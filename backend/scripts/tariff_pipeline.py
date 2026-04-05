@@ -71,7 +71,8 @@ GOOGLE_CSE_API_KEY = _load_setting("google_cse_api_key", "GOOGLE_CSE_API_KEY")
 GOOGLE_CSE_CX = _load_setting("google_cse_cx", "GOOGLE_CSE_CX")
 GOOGLE_AI_API_KEY = _load_setting("google_ai_api_key", "GOOGLE_AI_API_KEY")
 HAIKU_MODEL = "claude-haiku-4-5-20251001"
-GEMINI_MODEL = "gemini-2.0-flash"
+OPUS_MODEL = "claude-opus-4-6"
+GEMINI_MODEL = "gemini-3-flash-preview"
 
 FETCH_TIMEOUT = httpx.Timeout(15.0, connect=8.0)
 PDF_TIMEOUT = httpx.Timeout(30.0, connect=10.0)
@@ -230,20 +231,32 @@ IRRELEVANT_URL_KEYWORDS = re.compile(
 
 HOMEPAGE_ONLY_PATH = re.compile(r"^/?$")
 
+# Aggregator / comparison / non-utility domains. Results from these are
+# HARD-BLOCKED in search scoring (score = -999) so the pipeline never
+# extracts tariffs from them.  Government / regulatory sites are NOT
+# included here — they can be legitimate sources.
 THIRD_PARTY_DOMAINS = frozenset({
-    "openei.org", "wikipedia.org", "yelp.com", "yellowpages.com",
-    "bbb.org", "facebook.com", "twitter.com", "linkedin.com",
-    "utility-rates.com", "costcheckusa.com", "findenergy.com",
-    "energysage.com", "choosetexaspower.org", "electricityplans.com",
-    "saveonenergy.com", "electricrate.com", "wattbuy.com",
-    "opb.org", "prnewswire.com", "businesswire.com",
-    "reddit.com", "nextdoor.com", "glassdoor.com",
-    "mapquest.com", "solar.com", "nrgcleanpower.com",
-    "greenridgesolar.com", "koin.com", "madison.com",
-    "energybot.com", "electricitylocal.com", "energypal.com",
-    "electricchoice.com", "paylesspower.com", "texaselectricityratings.com",
-    "powertochoose.org", "electricityrates.com", "utilitygenius.com",
-    "switchwise.com", "energyrates.ca", "ratehub.ca",
+    # Social / directory / review
+    "wikipedia.org", "yelp.com", "yellowpages.com", "bbb.org",
+    "facebook.com", "twitter.com", "linkedin.com", "reddit.com",
+    "nextdoor.com", "glassdoor.com", "mapquest.com",
+    # News / press
+    "opb.org", "prnewswire.com", "businesswire.com", "koin.com",
+    "azfamily.com",
+    # Rate comparison / aggregator
+    "openei.org", "utility-rates.com", "costcheckusa.com",
+    "findenergy.com", "energysage.com", "choosetexaspower.org",
+    "electricityplans.com", "saveonenergy.com", "electricrate.com",
+    "wattbuy.com", "energybot.com", "electricitylocal.com",
+    "energypal.com", "electricchoice.com", "paylesspower.com",
+    "texaselectricityratings.com", "powertochoose.org",
+    "electricityrates.com", "utilitygenius.com", "switchwise.com",
+    "energyrates.ca", "ratehub.ca", "chooseenergy.com",
+    "smartenergyusa.com", "gatby.com", "poweroutage.us",
+    "njenergyratings.com", "energypricing.com",
+    # Solar / green energy marketing
+    "solar.com", "nrgcleanpower.com", "greenridgesolar.com",
+    "madison.com", "sandboxsolar.com",
 })
 
 
@@ -777,7 +790,7 @@ def score_search_result(result: dict, utility_name: str, utility_domain: str | N
 
     url_domain = urlparse(url).netloc.replace("www.", "")
     if any(url_domain == d or url_domain.endswith(f".{d}") for d in THIRD_PARTY_DOMAINS):
-        score -= 40
+        return -999  # Hard block — never use aggregator/comparison sites
 
     return score
 
@@ -822,7 +835,11 @@ def _clean_utility_name(name: str) -> str:
 
 
 def _discover_utility_domain(utility_name: str, state: str) -> str | None:
-    """Find the utility's official website domain via search."""
+    """Find the utility's official website domain via search.
+
+    Skips any domain in THIRD_PARTY_DOMAINS to avoid returning aggregator
+    sites like energypal.com when searching for "Duke Energy".
+    """
     clean_name = _clean_utility_name(utility_name)
     query = f"{clean_name} electric utility official website {state}"
     log.info(f"  Phase 1: Discovering domain [{query}]")
@@ -835,8 +852,11 @@ def _discover_utility_domain(utility_name: str, state: str) -> str | None:
     for r in results:
         url = r["url"]
         domain = urlparse(url).netloc.replace("www.", "")
+
+        if any(domain == d or domain.endswith(f".{d}") for d in THIRD_PARTY_DOMAINS):
+            continue
+
         domain_base = domain.split(".")[0] if "." in domain else domain
-        # Check if the domain looks like it belongs to this utility
         name_words = [w.lower() for w in clean_name.split() if len(w) > 2]
         matching = sum(1 for w in name_words if w in domain_base)
         if matching >= 1 or name_lower[:6] in domain_base:
@@ -886,6 +906,9 @@ def phase1_find_rate_page(utility_name: str, state: str, website_url: str | None
                 scored.append((s, r))
             scored.sort(key=lambda x: -x[0])
             log.info(f"    Google returned {len(google_results)} additional results")
+
+    # Drop hard-blocked results (3rd party aggregators)
+    scored = [(s, r) for s, r in scored if s > -900]
 
     if not scored:
         return "", 0, []
@@ -2089,10 +2112,57 @@ def _select_model(page: "RatePage") -> str:
     return "gemini"
 
 
+def _call_opus_tool(prompt: str) -> list[dict]:
+    """Call Claude Opus 4.6 for structured tariff extraction.
+
+    Only used as the last-resort third tier when both Gemini 3 Flash
+    and Haiku fail to extract any tariffs.  More expensive but
+    significantly better at complex rate structures, PDFs, and edge cases.
+    """
+    client = _get_anthropic_client()
+    try:
+        resp = client.messages.create(
+            model=OPUS_MODEL,
+            max_tokens=8192,
+            system=[
+                {
+                    "type": "text",
+                    "text": _CACHED_SYSTEM_PROMPT,
+                    "cache_control": {"type": "ephemeral"},
+                }
+            ],
+            messages=[{"role": "user", "content": prompt}],
+            tools=[
+                {
+                    **TARIFF_EXTRACTION_TOOL,
+                    "cache_control": {"type": "ephemeral"},
+                }
+            ],
+            tool_choice={"type": "tool", "name": "store_tariffs"},
+        )
+        for block in resp.content:
+            if block.type == "tool_use" and block.name == "store_tariffs":
+                return block.input.get("tariffs", [])
+        log.warning("    No tool_use block in Opus response, falling back to text parse")
+        for block in resp.content:
+            if hasattr(block, "text"):
+                return _parse_text_response(block.text)
+        return []
+    except Exception as e:
+        log.warning(f"    Opus extraction failed: {e}")
+        return []
+
+
 def _extract_with_model_routing(prompt: str, page: "RatePage") -> tuple[list[dict], str]:
-    """Extract tariffs using the tiered model strategy.
-    Returns (tariff_dicts, model_used). Falls back from Gemini to Haiku on failure.
-    Uses LLM extraction cache to avoid redundant API calls."""
+    """Extract tariffs using a 3-tier model strategy.
+
+    Tier 1: Gemini 3 Flash  (fast, cheap, good for most pages)
+    Tier 2: Claude Haiku    (better at complex HTML, tool use)
+    Tier 3: Claude Opus 4.6 (last resort for pages both cheaper models fail on)
+
+    Returns (tariff_dicts, model_used). Uses LLM extraction cache to avoid
+    redundant API calls.
+    """
     model = _select_model(page)
 
     if page.content_hash:
@@ -2110,9 +2180,17 @@ def _extract_with_model_routing(prompt: str, page: "RatePage") -> tuple[list[dic
         log.info("    Gemini returned no tariffs, escalating to Haiku")
 
     result = _call_claude_tool(prompt)
-    if page.content_hash:
-        _set_llm_cache(page.content_hash, "haiku", result)
-    return result, "haiku"
+    if result:
+        if page.content_hash:
+            _set_llm_cache(page.content_hash, "haiku", result)
+        return result, "haiku"
+
+    log.info("    Haiku returned no tariffs, escalating to Opus 4.6")
+    result = _call_opus_tool(prompt)
+    if result:
+        if page.content_hash:
+            _set_llm_cache(page.content_hash, "opus", result)
+    return result, "opus"
 
 
 def _parse_extraction_response(items: list[dict], source_url: str) -> list[ExtractedTariff]:
