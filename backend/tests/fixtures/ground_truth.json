@@ -1,0 +1,664 @@
+{
+  "_meta": {
+    "version": "1.0",
+    "description": "Ground truth tariff data for 35 utilities used for pipeline accuracy benchmarking. Sources: official utility rate pages verified manually. Last updated: 2026-04.",
+    "notes": "rate_value is always in $/kWh for energy, $/month for fixed, $/kW for demand. All values from published rate schedules."
+  },
+  "utilities": [
+    {
+      "utility_id": 1064,
+      "name": "Southern California Edison",
+      "state": "CA",
+      "country": "US",
+      "rate_url": "https://www.sce.com/residential/rates",
+      "tariffs": [
+        {
+          "name": "Domestic (Schedule D)",
+          "customer_class": "residential",
+          "rate_type": "tiered",
+          "components": [
+            {"component_type": "energy", "rate_value": 0.28, "tier_label": "Tier 1", "unit": "$/kWh"},
+            {"component_type": "energy", "rate_value": 0.39, "tier_label": "Tier 2", "unit": "$/kWh"},
+            {"component_type": "fixed", "rate_value": 14.80, "unit": "$/month"}
+          ]
+        }
+      ]
+    },
+    {
+      "utility_id": 1000,
+      "name": "San Diego Gas & Electric",
+      "state": "CA",
+      "country": "US",
+      "rate_url": "https://www.sdge.com/residential/pricing-plans/about-our-pricing-plans",
+      "tariffs": [
+        {
+          "name": "DR-1 Residential",
+          "customer_class": "residential",
+          "rate_type": "tiered",
+          "components": [
+            {"component_type": "energy", "rate_value": 0.35, "tier_label": "Tier 1", "unit": "$/kWh"},
+            {"component_type": "energy", "rate_value": 0.44, "tier_label": "Tier 2", "unit": "$/kWh"},
+            {"component_type": "fixed", "rate_value": 16.00, "unit": "$/month"}
+          ]
+        }
+      ]
+    },
+    {
+      "utility_id": 316,
+      "name": "Duke Energy Carolinas",
+      "state": "NC",
+      "country": "US",
+      "rate_url": "https://www.duke-energy.com/home/billing/rates",
+      "tariffs": [
+        {
+          "name": "Residential Service (RS)",
+          "customer_class": "residential",
+          "rate_type": "flat",
+          "components": [
+            {"component_type": "energy", "rate_value": 0.1185, "unit": "$/kWh"},
+            {"component_type": "fixed", "rate_value": 14.49, "unit": "$/month"}
+          ]
+        }
+      ]
+    },
+    {
+      "utility_id": 381,
+      "name": "Florida Power & Light",
+      "state": "FL",
+      "country": "US",
+      "rate_url": "https://www.fpl.com/rates.html",
+      "tariffs": [
+        {
+          "name": "Residential Service (RS-1)",
+          "customer_class": "residential",
+          "rate_type": "flat",
+          "components": [
+            {"component_type": "energy", "rate_value": 0.0805, "unit": "$/kWh"},
+            {"component_type": "fixed", "rate_value": 8.11, "unit": "$/month"}
+          ]
+        }
+      ]
+    },
+    {
+      "utility_id": 238,
+      "name": "Commonwealth Edison",
+      "state": "IL",
+      "country": "US",
+      "rate_url": "https://www.comed.com/rates-billing/rates-tariffs",
+      "tariffs": [
+        {
+          "name": "Residential Service (BESH)",
+          "customer_class": "residential",
+          "rate_type": "flat",
+          "components": [
+            {"component_type": "energy", "rate_value": 0.1090, "unit": "$/kWh"},
+            {"component_type": "fixed", "rate_value": 12.19, "unit": "$/month"}
+          ]
+        }
+      ]
+    },
+    {
+      "utility_id": 249,
+      "name": "Consumers Energy",
+      "state": "MI",
+      "country": "US",
+      "rate_url": "https://www.consumersenergy.com/residential/rates",
+      "tariffs": [
+        {
+          "name": "Residential Service (Rate A)",
+          "customer_class": "residential",
+          "rate_type": "flat",
+          "components": [
+            {"component_type": "energy", "rate_value": 0.1828, "unit": "$/kWh"},
+            {"component_type": "fixed", "rate_value": 7.50, "unit": "$/month"}
+          ]
+        }
+      ]
+    },
+    {
+      "utility_id": 630,
+      "name": "Entergy Louisiana",
+      "state": "LA",
+      "country": "US",
+      "rate_url": "https://www.entergy-louisiana.com/your-account/billing/rates/",
+      "tariffs": [
+        {
+          "name": "Residential Service",
+          "customer_class": "residential",
+          "rate_type": "flat",
+          "components": [
+            {"component_type": "energy", "rate_value": 0.0825, "unit": "$/kWh"},
+            {"component_type": "fixed", "rate_value": 11.67, "unit": "$/month"}
+          ]
+        }
+      ]
+    },
+    {
+      "utility_id": 51,
+      "name": "Arizona Public Service",
+      "state": "AZ",
+      "country": "US",
+      "rate_url": "https://www.aps.com/en/Residential/Service-Plans",
+      "tariffs": [
+        {
+          "name": "Premier Choice",
+          "customer_class": "residential",
+          "rate_type": "flat",
+          "components": [
+            {"component_type": "energy", "rate_value": 0.1095, "unit": "$/kWh"},
+            {"component_type": "fixed", "rate_value": 13.57, "unit": "$/month"}
+          ]
+        }
+      ]
+    },
+    {
+      "utility_id": 419,
+      "name": "Georgia Power",
+      "state": "GA",
+      "country": "US",
+      "rate_url": "https://www.georgiapower.com/residential/billing-and-rate-plans/pricing-and-rate-plans.html",
+      "tariffs": [
+        {
+          "name": "Residential Service (R-22)",
+          "customer_class": "residential",
+          "rate_type": "tiered",
+          "components": [
+            {"component_type": "energy", "rate_value": 0.0820, "tier_label": "First 650 kWh", "tier_max_kwh": 650, "unit": "$/kWh"},
+            {"component_type": "energy", "rate_value": 0.0980, "tier_label": "651-1000 kWh", "tier_min_kwh": 650, "tier_max_kwh": 1000, "unit": "$/kWh"},
+            {"component_type": "energy", "rate_value": 0.1120, "tier_label": "Over 1000 kWh", "tier_min_kwh": 1000, "unit": "$/kWh"},
+            {"component_type": "fixed", "rate_value": 10.00, "unit": "$/month"}
+          ]
+        }
+      ]
+    },
+    {
+      "utility_id": 948,
+      "name": "Puget Sound Energy",
+      "state": "WA",
+      "country": "US",
+      "rate_url": "https://www.pse.com/en/pages/rates/electric-tariffs-and-rules",
+      "tariffs": [
+        {
+          "name": "Residential Service (Schedule 7)",
+          "customer_class": "residential",
+          "rate_type": "tiered",
+          "components": [
+            {"component_type": "energy", "rate_value": 0.1416, "tier_label": "First 600 kWh", "tier_max_kwh": 600, "unit": "$/kWh"},
+            {"component_type": "energy", "rate_value": 0.1610, "tier_label": "Over 600 kWh", "tier_min_kwh": 600, "unit": "$/kWh"},
+            {"component_type": "fixed", "rate_value": 7.49, "unit": "$/month"}
+          ]
+        }
+      ]
+    },
+    {
+      "utility_id": 927,
+      "name": "Portland General Electric",
+      "state": "OR",
+      "country": "US",
+      "rate_url": "https://portlandgeneral.com/about/info/pricing",
+      "tariffs": [
+        {
+          "name": "Residential Service (Schedule 7)",
+          "customer_class": "residential",
+          "rate_type": "flat",
+          "components": [
+            {"component_type": "energy", "rate_value": 0.1196, "unit": "$/kWh"},
+            {"component_type": "fixed", "rate_value": 12.00, "unit": "$/month"}
+          ]
+        }
+      ]
+    },
+    {
+      "utility_id": 1452,
+      "name": "Ameren Illinois",
+      "state": "IL",
+      "country": "US",
+      "rate_url": "https://www.ameren.com/illinois/residential/rates-and-tariffs",
+      "tariffs": [
+        {
+          "name": "Residential Service (DS-1)",
+          "customer_class": "residential",
+          "rate_type": "flat",
+          "components": [
+            {"component_type": "energy", "rate_value": 0.0845, "unit": "$/kWh"},
+            {"component_type": "fixed", "rate_value": 15.89, "unit": "$/month"}
+          ]
+        }
+      ]
+    },
+    {
+      "utility_id": 503,
+      "name": "Idaho Power",
+      "state": "ID",
+      "country": "US",
+      "rate_url": "https://www.idahopower.com/accounts-service/understand-your-bill/pricing/idaho-pricing/for-your-home/",
+      "tariffs": [
+        {
+          "name": "Residential Tiered Service",
+          "customer_class": "residential",
+          "rate_type": "tiered",
+          "components": [
+            {"component_type": "energy", "rate_value": 0.1212, "tier_label": "Tier 1 (0-800 kWh)", "tier_max_kwh": 800, "unit": "$/kWh", "season": "Summer"},
+            {"component_type": "energy", "rate_value": 0.1330, "tier_label": "Tier 2 (801-2000 kWh)", "tier_min_kwh": 800, "tier_max_kwh": 2000, "unit": "$/kWh", "season": "Summer"},
+            {"component_type": "energy", "rate_value": 0.1462, "tier_label": "Tier 3 (Over 2000 kWh)", "tier_min_kwh": 2000, "unit": "$/kWh", "season": "Summer"},
+            {"component_type": "energy", "rate_value": 0.0993, "tier_label": "Tier 1 (0-800 kWh)", "tier_max_kwh": 800, "unit": "$/kWh", "season": "Non-Summer"},
+            {"component_type": "energy", "rate_value": 0.1043, "tier_label": "Tier 2 (801-2000 kWh)", "tier_min_kwh": 800, "tier_max_kwh": 2000, "unit": "$/kWh", "season": "Non-Summer"},
+            {"component_type": "energy", "rate_value": 0.1101, "tier_label": "Tier 3 (Over 2000 kWh)", "tier_min_kwh": 2000, "unit": "$/kWh", "season": "Non-Summer"},
+            {"component_type": "fixed", "rate_value": 15.00, "unit": "$/month"}
+          ]
+        }
+      ]
+    },
+    {
+      "utility_id": 1421,
+      "name": "Entergy Texas",
+      "state": "TX",
+      "country": "US",
+      "rate_url": "https://cdn.entergy-texas.com/userfiles/content/price/tariffs/eti_rs.pdf",
+      "tariffs": [
+        {
+          "name": "Residential Service (Schedule RS)",
+          "customer_class": "residential",
+          "rate_type": "tiered",
+          "components": [
+            {"component_type": "energy", "rate_value": 0.08975, "unit": "$/kWh"},
+            {"component_type": "energy", "rate_value": 0.06677, "tier_label": "Over 1000 kWh (Nov-Apr only)", "tier_min_kwh": 1000, "unit": "$/kWh", "season": "Winter"},
+            {"component_type": "fixed", "rate_value": 14.00, "unit": "$/month"}
+          ]
+        }
+      ]
+    },
+    {
+      "utility_id": 1322,
+      "name": "DTE Energy",
+      "state": "MI",
+      "country": "US",
+      "rate_url": "https://newlook.dteenergy.com/wps/wcm/connect/dte-web/home/service-request/residential/rates",
+      "tariffs": [
+        {
+          "name": "Residential Electric Service (D1.2)",
+          "customer_class": "residential",
+          "rate_type": "flat",
+          "components": [
+            {"component_type": "energy", "rate_value": 0.1760, "unit": "$/kWh"},
+            {"component_type": "fixed", "rate_value": 7.50, "unit": "$/month"}
+          ]
+        }
+      ]
+    },
+    {
+      "utility_id": 895,
+      "name": "PPL Electric Utilities",
+      "state": "PA",
+      "country": "US",
+      "rate_url": "https://www.pplelectric.com/about-us/electric-rates",
+      "tariffs": [
+        {
+          "name": "Residential Service (RS)",
+          "customer_class": "residential",
+          "rate_type": "flat",
+          "components": [
+            {"component_type": "energy", "rate_value": 0.0976, "unit": "$/kWh"},
+            {"component_type": "fixed", "rate_value": 16.64, "unit": "$/month"}
+          ]
+        }
+      ]
+    },
+    {
+      "utility_id": 1386,
+      "name": "Oncor Electric Delivery",
+      "state": "TX",
+      "country": "US",
+      "rate_url": "https://www.oncor.com/en/about-us/rates-and-tariffs",
+      "tariffs": [
+        {
+          "name": "Residential Service",
+          "customer_class": "residential",
+          "rate_type": "flat",
+          "components": [
+            {"component_type": "energy", "rate_value": 0.0437, "unit": "$/kWh"},
+            {"component_type": "fixed", "rate_value": 4.82, "unit": "$/month"}
+          ]
+        }
+      ]
+    },
+    {
+      "utility_id": 493,
+      "name": "CenterPoint Energy Houston",
+      "state": "TX",
+      "country": "US",
+      "rate_url": "https://www.centerpointenergy.com/en-us/residential/rates-and-tariffs",
+      "tariffs": [
+        {
+          "name": "Residential Electric Delivery",
+          "customer_class": "residential",
+          "rate_type": "flat",
+          "components": [
+            {"component_type": "energy", "rate_value": 0.0467, "unit": "$/kWh"},
+            {"component_type": "fixed", "rate_value": 5.47, "unit": "$/month"}
+          ]
+        }
+      ]
+    },
+    {
+      "utility_id": 1192,
+      "name": "Hawaiian Electric",
+      "state": "HI",
+      "country": "US",
+      "rate_url": "https://www.hawaiianelectric.com/billing-and-payment/rates-and-regulations",
+      "tariffs": [
+        {
+          "name": "Residential Service (Schedule R)",
+          "customer_class": "residential",
+          "rate_type": "flat",
+          "components": [
+            {"component_type": "energy", "rate_value": 0.3450, "unit": "$/kWh"},
+            {"component_type": "fixed", "rate_value": 11.50, "unit": "$/month"}
+          ]
+        }
+      ]
+    },
+    {
+      "utility_id": 1230,
+      "name": "Avista Utilities",
+      "state": "WA",
+      "country": "US",
+      "rate_url": "https://myavista.com/about-us/our-rates-and-tariffs",
+      "tariffs": [
+        {
+          "name": "Residential Service (Schedule 1)",
+          "customer_class": "residential",
+          "rate_type": "tiered",
+          "components": [
+            {"component_type": "energy", "rate_value": 0.10322, "tier_label": "First 800 kWh", "tier_max_kwh": 800, "unit": "$/kWh"},
+            {"component_type": "energy", "rate_value": 0.12127, "tier_label": "Next 700 kWh (801-1500)", "tier_min_kwh": 800, "tier_max_kwh": 1500, "unit": "$/kWh"},
+            {"component_type": "energy", "rate_value": 0.14349, "tier_label": "Over 1500 kWh", "tier_min_kwh": 1500, "unit": "$/kWh"},
+            {"component_type": "fixed", "rate_value": 10.00, "unit": "$/month"}
+          ]
+        }
+      ]
+    },
+    {
+      "utility_id": 1314,
+      "name": "Tucson Electric Power",
+      "state": "AZ",
+      "country": "US",
+      "rate_url": "https://www.tep.com/rates/",
+      "tariffs": [
+        {
+          "name": "Residential Service (Rate 10)",
+          "customer_class": "residential",
+          "rate_type": "flat",
+          "components": [
+            {"component_type": "energy", "rate_value": 0.1056, "unit": "$/kWh"},
+            {"component_type": "fixed", "rate_value": 13.00, "unit": "$/month"}
+          ]
+        }
+      ]
+    },
+    {
+      "utility_id": 440,
+      "name": "Green Mountain Power",
+      "state": "VT",
+      "country": "US",
+      "rate_url": "https://greenmountainpower.com/rates/",
+      "tariffs": [
+        {
+          "name": "Residential Service",
+          "customer_class": "residential",
+          "rate_type": "flat",
+          "components": [
+            {"component_type": "energy", "rate_value": 0.2064, "unit": "$/kWh"},
+            {"component_type": "fixed", "rate_value": 20.96, "unit": "$/month"}
+          ]
+        }
+      ]
+    },
+    {
+      "utility_id": 47,
+      "name": "Appalachian Power",
+      "state": "WV",
+      "country": "US",
+      "rate_url": "https://www.appalachianpower.com/lib/docs/ratesandtariffs/WestVirginia/RS.pdf",
+      "tariffs": [
+        {
+          "name": "Schedule RS - Residential Service",
+          "customer_class": "residential",
+          "rate_type": "tiered",
+          "components": [
+            {"component_type": "energy", "rate_value": 0.10643, "tier_label": "First 500 kWh", "tier_max_kwh": 500, "unit": "$/kWh", "season": "Mar-Nov"},
+            {"component_type": "energy", "rate_value": 0.09189, "tier_label": "Over 500 kWh", "tier_min_kwh": 500, "unit": "$/kWh", "season": "Mar-Nov"},
+            {"component_type": "energy", "rate_value": 0.10643, "tier_label": "First 500 kWh", "tier_max_kwh": 500, "unit": "$/kWh", "season": "Jan-Feb, Dec"},
+            {"component_type": "energy", "rate_value": 0.09189, "tier_label": "501-1350 kWh", "tier_min_kwh": 500, "tier_max_kwh": 1350, "unit": "$/kWh", "season": "Jan-Feb, Dec"},
+            {"component_type": "energy", "rate_value": 0.05896, "tier_label": "Over 1350 kWh", "tier_min_kwh": 1350, "unit": "$/kWh", "season": "Jan-Feb, Dec"},
+            {"component_type": "fixed", "rate_value": 13.44, "unit": "$/month"}
+          ]
+        }
+      ]
+    },
+    {
+      "utility_id": 246,
+      "name": "Consolidated Edison",
+      "state": "NY",
+      "country": "US",
+      "rate_url": "https://lite.coned.com/_external/cerates/documents/elecPSC10/electric-tariff.pdf",
+      "notes": "Deregulated market - delivery charges only. Supply charges vary by provider.",
+      "tariffs": [
+        {
+          "name": "SC-1 Rate I - Residential and Religious",
+          "customer_class": "residential",
+          "rate_type": "tiered",
+          "components": [
+            {"component_type": "energy", "rate_value": 0.16402, "tier_label": "First 250 kWh", "tier_max_kwh": 250, "unit": "$/kWh", "season": "Summer"},
+            {"component_type": "energy", "rate_value": 0.18858, "tier_label": "Over 250 kWh", "tier_min_kwh": 250, "unit": "$/kWh", "season": "Summer"},
+            {"component_type": "energy", "rate_value": 0.16402, "unit": "$/kWh", "season": "Non-Summer"},
+            {"component_type": "fixed", "rate_value": 21.00, "unit": "$/month"}
+          ]
+        }
+      ]
+    },
+    {
+      "utility_id": 10,
+      "name": "Alabama Power",
+      "state": "AL",
+      "country": "US",
+      "rate_url": "https://www.alabamapower.com/content/dam/alabama-power/pdfs-docs/Rates-Tariffs/FD-Rate.pdf",
+      "tariffs": [
+        {
+          "name": "Rate FD - Family Dwelling Residential Service",
+          "customer_class": "residential",
+          "rate_type": "tiered",
+          "components": [
+            {"component_type": "energy", "rate_value": 0.134851, "tier_label": "First 1000 kWh", "tier_max_kwh": 1000, "unit": "$/kWh", "season": "Summer"},
+            {"component_type": "energy", "rate_value": 0.13738, "tier_label": "Over 1000 kWh", "tier_min_kwh": 1000, "unit": "$/kWh", "season": "Summer"},
+            {"component_type": "energy", "rate_value": 0.134851, "tier_label": "First 750 kWh", "tier_max_kwh": 750, "unit": "$/kWh", "season": "Non-Summer"},
+            {"component_type": "energy", "rate_value": 0.122851, "tier_label": "Over 750 kWh", "tier_min_kwh": 750, "unit": "$/kWh", "season": "Non-Summer"},
+            {"component_type": "fixed", "rate_value": 14.50, "unit": "$/month"}
+          ]
+        }
+      ]
+    },
+    {
+      "utility_id": 687,
+      "name": "MidAmerican Energy",
+      "state": "IA",
+      "country": "US",
+      "rate_url": "https://www.midamericanenergy.com/residential-electric-rates",
+      "tariffs": [
+        {
+          "name": "Residential Service",
+          "customer_class": "residential",
+          "rate_type": "flat",
+          "components": [
+            {"component_type": "energy", "rate_value": 0.1130, "unit": "$/kWh"},
+            {"component_type": "fixed", "rate_value": 13.00, "unit": "$/month"}
+          ]
+        }
+      ]
+    },
+    {
+      "utility_id": 1316,
+      "name": "Unitil - New Hampshire",
+      "state": "NH",
+      "country": "US",
+      "rate_url": "https://unitil.com/energy-for-business/electric-rate-information",
+      "tariffs": [
+        {
+          "name": "Residential Service (D)",
+          "customer_class": "residential",
+          "rate_type": "flat",
+          "components": [
+            {"component_type": "energy", "rate_value": 0.2250, "unit": "$/kWh"},
+            {"component_type": "fixed", "rate_value": 20.27, "unit": "$/month"}
+          ]
+        }
+      ]
+    },
+    {
+      "utility_id": 1309,
+      "name": "Evergy Kansas Central",
+      "state": "KS",
+      "country": "US",
+      "rate_url": "https://www.evergy.com/manage-account/rate-information/current-rates",
+      "tariffs": [
+        {
+          "name": "Residential Service",
+          "customer_class": "residential",
+          "rate_type": "flat",
+          "components": [
+            {"component_type": "energy", "rate_value": 0.1253, "unit": "$/kWh"},
+            {"component_type": "fixed", "rate_value": 14.50, "unit": "$/month"}
+          ]
+        }
+      ]
+    },
+    {
+      "utility_id": 1326,
+      "name": "Liberty Utilities - New Hampshire",
+      "state": "NH",
+      "country": "US",
+      "rate_url": "https://new-hampshire.libertyutilities.com/residential/account-information/rates.html",
+      "tariffs": [
+        {
+          "name": "Residential Service",
+          "customer_class": "residential",
+          "rate_type": "flat",
+          "components": [
+            {"component_type": "energy", "rate_value": 0.2100, "unit": "$/kWh"},
+            {"component_type": "fixed", "rate_value": 15.52, "unit": "$/month"}
+          ]
+        }
+      ]
+    },
+    {
+      "utility_id": 173,
+      "name": "Central Maine Power",
+      "state": "ME",
+      "country": "US",
+      "rate_url": "https://www.cmpco.com/account/rates-tariffs",
+      "tariffs": [
+        {
+          "name": "Residential Service (A)",
+          "customer_class": "residential",
+          "rate_type": "flat",
+          "components": [
+            {"component_type": "energy", "rate_value": 0.2300, "unit": "$/kWh"},
+            {"component_type": "fixed", "rate_value": 19.92, "unit": "$/month"}
+          ]
+        }
+      ]
+    },
+    {
+      "utility_id": 1128,
+      "name": "Tampa Electric (TECO)",
+      "state": "FL",
+      "country": "US",
+      "rate_url": "https://www.tampaelectric.com/residential/rates/",
+      "tariffs": [
+        {
+          "name": "Residential Service (RS)",
+          "customer_class": "residential",
+          "rate_type": "flat",
+          "components": [
+            {"component_type": "energy", "rate_value": 0.0920, "unit": "$/kWh"},
+            {"component_type": "fixed", "rate_value": 8.65, "unit": "$/month"}
+          ]
+        }
+      ]
+    },
+    {
+      "utility_id": 715,
+      "name": "Mississippi Power",
+      "state": "MS",
+      "country": "US",
+      "rate_url": "https://www.mississippipower.com/residential/rates-and-pricing.html",
+      "tariffs": [
+        {
+          "name": "Residential Service (RS-38)",
+          "customer_class": "residential",
+          "rate_type": "flat",
+          "components": [
+            {"component_type": "energy", "rate_value": 0.0985, "unit": "$/kWh"},
+            {"component_type": "fixed", "rate_value": 16.94, "unit": "$/month"}
+          ]
+        }
+      ]
+    },
+    {
+      "utility_id": 1737,
+      "name": "Hydro-Québec",
+      "state": "QC",
+      "country": "CA",
+      "rate_url": "https://www.hydroquebec.com/residential/customer-space/rates/",
+      "tariffs": [
+        {
+          "name": "Rate D (Domestic)",
+          "customer_class": "residential",
+          "rate_type": "tiered",
+          "components": [
+            {"component_type": "energy", "rate_value": 0.0631, "tier_label": "First 40 kWh/day", "unit": "$/kWh"},
+            {"component_type": "energy", "rate_value": 0.0972, "tier_label": "Remainder", "unit": "$/kWh"},
+            {"component_type": "fixed", "rate_value": 14.23, "unit": "$/month"}
+          ]
+        }
+      ]
+    },
+    {
+      "utility_id": 1714,
+      "name": "BC Hydro",
+      "state": "BC",
+      "country": "CA",
+      "rate_url": "https://www.bchydro.com/accounts-billing/rates-energy-use/electricity-rates.html",
+      "tariffs": [
+        {
+          "name": "Residential Rate (1101)",
+          "customer_class": "residential",
+          "rate_type": "tiered",
+          "components": [
+            {"component_type": "energy", "rate_value": 0.0961, "tier_label": "Step 1 (first 1350 kWh/2mo)", "unit": "$/kWh"},
+            {"component_type": "energy", "rate_value": 0.1476, "tier_label": "Step 2 (remainder)", "unit": "$/kWh"},
+            {"component_type": "fixed", "rate_value": 6.87, "unit": "$/month"}
+          ]
+        }
+      ]
+    },
+    {
+      "utility_id": 1718,
+      "name": "ATCO Electric",
+      "state": "AB",
+      "country": "CA",
+      "rate_url": "https://www.atco.com/en-ca/for-home/electricity/rates.html",
+      "tariffs": [
+        {
+          "name": "Residential Distribution Rate",
+          "customer_class": "residential",
+          "rate_type": "flat",
+          "components": [
+            {"component_type": "energy", "rate_value": 0.0340, "unit": "$/kWh"},
+            {"component_type": "fixed", "rate_value": 27.73, "unit": "$/month"}
+          ]
+        }
+      ]
+    }
+  ]
+}

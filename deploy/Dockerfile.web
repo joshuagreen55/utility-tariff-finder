@@ -1,0 +1,18 @@
+# Static React build + Caddy reverse proxy to API
+FROM node:20-alpine AS frontend-build
+WORKDIR /app
+COPY frontend/package.json frontend/package-lock.json ./
+RUN npm ci
+COPY frontend/ ./
+
+# Public env baked into the frontend bundle (safe to expose)
+ARG VITE_GOOGLE_MAPS_API_KEY=""
+ENV VITE_GOOGLE_MAPS_API_KEY=$VITE_GOOGLE_MAPS_API_KEY
+# NOTE: VITE_ADMIN_API_KEY is no longer baked in — the admin panel
+# reads it from localStorage or a runtime config endpoint instead.
+
+RUN npm run build
+
+FROM caddy:2-alpine
+COPY deploy/Caddyfile /etc/caddy/Caddyfile
+COPY --from=frontend-build /app/dist /srv/frontend

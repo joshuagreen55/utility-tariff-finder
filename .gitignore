@@ -1,0 +1,34 @@
+# Secrets
+.env
+.env.local
+*.pem
+
+# Python
+backend/venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+
+# Node
+frontend/node_modules/
+frontend/dist/
+
+# IDE
+.idea/
+.vscode/
+
+# Cursor
+.cursor/
+
+# macOS
+.DS_Store
+._*
+
+# Logs and caches
+logs/
+!logs/.gitkeep
+
+# Docker
+*.log
