@@ -124,23 +124,32 @@ def _count_tariffs(session: Session, utility_ids: list[int]) -> dict[int, int]:
 # Child task: process a single utility
 # ---------------------------------------------------------------------------
 
+TRANSIENT_ERRORS = (ConnectionError, TimeoutError, OSError)
+
+
 @celery_app.task(
     name="app.tasks.refresh.process_utility",
     bind=True,
-    max_retries=1,
+    max_retries=2,
     soft_time_limit=600,
     time_limit=660,
     rate_limit=LLM_RATE_LIMIT,
     acks_late=True,
+    autoretry_for=TRANSIENT_ERRORS,
+    retry_backoff=60,
+    retry_backoff_max=300,
+    retry_jitter=True,
 )
 def process_utility(self, uid: int, comprehensive: bool = False) -> dict:
     """Run the full tariff pipeline for a single utility.
-    
+
     This is the unit of parallelism — Celery distributes these across workers.
+    Automatically retries up to 2 times with exponential backoff (60s, then
+    up to 300s with jitter) on transient network/timeout errors.
     """
     from scripts.tariff_pipeline import cleanup_between_utilities, run_pipeline
 
-    log.info(f"Processing utility {uid} (comprehensive={comprehensive})")
+    log.info(f"Processing utility {uid} (comprehensive={comprehensive}, attempt={self.request.retries + 1})")
     try:
         result = run_pipeline(uid, dry_run=False, comprehensive=comprehensive)
         valid_count = (result.phase4_validation or {}).get("valid", 0)
@@ -152,6 +161,8 @@ def process_utility(self, uid: int, comprehensive: bool = False) -> dict:
             "errors": result.errors,
             "success": valid_count > 0,
         }
+    except TRANSIENT_ERRORS:
+        raise  # Let autoretry handle these
     except Exception as e:
         log.error(f"Utility {uid} CRASHED: {e}")
         return {

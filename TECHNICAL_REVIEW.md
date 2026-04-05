@@ -679,9 +679,9 @@ The phantom tariff fix (delete tariffs not in current extraction) is a double-ed
 - But if the pipeline only finds a subset of tariffs (common), it also removes valid ones
 - The only safeguard is "at least 1 residential tariff must be stored" — this is too permissive
 
-### 10.3 `run_pipeline()` API Design
+### 10.3 `run_pipeline()` API Design — RESOLVED
 
-The function requires callers to pass `utility_name`, `state`, `country`, and `website_url`. It does NOT look these up from the database. This led to the critical bug in Section 8.7 and is a footgun for any new calling code.
+This issue has been fixed. `run_pipeline(utility_id)` now only requires `utility_id` and internally calls `get_utility_info()` to load the utility's name, state, country, and website URL from the database. Optional `name_override`, `state_override`, etc. parameters exist for explicit overrides only. The LG&E bug (Section 8.7) cannot recur.
 
 ### 10.4 Search Dependency on Brave
 

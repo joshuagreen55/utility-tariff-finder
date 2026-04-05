@@ -591,9 +591,9 @@ The pipeline achieves ~57% A/B grade on audited utilities. The remaining ~43% ha
 
 Reconciliation (delete tariffs not in current extraction) is a double-edged sword. Domain-scoped safety and wipe protection help, but if the pipeline only finds 2 of 6 tariffs from the same domain, it still deletes the other 4.
 
-### 13.3 `run_pipeline()` API Design
+### 13.3 `run_pipeline()` API Design — RESOLVED
 
-The function requires callers to pass `utility_name`, `state`, `country`, `website_url`. It does NOT look these up from the database. This led to the critical LG&E bug (Section 9.4). Any new calling code must remember to load utility details first.
+This issue has been fixed. `run_pipeline(utility_id)` now only requires `utility_id` as a mandatory parameter and internally calls `get_utility_info()` to load the utility's name, state, country, and website URL from the database. Optional `_override` parameters exist for explicit overrides only. The LG&E bug (Section 9.4) cannot recur with the current function signature.
 
 ### 13.4 PDF Extraction Quality
 
@@ -687,6 +687,22 @@ Code directories are bind-mounted into containers, allowing code changes without
 |------|---------|
 | `backend/tests/fixtures/ground_truth.json` | 35-utility manually verified benchmark dataset |
 | `backend/test_results/` | Lookup test results (US and Canada) |
+
+---
+
+---
+
+## 16. Post-Review Fixes (2026-03-31)
+
+Following an external code review, the following additional fixes were applied:
+
+| Fix | Description |
+|-----|-------------|
+| **Minimum energy rate floor** | Energy rates below $0.01/kWh are now rejected as likely cents-vs-dollars parsing errors |
+| **Stricter identity verification** | `verify_content_identity()` now rejects pages that mention the target state but not the utility name when the domain doesn't match. Also detects pages mentioning 3+ other states as likely cross-contamination |
+| **Tighter reconciliation** | Threshold raised from 50% to 75% — reconciliation is skipped if new extraction finds fewer than 75% of existing tariffs (was 50%), and triggers at 3+ existing tariffs (was 4+) |
+| **Celery auto-retry** | `process_utility` task now retries up to 2 times with exponential backoff (60s base, 300s max, with jitter) on transient network/timeout errors |
+| **Documentation corrections** | `run_pipeline()` API design issue marked as RESOLVED in docs — the function has already been fixed to do its own DB lookup |
 
 ---
 

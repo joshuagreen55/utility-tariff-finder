@@ -2217,6 +2217,26 @@ def verify_content_identity(
     state_full = state_names.get(state.upper(), state_lower)
     has_state = state_lower in all_text or state_full in all_text
 
+    # Check for OTHER states being mentioned more prominently than the target
+    # state — a signal that we're looking at the wrong utility's page.
+    if has_state and matches == 0:
+        other_state_hits = 0
+        for abbr, full_name in state_names.items():
+            if abbr.upper() == state.upper():
+                continue
+            # Only count full state names to avoid false positives from
+            # short abbreviations appearing in words
+            if full_name in all_text:
+                other_state_hits += 1
+        if other_state_hits >= 3 and not domain_ok:
+            reason = (
+                f"Page mentions {other_state_hits} other states more than "
+                f"target state ({state}) and domain doesn't match — "
+                f"likely cross-contamination."
+            )
+            log.warning(f"  IDENTITY CHECK FAILED: {reason}")
+            return False, reason
+
     if matches == 0 and not has_state and not domain_ok:
         reason = (
             f"Page content does not mention the utility name ({utility_name}), "
@@ -2236,12 +2256,15 @@ def verify_content_identity(
 
     if matches == 0 and has_state:
         if not domain_ok:
-            log.info(
-                "  Identity check: state matches but name absent and domain "
-                "differs — proceeding with caution"
+            reason = (
+                f"Page mentions target state ({state}) but utility name "
+                f"({utility_name}) not found and domain doesn't match — "
+                f"possible cross-contamination."
             )
+            log.warning(f"  IDENTITY CHECK FAILED: {reason}")
+            return False, reason
         else:
-            log.info("  Identity check: utility name not found but state matches — proceeding with caution")
+            log.info("  Identity check: utility name not found but state matches and domain OK — proceeding with caution")
 
     return True, ""
 
@@ -2342,6 +2365,11 @@ def phase4_validate(
                     ctype = comp.get("component_type")
                     if rv < 0 and ctype not in ("adjustment", "energy"):
                         tariff_issues.append(f"negative rate_value {rv}")
+                    if ctype == "energy" and rv > 0 and rv < 0.01:
+                        tariff_issues.append(
+                            f"energy rate {rv} $/kWh suspiciously low "
+                            f"(likely cents parsed as dollars)"
+                        )
                     if ctype == "energy":
                         if rv > p99_energy:
                             tariff_issues.append(
@@ -2609,10 +2637,10 @@ def store_tariffs(utility_id: int, tariffs: list[ExtractedTariff], dry_run: bool
                 # Count-based guard: if new extraction found significantly fewer
                 # tariffs than already exist, skip reconciliation to avoid
                 # destroying valid data from a partial extraction.
-                if stored < existing_count * 0.5 and existing_count >= 4:
+                if stored < existing_count * 0.75 and existing_count >= 3:
                     log.warning(
                         f"  Reconciliation SKIPPED: new extraction found {stored} tariffs "
-                        f"vs {existing_count} existing (< 50%) — possible partial extraction"
+                        f"vs {existing_count} existing (< 75%) — possible partial extraction"
                     )
                 else:
                     # Source-aware reconciliation: only consider deleting tariffs
