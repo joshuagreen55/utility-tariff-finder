@@ -589,9 +589,14 @@ def fetch_pdf_text(url: str) -> str:
         return ""
 
 
-def fetch_page_js(url: str) -> tuple[str, str]:
+def fetch_page_js(url: str, wait_ms: int = 2000) -> tuple[str, str]:
     """Fetch a page using the shared Playwright browser for JS-rendered content.
-    Returns (html_content, page_title)."""
+    Returns (html_content, page_title).
+
+    Args:
+        wait_ms: Extra milliseconds to wait after networkidle for AJAX content.
+                 Default 2000ms. Use 5000+ for sites with heavy dynamic loading.
+    """
     if not _get_pw_mgr().is_available:
         log.warning("  Playwright not installed — cannot render JS pages")
         return "", ""
@@ -602,7 +607,7 @@ def fetch_page_js(url: str) -> tuple[str, str]:
         )
         page = context.new_page()
         page.goto(url, wait_until="networkidle", timeout=20000)
-        page.wait_for_timeout(2000)
+        page.wait_for_timeout(wait_ms)
         title = page.title()
         html = page.content()
         return html, title
@@ -958,13 +963,14 @@ def phase1_find_rate_page(utility_name: str, state: str, website_url: str | None
     if status != 200:
         log.warning(f"  Phase 1: Best URL returned {status}, trying next")
 
-        # If httpx can't connect (SSL errors, bot blocking), try Playwright
-        if status == 0 and best_score >= 50:
-            log.info(f"  Phase 1: httpx failed entirely — trying Playwright for {best_url[:60]}")
+        # If httpx can't connect or gets blocked (403), try Playwright
+        if status in (0, 403) and best_score >= 50:
+            log.info(f"  Phase 1: httpx returned {status} — trying Playwright for {best_url[:60]}")
             html_js, title_js = fetch_page_js(best_url)
             if html_js and len(html_js.strip()) > 200:
                 log.info(f"  Phase 1: Playwright succeeded for {best_url[:60]}")
-                _js_rendered_domains.add(best_domain)
+                with _js_rendered_lock:
+                    _js_rendered_domains.add(best_domain)
                 return best_url, len(results), all_alt_urls
 
         for score, r in scored[1:3]:
@@ -1041,6 +1047,12 @@ def _extract_links(soup: BeautifulSoup, base_url: str) -> list[tuple[str, str]]:
     return links
 
 
+def _find_relevant_links(html: str, base_url: str) -> list[tuple[str, str]]:
+    """Extract relevant rate-page links from raw HTML content."""
+    soup = BeautifulSoup(html, "html.parser")
+    return _extract_links(soup, base_url)
+
+
 _js_rendered_domains: set[str] = set()
 _js_rendered_lock = threading.Lock()
 
@@ -1065,9 +1077,10 @@ def _fetch_and_parse(url: str) -> RatePage | None:
 
     content, ctype, status = fetch_page(url)
     if status == 403:
-        log.info(f"    Got 403 on {url[:70]}, trying browser agent...")
-        pages = _try_browser_agent_fallback(url)
-        return pages[0] if pages else None
+        log.info(f"    Got 403 on {url[:70]}, trying Playwright...")
+        with _js_rendered_lock:
+            _js_rendered_domains.add(domain)
+        return _fetch_and_parse_js(url)
     if status == 0:
         log.info(f"    Connection failed for {url[:70]}, trying Playwright...")
         with _js_rendered_lock:
@@ -1081,6 +1094,15 @@ def _fetch_and_parse(url: str) -> RatePage | None:
 
     if len(text.strip()) < 200:
         log.info(f"    Thin content from httpx ({len(text.strip())} chars), trying Playwright...")
+        with _js_rendered_lock:
+            _js_rendered_domains.add(domain)
+        return _fetch_and_parse_js(url)
+
+    # If URL/title suggest rate content but body has no rate signals ($/kWh etc.),
+    # the data is likely loaded via JavaScript — retry with Playwright.
+    if (RATE_TITLE_KEYWORDS.search(f"{title} {url}")
+            and not RATE_CONTENT_SIGNALS.search(text)):
+        log.info(f"    Title/URL suggests rates but no rate signals in text — trying Playwright...")
         with _js_rendered_lock:
             _js_rendered_domains.add(domain)
         return _fetch_and_parse_js(url)
@@ -1168,14 +1190,22 @@ def phase2_discover_tariff_pages(rate_page_url: str) -> list[RatePage]:
 
     if status != 200:
         if status == 403:
-            log.info(f"  Phase 2: Got 403 — falling back to browser agent")
-            return _try_browser_agent_fallback(rate_page_url)
-        if status == 0:
+            log.info(f"  Phase 2: Got 403 — trying Playwright...")
+            html_js, title_js = fetch_page_js(rate_page_url)
+            if html_js and len(html_js.strip()) > 200:
+                content = html_js
+                with _js_rendered_lock:
+                    _js_rendered_domains.add(domain)
+            else:
+                log.warning(f"  Phase 2: Playwright also blocked for {rate_page_url[:60]}")
+                return []
+        elif status == 0:
             log.info(f"  Phase 2: httpx connection failed — trying Playwright...")
             html_js, title_js = fetch_page_js(rate_page_url)
             if html_js and len(html_js.strip()) > 200:
                 content = html_js
-                _js_rendered_domains.add(domain)
+                with _js_rendered_lock:
+                    _js_rendered_domains.add(domain)
             else:
                 log.warning(f"  Phase 2: Failed to fetch rate page (status={status})")
                 return []
@@ -1185,9 +1215,19 @@ def phase2_discover_tariff_pages(rate_page_url: str) -> list[RatePage]:
 
     soup = BeautifulSoup(content, "lxml")
     text = _extract_text(BeautifulSoup(content, "lxml"))
+    title = soup.title.string.strip() if soup.title and soup.title.string else ""
 
-    # If httpx returned thin content OR domain is known to need JS, use Playwright
-    needs_playwright = len(text.strip()) < 200 or domain in _js_rendered_domains
+    # If httpx returned thin content, domain needs JS, or title suggests rates
+    # but body has no rate signals (JS-loaded data), use Playwright.
+    title_hints_rates = (
+        RATE_TITLE_KEYWORDS.search(f"{title} {rate_page_url}")
+        and not RATE_CONTENT_SIGNALS.search(text)
+    )
+    needs_playwright = (
+        len(text.strip()) < 200
+        or domain in _js_rendered_domains
+        or title_hints_rates
+    )
     if needs_playwright:
         if domain not in _js_rendered_domains:
             log.info(f"  Phase 2: Thin httpx content, retrying main page with Playwright...")
@@ -1320,7 +1360,11 @@ def phase2_discover_tariff_pages(rate_page_url: str) -> list[RatePage]:
 
 
 def _extract_text(soup: BeautifulSoup) -> str:
-    for tag in soup(["script", "style", "nav", "footer", "header", "noscript", "iframe"]):
+    # Capture full-page text BEFORE stripping, in case structured extraction
+    # accidentally removes rate data hidden in non-standard elements.
+    full_raw_text = soup.get_text(separator="\n", strip=True)
+
+    for tag in soup(["script", "style", "noscript", "iframe"]):
         tag.decompose()
     for tag in soup.find_all(True, class_=re.compile(
         r"menu|mega-?nav|side-?bar|side-?nav|breadcrumb|skip-link", re.IGNORECASE
@@ -1335,7 +1379,6 @@ def _extract_text(soup: BeautifulSoup) -> str:
     if not main:
         main = soup.find("div", class_=re.compile(r"content|main|body", re.IGNORECASE))
 
-    # Fallback: find the largest ContentBlock-style div with substantial text
     if not main or len(main.get_text(strip=True)) < 200:
         best_div = None
         best_len = 0
@@ -1350,7 +1393,17 @@ def _extract_text(soup: BeautifulSoup) -> str:
             main = best_div
 
     el = main if main else soup
-    return el.get_text(separator="\n", strip=True)[:15000]
+    text = el.get_text(separator="\n", strip=True)[:15000]
+
+    # If structured extraction missed rate-bearing content (common with JS
+    # frameworks, Angular, React apps using custom components), fall back to
+    # the pre-decomposition full-page text.
+    if len(text) < 500 or (
+        not RATE_CONTENT_SIGNALS.search(text) and RATE_CONTENT_SIGNALS.search(full_raw_text)
+    ):
+        text = _compress_whitespace(full_raw_text)[:15000]
+
+    return text
 
 
 RATE_CONTENT_SIGNALS = re.compile(
@@ -1451,9 +1504,29 @@ def _select_rate_content(text: str, max_chars: int = 20000) -> str:
     return selected
 
 
-def _page_has_rate_content(text: str) -> bool:
-    """Quick heuristic: does this page text look like it has rate data?"""
-    return bool(RATE_CONTENT_SIGNALS.search(text))
+RATE_TITLE_KEYWORDS = re.compile(
+    r"\brate[s]?\b|\btariff|\bpricing|\bbilling.*rate|\bschedule\b|\belectric.*charge|"
+    r"\bresidential.*service|\bgeneral.*service|\bcost.*electric|\belectricity.*cost",
+    re.IGNORECASE,
+)
+
+
+def _page_has_rate_content(text: str, title: str = "", url: str = "") -> bool:
+    """Check if a page likely contains rate data.
+
+    Uses two tiers:
+    - Strong signal: body text matches rate content regex ($/kWh, etc.)
+    - Weak signal: title or URL mentions rates/tariffs/pricing — even if the
+      body is sparse (e.g. JS-rendered pages where the text hasn't loaded).
+      This lets the LLM see the page instead of blindly skipping it.
+    """
+    if RATE_CONTENT_SIGNALS.search(text):
+        return True
+    if title and RATE_TITLE_KEYWORDS.search(title):
+        return True
+    if url and RATE_TITLE_KEYWORDS.search(url):
+        return True
+    return False
 
 
 # ---------------------------------------------------------------------------
@@ -1790,7 +1863,7 @@ def phase3_extract_tariffs(pages: list[RatePage], utility_name: str) -> list[Ext
         if SKIP_KEYWORDS.search(f"{page.url} {page.title}"):
             log.info(f"    Skipping {page.title or page.url[:60]} (irrelevant category)")
             continue
-        if not _page_has_rate_content(page.content):
+        if not _page_has_rate_content(page.content, title=page.title, url=page.url):
             log.info(f"    Skipping {page.title or page.url[:60]} (no rate content signals)")
             continue
         if llm_calls >= MAX_LLM_CALLS:
@@ -3090,6 +3163,167 @@ def _touch_tariff_verified(utility_id: int):
     log.info(f"  Refreshed last_verified_at for utility {utility_id} (content unchanged)")
 
 
+NAVIGATE_PROMPT = """You are navigating a utility company's website to find their electricity rate information.
+
+Utility: {utility_name}
+State: {state}
+Current page: {current_url}
+Page title: {page_title}
+
+Here are ALL the links on this page:
+{link_list}
+
+Which links are most likely to lead to electricity rate/tariff/pricing information?
+Think step-by-step: rates might be under "Residential", "Services", "Billing", "Customer Service", "Electric", or similar sections.
+
+Return a JSON array of the link URLs (max 5) most likely to contain or lead to rate information, ordered by likelihood.
+Return ONLY the JSON array, no explanation.
+"""
+
+
+def _extract_all_links(html: str, base_url: str) -> list[tuple[str, str]]:
+    """Extract ALL links from an HTML page (not just rate-relevant ones)."""
+    soup = BeautifulSoup(html, "html.parser")
+    links = []
+    seen = set()
+    base_domain = urlparse(base_url).netloc
+    for a in soup.find_all("a", href=True):
+        full_url = urljoin(base_url, a["href"]).split("#")[0].split("?")[0]
+        if full_url in seen:
+            continue
+        link_domain = urlparse(full_url).netloc
+        if link_domain and link_domain != base_domain:
+            continue
+        link_text = a.get_text(strip=True)[:80]
+        if not link_text or len(link_text) < 2:
+            continue
+        if full_url.endswith(('.jpg', '.png', '.gif', '.css', '.js', '.ico')):
+            continue
+        seen.add(full_url)
+        links.append((full_url, link_text))
+    return links
+
+
+def _pw_fetch_as_page(url: str, wait_ms: int = 5000) -> "RatePage | None":
+    """Fetch a URL with Playwright and return as a RatePage."""
+    try:
+        html_js, title_js = fetch_page_js(url, wait_ms=wait_ms)
+        if not html_js or len(html_js.strip()) < 200:
+            return None
+        text = _compress_whitespace(
+            BeautifulSoup(html_js, "html.parser").get_text(" ", strip=True)
+        )
+        if len(text.strip()) < 50:
+            return None
+        return RatePage(
+            url=url,
+            title=title_js or "",
+            page_type="html",
+            content=text,
+            content_hash=hashlib.sha256(text.encode()).hexdigest(),
+        )
+    except Exception:
+        return None
+
+
+def _phase5_smart_retry(
+    utility_name: str,
+    state: str,
+    website_url: str | None,
+    existing_pages: list["RatePage"],
+) -> tuple[list["ExtractedTariff"], list["RatePage"]]:
+    """Phase 5: AI-guided website navigation when the normal pipeline fails.
+
+    Works like a human would: loads the utility's homepage, shows the LLM
+    all the navigation links, and asks it which ones likely lead to rate info.
+    Then follows those links and extracts tariffs.
+
+    Two-level deep: homepage → LLM picks links → follow links → if needed,
+    LLM picks sub-links → follow those too.
+    """
+    if not ANTHROPIC_API_KEY or not website_url:
+        return [], []
+
+    log.info("  Phase 5: AI-guided website navigation...")
+
+    # Step 1: Load homepage with Playwright (longer wait for JS)
+    html_js, title_js = fetch_page_js(website_url, wait_ms=5000)
+    if not html_js or len(html_js.strip()) < 200:
+        log.info("  Phase 5: Could not load homepage")
+        return [], []
+
+    all_links = _extract_all_links(html_js, website_url)
+    if not all_links:
+        log.info("  Phase 5: No links found on homepage")
+        return [], []
+
+    link_list = "\n".join(f"- {text}: {url}" for url, text in all_links[:50])
+
+    # Step 2: Ask LLM which links to follow
+    prompt = NAVIGATE_PROMPT.format(
+        utility_name=utility_name,
+        state=state,
+        current_url=website_url,
+        page_title=title_js or "Unknown",
+        link_list=link_list,
+    )
+
+    try:
+        client = _get_anthropic_client()
+        resp = client.messages.create(
+            model=HAIKU_MODEL,
+            max_tokens=1024,
+            messages=[{"role": "user", "content": prompt}],
+        )
+        text = resp.content[0].text.strip()
+        if text.startswith("```"):
+            text = re.sub(r"^```\w*\n?", "", text)
+            text = re.sub(r"\n?```$", "", text)
+        nav_urls = json.loads(text)
+        if not isinstance(nav_urls, list):
+            nav_urls = [nav_urls]
+    except Exception as e:
+        log.warning(f"  Phase 5: Navigation AI failed: {e}")
+        return [], []
+
+    log.info(f"  Phase 5: AI chose {len(nav_urls)} links to follow")
+
+    # Step 3: Fetch each suggested page with Playwright
+    all_pages: list[RatePage] = []
+    for url in nav_urls[:5]:
+        if not isinstance(url, str) or not url.startswith("http"):
+            continue
+        log.info(f"  Phase 5: Following {url[:80]}")
+        page = _pw_fetch_as_page(url)
+        if page:
+            all_pages.append(page)
+
+            # Check sub-page links too (one level deeper)
+            sub_html, _ = fetch_page_js(url, wait_ms=3000)
+            if sub_html:
+                sub_links = _extract_all_links(sub_html, url)
+                rate_sub = [
+                    (u, t) for u, t in sub_links
+                    if RATE_TITLE_KEYWORDS.search(f"{u} {t}")
+                ]
+                for sub_url, sub_text in rate_sub[:3]:
+                    sub_page = _pw_fetch_as_page(sub_url, wait_ms=3000)
+                    if sub_page:
+                        all_pages.append(sub_page)
+
+    if not all_pages:
+        return [], []
+
+    log.info(f"  Phase 5: Collected {len(all_pages)} pages, sending to LLM")
+
+    try:
+        tariffs = phase3_extract_tariffs(all_pages, utility_name)
+        return tariffs, all_pages
+    except Exception as e:
+        log.warning(f"  Phase 5: Extraction failed: {e}")
+        return [], []
+
+
 def run_pipeline(
     utility_id: int,
     *,
@@ -3160,6 +3394,23 @@ def run_pipeline(
         result.phase1_rate_page_url = rate_page_url
 
     if not rate_page_url:
+        log.warning("  No rate page found — trying AI-guided navigation")
+        if website_url:
+            smart_tariffs, smart_pages = _phase5_smart_retry(
+                utility_name, state, website_url, []
+            )
+            if smart_tariffs:
+                tariffs = smart_tariffs
+                pages = smart_pages or []
+                # Skip to Phase 4 validation
+                validation, valid_tariffs = phase4_validate(tariffs, utility_name, state)
+                result.phase4_validation = validation
+                if valid_tariffs and not dry_run:
+                    store_tariffs(utility_id, valid_tariffs, dry_run)
+                    update_monitoring_source(utility_id, smart_pages[0].url if smart_pages else "", dry_run)
+                total = len(valid_tariffs)
+                log.info(f"=== Done (via Phase 5): {utility_name} — {total} tariffs ===\n")
+                return result
         result.errors.append("No rate page found")
         log.warning("  No rate page found — stopping")
         return result
@@ -3228,15 +3479,42 @@ def run_pipeline(
             current_url = _pick_next_alt()
             continue
 
-        if tariffs:
+        # Only count tariffs with real components (energy/fixed/demand),
+        # not rate riders or surcharges that Phase 4 would reject.
+        base_types = {"energy", "fixed", "demand"}
+        has_base_tariff = any(
+            any(
+                (c.get("component_type") if isinstance(c, dict) else getattr(c, "type", ""))
+                in base_types
+                for c in t.components
+            )
+            for t in tariffs
+        )
+        if has_base_tariff:
             result.phase1_rate_page_url = current_url
             break
+        elif tariffs:
+            log.info(f"  Found {len(tariffs)} tariffs but all are rate riders/surcharges, trying alternates...")
 
         current_url = _pick_next_alt()
 
     if not tariffs:
-        result.errors.append("No tariffs extracted from any candidate page")
-        log.warning("  No tariffs extracted from any candidate page")
+        log.warning("  No tariffs extracted from any candidate page — trying smart retry")
+        # Derive website URL from the rate page we found if we don't have one
+        phase5_website = website_url
+        if not phase5_website and rate_page_url:
+            parsed = urlparse(rate_page_url)
+            phase5_website = f"{parsed.scheme}://{parsed.netloc}"
+        smart_tariffs, smart_pages = _phase5_smart_retry(
+            utility_name, state, phase5_website, pages
+        )
+        if smart_tariffs:
+            tariffs = smart_tariffs
+            pages = smart_pages or pages
+            log.info(f"  Phase 5 smart retry found {len(tariffs)} tariffs")
+        else:
+            result.errors.append("No tariffs extracted from any candidate page")
+            log.warning("  Smart retry also found no tariffs")
 
     # Content identity check — reject if pages clearly belong to a different utility
     utility_domain = urlparse(website_url).netloc if website_url else None
