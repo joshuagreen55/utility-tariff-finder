@@ -39,7 +39,7 @@ import time
 from dataclasses import dataclass, field, asdict
 from datetime import datetime, timezone
 from typing import Any
-from urllib.parse import urljoin, urlparse
+from urllib.parse import unquote, urljoin, urlparse
 
 import httpx
 from bs4 import BeautifulSoup
@@ -70,9 +70,10 @@ ANTHROPIC_API_KEY = _load_setting("anthropic_api_key", "ANTHROPIC_API_KEY")
 GOOGLE_CSE_API_KEY = _load_setting("google_cse_api_key", "GOOGLE_CSE_API_KEY")
 GOOGLE_CSE_CX = _load_setting("google_cse_cx", "GOOGLE_CSE_CX")
 GOOGLE_AI_API_KEY = _load_setting("google_ai_api_key", "GOOGLE_AI_API_KEY")
-HAIKU_MODEL = "claude-haiku-4-5-20251001"
-OPUS_MODEL = "claude-opus-4-6"
-GEMINI_MODEL = "gemini-3-flash-preview"
+HAIKU_MODEL = os.environ.get("HAIKU_MODEL", "claude-haiku-4-5-20251001")
+OPUS_MODEL = os.environ.get("OPUS_MODEL", "claude-opus-4-7")
+GEMINI_MODEL = os.environ.get("GEMINI_MODEL", "gemini-3-flash-preview")
+GEMINI_TIMEOUT_MS = int(os.environ.get("GEMINI_TIMEOUT_MS", "60000"))
 
 FETCH_TIMEOUT = httpx.Timeout(15.0, connect=8.0)
 PDF_TIMEOUT = httpx.Timeout(30.0, connect=10.0)
@@ -254,6 +255,10 @@ THIRD_PARTY_DOMAINS = frozenset({
     "energyrates.ca", "ratehub.ca", "chooseenergy.com",
     "smartenergyusa.com", "gatby.com", "poweroutage.us",
     "njenergyratings.com", "energypricing.com",
+    "power2switch.com", "homeotter.com", "nyenergyratings.com",
+    "texaschoicepower.com", "compareelectricity.com",
+    "electricalratesgeorgia.com", "electricityrate.com",
+    "gotelectric.com", "ratetruth.com",
     # Solar / green energy marketing
     "solar.com", "nrgcleanpower.com", "greenridgesolar.com",
     "madison.com", "sandboxsolar.com",
@@ -589,13 +594,45 @@ def fetch_pdf_text(url: str) -> str:
         return ""
 
 
-def fetch_page_js(url: str, wait_ms: int = 2000) -> tuple[str, str]:
+# Sentinel returned by fetch_page_js when the URL triggered a browser download
+# instead of navigation (e.g. DocumentCenter/Download endpoints). Callers that
+# see this should try _download_pdf_playwright() on the URL instead.
+FETCH_JS_DOWNLOAD_SENTINEL = "__PW_DOWNLOAD__"
+
+
+def _is_download_error(exc: BaseException | str) -> bool:
+    """Is this Playwright exception caused by the URL triggering a download?
+
+    Playwright's page.goto() raises specific error messages when the server
+    responds with Content-Disposition: attachment — it refuses to navigate
+    since there's no page to render. Detect those so callers can fall back
+    to download-handling logic.
+    """
+    msg = str(exc).lower()
+    return (
+        "download is starting" in msg
+        or "net::err_aborted" in msg
+        or "net::err_invalid_response" in msg and "download" in msg
+    )
+
+
+def fetch_page_js(
+    url: str,
+    wait_ms: int = 2000,
+    ignore_https_errors: bool = False,
+) -> tuple[str, str]:
     """Fetch a page using the shared Playwright browser for JS-rendered content.
     Returns (html_content, page_title).
+
+    If the URL triggers a file download instead of rendering a page
+    (Content-Disposition: attachment), returns (FETCH_JS_DOWNLOAD_SENTINEL, "")
+    so the caller can fall back to _download_pdf_playwright().
 
     Args:
         wait_ms: Extra milliseconds to wait after networkidle for AJAX content.
                  Default 2000ms. Use 5000+ for sites with heavy dynamic loading.
+        ignore_https_errors: If True, accept self-signed or mismatched certs.
+                 Useful for municipal utilities with expired/misconfigured SSL.
     """
     if not _get_pw_mgr().is_available:
         log.warning("  Playwright not installed — cannot render JS pages")
@@ -604,6 +641,7 @@ def fetch_page_js(url: str, wait_ms: int = 2000) -> tuple[str, str]:
     try:
         context = _get_pw_mgr().new_context(
             user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
+            ignore_https_errors=ignore_https_errors,
         )
         page = context.new_page()
         page.goto(url, wait_until="networkidle", timeout=20000)
@@ -612,6 +650,9 @@ def fetch_page_js(url: str, wait_ms: int = 2000) -> tuple[str, str]:
         html = page.content()
         return html, title
     except Exception as e:
+        if _is_download_error(e):
+            log.info(f"  Playwright: URL triggered download, signaling PDF fallback for {url[:60]}")
+            return FETCH_JS_DOWNLOAD_SENTINEL, ""
         log.warning(f"  Playwright fetch failed for {url[:60]}: {e}")
         return "", ""
     finally:
@@ -746,7 +787,87 @@ def _utility_name_words(name: str) -> list[str]:
     return [w for w in cleaned.split() if len(w) > 2 and w not in stop]
 
 
-def score_search_result(result: dict, utility_name: str, utility_domain: str | None) -> float:
+US_STATE_CODES = {
+    "al", "ak", "az", "ar", "ca", "co", "ct", "de", "fl", "ga", "hi", "id",
+    "il", "in", "ia", "ks", "ky", "la", "me", "md", "ma", "mi", "mn", "ms",
+    "mo", "mt", "ne", "nv", "nh", "nj", "nm", "ny", "nc", "nd", "oh", "ok",
+    "or", "pa", "ri", "sc", "sd", "tn", "tx", "ut", "vt", "va", "wa", "wv",
+    "wi", "wy",
+}
+
+US_STATE_FULL = {
+    "al": "alabama", "ak": "alaska", "az": "arizona", "ar": "arkansas",
+    "ca": "california", "co": "colorado", "ct": "connecticut", "de": "delaware",
+    "fl": "florida", "ga": "georgia", "hi": "hawaii", "id": "idaho",
+    "il": "illinois", "in": "indiana", "ia": "iowa", "ks": "kansas",
+    "ky": "kentucky", "la": "louisiana", "me": "maine", "md": "maryland",
+    "ma": "massachusetts", "mi": "michigan", "mn": "minnesota", "ms": "mississippi",
+    "mo": "missouri", "mt": "montana", "ne": "nebraska", "nv": "nevada",
+    "nh": "new-hampshire", "nj": "new-jersey", "nm": "new-mexico", "ny": "new-york",
+    "nc": "north-carolina", "nd": "north-dakota", "oh": "ohio", "ok": "oklahoma",
+    "or": "oregon", "pa": "pennsylvania", "ri": "rhode-island",
+    "sc": "south-carolina", "sd": "south-dakota", "tn": "tennessee", "tx": "texas",
+    "ut": "utah", "vt": "vermont", "va": "virginia", "wa": "washington",
+    "wv": "west-virginia", "wi": "wisconsin", "wy": "wyoming",
+}
+
+
+def _url_mentions_wrong_state(url: str, utility_state: str) -> bool:
+    """Return True if the URL clearly points at a state *other* than the utility's.
+
+    Uses path segments and subdomain parts so we don't false-match on
+    substrings like 'la' inside 'relay' or 'class'. Intentionally cautious:
+    false positives would demote valid results.
+    """
+    if not utility_state:
+        return False
+    target = utility_state.lower().strip()
+    if len(target) == 2:
+        target_code = target
+    else:
+        target_code = next(
+            (code for code, full in US_STATE_FULL.items() if full.replace("-", "") == target.replace(" ", "").replace("-", "")),
+            "",
+        )
+    if not target_code:
+        return False
+
+    parsed = urlparse(url)
+    # Split into tokens that could carry a state indicator
+    path_segments = [seg for seg in parsed.path.lower().split("/") if seg]
+    subdomain_parts = [
+        part for part in parsed.netloc.lower().replace("www.", "").split(".") if part
+    ][:-1]  # drop TLD segment
+
+    tokens = set(path_segments) | set(subdomain_parts)
+    # Look for other-state codes as whole path/subdomain tokens
+    other_codes = US_STATE_CODES - {target_code}
+    for tok in tokens:
+        if tok in other_codes:
+            return True
+
+    # Look for full state names (with hyphens) elsewhere in URL
+    url_lc = url.lower()
+    target_full = US_STATE_FULL.get(target_code, "")
+    for code, full in US_STATE_FULL.items():
+        if code == target_code:
+            continue
+        # Require a word boundary on both sides: slash, dash, or dot
+        pattern = rf"(?:^|[/\-_.]){re.escape(full)}(?:$|[/\-_.])"
+        if re.search(pattern, url_lc):
+            # Don't false-match if target state name also appears in URL
+            if target_full and re.search(rf"(?:^|[/\-_.]){re.escape(target_full)}(?:$|[/\-_.])", url_lc):
+                return False
+            return True
+    return False
+
+
+def score_search_result(
+    result: dict,
+    utility_name: str,
+    utility_domain: str | None,
+    utility_state: str | None = None,
+) -> float:
     """Score a Brave Search result for relevance to tariff/rate pages.
     Higher = better."""
     url = result.get("url", "")
@@ -793,11 +914,49 @@ def score_search_result(result: dict, utility_name: str, utility_domain: str | N
     if url_is_homepage(url):
         score -= 30
 
+    # Wrong-state penalty: demote URLs whose path/subdomain clearly names
+    # a different US state (e.g. /al/ when utility is in NY).
+    if utility_state and _url_mentions_wrong_state(url, utility_state):
+        score -= 40
+
+    # Cancelled/superseded/historical tariff penalty: regulator archives
+    # often serve both current and outdated PDFs. Prefer current ones.
+    if _is_superseded_url(url, f"{title} {description}"):
+        score -= 50
+
     url_domain = urlparse(url).netloc.replace("www.", "")
     if any(url_domain == d or url_domain.endswith(f".{d}") for d in THIRD_PARTY_DOMAINS):
         return -999  # Hard block — never use aggregator/comparison sites
 
     return score
+
+
+# URLs/titles matching these patterns are regulator archives of cancelled or
+# superseded tariffs — always demote them when a current alternative exists.
+# Handles slash-separated (/cancelled/), underscore (cancelled_tariff),
+# URL-encoded spaces (/cancelled%20tariff/), and plain-word occurrences.
+_SUPERSEDED_TERMS = (
+    r"cancell?ed|superse[dt]ed|historic(?:al)?|archive[ds]?|"
+    r"withdrawn|expired|obsolete|rescinded"
+)
+_URL_SUPERSEDED_RE = re.compile(
+    rf"(?:[/_\-\s]|%20)(?:{_SUPERSEDED_TERMS})(?:[/_\-\s]|%20|$)|"
+    rf"\b(?:{_SUPERSEDED_TERMS})\b",
+    re.IGNORECASE,
+)
+
+
+def _is_superseded_url(url: str, title: str = "") -> bool:
+    """Does this URL/title look like a cancelled or superseded tariff?"""
+    # Decode URL-encoded characters so /cancelled%20tariff%20pages/ matches.
+    try:
+        url_decoded = unquote(url)
+    except Exception:
+        url_decoded = url
+    return bool(
+        _URL_SUPERSEDED_RE.search(url_decoded)
+        or (title and _URL_SUPERSEDED_RE.search(title))
+    )
 
 
 def _try_direct_rate_pages(website_url: str) -> str | None:
@@ -898,7 +1057,7 @@ def phase1_find_rate_page(utility_name: str, state: str, website_url: str | None
     scored = []
     if results:
         for r in results:
-            s = score_search_result(r, utility_name, utility_domain)
+            s = score_search_result(r, utility_name, utility_domain, state)
             scored.append((s, r))
         scored.sort(key=lambda x: -x[0])
 
@@ -907,7 +1066,7 @@ def phase1_find_rate_page(utility_name: str, state: str, website_url: str | None
         google_results = google_search(query, count=10)
         if google_results:
             for r in google_results:
-                s = score_search_result(r, utility_name, utility_domain)
+                s = score_search_result(r, utility_name, utility_domain, state)
                 scored.append((s, r))
             scored.sort(key=lambda x: -x[0])
             log.info(f"    Google returned {len(google_results)} additional results")
@@ -967,6 +1126,10 @@ def phase1_find_rate_page(utility_name: str, state: str, website_url: str | None
         if status in (0, 403) and best_score >= 50:
             log.info(f"  Phase 1: httpx returned {status} — trying Playwright for {best_url[:60]}")
             html_js, title_js = fetch_page_js(best_url)
+            if html_js == FETCH_JS_DOWNLOAD_SENTINEL:
+                # URL is a PDF attachment — accept as rate page and let Phase 2 handle
+                log.info(f"  Phase 1: Rate page is a PDF download: {best_url[:60]}")
+                return best_url, len(results), all_alt_urls
             if html_js and len(html_js.strip()) > 200:
                 log.info(f"  Phase 1: Playwright succeeded for {best_url[:60]}")
                 with _js_rendered_lock:
@@ -1116,9 +1279,54 @@ def _fetch_and_parse(url: str) -> RatePage | None:
     )
 
 
+def _fetch_as_pdf_via_download(url: str) -> RatePage | None:
+    """Treat a URL as a PDF download: fetch bytes via Playwright's download
+    handler and extract text with pdfplumber/OCR.
+
+    Returns a PDF-typed RatePage on success or None if the URL doesn't
+    actually resolve to a PDF or extraction yields no content.
+    """
+    pdf_bytes = _download_pdf_playwright(url)
+    if not pdf_bytes or len(pdf_bytes) < 200:
+        return None
+    # Sanity: PDFs start with '%PDF-'. If not, this was probably a different
+    # kind of download (image, zip, etc.) and we shouldn't treat it as text.
+    if not pdf_bytes[:5].startswith(b"%PDF-"):
+        log.info(f"    Download at {url[:60]} was not a PDF, skipping")
+        return None
+    text = _extract_pdf_pdfplumber(pdf_bytes)
+    if len(text.strip()) < 200:
+        text = _extract_pdf_ocr(pdf_bytes) or text
+    if not text or len(text.strip()) < 50:
+        return None
+    # Use URL's last path segment as a working title
+    try:
+        title_hint = urlparse(url).path.rsplit("/", 1)[-1] or "PDF"
+    except Exception:
+        title_hint = "PDF"
+    return RatePage(
+        url=url,
+        title=title_hint,
+        page_type="pdf",
+        content=text,
+        content_hash=hashlib.sha256(text.encode()).hexdigest(),
+        pdf_bytes=pdf_bytes,
+    )
+
+
 def _fetch_and_parse_js(url: str) -> RatePage | None:
-    """Fetch a page using headless Playwright and extract text."""
+    """Fetch a page using headless Playwright and extract text.
+
+    If the URL triggers a browser download instead of rendering a page
+    (common with municipal DocumentCenter/Download endpoints), falls back
+    to downloading as a PDF and returning a PDF-typed RatePage.
+    """
     html, title = fetch_page_js(url)
+    # Download fallback: the server sent Content-Disposition: attachment
+    # so there's no page to render — grab the bytes and treat as a PDF.
+    if html == FETCH_JS_DOWNLOAD_SENTINEL:
+        log.info(f"    Trying PDF download for {url[:70]}")
+        return _fetch_as_pdf_via_download(url)
     if not html:
         return None
     soup = BeautifulSoup(html, "lxml")
@@ -1180,6 +1388,9 @@ def phase2_discover_tariff_pages(rate_page_url: str) -> list[RatePage]:
     if bare_domain in _BROWSER_REQUIRED_DOMAINS or domain in _js_rendered_domains:
         log.info(f"  Phase 2: Browser-required domain, using Playwright directly...")
         html_js, title_js = fetch_page_js(rate_page_url)
+        if html_js == FETCH_JS_DOWNLOAD_SENTINEL:
+            pdf_page = _fetch_as_pdf_via_download(rate_page_url)
+            return [pdf_page] if pdf_page else []
         if not html_js:
             log.warning(f"  Phase 2: Playwright also failed for {rate_page_url[:60]}")
             return []
@@ -1192,6 +1403,9 @@ def phase2_discover_tariff_pages(rate_page_url: str) -> list[RatePage]:
         if status == 403:
             log.info(f"  Phase 2: Got 403 — trying Playwright...")
             html_js, title_js = fetch_page_js(rate_page_url)
+            if html_js == FETCH_JS_DOWNLOAD_SENTINEL:
+                pdf_page = _fetch_as_pdf_via_download(rate_page_url)
+                return [pdf_page] if pdf_page else []
             if html_js and len(html_js.strip()) > 200:
                 content = html_js
                 with _js_rendered_lock:
@@ -1202,6 +1416,9 @@ def phase2_discover_tariff_pages(rate_page_url: str) -> list[RatePage]:
         elif status == 0:
             log.info(f"  Phase 2: httpx connection failed — trying Playwright...")
             html_js, title_js = fetch_page_js(rate_page_url)
+            if html_js == FETCH_JS_DOWNLOAD_SENTINEL:
+                pdf_page = _fetch_as_pdf_via_download(rate_page_url)
+                return [pdf_page] if pdf_page else []
             if html_js and len(html_js.strip()) > 200:
                 content = html_js
                 with _js_rendered_lock:
@@ -1235,6 +1452,9 @@ def phase2_discover_tariff_pages(rate_page_url: str) -> list[RatePage]:
             log.info(f"  Phase 2: Known JS-rendered domain, using Playwright...")
         _js_rendered_domains.add(domain)
         html_js, title_js = fetch_page_js(rate_page_url)
+        if html_js == FETCH_JS_DOWNLOAD_SENTINEL:
+            pdf_page = _fetch_as_pdf_via_download(rate_page_url)
+            return [pdf_page] if pdf_page else []
         if html_js:
             content = html_js
             soup = BeautifulSoup(content, "lxml")
@@ -1254,7 +1474,52 @@ def phase2_discover_tariff_pages(rate_page_url: str) -> list[RatePage]:
     # Extract links from a FRESH soup — _extract_text destroys the soup in-place
     link_soup = BeautifulSoup(content, "lxml")
     level1_links = _extract_links(link_soup, rate_page_url)
+
+    # If the main page is clearly rate-themed, *also* pick up all PDF links
+    # regardless of anchor text. Utilities often link to tariff/rate PDFs
+    # with generic text like "Download" or "View" that _is_relevant_link
+    # would otherwise filter out.
+    page_is_rate_themed = bool(
+        RATE_TITLE_KEYWORDS.search(f"{main_page.title} {rate_page_url}")
+        or RATE_CONTENT_SIGNALS.search(text)
+    )
+    if page_is_rate_themed:
+        existing_urls = {u for u, _ in level1_links}
+        extra_pdfs: list[tuple[str, str]] = []
+        for a in link_soup.find_all("a", href=True):
+            full_url = urljoin(rate_page_url, a["href"]).split("#")[0]
+            if not full_url.lower().endswith(".pdf"):
+                continue
+            if full_url in existing_urls:
+                continue
+            # Stay on same domain to avoid off-site PDFs
+            if not is_same_domain(full_url, rate_page_url):
+                continue
+            link_text = a.get_text(strip=True) or "PDF"
+            extra_pdfs.append((full_url, link_text))
+            existing_urls.add(full_url)
+        if extra_pdfs:
+            log.info(
+                f"  Phase 2: Rate-themed page — found {len(extra_pdfs)} "
+                f"additional PDF links beyond filtered set"
+            )
+            level1_links.extend(extra_pdfs)
+
     log.info(f"  Phase 2: Found {len(level1_links)} relevant links on main page")
+
+    # Demote cancelled/superseded URLs to the bottom so that when we hit the
+    # MAX_LEVEL1 cap we keep current tariffs. Regulator archives (psc.ky.gov,
+    # etc.) often list both current and cancelled PDFs; we want current first.
+    if any(_is_superseded_url(u, t) for u, t in level1_links):
+        before_count = sum(1 for u, t in level1_links if _is_superseded_url(u, t))
+        level1_links = sorted(
+            level1_links,
+            key=lambda ut: 1 if _is_superseded_url(ut[0], ut[1]) else 0,
+        )
+        log.info(
+            f"  Phase 2: Demoted {before_count} cancelled/superseded links "
+            f"to end of queue"
+        )
 
     MAX_LEVEL1 = 15
     if len(level1_links) > MAX_LEVEL1:
@@ -1301,7 +1566,7 @@ def phase2_discover_tariff_pages(rate_page_url: str) -> list[RatePage]:
             link_bare = link_domain.replace("www.", "")
             if link_bare in _BROWSER_REQUIRED_DOMAINS or link_domain in _js_rendered_domains:
                 sub_html, _ = fetch_page_js(url)
-                if sub_html:
+                if sub_html and sub_html != FETCH_JS_DOWNLOAD_SENTINEL:
                     sub_soup = BeautifulSoup(sub_html, "lxml")
             else:
                 sub_content, _, sub_status = fetch_page(url)
@@ -1644,6 +1909,115 @@ def _merge_prefix_duplicates(tariffs: list[ExtractedTariff]) -> list[ExtractedTa
     return merged
 
 
+PAGE_SCREENSHOT_EXTRACTION_PROMPT = """Extract all residential and commercial electricity tariffs visible in this web page screenshot.
+
+The page may display rate information as images, charts, infographics, or styled tables that don't appear in the raw HTML text.
+
+For each tariff provide: name, code, customer_class ("residential"/"commercial"), rate_type, description, effective_date, confidence (0-1), and components array.
+Each component needs: component_type ("energy"/"demand"/"fixed"/"minimum"/"adjustment"), unit, rate_value, and optional tier_min_kwh, tier_max_kwh, tier_label, period_label, season.
+
+Rules:
+- Read numbers exactly as shown — do NOT estimate
+- Convert cents to dollars (divide by 100)
+- Include ALL tiers, periods, seasonal variations visible
+- Skip industrial/lighting/irrigation/wholesale tariffs
+- If you cannot see any clear residential or commercial electricity rates in the image, return an empty tariffs array
+- Set confidence 0.9+ if values clearly readable, 0.5-0.8 if some ambiguity
+
+Use the store_tariffs tool to return results."""
+
+
+# Max viewport height for the full-page screenshot. Most rate pages fit in
+# one or two screens; clamping avoids Vision token blowups on very long pages.
+MAX_SCREENSHOT_HEIGHT_PX = 6000
+
+
+def _fetch_full_page_screenshot(url: str, wait_ms: int = 3000) -> bytes | None:
+    """Render a page with Playwright and capture a full-page JPEG screenshot.
+
+    Used as a fallback for rate-themed pages whose rate data is embedded as
+    images/graphics (C2 pattern) — Fix 12. Returns None on any failure.
+    """
+    if not _get_pw_mgr().is_available:
+        return None
+    context = None
+    try:
+        context = _get_pw_mgr().new_context(
+            user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
+            ignore_https_errors=True,
+        )
+        page = context.new_page()
+        page.set_viewport_size({"width": 1440, "height": 2200})
+        page.goto(url, wait_until="networkidle", timeout=25000)
+        page.wait_for_timeout(wait_ms)
+        png = page.screenshot(
+            full_page=True,
+            type="jpeg",
+            quality=80,
+            clip=None,
+        )
+        return png
+    except Exception as e:
+        log.info(f"    Screenshot capture failed for {url[:60]}: {e}")
+        return None
+    finally:
+        if context:
+            try:
+                context.close()
+            except Exception:
+                pass
+
+
+def _extract_page_screenshot_vision(url: str) -> tuple[list[ExtractedTariff], int]:
+    """Capture a full-page screenshot of a rate-themed page and ask Claude
+    Vision to extract tariffs visible in the rendered image.
+
+    This is Fix 12: targets pages where rate data is displayed as images,
+    infographics, or canvas-rendered content that text extraction misses.
+    Returns (tariffs, llm_call_count).
+    """
+    img_bytes = _fetch_full_page_screenshot(url)
+    if not img_bytes:
+        return [], 0
+
+    import base64
+
+    b64 = base64.standard_b64encode(img_bytes).decode("ascii")
+    log.info(f"    Page screenshot vision: sending image ({len(img_bytes)} bytes) to Claude")
+
+    content_blocks = [
+        {"type": "text", "text": PAGE_SCREENSHOT_EXTRACTION_PROMPT},
+        {
+            "type": "image",
+            "source": {
+                "type": "base64",
+                "media_type": "image/jpeg",
+                "data": b64,
+            },
+        },
+    ]
+
+    client = _get_anthropic_client()
+    try:
+        resp = client.messages.create(
+            model=HAIKU_MODEL,
+            max_tokens=4096,
+            messages=[{"role": "user", "content": content_blocks}],
+            tools=[TARIFF_EXTRACTION_TOOL],
+            tool_choice={"type": "tool", "name": "store_tariffs"},
+        )
+    except Exception as e:
+        log.error(f"    Page screenshot vision API call failed: {e}")
+        return [], 1
+
+    for block in resp.content:
+        if block.type == "tool_use" and block.name == "store_tariffs":
+            raw = block.input.get("tariffs", [])
+            return _parse_extraction_response(raw, url), 1
+
+    return [], 1
+
+
 PDF_VISION_EXTRACTION_PROMPT = """Extract all residential and commercial electricity tariffs visible in these PDF page images.
 
 For each tariff provide: name, code, customer_class ("residential"/"commercial"), rate_type, description, effective_date, confidence (0-1), and components array.
@@ -1835,7 +2209,14 @@ def _extract_two_pass(page: RatePage, utility_name: str) -> tuple[list[Extracted
     return all_tariffs, llm_calls
 
 
-def phase3_extract_tariffs(pages: list[RatePage], utility_name: str) -> list[ExtractedTariff]:
+MAX_CONSECUTIVE_LLM_ZEROS = 5
+
+
+def phase3_extract_tariffs(
+    pages: list[RatePage],
+    utility_name: str,
+    stats: dict | None = None,
+) -> list[ExtractedTariff]:
     """Use Claude to extract structured tariff data from each rate page.
 
     Detail pages are processed first so they win dedup over overview pages
@@ -1843,6 +2224,14 @@ def phase3_extract_tariffs(pages: list[RatePage], utility_name: str) -> list[Ext
 
     Complex pages (long content with many rate signals) use a two-pass
     approach: identify tariffs first, then extract each individually.
+
+    Args:
+        pages: Candidate pages to process.
+        utility_name: Target utility name.
+        stats: Optional dict the caller can pass in to receive counts:
+               {pages_total, pages_skipped_thin, pages_skipped_irrelevant,
+                pages_skipped_no_signal, pages_sent_to_llm, llm_zero_results,
+                llm_errors, early_abort}. Mutated in place.
     """
     if not ANTHROPIC_API_KEY:
         raise RuntimeError("ANTHROPIC_API_KEY not set")
@@ -1855,22 +2244,54 @@ def phase3_extract_tariffs(pages: list[RatePage], utility_name: str) -> list[Ext
     MAX_LLM_CALLS = 12
     all_tariffs: dict[str, ExtractedTariff] = {}
     llm_calls = 0
+    consecutive_zeros = 0
+
+    # Tracking for structured error messages
+    if stats is None:
+        stats = {}
+    stats.setdefault("pages_total", len(pages))
+    stats.setdefault("pages_skipped_thin", 0)
+    stats.setdefault("pages_skipped_irrelevant", 0)
+    stats.setdefault("pages_skipped_no_signal", 0)
+    stats.setdefault("pages_sent_to_llm", 0)
+    stats.setdefault("llm_zero_results", 0)
+    stats.setdefault("llm_errors", 0)
+    stats.setdefault("early_abort", False)
 
     for page in sorted_pages:
+        page_domain = urlparse(page.url).netloc.replace("www.", "").lower()
+        if any(
+            page_domain == d or page_domain.endswith(f".{d}")
+            for d in THIRD_PARTY_DOMAINS
+        ):
+            log.info(f"    Skipping {page.url[:70]} (third-party aggregator)")
+            stats["pages_skipped_irrelevant"] += 1
+            continue
         if not page.content or len(page.content.strip()) < 100:
             log.info(f"    Skipping {page.url[:60]} (no/little content)")
+            stats["pages_skipped_thin"] += 1
             continue
         if SKIP_KEYWORDS.search(f"{page.url} {page.title}"):
             log.info(f"    Skipping {page.title or page.url[:60]} (irrelevant category)")
+            stats["pages_skipped_irrelevant"] += 1
             continue
         if not _page_has_rate_content(page.content, title=page.title, url=page.url):
             log.info(f"    Skipping {page.title or page.url[:60]} (no rate content signals)")
+            stats["pages_skipped_no_signal"] += 1
             continue
         if llm_calls >= MAX_LLM_CALLS:
             log.info(f"    Stopping: reached {MAX_LLM_CALLS} LLM call limit")
             break
+        if consecutive_zeros >= MAX_CONSECUTIVE_LLM_ZEROS:
+            log.info(
+                f"    Early abort: {consecutive_zeros} consecutive 0-tariff "
+                f"LLM extractions on this URL tree — likely wrong site"
+            )
+            stats["early_abort"] = True
+            break
 
         log.info(f"  Phase 3: Extracting from {page.url[:80]}")
+        stats["pages_sent_to_llm"] += 1
 
         # PDF vision: send pages as images for better table/layout preservation
         if page.page_type == "pdf" and page.pdf_bytes and len(page.pdf_bytes) > 100:
@@ -1892,12 +2313,15 @@ def phase3_extract_tariffs(pages: list[RatePage], utility_name: str) -> list[Ext
                 accepted += 1
             if accepted > 0:
                 log.info(f"    Extracted {accepted} tariffs via PDF vision from {page.url[:60]}")
+                consecutive_zeros = 0
                 time.sleep(1)
                 continue
             elif page.content:
                 log.info(f"    Vision returned no usable tariffs, falling back to text extraction")
             else:
                 log.info(f"    Vision returned no usable tariffs and no text content available")
+                stats["llm_zero_results"] += 1
+                consecutive_zeros += 1
                 continue
 
         # Use two-pass for complex pages (long PDFs with many rate structures)
@@ -1918,6 +2342,7 @@ def phase3_extract_tariffs(pages: list[RatePage], utility_name: str) -> list[Ext
                 log.info(f"    Model used: {model_used}")
             except Exception as e:
                 log.error(f"    Extraction failed: {e}")
+                stats["llm_errors"] += 1
                 continue
             llm_calls += 1
 
@@ -1939,6 +2364,50 @@ def phase3_extract_tariffs(pages: list[RatePage], utility_name: str) -> list[Ext
             accepted += 1
 
         log.info(f"    Extracted {accepted} tariffs from {page.url[:60]}")
+        if accepted > 0:
+            consecutive_zeros = 0
+        else:
+            # Fix 12: if text extraction returned 0 on a rate-themed HTML
+            # page whose body has no numeric rate signals, the rates may be
+            # embedded as images/graphics. Try a full-page screenshot + Vision
+            # before giving up on this page.
+            if (
+                page.page_type != "pdf"
+                and is_rate_relevant_url(page.url, page.title or "")
+                and not _page_has_numeric_rates(page.content)
+            ):
+                log.info(
+                    "    Text extraction returned 0 on a rate-themed page "
+                    "with no numeric signals — trying page-screenshot vision"
+                )
+                try:
+                    vision_tariffs, vision_calls = _extract_page_screenshot_vision(page.url)
+                    llm_calls += vision_calls
+                    vision_accepted = 0
+                    for t in vision_tariffs:
+                        if SKIP_KEYWORDS.search(t.name):
+                            continue
+                        if t.customer_class not in VALID_CLASSES:
+                            continue
+                        key = f"{t.name}|{t.customer_class}"
+                        t.source_url = page.url
+                        existing = all_tariffs.get(key)
+                        if existing and len(existing.components) >= len(t.components):
+                            continue
+                        all_tariffs[key] = t
+                        vision_accepted += 1
+                    if vision_accepted > 0:
+                        log.info(
+                            f"    Recovered {vision_accepted} tariffs via page-screenshot "
+                            f"vision from {page.url[:60]}"
+                        )
+                        consecutive_zeros = 0
+                        time.sleep(1)
+                        continue
+                except Exception as e:
+                    log.warning(f"    Page-screenshot vision failed: {e}")
+            consecutive_zeros += 1
+            stats["llm_zero_results"] += 1
         time.sleep(1)
 
     # Drop tariffs with 0 components — they're just index entries
@@ -2096,13 +2565,17 @@ def _parse_text_response(text: str) -> list[dict]:
 
 
 def _get_gemini_client():
-    """Lazy-init Google GenAI client (new SDK) with a 30s HTTP timeout."""
+    """Lazy-init Google GenAI client (new SDK) with configurable HTTP timeout.
+
+    Default is 60s — Gemini 3 Flash Preview occasionally takes 30-50s on
+    large pages and was hitting DEADLINE_EXCEEDED on a shorter timeout.
+    """
     client = getattr(_thread_local, "gemini_client", None)
     if client is None:
         from google import genai
         client = genai.Client(
             api_key=GOOGLE_AI_API_KEY,
-            http_options={"timeout": 30_000},
+            http_options={"timeout": GEMINI_TIMEOUT_MS},
         )
         _thread_local.gemini_client = client
     return client
@@ -2138,15 +2611,52 @@ def _gemini_record_failure():
             )
 
 
+# Cache for whether google-genai SDK is installed. Checked once so we
+# don't spam import errors in hot paths and so _select_model can skip
+# Gemini entirely when the SDK is missing.
+_GEMINI_SDK_AVAILABLE: bool | None = None
+
+
+def _gemini_sdk_available() -> bool:
+    """Return True iff the google-genai package can be imported.
+
+    Cached after first call. If False, _select_model will skip Gemini
+    entirely and route directly to Haiku.
+    """
+    global _GEMINI_SDK_AVAILABLE
+    if _GEMINI_SDK_AVAILABLE is not None:
+        return _GEMINI_SDK_AVAILABLE
+    try:
+        import google.genai  # noqa: F401
+        _GEMINI_SDK_AVAILABLE = True
+    except ImportError:
+        log.warning(
+            "google-genai SDK is not installed — Gemini tier disabled, "
+            "routing all requests to Haiku/Opus"
+        )
+        _GEMINI_SDK_AVAILABLE = False
+    return _GEMINI_SDK_AVAILABLE
+
+
 def _call_gemini(prompt: str) -> list[dict]:
     """Call Gemini Flash for structured tariff extraction.
     Uses the google-genai SDK with JSON schema enforcement.
-    Has a 30s timeout and feeds into a circuit breaker on repeated failures.
-    Returns list of tariff dicts matching the same schema as Claude tool use."""
-    from google.genai import types
+    Feeds into a circuit breaker on repeated failures.
+    Returns list of tariff dicts matching the same schema as Claude tool use.
 
-    client = _get_gemini_client()
+    Returns [] and records a circuit-breaker failure on any error
+    (including ImportError when the SDK isn't installed), so the
+    caller can fall back to Haiku without crashing the page.
+    """
     try:
+        from google.genai import types  # type: ignore
+    except ImportError as e:
+        _gemini_record_failure()
+        log.warning(f"    Gemini SDK unavailable: {e}")
+        return []
+
+    try:
+        client = _get_gemini_client()
         resp = client.models.generate_content(
             model=GEMINI_MODEL,
             contents=prompt,
@@ -2170,7 +2680,7 @@ def _call_gemini(prompt: str) -> list[dict]:
 def _select_model(page: "RatePage") -> str:
     """Choose which LLM to use based on page characteristics.
     Returns 'gemini' or 'haiku'. Respects the circuit breaker."""
-    if not GOOGLE_AI_API_KEY:
+    if not GOOGLE_AI_API_KEY or not _gemini_sdk_available():
         return "haiku"
 
     if _gemini_circuit_open():
@@ -2186,7 +2696,7 @@ def _select_model(page: "RatePage") -> str:
 
 
 def _call_opus_tool(prompt: str) -> list[dict]:
-    """Call Claude Opus 4.6 for structured tariff extraction.
+    """Call Claude Opus 4.7 for structured tariff extraction.
 
     Only used as the last-resort third tier when both Gemini 3 Flash
     and Haiku fail to extract any tariffs.  More expensive but
@@ -2226,12 +2736,36 @@ def _call_opus_tool(prompt: str) -> list[dict]:
         return []
 
 
+_NUMERIC_RATE_SIGNAL = re.compile(
+    r"\$\s*\d+\.\d{2,4}|"                     # $0.0956, $12.50
+    r"\d+\.\d+\s*(?:cents|¢)|"                # 9.56 cents
+    r"\d+\.\d+\s*/\s*k[wW]h|"                 # 0.0956/kWh
+    r"\d+\.\d+\s*/\s*k[wW]\b|"                # $25.00/kW
+    r"\$\d+\s*/\s*month",                     # $12/month
+    re.IGNORECASE,
+)
+
+
+def _page_has_numeric_rates(content: str) -> bool:
+    """Does the page contain at least one rate-amount-shaped number?
+
+    Pages where both Haiku and Gemini returned 0 AND which contain no
+    numeric rate values cannot produce extractable tariffs no matter
+    which LLM we use — so we skip escalating to the expensive Opus tier.
+    """
+    if not content:
+        return False
+    return bool(_NUMERIC_RATE_SIGNAL.search(content))
+
+
 def _extract_with_model_routing(prompt: str, page: "RatePage") -> tuple[list[dict], str]:
     """Extract tariffs using a 3-tier model strategy.
 
     Tier 1: Gemini 3 Flash  (fast, cheap, good for most pages)
     Tier 2: Claude Haiku    (better at complex HTML, tool use)
-    Tier 3: Claude Opus 4.6 (last resort for pages both cheaper models fail on)
+    Tier 3: Claude Opus 4.7 (last resort — only invoked if the page has
+                             at least one rate-amount-shaped number so we
+                             don't burn Opus tokens on pages without data)
 
     Returns (tariff_dicts, model_used). Uses LLM extraction cache to avoid
     redundant API calls.
@@ -2258,7 +2792,18 @@ def _extract_with_model_routing(prompt: str, page: "RatePage") -> tuple[list[dic
             _set_llm_cache(page.content_hash, "haiku", result)
         return result, "haiku"
 
-    log.info("    Haiku returned no tariffs, escalating to Opus 4.6")
+    # Only escalate to Opus if the page actually contains numeric rate data.
+    # Pages with rate-themed titles but no numbers (e.g. marketing pages
+    # that link to PDFs) can't yield tariffs from any LLM, so escalating
+    # to the expensive Opus tier wastes tokens.
+    if not _page_has_numeric_rates(page.content):
+        log.info(
+            "    Haiku returned 0; skipping Opus escalation "
+            "(page has no numeric rate signals)"
+        )
+        return [], "haiku"
+
+    log.info("    Haiku returned no tariffs, escalating to Opus 4.7")
     result = _call_opus_tool(prompt)
     if result:
         if page.content_hash:
@@ -2314,6 +2859,24 @@ def verify_content_identity(
 
     matches = sum(1 for w in name_words if w in all_text)
     ratio = matches / len(name_words) if name_words else 0
+
+    # Also check URL, domain and page title for utility name words.
+    # Pages can have sparse body text (SPAs, PDF landing pages, JS-loaded
+    # content) but still clearly belong to the target utility based on
+    # their URL path and title.
+    url_title_text = " ".join(
+        f"{urlparse(p.url).netloc} {urlparse(p.url).path} {p.title or ''}".lower()
+        for p in pages
+    )
+    url_title_matches = sum(1 for w in name_words if w in url_title_text)
+
+    # If URL/domain/title strongly identifies the utility, accept even
+    # when body text is sparse.
+    if url_title_matches >= 2 or (
+        url_title_matches >= 1 and len(name_words) <= 2
+    ):
+        matches = max(matches, url_title_matches)
+        ratio = max(ratio, url_title_matches / max(len(name_words), 1))
 
     # Domain check: if we know the utility's domain, verify at least some
     # pages come from it or a related domain
@@ -3018,7 +3581,7 @@ def run_additional_tariff_search(
                 continue
             seen_urls.add(url)
 
-            score = score_search_result(r, utility_name, utility_domain)
+            score = score_search_result(r, utility_name, utility_domain, state)
             if score < 20:
                 continue
 
@@ -3204,10 +3767,19 @@ def _extract_all_links(html: str, base_url: str) -> list[tuple[str, str]]:
     return links
 
 
-def _pw_fetch_as_page(url: str, wait_ms: int = 5000) -> "RatePage | None":
-    """Fetch a URL with Playwright and return as a RatePage."""
+def _pw_fetch_as_page(
+    url: str,
+    wait_ms: int = 5000,
+    ignore_https_errors: bool = False,
+) -> "RatePage | None":
+    """Fetch a URL with Playwright and return as a RatePage.
+    Falls back to PDF download if the URL triggers a file attachment."""
     try:
-        html_js, title_js = fetch_page_js(url, wait_ms=wait_ms)
+        html_js, title_js = fetch_page_js(
+            url, wait_ms=wait_ms, ignore_https_errors=ignore_https_errors
+        )
+        if html_js == FETCH_JS_DOWNLOAD_SENTINEL:
+            return _fetch_as_pdf_via_download(url)
         if not html_js or len(html_js.strip()) < 200:
             return None
         text = _compress_whitespace(
@@ -3226,12 +3798,60 @@ def _pw_fetch_as_page(url: str, wait_ms: int = 5000) -> "RatePage | None":
         return None
 
 
+def _build_extraction_failure_reason(stats: dict, rate_page_url: str | None) -> str:
+    """Build a diagnostic failure message from pipeline stats.
+
+    Shows *where* extraction broke down so operators can triage faster
+    rather than seeing the generic 'No tariffs extracted from any candidate
+    page' message for every failure mode.
+    """
+    pages_total = int(stats.get("pages_total", 0))
+    llm_sent = int(stats.get("pages_sent_to_llm", 0))
+    llm_zero = int(stats.get("llm_zero_results", 0))
+    llm_err = int(stats.get("llm_errors", 0))
+    skip_thin = int(stats.get("pages_skipped_thin", 0))
+    skip_irrel = int(stats.get("pages_skipped_irrelevant", 0))
+    skip_nosig = int(stats.get("pages_skipped_no_signal", 0))
+    early_abort = bool(stats.get("early_abort", False))
+
+    # No pages found at all
+    if pages_total == 0:
+        if rate_page_url:
+            return "No candidate pages found after visiting rate page"
+        return "No candidate pages found — search returned no usable URLs"
+
+    # Pages found but all filtered before reaching the LLM
+    if llm_sent == 0:
+        parts = []
+        if skip_nosig:
+            parts.append(f"{skip_nosig} pages had no rate content signals")
+        if skip_irrel:
+            parts.append(f"{skip_irrel} pages were off-topic")
+        if skip_thin:
+            parts.append(f"{skip_thin} pages had too little content")
+        detail = "; ".join(parts) if parts else f"{pages_total} pages did not pass filters"
+        return f"No pages reached the LLM: {detail}"
+
+    # LLM was called but returned no usable tariffs
+    if llm_zero and llm_zero == llm_sent:
+        note = " (aborted early after 5 consecutive 0-extractions)" if early_abort else ""
+        return f"LLM returned 0 tariffs on all {llm_sent} pages{note}"
+    if llm_err and llm_err >= llm_sent:
+        return f"LLM errored on all {llm_sent} attempts — possible API issue"
+
+    # Mixed — some extracted but none passed validation
+    return (
+        f"Extracted tariffs did not pass validation "
+        f"({pages_total} pages total, {llm_sent} reached LLM, {llm_zero} returned 0)"
+    )
+
+
 def _phase5_smart_retry(
     utility_name: str,
     state: str,
     website_url: str | None,
     existing_pages: list["RatePage"],
-) -> tuple[list["ExtractedTariff"], list["RatePage"]]:
+) -> tuple[list["ExtractedTariff"], list["RatePage"], dict]:
     """Phase 5: AI-guided website navigation when the normal pipeline fails.
 
     Works like a human would: loads the utility's homepage, shows the LLM
@@ -3240,22 +3860,44 @@ def _phase5_smart_retry(
 
     Two-level deep: homepage → LLM picks links → follow links → if needed,
     LLM picks sub-links → follow those too.
+
+    Returns (tariffs, pages, stats_dict).
     """
+    stats = {
+        "pages_total": 0,
+        "pages_sent_to_llm": 0,
+        "llm_zero_results": 0,
+        "llm_errors": 0,
+        "phase5_homepage_failed": False,
+        "phase5_no_links": False,
+        "phase5_ai_picked": 0,
+    }
+
     if not ANTHROPIC_API_KEY or not website_url:
-        return [], []
+        return [], [], stats
 
     log.info("  Phase 5: AI-guided website navigation...")
 
-    # Step 1: Load homepage with Playwright (longer wait for JS)
-    html_js, title_js = fetch_page_js(website_url, wait_ms=5000)
+    # Step 1: Load homepage with Playwright (longer wait for JS).
+    # Use SSL-tolerant fetch so sites with mismatched/expired certs still work.
+    html_js, title_js = fetch_page_js(website_url, wait_ms=5000, ignore_https_errors=True)
+    if html_js == FETCH_JS_DOWNLOAD_SENTINEL:
+        log.info("  Phase 5: Homepage URL triggered a download, treating as PDF")
+        pdf_page = _fetch_as_pdf_via_download(website_url)
+        if pdf_page:
+            return [pdf_page], [], stats
+        stats["phase5_homepage_failed"] = True
+        return [], [], stats
     if not html_js or len(html_js.strip()) < 200:
         log.info("  Phase 5: Could not load homepage")
-        return [], []
+        stats["phase5_homepage_failed"] = True
+        return [], [], stats
 
     all_links = _extract_all_links(html_js, website_url)
     if not all_links:
         log.info("  Phase 5: No links found on homepage")
-        return [], []
+        stats["phase5_no_links"] = True
+        return [], [], stats
 
     link_list = "\n".join(f"- {text}: {url}" for url, text in all_links[:50])
 
@@ -3284,44 +3926,59 @@ def _phase5_smart_retry(
             nav_urls = [nav_urls]
     except Exception as e:
         log.warning(f"  Phase 5: Navigation AI failed: {e}")
-        return [], []
+        return [], [], stats
 
     log.info(f"  Phase 5: AI chose {len(nav_urls)} links to follow")
+    stats["phase5_ai_picked"] = len(nav_urls)
 
     # Step 3: Fetch each suggested page with Playwright
     all_pages: list[RatePage] = []
     for url in nav_urls[:5]:
         if not isinstance(url, str) or not url.startswith("http"):
             continue
+        nav_domain = urlparse(url).netloc.replace("www.", "").lower()
+        if any(
+            nav_domain == d or nav_domain.endswith(f".{d}")
+            for d in THIRD_PARTY_DOMAINS
+        ):
+            log.info(f"  Phase 5: Skipping third-party aggregator: {url[:70]}")
+            continue
         log.info(f"  Phase 5: Following {url[:80]}")
-        page = _pw_fetch_as_page(url)
+        page = _pw_fetch_as_page(url, ignore_https_errors=True)
         if page:
             all_pages.append(page)
 
             # Check sub-page links too (one level deeper)
-            sub_html, _ = fetch_page_js(url, wait_ms=3000)
-            if sub_html:
+            sub_html, _ = fetch_page_js(url, wait_ms=3000, ignore_https_errors=True)
+            if sub_html and sub_html != FETCH_JS_DOWNLOAD_SENTINEL:
                 sub_links = _extract_all_links(sub_html, url)
                 rate_sub = [
                     (u, t) for u, t in sub_links
                     if RATE_TITLE_KEYWORDS.search(f"{u} {t}")
                 ]
                 for sub_url, sub_text in rate_sub[:3]:
-                    sub_page = _pw_fetch_as_page(sub_url, wait_ms=3000)
+                    sub_page = _pw_fetch_as_page(sub_url, wait_ms=3000, ignore_https_errors=True)
                     if sub_page:
                         all_pages.append(sub_page)
 
     if not all_pages:
-        return [], []
+        return [], [], stats
 
     log.info(f"  Phase 5: Collected {len(all_pages)} pages, sending to LLM")
 
     try:
-        tariffs = phase3_extract_tariffs(all_pages, utility_name)
-        return tariffs, all_pages
+        phase3_stats: dict = {}
+        tariffs = phase3_extract_tariffs(all_pages, utility_name, stats=phase3_stats)
+        # Merge Phase 3 stats into Phase 5 stats
+        for k, v in phase3_stats.items():
+            if k in stats and isinstance(stats[k], (int, float)):
+                stats[k] += int(v)
+            else:
+                stats[k] = v
+        return tariffs, all_pages, stats
     except Exception as e:
         log.warning(f"  Phase 5: Extraction failed: {e}")
-        return [], []
+        return [], [], stats
 
 
 def run_pipeline(
@@ -3396,7 +4053,7 @@ def run_pipeline(
     if not rate_page_url:
         log.warning("  No rate page found — trying AI-guided navigation")
         if website_url:
-            smart_tariffs, smart_pages = _phase5_smart_retry(
+            smart_tariffs, smart_pages, _ = _phase5_smart_retry(
                 utility_name, state, website_url, []
             )
             if smart_tariffs:
@@ -3417,20 +4074,53 @@ def run_pipeline(
 
     # Phases 2+3 with automatic retry: if first URL yields 0 tariffs,
     # pick alternates from a DIFFERENT section of the site.
-    MAX_ATTEMPTS = 4
+    # Cap scales with the number of alternates so we always get a chance to
+    # try every distinct candidate (prevents "Retrying with <url>..." messages
+    # that never actually fetch that URL when MAX_ATTEMPTS is too low).
+    # Hard ceiling of 10 to avoid runaway on rare pathological cases.
+    MAX_ATTEMPTS = min(10, max(6, 1 + len(alt_urls)))
     tariffs: list[ExtractedTariff] = []
     pages: list[RatePage] = []
     tried_prefixes: set[str] = set()
+    tried_domains: set[str] = set()
 
     def _path_prefix(u: str) -> str:
         parts = urlparse(u).path.strip("/").split("/")
         return "/".join(parts[:2]) if len(parts) >= 2 else parts[0] if parts else ""
 
+    def _alt_domain(u: str) -> str:
+        return urlparse(u).netloc.replace("www.", "").lower()
+
     remaining_alts = list(alt_urls)
     current_url = rate_page_url
     attempts = 0
+    # Aggregate stats across all attempts for diagnostic error reporting
+    combined_stats = {
+        "pages_total": 0,
+        "pages_skipped_thin": 0,
+        "pages_skipped_irrelevant": 0,
+        "pages_skipped_no_signal": 0,
+        "pages_sent_to_llm": 0,
+        "llm_zero_results": 0,
+        "llm_errors": 0,
+        "early_abort": False,
+    }
 
     def _pick_next_alt() -> str | None:
+        # Prefer alternates on a DIFFERENT domain than any we've already tried.
+        # When our initial pick was on a wrong-utility look-alike domain (e.g.
+        # lynchesriver.com when the real coop is at lreci.coop), jumping
+        # straight to a fresh domain is the fastest path to success.
+        for alt in remaining_alts:
+            alt_prefix = _path_prefix(alt)
+            alt_dom = _alt_domain(alt)
+            if alt_prefix not in tried_prefixes and alt_dom not in tried_domains:
+                log.warning(
+                    f"  Retrying with different-domain URL: {alt[:70]}"
+                )
+                remaining_alts.remove(alt)
+                return alt
+        # Fall back to same-domain different-section alternates.
         for alt in remaining_alts:
             alt_prefix = _path_prefix(alt)
             if alt_prefix not in tried_prefixes:
@@ -3439,10 +4129,18 @@ def run_pipeline(
                 return alt
         return None
 
+    def _merge_stats(src: dict):
+        for k, v in src.items():
+            if k == "early_abort":
+                combined_stats[k] = combined_stats.get(k, False) or bool(v)
+            else:
+                combined_stats[k] = combined_stats.get(k, 0) + int(v)
+
     while current_url and attempts < MAX_ATTEMPTS:
         attempts += 1
         prefix = _path_prefix(current_url)
         tried_prefixes.add(prefix)
+        tried_domains.add(_alt_domain(current_url))
 
         # Phase 2
         try:
@@ -3470,14 +4168,17 @@ def run_pipeline(
             return result
 
         # Phase 3
+        phase3_stats: dict = {}
         try:
-            tariffs = phase3_extract_tariffs(pages, utility_name)
+            tariffs = phase3_extract_tariffs(pages, utility_name, stats=phase3_stats)
             result.phase3_tariffs = [asdict(t) for t in tariffs]
         except Exception as e:
             result.errors.append(f"Phase 3 error on {current_url[:60]}: {e}")
             log.error(f"  Phase 3 failed: {e}")
             current_url = _pick_next_alt()
             continue
+        finally:
+            _merge_stats(phase3_stats)
 
         # Only count tariffs with real components (energy/fixed/demand),
         # not rate riders or surcharges that Phase 4 would reject.
@@ -3505,15 +4206,18 @@ def run_pipeline(
         if not phase5_website and rate_page_url:
             parsed = urlparse(rate_page_url)
             phase5_website = f"{parsed.scheme}://{parsed.netloc}"
-        smart_tariffs, smart_pages = _phase5_smart_retry(
+        smart_tariffs, smart_pages, phase5_stats = _phase5_smart_retry(
             utility_name, state, phase5_website, pages
         )
+        _merge_stats(phase5_stats)
         if smart_tariffs:
             tariffs = smart_tariffs
             pages = smart_pages or pages
             log.info(f"  Phase 5 smart retry found {len(tariffs)} tariffs")
         else:
-            result.errors.append("No tariffs extracted from any candidate page")
+            result.errors.append(
+                _build_extraction_failure_reason(combined_stats, rate_page_url)
+            )
             log.warning("  Smart retry also found no tariffs")
 
     # Content identity check — reject if pages clearly belong to a different utility
