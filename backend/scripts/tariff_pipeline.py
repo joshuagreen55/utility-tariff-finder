@@ -3981,6 +3981,389 @@ def _phase5_smart_retry(
         return [], [], stats
 
 
+# ---------------------------------------------------------------------------
+# Phase 6: Deep Research fallback (Gemini Interactions API)
+# ---------------------------------------------------------------------------
+#
+# Last-resort recovery tier for utilities that fail Phases 1-5. The Gemini
+# Deep Research agent performs a long-horizon, multi-source web investigation
+# on our behalf and returns a cited report. Typical cost per call is on the
+# order of $1.50-$2.50 and latency is 5-15 minutes, so we only run this on
+# the ~5% long tail where all faster tiers struck out.
+#
+# Cost/safety guardrails:
+#   - Gated behind env var PHASE6_ENABLED (default off)
+#   - Client-side wall-clock cap via PHASE6_MAX_WAIT_SEC (default 1200s);
+#     the Interactions cancel() API does NOT actually abort a running task,
+#     so we simply stop polling and let the server-side work time out.
+#   - Skips instantly if google-genai SDK isn't installed or no API key.
+#   - Never raises — returns ([], stats_with_error) so the pipeline continues.
+
+PHASE6_AGENT_DEFAULT = "deep-research-preview-04-2026"
+PHASE6_MAX_WAIT_SEC_DEFAULT = 1200
+PHASE6_POLL_INTERVAL_SEC = 20
+
+
+def _phase6_enabled() -> bool:
+    return os.environ.get("PHASE6_ENABLED", "").strip().lower() in ("1", "true", "yes", "on")
+
+
+def _phase6_prompt(utility_name: str, state: str, attempted_urls: list[str] | None) -> str:
+    """Build the Deep Research prompt.
+
+    We stuff URLs we already tried into the prompt so the agent doesn't waste
+    tokens rediscovering pages we've already confirmed fail (Cloudflare blocks,
+    Angular SPA shells, image-only rate pages, etc.).
+    """
+    tried_clause = ""
+    if attempted_urls:
+        # Keep this tight — just the first 10 unique URLs
+        seen: set[str] = set()
+        trimmed: list[str] = []
+        for u in attempted_urls:
+            if u and u not in seen:
+                seen.add(u)
+                trimmed.append(u)
+            if len(trimmed) >= 10:
+                break
+        if trimmed:
+            tried_clause = (
+                "\n\nOur existing scraper already tried these URLs and could "
+                "not extract tariffs from them — either the data is rendered "
+                "client-side, the site blocked automated access, or the rates "
+                "are shown as images/graphics. You can still consult them, but "
+                "prioritize OTHER authoritative sources such as state PUC/PSC "
+                "filings, cached versions, or linked tariff PDFs:\n"
+                + "\n".join(f"  - {u}" for u in trimmed)
+            )
+
+    return f"""Research task (scope-bounded, 10 minutes maximum):
+
+Find the current published residential and commercial electricity tariffs for {utility_name} in {state}, USA.
+
+Authoritative sources ONLY:
+- The utility's own corporate website (tariff/rates pages, tariff PDFs).
+- Filings on the relevant state Public Utility / Service Commission.
+- Directly-linked utility tariff PDFs or regulatory orders.
+
+Do NOT use third-party comparison or aggregator sites (energybot.com, electricrate.com, choose-energy.com, power2switch.com, nyenergyratings.com, saveonenergy.com, chooseenergy.com, findenergy.com, etc.). Do NOT use wholesale/generation-company sources.{tried_clause}
+
+Scope limits:
+- Only RESIDENTIAL and COMMERCIAL schedules. Skip industrial, lighting, irrigation, wholesale, standby, cogen, interruptible, fleet EV charging, and street light.
+- Only CURRENT tariffs. Skip anything marked cancelled, superseded, historic, withdrawn, or obsolete.
+- Stop once you have a reasonable set for both classes — do not exhaustively catalog every rider or adjustment.
+
+Return your findings as a report ending with a fenced JSON block like this:
+
+```json
+[
+  {{
+    "name": "official tariff name",
+    "code": "schedule code",
+    "customer_class": "residential" or "commercial",
+    "rate_type": "flat" | "tiered" | "tou" | "demand" | "seasonal",
+    "effective_date": "YYYY-MM-DD" or null,
+    "source_url": "URL you used",
+    "confidence": 0.0-1.0,
+    "components": [
+      {{
+        "component_type": "energy" | "fixed" | "demand" | "minimum" | "adjustment",
+        "unit": "$/kWh" | "$/kW" | "$/month" | "cents/kWh",
+        "rate_value": <number>,
+        "tier_min_kwh": <number or null>,
+        "tier_max_kwh": <number or null>,
+        "tier_label": <string or null>,
+        "period_label": "on-peak" | "off-peak" | "shoulder" | null,
+        "season": "summer" | "winter" | null
+      }}
+    ]
+  }}
+]
+```
+
+Rules for the JSON:
+- Include each schedule ONCE. Break tiers, seasons, and time-of-use periods out as separate components.
+- Read numbers EXACTLY as printed in the source — do not estimate or round.
+- If you use "$/kWh" as the unit, convert cents to dollars in rate_value. Otherwise use "cents/kWh" and leave rate_value as-is.
+- If you cannot find the utility's current residential/commercial electric tariffs at all from authoritative sources, return an empty array [].
+"""
+
+
+# Regex to extract a fenced JSON code block from the Deep Research report.
+# Uses a non-greedy array match that handles nested objects.
+_PHASE6_JSON_RE = re.compile(
+    r"```\s*json\s*(\[[\s\S]*?\])\s*```",
+    re.IGNORECASE,
+)
+
+
+def _phase6_parse_tariffs(report_text: str, fallback_source: str) -> list[ExtractedTariff]:
+    """Find and parse the JSON block from a Deep Research report.
+
+    Returns validated ExtractedTariff objects with the same customer-class
+    and skip-keyword filtering we apply to Phase 3 LLM output.
+    """
+    m = _PHASE6_JSON_RE.search(report_text)
+    if not m:
+        log.warning("  Phase 6: report did not contain a ```json ... ``` block")
+        return []
+    js_text = m.group(1)
+    try:
+        raw = json.loads(js_text)
+    except json.JSONDecodeError as e:
+        log.warning(f"  Phase 6: JSON parse failed ({e})")
+        return []
+    if not isinstance(raw, list):
+        log.warning("  Phase 6: JSON block was not an array")
+        return []
+
+    tariffs: list[ExtractedTariff] = []
+    for idx, item in enumerate(raw):
+        if not isinstance(item, dict):
+            continue
+        name = str(item.get("name") or "").strip()
+        if not name:
+            continue
+        if SKIP_KEYWORDS.search(name):
+            log.info(f"    Phase 6: filtered out '{name}' (SKIP_KEYWORDS)")
+            continue
+        cclass = str(item.get("customer_class") or "").strip().lower()
+        if cclass not in VALID_CLASSES:
+            log.info(f"    Phase 6: filtered out '{name}' (class={cclass})")
+            continue
+
+        components_raw = item.get("components") or []
+        components: list[dict] = []
+        for c in components_raw:
+            if not isinstance(c, dict):
+                continue
+            try:
+                rv = c.get("rate_value")
+                rv_float = float(rv) if rv is not None else None
+            except (TypeError, ValueError):
+                continue
+            if rv_float is None:
+                continue
+            components.append({
+                "component_type": str(c.get("component_type") or "energy").strip().lower(),
+                "unit": str(c.get("unit") or "$/kWh"),
+                "rate_value": rv_float,
+                "tier_min_kwh": c.get("tier_min_kwh"),
+                "tier_max_kwh": c.get("tier_max_kwh"),
+                "tier_label": c.get("tier_label"),
+                "period_label": c.get("period_label"),
+                "season": c.get("season"),
+            })
+        if not components:
+            log.info(f"    Phase 6: dropping '{name}' (no numeric components)")
+            continue
+
+        try:
+            confidence = float(item.get("confidence") or 0.7)
+        except (TypeError, ValueError):
+            confidence = 0.7
+
+        tariffs.append(ExtractedTariff(
+            name=name,
+            code=str(item.get("code") or "").strip(),
+            customer_class=cclass,
+            rate_type=str(item.get("rate_type") or "").strip().lower(),
+            description=f"Phase 6 Deep Research (item {idx})",
+            source_url=str(item.get("source_url") or fallback_source or "").strip(),
+            effective_date=str(item.get("effective_date") or "").strip() or "",
+            components=components,
+            confidence=max(0.0, min(1.0, confidence)),
+        ))
+
+    return tariffs
+
+
+def phase6_deep_research(
+    utility_name: str,
+    state: str,
+    attempted_urls: list[str] | None = None,
+    *,
+    agent: str | None = None,
+    max_wait_sec: int | None = None,
+) -> tuple[list[ExtractedTariff], dict]:
+    """Gemini Deep Research fallback for utilities that failed Phases 1-5.
+
+    Returns (tariffs, stats). Never raises; all errors surface via
+    `stats["phase6_error"]` and the returned tariff list is empty.
+    """
+    stats: dict = {
+        "phase6_attempted": True,
+        "phase6_enabled": _phase6_enabled(),
+        "phase6_status": None,
+        "phase6_elapsed_sec": 0.0,
+        "phase6_interaction_id": None,
+        "phase6_total_tokens": 0,
+        "phase6_input_tokens": 0,
+        "phase6_output_tokens": 0,
+        "phase6_raw_tariffs_returned": 0,
+        "phase6_accepted_tariffs": 0,
+        "phase6_error": None,
+    }
+
+    if not _phase6_enabled():
+        stats["phase6_status"] = "disabled"
+        log.info("  Phase 6: skipped (PHASE6_ENABLED is not set)")
+        return [], stats
+    if not _gemini_sdk_available():
+        stats["phase6_status"] = "sdk_missing"
+        stats["phase6_error"] = "google-genai SDK not available"
+        log.warning("  Phase 6: skipped — google-genai SDK not available")
+        return [], stats
+    if not GOOGLE_AI_API_KEY:
+        stats["phase6_status"] = "no_api_key"
+        stats["phase6_error"] = "GOOGLE_AI_API_KEY not set"
+        log.warning("  Phase 6: skipped — GOOGLE_AI_API_KEY not set")
+        return [], stats
+
+    agent_id = agent or os.environ.get("PHASE6_AGENT", PHASE6_AGENT_DEFAULT)
+    try:
+        wait_cap = int(max_wait_sec if max_wait_sec is not None
+                       else os.environ.get("PHASE6_MAX_WAIT_SEC", PHASE6_MAX_WAIT_SEC_DEFAULT))
+    except ValueError:
+        wait_cap = PHASE6_MAX_WAIT_SEC_DEFAULT
+
+    log.info(
+        f"  Phase 6: Deep Research fallback — agent={agent_id} "
+        f"wait_cap={wait_cap}s"
+    )
+
+    prompt = _phase6_prompt(utility_name, state, attempted_urls)
+
+    try:
+        from google import genai  # type: ignore
+    except ImportError as e:
+        stats["phase6_status"] = "sdk_import_error"
+        stats["phase6_error"] = str(e)
+        return [], stats
+
+    try:
+        client = genai.Client(api_key=GOOGLE_AI_API_KEY)
+    except Exception as e:
+        stats["phase6_status"] = "client_init_error"
+        stats["phase6_error"] = str(e)
+        log.warning(f"  Phase 6: client init failed ({e})")
+        return [], stats
+
+    t0 = time.time()
+    try:
+        interaction = client.interactions.create(
+            input=prompt,
+            agent=agent_id,
+            background=True,
+        )
+    except Exception as e:
+        stats["phase6_elapsed_sec"] = round(time.time() - t0, 1)
+        stats["phase6_status"] = "create_failed"
+        stats["phase6_error"] = str(e)
+        log.warning(f"  Phase 6: create failed ({e})")
+        return [], stats
+
+    iid = getattr(interaction, "id", None)
+    stats["phase6_interaction_id"] = iid
+    log.info(f"  Phase 6: submitted interaction id={iid}")
+
+    last_status: str | None = None
+    last_log_t = 0.0
+    final_interaction = interaction
+    while True:
+        elapsed = time.time() - t0
+        if elapsed > wait_cap:
+            stats["phase6_status"] = "client_timeout"
+            stats["phase6_error"] = f"exceeded client wall-clock cap of {wait_cap}s"
+            stats["phase6_elapsed_sec"] = round(elapsed, 1)
+            log.warning(
+                f"  Phase 6: aborting after {elapsed:.0f}s — agent still "
+                f"in_progress (cancel API is non-functional; task will be "
+                f"abandoned server-side)"
+            )
+            try:
+                client.interactions.cancel(iid)
+            except Exception:
+                pass
+            return [], stats
+
+        try:
+            final_interaction = client.interactions.get(iid)
+        except Exception as e:
+            stats["phase6_status"] = "poll_error"
+            stats["phase6_error"] = str(e)
+            stats["phase6_elapsed_sec"] = round(elapsed, 1)
+            log.warning(f"  Phase 6: poll failed ({e})")
+            return [], stats
+
+        st = getattr(final_interaction, "status", None)
+        if st != last_status or (time.time() - last_log_t) > 120:
+            log.info(f"  Phase 6: t={elapsed:.0f}s status={st}")
+            last_status = st
+            last_log_t = time.time()
+        if st in ("completed", "failed", "cancelled"):
+            break
+        time.sleep(PHASE6_POLL_INTERVAL_SEC)
+
+    elapsed = time.time() - t0
+    stats["phase6_elapsed_sec"] = round(elapsed, 1)
+    stats["phase6_status"] = getattr(final_interaction, "status", "unknown")
+
+    if stats["phase6_status"] != "completed":
+        err = getattr(final_interaction, "error", None)
+        stats["phase6_error"] = str(err) if err else "non-completed status"
+        log.warning(
+            f"  Phase 6: finished with status={stats['phase6_status']} in "
+            f"{elapsed:.0f}s — {stats['phase6_error']}"
+        )
+        return [], stats
+
+    # Collect usage stats if available
+    usage = getattr(final_interaction, "usage", None)
+    if usage is not None:
+        for attr, key in (
+            ("total_tokens", "phase6_total_tokens"),
+            ("total_input_tokens", "phase6_input_tokens"),
+            ("total_output_tokens", "phase6_output_tokens"),
+        ):
+            try:
+                stats[key] = int(getattr(usage, attr, 0) or 0)
+            except (TypeError, ValueError):
+                pass
+
+    # Concatenate ALL text outputs — Deep Research returns multiple (exec
+    # summary, analysis+JSON, citations, ...) and the JSON block is usually
+    # NOT in the last one.
+    outputs = getattr(final_interaction, "outputs", None) or []
+    combined_text = "\n\n".join(
+        (getattr(o, "text", "") or "") for o in outputs
+    )
+    log.info(
+        f"  Phase 6: completed in {elapsed:.0f}s — "
+        f"{len(outputs)} outputs, {len(combined_text)} chars, "
+        f"{stats['phase6_total_tokens']} tokens"
+    )
+
+    tariffs = _phase6_parse_tariffs(
+        combined_text,
+        fallback_source=f"gemini-deep-research://{iid}",
+    )
+    stats["phase6_raw_tariffs_returned"] = len(tariffs)
+    # We still need to dedupe inside the caller, but count what we accepted
+    stats["phase6_accepted_tariffs"] = len(tariffs)
+
+    if tariffs:
+        log.info(
+            f"  Phase 6: recovered {len(tariffs)} tariffs from Deep Research"
+        )
+    else:
+        log.warning(
+            "  Phase 6: Deep Research returned no usable tariffs"
+        )
+
+    return tariffs, stats
+
+
 def run_pipeline(
     utility_id: int,
     *,
@@ -4131,10 +4514,20 @@ def run_pipeline(
 
     def _merge_stats(src: dict):
         for k, v in src.items():
-            if k == "early_abort":
+            if v is None:
+                continue
+            if isinstance(v, bool) or k == "early_abort":
                 combined_stats[k] = combined_stats.get(k, False) or bool(v)
+            elif isinstance(v, (int, float)):
+                existing = combined_stats.get(k, 0)
+                if isinstance(existing, (int, float)):
+                    combined_stats[k] = existing + v
+                else:
+                    combined_stats[k] = v
             else:
-                combined_stats[k] = combined_stats.get(k, 0) + int(v)
+                # Non-numeric strings (status codes, interaction IDs, errors)
+                # — keep the most recent value instead of trying to sum.
+                combined_stats[k] = v
 
     while current_url and attempts < MAX_ATTEMPTS:
         attempts += 1
@@ -4215,10 +4608,36 @@ def run_pipeline(
             pages = smart_pages or pages
             log.info(f"  Phase 5 smart retry found {len(tariffs)} tariffs")
         else:
-            result.errors.append(
-                _build_extraction_failure_reason(combined_stats, rate_page_url)
-            )
             log.warning("  Smart retry also found no tariffs")
+            # Phase 6 — Gemini Deep Research as a last-resort fallback.
+            # Gated behind PHASE6_ENABLED env var because each call costs
+            # ~$1-2 and takes 5-15 minutes. Only worth it for the long tail
+            # of utilities that fail every faster tier.
+            if _phase6_enabled():
+                attempted: list[str] = []
+                if rate_page_url:
+                    attempted.append(rate_page_url)
+                attempted.extend(alt_urls or [])
+                for p in (pages or []):
+                    if getattr(p, "url", None):
+                        attempted.append(p.url)
+                dr_tariffs, phase6_stats = phase6_deep_research(
+                    utility_name, state, attempted,
+                )
+                _merge_stats(phase6_stats)
+                if dr_tariffs:
+                    tariffs = dr_tariffs
+                    log.info(
+                        f"  Phase 6 Deep Research found {len(tariffs)} tariffs"
+                    )
+                else:
+                    result.errors.append(
+                        _build_extraction_failure_reason(combined_stats, rate_page_url)
+                    )
+            else:
+                result.errors.append(
+                    _build_extraction_failure_reason(combined_stats, rate_page_url)
+                )
 
     # Content identity check — reject if pages clearly belong to a different utility
     utility_domain = urlparse(website_url).netloc if website_url else None
