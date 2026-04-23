@@ -4002,6 +4002,11 @@ def _phase5_smart_retry(
 PHASE6_AGENT_DEFAULT = "deep-research-preview-04-2026"
 PHASE6_MAX_WAIT_SEC_DEFAULT = 1200
 PHASE6_POLL_INTERVAL_SEC = 20
+# Per-call token ceiling. Deep Research calls normally use 800k–3M tokens;
+# anything above ~3M indicates the agent is spinning on a pathological target
+# (our 16-utility retest had one utility balloon to 9.27M tokens ≈ $13 for an
+# empty report). We cancel client-side once we observe usage exceeding this.
+PHASE6_MAX_TOKENS_DEFAULT = 3_000_000
 
 
 def _phase6_enabled() -> bool:
@@ -4226,10 +4231,16 @@ def phase6_deep_research(
                        else os.environ.get("PHASE6_MAX_WAIT_SEC", PHASE6_MAX_WAIT_SEC_DEFAULT))
     except ValueError:
         wait_cap = PHASE6_MAX_WAIT_SEC_DEFAULT
+    try:
+        token_cap = int(os.environ.get(
+            "PHASE6_MAX_TOKENS", PHASE6_MAX_TOKENS_DEFAULT
+        ))
+    except ValueError:
+        token_cap = PHASE6_MAX_TOKENS_DEFAULT
 
     log.info(
         f"  Phase 6: Deep Research fallback — agent={agent_id} "
-        f"wait_cap={wait_cap}s"
+        f"wait_cap={wait_cap}s token_cap={token_cap}"
     )
 
     prompt = _phase6_prompt(utility_name, state, attempted_urls)
@@ -4295,6 +4306,34 @@ def phase6_deep_research(
             stats["phase6_elapsed_sec"] = round(elapsed, 1)
             log.warning(f"  Phase 6: poll failed ({e})")
             return [], stats
+
+        # Mid-flight token ceiling: usage grows as the agent runs, so we can
+        # abort a runaway call long before wait_cap expires. Guards us against
+        # the occasional pathological target that otherwise burns $10+ before
+        # returning an empty report.
+        mid_usage = getattr(final_interaction, "usage", None)
+        if mid_usage is not None:
+            try:
+                so_far = int(getattr(mid_usage, "total_tokens", 0) or 0)
+            except (TypeError, ValueError):
+                so_far = 0
+            if so_far and so_far > token_cap:
+                stats["phase6_status"] = "token_cap"
+                stats["phase6_error"] = (
+                    f"exceeded client token cap of {token_cap} "
+                    f"(observed {so_far})"
+                )
+                stats["phase6_elapsed_sec"] = round(elapsed, 1)
+                stats["phase6_total_tokens"] = so_far
+                log.warning(
+                    f"  Phase 6: aborting after {elapsed:.0f}s — "
+                    f"token usage {so_far} exceeded cap {token_cap}"
+                )
+                try:
+                    client.interactions.cancel(iid)
+                except Exception:
+                    pass
+                return [], stats
 
         st = getattr(final_interaction, "status", None)
         if st != last_status or (time.time() - last_log_t) > 120:
@@ -4450,6 +4489,35 @@ def run_pipeline(
                     update_monitoring_source(utility_id, smart_pages[0].url if smart_pages else "", dry_run)
                 total = len(valid_tariffs)
                 log.info(f"=== Done (via Phase 5): {utility_name} — {total} tariffs ===\n")
+                return result
+        # Phase 6 fallback for the "Phase 1 found nothing" case. Without this,
+        # utilities whose corporate site simply isn't in Brave's top results
+        # (small munis, obscure co-ops) never get a chance at Deep Research.
+        if _phase6_enabled():
+            dr_tariffs, phase6_stats = phase6_deep_research(
+                utility_name, state, [website_url] if website_url else [],
+            )
+            if dr_tariffs:
+                tariffs = dr_tariffs
+                validation, valid_tariffs = phase4_validate(
+                    tariffs, utility_name, state
+                )
+                result.phase4_validation = validation
+                if valid_tariffs and not dry_run:
+                    store_tariffs(utility_id, valid_tariffs, dry_run)
+                    src = (
+                        valid_tariffs[0].source_url
+                        if valid_tariffs and getattr(
+                            valid_tariffs[0], "source_url", None
+                        )
+                        else ""
+                    )
+                    if src:
+                        update_monitoring_source(utility_id, src, dry_run)
+                total = len(valid_tariffs)
+                log.info(
+                    f"=== Done (via Phase 6): {utility_name} — {total} tariffs ===\n"
+                )
                 return result
         result.errors.append("No rate page found")
         log.warning("  No rate page found — stopping")

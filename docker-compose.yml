@@ -45,6 +45,12 @@ services:
       SYNC_DATABASE_URL: ${SYNC_DATABASE_URL:-postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD}@db:5432/utility_tariff_finder}
       REDIS_URL: ${REDIS_URL:-redis://:${REDIS_PASSWORD:-changeme}@redis:6379/0}
       CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost}
+      # Phase 6: Gemini Deep Research fallback. Fires only when Phases 1-5
+      # return zero tariffs. Guarded by a 20-min wall cap and a 3M token
+      # ceiling per call to keep costs bounded.
+      PHASE6_ENABLED: ${PHASE6_ENABLED:-1}
+      PHASE6_MAX_WAIT_SEC: ${PHASE6_MAX_WAIT_SEC:-1200}
+      PHASE6_MAX_TOKENS: ${PHASE6_MAX_TOKENS:-3000000}
     depends_on:
       db:
         condition: service_healthy
@@ -73,6 +79,10 @@ services:
       DATABASE_URL: ${DATABASE_URL:-postgresql+asyncpg://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD}@db:5432/utility_tariff_finder}
       SYNC_DATABASE_URL: ${SYNC_DATABASE_URL:-postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD}@db:5432/utility_tariff_finder}
       REDIS_URL: ${REDIS_URL:-redis://:${REDIS_PASSWORD:-changeme}@redis:6379/0}
+      # Phase 6 Deep Research fallback (see api service above for details).
+      PHASE6_ENABLED: ${PHASE6_ENABLED:-1}
+      PHASE6_MAX_WAIT_SEC: ${PHASE6_MAX_WAIT_SEC:-1200}
+      PHASE6_MAX_TOKENS: ${PHASE6_MAX_TOKENS:-3000000}
     command: celery -A app.tasks.celery_app worker --loglevel=info --concurrency=8 --prefetch-multiplier=1
     depends_on:
       db:
