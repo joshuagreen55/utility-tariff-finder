@@ -181,6 +181,19 @@ def process_utility(self, uid: int, comprehensive: bool = False) -> dict:
 # Completion callback: finalize a refresh run
 # ---------------------------------------------------------------------------
 
+@celery_app.task(name="app.tasks.refresh.log_chord_failure")
+def log_chord_failure(request, exc, traceback):
+    """Surfaced when a chord errors out so we can see it in logs.
+
+    Without this, chord failures are silent and the dashboard sits stuck
+    on a "running" RefreshRun until the hourly reaper finalizes it.
+    """
+    log.error(
+        f"Chord callback FAILED: task={getattr(request, 'task', '?')} "
+        f"id={getattr(request, 'id', '?')}: {exc}"
+    )
+
+
 @celery_app.task(name="app.tasks.refresh.finalize_refresh_run")
 def finalize_refresh_run(results: list[dict], run_id: int, before_counts_json: str):
     """Aggregate child task results and update the RefreshRun record."""
@@ -271,6 +284,131 @@ def finalize_refresh_run(results: list[dict], run_id: int, before_counts_json: s
 
 
 # ---------------------------------------------------------------------------
+# Safety-net reaper: finalize stalled runs from the audit trail
+# ---------------------------------------------------------------------------
+
+# A refresh that has been "running" longer than this is considered stalled
+# (its chord callback failed to fire). Set to comfortably exceed the longest
+# real run we could plausibly produce: ~519 utilities at the 8/min LLM rate
+# limit + per-task pipeline work tops out around 4-6 hours.
+STALLED_RUN_THRESHOLD_HOURS = 6
+
+
+def _finalize_run_from_audit(session: Session, run: RefreshRun) -> dict:
+    """Reconstruct a refresh-run summary from the database audit trail.
+
+    Used when the chord callback never fires (Celery result expiry, unlock
+    retry exhaustion, header task killed by the time limit, etc). The
+    numbers are best-effort: errors is computed conservatively as
+    `targeted - utilities_processed`. Per-utility error reasons cannot be
+    recovered after the fact.
+    """
+    started = run.started_at
+    if started.tzinfo is None:
+        started = started.replace(tzinfo=timezone.utc)
+    # Bound the audit window at "now" (or 24h after start, whichever is
+    # earlier — the longest a real run could plausibly take is ~6h, but
+    # leave headroom for exotic cases).
+    window_end = min(
+        datetime.now(timezone.utc),
+        started + timedelta(hours=24),
+    )
+
+    created = session.execute(
+        select(func.count(Tariff.id)).where(
+            Tariff.created_at >= started,
+            Tariff.created_at < window_end,
+        )
+    ).scalar() or 0
+
+    verified_only = session.execute(
+        select(func.count(Tariff.id)).where(
+            Tariff.last_verified_at >= started,
+            Tariff.last_verified_at < window_end,
+            (Tariff.created_at < started) | (Tariff.created_at.is_(None)),
+        )
+    ).scalar() or 0
+
+    utilities_processed = session.execute(
+        select(func.count(func.distinct(Tariff.utility_id))).where(
+            Tariff.last_verified_at >= started,
+            Tariff.last_verified_at < window_end,
+        )
+    ).scalar() or 0
+
+    targeted = run.utilities_targeted or 0
+    errors = max(targeted - utilities_processed, 0)
+
+    summary = {
+        "total_targeted": targeted,
+        "processed_ok": utilities_processed,
+        "errors": errors,
+        "tariffs_added": created,
+        "tariffs_updated": verified_only,
+        "_note": (
+            f"Reconstructed from audit trail at "
+            f"{datetime.now(timezone.utc).isoformat()} because the chord "
+            f"callback did not fire within {STALLED_RUN_THRESHOLD_HOURS}h."
+        ),
+    }
+
+    run.finished_at = window_end
+    run.utilities_processed = utilities_processed
+    run.tariffs_added = created
+    run.tariffs_updated = verified_only
+    run.errors = errors
+    run.summary_json = summary
+    run.error_details = (
+        "(Reconstructed post-hoc; chord callback never collected per-task "
+        "results.)"
+    )
+    return summary
+
+
+@celery_app.task(
+    name="app.tasks.refresh.reap_stalled_runs",
+    time_limit=120,
+    soft_time_limit=110,
+)
+def reap_stalled_runs() -> dict:
+    """Finalize any refresh run whose chord callback never fired.
+
+    Runs hourly (see beat_schedule). Idempotent — only touches runs whose
+    `finished_at` is still NULL after the staleness threshold has elapsed.
+    """
+    engine = get_sync_engine()
+    cutoff = datetime.now(timezone.utc) - timedelta(hours=STALLED_RUN_THRESHOLD_HOURS)
+    reaped: list[int] = []
+
+    with Session(engine) as session:
+        stalled = session.execute(
+            select(RefreshRun)
+            .where(RefreshRun.finished_at.is_(None))
+            .where(RefreshRun.started_at < cutoff)
+        ).scalars().all()
+
+        for run in stalled:
+            log.warning(
+                f"Reaping stalled RefreshRun #{run.id} "
+                f"(started {run.started_at.isoformat()}, "
+                f"type={run.refresh_type})"
+            )
+            try:
+                summary = _finalize_run_from_audit(session, run)
+                session.commit()
+                reaped.append(run.id)
+                log.info(
+                    f"  Reaped #{run.id}: processed={summary['processed_ok']}, "
+                    f"errors={summary['errors']}, added={summary['tariffs_added']}"
+                )
+            except Exception as e:
+                log.error(f"  Failed to reap run #{run.id}: {e}")
+                session.rollback()
+
+    return {"reaped_run_ids": reaped, "count": len(reaped)}
+
+
+# ---------------------------------------------------------------------------
 # Parent tasks: orchestrate refresh runs
 # ---------------------------------------------------------------------------
 
@@ -315,11 +453,15 @@ def refresh_changed_tariffs():
     before_json = json.dumps({str(k): v for k, v in before_counts.items()})
 
     # Dispatch per-utility tasks as a chord: all process in parallel,
-    # then finalize_refresh_run runs once all are done
+    # then finalize_refresh_run runs once all are done. The hourly
+    # reap_stalled_runs task is the safety net if the chord callback
+    # ever fails to fire.
     task_group = group(
         process_utility.s(uid, False) for uid in all_ids
     )
-    callback = finalize_refresh_run.s(run_id, before_json)
+    callback = finalize_refresh_run.s(run_id, before_json).on_error(
+        log_chord_failure.s()
+    )
     chord(task_group)(callback)
 
     log.info(f"  Dispatched {len(all_ids)} tasks for run {run_id}")
@@ -365,7 +507,9 @@ def recover_error_utilities():
     task_group = group(
         process_utility.s(uid, True) for uid in error_ids
     )
-    callback = finalize_refresh_run.s(run_id, before_json)
+    callback = finalize_refresh_run.s(run_id, before_json).on_error(
+        log_chord_failure.s()
+    )
     chord(task_group)(callback)
 
     log.info(f"  Dispatched {len(error_ids)} tasks for run {run_id}")
