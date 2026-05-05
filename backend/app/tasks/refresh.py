@@ -131,8 +131,14 @@ TRANSIENT_ERRORS = (ConnectionError, TimeoutError, OSError)
     name="app.tasks.refresh.process_utility",
     bind=True,
     max_retries=2,
-    soft_time_limit=600,
-    time_limit=660,
+    # Budget must comfortably exceed the longest plausible Phase 6 Deep
+    # Research call (~10 min) plus Phases 1-5 (~1-2 min) so the parent
+    # task does not get killed mid-flight, throwing away DR compute we
+    # have already paid for. The May 4 quarterly run wasted ~55 of 65
+    # Phase 6 calls because the previous 660s budget was tighter than
+    # one DR call. See PHASE6_MAX_WAIT_SEC=1200 in docker-compose.
+    soft_time_limit=1700,
+    time_limit=1800,
     rate_limit=LLM_RATE_LIMIT,
     acks_late=True,
     autoretry_for=TRANSIENT_ERRORS,

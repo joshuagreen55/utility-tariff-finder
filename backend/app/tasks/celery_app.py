@@ -32,6 +32,14 @@ celery_app.conf.update(
     result_chord_retry_interval=10,             # poll unlock every 10s
     task_track_started=True,
     beat_schedule={
+        # Watchdog: writes a Redis heartbeat key that the celery-beat
+        # Docker healthcheck reads. If beat hangs (as it did on May 4),
+        # the heartbeat goes stale, the container is marked unhealthy,
+        # and the autoheal sidecar restarts it within ~1 minute.
+        "beat-heartbeat": {
+            "task": "app.tasks.monitoring.beat_heartbeat",
+            "schedule": 60.0,  # every 60 seconds
+        },
         "weekly-monitoring-check": {
             "task": "app.tasks.monitoring.check_all_sources",
             "schedule": crontab(hour=6, minute=0, day_of_week=1),  # Monday 6 AM UTC

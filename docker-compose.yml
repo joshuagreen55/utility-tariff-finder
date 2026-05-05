@@ -112,10 +112,45 @@ services:
       redis:
         condition: service_started
     restart: unless-stopped
+    # The watchdog reads the heartbeat key written by the
+    # `app.tasks.monitoring.beat_heartbeat` task (fires every 60s). If
+    # beat hangs without crashing (the May 4 symptom), the heartbeat
+    # goes stale, the container is marked unhealthy, and the autoheal
+    # sidecar below restarts it.
+    healthcheck:
+      test: ["CMD", "python", "/app/scripts/beat_healthcheck.py"]
+      interval: 30s
+      timeout: 8s
+      retries: 3
+      start_period: 90s
+    labels:
+      autoheal: "true"
+    volumes:
+      - ./backend/app:/app/app
+      - ./backend/scripts:/app/scripts
     deploy:
       resources:
         limits:
           memory: 256m
+
+  # Watchdog sidecar: listens for any container labelled `autoheal=true`
+  # whose Docker healthcheck has gone unhealthy and restarts it. We
+  # currently use this to recover a hung celery-beat (see May 4
+  # incident). Add `labels: { autoheal: "true" }` to any other service
+  # that should benefit.
+  autoheal:
+    image: willfarrell/autoheal:latest
+    restart: unless-stopped
+    environment:
+      AUTOHEAL_CONTAINER_LABEL: autoheal
+      AUTOHEAL_INTERVAL: "30"
+      AUTOHEAL_START_PERIOD: "90"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    deploy:
+      resources:
+        limits:
+          memory: 64m
 
   web:
     build:
