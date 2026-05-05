@@ -6,6 +6,7 @@ import UtilityDetailPage from "./pages/UtilityDetailPage";
 import TariffDetailPage from "./pages/TariffDetailPage";
 import TariffBrowserPage from "./pages/TariffBrowserPage";
 import MonitoringPage from "./pages/MonitoringPage";
+import DataQualityPage from "./pages/DataQualityPage";
 import LoginPage from "./pages/LoginPage";
 
 export default function App() {
@@ -47,6 +48,7 @@ export default function App() {
             <NavLink to="/utilities">Utilities</NavLink>
             <NavLink to="/tariffs">Tariffs</NavLink>
             <NavLink to="/admin/monitoring">Monitoring</NavLink>
+            <NavLink to="/admin/data-quality">Data Quality</NavLink>
             {signedInLabel ? (
               <span className="nav-user">
                 <span className="nav-user-email">{signedInLabel}</span>
@@ -66,6 +68,7 @@ export default function App() {
           <Route path="/tariffs" element={<TariffBrowserPage />} />
           <Route path="/tariffs/:id" element={<TariffDetailPage />} />
           <Route path="/admin/monitoring" element={<MonitoringPage />} />
+          <Route path="/admin/data-quality" element={<DataQualityPage />} />
         </Routes>
       </main>
     </div>

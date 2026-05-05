@@ -243,7 +243,7 @@ THIRD_PARTY_DOMAINS = frozenset({
     "nextdoor.com", "glassdoor.com", "mapquest.com",
     # News / press
     "opb.org", "prnewswire.com", "businesswire.com", "koin.com",
-    "azfamily.com",
+    "azfamily.com", "ecowatch.com",
     # Rate comparison / aggregator
     "openei.org", "utility-rates.com", "costcheckusa.com",
     "findenergy.com", "energysage.com", "choosetexaspower.org",
@@ -259,6 +259,17 @@ THIRD_PARTY_DOMAINS = frozenset({
     "texaschoicepower.com", "compareelectricity.com",
     "electricalratesgeorgia.com", "electricityrate.com",
     "gotelectric.com", "ratetruth.com",
+    # Added 2026-05-05 after detecting historical contamination from
+    # multi-utility aggregator pages that listed rates for several
+    # utilities side-by-side (the LLM extracted them all and our
+    # pipeline attributed every row to whichever utility we were
+    # searching for at the time). See contamination cleanup commit.
+    "comparepower.com", "ohenergyratings.com", "vaultelectricity.com",
+    "maenergyratings.com", "energysavings.com", "getcurrents.com",
+    "utilitiesformyhome.com", "uselectricgrid.com", "qmerit.com",
+    # Retail-electric-provider promotional offer sites (not the
+    # utility's own default tariff)
+    "xoomenergy.com",
     # Solar / green energy marketing
     "solar.com", "nrgcleanpower.com", "greenridgesolar.com",
     "madison.com", "sandboxsolar.com",
@@ -1803,6 +1814,12 @@ EXTRACTION_PROMPT = """Extract ONLY residential and small/general commercial ele
 INCLUDE: residential rates, small business / general service rates, default service rates
 SKIP: industrial, large commercial/power, irrigation, fleet, street lighting, transmission, wholesale, interruptible, standby
 
+ATTRIBUTION CHECK (applies to every page you extract from):
+- A target utility is provided below. Only return rates that the page explicitly attributes to the target utility or one of its named operating subsidiaries.
+- If the page is a comparison / aggregator page that lists rates for multiple utilities side-by-side, only include rows unambiguously labeled for the target utility. If you cannot tell, return an empty tariffs array.
+- If a section, table, or rate sheet is labeled with a different utility's name (a neighboring IOU, a sister utility in another state, a competitive REP/marketer), DO NOT include those rates.
+- If the page contains no rates clearly attributable to the target utility, return an empty tariffs array — do NOT guess.
+
 For each tariff, provide:
 - name: Official schedule name (e.g. "Residential Service", "Schedule GS-1")
 - code: Schedule code if shown (e.g. "RS", "GS-1")
@@ -1846,6 +1863,7 @@ Output: one tariff type "seasonal_tou", confidence 0.9, with fixed ($10), and 4 
 
 Use the store_tariffs tool to return your results.
 
+TARGET UTILITY: {utility_name} ({state})
 Page URL: {url}
 Page title: {title}
 
@@ -1909,9 +1927,11 @@ def _merge_prefix_duplicates(tariffs: list[ExtractedTariff]) -> list[ExtractedTa
     return merged
 
 
-PAGE_SCREENSHOT_EXTRACTION_PROMPT = """Extract all residential and commercial electricity tariffs visible in this web page screenshot.
+PAGE_SCREENSHOT_EXTRACTION_PROMPT_BASE = """Extract all residential and commercial electricity tariffs visible in this web page screenshot.
 
 The page may display rate information as images, charts, infographics, or styled tables that don't appear in the raw HTML text.
+
+ATTRIBUTION CHECK: This extraction is for a specific target utility (named below). If the screenshot shows rates for multiple utilities, only return those clearly attributed to the target. If you cannot confidently attribute rates to the target utility, return an empty tariffs array.
 
 For each tariff provide: name, code, customer_class ("residential"/"commercial"), rate_type, description, effective_date, confidence (0-1), and components array.
 Each component needs: component_type ("energy"/"demand"/"fixed"/"minimum"/"adjustment"), unit, rate_value, and optional tier_min_kwh, tier_max_kwh, tier_label, period_label, season.
@@ -1968,7 +1988,11 @@ def _fetch_full_page_screenshot(url: str, wait_ms: int = 3000) -> bytes | None:
                 pass
 
 
-def _extract_page_screenshot_vision(url: str) -> tuple[list[ExtractedTariff], int]:
+def _extract_page_screenshot_vision(
+    url: str,
+    utility_name: str = "",
+    state: str = "",
+) -> tuple[list[ExtractedTariff], int]:
     """Capture a full-page screenshot of a rate-themed page and ask Claude
     Vision to extract tariffs visible in the rendered image.
 
@@ -1985,8 +2009,12 @@ def _extract_page_screenshot_vision(url: str) -> tuple[list[ExtractedTariff], in
     b64 = base64.standard_b64encode(img_bytes).decode("ascii")
     log.info(f"    Page screenshot vision: sending image ({len(img_bytes)} bytes) to Claude")
 
+    target_line = (
+        f"\n\nTARGET UTILITY: {utility_name} ({state})"
+        if utility_name else ""
+    )
     content_blocks = [
-        {"type": "text", "text": PAGE_SCREENSHOT_EXTRACTION_PROMPT},
+        {"type": "text", "text": PAGE_SCREENSHOT_EXTRACTION_PROMPT_BASE + target_line},
         {
             "type": "image",
             "source": {
@@ -2018,7 +2046,9 @@ def _extract_page_screenshot_vision(url: str) -> tuple[list[ExtractedTariff], in
     return [], 1
 
 
-PDF_VISION_EXTRACTION_PROMPT = """Extract all residential and commercial electricity tariffs visible in these PDF page images.
+PDF_VISION_EXTRACTION_PROMPT_BASE = """Extract all residential and commercial electricity tariffs visible in these PDF page images.
+
+ATTRIBUTION CHECK: This extraction is for a specific target utility (named below). If the PDF contains rate sheets for multiple utilities, only return those clearly attributed to the target. If you cannot confidently attribute rates to the target utility, return an empty tariffs array.
 
 For each tariff provide: name, code, customer_class ("residential"/"commercial"), rate_type, description, effective_date, confidence (0-1), and components array.
 Each component needs: component_type ("energy"/"demand"/"fixed"/"minimum"/"adjustment"), unit, rate_value, and optional tier_min_kwh, tier_max_kwh, tier_label, period_label, season.
@@ -2035,7 +2065,12 @@ Use the store_tariffs tool to return results."""
 MAX_PDF_VISION_PAGES = 15
 
 
-def _extract_pdf_vision(pdf_bytes: bytes, page_url: str) -> tuple[list[ExtractedTariff], int]:
+def _extract_pdf_vision(
+    pdf_bytes: bytes,
+    page_url: str,
+    utility_name: str = "",
+    state: str = "",
+) -> tuple[list[ExtractedTariff], int]:
     """Send PDF pages as images to Claude vision for extraction.
 
     Returns (tariffs, llm_call_count). Falls back to empty list if conversion fails.
@@ -2060,7 +2095,11 @@ def _extract_pdf_vision(pdf_bytes: bytes, page_url: str) -> tuple[list[Extracted
     import base64
     import io
 
-    content_blocks = [{"type": "text", "text": PDF_VISION_EXTRACTION_PROMPT}]
+    target_line = (
+        f"\n\nTARGET UTILITY: {utility_name} ({state})"
+        if utility_name else ""
+    )
+    content_blocks = [{"type": "text", "text": PDF_VISION_EXTRACTION_PROMPT_BASE + target_line}]
     for i, img in enumerate(images):
         buf = io.BytesIO()
         img.save(buf, format="JPEG", quality=85)
@@ -2102,12 +2141,16 @@ _COMPLEXITY_SIGNALS = re.compile(
     re.IGNORECASE,
 )
 
-TWOPASS_IDENTIFY_PROMPT = """List all residential and commercial electricity rate plans/tariffs in this document.
+TWOPASS_IDENTIFY_PROMPT = """List all residential and commercial electricity rate plans/tariffs in this document for the TARGET UTILITY only.
+
+TARGET UTILITY: {utility_name} ({state})
 
 For each tariff, provide ONLY:
 - name: The official name or schedule code
 - customer_class: "residential" or "commercial"
 - location_hint: A short phrase (5-10 words) from the text near where the rate details appear
+
+ATTRIBUTION RULE: Only list rates the document explicitly attributes to the target utility. If the document is a comparison/aggregator and lists rates for several utilities, exclude rates not labeled for the target. If you cannot tell, return [].
 
 SKIP: industrial, large commercial, lighting, irrigation, wholesale, interruptible
 
@@ -2119,6 +2162,9 @@ Content:
 {content}"""
 
 TWOPASS_EXTRACT_PROMPT = """Extract the complete rate details for the tariff named "{tariff_name}" ({customer_class}) from the following content.
+
+TARGET UTILITY: {utility_name} ({state})
+Only extract rates this document explicitly attributes to the target utility. If the named tariff appears under a different utility's section, return an empty array.
 
 Provide:
 - name, code, customer_class, rate_type, description, effective_date, confidence
@@ -2143,7 +2189,11 @@ def _is_complex_page(content: str) -> bool:
     return signals >= 5
 
 
-def _extract_two_pass(page: RatePage, utility_name: str) -> tuple[list[ExtractedTariff], int]:
+def _extract_two_pass(
+    page: RatePage,
+    utility_name: str,
+    state: str = "",
+) -> tuple[list[ExtractedTariff], int]:
     """Two-pass extraction: identify tariffs first, then extract each individually.
 
     Returns (tariffs, llm_call_count).
@@ -2152,7 +2202,11 @@ def _extract_two_pass(page: RatePage, utility_name: str) -> tuple[list[Extracted
     llm_calls = 0
 
     # Pass 1: Identify all tariff names
-    identify_prompt = TWOPASS_IDENTIFY_PROMPT.format(content=content_for_llm[:15000])
+    identify_prompt = TWOPASS_IDENTIFY_PROMPT.format(
+        content=content_for_llm[:15000],
+        utility_name=utility_name,
+        state=state,
+    )
     try:
         raw_text = _call_claude(identify_prompt)
         llm_calls += 1
@@ -2191,6 +2245,8 @@ def _extract_two_pass(page: RatePage, utility_name: str) -> tuple[list[Extracted
             tariff_name=name,
             customer_class=cc,
             content=section,
+            utility_name=utility_name,
+            state=state,
         )
 
         try:
@@ -2212,10 +2268,75 @@ def _extract_two_pass(page: RatePage, utility_name: str) -> tuple[list[Extracted
 MAX_CONSECUTIVE_LLM_ZEROS = 5
 
 
+# Names that frequently appear in deregulated-state aggregator pages
+# attached to a SPECIFIC utility's section. If we see one of these in
+# an extracted tariff name and the target utility's name doesn't share
+# a common token with the matched name, the LLM almost certainly grabbed
+# a rate from another utility's row in the same multi-utility page.
+#
+# This list is intentionally narrow — the prompt-level attribution check
+# is the primary defense. This is a defense-in-depth log-and-reject that
+# catches the most common mis-attribution patterns we've observed.
+_OTHER_UTILITY_TOKENS = (
+    "penelec", "met-ed", "met ed", "metropolitan edison",
+    "duquesne light", "west penn power", "ppl electric",
+    "aep ohio", "aep texas", "appalachian power",
+    "first energy", "firstenergy",
+    "ohio edison", "the illuminating company", "toledo edison",
+    "national grid", "eversource",
+    "pseg", "pse&g", "jersey central power",
+    "atlantic city electric", "delmarva power",
+    "pepco", "bge", "baltimore gas",
+    "consolidated edison", "con edison", "con ed",
+    "central hudson", "orange and rockland",
+    "centerpoint energy", "oncor", "aep central",
+    "tnmp", "txu energy", "reliant energy",
+    "georgia power", "alabama power", "mississippi power",
+    "duke energy", "progress energy",
+    "dominion energy", "dominion virginia",
+    "pacific gas", "pg&e", "pge", "southern california edison", "sce",
+    "san diego gas", "sdg&e",
+    "xcel energy", "northern states power",
+)
+
+
+def _attribution_violates(
+    tariff: ExtractedTariff,
+    utility_name: str,
+) -> str | None:
+    """Return a short reason string if the tariff name appears to belong to
+    a different utility than `utility_name`, otherwise None.
+
+    Heuristic: scan the tariff `name` and `description` for known
+    multi-utility marker phrases. If a marker matches AND the marker
+    phrase is NOT itself a substring of the target utility's name,
+    flag as a likely mis-attribution.
+
+    Substring match (not token overlap) keeps false positives low when
+    a single common word like "light" or "energy" coincidentally appears
+    in both lists.
+    """
+    if not utility_name:
+        return None
+
+    blob = f"{tariff.name} {tariff.description}".lower()
+    target = utility_name.lower()
+
+    for marker in _OTHER_UTILITY_TOKENS:
+        if marker not in blob:
+            continue
+        if marker in target:
+            return None  # marker phrase is itself part of the target utility name
+        return f"name mentions '{marker}' but target is '{utility_name}'"
+
+    return None
+
+
 def phase3_extract_tariffs(
     pages: list[RatePage],
     utility_name: str,
     stats: dict | None = None,
+    state: str = "",
 ) -> list[ExtractedTariff]:
     """Use Claude to extract structured tariff data from each rate page.
 
@@ -2296,13 +2417,20 @@ def phase3_extract_tariffs(
         # PDF vision: send pages as images for better table/layout preservation
         if page.page_type == "pdf" and page.pdf_bytes and len(page.pdf_bytes) > 100:
             log.info(f"    Using PDF vision extraction ({len(page.pdf_bytes)} bytes)")
-            tariffs, calls = _extract_pdf_vision(page.pdf_bytes, page.url)
+            tariffs, calls = _extract_pdf_vision(
+                page.pdf_bytes, page.url, utility_name=utility_name, state=state,
+            )
             llm_calls += calls
             accepted = 0
             for t in tariffs:
                 if SKIP_KEYWORDS.search(t.name):
                     continue
                 if t.customer_class not in VALID_CLASSES:
+                    continue
+                violation = _attribution_violates(t, utility_name)
+                if violation:
+                    log.warning(f"      Rejected (attribution): {t.name} — {violation}")
+                    stats["attribution_rejects"] = stats.get("attribution_rejects", 0) + 1
                     continue
                 key = f"{t.name}|{t.customer_class}"
                 t.source_url = page.url
@@ -2327,7 +2455,7 @@ def phase3_extract_tariffs(
         # Use two-pass for complex pages (long PDFs with many rate structures)
         if _is_complex_page(page.content):
             log.info(f"    Using two-pass extraction (complex page, {len(page.content)} chars)")
-            tariffs, calls = _extract_two_pass(page, utility_name)
+            tariffs, calls = _extract_two_pass(page, utility_name, state=state)
             llm_calls += calls
         else:
             content_for_llm = _select_rate_content(page.content, max_chars=20000)
@@ -2335,6 +2463,8 @@ def phase3_extract_tariffs(
                 url=page.url,
                 title=page.title,
                 content=content_for_llm,
+                utility_name=utility_name,
+                state=state,
             )
             try:
                 raw_tariffs, model_used = _extract_with_model_routing(prompt, page)
@@ -2353,6 +2483,11 @@ def phase3_extract_tariffs(
                 continue
             if t.customer_class not in VALID_CLASSES:
                 log.info(f"      Filtered out: {t.name} (class={t.customer_class}, not residential/commercial)")
+                continue
+            violation = _attribution_violates(t, utility_name)
+            if violation:
+                log.warning(f"      Rejected (attribution): {t.name} — {violation}")
+                stats["attribution_rejects"] = stats.get("attribution_rejects", 0) + 1
                 continue
 
             key = f"{t.name}|{t.customer_class}"
@@ -2381,13 +2516,20 @@ def phase3_extract_tariffs(
                     "with no numeric signals — trying page-screenshot vision"
                 )
                 try:
-                    vision_tariffs, vision_calls = _extract_page_screenshot_vision(page.url)
+                    vision_tariffs, vision_calls = _extract_page_screenshot_vision(
+                        page.url, utility_name=utility_name, state=state,
+                    )
                     llm_calls += vision_calls
                     vision_accepted = 0
                     for t in vision_tariffs:
                         if SKIP_KEYWORDS.search(t.name):
                             continue
                         if t.customer_class not in VALID_CLASSES:
+                            continue
+                        violation = _attribution_violates(t, utility_name)
+                        if violation:
+                            log.warning(f"      Rejected (attribution): {t.name} — {violation}")
+                            stats["attribution_rejects"] = stats.get("attribution_rejects", 0) + 1
                             continue
                         key = f"{t.name}|{t.customer_class}"
                         t.source_url = page.url
@@ -2504,7 +2646,10 @@ def _call_claude(prompt: str) -> str:
     return resp.content[0].text
 
 
-_CACHED_SYSTEM_PROMPT = EXTRACTION_PROMPT.split("Page URL:")[0].strip()
+# Split BEFORE the dynamic per-call section so the cached system prompt
+# stays identical across calls and Anthropic's prompt caching works.
+# Everything from "TARGET UTILITY:" downward is rendered fresh each call.
+_CACHED_SYSTEM_PROMPT = EXTRACTION_PROMPT.split("TARGET UTILITY:")[0].strip()
 
 
 def _call_claude_tool(prompt: str) -> list[dict]:
@@ -3589,7 +3734,7 @@ def run_additional_tariff_search(
             if not page or len(page.content.strip()) < 200:
                 continue
 
-            tariffs = phase3_extract_tariffs([page], utility_name)
+            tariffs = phase3_extract_tariffs([page], utility_name, state=state)
             for t in tariffs:
                 norm_name = _normalize_tariff_name(t.name)
                 if _is_prefix_duplicate(norm_name, existing_names):
@@ -3968,7 +4113,7 @@ def _phase5_smart_retry(
 
     try:
         phase3_stats: dict = {}
-        tariffs = phase3_extract_tariffs(all_pages, utility_name, stats=phase3_stats)
+        tariffs = phase3_extract_tariffs(all_pages, utility_name, stats=phase3_stats, state=state)
         # Merge Phase 3 stats into Phase 5 stats
         for k, v in phase3_stats.items():
             if k in stats and isinstance(stats[k], (int, float)):
@@ -4631,7 +4776,7 @@ def run_pipeline(
         # Phase 3
         phase3_stats: dict = {}
         try:
-            tariffs = phase3_extract_tariffs(pages, utility_name, stats=phase3_stats)
+            tariffs = phase3_extract_tariffs(pages, utility_name, stats=phase3_stats, state=state)
             result.phase3_tariffs = [asdict(t) for t in tariffs]
         except Exception as e:
             result.errors.append(f"Phase 3 error on {current_url[:60]}: {e}")

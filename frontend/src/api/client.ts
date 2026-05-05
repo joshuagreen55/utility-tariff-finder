@@ -293,4 +293,41 @@ export const api = {
 
   getRefreshRun: (runId: number) =>
     request<RefreshRun>(`/admin/monitoring/refresh-runs/${runId}`),
+
+  dataQualityOverview: () => request<DataQualityOverview>("/admin/data-quality/overview"),
 };
+
+export interface DataQualityOverview {
+  headline: {
+    total_tariffs: number;
+    utilities_with_tariffs: number;
+    active_utilities: number;
+    coverage_pct: number;
+    tariffs_no_source: number;
+    tariffs_no_confidence: number;
+  };
+  top_source_domains: {
+    domain: string;
+    tariff_count: number;
+    utility_count: number;
+  }[];
+  utility_outliers: {
+    id: number;
+    name: string;
+    state_province: string;
+    country: string | null;
+    tariff_count: number;
+  }[];
+  freshness: {
+    current: number;
+    aging: number;
+    stale: number;
+    never_verified: number;
+  };
+  confidence: {
+    high: number;
+    medium: number;
+    low: number;
+    unscored: number;
+  };
+}

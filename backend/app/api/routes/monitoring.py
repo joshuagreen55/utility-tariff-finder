@@ -636,3 +636,122 @@ async def get_refresh_run(
         "summary_json": run.summary_json,
         "error_details": run.error_details,
     }
+
+
+# ---------------------------------------------------------------------------
+# Data Quality
+# ---------------------------------------------------------------------------
+
+@router.get("/data-quality/overview")
+async def data_quality_overview(db: AsyncSession = Depends(get_db)):
+    """Aggregate signals that help spot data quality regressions:
+
+    - top source domains (admins can add new aggregators to the blocklist)
+    - utility outliers with abnormally high tariff counts (mis-attribution risk)
+    - tariff freshness buckets based on last_verified_at
+    - confidence distribution
+    """
+    # Headline counts
+    headline_sql = text("""
+        SELECT
+          (SELECT COUNT(*) FROM tariffs)                                 AS total_tariffs,
+          (SELECT COUNT(DISTINCT utility_id) FROM tariffs)               AS utilities_with_tariffs,
+          (SELECT COUNT(*) FROM tariffs WHERE source_url IS NULL)        AS tariffs_no_source,
+          (SELECT COUNT(*) FROM tariffs WHERE confidence_score IS NULL)  AS tariffs_no_confidence,
+          (SELECT COUNT(*) FROM utilities WHERE is_active = true)        AS active_utilities
+    """)
+    headline = (await db.execute(headline_sql)).first()
+
+    # Top source domains
+    domains_sql = text("""
+        SELECT
+          substring(source_url from 'https?://([^/]+)') AS domain,
+          COUNT(*)                                       AS tariff_count,
+          COUNT(DISTINCT utility_id)                     AS utility_count
+        FROM tariffs
+        WHERE source_url IS NOT NULL
+        GROUP BY domain
+        ORDER BY tariff_count DESC
+        LIMIT 30
+    """)
+    domain_rows = (await db.execute(domains_sql)).all()
+
+    # Utility outliers — abnormally high tariff counts hint at mis-attribution
+    outliers_sql = text("""
+        SELECT u.id, u.name, u.state_province, u.country, COUNT(t.id) AS tariff_count
+        FROM utilities u
+        JOIN tariffs t ON t.utility_id = u.id
+        WHERE u.is_active = true
+        GROUP BY u.id, u.name, u.state_province, u.country
+        HAVING COUNT(t.id) >= 25
+        ORDER BY tariff_count DESC
+        LIMIT 30
+    """)
+    outlier_rows = (await db.execute(outliers_sql)).all()
+
+    # Freshness buckets — current (<30d), aging (30–90d), stale (>90d), never
+    freshness_sql = text("""
+        SELECT
+          COUNT(*) FILTER (WHERE last_verified_at >= NOW() - INTERVAL '30 days')                                    AS current_count,
+          COUNT(*) FILTER (WHERE last_verified_at <  NOW() - INTERVAL '30 days'
+                            AND last_verified_at >= NOW() - INTERVAL '90 days')                                    AS aging_count,
+          COUNT(*) FILTER (WHERE last_verified_at <  NOW() - INTERVAL '90 days')                                    AS stale_count,
+          COUNT(*) FILTER (WHERE last_verified_at IS NULL)                                                          AS never_count
+        FROM tariffs
+    """)
+    fresh = (await db.execute(freshness_sql)).first()
+
+    # Confidence buckets
+    confidence_sql = text("""
+        SELECT
+          COUNT(*) FILTER (WHERE confidence_score >= 0.85)                                       AS high_count,
+          COUNT(*) FILTER (WHERE confidence_score >= 0.5  AND confidence_score < 0.85)          AS medium_count,
+          COUNT(*) FILTER (WHERE confidence_score < 0.5)                                         AS low_count,
+          COUNT(*) FILTER (WHERE confidence_score IS NULL)                                       AS unscored_count
+        FROM tariffs
+    """)
+    conf = (await db.execute(confidence_sql)).first()
+
+    return {
+        "headline": {
+            "total_tariffs": headline.total_tariffs or 0,
+            "utilities_with_tariffs": headline.utilities_with_tariffs or 0,
+            "active_utilities": headline.active_utilities or 0,
+            "coverage_pct": round(
+                100 * (headline.utilities_with_tariffs or 0) / (headline.active_utilities or 1), 2
+            ),
+            "tariffs_no_source": headline.tariffs_no_source or 0,
+            "tariffs_no_confidence": headline.tariffs_no_confidence or 0,
+        },
+        "top_source_domains": [
+            {
+                "domain": d.domain or "(null)",
+                "tariff_count": d.tariff_count,
+                "utility_count": d.utility_count,
+            }
+            for d in domain_rows
+        ],
+        "utility_outliers": [
+            {
+                "id": r.id,
+                "name": r.name,
+                "state_province": r.state_province,
+                # Raw text() query returns country as a string already.
+                "country": r.country if r.country else None,
+                "tariff_count": r.tariff_count,
+            }
+            for r in outlier_rows
+        ],
+        "freshness": {
+            "current": fresh.current_count or 0,
+            "aging": fresh.aging_count or 0,
+            "stale": fresh.stale_count or 0,
+            "never_verified": fresh.never_count or 0,
+        },
+        "confidence": {
+            "high": conf.high_count or 0,
+            "medium": conf.medium_count or 0,
+            "low": conf.low_count or 0,
+            "unscored": conf.unscored_count or 0,
+        },
+    }
