@@ -413,17 +413,16 @@ def _download_pdf_playwright(url: str) -> bytes | None:
         return None
 
 
-def _extract_pdf_pdfplumber(pdf_bytes: bytes, max_pages: int = 150) -> str:
+def _extract_pdf_pdfplumber(pdf_bytes: bytes, max_pages: int = 120) -> str:
     """Try extracting text from a PDF using pdfplumber (works for text-based PDFs).
 
-    Page cap raised from 50 to 150 so we capture all rate sections in
-    consolidated rate-book PDFs:
-    - Hydro-Québec's `electricity-rates.pdf` is 160 pages — Rate D/DP/DM/DT/
-      Flex D detail spans pages 12–31; commercial Rate G/M/L spans pages
-      32–80; Off-Grid Systems chapter (Domestic rate for isolated networks,
-      sometimes called "Rate DN") starts at page 119; appendices follow.
+    Page cap is 120 — a balance between coverage and worker memory:
+    - Hydro-Québec's `electricity-rates.pdf` is 160 pages but Rate D/DP/DM/
+      DT/Flex D detail (pages 12–31) and Off-Grid Systems chapter (pages
+      119–127) both fit. Pages 128+ are appendices/glossary we don't need.
     - Manitoba Hydro / BC Hydro rate books follow similar structures.
-    Pages 150+ are typically appendices/glossary we don't need.
+    Going higher (e.g. 150) caused OOM-kills of celery workers when the
+    pipeline holds multiple large PDFs in memory simultaneously.
     """
     import io
     try:
