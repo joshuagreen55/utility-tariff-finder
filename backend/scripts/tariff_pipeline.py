@@ -389,9 +389,13 @@ def _download_pdf_playwright(url: str) -> bytes | None:
         context = _get_pw_mgr().new_context(accept_downloads=True)
         try:
             page = context.new_page()
-            with page.expect_download(timeout=30000) as dl_info:
+            # 12s — long enough for legitimate utility PDF downloads,
+            # short enough that traversing a regulator index of 30+
+            # broken/redirected docket links (which used to trap ConEd
+            # for 30s × 30 links = 15 minutes) finishes quickly.
+            with page.expect_download(timeout=12000) as dl_info:
                 try:
-                    page.goto(url, timeout=20000, wait_until="commit")
+                    page.goto(url, timeout=10000, wait_until="commit")
                 except Exception:
                     pass  # navigation "fails" when a download starts
             download = dl_info.value
@@ -1040,6 +1044,49 @@ def _is_explainer_url(url: str, title: str = "") -> bool:
     )
 
 
+# State public-utility-commission "rate case / docket / proceeding"
+# subdomains and paths. These contain regulatory filings (testimony,
+# orders, staff memos) — *not* customer-facing tariff publications.
+# When a utility's main rate page links out to these (e.g. ConEd's site
+# linking to ru.dps.ny.gov rate-case summaries for *all* NY utilities),
+# the L2 crawler used to follow them all and hang for 30s each on the
+# Playwright download timeout.
+#
+# CAUTION: We don't block whole regulator domains because some utilities
+# (especially Canadian ones — BCUC, OEB, NEB, Régie de l'énergie) use
+# the regulator as their *primary* tariff publisher. Match on filing-
+# specific path/subdomain patterns instead.
+_REGULATOR_FILING_PATTERNS = (
+    r"://[a-z]{2,4}\.dps\.ny\.gov",
+    r"/rate[-_]case[-_]",
+    r"/rate[-_]case/",
+    r"[-_]rate[-_]case[-_]filing",
+    r"[-_]rate[-_]case[-_]summary",
+    r"[-_]rate[-_]case[-_]staff",
+    r"[-_]filing[-_]memo",
+    r"[-_]staff[-_]broadcast[-_]memo",
+    r"/dockets?/",
+    r"/proceedings?/",
+    r"docket[-_]?no[-_\.]?\d",
+)
+_REGULATOR_FILING_RE = re.compile(
+    "|".join(_REGULATOR_FILING_PATTERNS), re.IGNORECASE
+)
+
+
+def _is_regulator_filing_url(url: str, title: str = "") -> bool:
+    """True if the URL looks like a regulator rate-case docket or
+    filing memo rather than a tariff publication."""
+    try:
+        url_decoded = unquote(url)
+    except Exception:
+        url_decoded = url
+    return bool(
+        _REGULATOR_FILING_RE.search(url_decoded)
+        or (title and _REGULATOR_FILING_RE.search(title))
+    )
+
+
 # URLs/titles matching these patterns are regulator archives of cancelled or
 # superseded tariffs — always demote them when a current alternative exists.
 # Handles slash-separated (/cancelled/), underscore (cancelled_tariff),
@@ -1616,6 +1663,19 @@ def phase2_discover_tariff_pages(rate_page_url: str) -> list[RatePage]:
 
     log.info(f"  Phase 2: Found {len(level1_links)} relevant links on main page")
 
+    # Drop regulator rate-case / docket / proceeding links — they're filings
+    # about *changes* to rates, not the rates themselves, and Playwright
+    # PDF-download timeouts on these (30s each) trapped ConEd's run.
+    before_filing = len(level1_links)
+    level1_links = [
+        (u, t) for u, t in level1_links if not _is_regulator_filing_url(u, t)
+    ]
+    if len(level1_links) < before_filing:
+        log.info(
+            f"  Phase 2: Dropped {before_filing - len(level1_links)} regulator "
+            f"rate-case / docket links"
+        )
+
     # Demote cancelled/superseded URLs to the bottom so that when we hit the
     # MAX_LEVEL1 cap we keep current tariffs. Regulator archives (psc.ky.gov,
     # etc.) often list both current and cancelled PDFs; we want current first.
@@ -1687,6 +1747,20 @@ def phase2_discover_tariff_pages(rate_page_url: str) -> list[RatePage]:
                     level2_candidates.append((sub_url, sub_text))
 
         time.sleep(0.3)
+
+    # Drop regulator rate-case / docket / proceeding links from L2 too.
+    # The L2 enumeration is where ConEd's run got trapped — its main page
+    # linked to ru.dps.ny.gov which itself linked to PDF rate-case
+    # summaries for every NY utility (NYSEG, RG&E, Central Hudson, etc.).
+    before_filing_l2 = len(level2_candidates)
+    level2_candidates = [
+        (u, t) for u, t in level2_candidates if not _is_regulator_filing_url(u, t)
+    ]
+    if len(level2_candidates) < before_filing_l2:
+        log.info(
+            f"  Phase 2: Dropped {before_filing_l2 - len(level2_candidates)} "
+            f"regulator rate-case / docket links from L2"
+        )
 
     # Level 2: fetch the deeper pages (capped to avoid runaway crawling)
     MAX_LEVEL2 = 10
