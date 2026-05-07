@@ -939,7 +939,47 @@ def score_search_result(
     if any(url_domain == d or url_domain.endswith(f".{d}") for d in THIRD_PARTY_DOMAINS):
         return -999  # Hard block — never use aggregator/comparison sites
 
+    # Hard-block utility-published "average rate comparison" brochures.
+    # These print one representative price per region (not real tariffs);
+    # the LLM cleanly extracts that single number as a phantom FLAT
+    # tariff, e.g. HQ's `comparison-electricity-prices-2019.pdf` produced
+    # a fake "Residential Service $0.07299/kWh". See quality_cleanup.py
+    # category A and the contamination cleanup commit.
+    if _is_comparison_brochure_url(url, title):
+        return -999
+
     return score
+
+
+# Patterns marking a URL as a comparison/marketing brochure rather than
+# a real tariff schedule. Match in both URL paths and titles.
+_COMPARISON_BROCHURE_PATTERNS = (
+    r"comparison[-_]of[-_]electricity",
+    r"comparison[-_]electricity[-_]prices",
+    r"comparing[-_]electricity",
+    r"electricity[-_]rate[s]?[-_]comparison",
+    r"rate[-_]comparison",
+    r"average[-_]electricity[-_]rates",
+    # Annual "comparison-electricity-prices-YYYY.pdf" naming used by
+    # several utilities (HQ, Manitoba Hydro, etc).
+    r"electricity[-_]prices[-_]\d{4}",
+)
+_COMPARISON_BROCHURE_RE = re.compile(
+    "|".join(_COMPARISON_BROCHURE_PATTERNS), re.IGNORECASE
+)
+
+
+def _is_comparison_brochure_url(url: str, title: str = "") -> bool:
+    """True if this URL/title looks like a marketing rate-comparison
+    brochure. These docs are not authoritative tariff schedules."""
+    try:
+        url_decoded = unquote(url)
+    except Exception:
+        url_decoded = url
+    return bool(
+        _COMPARISON_BROCHURE_RE.search(url_decoded)
+        or (title and _COMPARISON_BROCHURE_RE.search(title))
+    )
 
 
 # URLs/titles matching these patterns are regulator archives of cancelled or
@@ -3488,6 +3528,48 @@ def store_tariffs(utility_id: int, tariffs: list[ExtractedTariff], dry_run: bool
 
             stored += 1
 
+        # Targeted OpenEI supersede: when a freshly-extracted tariff
+        # plausibly names the same product as a 2017-era OpenEI import
+        # for the same utility+class, delete the OpenEI row. This runs
+        # BEFORE the count-based reconciliation below so it works even
+        # on partial extractions (which the count guard correctly
+        # protects against). See tariffs_likely_same() for the matcher.
+        if stored >= 1:
+            fresh_keys = [
+                (et.name, CLASS_MAP.get(et.customer_class))
+                for et in tariffs
+                if CLASS_MAP.get(et.customer_class)
+            ]
+            if fresh_keys:
+                openei_siblings = session.execute(
+                    select(Tariff).where(
+                        Tariff.utility_id == utility_id,
+                        Tariff.openei_id.is_not(None),
+                    )
+                ).scalars().all()
+                superseded_ids: list[int] = []
+                for ot in openei_siblings:
+                    for fresh_name, fresh_class in fresh_keys:
+                        if ot.customer_class != fresh_class:
+                            continue
+                        if tariffs_likely_same(ot.name, fresh_name):
+                            superseded_ids.append(ot.id)
+                            break
+                if superseded_ids:
+                    from sqlalchemy import delete as sa_delete
+                    session.execute(
+                        sa_delete(RateComponent).where(
+                            RateComponent.tariff_id.in_(superseded_ids)
+                        )
+                    )
+                    session.execute(
+                        sa_delete(Tariff).where(Tariff.id.in_(superseded_ids))
+                    )
+                    log.info(
+                        f"  Superseded: removed {len(superseded_ids)} stale OpenEI "
+                        f"siblings duplicated by fresh extractions"
+                    )
+
         # Reconcile: remove tariffs for this utility that were not in the
         # current extraction, with guards to prevent destroying valid data.
         if stored >= 1:
@@ -3785,6 +3867,132 @@ def _is_prefix_duplicate(norm_name: str, existing_names: set[str]) -> bool:
         if norm_name.startswith(existing) or existing.startswith(norm_name):
             return True
     return False
+
+
+# ---------------------------------------------------------------------------
+# Stale-tariff supersede helpers (used both at write-time in Phase 4 and by
+# the offline `quality_cleanup.py` script). Kept here so a single matcher
+# governs both code paths.
+# ---------------------------------------------------------------------------
+
+# Tokens that distinguish otherwise-similar tariff names. If both sides
+# carry conflicting discriminators, they are NOT the same product.
+_TARIFF_DISCRIMINATORS: frozenset[str] = frozenset({
+    # phase / voltage
+    "single", "multi", "multiphase", "polyphase", "three", "threephase",
+    "1ph", "3ph", "primary", "secondary", "transmission", "subtransmission",
+    # size class
+    "small", "medium", "large",
+    # season
+    "summer", "winter", "seasonal",
+    # rate-shape
+    "tou", "flat", "tiered", "demand",
+    "flex", "flexible", "block", "declining",
+    # program type
+    "optional", "experimental", "pilot", "trial",
+    # load-shape / DR
+    "interruptible", "curtailable", "controlled", "controllable",
+    "load", "management",
+    # special-purpose
+    "lighting", "heating", "heater", "irrigation", "agricultural", "farm",
+    "rural", "urban", "inside", "outside",
+    "second", "water",
+    "additional", "auxiliary", "supplemental",
+    # time-encoded forms (post-normalization)
+    "timeofuse", "timeofday", "tod",
+    # DG / DERs
+    "ev", "solar", "wind", "renewable", "metering", "net",
+    "plugin", "vehicle", "charging", "pev", "evse",
+    # equity / income
+    "lifeline", "subsidized", "low", "income", "senior",
+    # fuel mix
+    "dual", "fuel",
+    # usage qualifiers
+    "limited", "without",
+    # negation prefixes — meaningful when paired with a discriminator,
+    # e.g. "Demand Billing" vs "Non-Demand Billing"
+    "no", "non",
+})
+
+_TARIFF_NAME_STOPWORDS: frozenset[str] = frozenset({
+    "and", "or", "for", "the", "of", "in", "to", "a", "an", "is",
+    "by", "as", "on", "at", "with",
+    "rate", "plan", "schedule", "service",
+})
+
+_BLURB_HINTS: frozenset[str] = frozenset({
+    "for", "with", "applies", "applicable", "whose", "when",
+    "that", "including",
+})
+
+
+def _norm_tariff_name_for_match(name: str) -> str:
+    """Normalize a tariff name for cross-source matching.
+
+    Critically, hyphens / dashes / slashes are turned into spaces BEFORE
+    stripping the rest of the punctuation, so 'Time-of-Use' tokenizes as
+    {time, of, use} rather than collapsing into the compound 'timeofuse'.
+    """
+    if not name:
+        return ""
+    n = name.lower().strip()
+    n = re.sub(r"[\-–—/_]+", " ", n)
+    n = re.sub(r"[^a-z0-9\s]", "", n)
+    return " ".join(n.split())
+
+
+def _strip_tariff_blurb(name: str) -> str:
+    """Drop trailing '- <descriptive blurb>' that OpenEI is fond of, but
+    preserve trailing '- <real qualifier>' like '- Single Phase'."""
+    for sep in (" - ", " — "):
+        if sep in name:
+            head, _, tail = name.partition(sep)
+            tail_toks = [t.lower() for t in tail.split()]
+            if len(tail_toks) > 6 or any(t in _BLURB_HINTS for t in tail_toks):
+                return head.strip()
+    return name.strip()
+
+
+def tariffs_likely_same(name_a: str, name_b: str) -> bool:
+    """True iff the two tariff names plausibly describe the same product.
+
+    This is the matcher used both at extraction-write time (to supersede
+    OpenEI siblings) and offline by `quality_cleanup.py`. Conservative:
+    favors false negatives over false positives.
+    """
+    a_full = _norm_tariff_name_for_match(name_a)
+    b_full = _norm_tariff_name_for_match(name_b)
+    if not a_full or not b_full:
+        return False
+    if a_full == b_full:
+        return True
+    a_head = _norm_tariff_name_for_match(_strip_tariff_blurb(name_a))
+    b_head = _norm_tariff_name_for_match(_strip_tariff_blurb(name_b))
+    if a_head and b_head and a_head == b_head:
+        return True
+    ta = set((a_head or a_full).split())
+    tb = set((b_head or b_full).split())
+    if not ta or not tb:
+        return False
+    overlap = len(ta & tb) / min(len(ta), len(tb))
+    if overlap < 0.6:
+        return False
+    a_disc = ta & _TARIFF_DISCRIMINATORS
+    b_disc = tb & _TARIFF_DISCRIMINATORS
+    if a_disc != b_disc:
+        return False
+    def _codes(toks: set[str]) -> set[str]:
+        return {
+            t for t in toks
+            if 1 <= len(t) <= 4
+            and any(c.isalpha() for c in t)
+            and t not in _TARIFF_DISCRIMINATORS
+            and t not in _TARIFF_NAME_STOPWORDS
+        }
+    ca, cb = _codes(ta), _codes(tb)
+    if (ca or cb) and not (ca & cb):
+        return False
+    return True
 
 
 def _check_fingerprints(utility_id: int, pages: list[RatePage]) -> bool:
