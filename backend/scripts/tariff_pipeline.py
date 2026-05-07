@@ -413,8 +413,18 @@ def _download_pdf_playwright(url: str) -> bytes | None:
         return None
 
 
-def _extract_pdf_pdfplumber(pdf_bytes: bytes, max_pages: int = 50) -> str:
-    """Try extracting text from a PDF using pdfplumber (works for text-based PDFs)."""
+def _extract_pdf_pdfplumber(pdf_bytes: bytes, max_pages: int = 150) -> str:
+    """Try extracting text from a PDF using pdfplumber (works for text-based PDFs).
+
+    Page cap raised from 50 to 150 so we capture all rate sections in
+    consolidated rate-book PDFs:
+    - Hydro-Québec's `electricity-rates.pdf` is 160 pages — Rate D/DP/DM/DT/
+      Flex D detail spans pages 12–31; commercial Rate G/M/L spans pages
+      32–80; Off-Grid Systems chapter (Domestic rate for isolated networks,
+      sometimes called "Rate DN") starts at page 119; appendices follow.
+    - Manitoba Hydro / BC Hydro rate books follow similar structures.
+    Pages 150+ are typically appendices/glossary we don't need.
+    """
     import io
     try:
         import pdfplumber
@@ -948,6 +958,13 @@ def score_search_result(
     if _is_comparison_brochure_url(url, title):
         return -999
 
+    # Demote (but don't outright block) customer-facing explainer pages.
+    # Sometimes a utility links its actual rate page from a "how-your-bill-
+    # works" page, so we may still want to crawl in for links — just give
+    # it lower priority than dedicated rate URLs.
+    if _is_explainer_url(url, title):
+        score -= 30
+
     return score
 
 
@@ -979,6 +996,48 @@ def _is_comparison_brochure_url(url: str, title: str = "") -> bool:
     return bool(
         _COMPARISON_BROCHURE_RE.search(url_decoded)
         or (title and _COMPARISON_BROCHURE_RE.search(title))
+    )
+
+
+# Patterns that mark a URL as a customer-facing explainer/conceptual
+# page rather than a rate publication. These pages talk about how
+# billing works, what a kilowatt-hour is, etc. The LLM (especially
+# screenshot vision) tends to hallucinate "tariffs" from this kind of
+# conceptual prose — for example, "Detail de la consommation",
+# "Tarification pour une résidence", "Domestic Rate Schedule -
+# Bill consumption" — none of which are real published rates.
+_EXPLAINER_URL_PATTERNS = (
+    r"understanding[-_]",
+    r"how[-_]it[-_]works",
+    r"how[-_]is[-_]",
+    r"how[-_]your[-_]bill",
+    r"comment[-_](?:fonctionne|calculer|lire)",
+    r"learn[-_]about",
+    r"about[-_]your[-_](?:bill|rates?|electricity)",
+    r"glossary",
+    r"explanation",
+    r"explained\.",
+    r"demystify",
+    r"comprendre",
+    r"deposit[-_]payment",
+    r"estimate[-_]electric",
+    r"power[-_]demand",
+)
+_EXPLAINER_URL_RE = re.compile("|".join(_EXPLAINER_URL_PATTERNS), re.IGNORECASE)
+
+
+def _is_explainer_url(url: str, title: str = "") -> bool:
+    """True if the URL/title looks like a customer-education page
+    rather than a rate publication. Used to demote scoring and to
+    skip screenshot-vision fallback (which is the main hallucination
+    surface on these pages)."""
+    try:
+        url_decoded = unquote(url)
+    except Exception:
+        url_decoded = url
+    return bool(
+        _EXPLAINER_URL_RE.search(url_decoded)
+        or (title and _EXPLAINER_URL_RE.search(title))
     )
 
 
@@ -1753,36 +1812,102 @@ def _compress_whitespace(text: str) -> str:
 
 
 def _select_rate_content(text: str, max_chars: int = 20000) -> str:
-    """For long documents (especially PDFs), extract a contiguous window
-    of text starting from the first residential/domestic rate section."""
+    """Select the most rate-relevant portion(s) of a document.
+
+    For long documents, find ALL residential/general-service rate
+    sections (not just the first one) and concatenate windows around
+    each within the char budget. This handles consolidated rate-book
+    PDFs — like Hydro-Québec's `electricity-rates.pdf` (333K chars,
+    160 pages) — where Rate D, Rate DP, Rate DM, Rate DT, Rate Flex D
+    each occupy only a few pages and are spread across the first
+    ~12% of the document. Anchoring on the first match alone
+    truncates well before the second rate.
+
+    Long-document budget bump: very large PDFs (>100K chars) get up to
+    3x the requested budget. The marginal LLM cost is worth it for
+    consolidated rate books.
+    """
     text = _compress_whitespace(text)
     if len(text) <= max_chars:
         return text
 
-    # Strategy 1: find the first residential/domestic/general-service section
-    # that contains actual rate values (skip TOC entries and wholesale sections)
-    _per_unit = re.compile(r"per\s+(?:month|kWh|kW)", re.IGNORECASE)
-    best_start = None
+    # Adaptive budget: triple the budget for long docs (consolidated
+    # rate books). Threshold lowered to 50k chars because pdfplumber
+    # text extraction is denser per page than pdfminer — a 50-page
+    # rate-book PDF often produces only 90–110k chars (where pdfminer
+    # would produce 200k+). Caller's `max_chars` defines the floor.
+    effective_max = max_chars * 3 if len(text) > 50_000 else max_chars
+
+    # Strategy 1: gather windows around EVERY residential/domestic rate
+    # section that has actual rate values nearby (skip TOC entries and
+    # wholesale sections).
+    _per_unit = re.compile(
+        r"per\s+(?:month|kWh|kW)|\$/\s*(?:kWh|kW|day|month)|¢/\s*kWh",
+        re.IGNORECASE,
+    )
+    anchors: list[int] = []
     for m in _RESIDENTIAL_SIGNAL.finditer(text):
-        nearby = text[m.start():min(len(text), m.start() + 1500)]
+        nearby = text[m.start():min(len(text), m.start() + 2500)]
         if _RATE_AMOUNT_RE.search(nearby) and _per_unit.search(nearby):
-            best_start = max(0, m.start() - 200)
-            break
+            anchors.append(m.start())
 
-    if best_start is not None:
-        start = best_start
-        end = start + max_chars
-        if end > len(text):
-            end = len(text)
-            start = max(0, end - max_chars)
-        selected = text[start:end]
-        if start > 0:
-            selected = "[...document truncated...]\n" + selected
-        if end < len(text):
-            selected += "\n[...document truncated...]"
-        return selected
+    if anchors:
+        first_anchor = anchors[0]
+        last_anchor = anchors[-1]
+        anchor_span = last_anchor - first_anchor
 
-    # Strategy 2 (fallback): sliding window maximizing rate signal density
+        # A consolidated rate-book PDF (HQ, Manitoba Hydro, BC Hydro, etc.)
+        # has its residential sections spread across many tens of
+        # thousands of characters — Rate D / DP / DM / DT / Flex D for
+        # Hydro-Québec span offsets 25k–70k. Tiny per-anchor windows
+        # leave gaps. When anchors are spread out (>10k between first
+        # and last) OR there's plenty of budget vs. single-anchor
+        # window size, use ONE big contiguous window instead.
+        if anchor_span > 10_000 or effective_max > 30_000:
+            # Pad before the first anchor so the section heading and
+            # any preceding rate detail (commonly a lead-in section
+            # like "Section 2 – Rate D") makes it into the window.
+            lead_in = 10_000
+            start = max(0, first_anchor - lead_in)
+            end = min(len(text), start + effective_max)
+            selected = text[start:end]
+            if start > 0:
+                selected = "[...document truncated...]\n" + selected
+            if end < len(text):
+                selected += "\n[...document truncated...]"
+            return selected
+
+        # Otherwise: small/medium docs with tightly-clustered anchors.
+        # Build a window around each anchor and merge overlaps.
+        windows = [(max(0, a - 1000), min(len(text), a + 6000)) for a in anchors]
+        windows.sort()
+        merged: list[list[int]] = [list(windows[0])]
+        for s_, e_ in windows[1:]:
+            if s_ <= merged[-1][1] + 500:
+                merged[-1][1] = max(merged[-1][1], e_)
+            else:
+                merged.append([s_, e_])
+
+        sep = "\n\n[...document truncated...]\n\n"
+        used = 0
+        parts: list[str] = []
+        for s_, e_ in merged:
+            chunk = text[s_:e_]
+            sep_cost = len(sep) if parts else 0
+            if used + sep_cost + len(chunk) > effective_max:
+                remaining = effective_max - used - sep_cost
+                if remaining > 500:
+                    parts.append(chunk[:remaining])
+                break
+            parts.append(chunk)
+            used += sep_cost + len(chunk)
+
+        if parts:
+            prefix = "[...document truncated...]\n" if merged[0][0] > 0 else ""
+            suffix = "\n[...document truncated...]" if merged[-1][1] < len(text) else ""
+            return prefix + sep.join(parts) + suffix
+
+    # Strategy 2 (fallback): sliding window maximizing rate signal density.
     block = 500
     n_blocks = (len(text) + block - 1) // block
     scores = []
@@ -1797,7 +1922,7 @@ def _select_rate_content(text: str, max_chars: int = 20000) -> str:
             s += 2
         scores.append(s)
 
-    window_blocks = max_chars // block
+    window_blocks = effective_max // block
     if window_blocks >= n_blocks:
         return text
 
@@ -1811,7 +1936,7 @@ def _select_rate_content(text: str, max_chars: int = 20000) -> str:
             best_start = start
 
     start_char = best_start * block
-    end_char = start_char + max_chars
+    end_char = start_char + effective_max
     selected = text[start_char:end_char]
     if start_char > 0:
         selected = "[...document truncated...]\n" + selected
@@ -1943,7 +2068,18 @@ def _merge_prefix_duplicates(tariffs: list[ExtractedTariff]) -> list[ExtractedTa
                     else:
                         absorbed.add(i)
                     continue
-                is_prefix = norm_i.startswith(norm_j) or norm_j.startswith(norm_i)
+                # Token-aware prefix check. The naive substring prefix test
+                # incorrectly merged products like "Rate D" vs "Rate DP",
+                # because "rate dp".startswith("rate d") is True. Require
+                # the shorter name to end on a token boundary in the longer
+                # name — i.e. the longer name's next character must be a
+                # space — so "Rate D" / "Rate DP" no longer collide while
+                # "Rate D" / "Rate D Service" still merges as expected.
+                shorter, longer = (norm_i, norm_j) if len(norm_i) <= len(norm_j) else (norm_j, norm_i)
+                is_prefix = (
+                    longer.startswith(shorter)
+                    and (len(longer) == len(shorter) or longer[len(shorter)] == " ")
+                )
                 if not is_prefix:
                     continue
                 # One is a prefix of the other — keep the richer one
@@ -2102,7 +2238,11 @@ Rules:
 
 Use the store_tariffs tool to return results."""
 
-MAX_PDF_VISION_PAGES = 15
+# Vision page budget. Bumped from 15 because consolidated rate-book PDFs
+# (HQ's electricity-rates.pdf is 160 pages) bury tariff detail past page
+# 15. We pay roughly 25/15 = 1.67x more vision tokens but actually see
+# the rates we need to extract.
+MAX_PDF_VISION_PAGES = 25
 
 
 def _extract_pdf_vision(
@@ -2181,9 +2321,16 @@ _COMPLEXITY_SIGNALS = re.compile(
     re.IGNORECASE,
 )
 
-TWOPASS_IDENTIFY_PROMPT = """List all residential and commercial electricity rate plans/tariffs in this document for the TARGET UTILITY only.
+TWOPASS_IDENTIFY_PROMPT = """List EVERY DISTINCT residential or commercial electricity rate/tariff/schedule named in this document for the TARGET UTILITY.
 
 TARGET UTILITY: {utility_name} ({state})
+
+Be exhaustive. Include EVERY named rate you see — base rates AND variants/options — for example:
+- Rate D, Rate DP, Rate DM, Rate DT, Rate Flex D, Rate G, Rate Flex G
+- Schedule R, Schedule RS, Schedule R-TOU, Schedule R-EV
+- Plan A, Plan B, Standard Plan, TOU Plan, Critical Peak Plan
+- Residential Service, Time-of-Use Service, Optional Plans
+A "rate" is anything the document treats as a separately-priced product, even if it's only a paragraph long. DO NOT collapse variants into the parent rate; list each one.
 
 For each tariff, provide ONLY:
 - name: The official name or schedule code
@@ -2192,7 +2339,7 @@ For each tariff, provide ONLY:
 
 ATTRIBUTION RULE: Only list rates the document explicitly attributes to the target utility. If the document is a comparison/aggregator and lists rates for several utilities, exclude rates not labeled for the target. If you cannot tell, return [].
 
-SKIP: industrial, large commercial, lighting, irrigation, wholesale, interruptible
+SKIP: industrial-only, lighting-only, irrigation-only, wholesale-only, riders that aren't standalone rates
 
 Return a JSON array of objects with keys: name, customer_class, location_hint
 If no relevant tariffs, return [].
@@ -2241,19 +2388,40 @@ def _extract_two_pass(
     content_for_llm = _select_rate_content(page.content, max_chars=25000)
     llm_calls = 0
 
-    # Pass 1: Identify all tariff names
+    # Pass 1: Identify all tariff names. Pass the full pre-selected
+    # content (which may already be a multi-window concatenation for
+    # long rate-book PDFs) so we don't miss tariffs in later sections.
+    # Cap at 60k chars defensively to control LLM input size.
     identify_prompt = TWOPASS_IDENTIFY_PROMPT.format(
-        content=content_for_llm[:15000],
+        content=content_for_llm[:60000],
         utility_name=utility_name,
         state=state,
     )
+    # Long-document identify needs higher recall than Haiku reliably
+    # delivers. Opus is one call per utility, so the cost delta is
+    # bounded; the win is enumerating every named rate in consolidated
+    # rate-book PDFs (HQ, Manitoba Hydro, BC Hydro, etc.).
+    use_opus_for_identify = len(content_for_llm) >= 30_000
     try:
-        raw_text = _call_claude(identify_prompt)
+        raw_text = _call_claude(
+            identify_prompt,
+            model=OPUS_MODEL if use_opus_for_identify else None,
+        )
         llm_calls += 1
         identified = _parse_text_response(raw_text)
     except Exception as e:
         log.error(f"    Two-pass identification failed: {e}")
-        return [], llm_calls
+        # Retry with Haiku if Opus failed (rate-limit, transient error)
+        if use_opus_for_identify:
+            try:
+                raw_text = _call_claude(identify_prompt)
+                llm_calls += 1
+                identified = _parse_text_response(raw_text)
+            except Exception as e2:
+                log.error(f"    Identify retry with Haiku also failed: {e2}")
+                return [], llm_calls
+        else:
+            return [], llm_calls
 
     if not identified:
         return [], llm_calls
@@ -2262,11 +2430,16 @@ def _extract_two_pass(
         t for t in identified
         if isinstance(t, dict) and t.get("customer_class") in VALID_CLASSES
     ]
-    log.info(f"    Two-pass: identified {len(relevant)} relevant tariffs")
+    log.info(
+        f"    Two-pass: identified {len(relevant)} relevant tariffs "
+        f"(model={'opus' if use_opus_for_identify else 'haiku'})"
+    )
 
-    # Pass 2: Extract each tariff individually
+    # Pass 2: Extract each tariff individually. Cap at 12 to bound LLM
+    # cost — consolidated rate-book PDFs (HQ, Manitoba Hydro, etc.) can
+    # legitimately have ~10 named residential variants plus commercial.
     all_tariffs: list[ExtractedTariff] = []
-    for item in relevant[:8]:
+    for item in relevant[:12]:
         name = item.get("name", "Unknown")
         cc = item.get("customer_class", "residential")
         hint = item.get("location_hint", "")
@@ -2410,7 +2583,12 @@ def phase3_extract_tariffs(
 
     sorted_pages = sorted(pages, key=_depth)
 
-    MAX_LLM_CALLS = 12
+    # Upper bound on LLM calls per utility per run. 20 lets a consolidated
+    # rate-book PDF identify + extract ~10 distinct rates while leaving
+    # budget for HTML page extraction and screenshot vision fallbacks.
+    # Below 20, large utilities like Hydro-Québec (6 residential rates +
+    # commercial) run out of budget mid-extraction.
+    MAX_LLM_CALLS = 20
     all_tariffs: dict[str, ExtractedTariff] = {}
     llm_calls = 0
     consecutive_zeros = 0
@@ -2462,8 +2640,26 @@ def phase3_extract_tariffs(
         log.info(f"  Phase 3: Extracting from {page.url[:80]}")
         stats["pages_sent_to_llm"] += 1
 
-        # PDF vision: send pages as images for better table/layout preservation
-        if page.page_type == "pdf" and page.pdf_bytes and len(page.pdf_bytes) > 100:
+        # PDF dispatch:
+        #   - Rich-text PDFs (>10k chars extractable) -> fall through to
+        #     text-based two-pass extraction. The vision page cap (25 pages)
+        #     can't see past the first ~50k chars of a long rate book, so
+        #     for HQ-style consolidated PDFs (160 pages) text extraction
+        #     with the multi-section selector covers more ground.
+        #   - Sparse-text PDFs (image-heavy / scanned) -> vision.
+        is_rich_text_pdf = (
+            page.page_type == "pdf"
+            and page.pdf_bytes
+            and len(page.pdf_bytes) > 100
+            and page.content
+            and len(page.content) >= 10_000
+        )
+        if (
+            page.page_type == "pdf"
+            and page.pdf_bytes
+            and len(page.pdf_bytes) > 100
+            and not is_rich_text_pdf
+        ):
             log.info(f"    Using PDF vision extraction ({len(page.pdf_bytes)} bytes)")
             tariffs, calls = _extract_pdf_vision(
                 page.pdf_bytes, page.url, utility_name=utility_name, state=state,
@@ -2554,10 +2750,17 @@ def phase3_extract_tariffs(
             # page whose body has no numeric rate signals, the rates may be
             # embedded as images/graphics. Try a full-page screenshot + Vision
             # before giving up on this page.
+            #
+            # IMPORTANT: skip explainer/conceptual pages (e.g. "understanding-
+            # power-demand.html"). Screenshot-vision on those pages
+            # hallucinates "tariffs" out of conceptual prose ("Detail de la
+            # consommation", "Domestic Rate Schedule – Bill consumption"
+            # etc.) which then pollutes the residential view.
             if (
                 page.page_type != "pdf"
                 and is_rate_relevant_url(page.url, page.title or "")
                 and not _page_has_numeric_rates(page.content)
+                and not _is_explainer_url(page.url, page.title or "")
             ):
                 log.info(
                     "    Text extraction returned 0 on a rate-themed page "
@@ -2683,11 +2886,17 @@ def _get_anthropic_client():
     return client
 
 
-def _call_claude(prompt: str) -> str:
-    """Legacy text-only Claude call (used by two-pass identification step)."""
+def _call_claude(prompt: str, model: str | None = None) -> str:
+    """Text-only Claude call (used by two-pass identification step).
+
+    Defaults to Haiku for cost. Pass `model=OPUS_MODEL` from callers
+    that need higher recall (e.g. enumerating all named rates in a
+    consolidated rate-book PDF — Haiku is stochastic at scale and will
+    silently drop tariffs from the list).
+    """
     client = _get_anthropic_client()
     resp = client.messages.create(
-        model=HAIKU_MODEL,
+        model=model or HAIKU_MODEL,
         max_tokens=8192,
         messages=[{"role": "user", "content": prompt}],
     )
@@ -3186,6 +3395,10 @@ VALID_RATE_TYPES = {
     "tou_tiered", "seasonal_tou", "seasonal_tiered", "demand_tou",
     "tiered_demand", "demand_tiered", "tiered_demand_seasonal",
     "seasonal_demand", "demand_seasonal", "complex",
+    # Aliases the DB layer normalizes to COMPLEX. Listed here so the
+    # validator doesn't reject tariffs whose rate_type is recoverable.
+    "seasonal_tiered_demand", "seasonal_tou_tiered",
+    "seasonal_tou_demand", "tou_demand",
 }
 VALID_COMPONENT_TYPES = {"energy", "demand", "fixed", "minimum", "adjustment"}
 
@@ -3277,27 +3490,35 @@ def phase4_validate(
                             f"energy rate {rv} $/kWh suspiciously low "
                             f"(likely cents parsed as dollars)"
                         )
+                    # Tiered validation: only HARD-reject when a value is so
+                    # far out of bounds that it's almost certainly a parser
+                    # or LLM hallucination (>3x the 99th percentile). Within
+                    # 1x-3x of the 99th percentile we keep the tariff but
+                    # flag it for human review — these are legitimate peak,
+                    # dynamic-pricing, or critical-period rates that can
+                    # legitimately exceed the typical bound (e.g. HQ's Rate
+                    # DT dual-fuel pricing, ConEd's critical peak, etc.).
                     if ctype == "energy":
-                        if rv > p99_energy:
+                        if rv > p99_energy * 3:
                             tariff_issues.append(
-                                f"energy rate {rv} $/kWh exceeds 99th percentile "
-                                f"for {state or 'US'} ({p99_energy})"
+                                f"energy rate {rv} $/kWh > 3x 99th percentile "
+                                f"for {state or 'US'} ({p99_energy}) — likely hallucination"
                             )
                         elif rv > p95_energy:
                             needs_review = True
                     elif ctype == "fixed":
-                        if rv > p99_fixed:
+                        if rv > p99_fixed * 3:
                             tariff_issues.append(
-                                f"fixed charge ${rv}/month exceeds 99th percentile "
-                                f"for {state or 'US'} ({p99_fixed})"
+                                f"fixed charge ${rv}/month > 3x 99th percentile "
+                                f"for {state or 'US'} ({p99_fixed}) — likely hallucination"
                             )
                         elif rv > p95_fixed:
                             needs_review = True
                     elif ctype == "demand":
-                        if rv > p99_demand:
+                        if rv > p99_demand * 3:
                             tariff_issues.append(
-                                f"demand charge ${rv}/kW exceeds 99th percentile "
-                                f"for {state or 'US'} ({p99_demand})"
+                                f"demand charge ${rv}/kW > 3x 99th percentile "
+                                f"for {state or 'US'} ({p99_demand}) — likely hallucination"
                             )
                         elif rv > p95_demand:
                             needs_review = True
