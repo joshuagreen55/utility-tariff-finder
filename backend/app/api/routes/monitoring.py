@@ -651,11 +651,15 @@ async def data_quality_overview(db: AsyncSession = Depends(get_db)):
     - tariff freshness buckets based on last_verified_at
     - confidence distribution
     """
-    # Headline counts
+    # Headline counts. utilities_with_tariffs filters by active so coverage
+    # never exceeds 100% after we deactivate utilities that still have
+    # historical tariff rows attached (e.g. the REP cleanup).
     headline_sql = text("""
         SELECT
           (SELECT COUNT(*) FROM tariffs)                                 AS total_tariffs,
-          (SELECT COUNT(DISTINCT utility_id) FROM tariffs)               AS utilities_with_tariffs,
+          (SELECT COUNT(DISTINCT t.utility_id) FROM tariffs t
+             JOIN utilities u ON u.id = t.utility_id
+             WHERE u.is_active = true)                                   AS utilities_with_tariffs,
           (SELECT COUNT(*) FROM tariffs WHERE source_url IS NULL)        AS tariffs_no_source,
           (SELECT COUNT(*) FROM tariffs WHERE confidence_score IS NULL)  AS tariffs_no_confidence,
           (SELECT COUNT(*) FROM utilities WHERE is_active = true)        AS active_utilities

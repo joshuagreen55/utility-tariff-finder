@@ -2307,23 +2307,31 @@ def _attribution_violates(
     """Return a short reason string if the tariff name appears to belong to
     a different utility than `utility_name`, otherwise None.
 
-    Heuristic: scan the tariff `name` and `description` for known
+    Heuristic: scan the tariff `name` (only — not description) for known
     multi-utility marker phrases. If a marker matches AND the marker
     phrase is NOT itself a substring of the target utility's name,
     flag as a likely mis-attribution.
 
+    Why name-only: the original PECO/Penelec contamination always had
+    the wrong utility's name in the tariff name itself (e.g. "Penelec
+    Default Service"). Description fields, by contrast, frequently
+    contain a utility's own brand acronym as background context (e.g.
+    "Gas Distribution Rate" with description "...applies to BGE
+    customers..."), which produced false-positive rejections in
+    RefreshRun #5.
+
     Substring match (not token overlap) keeps false positives low when
-    a single common word like "light" or "energy" coincidentally appears
-    in both lists.
+    a single common word like "light" or "energy" coincidentally
+    appears in both lists.
     """
     if not utility_name:
         return None
 
-    blob = f"{tariff.name} {tariff.description}".lower()
+    name = (tariff.name or "").lower()
     target = utility_name.lower()
 
     for marker in _OTHER_UTILITY_TOKENS:
-        if marker not in blob:
+        if marker not in name:
             continue
         if marker in target:
             return None  # marker phrase is itself part of the target utility name
