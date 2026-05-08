@@ -425,9 +425,31 @@ def _extract_pdf_pdfplumber(pdf_bytes: bytes, max_pages: int = 120) -> str:
       DT/Flex D detail (pages 12–31) and Off-Grid Systems chapter (pages
       119–127) both fit. Pages 128+ are appendices/glossary we don't need.
     - Manitoba Hydro / BC Hydro rate books follow similar structures.
-    Going higher (e.g. 150) caused OOM-kills of celery workers when the
-    pipeline holds multiple large PDFs in memory simultaneously.
+
+    Memory protection:
+    - For PDFs over ~4MB we skip `extract_tables()` (which is the most
+      memory-heavy pdfplumber operation; on a 6.5MB Newfoundland Power
+      rate book it ballooned to >1.5GB and OOM-killed the worker).
+      `extract_text()` alone usually captures all rate values when the
+      PDF uses real text (not images) for tables.
+    - We call `page.flush_cache()` after each page to release the
+      parsed objects and chars that pdfplumber otherwise retains for
+      the lifetime of the `with` block.
+    - PDFs over 18MB are refused outright — they're virtually always
+      multi-document PDF bundles or scanned books that pdfplumber will
+      either OOM on or produce useless OCR-grade output for.
     """
+    if len(pdf_bytes) > 18_000_000:
+        log.warning(
+            f"  PDF too large ({len(pdf_bytes)/1e6:.1f}MB), skipping pdfplumber"
+        )
+        return ""
+    skip_tables = len(pdf_bytes) > 4_000_000
+    if skip_tables:
+        log.info(
+            f"  PDF is {len(pdf_bytes)/1e6:.1f}MB — extracting text only "
+            f"(table extraction is OOM risk above 4MB)"
+        )
     import io
     try:
         import pdfplumber
@@ -438,13 +460,23 @@ def _extract_pdf_pdfplumber(pdf_bytes: bytes, max_pages: int = 120) -> str:
         for i, page in enumerate(pdf.pages):
             if i >= max_pages:
                 break
-            page_text = page.extract_text() or ""
-            tables = page.extract_tables()
-            for table in tables:
-                for row in table:
-                    cells = [str(c).strip() if c else "" for c in row]
-                    page_text += "\n" + " | ".join(cells)
-            text_parts.append(page_text)
+            try:
+                page_text = page.extract_text() or ""
+                if not skip_tables:
+                    tables = page.extract_tables()
+                    for table in tables:
+                        for row in table:
+                            cells = [str(c).strip() if c else "" for c in row]
+                            page_text += "\n" + " | ".join(cells)
+                text_parts.append(page_text)
+            finally:
+                # Release per-page cached chars/lines/edges so memory
+                # doesn't grow linearly with page count.
+                try:
+                    page.flush_cache()
+                    page.get_textmap.cache_clear()
+                except Exception:
+                    pass
     return "\n\n".join(text_parts).strip()
 
 
