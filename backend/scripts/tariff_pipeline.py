@@ -270,6 +270,10 @@ THIRD_PARTY_DOMAINS = frozenset({
     # Retail-electric-provider promotional offer sites (not the
     # utility's own default tariff)
     "xoomenergy.com",
+    # Added 2026-05-12 after Chunk 1 caught these polluting ComEd's
+    # tariff list with REP promotional plans and "price to compare"
+    # blurbs that aren't ComEd's own filings.
+    "ilagg.com", "ilenergyratings.com", "goananta.com",
     # Solar / green energy marketing
     "solar.com", "nrgcleanpower.com", "greenridgesolar.com",
     "madison.com", "sandboxsolar.com",
@@ -1057,6 +1061,22 @@ _EXPLAINER_URL_PATTERNS = (
     r"deposit[-_]payment",
     r"estimate[-_]electric",
     r"power[-_]demand",
+    # Utility-owned news/blog/storytelling subdomains and paths.
+    # Added 2026-05-12 after Chunk 1 caught the pipeline extracting
+    # "Proposed Rate Structure" tariffs from SCE's news blog at
+    # energized.edison.com/stories/sce-proposal-would-lower... These
+    # are news articles announcing proposed rate cases, NOT actual
+    # tariff publications. Generalising the pattern: any path
+    # containing /stories/, /news/, /press-release(s)/, /blog/, or
+    # /newsroom/ is a news article rather than a tariff filing.
+    r"//energized\.edison\.com/",
+    r"/stories/",
+    r"/newsroom/",
+    r"/news[-_]?releases?/",
+    r"/press[-_]?releases?/",
+    r"/media[-_]?releases?/",
+    r"/blog/",
+    r"/blogs/",
 )
 _EXPLAINER_URL_RE = re.compile("|".join(_EXPLAINER_URL_PATTERNS), re.IGNORECASE)
 
@@ -3575,6 +3595,22 @@ def phase4_validate(
         if t.rate_type not in VALID_RATE_TYPES:
             tariff_issues.append(f"invalid rate_type '{t.rate_type}'")
 
+        # Reject "proposed" / "pending" rates -- these come from rate-case
+        # news articles describing what a utility *wants* to charge, not
+        # the rate it actually charges today. Added 2026-05-12 after
+        # Chunk 1 caught SCE's news-blog "Proposed Rate Structure"
+        # tariffs being stored as if they were current filings.
+        if t.name:
+            _lower = t.name.lower()
+            if any(token in _lower for token in (
+                "proposed rate", "(proposed)", "pending approval",
+                "subject to approval", "preliminary rate",
+            )):
+                tariff_issues.append(
+                    f"rate marked as proposed/pending in name "
+                    f"({t.name!r}) -- not a current tariff"
+                )
+
         comp_types = {comp.get("component_type") for comp in t.components}
         has_core_component = bool(comp_types & {"energy", "fixed", "demand"})
         if not has_core_component:
@@ -4279,6 +4315,72 @@ def _strip_tariff_blurb(name: str) -> str:
     return name.strip()
 
 
+def _extract_rate_code_tokens(name: str) -> set[str]:
+    """Return rate-code-shaped tokens (e.g. 'sc1c', 'e1', 'd1', 'rsm',
+    '1c', 'tou-c') from a tariff name. A rate-code token is short
+    (2-6 chars), contains at least one digit AND one letter, and is
+    not a common English word.
+
+    Run on the raw name (not the heavily-normalized version) so the
+    embedded parens-codes like '(E-1)' or '(RSM)' survive.
+    """
+    if not name:
+        return set()
+    n = name.lower()
+    out: set[str] = set()
+
+    # Recognise common verbose forms of rate-code references and add the
+    # compact equivalents. NY utilities label residential and general
+    # service classes as "Service Classification No. 1", "No. 1C",
+    # "No. 2" etc. — but the URDB seed names abbreviate to "SC1",
+    # "SC1C", "SC2". Normalise both directions so they pair.
+    #   "Service Classification No. 1C"  -> sc1c
+    #   "Schedule D-1"                    -> d1
+    #   "Rate Schedule E-TOU-C"           -> etouc
+    for m in re.finditer(r"service classification\s*(?:no\.?|number)?\s*([0-9]+[a-z]?)",
+                         n):
+        out.add("sc" + m.group(1))
+    for m in re.finditer(r"\b(?:rate\s+)?schedule\s+([a-z]+[\-\.]?[0-9]+[a-z]?)",
+                         n):
+        compact = re.sub(r"[\-.]+", "", m.group(1))
+        if 2 <= len(compact) <= 6:
+            out.add(compact)
+
+    # Tokenize on spaces, parens, slashes, colons, commas
+    raw = re.split(r"[\s\(\)\[\]\{\}/:,;]+", n)
+    for tok in raw:
+        # Remove leading/trailing dashes/dots but keep internal ones
+        t = tok.strip("-.")
+        if 2 <= len(t) <= 6 and any(c.isdigit() for c in t) and any(c.isalpha() for c in t):
+            out.add(t)
+            # Also add the version with internal punctuation removed
+            stripped = re.sub(r"[\-.]+", "", t)
+            if 2 <= len(stripped) <= 6:
+                out.add(stripped)
+    return out
+
+
+def _rate_codes_share_substring(codes_a: set[str], codes_b: set[str]) -> bool:
+    """True if any code in `codes_a` is a substring of any code in
+    `codes_b` (or vice versa), with min match length 2 and both ends
+    being valid rate codes (mixed letter+digit). Used as a fallback in
+    `tariffs_likely_same` to pair URDB technical names like 'sc1c' with
+    extracted marketing names that mention '1c'."""
+    for a in codes_a:
+        for b in codes_b:
+            if a == b:
+                return True
+            shorter, longer = (a, b) if len(a) < len(b) else (b, a)
+            if len(shorter) < 2:
+                continue
+            if shorter in longer:
+                # Require at least one digit in the shared substring to
+                # avoid accidentally matching things like 'rate' contains 'rat'
+                if any(c.isdigit() for c in shorter):
+                    return True
+    return False
+
+
 def tariffs_likely_same(name_a: str, name_b: str) -> bool:
     """True iff the two tariff names plausibly describe the same product.
 
@@ -4296,6 +4398,19 @@ def tariffs_likely_same(name_a: str, name_b: str) -> bool:
     b_head = _norm_tariff_name_for_match(_strip_tariff_blurb(name_b))
     if a_head and b_head and a_head == b_head:
         return True
+
+    # Rate-code fast path: when both names contain a rate-code-shaped
+    # token (digit + letter, 2-6 chars) that overlaps by substring,
+    # treat them as the same. This catches the URDB-vs-marketing-name
+    # case where the technical name has 'SC1C (TOU)- Zone A' and the
+    # extracted marketing name has 'Service Classification No. 1C -
+    # Time of Use Residential' -- both encode rate code 1C/SC1C and
+    # `1c` is a substring of `sc1c`. Added 2026-05-12 after Chunk 1.
+    rc_a = _extract_rate_code_tokens(name_a)
+    rc_b = _extract_rate_code_tokens(name_b)
+    if rc_a and rc_b and _rate_codes_share_substring(rc_a, rc_b):
+        return True
+
     ta = set((a_head or a_full).split())
     tb = set((b_head or b_full).split())
     if not ta or not tb:
