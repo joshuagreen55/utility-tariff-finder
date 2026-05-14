@@ -2,7 +2,7 @@
 
 Lookup electricity utility providers and rate tariffs by US or Canadian address.
 
-**What to do next:** [docs/NEXT_STEPS.md](docs/NEXT_STEPS.md) · **Google Cloud (first VM):** [docs/GCP_FIRST_TIME.md](docs/GCP_FIRST_TIME.md) · **OpenClaw:** [deploy/OPENCLAW_VM.md](deploy/OPENCLAW_VM.md)
+**What to do next:** [docs/NEXT_STEPS.md](docs/NEXT_STEPS.md) · **Google Cloud (first VM):** [docs/GCP_FIRST_TIME.md](docs/GCP_FIRST_TIME.md) · **Query the database:** [docs/DATABASE_ACCESS.md](docs/DATABASE_ACCESS.md) · **OpenClaw:** [deploy/OPENCLAW_VM.md](deploy/OPENCLAW_VM.md)
 
 ## Architecture
 

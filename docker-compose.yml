@@ -14,6 +14,12 @@ services:
       POSTGRES_DB: utility_tariff_finder
     volumes:
       - pgdata:/var/lib/postgresql/data
+    # Bind to the loopback interface on the VM host so SSH-tunnel users
+    # can connect with psql/DBeaver/TablePlus from their laptop without
+    # exposing the database to the public internet. See
+    # docs/DATABASE_ACCESS.md for the full tunneling recipe.
+    ports:
+      - "127.0.0.1:5432:5432"
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres -d utility_tariff_finder"]
       interval: 5s
