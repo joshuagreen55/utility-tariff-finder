@@ -46,14 +46,16 @@ from sqlalchemy.orm import Session
 from app.models.tariff import Tariff
 
 # --- out-of-scope name signals (high precision; consumer retail stays) ---
+# Deliberately excluded as too ambiguous (they match legitimate retail
+# rates): 'transmission service' (large retail customers take service at
+# transmission voltage) and 'buy-back' (net-metering export rates are
+# arguably in scope for solar customers).
 OOS_NAME_PATTERNS = [
     r"\bresale\b",
     r"\bwholesale\b",
     r"\bfor\s+resale\b",
-    r"transmission\s+service",
     r"\binterdepartmental\b",
     r"telecommunications\s+network",
-    r"\bbuy[\s-]?back\b",
     r"\bbulk\s+power\b",
     r"\bfull\s+requirements\b",
     r"\bpartial\s+requirements\b",
@@ -69,13 +71,19 @@ OOS_NAME_HINTS_UTIL = re.compile(
 
 def normalize_name(name: str) -> str:
     """Collapse OpenEI zone/region/tier/season permutations and boilerplate
-    so that seed names can be compared to fresh marketing names."""
+    so that seed names can be compared to fresh marketing names.
+
+    Product-discriminating words ('optional', 'standard', 'tou', 'demand',
+    ...) are deliberately KEPT: stripping them made 'Optional Residential
+    Service' normalize identically to 'Residential Service' — two different
+    products — and dup_exact then retired the wrong seed.
+    """
     s = name.lower()
     s = re.sub(r"\[[^\]]*\]", " ", s)                       # [NYC Zone J]
     s = re.sub(r"\b(region|zone|district|area|territory|baseline)\s*[-#:]?\s*\w+", " ", s)
     s = re.sub(r"\b(tier|step|block)\s*\d+\b", " ", s)
     s = re.sub(r"\b(summer|winter|spring|fall|autumn)\b", " ", s)
-    s = re.sub(r"\b(schedule|rate|service|services|optional|standard)\b", " ", s)
+    s = re.sub(r"\b(schedule|rate|service|services)\b", " ", s)
     s = re.sub(r"[^a-z0-9]+", " ", s)
     s = re.sub(r"\s+", " ", s).strip()
     return s
@@ -145,13 +153,20 @@ def main():
             has_fresh = u.fresh > 0
             # fresh normalized names by class for dup detection
             fresh_norm = defaultdict(dict)  # class -> {norm_name: id}
+            collided: set[tuple[str, str]] = set()
             if has_fresh:
                 for fr in session.execute(text("""
                     SELECT id, name, customer_class::text AS cc FROM tariffs
                     WHERE utility_id = :uid AND last_verified_at IS NOT NULL
                       AND superseded_by_tariff_id IS NULL AND supersede_reason IS NULL
                 """), {"uid": u.id}):
-                    fresh_norm[fr.cc].setdefault(normalize_name(fr.name), fr.id)
+                    key = normalize_name(fr.name)
+                    if key in fresh_norm[fr.cc] and fresh_norm[fr.cc][key] != fr.id:
+                        # Two distinct fresh tariffs collapse to the same
+                        # normalized name -> dup_exact would be ambiguous.
+                        collided.add((fr.cc, key))
+                    else:
+                        fresh_norm[fr.cc].setdefault(key, fr.id)
 
             seeds = session.execute(text("""
                 SELECT id, name, customer_class::text AS cc FROM tariffs
@@ -163,8 +178,9 @@ def main():
             for s in seeds:
                 bucket, _ = classify(s.name, u.utype, u.name, has_fresh, fresh_norm)
                 if bucket == "has_fresh_review":
-                    match = fresh_norm.get(s.cc, {}).get(normalize_name(s.name))
-                    if match:
+                    seed_key = normalize_name(s.name)
+                    match = fresh_norm.get(s.cc, {}).get(seed_key)
+                    if match and (s.cc, seed_key) not in collided:
                         bucket = "dup_exact"
                         dup_pairs.append((s.id, match))
                 if bucket == "out_of_scope":

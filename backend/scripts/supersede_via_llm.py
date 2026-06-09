@@ -230,12 +230,21 @@ def main():
             applied = 0
             fresh_ids = {f["id"] for f in fresh}
             stranded_ids = {s["id"] for s in stranded}
+            fresh_class = {f["id"]: f["customer_class"] for f in fresh}
+            stranded_class = {s["id"]: s["customer_class"] for s in stranded}
             for p in non_null:
                 conf = p.get("confidence", "low")
                 grand_conf[conf] += 1
                 if CONF_RANK.get(conf, 0) < min_conf:
                     continue
                 if p["fresh_id"] not in fresh_ids or p["stranded_id"] not in stranded_ids:
+                    continue
+                # Hard guard: never pair across customer classes, even if
+                # the LLM proposes it (prompt rule 1 is advisory; this is
+                # enforcement — the supersede hides the row from the API).
+                if fresh_class.get(p["fresh_id"]) != stranded_class.get(p["stranded_id"]):
+                    print(f"        SKIP cross-class pairing: stranded "
+                          f"{p['stranded_id']} -> fresh {p['fresh_id']}")
                     continue
                 applied += 1
                 if args.apply:

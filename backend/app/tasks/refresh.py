@@ -159,13 +159,18 @@ def process_utility(self, uid: int, comprehensive: bool = False) -> dict:
     try:
         result = run_pipeline(uid, dry_run=False, comprehensive=comprehensive)
         valid_count = (result.phase4_validation or {}).get("valid", 0)
+        # A fingerprint skip (content unchanged, existing tariffs re-verified)
+        # is a cheap success, not an error — counting it as a failure used to
+        # inflate error rates and trigger pointless retry campaigns.
+        skipped = getattr(result, "skipped_unchanged", False)
         return {
             "utility_id": uid,
             "utility_name": result.utility_name,
             "state": result.state,
             "tariffs_found": valid_count,
             "errors": result.errors,
-            "success": valid_count > 0,
+            "success": valid_count > 0 or skipped,
+            "skipped_unchanged": skipped,
         }
     except TRANSIENT_ERRORS:
         raise  # Let autoretry handle these

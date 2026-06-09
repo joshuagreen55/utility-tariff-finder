@@ -1,9 +1,16 @@
-"""One-time cleanup: remove duplicate and incomplete tariffs from the database.
+"""Cleanup: retire duplicate and incomplete tariffs (soft supersede).
 
 Two passes:
-  1. Remove tariffs that have ZERO energy/fixed/demand components (rate riders only).
+  1. Retire tariffs that have ZERO energy/fixed/demand components (rate
+     riders only) — supersede_reason='no_core_components'.
   2. Merge prefix-duplicate names within the same utility + customer class,
-     keeping the version with the most components and deleting the rest.
+     keeping the best version (verified first, then most core/total
+     components) and pointing the rest at it via superseded_by_tariff_id
+     (supersede_reason='dup_cleanup').
+
+Rows are never hard-deleted: the soft-supersede columns keep the audit
+trail and the API filters them out. Already-superseded rows and rows that
+other tariffs point at (absorb targets) are excluded from both passes.
 
 Usage:
   # Dry run for Nova Scotia only
@@ -56,7 +63,15 @@ def run_cleanup(country: str | None, province: str | None, states: list[str] | N
     engine = get_sync_engine()
 
     with Session(engine) as session:
-        # ----- PASS 1: Remove tariffs with no core components -----
+        # Rows other tariffs point at must keep existing (absorb targets).
+        successor_ids = {
+            r[0] for r in session.execute(text(
+                "SELECT DISTINCT superseded_by_tariff_id FROM tariffs "
+                "WHERE superseded_by_tariff_id IS NOT NULL"
+            )).fetchall()
+        }
+
+        # ----- PASS 1: Retire tariffs with no core components -----
         print("\n=== PASS 1: Tariffs with no energy/fixed/demand components ===\n")
 
         rows = session.execute(text(f"""
@@ -71,12 +86,15 @@ def run_cleanup(country: str | None, province: str | None, states: list[str] | N
             JOIN utilities u ON u.id = t.utility_id
             LEFT JOIN rate_components rc ON rc.tariff_id = t.id
             WHERE {where}
+              AND t.superseded_by_tariff_id IS NULL
+              AND t.supersede_reason IS NULL
             GROUP BY t.id, t.name, t.customer_class, u.name, u.state_province
             HAVING COUNT(rc.id) FILTER (
                 WHERE LOWER(rc.component_type::text) IN ('energy', 'fixed', 'demand')
             ) = 0
             ORDER BY u.state_province, u.name, t.name
         """), params).fetchall()
+        rows = [r for r in rows if r[0] not in successor_ids]
 
         no_core_ids = [r[0] for r in rows]
         print(f"Found {len(no_core_ids)} tariffs with no core components:")
@@ -92,21 +110,26 @@ def run_cleanup(country: str | None, province: str | None, states: list[str] | N
                    COUNT(rc.id) as comp_count,
                    COUNT(rc.id) FILTER (
                        WHERE LOWER(rc.component_type::text) IN ('energy', 'fixed', 'demand')
-                   ) as core_count
+                   ) as core_count,
+                   (t.last_verified_at IS NOT NULL) as is_verified
             FROM tariffs t
             JOIN utilities u ON u.id = t.utility_id
             LEFT JOIN rate_components rc ON rc.tariff_id = t.id
             WHERE {where}
-            GROUP BY t.id, t.utility_id, t.name, t.customer_class, u.name, u.state_province
+              AND t.superseded_by_tariff_id IS NULL
+              AND t.supersede_reason IS NULL
+            GROUP BY t.id, t.utility_id, t.name, t.customer_class, u.name,
+                     u.state_province, t.last_verified_at
             ORDER BY u.state_province, u.name, t.name
         """), params).fetchall()
+        all_tariffs = [r for r in all_tariffs if r[0] not in successor_ids]
 
         groups: dict[tuple, list] = defaultdict(list)
         for r in all_tariffs:
             key = (r[1], r[3])  # (utility_id, customer_class)
             groups[key].append(r)
 
-        dup_ids_to_delete: list[int] = []
+        dup_pairs: list[tuple[int, int]] = []  # (lose_id, keep_id)
         for key, group in groups.items():
             if len(group) < 2:
                 continue
@@ -133,45 +156,52 @@ def run_cleanup(country: str | None, province: str | None, states: list[str] | N
                     if not is_dup:
                         continue
 
-                    keep, lose = (ri, rj) if (ri[7], ri[6]) >= (rj[7], rj[6]) else (rj, ri)
+                    # Keeper: verified beats unverified (a fresh extraction
+                    # must never lose to a stale seed), then most core
+                    # components, then most total components.
+                    keep, lose = (ri, rj) if (ri[8], ri[7], ri[6]) >= (rj[8], rj[7], rj[6]) else (rj, ri)
                     absorbed.add(lose[0])
-                    dup_ids_to_delete.append(lose[0])
-                    print(f"  [{lose[5]}] {lose[4]:<35s} | REMOVE '{lose[2]}' ({lose[6]} comp, {lose[7]} core)")
-                    print(f"  {'':35s}   KEEP   '{keep[2]}' ({keep[6]} comp, {keep[7]} core)")
+                    dup_pairs.append((lose[0], keep[0]))
+                    print(f"  [{lose[5]}] {lose[4]:<35s} | RETIRE '{lose[2]}' ({lose[6]} comp, {lose[7]} core, verified={lose[8]})")
+                    print(f"  {'':35s}   KEEP   '{keep[2]}' ({keep[6]} comp, {keep[7]} core, verified={keep[8]})")
                     if lose[0] == ri[0]:
                         break  # outer item absorbed, stop comparing it
 
-        # ----- Combine and execute -----
-        all_delete_ids = list(set(no_core_ids + dup_ids_to_delete))
-        # Avoid double-counting: some pass-1 tariffs may also be pass-2 duplicates
-        pass1_only = set(no_core_ids) - set(dup_ids_to_delete)
-        pass2_only = set(dup_ids_to_delete) - set(no_core_ids)
-        both = set(no_core_ids) & set(dup_ids_to_delete)
+        # ----- Combine and execute (soft supersede, never DELETE) -----
+        dup_lose_ids = {lose for lose, _ in dup_pairs}
+        both = set(no_core_ids) & dup_lose_ids
+        # When a row is in both passes, the dup pointer wins (it names a
+        # surviving successor instead of just retiring the row).
+        pass1_only_ids = list(set(no_core_ids) - dup_lose_ids)
+        total = len(pass1_only_ids) + len(dup_pairs)
 
         print(f"\n=== SUMMARY ===")
         print(f"  Pass 1 (no core components):  {len(no_core_ids)}")
-        print(f"  Pass 2 (prefix duplicates):   {len(dup_ids_to_delete)}")
+        print(f"  Pass 2 (prefix duplicates):   {len(dup_pairs)}")
         print(f"  Overlap (in both passes):     {len(both)}")
-        print(f"  Total unique to delete:       {len(all_delete_ids)}")
+        print(f"  Total unique to retire:       {total}")
 
-        if not all_delete_ids:
-            print("\nNothing to delete!")
+        if not total:
+            print("\nNothing to retire!")
             return
 
         if dry_run:
             print(f"\n  DRY RUN — no changes made. Re-run without --dry-run to commit.\n")
             return
 
-        # Delete rate components first, then tariffs
-        print(f"\n  Deleting {len(all_delete_ids)} tariffs and their components...")
-        session.execute(text(
-            "DELETE FROM rate_components WHERE tariff_id = ANY(:ids)"
-        ), {"ids": all_delete_ids})
-        result = session.execute(text(
-            "DELETE FROM tariffs WHERE id = ANY(:ids)"
-        ), {"ids": all_delete_ids})
+        print(f"\n  Retiring {total} tariffs (soft supersede)...")
+        if pass1_only_ids:
+            session.execute(text(
+                "UPDATE tariffs SET supersede_reason = 'no_core_components' "
+                "WHERE id = ANY(:ids)"
+            ), {"ids": pass1_only_ids})
+        for lose_id, keep_id in dup_pairs:
+            session.execute(text(
+                "UPDATE tariffs SET superseded_by_tariff_id = :keep, "
+                "supersede_reason = 'dup_cleanup' WHERE id = :lose"
+            ), {"keep": keep_id, "lose": lose_id})
         session.commit()
-        print(f"  Deleted {result.rowcount} tariffs. Done.\n")
+        print(f"  Retired {total} tariffs. Done.\n")
 
 
 def main():

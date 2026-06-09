@@ -306,6 +306,10 @@ class ExtractedTariff:
     effective_date: str = ""
     components: list[dict] = field(default_factory=list)
     confidence: float = 0.0
+    # Set by Phase 4 when a value passed validation but sits in a
+    # suspicious band (above p95, or unit auto-corrected). Persisted in
+    # confidence_factors so reviewers can query it.
+    needs_review: bool = False
 
 
 @dataclass
@@ -320,6 +324,9 @@ class PipelineResult:
     phase3_tariffs: list[dict] = field(default_factory=list)
     phase4_validation: dict = field(default_factory=dict)
     errors: list[str] = field(default_factory=list)
+    # True when extraction was skipped because page fingerprints matched —
+    # a cheap SUCCESS (content re-verified), not a failure.
+    skipped_unchanged: bool = False
 
 
 # ---------------------------------------------------------------------------
@@ -3591,6 +3598,63 @@ def _get_rate_bounds(state: str) -> tuple[float, float, float, float, float, flo
     return _STATE_RATE_BOUNDS.get(state.upper(), _DEFAULT_BOUNDS)
 
 
+_CENTS_UNIT_RE = re.compile(r"(?:¢|\bcents?\b|(?<![a-z])c/)", re.IGNORECASE)
+
+# Canonical dollar units per component type after normalization.
+_DOLLAR_UNIT = {
+    "energy": "$/kWh",
+    "demand": "$/kW",
+    "fixed": "$/month",
+    "minimum": "$/month",
+    "adjustment": "$/kWh",
+}
+
+
+def _normalize_component_units(t: ExtractedTariff, p99_energy: float) -> list[str]:
+    """Normalize cents-denominated components to dollars, in place.
+
+    Two passes:
+      1. Deterministic: unit string says cents (¢/kWh, cents/kWh, c/kWh)
+         -> divide by 100 and rewrite the unit. LLMs (esp. Phase 6, which
+         explicitly allows cents/kWh) emit these; downstream math assumes
+         dollars, a silent 100x error.
+      2. Heuristic rescue: unit claims dollars but an energy value is so
+         large it would be hard-rejected (>3x p99) while value/100 lands
+         in the plausible band — almost certainly cents mislabeled as
+         dollars. Convert instead of discarding. Legit critical-peak rates
+         below the hard-reject line are never touched.
+
+    Returns a list of notes (empty when nothing changed).
+    """
+    notes: list[str] = []
+    for comp in t.components:
+        ctype = comp.get("component_type")
+        unit = str(comp.get("unit") or "")
+        try:
+            rv = float(comp.get("rate_value"))
+        except (ValueError, TypeError):
+            continue
+
+        if _CENTS_UNIT_RE.search(unit):
+            new_rv = rv / 100.0
+            new_unit = _DOLLAR_UNIT.get(ctype, "$/kWh")
+            comp["rate_value"] = new_rv
+            comp["unit"] = new_unit
+            notes.append(f"{ctype} {rv} {unit!r} -> {new_rv} {new_unit}")
+        elif (
+            ctype == "energy"
+            and rv > p99_energy * 3
+            and 0.01 <= rv / 100.0 <= p99_energy
+        ):
+            new_rv = rv / 100.0
+            comp["rate_value"] = new_rv
+            comp["unit"] = "$/kWh"
+            notes.append(
+                f"energy {rv} looks like cents mislabeled as dollars -> {new_rv} $/kWh"
+            )
+    return notes
+
+
 def phase4_validate(
     tariffs: list[ExtractedTariff], utility_name: str, state: str = ""
 ) -> tuple[dict, list[ExtractedTariff]]:
@@ -3599,6 +3663,9 @@ def phase4_validate(
     Uses state-level percentile bounds for rate validation:
     - Above 99th percentile: hard reject
     - Above 95th percentile: accepted but flagged as needs_review
+
+    Units are normalized first (cents -> dollars) so magnitude checks run
+    against comparable values.
     """
     bounds = _get_rate_bounds(state)
     p95_energy, p99_energy, p95_fixed, p99_fixed, p95_demand, p99_demand = bounds
@@ -3610,6 +3677,13 @@ def phase4_validate(
     for t in tariffs:
         tariff_issues = []
         needs_review = False
+
+        # Normalize units BEFORE bounds checks so cents-denominated values
+        # don't get rejected (or worse, accepted) as dollar amounts.
+        unit_notes = _normalize_component_units(t, p99_energy)
+        if unit_notes:
+            needs_review = True
+            log.info(f"    Unit normalization on '{t.name}': {'; '.join(unit_notes)}")
 
         if not t.name or t.name == "Unknown":
             tariff_issues.append("missing name")
@@ -3692,6 +3766,7 @@ def phase4_validate(
         if tariff_issues:
             issues.append({"tariff": t.name, "issues": tariff_issues})
         else:
+            t.needs_review = needs_review
             valid_tariffs.append(t)
             if needs_review:
                 flagged_tariffs.append(t.name)
@@ -3828,6 +3903,9 @@ def store_tariffs(utility_id: int, tariffs: list[ExtractedTariff], dry_run: bool
     u_domain = urlparse(u_website).netloc if u_website else None
 
     with Session(engine) as session:
+        # (name, class) -> persisted Tariff object, used to point superseded
+        # OpenEI seeds at their surviving fresh row below.
+        fresh_by_key: dict = {}
         for et in tariffs:
             cc = CLASS_MAP.get(et.customer_class)
             rt = TYPE_MAP.get(et.rate_type)
@@ -3845,6 +3923,10 @@ def store_tariffs(utility_id: int, tariffs: list[ExtractedTariff], dry_run: bool
             conf_score, conf_factors = _calculate_confidence(
                 et, u_name, u_state, u_domain,
             )
+            # Durable review flag (Phase 4 p95 band / unit auto-correction)
+            # so suspicious rows are queryable, not just logged.
+            if getattr(et, "needs_review", False):
+                conf_factors = {**conf_factors, "needs_review": True}
 
             existing = session.execute(
                 select(Tariff).where(
@@ -3912,48 +3994,42 @@ def store_tariffs(utility_id: int, tariffs: list[ExtractedTariff], dry_run: bool
                 tariff_obj.rate_components.append(rc)
 
             stored += 1
+            fresh_by_key[(et.name, cc)] = tariff_obj
 
         # Targeted OpenEI supersede: when a freshly-extracted tariff
         # plausibly names the same product as a 2017-era OpenEI import
-        # for the same utility+class, delete the OpenEI row. This runs
-        # BEFORE the count-based reconciliation below so it works even
-        # on partial extractions (which the count guard correctly
-        # protects against). See tariffs_likely_same() for the matcher.
-        if stored >= 1:
-            fresh_keys = [
-                (et.name, CLASS_MAP.get(et.customer_class))
-                for et in tariffs
-                if CLASS_MAP.get(et.customer_class)
-            ]
-            if fresh_keys:
-                openei_siblings = session.execute(
-                    select(Tariff).where(
-                        Tariff.utility_id == utility_id,
-                        Tariff.openei_id.is_not(None),
-                    )
-                ).scalars().all()
-                superseded_ids: list[int] = []
-                for ot in openei_siblings:
-                    for fresh_name, fresh_class in fresh_keys:
-                        if ot.customer_class != fresh_class:
-                            continue
-                        if tariffs_likely_same(ot.name, fresh_name):
-                            superseded_ids.append(ot.id)
-                            break
-                if superseded_ids:
-                    from sqlalchemy import delete as sa_delete
-                    session.execute(
-                        sa_delete(RateComponent).where(
-                            RateComponent.tariff_id.in_(superseded_ids)
-                        )
-                    )
-                    session.execute(
-                        sa_delete(Tariff).where(Tariff.id.in_(superseded_ids))
-                    )
-                    log.info(
-                        f"  Superseded: removed {len(superseded_ids)} stale OpenEI "
-                        f"siblings duplicated by fresh extractions"
-                    )
+        # for the same utility+class, soft-supersede the OpenEI row
+        # (superseded_by_tariff_id + supersede_reason='matcher') so the
+        # API hides it while keeping the audit trail. This runs BEFORE
+        # the count-based reconciliation below so it works even on
+        # partial extractions. See tariffs_likely_same() for the matcher.
+        if stored >= 1 and fresh_by_key:
+            session.flush()  # assign ids to newly inserted tariffs
+            openei_siblings = session.execute(
+                select(Tariff).where(
+                    Tariff.utility_id == utility_id,
+                    Tariff.openei_id.is_not(None),
+                    Tariff.superseded_by_tariff_id.is_(None),
+                    Tariff.supersede_reason.is_(None),
+                )
+            ).scalars().all()
+            absorbed = 0
+            for ot in openei_siblings:
+                for (fresh_name, fresh_class), fresh_obj in fresh_by_key.items():
+                    if ot.customer_class != fresh_class:
+                        continue
+                    if fresh_obj.id is not None and ot.id == fresh_obj.id:
+                        continue  # the fresh row IS this OpenEI row (re-verified)
+                    if tariffs_likely_same(ot.name, fresh_name):
+                        ot.superseded_by_tariff_id = fresh_obj.id
+                        ot.supersede_reason = "matcher"
+                        absorbed += 1
+                        break
+            if absorbed:
+                log.info(
+                    f"  Superseded: marked {absorbed} stale OpenEI siblings "
+                    f"as absorbed by fresh extractions (soft supersede)"
+                )
 
         # Reconcile: remove tariffs for this utility that were not in the
         # current extraction, with guards to prevent destroying valid data.
@@ -3966,7 +4042,20 @@ def store_tariffs(utility_id: int, tariffs: list[ExtractedTariff], dry_run: bool
                     select(Tariff).where(Tariff.utility_id == utility_id)
                 ).scalars().all()
 
-                existing_count = len(all_existing)
+                # Rows other tariffs point at (absorb targets) must never be
+                # deleted — that would strand their superseded seeds.
+                successor_ids = {
+                    t.superseded_by_tariff_id
+                    for t in all_existing
+                    if t.superseded_by_tariff_id is not None
+                }
+
+                # The 75% partial-extraction guard should compare against
+                # live rows only; superseded/retired rows aren't served.
+                existing_count = len([
+                    t for t in all_existing
+                    if t.superseded_by_tariff_id is None and t.supersede_reason is None
+                ])
 
                 # Count-based guard: if new extraction found significantly fewer
                 # tariffs than already exist, skip reconciliation to avoid
@@ -3996,6 +4085,16 @@ def store_tariffs(utility_id: int, tariffs: list[ExtractedTariff], dry_run: bool
                         stale = []
                         for t in all_existing:
                             if (t.name, t.customer_class) in stored_names:
+                                continue
+                            # OpenEI seeds and already-superseded rows are
+                            # owned by the supersede model (matcher/Track B/
+                            # triage) — never hard-delete them here.
+                            if t.openei_id is not None:
+                                continue
+                            if t.superseded_by_tariff_id is not None or t.supersede_reason is not None:
+                                continue
+                            # Never delete a row that absorbed other tariffs.
+                            if t.id in successor_ids:
                                 continue
                             if t.source_url:
                                 t_domain = urlparse(t.source_url).netloc.replace("www.", "")
@@ -4399,23 +4498,28 @@ def _extract_rate_code_tokens(name: str) -> set[str]:
     return out
 
 
-def _rate_codes_share_substring(codes_a: set[str], codes_b: set[str]) -> bool:
-    """True if any code in `codes_a` is a substring of any code in
-    `codes_b` (or vice versa), with min match length 2 and both ends
-    being valid rate codes (mixed letter+digit). Used as a fallback in
-    `tariffs_likely_same` to pair URDB technical names like 'sc1c' with
-    extracted marketing names that mention '1c'."""
+def _rate_codes_match(codes_a: set[str], codes_b: set[str]) -> bool:
+    """True if a rate code on one side names the SAME code as the other.
+
+    Exact equality always matches. The only partial match allowed is a
+    pure letter PREFIX difference: '1c' matches 'sc1c' (the URDB 'SC'
+    classification prefix), because the trailing code body is identical.
+
+    A general substring rule used to live here and caused false merges:
+    'sc1' is a substring of 'sc1c' but SC-1 and SC-1C are DIFFERENT
+    products (same for 'd1' vs 'd1a', 'e1' vs 'e16'). Trailing-character
+    differences always mean a different rate, so they never match now.
+    """
     for a in codes_a:
         for b in codes_b:
             if a == b:
                 return True
             shorter, longer = (a, b) if len(a) < len(b) else (b, a)
-            if len(shorter) < 2:
+            if len(shorter) < 2 or not any(c.isdigit() for c in shorter):
                 continue
-            if shorter in longer:
-                # Require at least one digit in the shared substring to
-                # avoid accidentally matching things like 'rate' contains 'rat'
-                if any(c.isdigit() for c in shorter):
+            if longer.endswith(shorter):
+                prefix = longer[: -len(shorter)]
+                if prefix.isalpha() and len(prefix) <= 3:
                     return True
     return False
 
@@ -4438,20 +4542,23 @@ def tariffs_likely_same(name_a: str, name_b: str) -> bool:
     if a_head and b_head and a_head == b_head:
         return True
 
-    # Rate-code fast path: when both names contain a rate-code-shaped
-    # token (digit + letter, 2-6 chars) that overlaps by substring,
-    # treat them as the same. This catches the URDB-vs-marketing-name
-    # case where the technical name has 'SC1C (TOU)- Zone A' and the
-    # extracted marketing name has 'Service Classification No. 1C -
-    # Time of Use Residential' -- both encode rate code 1C/SC1C and
-    # `1c` is a substring of `sc1c`. Added 2026-05-12 after Chunk 1.
-    rc_a = _extract_rate_code_tokens(name_a)
-    rc_b = _extract_rate_code_tokens(name_b)
-    if rc_a and rc_b and _rate_codes_share_substring(rc_a, rc_b):
-        return True
-
     ta = set((a_head or a_full).split())
     tb = set((b_head or b_full).split())
+
+    # Rate-code fast path: when both names encode the SAME rate code
+    # (exact, or letter-prefix variant like '1c' vs 'sc1c'), treat them
+    # as the same product — unless both names carry discriminator words
+    # and they disagree ('SC1 TOU' vs 'SC1 Flat' are different products
+    # even though the code matches). One-sided discriminators are fine:
+    # URDB names often omit the rate shape the marketing name spells out.
+    rc_a = _extract_rate_code_tokens(name_a)
+    rc_b = _extract_rate_code_tokens(name_b)
+    if rc_a and rc_b and _rate_codes_match(rc_a, rc_b):
+        a_disc_fast = ta & _TARIFF_DISCRIMINATORS
+        b_disc_fast = tb & _TARIFF_DISCRIMINATORS
+        if not a_disc_fast or not b_disc_fast or a_disc_fast == b_disc_fast:
+            return True
+
     if not ta or not tb:
         return False
     overlap = len(ta & tb) / min(len(ta), len(tb))
@@ -4549,7 +4656,16 @@ def _touch_fingerprints(utility_id: int, pages: list[RatePage]):
 
 
 def _touch_tariff_verified(utility_id: int):
-    """Update last_verified_at on existing tariffs to mark them as still current."""
+    """Update last_verified_at on pipeline-verified tariffs to mark them as
+    still current.
+
+    Only rows that were ALREADY verified by an extraction are touched: an
+    unchanged rate page re-confirms what we extracted from it, nothing
+    else. Blanket-touching every row used to mark 2017 OpenEI seeds (never
+    re-extracted) as "verified", silently corrupting freshness metrics and
+    Track B's fresh/stranded split. Superseded/retired rows are skipped
+    too — they are not served, so they should not look fresh.
+    """
     from sqlalchemy.orm import Session
     from sqlalchemy import update
     from app.db.session import get_sync_engine
@@ -4558,13 +4674,21 @@ def _touch_tariff_verified(utility_id: int):
     now = datetime.now(timezone.utc)
     engine = get_sync_engine()
     with Session(engine) as session:
-        session.execute(
+        result = session.execute(
             update(Tariff)
-            .where(Tariff.utility_id == utility_id)
+            .where(
+                Tariff.utility_id == utility_id,
+                Tariff.last_verified_at.is_not(None),
+                Tariff.superseded_by_tariff_id.is_(None),
+                Tariff.supersede_reason.is_(None),
+            )
             .values(last_verified_at=now)
         )
         session.commit()
-    log.info(f"  Refreshed last_verified_at for utility {utility_id} (content unchanged)")
+    log.info(
+        f"  Refreshed last_verified_at on {result.rowcount} verified tariffs "
+        f"for utility {utility_id} (content unchanged)"
+    )
 
 
 NAVIGATE_PROMPT = """You are navigating a utility company's website to find their electricity rate information.
@@ -5466,6 +5590,7 @@ def run_pipeline(
             _touch_fingerprints(utility_id, pages)
             _touch_tariff_verified(utility_id)
             result.phase3_tariffs = []
+            result.skipped_unchanged = True
             log.info("  Skipping Phase 3 (content unchanged) — existing tariffs still valid")
             return result
 

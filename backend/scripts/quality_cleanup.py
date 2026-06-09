@@ -139,9 +139,10 @@ def _name_matches(openei_name: str, fresh_name: str) -> bool:
     return tariffs_likely_same(openei_name, fresh_name)
 
 
-def find_stale_openei_dups(s: Session) -> list[tuple[int, str, str, str]]:
-    """Return (id, utility_name, openei_tariff_name, matched_fresh_name) for
-    OpenEI imports that have a fresh sibling matching by name."""
+def find_stale_openei_dups(s: Session) -> list[tuple[int, str, str, str, int]]:
+    """Return (id, utility_name, openei_tariff_name, matched_fresh_name,
+    fresh_tariff_id) for OpenEI imports that have a fresh sibling matching
+    by name. Already-superseded rows are excluded on both sides."""
     rows = s.execute(
         text(
             """
@@ -150,6 +151,8 @@ def find_stale_openei_dups(s: Session) -> list[tuple[int, str, str, str]]:
                    t.last_verified_at
             FROM tariffs t
             JOIN utilities u ON u.id = t.utility_id
+            WHERE t.superseded_by_tariff_id IS NULL
+              AND t.supersede_reason IS NULL
             ORDER BY t.utility_id, t.customer_class
             """
         )
@@ -159,7 +162,7 @@ def find_stale_openei_dups(s: Session) -> list[tuple[int, str, str, str]]:
     for r in rows:
         by_group[(r[1], r[4])].append(r)
 
-    candidates: list[tuple[int, str, str, str]] = []
+    candidates: list[tuple[int, str, str, str, int]] = []
     for (_uid, _cclass), members in by_group.items():
         openei = [r for r in members if r[5] and r[6] is None]
         fresh = [r for r in members if not r[5] or r[6] is not None]
@@ -168,7 +171,7 @@ def find_stale_openei_dups(s: Session) -> list[tuple[int, str, str, str]]:
         for o in openei:
             for f in fresh:
                 if _name_matches(o[3], f[3]):
-                    candidates.append((o[0], o[2], o[3], f[3]))
+                    candidates.append((o[0], o[2], o[3], f[3], f[0]))
                     break
     return candidates
 
@@ -177,22 +180,28 @@ def find_stale_openei_dups(s: Session) -> list[tuple[int, str, str, str]]:
 # Driver
 # ----------------------------------------------------------------------
 
-def _delete_ids(s: Session, ids: Iterable[int], label: str) -> int:
+def _retire_ids(s: Session, ids: Iterable[int], label: str, reason: str) -> int:
+    """Soft-retire rows via supersede_reason instead of hard-deleting them.
+
+    Keeps the audit trail and matches the API's live-tariff filter
+    (superseded_by_tariff_id IS NULL AND supersede_reason IS NULL).
+    """
     ids = list(ids)
     if not ids:
         return 0
     BATCH = 500
-    deleted = 0
+    retired = 0
     for i in range(0, len(ids), BATCH):
         chunk = ids[i : i + BATCH]
         res = s.execute(
-            text("DELETE FROM tariffs WHERE id = ANY(:ids)"),
-            {"ids": chunk},
+            text("UPDATE tariffs SET supersede_reason = :reason "
+                 "WHERE id = ANY(:ids) AND supersede_reason IS NULL"),
+            {"ids": chunk, "reason": reason},
         )
-        deleted += res.rowcount or 0
+        retired += res.rowcount or 0
     s.commit()
-    print(f"  deleted {deleted:,d} {label}")
-    return deleted
+    print(f"  retired {retired:,d} {label}")
+    return retired
 
 
 def main() -> int:
@@ -244,19 +253,19 @@ def main() -> int:
             print(f"C. STALE OpenEI imports superseded by fresh extractions: {len(stale)}")
             print("=" * 78)
             by_util: dict[str, int] = defaultdict(int)
-            for tid, uname, on, fn in stale:
+            for tid, uname, on, fn, _fid in stale:
                 by_util[uname] += 1
             top = sorted(by_util.items(), key=lambda kv: -kv[1])[:15]
             for uname, n in top:
                 print(f"  {uname[:55]:<55s}  {n:>4d}")
             if stale[:8]:
                 print("\n  Sample matches (OpenEI -> fresh):")
-                for tid, uname, on, fn in stale[:8]:
+                for tid, uname, on, fn, _fid in stale[:8]:
                     print(f"    id={tid:<5d}  {uname[:25]:<25s}")
                     print(f"           OpenEI: {on[:65]}")
                     print(f"            Fresh: {fn[:65]}")
 
-        total_to_delete = sum(len(v) for v in cats.values())
+        total_to_retire = sum(len(v) for v in cats.values())
         print()
         print("=" * 78)
         print(f"SUMMARY  ({'APPLY MODE' if args.apply else 'DRY-RUN'})")
@@ -264,32 +273,47 @@ def main() -> int:
         print(f"  Tariffs in DB now:              {before_total:>6,d}")
         for k, v in cats.items():
             print(f"  Cat {k} candidates:              {len(v):>6,d}")
-        print(f"  Total to delete:                {total_to_delete:>6,d}")
-        print(f"  Tariffs after cleanup (est.):   {before_total - total_to_delete:>6,d}")
+        print(f"  Total to retire (soft):         {total_to_retire:>6,d}")
 
         if not args.apply:
             print()
-            print("DRY-RUN: no changes made. Re-run with --apply to delete.")
+            print("DRY-RUN: no changes made. Re-run with --apply to retire.")
             return 0
 
-        # Apply
+        # Apply — soft supersede only, never DELETE
         print()
         print("APPLYING...")
-        deleted_total = 0
+        retired_total = 0
         if "A" in cats:
-            deleted_total += _delete_ids(s, [r[0] for r in cats["A"]], "phantom (cat A)")
+            retired_total += _retire_ids(s, [r[0] for r in cats["A"]], "phantom (cat A)", "phantom_pdf")
         if "B" in cats:
-            deleted_total += _delete_ids(s, [r[0] for r in cats["B"]], "gas (cat B)")
+            retired_total += _retire_ids(s, [r[0] for r in cats["B"]], "gas (cat B)", "gas_tariff")
         if "C" in cats:
-            deleted_total += _delete_ids(s, [r[0] for r in cats["C"]], "stale OpenEI (cat C)")
+            applied_c = 0
+            for tid, _uname, _on, _fn, fresh_id in cats["C"]:
+                res = s.execute(
+                    text("UPDATE tariffs SET superseded_by_tariff_id = :fid, "
+                         "supersede_reason = 'matcher' "
+                         "WHERE id = :tid AND supersede_reason IS NULL"),
+                    {"fid": fresh_id, "tid": tid},
+                )
+                applied_c += res.rowcount or 0
+            s.commit()
+            print(f"  retired {applied_c:,d} stale OpenEI (cat C, pointed at fresh)")
+            retired_total += applied_c
 
-        after_total = s.execute(text("SELECT COUNT(*) FROM tariffs")).scalar()
+        after_live = s.execute(text(
+            "SELECT COUNT(*) FROM tariffs "
+            "WHERE superseded_by_tariff_id IS NULL AND supersede_reason IS NULL"
+        )).scalar()
         active_with_tariffs = s.execute(
             text(
                 """
                 SELECT COUNT(DISTINCT t.utility_id) FROM tariffs t
                 JOIN utilities u ON u.id = t.utility_id
                 WHERE u.is_active = true
+                  AND t.superseded_by_tariff_id IS NULL
+                  AND t.supersede_reason IS NULL
                 """
             )
         ).scalar()
@@ -298,9 +322,8 @@ def main() -> int:
         print("=" * 78)
         print("DONE")
         print("=" * 78)
-        print(f"  Deleted total:           {deleted_total:>6,d}")
-        print(f"  Tariffs before:          {before_total:>6,d}")
-        print(f"  Tariffs after:           {after_total:>6,d}")
+        print(f"  Retired total:           {retired_total:>6,d}")
+        print(f"  Live tariffs after:      {after_live:>6,d}")
         print(f"  Active-utility coverage: {active_with_tariffs} / {active_total} = "
               f"{100*active_with_tariffs/active_total:.2f}%")
         return 0

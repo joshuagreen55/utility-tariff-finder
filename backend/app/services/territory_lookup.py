@@ -36,6 +36,26 @@ ALL_US_ABBREVS = set(US_STATE_ABBREVS.values())
 ALL_CA_ABBREVS = set(CA_PROVINCE_ABBREVS.values())
 
 
+def _live_tariff_count(customer_class: CustomerClass):
+    """Correlated count of LIVE tariffs for a utility/class.
+
+    'Live' matches the list/browse API definition: not absorbed by a fresher
+    tariff and not retired (out_of_scope etc.). Keeping this in one place so
+    lookup counts can never drift from what the tariff endpoints serve.
+    """
+    return (
+        select(func.count(Tariff.id))
+        .where(
+            Tariff.utility_id == Utility.id,
+            Tariff.customer_class == customer_class,
+            Tariff.superseded_by_tariff_id.is_(None),
+            Tariff.supersede_reason.is_(None),
+        )
+        .correlate(Utility)
+        .scalar_subquery()
+    )
+
+
 def _extract_state_and_country(address: str) -> tuple[str | None, Country | None]:
     """Parse state/province abbreviation and country from a formatted address."""
     addr_lower = address.lower()
@@ -105,18 +125,8 @@ async def lookup_utilities_by_address(address: str, db: AsyncSession) -> Address
 async def _point_in_polygon_lookup(lat: float, lon: float, db: AsyncSession) -> list[UtilityMatch]:
     point = ST_SetSRID(ST_MakePoint(lon, lat), 4326)
 
-    res_count = (
-        select(func.count(Tariff.id))
-        .where(Tariff.utility_id == Utility.id, Tariff.customer_class == CustomerClass.RESIDENTIAL)
-        .correlate(Utility)
-        .scalar_subquery()
-    )
-    com_count = (
-        select(func.count(Tariff.id))
-        .where(Tariff.utility_id == Utility.id, Tariff.customer_class == CustomerClass.COMMERCIAL)
-        .correlate(Utility)
-        .scalar_subquery()
-    )
+    res_count = _live_tariff_count(CustomerClass.RESIDENTIAL)
+    com_count = _live_tariff_count(CustomerClass.COMMERCIAL)
 
     stmt = (
         select(
@@ -158,18 +168,8 @@ async def _state_fallback(
     matches. If other matches already exist, only adds utilities that have
     tariffs. If no other matches exist at all, includes all utilities in the
     state so the user at least sees the correct utility name."""
-    res_count = (
-        select(func.count(Tariff.id))
-        .where(Tariff.utility_id == Utility.id, Tariff.customer_class == CustomerClass.RESIDENTIAL)
-        .correlate(Utility)
-        .scalar_subquery()
-    )
-    com_count = (
-        select(func.count(Tariff.id))
-        .where(Tariff.utility_id == Utility.id, Tariff.customer_class == CustomerClass.COMMERCIAL)
-        .correlate(Utility)
-        .scalar_subquery()
-    )
+    res_count = _live_tariff_count(CustomerClass.RESIDENTIAL)
+    com_count = _live_tariff_count(CustomerClass.COMMERCIAL)
 
     stmt = (
         select(
@@ -189,7 +189,14 @@ async def _state_fallback(
     if exclude_ids:
         stmt = stmt.where(Utility.id.notin_(exclude_ids))
         tariff_exists = (
-            select(Tariff.id).where(Tariff.utility_id == Utility.id).correlate(Utility).exists()
+            select(Tariff.id)
+            .where(
+                Tariff.utility_id == Utility.id,
+                Tariff.superseded_by_tariff_id.is_(None),
+                Tariff.supersede_reason.is_(None),
+            )
+            .correlate(Utility)
+            .exists()
         )
         stmt = stmt.where(tariff_exists)
 
@@ -223,18 +230,8 @@ async def _zip_code_fallback(address: str, db: AsyncSession) -> list[UtilityMatc
     if not us_zip and not ca_postal:
         return []
 
-    res_count = (
-        select(func.count(Tariff.id))
-        .where(Tariff.utility_id == Utility.id, Tariff.customer_class == CustomerClass.RESIDENTIAL)
-        .correlate(Utility)
-        .scalar_subquery()
-    )
-    com_count = (
-        select(func.count(Tariff.id))
-        .where(Tariff.utility_id == Utility.id, Tariff.customer_class == CustomerClass.COMMERCIAL)
-        .correlate(Utility)
-        .scalar_subquery()
-    )
+    res_count = _live_tariff_count(CustomerClass.RESIDENTIAL)
+    com_count = _live_tariff_count(CustomerClass.COMMERCIAL)
 
     if us_zip:
         zip_code = us_zip.group(1)

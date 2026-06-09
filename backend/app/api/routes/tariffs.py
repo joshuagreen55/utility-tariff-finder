@@ -29,6 +29,10 @@ async def tariff_filter_options(db: AsyncSession = Depends(get_db)):
         )
         .join(Tariff, Tariff.utility_id == Utility.id)
         .where(Utility.is_active.is_(True))
+        # Only offer utilities that have at least one live tariff, matching
+        # what browse/list will actually return.
+        .where(Tariff.superseded_by_tariff_id.is_(None))
+        .where(Tariff.supersede_reason.is_(None))
         .distinct()
         .order_by(Utility.country, Utility.state_province, Utility.name)
     )).all()
@@ -163,6 +167,18 @@ async def get_tariff(tariff_id: int, db: AsyncSession = Depends(get_db)):
     if not tariff:
         raise HTTPException(status_code=404, detail="Tariff not found")
 
+    # Superseded/retired rows are hidden from list endpoints; direct links
+    # (bookmarks, shares) should not serve dead rates either. Point the
+    # client at the successor when one exists.
+    if tariff.superseded_by_tariff_id is not None or tariff.supersede_reason is not None:
+        raise HTTPException(
+            status_code=410,
+            detail={
+                "reason": "superseded",
+                "successor_tariff_id": tariff.superseded_by_tariff_id,
+            },
+        )
+
     return tariff
 
 
@@ -195,6 +211,19 @@ async def delete_tariff(tariff_id: int, db: AsyncSession = Depends(get_db)):
 
     if not tariff:
         raise HTTPException(status_code=404, detail="Tariff not found")
+
+    # Deleting a tariff that absorbed others would strand its superseded
+    # seeds (FK is ON DELETE SET NULL: pointer clears, reason stays, the
+    # utility silently loses live plans). Block it.
+    inbound = (await db.execute(
+        select(func.count(Tariff.id)).where(Tariff.superseded_by_tariff_id == tariff_id)
+    )).scalar() or 0
+    if inbound:
+        raise HTTPException(
+            status_code=409,
+            detail=f"Tariff {tariff_id} is the successor of {inbound} superseded "
+                   "tariff(s). Re-point or un-supersede them before deleting.",
+        )
 
     await db.delete(tariff)
     await db.commit()

@@ -1,8 +1,14 @@
 """
-Deduplicate tariffs by keeping only the most recent version of each
-(utility_id, name, customer_class) group.
+Deduplicate tariffs within each (utility_id, name, customer_class) group.
 
-Older versions are deleted along with their rate_components (via CASCADE).
+The keeper is chosen by: verified first (last_verified_at IS NOT NULL),
+then newest effective_date, then newest end_date, then highest id. The
+old ordering used effective_date alone, which made fresh extractions
+(often NULL effective_date) lose to 2017 URDB seeds.
+
+Losers are soft-superseded (superseded_by_tariff_id -> keeper,
+supersede_reason='dup_exact_name') instead of deleted, matching the
+API's live-tariff filter and keeping the audit trail.
 
 Usage:
     python -m scripts.dedup_tariffs [--dry-run]
@@ -15,72 +21,72 @@ from sqlalchemy.orm import Session
 
 from app.db.session import get_sync_engine
 
+RANKED_CTE = """
+    WITH ranked AS (
+        SELECT id,
+               FIRST_VALUE(id) OVER (
+                   PARTITION BY utility_id, name, customer_class
+                   ORDER BY (last_verified_at IS NOT NULL) DESC,
+                            effective_date DESC NULLS LAST,
+                            end_date DESC NULLS FIRST,
+                            id DESC
+               ) AS keeper_id
+        FROM tariffs
+        WHERE superseded_by_tariff_id IS NULL
+          AND supersede_reason IS NULL
+    )
+"""
+
 
 def dedup_tariffs(session: Session, dry_run: bool = False) -> dict:
-    total = session.execute(text("SELECT COUNT(*) FROM tariffs")).scalar()
+    total_live = session.execute(text(
+        "SELECT COUNT(*) FROM tariffs "
+        "WHERE superseded_by_tariff_id IS NULL AND supersede_reason IS NULL"
+    )).scalar()
 
-    keep_ids = session.execute(text("""
-        SELECT DISTINCT ON (utility_id, name, customer_class) id
-        FROM tariffs
-        ORDER BY utility_id, name, customer_class,
-                 effective_date DESC NULLS LAST,
-                 end_date DESC NULLS FIRST,
-                 id DESC
-    """)).scalars().all()
+    dup_count = session.execute(text(
+        RANKED_CTE + "SELECT COUNT(*) FROM ranked WHERE id <> keeper_id"
+    )).scalar()
 
-    keep_set = set(keep_ids)
-    to_delete = total - len(keep_set)
+    print(f"Live tariffs:         {total_live:,}")
+    print(f"Exact-name dupes:     {dup_count:,}"
+          + (f" ({dup_count/total_live*100:.1f}%)" if total_live else ""))
 
-    print(f"Total tariffs:        {total:,}")
-    print(f"Unique rate plans:    {len(keep_set):,}")
-    print(f"Older duplicates:     {to_delete:,} ({to_delete/total*100:.1f}%)")
-
-    if to_delete == 0:
-        print("Nothing to purge.")
-        return {"total": total, "kept": len(keep_set), "deleted": 0}
+    if dup_count == 0:
+        print("Nothing to retire.")
+        return {"total": total_live, "kept": total_live, "retired": 0}
 
     if dry_run:
         print("\n[DRY RUN] No changes made.")
-        return {"total": total, "kept": len(keep_set), "deleted": 0}
+        return {"total": total_live, "kept": total_live - dup_count, "retired": 0}
 
-    rc_deleted = session.execute(text("""
-        DELETE FROM rate_components
-        WHERE tariff_id NOT IN (
-            SELECT DISTINCT ON (utility_id, name, customer_class) id
-            FROM tariffs
-            ORDER BY utility_id, name, customer_class,
-                     effective_date DESC NULLS LAST,
-                     end_date DESC NULLS FIRST,
-                     id DESC
-        )
-    """)).rowcount
-
-    t_deleted = session.execute(text("""
-        DELETE FROM tariffs
-        WHERE id NOT IN (
-            SELECT DISTINCT ON (utility_id, name, customer_class) id
-            FROM tariffs
-            ORDER BY utility_id, name, customer_class,
-                     effective_date DESC NULLS LAST,
-                     end_date DESC NULLS FIRST,
-                     id DESC
-        )
-    """)).rowcount
+    retired = session.execute(text(
+        RANKED_CTE +
+        """
+        UPDATE tariffs t
+        SET superseded_by_tariff_id = r.keeper_id,
+            supersede_reason = 'dup_exact_name'
+        FROM ranked r
+        WHERE t.id = r.id AND r.id <> r.keeper_id
+        """
+    )).rowcount
 
     session.commit()
 
-    remaining = session.execute(text("SELECT COUNT(*) FROM tariffs")).scalar()
-    rc_remaining = session.execute(text("SELECT COUNT(*) FROM rate_components")).scalar()
+    remaining = session.execute(text(
+        "SELECT COUNT(*) FROM tariffs "
+        "WHERE superseded_by_tariff_id IS NULL AND supersede_reason IS NULL"
+    )).scalar()
 
-    print(f"\nDeleted {t_deleted:,} tariffs and {rc_deleted:,} rate components.")
-    print(f"Remaining: {remaining:,} tariffs, {rc_remaining:,} rate components.")
+    print(f"\nRetired {retired:,} duplicate tariffs (soft supersede).")
+    print(f"Live remaining: {remaining:,} tariffs.")
 
-    return {"total": total, "kept": remaining, "deleted": t_deleted}
+    return {"total": total_live, "kept": remaining, "retired": retired}
 
 
 def main():
     parser = argparse.ArgumentParser(description="Deduplicate tariffs")
-    parser.add_argument("--dry-run", action="store_true", help="Preview without deleting")
+    parser.add_argument("--dry-run", action="store_true", help="Preview without changing rows")
     args = parser.parse_args()
 
     engine = get_sync_engine()
