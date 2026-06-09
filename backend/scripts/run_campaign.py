@@ -45,6 +45,7 @@ NEXT_BATCH_SQL = text("""
            WHERE t.last_verified_at IS NULL
              AND t.openei_id IS NOT NULL
              AND t.superseded_by_tariff_id IS NULL
+             AND t.supersede_reason IS NULL
          ) AS old_count
   FROM utilities u
   JOIN tariffs t ON t.utility_id = u.id
@@ -56,6 +57,7 @@ NEXT_BATCH_SQL = text("""
            WHERE t.last_verified_at IS NULL
              AND t.openei_id IS NOT NULL
              AND t.superseded_by_tariff_id IS NULL
+             AND t.supersede_reason IS NULL
          ) >= :min_stale
   ORDER BY old_count DESC, u.id
   LIMIT :limit
@@ -70,11 +72,13 @@ TRACK_B_ALL_SQL = text("""
   HAVING COUNT(*) FILTER (
            WHERE t.last_verified_at IS NOT NULL
              AND t.superseded_by_tariff_id IS NULL
+             AND t.supersede_reason IS NULL
          ) > 0
      AND COUNT(*) FILTER (
            WHERE t.last_verified_at IS NULL
              AND t.openei_id IS NOT NULL
              AND t.superseded_by_tariff_id IS NULL
+             AND t.supersede_reason IS NULL
          ) > 0
   ORDER BY t.utility_id
 """)
@@ -85,17 +89,21 @@ def campaign_snapshot(session: Session) -> dict:
         text("""
           SELECT
             COUNT(*) FILTER (
-              WHERE last_verified_at IS NOT NULL AND superseded_by_tariff_id IS NULL
+              WHERE last_verified_at IS NOT NULL
+                AND superseded_by_tariff_id IS NULL
+                AND supersede_reason IS NULL
             ) AS fresh,
             COUNT(*) FILTER (
               WHERE last_verified_at IS NULL
                 AND openei_id IS NOT NULL
                 AND superseded_by_tariff_id IS NULL
+                AND supersede_reason IS NULL
             ) AS old,
             COUNT(DISTINCT utility_id) FILTER (
               WHERE last_verified_at IS NULL
                 AND openei_id IS NOT NULL
                 AND superseded_by_tariff_id IS NULL
+                AND supersede_reason IS NULL
             ) AS utils_with_old
           FROM tariffs
         """)
@@ -306,18 +314,26 @@ def main(argv: list[str] | None = None) -> None:
 
         batch_num += 1
         utility_ids = [uid for uid, _, _ in batch]
-        processed.update(utility_ids)
 
         with Session(engine) as session:
             run_id, chord_result = dispatch_batch(
                 session, batch, batch_num=batch_num, overrides=overrides
             )
 
-        batch_out = wait_for_refresh_run(
-            run_id,
-            chord_result,
-            timeout_sec=args.wait_timeout,
-        )
+        # Mark processed only AFTER the batch ran (success or timeout).
+        # Marking at dispatch time meant a timed-out batch was silently
+        # treated as covered for the rest of the campaign.
+        try:
+            batch_out = wait_for_refresh_run(
+                run_id,
+                chord_result,
+                timeout_sec=args.wait_timeout,
+            )
+        except TimeoutError as e:
+            batch_out = {"run_id": run_id, "finalized": False, "timeout": str(e)}
+            print(f"  WARNING: batch {batch_num} timed out — marking processed "
+                  f"to avoid re-dispatch, continuing campaign")
+        processed.update(utility_ids)
 
         with Session(engine) as session:
             batch_out["track_b"] = track_b_utilities(

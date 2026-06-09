@@ -32,15 +32,19 @@ services:
 
   redis:
     image: redis:7-alpine
+    # volatile-lru (not allkeys-lru): Celery chord/result keys carry TTLs,
+    # but allkeys-lru could evict a chord's result counter mid-run under
+    # memory pressure, silently dropping the finalize callback. 512mb gives
+    # large refresh runs (hundreds of per-task results) comfortable room.
     command: >
       redis-server
       --requirepass ${REDIS_PASSWORD:-changeme}
-      --maxmemory 128mb
-      --maxmemory-policy allkeys-lru
+      --maxmemory 512mb
+      --maxmemory-policy volatile-lru
     deploy:
       resources:
         limits:
-          memory: 256m
+          memory: 768m
 
   api:
     build: ./backend
@@ -89,7 +93,12 @@ services:
       PHASE6_ENABLED: ${PHASE6_ENABLED:-1}
       PHASE6_MAX_WAIT_SEC: ${PHASE6_MAX_WAIT_SEC:-1200}
       PHASE6_MAX_TOKENS: ${PHASE6_MAX_TOKENS:-3000000}
-    command: celery -A app.tasks.celery_app worker --loglevel=info --concurrency=8 --prefetch-multiplier=1
+    # concurrency=4: each pipeline can hold a Playwright/Chromium instance
+    # (~300-500MB); 8 concurrent pipelines repeatedly blew through the 4g
+    # container limit and got workers OOM-killed mid-task.
+    # max-tasks-per-child=25 recycles workers to contain slow leaks from
+    # Playwright/PDF parsing.
+    command: celery -A app.tasks.celery_app worker --loglevel=info --concurrency=4 --prefetch-multiplier=1 --max-tasks-per-child=25
     depends_on:
       db:
         condition: service_healthy

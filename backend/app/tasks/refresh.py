@@ -18,12 +18,14 @@ using Brave Search to rediscover tariff page URLs.
 
 import json
 import logging
+import os
 from datetime import datetime, timedelta, timezone
 
 from celery import chord, group
-from sqlalchemy import distinct, func, select
+from sqlalchemy import distinct, func, select, update
 from sqlalchemy.orm import Session
 
+from app.config import settings
 from app.db.session import get_sync_engine
 from app.models import (
     MonitoringSource,
@@ -40,8 +42,36 @@ log = logging.getLogger(__name__)
 STALE_THRESHOLD_DAYS = 90
 QUARTERLY_ERROR_LIMIT = 200
 
+# Hard cap on a single monthly run. Without it, one bad month (monitoring
+# flapping + a large stale backlog) dispatches thousands of tasks that take
+# days to drain through the LLM rate limit and starve everything else.
+MONTHLY_MAX_UTILITIES = int(os.environ.get("MONTHLY_MAX_UTILITIES", "400"))
+
+# Utilities that failed this many consecutive refresh attempts are skipped
+# by the monthly run (the quarterly recovery still retries them). Tracked
+# in a Redis hash so no schema change is needed.
+FAILURE_QUARANTINE_THRESHOLD = 3
+FAILURE_COUNTS_KEY = "refresh:failure_counts"
+
+# Per-utility dispatch lock TTL. Slightly above process_utility's hard
+# time_limit so a crashed worker can never leave a utility locked forever.
+UTILITY_LOCK_TTL = 1900
+
 LLM_RATE_LIMIT = "8/m"
 DOMAIN_RATE_LIMIT = "1/s"
+
+
+def _get_redis():
+    """Best-effort Redis client for locks/quarantine. Returns None when
+    unavailable — callers must degrade gracefully (no lock beats no run)."""
+    try:
+        import redis
+        client = redis.Redis.from_url(settings.redis_url)
+        client.ping()
+        return client
+    except Exception as e:
+        log.warning(f"Redis unavailable for refresh helpers: {e}")
+        return None
 
 
 # ---------------------------------------------------------------------------
@@ -108,6 +138,24 @@ def _get_error_utility_ids(session: Session, limit: int = QUARTERLY_ERROR_LIMIT)
     return list(session.execute(stmt).scalars().all())
 
 
+def _filter_quarantined(ids: list[int]) -> tuple[list[int], list[int]]:
+    """Split ids into (keep, quarantined) based on consecutive failures."""
+    r = _get_redis()
+    if r is None or not ids:
+        return ids, []
+    try:
+        counts = r.hmget(FAILURE_COUNTS_KEY, [str(i) for i in ids])
+    except Exception:
+        return ids, []
+    keep, quarantined = [], []
+    for uid, c in zip(ids, counts):
+        if c is not None and int(c) >= FAILURE_QUARANTINE_THRESHOLD:
+            quarantined.append(uid)
+        else:
+            keep.append(uid)
+    return keep, quarantined
+
+
 def _count_tariffs(session: Session, utility_ids: list[int]) -> dict[int, int]:
     """Count tariffs per utility."""
     if not utility_ids:
@@ -141,19 +189,75 @@ TRANSIENT_ERRORS = (ConnectionError, TimeoutError, OSError)
     time_limit=1800,
     rate_limit=LLM_RATE_LIMIT,
     acks_late=True,
+    # Without this, acks_late re-queues a task whose worker died (OOM kill,
+    # docker restart) and it can crash the next worker the same way, looping
+    # forever. Reject instead: the run's finalize/reaper accounts for it.
+    reject_on_worker_lost=True,
     autoretry_for=TRANSIENT_ERRORS,
     retry_backoff=60,
     retry_backoff_max=300,
     retry_jitter=True,
 )
+def _clear_changed_sources(uid: int):
+    """After a successful extraction, mark this utility's CHANGED monitoring
+    sources as UNCHANGED so next month's run doesn't re-target the same
+    already-consumed change signal."""
+    engine = get_sync_engine()
+    with Session(engine) as session:
+        session.execute(
+            update(MonitoringSource)
+            .where(
+                MonitoringSource.utility_id == uid,
+                MonitoringSource.status == MonitoringStatus.CHANGED,
+            )
+            .values(status=MonitoringStatus.UNCHANGED)
+        )
+        session.commit()
+
+
+def _record_outcome(uid: int, success: bool):
+    """Track consecutive failures in Redis for the monthly quarantine."""
+    r = _get_redis()
+    if r is None:
+        return
+    try:
+        if success:
+            r.hdel(FAILURE_COUNTS_KEY, str(uid))
+        else:
+            r.hincrby(FAILURE_COUNTS_KEY, str(uid), 1)
+    except Exception as e:
+        log.warning(f"Failed to record refresh outcome for {uid}: {e}")
+
+
 def process_utility(self, uid: int, comprehensive: bool = False) -> dict:
     """Run the full tariff pipeline for a single utility.
 
     This is the unit of parallelism — Celery distributes these across workers.
     Automatically retries up to 2 times with exponential backoff (60s, then
     up to 300s with jitter) on transient network/timeout errors.
+
+    A per-utility Redis lock prevents two concurrent runs (e.g. overlapping
+    monthly + quarterly dispatches, or a manual campaign) from processing
+    the same utility at once — concurrent store_tariffs calls can duplicate
+    rows and race the reconciliation pass.
     """
     from scripts.tariff_pipeline import cleanup_between_utilities, run_pipeline
+
+    r = _get_redis()
+    lock = None
+    if r is not None:
+        lock = r.lock(f"refresh:lock:utility:{uid}", timeout=UTILITY_LOCK_TTL)
+        if not lock.acquire(blocking=False):
+            log.info(f"Utility {uid} already being processed elsewhere — skipping")
+            return {
+                "utility_id": uid,
+                "utility_name": str(uid),
+                "state": "",
+                "tariffs_found": 0,
+                "errors": [],
+                "success": True,
+                "skipped_locked": True,
+            }
 
     log.info(f"Processing utility {uid} (comprehensive={comprehensive}, attempt={self.request.retries + 1})")
     try:
@@ -163,19 +267,27 @@ def process_utility(self, uid: int, comprehensive: bool = False) -> dict:
         # is a cheap success, not an error — counting it as a failure used to
         # inflate error rates and trigger pointless retry campaigns.
         skipped = getattr(result, "skipped_unchanged", False)
+        success = valid_count > 0 or skipped
+        _record_outcome(uid, success)
+        if success:
+            try:
+                _clear_changed_sources(uid)
+            except Exception as e:
+                log.warning(f"Could not clear CHANGED sources for {uid}: {e}")
         return {
             "utility_id": uid,
             "utility_name": result.utility_name,
             "state": result.state,
             "tariffs_found": valid_count,
             "errors": result.errors,
-            "success": valid_count > 0 or skipped,
+            "success": success,
             "skipped_unchanged": skipped,
         }
     except TRANSIENT_ERRORS:
         raise  # Let autoretry handle these
     except Exception as e:
         log.error(f"Utility {uid} CRASHED: {e}")
+        _record_outcome(uid, False)
         return {
             "utility_id": uid,
             "utility_name": str(uid),
@@ -186,6 +298,11 @@ def process_utility(self, uid: int, comprehensive: bool = False) -> dict:
         }
     finally:
         cleanup_between_utilities()
+        if lock is not None:
+            try:
+                lock.release()
+            except Exception:
+                pass  # TTL expiry already released it
 
 
 # ---------------------------------------------------------------------------
@@ -277,6 +394,11 @@ def finalize_refresh_run(results: list[dict], run_id: int, before_counts_json: s
     with Session(engine) as session:
         run = session.get(RefreshRun, run_id)
         if run:
+            # Preserve the dispatch-time audit scope written by the parent.
+            prior = run.summary_json or {}
+            for key in ("targeted_utility_ids", "quarantined_skipped"):
+                if key in prior:
+                    summary[key] = prior[key]
             run.finished_at = now
             run.utilities_processed = processed
             run.tariffs_added = tariffs_added
@@ -325,27 +447,33 @@ def _finalize_run_from_audit(session: Session, run: RefreshRun) -> dict:
         started + timedelta(hours=24),
     )
 
-    created = session.execute(
-        select(func.count(Tariff.id)).where(
-            Tariff.created_at >= started,
-            Tariff.created_at < window_end,
-        )
-    ).scalar() or 0
+    # Scope the reconstruction to the utilities this run actually
+    # dispatched (recorded at dispatch time). Without this, concurrent
+    # campaigns/manual scripts running in the same window get credited to
+    # this run and the numbers are fiction.
+    targeted_ids = (run.summary_json or {}).get("targeted_utility_ids") or []
 
-    verified_only = session.execute(
-        select(func.count(Tariff.id)).where(
-            Tariff.last_verified_at >= started,
-            Tariff.last_verified_at < window_end,
-            (Tariff.created_at < started) | (Tariff.created_at.is_(None)),
-        )
-    ).scalar() or 0
+    created_q = select(func.count(Tariff.id)).where(
+        Tariff.created_at >= started,
+        Tariff.created_at < window_end,
+    )
+    verified_q = select(func.count(Tariff.id)).where(
+        Tariff.last_verified_at >= started,
+        Tariff.last_verified_at < window_end,
+        (Tariff.created_at < started) | (Tariff.created_at.is_(None)),
+    )
+    processed_q = select(func.count(func.distinct(Tariff.utility_id))).where(
+        Tariff.last_verified_at >= started,
+        Tariff.last_verified_at < window_end,
+    )
+    if targeted_ids:
+        created_q = created_q.where(Tariff.utility_id.in_(targeted_ids))
+        verified_q = verified_q.where(Tariff.utility_id.in_(targeted_ids))
+        processed_q = processed_q.where(Tariff.utility_id.in_(targeted_ids))
 
-    utilities_processed = session.execute(
-        select(func.count(func.distinct(Tariff.utility_id))).where(
-            Tariff.last_verified_at >= started,
-            Tariff.last_verified_at < window_end,
-        )
-    ).scalar() or 0
+    created = session.execute(created_q).scalar() or 0
+    verified_only = session.execute(verified_q).scalar() or 0
+    utilities_processed = session.execute(processed_q).scalar() or 0
 
     targeted = run.utilities_targeted or 0
     errors = max(targeted - utilities_processed, 0)
@@ -388,7 +516,8 @@ def reap_stalled_runs() -> dict:
     `finished_at` is still NULL after the staleness threshold has elapsed.
     """
     engine = get_sync_engine()
-    cutoff = datetime.now(timezone.utc) - timedelta(hours=STALLED_RUN_THRESHOLD_HOURS)
+    now = datetime.now(timezone.utc)
+    cutoff = now - timedelta(hours=STALLED_RUN_THRESHOLD_HOURS)
     reaped: list[int] = []
 
     with Session(engine) as session:
@@ -399,6 +528,24 @@ def reap_stalled_runs() -> dict:
         ).scalars().all()
 
         for run in stalled:
+            # Scale the threshold with run size: a 5,000-utility campaign at
+            # the 8/min LLM rate limit legitimately takes >10h. Reaping it
+            # at 6h would finalize a run that is still healthy.
+            targeted = run.utilities_targeted or 0
+            expected_hours = max(
+                STALLED_RUN_THRESHOLD_HOURS,
+                (targeted / 480.0) * 2 + 1,  # 8/min = 480/h, 2x headroom
+            )
+            started = run.started_at
+            if started.tzinfo is None:
+                started = started.replace(tzinfo=timezone.utc)
+            age_hours = (now - started).total_seconds() / 3600
+            if age_hours < expected_hours:
+                log.info(
+                    f"Skipping RefreshRun #{run.id}: {age_hours:.1f}h old, "
+                    f"expected up to {expected_hours:.1f}h for {targeted} targets"
+                )
+                continue
             log.warning(
                 f"Reaping stalled RefreshRun #{run.id} "
                 f"(started {run.started_at.isoformat()}, "
@@ -445,16 +592,39 @@ def refresh_changed_tariffs():
     with Session(engine) as session:
         changed_ids = _get_changed_utility_ids(session)
         stale_ids = _get_stale_utility_ids(session)
-        all_ids = list(set(changed_ids + stale_ids))
-        before_counts = _count_tariffs(session, all_ids)
 
     log.info(f"  Changed (monitoring detected): {len(changed_ids)}")
     log.info(f"  Stale (not verified in {STALE_THRESHOLD_DAYS}d): {len(stale_ids)}")
+
+    # Quarantine: skip utilities that failed several consecutive attempts —
+    # retrying them monthly burns LLM spend with no new information. The
+    # quarterly recovery run still picks them up.
+    changed_ids, q1 = _filter_quarantined(changed_ids)
+    stale_ids, q2 = _filter_quarantined(stale_ids)
+    quarantined = sorted(set(q1 + q2))
+    if quarantined:
+        log.info(f"  Quarantined (>= {FAILURE_QUARANTINE_THRESHOLD} consecutive failures): {len(quarantined)}")
+
+    # Cap the run: changed utilities first (a real signal), stale fills the
+    # remainder. Whatever doesn't fit is naturally still stale next month.
+    all_ids = list(dict.fromkeys(changed_ids + [i for i in stale_ids if i not in set(changed_ids)]))
+    if len(all_ids) > MONTHLY_MAX_UTILITIES:
+        log.info(f"  Capping run at {MONTHLY_MAX_UTILITIES} of {len(all_ids)} candidates")
+        all_ids = all_ids[:MONTHLY_MAX_UTILITIES]
+
     log.info(f"  Total unique targets: {len(all_ids)}")
 
     with Session(engine) as session:
+        before_counts = _count_tariffs(session, all_ids)
         run = session.get(RefreshRun, run_id)
         run.utilities_targeted = len(all_ids)
+        # Persist exactly which utilities this run dispatched so the audit
+        # reaper can scope its reconstruction to them (instead of counting
+        # every tariff touched globally during the window).
+        run.summary_json = {
+            "targeted_utility_ids": all_ids,
+            "quarantined_skipped": len(quarantined),
+        }
         session.commit()
 
     if not all_ids:
@@ -507,6 +677,7 @@ def recover_error_utilities():
     with Session(engine) as session:
         run = session.get(RefreshRun, run_id)
         run.utilities_targeted = len(error_ids)
+        run.summary_json = {"targeted_utility_ids": error_ids}
         session.commit()
 
     if not error_ids:
