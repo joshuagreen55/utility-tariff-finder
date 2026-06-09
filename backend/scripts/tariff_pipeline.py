@@ -958,7 +958,17 @@ def score_search_result(
     if any(kw in path for kw in ["regulatory", "submission", "filing", "bcuc", "puc.", "docket"]):
         score -= 15
     if path.endswith(".pdf"):
-        score -= 30
+        # Many smaller utilities publish rates ONLY as a PDF rate book on
+        # their own site — a blanket -30 buried those behind off-domain
+        # HTML aggregators. Keep the penalty for off-domain or unnamed
+        # PDFs (often regulator filings) but go light when the utility's
+        # own domain serves a rate-named PDF.
+        on_domain = utility_domain and is_same_domain(url, f"https://{utility_domain}")
+        rate_named = any(kw in path for kw in ["rate", "tariff", "pricing"])
+        if on_domain and rate_named:
+            score -= 5
+        else:
+            score -= 30
 
     combined_text = f"{title} {description}".lower()
     for kw in ["rate", "electric", "residential", "commercial", "pricing"]:
@@ -1650,7 +1660,9 @@ def phase2_discover_tariff_pages(rate_page_url: str) -> list[RatePage]:
                     _js_rendered_domains.add(domain)
             else:
                 log.warning(f"  Phase 2: Playwright also blocked for {rate_page_url[:60]}")
-                return []
+                # Last resort for hard-blocked pages: the interactive
+                # browser agent (handles cookie walls, JS challenges).
+                return _try_browser_agent_fallback(rate_page_url)
         elif status == 0:
             log.info(f"  Phase 2: httpx connection failed — trying Playwright...")
             html_js, title_js = fetch_page_js(rate_page_url)
@@ -1697,6 +1709,14 @@ def phase2_discover_tariff_pages(rate_page_url: str) -> list[RatePage]:
             content = html_js
             soup = BeautifulSoup(content, "lxml")
             text = _extract_text(BeautifulSoup(content, "lxml"))
+
+        # Playwright still couldn't surface content (interactive widget,
+        # accordion, rate calculator). Try the interactive browser agent
+        # before giving up on the page.
+        if len(text.strip()) < 200:
+            agent_pages = _try_browser_agent_fallback(rate_page_url)
+            if agent_pages:
+                return agent_pages
 
     main_page = RatePage(
         url=rate_page_url,
@@ -1773,6 +1793,19 @@ def phase2_discover_tariff_pages(rate_page_url: str) -> list[RatePage]:
         )
 
     MAX_LEVEL1 = 15
+    # Rate-book hubs: a rate-themed page linking to many PDFs is a tariff
+    # library (each schedule its own PDF). Capping those at 15 silently
+    # dropped half the catalog — raise the budget for that shape of page.
+    if page_is_rate_themed:
+        pdf_link_count = sum(
+            1 for u, _ in level1_links if u.lower().split("?")[0].endswith(".pdf")
+        )
+        if pdf_link_count >= 10:
+            MAX_LEVEL1 = 30
+            log.info(
+                f"  Phase 2: Rate-book hub detected ({pdf_link_count} PDF links) "
+                f"— raising level-1 cap to {MAX_LEVEL1}"
+            )
     if len(level1_links) > MAX_LEVEL1:
         log.info(f"  Phase 2: Capping level 1 links to {MAX_LEVEL1} (from {len(level1_links)})")
         level1_links = level1_links[:MAX_LEVEL1]
@@ -2535,10 +2568,13 @@ def _extract_two_pass(
     page: RatePage,
     utility_name: str,
     state: str = "",
+    stats: dict | None = None,
 ) -> tuple[list[ExtractedTariff], int]:
     """Two-pass extraction: identify tariffs first, then extract each individually.
 
-    Returns (tariffs, llm_call_count).
+    Returns (tariffs, llm_call_count). When `stats` is provided, records
+    `twopass_truncated` if more tariffs were identified than the per-page
+    extraction cap allows (so the loss is visible, not silent).
     """
     content_for_llm = _select_rate_content(page.content, max_chars=25000)
     llm_calls = 0
@@ -2590,11 +2626,21 @@ def _extract_two_pass(
         f"(model={'opus' if use_opus_for_identify else 'haiku'})"
     )
 
-    # Pass 2: Extract each tariff individually. Cap at 12 to bound LLM
+    # Pass 2: Extract each tariff individually. Cap at 20 to bound LLM
     # cost — consolidated rate-book PDFs (HQ, Manitoba Hydro, etc.) can
-    # legitimately have ~10 named residential variants plus commercial.
+    # legitimately name 15+ residential variants plus commercial. When the
+    # cap truncates, record it so the run report shows the loss.
+    TWOPASS_EXTRACT_CAP = 20
+    if len(relevant) > TWOPASS_EXTRACT_CAP:
+        dropped = len(relevant) - TWOPASS_EXTRACT_CAP
+        log.warning(
+            f"    Two-pass: {len(relevant)} tariffs identified but cap is "
+            f"{TWOPASS_EXTRACT_CAP} — dropping {dropped}"
+        )
+        if stats is not None:
+            stats["twopass_truncated"] = stats.get("twopass_truncated", 0) + dropped
     all_tariffs: list[ExtractedTariff] = []
-    for item in relevant[:12]:
+    for item in relevant[:TWOPASS_EXTRACT_CAP]:
         name = item.get("name", "Unknown")
         cc = item.get("customer_class", "residential")
         hint = item.get("location_hint", "")
@@ -2783,6 +2829,7 @@ def phase3_extract_tariffs(
             continue
         if llm_calls >= MAX_LLM_CALLS:
             log.info(f"    Stopping: reached {MAX_LLM_CALLS} LLM call limit")
+            stats["llm_call_cap_hit"] = True
             break
         if consecutive_zeros >= MAX_CONSECUTIVE_LLM_ZEROS:
             log.info(
@@ -2854,7 +2901,7 @@ def phase3_extract_tariffs(
         # Use two-pass for complex pages (long PDFs with many rate structures)
         if _is_complex_page(page.content):
             log.info(f"    Using two-pass extraction (complex page, {len(page.content)} chars)")
-            tariffs, calls = _extract_two_pass(page, utility_name, state=state)
+            tariffs, calls = _extract_two_pass(page, utility_name, state=state, stats=stats)
             llm_calls += calls
         else:
             content_for_llm = _select_rate_content(page.content, max_chars=20000)
@@ -4778,6 +4825,14 @@ def _build_extraction_failure_reason(stats: dict, rate_page_url: str | None) -> 
     skip_irrel = int(stats.get("pages_skipped_irrelevant", 0))
     skip_nosig = int(stats.get("pages_skipped_no_signal", 0))
     early_abort = bool(stats.get("early_abort", False))
+    cap_hit = bool(stats.get("llm_call_cap_hit", False))
+    twopass_dropped = int(stats.get("twopass_truncated", 0))
+
+    suffix = ""
+    if cap_hit:
+        suffix += " [LLM call budget exhausted before all pages were tried]"
+    if twopass_dropped:
+        suffix += f" [{twopass_dropped} identified tariffs dropped by two-pass cap]"
 
     # No pages found at all
     if pages_total == 0:
@@ -4800,14 +4855,15 @@ def _build_extraction_failure_reason(stats: dict, rate_page_url: str | None) -> 
     # LLM was called but returned no usable tariffs
     if llm_zero and llm_zero == llm_sent:
         note = " (aborted early after 5 consecutive 0-extractions)" if early_abort else ""
-        return f"LLM returned 0 tariffs on all {llm_sent} pages{note}"
+        return f"LLM returned 0 tariffs on all {llm_sent} pages{note}{suffix}"
     if llm_err and llm_err >= llm_sent:
-        return f"LLM errored on all {llm_sent} attempts — possible API issue"
+        return f"LLM errored on all {llm_sent} attempts — possible API issue{suffix}"
 
     # Mixed — some extracted but none passed validation
     return (
         f"Extracted tariffs did not pass validation "
         f"({pages_total} pages total, {llm_sent} reached LLM, {llm_zero} returned 0)"
+        f"{suffix}"
     )
 
 
@@ -4850,7 +4906,22 @@ def _phase5_smart_retry(
         log.info("  Phase 5: Homepage URL triggered a download, treating as PDF")
         pdf_page = _fetch_as_pdf_via_download(website_url)
         if pdf_page:
-            return [pdf_page], [], stats
+            # Run the PDF through Phase 3 like any other page. (This used
+            # to return the RatePage itself in the tariffs slot, which
+            # poisoned downstream handling with non-tariff objects.)
+            try:
+                phase3_stats: dict = {}
+                tariffs = phase3_extract_tariffs(
+                    [pdf_page], utility_name, stats=phase3_stats, state=state
+                )
+                for k, v in phase3_stats.items():
+                    if k in stats and isinstance(stats[k], (int, float)):
+                        stats[k] += int(v)
+                    else:
+                        stats[k] = v
+                return tariffs, [pdf_page], stats
+            except Exception as e:
+                log.warning(f"  Phase 5: PDF homepage extraction failed: {e}")
         stats["phase5_homepage_failed"] = True
         return [], [], stats
     if not html_js or len(html_js.strip()) < 200:
@@ -5632,59 +5703,67 @@ def run_pipeline(
             if rate_page_url.lower().split("?")[0].endswith(".pdf")
             else ""
         )
-        if pdf_override and pdf_override.lower().split("?")[0].endswith(".pdf"):
+        pdf_override_failed = bool(
+            pdf_override and pdf_override.lower().split("?")[0].endswith(".pdf")
+        )
+        if pdf_override_failed:
+            # The pinned PDF came up empty (moved, scanned, image-only).
+            # Phase 5 is still worth running — AI navigation of the live
+            # site often finds the CURRENT rate page that replaced the
+            # stale PDF. Phase 6 stays skipped for these: deep-research
+            # spend on known-PDF utilities historically returned nothing
+            # the override didn't already cover.
             log.warning(
-                "  PDF override produced no tariffs — skipping Phase 5/6 smart retry"
-            )
-            result.errors.append(
-                _build_extraction_failure_reason(combined_stats, rate_page_url)
+                "  PDF override produced no tariffs — trying Phase 5 "
+                "(Phase 6 remains skipped for PDF overrides)"
             )
         else:
             log.warning("  No tariffs extracted from any candidate page — trying smart retry")
-            # Derive website URL from the rate page we found if we don't have one
-            phase5_website = website_url
-            if not phase5_website and rate_page_url:
-                parsed = urlparse(rate_page_url)
-                phase5_website = f"{parsed.scheme}://{parsed.netloc}"
-            smart_tariffs, smart_pages, phase5_stats = _phase5_smart_retry(
-                utility_name, state, phase5_website, pages
-            )
-            _merge_stats(phase5_stats)
-            if smart_tariffs:
-                tariffs = smart_tariffs
-                pages = smart_pages or pages
-                log.info(f"  Phase 5 smart retry found {len(tariffs)} tariffs")
-            else:
-                log.warning("  Smart retry also found no tariffs")
-                # Phase 6 — Gemini Deep Research as a last-resort fallback.
-                # Gated behind PHASE6_ENABLED env var because each call costs
-                # ~$1-2 and takes 5-15 minutes. Only worth it for the long tail
-                # of utilities that fail every faster tier.
-                if _phase6_enabled():
-                    attempted: list[str] = []
-                    if rate_page_url:
-                        attempted.append(rate_page_url)
-                    attempted.extend(alt_urls or [])
-                    for p in (pages or []):
-                        if getattr(p, "url", None):
-                            attempted.append(p.url)
-                    dr_tariffs, phase6_stats = phase6_deep_research(
-                        utility_name, state, attempted,
+
+        # Derive website URL from the rate page we found if we don't have one
+        phase5_website = website_url
+        if not phase5_website and rate_page_url:
+            parsed = urlparse(rate_page_url)
+            phase5_website = f"{parsed.scheme}://{parsed.netloc}"
+        smart_tariffs, smart_pages, phase5_stats = _phase5_smart_retry(
+            utility_name, state, phase5_website, pages
+        )
+        _merge_stats(phase5_stats)
+        if smart_tariffs:
+            tariffs = smart_tariffs
+            pages = smart_pages or pages
+            log.info(f"  Phase 5 smart retry found {len(tariffs)} tariffs")
+        else:
+            log.warning("  Smart retry also found no tariffs")
+            # Phase 6 — Gemini Deep Research as a last-resort fallback.
+            # Gated behind PHASE6_ENABLED env var because each call costs
+            # ~$1-2 and takes 5-15 minutes. Only worth it for the long tail
+            # of utilities that fail every faster tier.
+            if _phase6_enabled() and not pdf_override_failed:
+                attempted: list[str] = []
+                if rate_page_url:
+                    attempted.append(rate_page_url)
+                attempted.extend(alt_urls or [])
+                for p in (pages or []):
+                    if getattr(p, "url", None):
+                        attempted.append(p.url)
+                dr_tariffs, phase6_stats = phase6_deep_research(
+                    utility_name, state, attempted,
+                )
+                _merge_stats(phase6_stats)
+                if dr_tariffs:
+                    tariffs = dr_tariffs
+                    log.info(
+                        f"  Phase 6 Deep Research found {len(tariffs)} tariffs"
                     )
-                    _merge_stats(phase6_stats)
-                    if dr_tariffs:
-                        tariffs = dr_tariffs
-                        log.info(
-                            f"  Phase 6 Deep Research found {len(tariffs)} tariffs"
-                        )
-                    else:
-                        result.errors.append(
-                            _build_extraction_failure_reason(combined_stats, rate_page_url)
-                        )
                 else:
                     result.errors.append(
                         _build_extraction_failure_reason(combined_stats, rate_page_url)
                     )
+            else:
+                result.errors.append(
+                    _build_extraction_failure_reason(combined_stats, rate_page_url)
+                )
 
     # Content identity check — reject if pages clearly belong to a different utility
     utility_domain = urlparse(website_url).netloc if website_url else None
