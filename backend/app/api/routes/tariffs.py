@@ -85,6 +85,11 @@ async def browse_tariffs(
         .join(Utility, Tariff.utility_id == Utility.id)
         .outerjoin(component_count_sq, Tariff.id == component_count_sq.c.tariff_id)
         .where(Utility.is_active.is_(True))
+        # Hide tariffs absorbed by a fresher one (Track B LLM 1:N pairing)
+        # or otherwise retired (e.g. out_of_scope wholesale/federal seeds,
+        # which have a supersede_reason but no surviving tariff to point at).
+        .where(Tariff.superseded_by_tariff_id.is_(None))
+        .where(Tariff.supersede_reason.is_(None))
     )
 
     if country:
@@ -123,7 +128,15 @@ async def list_tariffs_for_utility(
     offset: int = Query(default=0, ge=0),
     db: AsyncSession = Depends(get_db),
 ):
-    stmt = select(Tariff).where(Tariff.utility_id == utility_id)
+    stmt = (
+        select(Tariff)
+        .where(Tariff.utility_id == utility_id)
+        # Hide tariffs absorbed by a fresher one (Track B LLM 1:N pairing)
+        # or otherwise retired (e.g. out_of_scope wholesale/federal seeds,
+        # which have a supersede_reason but no surviving tariff to point at).
+        .where(Tariff.superseded_by_tariff_id.is_(None))
+        .where(Tariff.supersede_reason.is_(None))
+    )
 
     if customer_class:
         stmt = stmt.where(Tariff.customer_class == customer_class)

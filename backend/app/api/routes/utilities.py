@@ -20,6 +20,11 @@ async def list_utilities(
 ):
     tariff_count_sub = (
         select(Tariff.utility_id, func.count(Tariff.id).label("tariff_count"))
+        # Count only "live" tariffs: exclude rows absorbed by a fresher
+        # version via the supersede-by-LLM pairing pass, plus rows retired
+        # for other reasons (e.g. out_of_scope wholesale/federal seeds).
+        .where(Tariff.superseded_by_tariff_id.is_(None))
+        .where(Tariff.supersede_reason.is_(None))
         .group_by(Tariff.utility_id)
         .subquery()
     )
@@ -66,6 +71,8 @@ async def get_utility(utility_id: int, db: AsyncSession = Depends(get_db)):
     tariff_count_sub = (
         select(func.count(Tariff.id))
         .where(Tariff.utility_id == utility_id)
+        .where(Tariff.superseded_by_tariff_id.is_(None))
+        .where(Tariff.supersede_reason.is_(None))
         .scalar_subquery()
     )
 

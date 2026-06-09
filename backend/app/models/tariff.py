@@ -74,6 +74,16 @@ class Tariff(Base):
     openei_id: Mapped[str | None] = mapped_column(String(50), unique=True, nullable=True, index=True)
     raw_openei_data: Mapped[dict | None] = mapped_column(JSONB, nullable=True)
 
+    # Set when this row has been absorbed by a fresher tariff. Points at
+    # the surviving tariff for that utility. The row is kept (audit trail)
+    # but filtered out of default API queries. `supersede_reason` records
+    # how the decision was made: 'matcher' (deterministic), 'llm_absorb'
+    # (LLM 1:N pairing), 'manual' (operator), etc.
+    superseded_by_tariff_id: Mapped[int | None] = mapped_column(
+        Integer, ForeignKey("tariffs.id", ondelete="SET NULL"), nullable=True, index=True
+    )
+    supersede_reason: Mapped[str | None] = mapped_column(String(50), nullable=True)
+
     energy_schedule_weekday: Mapped[dict | None] = mapped_column(JSONB, nullable=True)
     energy_schedule_weekend: Mapped[dict | None] = mapped_column(JSONB, nullable=True)
     demand_schedule_weekday: Mapped[dict | None] = mapped_column(JSONB, nullable=True)

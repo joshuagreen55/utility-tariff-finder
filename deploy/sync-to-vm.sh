@@ -65,6 +65,7 @@ gcloud compute ssh "$VM_NAME" --zone="$VM_ZONE" --quiet --command="
   cd $REMOTE_DIR && \
   mv -f alembic.ini backend/alembic.ini 2>/dev/null; \
   mv -f requirements.txt backend/requirements.txt 2>/dev/null; \
+  chmod -R a+rX backend/scripts backend/app backend/alembic backend/tests 2>/dev/null; \
   true
 "
 

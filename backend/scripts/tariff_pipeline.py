@@ -1588,6 +1588,18 @@ def phase2_discover_tariff_pages(rate_page_url: str) -> list[RatePage]:
     residential and small-commercial rate detail pages."""
     log.info(f"  Phase 2: Crawling {rate_page_url}")
 
+    # Direct PDF URL — skip HTML crawl (httpx returns raw bytes that
+    # BeautifulSoup cannot parse; e.g. SCE residential fact-sheet PDF).
+    if rate_page_url.lower().split("?")[0].endswith(".pdf"):
+        pdf_page = _fetch_as_pdf_via_download(rate_page_url)
+        if pdf_page:
+            log.info(
+                f"  Phase 2: Direct PDF URL, extracted {len(pdf_page.content)} chars"
+            )
+            return [pdf_page]
+        log.warning("  Phase 2: Failed to fetch direct PDF URL")
+        return []
+
     # Level 0: fetch the main rates page
     domain = urlparse(rate_page_url).netloc
     bare_domain = domain.replace("www.", "")
@@ -1606,6 +1618,17 @@ def phase2_discover_tariff_pages(rate_page_url: str) -> list[RatePage]:
         status = 200
     else:
         content, ctype, status = fetch_page(rate_page_url)
+
+    if status == 200 and "pdf" in (ctype or "").lower():
+        pdf_page = _fetch_as_pdf_via_download(rate_page_url)
+        if pdf_page:
+            log.info(
+                f"  Phase 2: Response is PDF ({ctype}), extracted "
+                f"{len(pdf_page.content)} chars"
+            )
+            return [pdf_page]
+        log.warning("  Phase 2: PDF content-type but extraction failed")
+        return []
 
     if status != 200:
         if status == 403:
@@ -4346,16 +4369,32 @@ def _extract_rate_code_tokens(name: str) -> set[str]:
         if 2 <= len(compact) <= 6:
             out.add(compact)
 
+    # Tokens that *look* like rate codes but aren't. Time-of-day stamps
+    # (4pm, 7pm, 9am), voltage labels (12kv, 480v, 240v), and a handful
+    # of unit / phase markers slip through the short-token heuristic.
+    # Excluding them here prevents false-positive matches like
+    # "Time of Use 4pm-7pm Weekdays" <-> "Time Advantage 7pm to noon".
+    def _is_real_rate_code(tok: str) -> bool:
+        if re.fullmatch(r"\d{1,2}(am|pm|a|p)", tok):
+            return False
+        if re.fullmatch(r"\d{1,4}(kv|v|kw|mw|hz|w|kva|mva)", tok):
+            return False
+        if re.fullmatch(r"\d{1,2}(st|nd|rd|th)", tok):
+            return False
+        return True
+
     # Tokenize on spaces, parens, slashes, colons, commas
     raw = re.split(r"[\s\(\)\[\]\{\}/:,;]+", n)
     for tok in raw:
         # Remove leading/trailing dashes/dots but keep internal ones
         t = tok.strip("-.")
         if 2 <= len(t) <= 6 and any(c.isdigit() for c in t) and any(c.isalpha() for c in t):
+            if not _is_real_rate_code(t):
+                continue
             out.add(t)
             # Also add the version with internal punctuation removed
             stripped = re.sub(r"[\-.]+", "", t)
-            if 2 <= len(stripped) <= 6:
+            if 2 <= len(stripped) <= 6 and _is_real_rate_code(stripped):
                 out.add(stripped)
     return out
 
@@ -5463,51 +5502,64 @@ def run_pipeline(
         current_url = _pick_next_alt()
 
     if not tariffs:
-        log.warning("  No tariffs extracted from any candidate page — trying smart retry")
-        # Derive website URL from the rate page we found if we don't have one
-        phase5_website = website_url
-        if not phase5_website and rate_page_url:
-            parsed = urlparse(rate_page_url)
-            phase5_website = f"{parsed.scheme}://{parsed.netloc}"
-        smart_tariffs, smart_pages, phase5_stats = _phase5_smart_retry(
-            utility_name, state, phase5_website, pages
+        pdf_override = rate_page_url_override or (
+            rate_page_url
+            if rate_page_url.lower().split("?")[0].endswith(".pdf")
+            else ""
         )
-        _merge_stats(phase5_stats)
-        if smart_tariffs:
-            tariffs = smart_tariffs
-            pages = smart_pages or pages
-            log.info(f"  Phase 5 smart retry found {len(tariffs)} tariffs")
+        if pdf_override and pdf_override.lower().split("?")[0].endswith(".pdf"):
+            log.warning(
+                "  PDF override produced no tariffs — skipping Phase 5/6 smart retry"
+            )
+            result.errors.append(
+                _build_extraction_failure_reason(combined_stats, rate_page_url)
+            )
         else:
-            log.warning("  Smart retry also found no tariffs")
-            # Phase 6 — Gemini Deep Research as a last-resort fallback.
-            # Gated behind PHASE6_ENABLED env var because each call costs
-            # ~$1-2 and takes 5-15 minutes. Only worth it for the long tail
-            # of utilities that fail every faster tier.
-            if _phase6_enabled():
-                attempted: list[str] = []
-                if rate_page_url:
-                    attempted.append(rate_page_url)
-                attempted.extend(alt_urls or [])
-                for p in (pages or []):
-                    if getattr(p, "url", None):
-                        attempted.append(p.url)
-                dr_tariffs, phase6_stats = phase6_deep_research(
-                    utility_name, state, attempted,
-                )
-                _merge_stats(phase6_stats)
-                if dr_tariffs:
-                    tariffs = dr_tariffs
-                    log.info(
-                        f"  Phase 6 Deep Research found {len(tariffs)} tariffs"
+            log.warning("  No tariffs extracted from any candidate page — trying smart retry")
+            # Derive website URL from the rate page we found if we don't have one
+            phase5_website = website_url
+            if not phase5_website and rate_page_url:
+                parsed = urlparse(rate_page_url)
+                phase5_website = f"{parsed.scheme}://{parsed.netloc}"
+            smart_tariffs, smart_pages, phase5_stats = _phase5_smart_retry(
+                utility_name, state, phase5_website, pages
+            )
+            _merge_stats(phase5_stats)
+            if smart_tariffs:
+                tariffs = smart_tariffs
+                pages = smart_pages or pages
+                log.info(f"  Phase 5 smart retry found {len(tariffs)} tariffs")
+            else:
+                log.warning("  Smart retry also found no tariffs")
+                # Phase 6 — Gemini Deep Research as a last-resort fallback.
+                # Gated behind PHASE6_ENABLED env var because each call costs
+                # ~$1-2 and takes 5-15 minutes. Only worth it for the long tail
+                # of utilities that fail every faster tier.
+                if _phase6_enabled():
+                    attempted: list[str] = []
+                    if rate_page_url:
+                        attempted.append(rate_page_url)
+                    attempted.extend(alt_urls or [])
+                    for p in (pages or []):
+                        if getattr(p, "url", None):
+                            attempted.append(p.url)
+                    dr_tariffs, phase6_stats = phase6_deep_research(
+                        utility_name, state, attempted,
                     )
+                    _merge_stats(phase6_stats)
+                    if dr_tariffs:
+                        tariffs = dr_tariffs
+                        log.info(
+                            f"  Phase 6 Deep Research found {len(tariffs)} tariffs"
+                        )
+                    else:
+                        result.errors.append(
+                            _build_extraction_failure_reason(combined_stats, rate_page_url)
+                        )
                 else:
                     result.errors.append(
                         _build_extraction_failure_reason(combined_stats, rate_page_url)
                     )
-            else:
-                result.errors.append(
-                    _build_extraction_failure_reason(combined_stats, rate_page_url)
-                )
 
     # Content identity check — reject if pages clearly belong to a different utility
     utility_domain = urlparse(website_url).netloc if website_url else None
