@@ -122,21 +122,34 @@ def _build_user_prompt(utility_name: str, state: str,
     return "\n".join(parts)
 
 
+# Max stranded seeds per LLM call. URDB can explode one utility into
+# hundreds of permutation rows; packing them all into one call overflows
+# the 8192-token tool output and silently truncates pairings mid-array.
+# Each call still sees the FULL fresh catalog (typically <20 rows).
+STRANDED_BATCH = 80
+
+
 def _pair_one_utility(client: anthropic.Anthropic, utility_name: str, state: str,
                       fresh: list[dict], stranded: list[dict]) -> list[dict]:
-    user = _build_user_prompt(utility_name, state, fresh, stranded)
-    resp = client.messages.create(
-        model=HAIKU_MODEL,
-        max_tokens=8192,
-        system=SYSTEM_PROMPT,
-        messages=[{"role": "user", "content": user}],
-        tools=[PAIRING_TOOL],
-        tool_choice={"type": "tool", "name": "report_pairings"},
-    )
-    for block in resp.content:
-        if block.type == "tool_use" and block.name == "report_pairings":
-            return block.input.get("pairings", [])
-    return []
+    all_pairings: list[dict] = []
+    for i in range(0, len(stranded), STRANDED_BATCH):
+        chunk = stranded[i:i + STRANDED_BATCH]
+        user = _build_user_prompt(utility_name, state, fresh, chunk)
+        resp = client.messages.create(
+            model=HAIKU_MODEL,
+            max_tokens=8192,
+            system=SYSTEM_PROMPT,
+            messages=[{"role": "user", "content": user}],
+            tools=[PAIRING_TOOL],
+            tool_choice={"type": "tool", "name": "report_pairings"},
+        )
+        for block in resp.content:
+            if block.type == "tool_use" and block.name == "report_pairings":
+                all_pairings.extend(block.input.get("pairings", []))
+                break
+        if len(stranded) > STRANDED_BATCH:
+            time.sleep(0.5)
+    return all_pairings
 
 
 def main():

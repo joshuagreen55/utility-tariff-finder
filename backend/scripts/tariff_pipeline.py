@@ -2442,7 +2442,16 @@ def _extract_pdf_vision(
     """Send PDF pages as images to Claude vision for extraction.
 
     Returns (tariffs, llm_call_count). Falls back to empty list if conversion fails.
+
+    Cached by PDF byte hash: vision calls are the priciest per-page tier
+    and scanned rate books rarely change between retries.
     """
+    pdf_hash = hashlib.sha256(pdf_bytes).hexdigest()
+    cached = _get_llm_cache(pdf_hash, "vision")
+    if cached is not None:
+        log.info(f"    Using cached vision extraction ({len(cached)} tariffs)")
+        return _parse_extraction_response(cached, page_url), 0
+
     try:
         from pdf2image import convert_from_bytes
     except ImportError:
@@ -2497,6 +2506,8 @@ def _extract_pdf_vision(
     for block in resp.content:
         if block.type == "tool_use" and block.name == "store_tariffs":
             raw = block.input.get("tariffs", [])
+            if raw:
+                _set_llm_cache(pdf_hash, "vision", raw)
             return _parse_extraction_response(raw, page_url), 1
 
     log.warning("    No tool_use block in PDF vision response")
@@ -2575,7 +2586,20 @@ def _extract_two_pass(
     Returns (tariffs, llm_call_count). When `stats` is provided, records
     `twopass_truncated` if more tariffs were identified than the per-page
     extraction cap allows (so the loss is visible, not silent).
+
+    Results are cached by content hash — two-pass is the most expensive
+    text tier (1 identify + up to 20 extract calls), and unchanged rate
+    books used to re-pay that on every retry/campaign pass.
     """
+    if page.content_hash:
+        cached = _get_llm_cache(page.content_hash, "twopass")
+        if cached is not None:
+            log.info(f"    Using cached two-pass extraction ({len(cached)} tariffs)")
+            try:
+                return [ExtractedTariff(**d) for d in cached], 0
+            except TypeError:
+                pass  # stale cache schema — re-extract
+
     content_for_llm = _select_rate_content(page.content, max_chars=25000)
     llm_calls = 0
 
@@ -2676,6 +2700,10 @@ def _extract_two_pass(
 
         time.sleep(0.5)
 
+    if all_tariffs and page.content_hash:
+        _set_llm_cache(
+            page.content_hash, "twopass", [asdict(t) for t in all_tariffs]
+        )
     return all_tariffs, llm_calls
 
 
@@ -3377,10 +3405,18 @@ def _extract_with_model_routing(prompt: str, page: "RatePage") -> tuple[list[dic
     model = _select_model(page)
 
     if page.content_hash:
-        cached = _get_llm_cache(page.content_hash, model)
-        if cached is not None:
-            log.info(f"    Using cached {model} extraction ({len(cached)} tariffs)")
-            return cached, model
+        # Check ALL tiers, not just the selected model: if a previous run
+        # escalated to Opus for this exact content, re-running Gemini and
+        # Haiku first just burns two calls to rediscover the same answer.
+        seen_models = []
+        for m in (model, "gemini", "haiku", "opus"):
+            if m in seen_models:
+                continue
+            seen_models.append(m)
+            cached = _get_llm_cache(page.content_hash, m)
+            if cached is not None:
+                log.info(f"    Using cached {m} extraction ({len(cached)} tariffs)")
+                return cached, m
 
     if model == "gemini":
         result = _call_gemini(prompt)
@@ -4980,22 +5016,42 @@ def _phase5_smart_retry(
             log.info(f"  Phase 5: Skipping third-party aggregator: {url[:70]}")
             continue
         log.info(f"  Phase 5: Following {url[:80]}")
-        page = _pw_fetch_as_page(url, ignore_https_errors=True)
-        if page:
-            all_pages.append(page)
+        # Fetch ONCE with Playwright and reuse the same HTML for both the
+        # page content and its links (this used to fetch every URL twice).
+        try:
+            sub_html, sub_title = fetch_page_js(url, wait_ms=5000, ignore_https_errors=True)
+        except Exception:
+            sub_html, sub_title = None, ""
+        if sub_html == FETCH_JS_DOWNLOAD_SENTINEL:
+            pdf_page = _fetch_as_pdf_via_download(url)
+            if pdf_page:
+                all_pages.append(pdf_page)
+            continue
+        if not sub_html or len(sub_html.strip()) < 200:
+            continue
+        sub_text_content = _compress_whitespace(
+            BeautifulSoup(sub_html, "html.parser").get_text(" ", strip=True)
+        )
+        if len(sub_text_content.strip()) >= 50:
+            all_pages.append(RatePage(
+                url=url,
+                title=sub_title or "",
+                page_type="html",
+                content=sub_text_content,
+                content_hash=hashlib.sha256(sub_text_content.encode()).hexdigest(),
+            ))
 
-            # Check sub-page links too (one level deeper)
-            sub_html, _ = fetch_page_js(url, wait_ms=3000, ignore_https_errors=True)
-            if sub_html and sub_html != FETCH_JS_DOWNLOAD_SENTINEL:
-                sub_links = _extract_all_links(sub_html, url)
-                rate_sub = [
-                    (u, t) for u, t in sub_links
-                    if RATE_TITLE_KEYWORDS.search(f"{u} {t}")
-                ]
-                for sub_url, sub_text in rate_sub[:3]:
-                    sub_page = _pw_fetch_as_page(sub_url, wait_ms=3000, ignore_https_errors=True)
-                    if sub_page:
-                        all_pages.append(sub_page)
+            # Check sub-page links too (one level deeper), from the HTML we
+            # already have.
+            sub_links = _extract_all_links(sub_html, url)
+            rate_sub = [
+                (u, t) for u, t in sub_links
+                if RATE_TITLE_KEYWORDS.search(f"{u} {t}")
+            ]
+            for sub_url, sub_text in rate_sub[:3]:
+                sub_page = _pw_fetch_as_page(sub_url, wait_ms=3000, ignore_https_errors=True)
+                if sub_page:
+                    all_pages.append(sub_page)
 
     if not all_pages:
         return [], [], stats
@@ -5049,12 +5105,21 @@ def _phase6_enabled() -> bool:
     return os.environ.get("PHASE6_ENABLED", "").strip().lower() in ("1", "true", "yes", "on")
 
 
+_CA_PROVINCE_CODES = {
+    "ON", "BC", "AB", "QC", "MB", "SK", "NS", "NB", "NL", "PE", "YT", "NT", "NU",
+}
+
+
 def _phase6_prompt(utility_name: str, state: str, attempted_urls: list[str] | None) -> str:
     """Build the Deep Research prompt.
 
     We stuff URLs we already tried into the prompt so the agent doesn't waste
     tokens rediscovering pages we've already confirmed fail (Cloudflare blocks,
     Angular SPA shells, image-only rate pages, etc.).
+
+    Country-aware: Canadian provinces get 'Canada' and the provincial
+    regulator framing — the old hardcoded 'USA' sent the agent hunting for
+    nonexistent US PUC filings for Hydro-Québec et al.
     """
     tried_clause = ""
     if attempted_urls:
@@ -5078,13 +5143,22 @@ def _phase6_prompt(utility_name: str, state: str, attempted_urls: list[str] | No
                 + "\n".join(f"  - {u}" for u in trimmed)
             )
 
+    is_canada = (state or "").strip().upper() in _CA_PROVINCE_CODES
+    country_name = "Canada" if is_canada else "USA"
+    regulator_line = (
+        "- Filings on the relevant provincial energy regulator (OEB, BCUC, "
+        "AUC, Régie de l'énergie, etc.)."
+        if is_canada
+        else "- Filings on the relevant state Public Utility / Service Commission."
+    )
+
     return f"""Research task (scope-bounded, 10 minutes maximum):
 
-Find the current published residential and commercial electricity tariffs for {utility_name} in {state}, USA.
+Find the current published residential and commercial electricity tariffs for {utility_name} in {state}, {country_name}.
 
 Authoritative sources ONLY:
 - The utility's own corporate website (tariff/rates pages, tariff PDFs).
-- Filings on the relevant state Public Utility / Service Commission.
+{regulator_line}
 - Directly-linked utility tariff PDFs or regulatory orders.
 
 Do NOT use third-party comparison or aggregator sites (energybot.com, electricrate.com, choose-energy.com, power2switch.com, nyenergyratings.com, saveonenergy.com, chooseenergy.com, findenergy.com, etc.). Do NOT use wholesale/generation-company sources.{tried_clause}
@@ -5137,6 +5211,42 @@ _PHASE6_JSON_RE = re.compile(
     re.IGNORECASE,
 )
 
+# Trailing commas before } or ] — the most common LLM JSON defect.
+_TRAILING_COMMA_RE = re.compile(r",\s*([}\]])")
+
+
+def _phase6_extract_json(report_text: str) -> list | None:
+    """Best-effort extraction of the tariff JSON array from a DR report.
+
+    Tries, in order:
+      1. The LAST fenced ```json array (the prompt asks for the report to
+         END with it; earlier blocks are often examples or partial drafts).
+      2. Any fenced code block containing an array.
+      3. A bare top-level array (first '[' to last ']').
+    Each candidate is retried with trailing commas stripped.
+    """
+    candidates: list[str] = [m.group(1) for m in _PHASE6_JSON_RE.finditer(report_text)]
+    candidates.reverse()  # last block first
+
+    generic = re.findall(r"```\w*\s*(\[[\s\S]*?\])\s*```", report_text)
+    candidates.extend(reversed(generic))
+
+    first, last = report_text.find("["), report_text.rfind("]")
+    if first != -1 and last > first:
+        candidates.append(report_text[first:last + 1])
+
+    for js_text in candidates:
+        for attempt in (js_text, _TRAILING_COMMA_RE.sub(r"\1", js_text)):
+            try:
+                raw = json.loads(attempt)
+            except json.JSONDecodeError:
+                continue
+            if isinstance(raw, dict):
+                raw = [raw]
+            if isinstance(raw, list):
+                return raw
+    return None
+
 
 def _phase6_parse_tariffs(report_text: str, fallback_source: str) -> list[ExtractedTariff]:
     """Find and parse the JSON block from a Deep Research report.
@@ -5144,18 +5254,11 @@ def _phase6_parse_tariffs(report_text: str, fallback_source: str) -> list[Extrac
     Returns validated ExtractedTariff objects with the same customer-class
     and skip-keyword filtering we apply to Phase 3 LLM output.
     """
-    m = _PHASE6_JSON_RE.search(report_text)
-    if not m:
-        log.warning("  Phase 6: report did not contain a ```json ... ``` block")
-        return []
-    js_text = m.group(1)
-    try:
-        raw = json.loads(js_text)
-    except json.JSONDecodeError as e:
-        log.warning(f"  Phase 6: JSON parse failed ({e})")
-        return []
-    if not isinstance(raw, list):
-        log.warning("  Phase 6: JSON block was not an array")
+    raw = _phase6_extract_json(report_text)
+    if raw is None:
+        log.warning(
+            "  Phase 6: report did not contain a parseable JSON tariff array"
+        )
         return []
 
     tariffs: list[ExtractedTariff] = []
