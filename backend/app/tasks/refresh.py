@@ -175,29 +175,6 @@ def _count_tariffs(session: Session, utility_ids: list[int]) -> dict[int, int]:
 TRANSIENT_ERRORS = (ConnectionError, TimeoutError, OSError)
 
 
-@celery_app.task(
-    name="app.tasks.refresh.process_utility",
-    bind=True,
-    max_retries=2,
-    # Budget must comfortably exceed the longest plausible Phase 6 Deep
-    # Research call (~10 min) plus Phases 1-5 (~1-2 min) so the parent
-    # task does not get killed mid-flight, throwing away DR compute we
-    # have already paid for. The May 4 quarterly run wasted ~55 of 65
-    # Phase 6 calls because the previous 660s budget was tighter than
-    # one DR call. See PHASE6_MAX_WAIT_SEC=1200 in docker-compose.
-    soft_time_limit=1700,
-    time_limit=1800,
-    rate_limit=LLM_RATE_LIMIT,
-    acks_late=True,
-    # Without this, acks_late re-queues a task whose worker died (OOM kill,
-    # docker restart) and it can crash the next worker the same way, looping
-    # forever. Reject instead: the run's finalize/reaper accounts for it.
-    reject_on_worker_lost=True,
-    autoretry_for=TRANSIENT_ERRORS,
-    retry_backoff=60,
-    retry_backoff_max=300,
-    retry_jitter=True,
-)
 def _clear_changed_sources(uid: int):
     """After a successful extraction, mark this utility's CHANGED monitoring
     sources as UNCHANGED so next month's run doesn't re-target the same
@@ -229,6 +206,29 @@ def _record_outcome(uid: int, success: bool):
         log.warning(f"Failed to record refresh outcome for {uid}: {e}")
 
 
+@celery_app.task(
+    name="app.tasks.refresh.process_utility",
+    bind=True,
+    max_retries=2,
+    # Budget must comfortably exceed the longest plausible Phase 6 Deep
+    # Research call (~10 min) plus Phases 1-5 (~1-2 min) so the parent
+    # task does not get killed mid-flight, throwing away DR compute we
+    # have already paid for. The May 4 quarterly run wasted ~55 of 65
+    # Phase 6 calls because the previous 660s budget was tighter than
+    # one DR call. See PHASE6_MAX_WAIT_SEC=1200 in docker-compose.
+    soft_time_limit=1700,
+    time_limit=1800,
+    rate_limit=LLM_RATE_LIMIT,
+    acks_late=True,
+    # Without this, acks_late re-queues a task whose worker died (OOM kill,
+    # docker restart) and it can crash the next worker the same way, looping
+    # forever. Reject instead: the run's finalize/reaper accounts for it.
+    reject_on_worker_lost=True,
+    autoretry_for=TRANSIENT_ERRORS,
+    retry_backoff=60,
+    retry_backoff_max=300,
+    retry_jitter=True,
+)
 def process_utility(self, uid: int, comprehensive: bool = False) -> dict:
     """Run the full tariff pipeline for a single utility.
 

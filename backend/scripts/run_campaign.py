@@ -267,6 +267,12 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
         action="store_true",
         help="Skip opening bulk Track B pass",
     )
+    p.add_argument(
+        "--max-batches",
+        type=int,
+        default=0,
+        help="Stop after N extract batches (0 = run until pool is empty)",
+    )
     return p.parse_args(argv)
 
 
@@ -299,8 +305,13 @@ def main(argv: list[str] | None = None) -> None:
     processed: set[int] = set()
     overrides = merged_extract_overrides()
     batch_num = 0
+    capped = False
 
     while True:
+        if args.max_batches and batch_num >= args.max_batches:
+            capped = True
+            print(f"\n=== Extract loop stopped at --max-batches={args.max_batches} ===")
+            break
         with Session(engine) as session:
             batch = fetch_next_batch(
                 session,
@@ -344,14 +355,20 @@ def main(argv: list[str] | None = None) -> None:
         out["batches"].append(batch_out)
         print(f"  Campaign progress: {json.dumps(batch_out['after'])}")
 
-    with Session(engine) as session:
-        out["retries"] = retry_hard_cases(session, apply=args.apply)
+    if capped:
+        # Bounded pilot: per-batch Track B already covered the processed
+        # utilities; skip the global retry + bulk Track B passes.
+        with Session(engine) as session:
+            out["final"] = campaign_snapshot(session)
+    else:
+        with Session(engine) as session:
+            out["retries"] = retry_hard_cases(session, apply=args.apply)
 
-    with Session(engine) as session:
-        ids = all_track_b_ids(session)
-        print(f"\n=== Final bulk Track B ({len(ids)} utilities) ===")
-        out["final_track_b"] = track_b_utilities(session, ids, apply=args.apply)
-        out["final"] = campaign_snapshot(session)
+        with Session(engine) as session:
+            ids = all_track_b_ids(session)
+            print(f"\n=== Final bulk Track B ({len(ids)} utilities) ===")
+            out["final_track_b"] = track_b_utilities(session, ids, apply=args.apply)
+            out["final"] = campaign_snapshot(session)
 
     out["finished_at"] = datetime.now(timezone.utc).isoformat()
     out["batches_run"] = batch_num
