@@ -4,10 +4,12 @@ Produces a single 0-100 Health Score from two lenses, each of which is
 also reported on its own so you can see WHERE the score comes from:
 
   LENS 1 — COVERAGE (breadth): of the active utilities we are supposed to
-           serve, what fraction actually have at least one "good" tariff
-           (verified, not superseded, with real rate components)?
-           Reported unweighted AND weighted by utility type (an IOU serving
-           millions matters more than a 500-meter coop).
+           serve, what fraction have what the product actually needs — a
+           live, verified RESIDENTIAL tariff with an energy component?
+           A looser "any verified tariff with components" count is also
+           reported for context. Reported unweighted AND weighted by
+           utility type (an IOU serving millions matters more than a
+           500-meter coop).
 
   LENS 2 — QUALITY (depth): for the tariffs we actually serve to users
            (everything not superseded — the API returns these), how fresh,
@@ -107,16 +109,23 @@ def bar(pct: float, width: int = 40) -> str:
 
 COVERAGE_SQL = text("""
 WITH good_tariffs AS (
-    SELECT DISTINCT t.utility_id
+    SELECT t.utility_id,
+           MAX(CASE WHEN lower(t.customer_class::text) = 'residential'
+                     AND EXISTS (SELECT 1 FROM rate_components rc
+                                 WHERE rc.tariff_id = t.id
+                                   AND lower(rc.component_type::text) = 'energy')
+                THEN 1 ELSE 0 END) AS has_res_energy
     FROM tariffs t
     WHERE t.last_verified_at IS NOT NULL
       AND t.superseded_by_tariff_id IS NULL
       AND t.supersede_reason IS NULL
       AND EXISTS (SELECT 1 FROM rate_components rc WHERE rc.tariff_id = t.id)
+    GROUP BY t.utility_id
 )
 SELECT u.utility_type::text AS utype,
        COUNT(*) AS total_utils,
-       COUNT(*) FILTER (WHERE gt.utility_id IS NOT NULL) AS covered_utils
+       COUNT(*) FILTER (WHERE gt.has_res_energy = 1) AS covered_utils,
+       COUNT(*) FILTER (WHERE gt.utility_id IS NOT NULL) AS covered_any
 FROM utilities u
 LEFT JOIN good_tariffs gt ON gt.utility_id = u.id
 WHERE u.is_active
@@ -187,6 +196,7 @@ def compute(session: Session) -> dict:
     cov_rows = session.execute(COVERAGE_SQL).all()
     total_utils = sum(r.total_utils for r in cov_rows)
     covered_utils = sum(r.covered_utils for r in cov_rows)
+    covered_any = sum(r.covered_any for r in cov_rows)
 
     weighted_total = 0.0
     weighted_covered = 0.0
@@ -200,6 +210,7 @@ def compute(session: Session) -> dict:
                 "type": r.utype,
                 "total": r.total_utils,
                 "covered": r.covered_utils,
+                "covered_any": r.covered_any,
                 "pct": round(100.0 * r.covered_utils / max(r.total_utils, 1), 1),
                 "weight": w,
             }
@@ -241,7 +252,8 @@ def compute(session: Session) -> dict:
         },
         "coverage": {
             "active_utilities": total_utils,
-            "utilities_with_good_tariff": covered_utils,
+            "utilities_with_res_energy_tariff": covered_utils,
+            "utilities_with_any_good_tariff": covered_any,
             "by_type": sorted(by_type, key=lambda x: -x["weight"]),
         },
         "quality": {
@@ -286,10 +298,11 @@ def print_scorecard(r: dict) -> None:
 
     cov = r["coverage"]
     print("  LENS 1 — COVERAGE (breadth)")
-    print(f"    {cov['utilities_with_good_tariff']:,} / {cov['active_utilities']:,} active utilities have a good tariff")
-    print(f"    {'type':<22}{'covered':>9}{'total':>8}{'pct':>7}  wt")
+    print(f"    {cov['utilities_with_res_energy_tariff']:,} / {cov['active_utilities']:,} active utilities have a verified residential tariff w/ energy rate")
+    print(f"    ({cov['utilities_with_any_good_tariff']:,} have any verified tariff with components)")
+    print(f"    {'type':<22}{'res+kWh':>9}{'any':>6}{'total':>8}{'pct':>7}  wt")
     for t in cov["by_type"]:
-        print(f"    {t['type']:<22}{t['covered']:>9}{t['total']:>8}{t['pct']:>6.0f}%  {t['weight']}")
+        print(f"    {t['type']:<22}{t['covered']:>9}{t['covered_any']:>6}{t['total']:>8}{t['pct']:>6.0f}%  {t['weight']}")
     print()
 
     q = r["quality"]
