@@ -241,6 +241,7 @@ def process_utility(self, uid: int, comprehensive: bool = False) -> dict:
     the same utility at once — concurrent store_tariffs calls can duplicate
     rows and race the reconciliation pass.
     """
+    from scripts import llm_cost
     from scripts.tariff_pipeline import cleanup_between_utilities, run_pipeline
 
     r = _get_redis()
@@ -282,6 +283,7 @@ def process_utility(self, uid: int, comprehensive: bool = False) -> dict:
             "errors": result.errors,
             "success": success,
             "skipped_unchanged": skipped,
+            "cost": llm_cost.summary(),
         }
     except TRANSIENT_ERRORS:
         raise  # Let autoretry handle these
@@ -295,6 +297,7 @@ def process_utility(self, uid: int, comprehensive: bool = False) -> dict:
             "tariffs_found": 0,
             "errors": [f"Unhandled crash: {e}"],
             "success": False,
+            "cost": llm_cost.summary(),
         }
     finally:
         cleanup_between_utilities()
@@ -379,6 +382,10 @@ def finalize_refresh_run(results: list[dict], run_id: int, before_counts_json: s
                 f"{'; '.join(r.get('errors', ['unknown']))}"
             )
 
+    # Roll up per-utility LLM cost into a run-level breakdown.
+    from scripts import llm_cost
+    cost = llm_cost.merge_summaries([r.get("cost") for r in results if r])
+
     summary = {
         "total_targeted": len(results),
         "processed_ok": processed,
@@ -388,6 +395,7 @@ def finalize_refresh_run(results: list[dict], run_id: int, before_counts_json: s
         "tariffs_updated": tariffs_updated,
         "tariffs_stale": stale_count,
         "affected_states": affected_states,
+        "llm_cost": cost,
     }
 
     now = datetime.now(timezone.utc)

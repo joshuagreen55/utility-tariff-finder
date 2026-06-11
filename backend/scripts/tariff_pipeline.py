@@ -44,6 +44,11 @@ from urllib.parse import unquote, urljoin, urlparse
 import httpx
 from bs4 import BeautifulSoup
 
+try:
+    from scripts import llm_cost
+except ImportError:
+    import llm_cost
+
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(message)s",
@@ -327,6 +332,8 @@ class PipelineResult:
     # True when extraction was skipped because page fingerprints matched —
     # a cheap SUCCESS (content re-verified), not a failure.
     skipped_unchanged: bool = False
+    # Per-phase / per-model LLM cost for this utility (see scripts.llm_cost).
+    cost: dict = field(default_factory=dict)
 
 
 # ---------------------------------------------------------------------------
@@ -1255,6 +1262,7 @@ def _discover_utility_domain(utility_name: str, state: str) -> str | None:
     return None
 
 
+@llm_cost.with_phase("phase1")
 def phase1_find_rate_page(utility_name: str, state: str, website_url: str | None) -> tuple[str, int, list[str]]:
     """Search for the utility's rate page. Returns (best_url, num_results, alt_urls)."""
     utility_domain = urlparse(website_url).netloc if website_url else None
@@ -1600,6 +1608,7 @@ def _try_browser_agent_fallback(rate_page_url: str) -> list[RatePage]:
         return []
 
 
+@llm_cost.with_phase("phase2")
 def phase2_discover_tariff_pages(rate_page_url: str) -> list[RatePage]:
     """Crawl the main rate page and one level of sub-pages to find
     residential and small-commercial rate detail pages."""
@@ -2782,6 +2791,7 @@ def _attribution_violates(
     return None
 
 
+@llm_cost.with_phase("phase3")
 def phase3_extract_tariffs(
     pages: list[RatePage],
     utility_name: str,
@@ -3106,14 +3116,43 @@ TARIFF_EXTRACTION_TOOL = {
 }
 
 
+class _AnthropicMessagesProxy:
+    """Wraps client.messages so every create() records token cost."""
+
+    def __init__(self, messages):
+        self._m = messages
+
+    def create(self, *args, **kwargs):
+        resp = self._m.create(*args, **kwargs)
+        llm_cost.record_anthropic(kwargs.get("model", ""), getattr(resp, "usage", None))
+        return resp
+
+    def __getattr__(self, name):
+        return getattr(self._m, name)
+
+
+class _AnthropicCostProxy:
+    """Transparent proxy over an Anthropic client that meters .messages.create."""
+
+    def __init__(self, client):
+        self._c = client
+
+    @property
+    def messages(self):
+        return _AnthropicMessagesProxy(self._c.messages)
+
+    def __getattr__(self, name):
+        return getattr(self._c, name)
+
+
 def _get_anthropic_client():
-    """Lazy-init Anthropic client."""
+    """Lazy-init Anthropic client (wrapped to meter per-call token cost)."""
     import anthropic
     client = getattr(_thread_local, "anthropic_client", None)
     if client is None:
         client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
         _thread_local.anthropic_client = client
-    return client
+    return _AnthropicCostProxy(client)
 
 
 def _call_claude(prompt: str, model: str | None = None) -> str:
@@ -3196,11 +3235,43 @@ def _parse_text_response(text: str) -> list[dict]:
     return [item for item in raw if isinstance(item, dict)]
 
 
+class _GeminiModelsProxy:
+    """Wraps client.models so every generate_content() records token cost."""
+
+    def __init__(self, models):
+        self._m = models
+
+    def generate_content(self, *args, **kwargs):
+        resp = self._m.generate_content(*args, **kwargs)
+        llm_cost.record_gemini(kwargs.get("model", ""), getattr(resp, "usage_metadata", None))
+        return resp
+
+    def __getattr__(self, name):
+        return getattr(self._m, name)
+
+
+class _GeminiCostProxy:
+    """Transparent proxy over a GenAI client that meters .models.generate_content."""
+
+    def __init__(self, client):
+        self._c = client
+
+    @property
+    def models(self):
+        return _GeminiModelsProxy(self._c.models)
+
+    def __getattr__(self, name):
+        return getattr(self._c, name)
+
+
 def _get_gemini_client():
     """Lazy-init Google GenAI client (new SDK) with configurable HTTP timeout.
 
     Default is 60s — Gemini 3 Flash Preview occasionally takes 30-50s on
     large pages and was hitting DEADLINE_EXCEEDED on a shorter timeout.
+
+    Wrapped to meter per-call token cost (Phase 6 Deep Research uses its own
+    client and is priced separately via llm_cost.record_manual).
     """
     client = getattr(_thread_local, "gemini_client", None)
     if client is None:
@@ -3210,7 +3281,7 @@ def _get_gemini_client():
             http_options={"timeout": GEMINI_TIMEOUT_MS},
         )
         _thread_local.gemini_client = client
-    return client
+    return _GeminiCostProxy(client)
 
 
 # Circuit breaker: after N consecutive Gemini failures in a single process,
@@ -4903,6 +4974,7 @@ def _build_extraction_failure_reason(stats: dict, rate_page_url: str | None) -> 
     )
 
 
+@llm_cost.with_phase("phase5")
 def _phase5_smart_retry(
     utility_name: str,
     state: str,
@@ -5322,6 +5394,7 @@ def _phase6_parse_tariffs(report_text: str, fallback_source: str) -> list[Extrac
     return tariffs
 
 
+@llm_cost.with_phase("phase6")
 def phase6_deep_research(
     utility_name: str,
     state: str,
@@ -5508,6 +5581,11 @@ def phase6_deep_research(
                 stats[key] = int(getattr(usage, attr, 0) or 0)
             except (TypeError, ValueError):
                 pass
+    # Price Deep Research separately (it uses its own client, so it bypasses
+    # the metered Gemini proxy). Broken out under the "gemini_dr" key.
+    llm_cost.record_manual(
+        "gemini_dr", stats["phase6_input_tokens"], stats["phase6_output_tokens"]
+    )
 
     # Concatenate ALL text outputs — Deep Research returns multiple (exec
     # summary, analysis+JSON, citations, ...) and the JSON block is usually
@@ -5555,6 +5633,7 @@ def run_pipeline(
     comprehensive: bool = False,
     force_extract: bool = False,
 ) -> PipelineResult:
+    llm_cost.reset()  # start a fresh per-utility cost accumulation window
     info = get_utility_info(utility_id)
     if not info or info.get("name", "").startswith("Utility #"):
         raise ValueError(f"Utility {utility_id} not found in database")
