@@ -8,6 +8,10 @@
 services:
   db:
     image: postgis/postgis:16-3.4
+    # Survive VM reboots / stop-start (e.g. machine-type resizes). Without
+    # this the core serving stack stayed down after any reboot because
+    # there is no systemd unit running `docker compose up`.
+    restart: unless-stopped
     environment:
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
@@ -32,6 +36,7 @@ services:
 
   redis:
     image: redis:7-alpine
+    restart: unless-stopped
     # volatile-lru (not allkeys-lru): Celery chord/result keys carry TTLs,
     # but allkeys-lru could evict a chord's result counter mid-run under
     # memory pressure, silently dropping the finalize callback. 512mb gives
@@ -48,6 +53,7 @@ services:
 
   api:
     build: ./backend
+    restart: unless-stopped
     env_file:
       - .env
     environment:
@@ -93,12 +99,14 @@ services:
       PHASE6_ENABLED: ${PHASE6_ENABLED:-1}
       PHASE6_MAX_WAIT_SEC: ${PHASE6_MAX_WAIT_SEC:-1200}
       PHASE6_MAX_TOKENS: ${PHASE6_MAX_TOKENS:-3000000}
-    # concurrency=4: each pipeline can hold a Playwright/Chromium instance
-    # (~300-500MB); 8 concurrent pipelines repeatedly blew through the 4g
-    # container limit and got workers OOM-killed mid-task.
-    # max-tasks-per-child=25 recycles workers to contain slow leaks from
-    # Playwright/PDF parsing.
-    command: celery -A app.tasks.celery_app worker --loglevel=info --concurrency=4 --prefetch-multiplier=1 --max-tasks-per-child=25
+    # CELERY_CONCURRENCY: each pipeline can hold a Playwright/Chromium
+    # instance (~300-500MB); 8 concurrent pipelines repeatedly blew through
+    # the 4g container limit and got workers OOM-killed mid-task. Tuned via
+    # env so the same image runs safely across machine sizes: 3 fits an
+    # e2-standard-2 (8GB) serving box; bump to 4+ when resized up for large
+    # backfills. max-tasks-per-child=25 recycles workers to contain slow
+    # leaks from Playwright/PDF parsing.
+    command: celery -A app.tasks.celery_app worker --loglevel=info --concurrency=${CELERY_CONCURRENCY:-3} --prefetch-multiplier=1 --max-tasks-per-child=25
     depends_on:
       db:
         condition: service_healthy
@@ -173,6 +181,7 @@ services:
       dockerfile: deploy/Dockerfile.web
       args:
         VITE_GOOGLE_MAPS_API_KEY: ${VITE_GOOGLE_MAPS_API_KEY:-}
+    restart: unless-stopped
     environment:
       SITE_ADDRESS: ${SITE_ADDRESS:-:80}
     ports:
