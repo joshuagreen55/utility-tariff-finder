@@ -32,3 +32,7 @@ logs/
 
 # Docker
 *.log
+
+# Marketing / presentation artifacts (not part of the app)
+linkedin_*.png
+slide*.png

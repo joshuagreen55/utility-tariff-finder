@@ -47,6 +47,19 @@ class Utility(Base):
     tariff_page_urls: Mapped[dict | None] = mapped_column(JSONB, nullable=True)
     rate_page_url_override: Mapped[str | None] = mapped_column(Text, nullable=True)
     is_active: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
+
+    # Refresh-quarantine bookkeeping. `refresh_fail_streak` counts consecutive
+    # *structural* extraction failures (page reached but 0 tariffs / no rate
+    # page / no rate signals) — transient network errors and crashes do not
+    # count. Once the streak crosses the threshold the utility is soft-
+    # quarantined (`refresh_quarantined_at` set): routine monthly/quarterly
+    # runs skip it, but a monitoring change signal or the slow-cadence recheck
+    # still re-attempts it. Cleared on any successful extraction.
+    refresh_fail_streak: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
+    refresh_quarantined_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+    refresh_last_reason: Mapped[str | None] = mapped_column(String(200), nullable=True)
+    refresh_last_attempt_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
     updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
 

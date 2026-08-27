@@ -57,6 +57,21 @@ def _print_breakdown(cost: dict) -> None:
                     f"in={rec.get('in', 0):<9} out={rec.get('out', 0):<8} "
                     f"${rec.get('cost', 0.0):.4f}"
                 )
+        print()
+    outcomes = cost.get("tier_outcomes") or {}
+    if outcomes:
+        print("  Extraction-tier yield (did the tier return any tariffs?):")
+        opus_cost = (cost.get("by_model") or {}).get("opus", 0.0) or 0.0
+        for key in sorted(outcomes):
+            rec = outcomes[key]
+            hit, miss = rec.get("hit", 0), rec.get("miss", 0)
+            calls = hit + miss
+            rate = (100.0 * hit / calls) if calls else 0.0
+            extra = ""
+            if key == "opus" and calls:
+                wasted = opus_cost * (miss / calls) if calls else 0.0
+                extra = f"  (~${wasted:.2f} on 0-yield escalations)"
+            print(f"    {key:<8} {hit:>4} hit / {miss:>4} miss  = {rate:4.0f}% hit rate{extra}")
 
 
 def _print_pricing() -> None:

@@ -76,9 +76,30 @@ GOOGLE_CSE_API_KEY = _load_setting("google_cse_api_key", "GOOGLE_CSE_API_KEY")
 GOOGLE_CSE_CX = _load_setting("google_cse_cx", "GOOGLE_CSE_CX")
 GOOGLE_AI_API_KEY = _load_setting("google_ai_api_key", "GOOGLE_AI_API_KEY")
 HAIKU_MODEL = os.environ.get("HAIKU_MODEL", "claude-haiku-4-5-20251001")
-OPUS_MODEL = os.environ.get("OPUS_MODEL", "claude-opus-4-7")
-GEMINI_MODEL = os.environ.get("GEMINI_MODEL", "gemini-3-flash-preview")
+# Tier-3 escalation / long-doc identify model. Opus 5 (May 2026) is a strict
+# upgrade over Opus 4.7: ~3x cheaper ($5/$25 vs $15/$75) and higher quality.
+OPUS_MODEL = os.environ.get("OPUS_MODEL", "claude-opus-5")
+# Tier-1 extraction model. Moved off the deprecated 3-flash-preview to GA
+# Gemini 3.7 Flash (Aug 2026) — smarter, so more pages resolve at tier 1
+# without escalating to Haiku/Opus.
+GEMINI_MODEL = os.environ.get("GEMINI_MODEL", "gemini-3.7-flash")
 GEMINI_TIMEOUT_MS = int(os.environ.get("GEMINI_TIMEOUT_MS", "60000"))
+
+# Hard cap on how many times a single utility may escalate to the expensive
+# Opus tier within one pipeline run. Opus escalations hit on only ~8% of
+# pages (measured), so a pathological utility firing 5+ escalations burns
+# Opus tokens for near-zero yield. Cap keeps the worst cases bounded.
+OPUS_MAX_PER_UTILITY = int(os.environ.get("OPUS_MAX_PER_UTILITY", "2"))
+
+# Per-utility Opus escalation budget (reset at the top of each run_pipeline).
+# Celery prefork runs one pipeline per process at a time, so a module global
+# is safe here.
+_opus_escalations_this_util = 0
+
+
+def _reset_opus_budget() -> None:
+    global _opus_escalations_this_util
+    _opus_escalations_this_util = 0
 
 FETCH_TIMEOUT = httpx.Timeout(15.0, connect=8.0)
 PDF_TIMEOUT = httpx.Timeout(30.0, connect=10.0)
@@ -282,7 +303,25 @@ THIRD_PARTY_DOMAINS = frozenset({
     # Solar / green energy marketing
     "solar.com", "nrgcleanpower.com", "greenridgesolar.com",
     "madison.com", "sandboxsolar.com",
+    # Government DATA aggregators (not a utility's own tariff source).
+    # Unlike a utility's .gov site (bpa.gov, tva.gov) or a state PSC, these
+    # host generic multi-utility statistics. eia.gov in particular sent the
+    # crawler into an archive of state electricity PDFs going back decades
+    # (sep2011.pdf, ...062905.pdf), burning minutes + tokens for zero rates.
+    # Added 2026-07-08.
+    "eia.gov",
 })
+
+
+def _is_third_party_domain(url: str) -> bool:
+    """True if the URL's domain is a hard-blocked aggregator/data site.
+    Used to keep the crawler off these domains entirely (not just to skip
+    extraction after we've already paid to fetch their pages/PDFs)."""
+    try:
+        dom = urlparse(url).netloc.replace("www.", "").lower()
+    except Exception:
+        return False
+    return any(dom == d or dom.endswith(f".{d}") for d in THIRD_PARTY_DOMAINS)
 
 
 # ---------------------------------------------------------------------------
@@ -1612,6 +1651,14 @@ def _try_browser_agent_fallback(rate_page_url: str) -> list[RatePage]:
 def phase2_discover_tariff_pages(rate_page_url: str) -> list[RatePage]:
     """Crawl the main rate page and one level of sub-pages to find
     residential and small-commercial rate detail pages."""
+    # Never crawl a hard-blocked aggregator/data domain. These can slip in
+    # as an OpenEI seed URL or a search alternate; crawling them wastes
+    # fetches (e.g. eia.gov's decades-deep archive of state rate PDFs) and
+    # can only ever yield mis-attributed multi-utility data.
+    if _is_third_party_domain(rate_page_url):
+        log.info(f"  Phase 2: Skipping third-party/aggregator domain: {rate_page_url[:70]}")
+        return []
+
     log.info(f"  Phase 2: Crawling {rate_page_url}")
 
     # Direct PDF URL — skip HTML crawl (httpx returns raw bytes that
@@ -1772,6 +1819,16 @@ def phase2_discover_tariff_pages(rate_page_url: str) -> list[RatePage]:
             )
             level1_links.extend(extra_pdfs)
 
+    # Drop links that point at hard-blocked aggregator/data domains so we
+    # never follow a rate page out to e.g. eia.gov's archive.
+    before_tp = len(level1_links)
+    level1_links = [(u, t) for u, t in level1_links if not _is_third_party_domain(u)]
+    if len(level1_links) < before_tp:
+        log.info(
+            f"  Phase 2: Dropped {before_tp - len(level1_links)} link(s) to "
+            f"third-party/aggregator domains"
+        )
+
     log.info(f"  Phase 2: Found {len(level1_links)} relevant links on main page")
 
     # Drop regulator rate-case / docket / proceeding links — they're filings
@@ -1878,12 +1935,13 @@ def phase2_discover_tariff_pages(rate_page_url: str) -> list[RatePage]:
     # summaries for every NY utility (NYSEG, RG&E, Central Hudson, etc.).
     before_filing_l2 = len(level2_candidates)
     level2_candidates = [
-        (u, t) for u, t in level2_candidates if not _is_regulator_filing_url(u, t)
+        (u, t) for u, t in level2_candidates
+        if not _is_regulator_filing_url(u, t) and not _is_third_party_domain(u)
     ]
     if len(level2_candidates) < before_filing_l2:
         log.info(
             f"  Phase 2: Dropped {before_filing_l2 - len(level2_candidates)} "
-            f"regulator rate-case / docket links from L2"
+            f"regulator rate-case / aggregator links from L2"
         )
 
     # Level 2: fetch the deeper pages (capped to avoid runaway crawling)
@@ -3399,7 +3457,7 @@ def _select_model(page: "RatePage") -> str:
 
 
 def _call_opus_tool(prompt: str) -> list[dict]:
-    """Call Claude Opus 4.7 for structured tariff extraction.
+    """Call Claude Opus (see OPUS_MODEL) for structured tariff extraction.
 
     Only used as the last-resort third tier when both Gemini 3 Flash
     and Haiku fail to extract any tariffs.  More expensive but
@@ -3464,11 +3522,12 @@ def _page_has_numeric_rates(content: str) -> bool:
 def _extract_with_model_routing(prompt: str, page: "RatePage") -> tuple[list[dict], str]:
     """Extract tariffs using a 3-tier model strategy.
 
-    Tier 1: Gemini 3 Flash  (fast, cheap, good for most pages)
-    Tier 2: Claude Haiku    (better at complex HTML, tool use)
-    Tier 3: Claude Opus 4.7 (last resort — only invoked if the page has
-                             at least one rate-amount-shaped number so we
-                             don't burn Opus tokens on pages without data)
+    Tier 1: Gemini 3.7 Flash (fast, cheap, good for most pages)
+    Tier 2: Claude Haiku     (better at complex HTML, tool use)
+    Tier 3: Claude Opus      (last resort — only invoked if the page has at
+                              least one rate-amount-shaped number AND the
+                              per-utility Opus budget isn't exhausted, so we
+                              don't burn Opus tokens on pages without data)
 
     Returns (tariff_dicts, model_used). Uses LLM extraction cache to avoid
     redundant API calls.
@@ -3491,6 +3550,7 @@ def _extract_with_model_routing(prompt: str, page: "RatePage") -> tuple[list[dic
 
     if model == "gemini":
         result = _call_gemini(prompt)
+        llm_cost.record_extraction_outcome("gemini", bool(result))
         if result:
             if page.content_hash:
                 _set_llm_cache(page.content_hash, "gemini", result)
@@ -3498,6 +3558,7 @@ def _extract_with_model_routing(prompt: str, page: "RatePage") -> tuple[list[dic
         log.info("    Gemini returned no tariffs, escalating to Haiku")
 
     result = _call_claude_tool(prompt)
+    llm_cost.record_extraction_outcome("haiku", bool(result))
     if result:
         if page.content_hash:
             _set_llm_cache(page.content_hash, "haiku", result)
@@ -3514,8 +3575,26 @@ def _extract_with_model_routing(prompt: str, page: "RatePage") -> tuple[list[dic
         )
         return [], "haiku"
 
-    log.info("    Haiku returned no tariffs, escalating to Opus 4.7")
+    # Per-utility Opus budget: Opus escalations hit on only ~8% of pages, so
+    # cap how many times one utility may fire the expensive tier per run.
+    global _opus_escalations_this_util
+    if _opus_escalations_this_util >= OPUS_MAX_PER_UTILITY:
+        log.info(
+            f"    Haiku returned 0; skipping Opus escalation "
+            f"(per-utility cap of {OPUS_MAX_PER_UTILITY} reached)"
+        )
+        return [], "haiku"
+    _opus_escalations_this_util += 1
+
+    log.info(
+        f"    Haiku returned no tariffs, escalating to Opus "
+        f"({_opus_escalations_this_util}/{OPUS_MAX_PER_UTILITY})"
+    )
     result = _call_opus_tool(prompt)
+    # Telemetry: track whether the expensive Opus escalation actually pays
+    # off (returns tariffs) or burns tokens for nothing. Rolled into the
+    # run summary as tier_outcomes so we can see Opus's hit rate per run.
+    llm_cost.record_extraction_outcome("opus", bool(result))
     if result:
         if page.content_hash:
             _set_llm_cache(page.content_hash, "opus", result)
@@ -5634,6 +5713,7 @@ def run_pipeline(
     force_extract: bool = False,
 ) -> PipelineResult:
     llm_cost.reset()  # start a fresh per-utility cost accumulation window
+    _reset_opus_budget()  # reset the per-utility Opus escalation cap
     info = get_utility_info(utility_id)
     if not info or info.get("name", "").startswith("Utility #"):
         raise ValueError(f"Utility {utility_id} not found in database")

@@ -45,13 +45,36 @@ QUARTERLY_ERROR_LIMIT = 200
 # Hard cap on a single monthly run. Without it, one bad month (monitoring
 # flapping + a large stale backlog) dispatches thousands of tasks that take
 # days to drain through the LLM rate limit and starve everything else.
-MONTHLY_MAX_UTILITIES = int(os.environ.get("MONTHLY_MAX_UTILITIES", "400"))
+#
+# Sized to the steady-state rotation: keeping ~1,425 utilities on a 90-day
+# freshness cycle needs ~475 re-verifications/month, plus changed-signal
+# utilities. 400 sat just under that (freshness slowly decayed); 600 covers
+# the rotation with headroom. The sourceless quarantine + aggregator-domain
+# guards keep the extra slots pointed at tractable utilities, so the added
+# spend is mostly cheap re-verifications rather than dead-end escalations.
+MONTHLY_MAX_UTILITIES = int(os.environ.get("MONTHLY_MAX_UTILITIES", "600"))
 
-# Utilities that failed this many consecutive refresh attempts are skipped
-# by the monthly run (the quarterly recovery still retries them). Tracked
-# in a Redis hash so no schema change is needed.
-FAILURE_QUARANTINE_THRESHOLD = 3
-FAILURE_COUNTS_KEY = "refresh:failure_counts"
+# A utility that fails this many consecutive *structural* extractions
+# (page reached but 0 tariffs, no rate page, no rate signals — i.e. it has
+# no machine-readable rates on the web) is soft-quarantined. Transient
+# network errors and crashes do NOT count toward the streak. State is
+# persisted on the utility row (survives Redis flushes and is queryable).
+QUARANTINE_STRUCTURAL_THRESHOLD = 3
+
+# A quarantined utility is re-checked at most this often. Between rechecks
+# it is skipped by both the monthly and quarterly runs — unless a monitoring
+# source detects a genuinely new page (a CHANGED signal), which always
+# overrides the quarantine.
+QUARANTINE_RECHECK_DAYS = int(os.environ.get("QUARANTINE_RECHECK_DAYS", "120"))
+
+# Error-string fragments that indicate a *transient* failure (worth
+# retrying as-is) rather than a structural "no source" failure. Matched
+# case-insensitively.
+_TRANSIENT_ERROR_MARKERS = (
+    "timeout", "timed out", "connection", "connreset", "reset by peer",
+    "rate limit", "429", "temporarily", "503", "502", "504",
+    "unhandled crash", "eof occurred", "ssl",
+)
 
 # Per-utility dispatch lock TTL. Slightly above process_utility's hard
 # time_limit so a crashed worker can never leave a utility locked forever.
@@ -92,10 +115,26 @@ def _get_changed_utility_ids(session: Session, since_days: int = 30) -> list[int
 
 
 def _get_stale_utility_ids(session: Session, threshold_days: int = STALE_THRESHOLD_DAYS) -> list[int]:
-    """Active utilities whose tariffs haven't been verified recently."""
+    """Active utilities whose tariffs haven't been verified recently,
+    ordered oldest-first.
+
+    Ordering matters when the monthly cap binds: we want to spend the
+    budget on the *most*-aged utilities and let the least-stale ones roll
+    to next month, rather than trimming an arbitrary slice. Utilities with
+    no verified tariff at all (NULL max) sort first via NULLS FIRST.
+    """
     cutoff = datetime.now(timezone.utc) - timedelta(days=threshold_days)
+    last_verified = (
+        select(
+            Tariff.utility_id.label("uid"),
+            func.max(Tariff.last_verified_at).label("last_verified"),
+        )
+        .group_by(Tariff.utility_id)
+        .subquery()
+    )
     stmt = (
         select(Utility.id)
+        .outerjoin(last_verified, last_verified.c.uid == Utility.id)
         .where(Utility.is_active.is_(True))
         .where(
             ~Utility.id.in_(
@@ -104,6 +143,7 @@ def _get_stale_utility_ids(session: Session, threshold_days: int = STALE_THRESHO
                 )
             )
         )
+        .order_by(last_verified.c.last_verified.asc().nulls_first())
     )
     return list(session.execute(stmt).scalars().all())
 
@@ -138,21 +178,28 @@ def _get_error_utility_ids(session: Session, limit: int = QUARTERLY_ERROR_LIMIT)
     return list(session.execute(stmt).scalars().all())
 
 
-def _filter_quarantined(ids: list[int]) -> tuple[list[int], list[int]]:
-    """Split ids into (keep, quarantined) based on consecutive failures."""
-    r = _get_redis()
-    if r is None or not ids:
+def _filter_quarantined(session: Session, ids: list[int]) -> tuple[list[int], list[int]]:
+    """Split ids into (keep, quarantined).
+
+    A utility is *actively* quarantined when `refresh_quarantined_at` is set
+    and newer than the recheck window. Those are skipped. Utilities whose
+    quarantine has aged past the window are returned in `keep` so they get
+    one recheck (and re-quarantine on a fresh failure).
+    """
+    if not ids:
         return ids, []
-    try:
-        counts = r.hmget(FAILURE_COUNTS_KEY, [str(i) for i in ids])
-    except Exception:
-        return ids, []
-    keep, quarantined = [], []
-    for uid, c in zip(ids, counts):
-        if c is not None and int(c) >= FAILURE_QUARANTINE_THRESHOLD:
-            quarantined.append(uid)
-        else:
-            keep.append(uid)
+    recheck_cutoff = datetime.now(timezone.utc) - timedelta(days=QUARANTINE_RECHECK_DAYS)
+    rows = session.execute(
+        select(Utility.id, Utility.refresh_quarantined_at).where(Utility.id.in_(ids))
+    ).all()
+    quarantined_set = {
+        uid
+        for uid, qat in rows
+        if qat is not None
+        and (qat if qat.tzinfo else qat.replace(tzinfo=timezone.utc)) >= recheck_cutoff
+    }
+    keep = [i for i in ids if i not in quarantined_set]
+    quarantined = [i for i in ids if i in quarantined_set]
     return keep, quarantined
 
 
@@ -192,16 +239,48 @@ def _clear_changed_sources(uid: int):
         session.commit()
 
 
-def _record_outcome(uid: int, success: bool):
-    """Track consecutive failures in Redis for the monthly quarantine."""
-    r = _get_redis()
-    if r is None:
-        return
+def _looks_transient(errors: list[str]) -> bool:
+    """Heuristic: do these error strings look like a retryable transient
+    failure (network/timeout/rate-limit/crash) rather than a structural
+    'this utility has no web-readable rates' failure?"""
+    blob = " ".join(errors or []).lower()
+    return any(marker in blob for marker in _TRANSIENT_ERROR_MARKERS)
+
+
+def _record_outcome(uid: int, success: bool, structural_failure: bool, reason: str = ""):
+    """Persist the refresh outcome on the utility row.
+
+    - success: reset the streak, lift any quarantine.
+    - structural failure: increment the streak; quarantine once it crosses
+      the threshold.
+    - transient failure / crash: record the attempt + reason but do NOT
+      advance the streak (we don't want a bad network day to quarantine a
+      utility that genuinely has rates).
+    """
+    now = datetime.now(timezone.utc)
+    reason = (reason or "")[:200]
+    engine = get_sync_engine()
     try:
-        if success:
-            r.hdel(FAILURE_COUNTS_KEY, str(uid))
-        else:
-            r.hincrby(FAILURE_COUNTS_KEY, str(uid), 1)
+        with Session(engine) as session:
+            u = session.get(Utility, uid)
+            if u is None:
+                return
+            u.refresh_last_attempt_at = now
+            if success:
+                u.refresh_fail_streak = 0
+                u.refresh_quarantined_at = None
+                u.refresh_last_reason = None
+            elif structural_failure:
+                u.refresh_fail_streak = (u.refresh_fail_streak or 0) + 1
+                u.refresh_last_reason = reason
+                if u.refresh_fail_streak >= QUARANTINE_STRUCTURAL_THRESHOLD:
+                    # Stamp a fresh timestamp so the recheck clock restarts
+                    # each time it re-fails, keeping chronic cases quarantined.
+                    u.refresh_quarantined_at = now
+            else:
+                # Transient: leave streak untouched, just note the reason.
+                u.refresh_last_reason = reason
+            session.commit()
     except Exception as e:
         log.warning(f"Failed to record refresh outcome for {uid}: {e}")
 
@@ -269,7 +348,14 @@ def process_utility(self, uid: int, comprehensive: bool = False) -> dict:
         # inflate error rates and trigger pointless retry campaigns.
         skipped = getattr(result, "skipped_unchanged", False)
         success = valid_count > 0 or skipped
-        _record_outcome(uid, success)
+        # A non-success with no transient markers means the pipeline reached
+        # the utility but found no extractable rates — a structural failure
+        # that should count toward quarantine.
+        structural = not success and not _looks_transient(result.errors)
+        _record_outcome(
+            uid, success, structural,
+            reason="; ".join(result.errors[:2]) if result.errors else "",
+        )
         if success:
             try:
                 _clear_changed_sources(uid)
@@ -289,7 +375,9 @@ def process_utility(self, uid: int, comprehensive: bool = False) -> dict:
         raise  # Let autoretry handle these
     except Exception as e:
         log.error(f"Utility {uid} CRASHED: {e}")
-        _record_outcome(uid, False)
+        # A crash is treated as transient (likely a bug or resource blip),
+        # not a structural "no source" failure — don't advance the streak.
+        _record_outcome(uid, False, structural_failure=False, reason=f"crash: {e}")
         return {
             "utility_id": uid,
             "utility_name": str(uid),
@@ -604,14 +692,19 @@ def refresh_changed_tariffs():
     log.info(f"  Changed (monitoring detected): {len(changed_ids)}")
     log.info(f"  Stale (not verified in {STALE_THRESHOLD_DAYS}d): {len(stale_ids)}")
 
-    # Quarantine: skip utilities that failed several consecutive attempts —
-    # retrying them monthly burns LLM spend with no new information. The
-    # quarterly recovery run still picks them up.
-    changed_ids, q1 = _filter_quarantined(changed_ids)
-    stale_ids, q2 = _filter_quarantined(stale_ids)
-    quarantined = sorted(set(q1 + q2))
+    # Quarantine: skip chronically sourceless utilities (structural failures
+    # past the threshold) — retrying them burns LLM spend with no new data.
+    # A CHANGED monitoring signal always overrides the quarantine, so a
+    # utility that finally publishes a real rate page still gets picked up.
+    with Session(engine) as session:
+        stale_ids, quarantined = _filter_quarantined(session, stale_ids)
+    changed_set = set(changed_ids)
+    quarantined = sorted(uid for uid in quarantined if uid not in changed_set)
     if quarantined:
-        log.info(f"  Quarantined (>= {FAILURE_QUARANTINE_THRESHOLD} consecutive failures): {len(quarantined)}")
+        log.info(
+            f"  Quarantined (>= {QUARANTINE_STRUCTURAL_THRESHOLD} structural "
+            f"failures, no change signal): {len(quarantined)}"
+        )
 
     # Cap the run: changed utilities first (a real signal), stale fills the
     # remainder. Whatever doesn't fit is naturally still stale next month.
@@ -678,14 +771,22 @@ def recover_error_utilities():
 
     with Session(engine) as session:
         error_ids = _get_error_utility_ids(session, limit=QUARTERLY_ERROR_LIMIT)
+        log.info(f"  Utilities with all-error monitoring sources: {len(error_ids)}")
+        # Skip chronically sourceless utilities here too. The quarterly run
+        # used to be the place these got retried forever; now a quarantined
+        # utility is only re-checked once its recheck window elapses.
+        error_ids, quarantined = _filter_quarantined(session, error_ids)
+        if quarantined:
+            log.info(f"  Quarantined (skipped): {len(quarantined)}")
         before_counts = _count_tariffs(session, error_ids)
-
-    log.info(f"  Utilities with all-error monitoring sources: {len(error_ids)}")
 
     with Session(engine) as session:
         run = session.get(RefreshRun, run_id)
         run.utilities_targeted = len(error_ids)
-        run.summary_json = {"targeted_utility_ids": error_ids}
+        run.summary_json = {
+            "targeted_utility_ids": error_ids,
+            "quarantined_skipped": len(quarantined),
+        }
         session.commit()
 
     if not error_ids:

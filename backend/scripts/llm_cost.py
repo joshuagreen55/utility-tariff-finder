@@ -39,13 +39,17 @@ log = logging.getLogger(__name__)
 
 # USD per 1M tokens. cache_read / cache_write apply to Anthropic prompt
 # caching (a cache hit bills ~10% of input; a cache write bills ~125%).
+# Verify against current pricing pages; override via LLM_PRICING_JSON if they
+# drift. Updated 2026-08-27: opus -> Opus 5 ($5/$25, was 4.7 @ $15/$75),
+# gemini -> Gemini 3.7 Flash intro ($0.75/$3.75 through 2026-12-31, then
+# $1.50/$7.50).
 DEFAULT_PRICING: dict[str, dict[str, float]] = {
     "haiku":     {"in": 1.00,  "out": 5.00,  "cache_read": 0.10, "cache_write": 1.25},
-    "opus":      {"in": 15.00, "out": 75.00, "cache_read": 1.50, "cache_write": 18.75},
-    "gemini":    {"in": 0.30,  "out": 2.50,  "cache_read": 0.075, "cache_write": 0.0},
+    "opus":      {"in": 5.00,  "out": 25.00, "cache_read": 0.50, "cache_write": 6.25},
+    "gemini":    {"in": 0.75,  "out": 3.75,  "cache_read": 0.075, "cache_write": 0.0},
     # Deep Research (Phase 6) — same token prices as Flash by default, but
     # broken out so its (typically large) spend is separately visible.
-    "gemini_dr": {"in": 0.30,  "out": 2.50,  "cache_read": 0.0,  "cache_write": 0.0},
+    "gemini_dr": {"in": 0.75,  "out": 3.75,  "cache_read": 0.0,  "cache_write": 0.0},
 }
 
 
@@ -74,9 +78,17 @@ def _new_acc() -> dict:
     )
 
 
+def _new_outcomes() -> dict:
+    # Per-tier extraction outcome counters. `hit` = the tier returned >=1
+    # tariff; `miss` = it was invoked but returned nothing. Used to answer
+    # "is the expensive Opus escalation actually earning its spend?".
+    return defaultdict(lambda: {"hit": 0, "miss": 0})
+
+
 def reset() -> None:
     """Start a fresh accumulation window (call at the top of run_pipeline)."""
     _local.acc = _new_acc()
+    _local.outcomes = _new_outcomes()
 
 
 def _acc() -> dict:
@@ -85,6 +97,25 @@ def _acc() -> dict:
         reset()
         acc = _local.acc
     return acc
+
+
+def _outcomes() -> dict:
+    oc = getattr(_local, "outcomes", None)
+    if oc is None:
+        reset()
+        oc = _local.outcomes
+    return oc
+
+
+def record_extraction_outcome(model: str, produced: bool) -> None:
+    """Record whether an extraction-tier call (gemini/haiku/opus) yielded
+    any tariffs. Keyed by pricing model so we can compute per-tier hit rate
+    and, crucially, the wasted-spend share of the Opus escalation."""
+    try:
+        rec = _outcomes()[model_key(model)]
+        rec["hit" if produced else "miss"] += 1
+    except Exception as e:  # noqa: BLE001 — telemetry must never break a call
+        log.debug("record_extraction_outcome failed: %s", e)
 
 
 def set_phase(name: str) -> None:
@@ -212,6 +243,7 @@ def summary() -> dict:
         "by_phase": {k: round(v, 6) for k, v in by_phase.items()},
         "by_model": {k: round(v, 6) for k, v in by_model.items()},
         "detail": detail,
+        "tier_outcomes": {k: dict(v) for k, v in _outcomes().items()},
     }
 
 
@@ -220,6 +252,7 @@ def merge_summaries(summaries: list[dict]) -> dict:
     by_phase: dict[str, float] = defaultdict(float)
     by_model: dict[str, float] = defaultdict(float)
     detail: dict[str, dict] = {}
+    tier_outcomes: dict[str, dict] = defaultdict(lambda: {"hit": 0, "miss": 0})
     total = 0.0
     for s in summaries:
         if not s:
@@ -237,9 +270,13 @@ def merge_summaries(summaries: list[dict]) -> dict:
                 )
                 for field in ("calls", "in", "out", "cache_read", "cache_write", "cost"):
                     agg[field] += rec.get(field, 0)
+        for key, rec in (s.get("tier_outcomes") or {}).items():
+            tier_outcomes[key]["hit"] += rec.get("hit", 0)
+            tier_outcomes[key]["miss"] += rec.get("miss", 0)
     return {
         "total_usd": round(total, 6),
         "by_phase": {k: round(v, 6) for k, v in by_phase.items()},
         "by_model": {k: round(v, 6) for k, v in by_model.items()},
         "detail": detail,
+        "tier_outcomes": {k: dict(v) for k, v in tier_outcomes.items()},
     }
