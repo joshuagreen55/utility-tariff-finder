@@ -1,5 +1,10 @@
 # Utility Tariff Finder — Technical Review Document
 
+> **⚠️ Historical document (spring 2026).** Predates the current
+> refresh/quarantine, LLM cost-tracking, model-routing, and health-score
+> systems. For the current system, read **[`AGENTS.md`](AGENTS.md)** and
+> **[`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md)**. Kept for historical context.
+
 ## Table of Contents
 
 1. [Problem Statement](#1-problem-statement)

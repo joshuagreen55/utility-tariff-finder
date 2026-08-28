@@ -1,6 +1,10 @@
 # Utility Tariff Finder — Comprehensive Project Summary
 
-*Last updated: 2026-03-31*
+> **⚠️ Historical document (last updated 2026-03-31).** This predates the
+> current refresh/quarantine, LLM cost-tracking, model-routing, and health-score
+> systems. For the current architecture, operating procedures, and guardrails,
+> read **[`AGENTS.md`](AGENTS.md)** and **[`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md)**.
+> Kept for historical context on early decisions.
 
 This document provides a complete summary of the Utility Tariff Finder project — what it does, how it works, every major decision made, every problem encountered, every fix applied, the current optimization state, and what's next. It is intended for external reviewers who need full context.
 

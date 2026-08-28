@@ -2,13 +2,19 @@
 
 Lookup electricity utility providers and rate tariffs by US or Canadian address.
 
-**What to do next:** [docs/NEXT_STEPS.md](docs/NEXT_STEPS.md) · **Google Cloud (first VM):** [docs/GCP_FIRST_TIME.md](docs/GCP_FIRST_TIME.md) · **Query the database:** [docs/DATABASE_ACCESS.md](docs/DATABASE_ACCESS.md) · **OpenClaw:** [deploy/OPENCLAW_VM.md](deploy/OPENCLAW_VM.md)
+> **Operating this system?** Read **[`AGENTS.md`](AGENTS.md)** first — it is the
+> system-of-record and runbook (data model, the extraction pipeline, refresh &
+> quarantine systems, health scoring, LLM cost tracking, VM deploy/ops, and
+> guardrails). This README covers overview + local setup only.
+
+**Other docs:** [Architecture](docs/ARCHITECTURE.md) · [Next steps](docs/NEXT_STEPS.md) · [Google Cloud (first VM)](docs/GCP_FIRST_TIME.md) · [Query the database](docs/DATABASE_ACCESS.md) · [OpenClaw](deploy/OPENCLAW_VM.md)
 
 ## Architecture
 
 - **Backend**: Python/FastAPI + PostgreSQL/PostGIS
 - **Frontend**: React + Vite + TypeScript
-- **Task Queue**: Celery + Redis (weekly tariff monitoring)
+- **Task Queue**: Celery + Redis — weekly monitoring, monthly refresh, quarterly recovery
+- **Extraction pipeline**: 6-phase LLM tariff extractor (`backend/scripts/tariff_pipeline.py`), 3-tier model routing (Gemini Flash → Claude Haiku → Claude Opus) + Gemini Deep Research fallback
 
 ## Data Sources
 
@@ -116,17 +122,26 @@ Optional **Google sign-in** (`AUTH_ENABLED=true`, vars in `.env.docker.example`)
 | GET | `/api/auth/google/login` | Start Google OAuth (redirect) |
 | GET | `/api/auth/google/callback` | OAuth redirect target (Google → app) |
 | POST | `/api/auth/logout` | Clear session cookie |
+| GET | `/api/health` | Liveness probe |
 | GET | `/api/lookup?address=...` | Find utilities serving an address |
 | GET | `/api/utilities` | List/search utilities |
 | GET | `/api/utilities/{id}` | Utility detail |
 | GET | `/api/utilities/{id}/tariffs?customer_class=residential` | List tariffs |
+| GET | `/api/tariffs/filters` | Distinct filter values (country/state/utility/class) |
+| GET | `/api/tariffs/browse` | Paginated tariff browser |
 | GET | `/api/tariffs/{id}` | Tariff detail with rate components |
 | GET | `/api/tariffs/{id}/source` | Source verification info |
+| DELETE | `/api/tariffs/{id}` | Delete a tariff (admin) |
 | GET | `/api/admin/monitoring/sources` | Monitoring sources |
 | GET | `/api/admin/monitoring/stats` | Monitoring dashboard counts |
 | GET | `/api/admin/monitoring/logs` | Change detection logs |
+| GET | `/api/admin/monitoring/dead-utilities` | Utilities with all-failing sources |
+| GET | `/api/admin/monitoring/error-categories` | Categorized source failures |
 | PATCH | `/api/admin/monitoring/sources/{id}` | Update monitored URL (for remediation) |
 | POST | `/api/admin/monitoring/sources/{id}/check` | Run one check immediately |
 | POST | `/api/admin/monitoring/sources/check-ids` | Batch check; `?wait=true` returns results |
 | POST | `/api/admin/monitoring/check-all` | Queue many checks (background) |
 | PATCH | `/api/admin/monitoring/logs/{id}` | Update review status |
+| GET | `/api/admin/monitoring/refresh-runs` | List refresh runs |
+| GET | `/api/admin/analytics/coverage` | Coverage by country/state |
+| GET | `/api/admin/data-quality/overview` | Data-quality dashboard aggregates |

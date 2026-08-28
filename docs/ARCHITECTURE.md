@@ -1,67 +1,71 @@
 # Architecture (system overview)
 
-This document matches how the **Utility Tariff Finder** is structured: storage, web/API, and monitoring. Written for **system-level** readers (not only software developers).
+How the **Utility Tariff Finder** is structured. For the full operating manual
+(runbook, guardrails, env vars), see [`AGENTS.md`](../AGENTS.md).
+
+_Last updated: 2026-08-28._
 
 ## Parts of the system
 
 | Piece | Role |
-|--------|------|
-| **Web app** | What people see in the browser. |
-| **API** | The program that answers requests and talks to the database. |
-| **Database (PostgreSQL + PostGIS)** | Stores utilities, map areas, tariffs, monitoring URLs, and check history. |
-| **Monitoring job** | A batch process that fetches many tariff URLs/PDFs, fingerprints content, and records changes/errors. |
-| **Agent (e.g. OpenClaw)** *(planned operator)* | Reads monitoring results, researches broken links, **updates URL rows in the database**, then triggers **targeted re-checks**. It should **not** rewrite application source code. |
+|-------|------|
+| **Web app** (React/Vite) | Address lookup, utility/tariff browsing, and admin monitoring/data-quality dashboards. |
+| **API** (FastAPI) | Answers lookups, serves tariff data, and exposes admin/monitoring endpoints. |
+| **Database** (PostgreSQL + PostGIS) | Utilities, service-territory polygons, tariffs + rate components, monitoring sources/logs, refresh runs, and page fingerprints. |
+| **Monitoring worker** (Celery) | Fetches tariff URLs/PDFs on a schedule, fingerprints content, records changes/errors. |
+| **Refresh pipeline** (Celery + `tariff_pipeline.py`) | The extraction engine: discovers rate pages and extracts/validates structured tariffs with LLMs. |
+| **Scheduler** (Celery beat) | Weekly monitoring, monthly refresh, quarterly recovery, hourly stalled-run reaper. |
 
-## Storage (“drawers” in the database)
+## Storage (main tables)
 
-- **Utilities** — who sells power, name, region.
-- **Service territories** — map-based or rule-based matching (US polygons, postal hints, etc.).
-- **Tariffs** — rate schedules (residential vs commercial, components, etc.).
-- **Monitoring sources** — URLs/PDFs to watch for changes.
-- **Monitoring logs** — each check: success, error message, content fingerprint (hash), whether content changed.
+- **utilities** — who sells power, region, active flag, and refresh-quarantine bookkeeping.
+- **service_territories** — PostGIS polygons + zip arrays for address→utility matching.
+- **tariffs** + **rate_components** — rate schedules and their priced parts. Retired tariffs are **soft-superseded** (`superseded_by_tariff_id`), never deleted.
+- **monitoring_sources** / **monitoring_logs** — URLs watched for change + per-check history.
+- **refresh_runs** — one row per refresh run (targets, results, per-run LLM cost).
+- **rate_page_fingerprints** — content hashes so unchanged pages can be skipped.
 
-## Diagram: main components
+## Main components
 
 ```mermaid
 flowchart LR
-  subgraph users [People]
-    U[Browser]
+  U[Browser] --> FE[Web app] --> API[API] --> DB[(PostgreSQL + PostGIS)]
+  subgraph automation [Celery + Redis]
+    MON[Monitoring worker]
+    REF[Refresh pipeline]
+    BEAT[Beat scheduler]
   end
-  subgraph app [Application]
-    FE[Web app]
-    API[API]
-  end
-  DB[(PostgreSQL + PostGIS)]
-  subgraph automation [Automation]
-    JOB[Monitoring batch job]
-    AG[Agent optional]
-  end
-  NET[(Internet: utility sites)]
-
-  U --> FE --> API --> DB
-  JOB --> DB
-  JOB --> NET
-  AG --> NET
-  AG --> API
-  AG --> JOB
+  BEAT --> MON
+  BEAT --> REF
+  MON --> DB
+  REF --> DB
+  REF --> LLM[(Anthropic + Gemini)]
+  MON --> NET[(Utility websites / PDFs)]
+  REF --> NET
 ```
 
 ## Flow: address lookup
+1. User enters an address.
+2. API **geocodes** it (Census → Nominatim → Google fallback).
+3. API **matches utilities** (PostGIS polygon containment, then zip/state fallbacks).
+4. API loads **live** tariffs for those utilities (superseded rows excluded).
+5. Web app shows utilities and rate components (residential + commercial).
 
-1. User enters an address.  
-2. API **geocodes** it (coordinates + country).  
-3. API **matches utilities** (polygons, ZIP/postal, state/province fallbacks).  
-4. API loads **tariffs** for those utilities.  
-5. Web app displays utilities and rates (including residential vs commercial).
+## Flow: extraction pipeline (per utility)
+`run_pipeline()` runs up to six phases: **1** find rate page (Brave/CSE) → **2**
+crawl for tariff pages/PDFs → **3** LLM extraction with 3-tier model routing
+(Gemini Flash → Haiku → Opus) → **4** validate (percentile bounds, unit
+normalization) + store + soft-supersede matching seeds → **5** AI-guided
+navigation fallback → **6** Gemini Deep Research for the long tail. See
+[`AGENTS.md` §4](../AGENTS.md).
 
-## Flow: monitoring + agent remediation (intended)
-
-1. Monitor job runs on a schedule (or on demand): **many URLs in parallel**, writes hashes/logs.  
-2. Job can emit a **JSON summary** (especially a list of errors) for tools/agents.  
-3. Agent (or human) **updates `monitoring_sources.url`** when a link moves.  
-4. **Targeted re-check** runs for those IDs only (`wait=true` on the check-ids API).  
-5. Success = **no error** and a **non-empty content hash** (and optionally extra checks later).
+## Flow: scheduled refresh
+1. **Weekly** monitoring fingerprints all sources and flags changes/errors.
+2. **Monthly** refresh re-extracts changed + oldest-stale utilities (capped, oldest-first), skipping quarantined ones.
+3. **Quarterly** recovery retries utilities whose sources are all erroring.
+4. Utilities that repeatedly yield nothing are **soft-quarantined** and re-checked infrequently.
+5. Each run records targets, results, and per-phase LLM cost in `refresh_runs`.
 
 ## Related docs
-
-- [GCP deployment](GCP.md) — Google Cloud VM, auth, and what **not** to paste into chat.
+- [`AGENTS.md`](../AGENTS.md) — operating manual, runbook, guardrails.
+- [GCP deployment](GCP.md) · [Database access](DATABASE_ACCESS.md) · [Centralized regulators](CENTRALIZED_REGULATORS.md)
