@@ -6,7 +6,7 @@ comprehensive; when in doubt, prefer what is written here over older docs
 (`PROJECT_SUMMARY.md` and `TECHNICAL_REVIEW.md` predate most of the current
 refresh/quarantine/cost/model systems).
 
-_Last updated: 2026-08-28._
+_Last updated: 2026-09-02._
 
 ---
 
@@ -121,14 +121,14 @@ one Celery `process_utility` task = one `run_pipeline` call for one utility.
 | 6 | `phase6_deep_research` | Gemini Deep Research (Interactions API) for the long tail. Last-resort, cost- and token-guarded. Gated by `PHASE6_ENABLED`. |
 
 ### Model-tier routing (Phase 3 extraction)
-`Gemini 3.7 Flash` (tier 1, cheap) → `Claude Haiku 4.5` (tier 2) → `Claude
+`Gemini 3.8 Flash` (tier 1, cheap) → `Claude Haiku 4.5` (tier 2) → `Claude
 Opus 5` (tier 3, last resort). Opus is only invoked when a page has numeric
 rate signals AND the per-utility Opus budget isn't spent.
 
 **Key model/cost env vars** (all overridable):
 - `OPUS_MODEL` (default `claude-opus-5`) — tier-3 + long-doc identify.
 - `HAIKU_MODEL` (default `claude-haiku-4-5-20251001`) — tier-2.
-- `GEMINI_MODEL` (default `gemini-3.7-flash`) — tier-1.
+- `GEMINI_MODEL` (default `gemini-3.8-flash`) — tier-1.
 - `OPUS_MAX_PER_UTILITY` (default `2`) — cap on Opus escalations per utility
   per run. Opus historically hit on only ~8% of escalations while being ~70%
   of run cost, so this cap matters.

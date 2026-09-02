@@ -80,9 +80,9 @@ HAIKU_MODEL = os.environ.get("HAIKU_MODEL", "claude-haiku-4-5-20251001")
 # upgrade over Opus 4.7: ~3x cheaper ($5/$25 vs $15/$75) and higher quality.
 OPUS_MODEL = os.environ.get("OPUS_MODEL", "claude-opus-5")
 # Tier-1 extraction model. Moved off the deprecated 3-flash-preview to GA
-# Gemini 3.7 Flash (Aug 2026) — smarter, so more pages resolve at tier 1
+# Gemini 3.8 Flash (Sep 2026) — smarter, so more pages resolve at tier 1
 # without escalating to Haiku/Opus.
-GEMINI_MODEL = os.environ.get("GEMINI_MODEL", "gemini-3.7-flash")
+GEMINI_MODEL = os.environ.get("GEMINI_MODEL", "gemini-3.8-flash")
 GEMINI_TIMEOUT_MS = int(os.environ.get("GEMINI_TIMEOUT_MS", "60000"))
 
 # Hard cap on how many times a single utility may escalate to the expensive
@@ -3522,7 +3522,7 @@ def _page_has_numeric_rates(content: str) -> bool:
 def _extract_with_model_routing(prompt: str, page: "RatePage") -> tuple[list[dict], str]:
     """Extract tariffs using a 3-tier model strategy.
 
-    Tier 1: Gemini 3.7 Flash (fast, cheap, good for most pages)
+    Tier 1: Gemini 3.8 Flash (fast, cheap, good for most pages)
     Tier 2: Claude Haiku     (better at complex HTML, tool use)
     Tier 3: Claude Opus      (last resort — only invoked if the page has at
                               least one rate-amount-shaped number AND the

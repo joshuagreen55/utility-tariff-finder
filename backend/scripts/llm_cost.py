@@ -41,7 +41,7 @@ log = logging.getLogger(__name__)
 # caching (a cache hit bills ~10% of input; a cache write bills ~125%).
 # Verify against current pricing pages; override via LLM_PRICING_JSON if they
 # drift. Updated 2026-08-27: opus -> Opus 5 ($5/$25, was 4.7 @ $15/$75),
-# gemini -> Gemini 3.7 Flash intro ($0.75/$3.75 through 2026-12-31, then
+# gemini -> Gemini 3.8 Flash intro ($0.75/$3.75 through 2026-12-31, then
 # $1.50/$7.50).
 DEFAULT_PRICING: dict[str, dict[str, float]] = {
     "haiku":     {"in": 1.00,  "out": 5.00,  "cache_read": 0.10, "cache_write": 1.25},
