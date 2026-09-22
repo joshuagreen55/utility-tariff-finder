@@ -10,7 +10,7 @@ class Settings(BaseSettings):
     google_maps_api_key: str = ""
     # Comma-separated origins for browser apps (local dev + production domain)
     cors_origins: str = "http://localhost:5173,http://localhost:3000"
-    # If set, /api/admin/* requires X-Admin-Key or Authorization: Bearer <key>
+    # If set, X-Admin-Key / Authorization: Bearer unlocks /api/* (gate) and /api/admin/* deps
     admin_api_key: str = ""
 
     # --- Pipeline API keys ---

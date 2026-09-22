@@ -32,20 +32,12 @@ class SessionAuthGateMiddleware(BaseHTTPMiddleware):
             return await call_next(request)
 
         if path.startswith("/api/"):
-            if path.startswith("/api/admin/"):
-                if request_has_valid_admin_key(request):
-                    return await call_next(request)
-                if _session_payload(request):
-                    return await call_next(request)
-                return JSONResponse(
-                    {"detail": "Not authenticated"},
-                    status_code=401,
-                    headers={"WWW-Authenticate": "Bearer"},
-                )
-
+            # Server-to-server callers (e.g. Flux proxy) use ADMIN_API_KEY via
+            # X-Admin-Key or Authorization: Bearer — accepted on all /api/* routes.
+            if request_has_valid_admin_key(request):
+                return await call_next(request)
             if _session_payload(request):
                 return await call_next(request)
-
             return JSONResponse(
                 {"detail": "Not authenticated"},
                 status_code=401,
