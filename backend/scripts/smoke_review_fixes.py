@@ -71,6 +71,32 @@ def main() -> int:
     assert raw and raw[0]["name"] == "Residential Service", "phase6 JSON recovery broke"
     print("phase6 JSON recovery OK")
 
+    # Job A: vintage product match (NF Rate #1.1 vs Flat sibling)
+    assert tp.same_vintage_product(
+        "Rate #1.1 Domestic Service",
+        "Domestic Service (Flat)",
+        code_a="1.1",
+        rate_type_a="flat",
+        rate_type_b="flat",
+    ), "NF vintage match broke"
+    # Job A: must NOT widen tariffs_likely_same for TOU vs Flat
+    assert not tp.tariffs_likely_same(
+        "Rate D1 TOU", "Rate D1 Flat"
+    ), "vintage work widened likely_same TOU vs Flat"
+    print("vintage match OK")
+
+    # Job B: fixed/minimum amp-tier dedupe
+    deduped = tp.dedupe_rate_components([
+        {"component_type": "fixed", "unit": "$/month", "rate_value": 17.36,
+         "tier_label": "0-10 Amp"},
+        {"component_type": "minimum", "unit": "$/month", "rate_value": 17.36,
+         "tier_label": "Basic Customer Charge (0-10 Amp)"},
+        {"component_type": "energy", "unit": "$/kWh", "rate_value": 0.15587},
+    ])
+    assert len(deduped) == 2, f"component dedupe broke: {deduped}"
+    assert deduped[0]["component_type"] == "fixed"
+    print("component dedupe OK")
+
     print("ALL SMOKE CHECKS PASSED")
     return 0
 
