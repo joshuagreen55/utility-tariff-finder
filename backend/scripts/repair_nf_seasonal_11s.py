@@ -1,26 +1,49 @@
-"""One-shot repair: Newfoundland Power Rate #1.1S Domestic Seasonal.
+"""One-shot repair: NL Rate #1.1S Domestic Seasonal (Power + Hydro).
 
-Creates or updates a live 2026-07-01 Rate #1.1S with two all-in ENERGY
-rows (Winter Dec–Apr, Non-Winter May–Nov) and soft-supersedes the stale
-2025 seasonal row. Soft-supersede only — never hard-delete.
+Creates a live 2026-07-01 Rate #1.1S with two all-in ENERGY rows
+(Winter Dec–Apr, Non-Winter May–Nov) and soft-supersedes the stale
+Flux-invisible seasonal row(s). Soft-supersede only — never hard-delete.
 
-Root cause: the 2025 extraction stored base ENERGY + seasonal ADJUSTMENT
-riders. Flux / Lookup group ENERGY by season and skip ADJUSTMENT, so
-Non-Winter never appeared and Winter showed the wrong rate.
+Root cause: extraction stored base ENERGY + seasonal ADJUSTMENT riders.
+Flux / Lookup group ENERGY by season and skip ADJUSTMENT, so Non-Winter
+never appeared and Winter showed the wrong rate. Newfoundland Power was
+repaired first (live keeper 67028); NL Hydro live id 65858 was the sole
+remaining B_nl_like row (ENERGY Winter + ADJ Winter/Non-Winter).
+
+Rate verification (2026-07-01 books — Hydro and Power match):
+  Both utilities publish Rate #1.1 Domestic ENERGY at 15.587 ¢/kWh
+  (0.15587 $/kWh) and Rate #1.1S riders Winter +0.953 ¢/kWh /
+  Non-Winter (1.297) ¢/kWh. Sources:
+    - NL Hydro Schedule of Rates, Rules and Regulations (Jul 2026)
+      https://nlhydro.com/wp-content/uploads/2026/07/Schedule-of-Rates-Rules-and-Regulations_Jul_2026.pdf
+    - Newfoundland Power Rate Book effective July 1, 2026 (PUB NL)
+    - PUB orders P.U. 16(2026) (Power) and P.U. 20(2026) (Hydro)
+  They are separate utilities / separate scrapes, but share the same
+  provincial #1.1 / #1.1S energy figures for Island Interconnected /
+  L'Anse au Loup domestic service.
 
 Target all-in (2026 Rate #1.1 base 0.15587 $/kWh ± published riders):
   Winter (Dec–Apr):     0.16540 $/kWh  (= 0.15587 + 0.00953)
   Non-Winter (May–Nov): 0.14290 $/kWh  (= 0.15587 - 0.01297)
 
+If a live 2026 Rate #1.1 ENERGY is present for the utility, that base is
+used instead of the published constant (should still be 0.15587).
+
 Fixed / amp-tier customer charges are NOT copied from Rate #1.1: the
 #1.1S schedule page only restates energy charges subject to seasonal
-adjustments. Customers on #1.1S remain served under #1.1 for customer
-charges, but inventing fixed rows here would be a guess.
+adjustments.
 
-Dry-run is the default; pass ``--apply`` to write.
+Matching is by utility name substring + tariff code/name heuristics
+(code 1.1S / "Domestic Seasonal" / "Domestic … Optional") — not by a
+hard-coded tariff id — so Hydro 65858 and any twin row are found by
+content.
+
+Dry-run is the default; pass ``--apply`` to write. Idempotent when a
+live keeper already has the 2026 all-in ENERGY shape.
 
 Usage:
-  python -m scripts.repair_nf_seasonal_11s --utility-name "Newfoundland Power"
+  python -m scripts.repair_nf_seasonal_11s
+  python -m scripts.repair_nf_seasonal_11s --utility-name "Labrador Hydro"
   python -m scripts.repair_nf_seasonal_11s --utility-name "Newfoundland Power" --apply
   python -m scripts.repair_nf_seasonal_11s --utility-id 123 --apply
 """
@@ -43,15 +66,35 @@ from app.models.tariff import (
 )
 
 # Published 2026 Rate #1.1 energy + Rate #1.1S seasonal riders (dollars).
+# Verified identical in NL Hydro and Newfoundland Power Jul-2026 books.
 NF_11_BASE_ENERGY_2026 = 0.15587
 NF_11S_WINTER_PREMIUM = 0.00953   # +0.953 ¢/kWh
 NF_11S_NONWINTER_CREDIT = -0.01297  # (1.297) ¢/kWh
 
 NF_11S_EFFECTIVE = date(2026, 7, 1)
-NF_11S_NAME = "Rate #1.1S Domestic Seasonal - Optional"
 NF_11S_CODE = "1.1S"
 NF_11S_WINTER_SEASON = "Winter (Dec–Apr)"
 NF_11S_NONWINTER_SEASON = "Non-Winter (May–Nov)"
+
+# Default targets: both Island utilities that publish Rate #1.1S.
+KNOWN_NL_UTILITY_NAMES = (
+    "Newfoundland Power",
+    "Newfoundland and Labrador Hydro",
+)
+
+NF_POWER_11S_NAME = "Rate #1.1S Domestic Seasonal - Optional"
+NF_HYDRO_11S_NAME = "Rate No. 1.1S Domestic - Optional"
+NF_HYDRO_SOURCE_URL = (
+    "https://nlhydro.com/wp-content/uploads/2026/07/"
+    "Schedule-of-Rates-Rules-and-Regulations_Jul_2026.pdf"
+)
+
+
+def nf_11s_display_name(utility_name: str) -> str:
+    """Published schedule title differs slightly Power vs Hydro."""
+    if "hydro" in (utility_name or "").lower():
+        return NF_HYDRO_11S_NAME
+    return NF_POWER_11S_NAME
 
 
 def build_nf_11s_all_in_components(
@@ -94,16 +137,22 @@ def _code_l(t: Tariff) -> str:
 
 
 def is_nf_11s_candidate(t: Tariff) -> bool:
-    """Match live Domestic Seasonal / Rate #1.1S rows."""
+    """Match live Domestic Seasonal / Rate #1.1S rows (Power or Hydro)."""
     name = _name_l(t)
     code = _code_l(t)
     if code in {"1.1s", "11s"}:
         return True
-    if "1.1s" in name.replace(" ", ""):
+    compact = name.replace(" ", "")
+    if "1.1s" in compact or "11s" in compact:
         return True
     if "seasonal" in name and "domestic" in name:
         return True
     if "domestic seasonal" in name:
+        return True
+    # Hydro schedule title is "Domestic - Optional" without "Seasonal".
+    if "domestic" in name and "optional" in name and (
+        "1.1" in compact or code.startswith("1.1")
+    ):
         return True
     return False
 
@@ -123,8 +172,12 @@ def is_nf_11_base(t: Tariff) -> bool:
     return False
 
 
-def pick_source_url(live: list[Tariff], seasonal_rows: list[Tariff]) -> str | None:
-    """Prefer the 2026 Rate #1.1 source_url; fall back to any #1.1S URL."""
+def pick_source_url(
+    live: list[Tariff],
+    seasonal_rows: list[Tariff],
+    utility_name: str = "",
+) -> str | None:
+    """Prefer the 2026 Rate #1.1 source_url; fall back to #1.1S / Hydro PDF."""
     elevens = [
         t for t in live
         if is_nf_11_base(t) and t.effective_date == NF_11S_EFFECTIVE and t.source_url
@@ -138,6 +191,8 @@ def pick_source_url(live: list[Tariff], seasonal_rows: list[Tariff]) -> str | No
     for t in seasonal_rows:
         if t.source_url:
             return t.source_url
+    if "hydro" in (utility_name or "").lower():
+        return NF_HYDRO_SOURCE_URL
     return None
 
 
@@ -189,6 +244,45 @@ def _components_match_target(tariff: Tariff, target: list[dict]) -> bool:
     return set(energy) == expected and tariff.effective_date == NF_11S_EFFECTIVE
 
 
+def _make_keeper(
+    utility: Utility,
+    target_comps: list[dict],
+    source_url: str | None,
+) -> Tariff:
+    display = nf_11s_display_name(utility.name)
+    keeper = Tariff(
+        utility_id=utility.id,
+        name=display,
+        code=NF_11S_CODE,
+        customer_class=CustomerClass.RESIDENTIAL,
+        rate_type=RateType.SEASONAL,
+        description=(
+            "Optional domestic seasonal rate: Rate #1.1 energy "
+            "charges subject to winter premium and non-winter credit."
+        ),
+        effective_date=NF_11S_EFFECTIVE,
+        source_url=source_url,
+        last_verified_at=datetime.now(timezone.utc),
+        approved=True,
+        confidence_score=0.95,
+        confidence_factors={
+            "repair": "repair_nf_seasonal_11s",
+            "note": "all-in ENERGY from #1.1 base ± #1.1S riders",
+        },
+    )
+    for c in target_comps:
+        keeper.rate_components.append(
+            RateComponent(
+                component_type=ComponentType.ENERGY,
+                unit=c["unit"],
+                rate_value=c["rate_value"],
+                tier_label=c.get("tier_label"),
+                season=c.get("season"),
+            )
+        )
+    return keeper
+
+
 def repair_utility(session: Session, utility: Utility, dry_run: bool) -> dict:
     live = session.execute(
         select(Tariff)
@@ -213,7 +307,8 @@ def repair_utility(session: Session, utility: Utility, dry_run: bool) -> dict:
 
     base_energy = find_base_energy(live)
     target_comps = build_nf_11s_all_in_components(base_energy)
-    source_url = pick_source_url(live, seasonal)
+    source_url = pick_source_url(live, seasonal, utility.name)
+    display = nf_11s_display_name(utility.name)
 
     print(f"  [{utility.name}] base ENERGY={base_energy} $/kWh")
     for c in target_comps:
@@ -225,17 +320,15 @@ def repair_utility(session: Session, utility: Utility, dry_run: bool) -> dict:
     else:
         print("    source_url: (none found on live #1.1 / #1.1S)")
 
-    # Prefer an already-correct 2026 keeper; else create one.
+    # Prefer an already-correct 2026 keeper (idempotent path).
+    # Otherwise CREATE a new live keeper and soft-supersede every
+    # Flux-invisible / vintage seasonal sibling — never hard-delete,
+    # and do not mutate the bad row in place (audit trail).
     keeper = None
     for t in seasonal:
         if _components_match_target(t, target_comps):
             keeper = t
             break
-    if keeper is None:
-        for t in seasonal:
-            if t.effective_date == NF_11S_EFFECTIVE:
-                keeper = t
-                break
 
     created = 0
     updated = 0
@@ -243,73 +336,14 @@ def repair_utility(session: Session, utility: Utility, dry_run: bool) -> dict:
 
     if keeper is None:
         print(
-            f"    CREATE '{NF_11S_NAME}' code={NF_11S_CODE} "
+            f"    CREATE '{display}' code={NF_11S_CODE} "
             f"eff={NF_11S_EFFECTIVE}"
         )
         if not dry_run:
-            keeper = Tariff(
-                utility_id=utility.id,
-                name=NF_11S_NAME,
-                code=NF_11S_CODE,
-                customer_class=CustomerClass.RESIDENTIAL,
-                rate_type=RateType.SEASONAL,
-                description=(
-                    "Optional domestic seasonal rate: Rate #1.1 energy "
-                    "charges subject to winter premium and non-winter credit."
-                ),
-                effective_date=NF_11S_EFFECTIVE,
-                source_url=source_url,
-                last_verified_at=datetime.now(timezone.utc),
-                approved=True,
-                confidence_score=0.95,
-                confidence_factors={
-                    "repair": "repair_nf_seasonal_11s",
-                    "note": "all-in ENERGY from #1.1 base ± #1.1S riders",
-                },
-            )
-            for c in target_comps:
-                keeper.rate_components.append(
-                    RateComponent(
-                        component_type=ComponentType.ENERGY,
-                        unit=c["unit"],
-                        rate_value=c["rate_value"],
-                        tier_label=c.get("tier_label"),
-                        season=c.get("season"),
-                    )
-                )
+            keeper = _make_keeper(utility, target_comps, source_url)
             session.add(keeper)
             session.flush()
         created = 1
-    elif not _components_match_target(keeper, target_comps):
-        print(
-            f"    UPDATE id={keeper.id} '{keeper.name}' → "
-            f"eff={NF_11S_EFFECTIVE}, two all-in ENERGY seasons"
-        )
-        if not dry_run:
-            keeper.name = NF_11S_NAME
-            keeper.code = NF_11S_CODE
-            keeper.rate_type = RateType.SEASONAL
-            keeper.effective_date = NF_11S_EFFECTIVE
-            if source_url:
-                keeper.source_url = source_url
-            keeper.last_verified_at = datetime.now(timezone.utc)
-            # Soft-repair: replace components in place (cascade orphan deletes
-            # the old rows). Soft-supersede is used for sibling tariffs only.
-            keeper.rate_components.clear()
-            for c in target_comps:
-                keeper.rate_components.append(
-                    RateComponent(
-                        component_type=ComponentType.ENERGY,
-                        unit=c["unit"],
-                        rate_value=c["rate_value"],
-                        tier_label=c.get("tier_label"),
-                        season=c.get("season"),
-                    )
-                )
-            factors = dict(keeper.confidence_factors or {})
-            factors["repair"] = "repair_nf_seasonal_11s"
-            keeper.confidence_factors = factors
-        updated = 1
     else:
         print(
             f"    KEEP id={keeper.id} '{keeper.name}' "
@@ -353,6 +387,7 @@ def repair_utility(session: Session, utility: Utility, dry_run: bool) -> dict:
         "skipped": False,
         "base_energy": base_energy,
         "target_components": target_comps,
+        "keeper_id": getattr(keeper, "id", None) if keeper is not None else None,
     }
 
 
@@ -362,27 +397,41 @@ def resolve_utilities(session: Session, args: argparse.Namespace) -> list[Utilit
         if not u:
             raise SystemExit(f"No utility with id={args.utility_id}")
         return [u]
-    if args.utility_name:
+    names = args.utility_names
+    if not names:
+        names = list(KNOWN_NL_UTILITY_NAMES)
+    found: list[Utility] = []
+    seen: set[int] = set()
+    for name in names:
         rows = session.execute(
-            select(Utility).where(Utility.name.ilike(f"%{args.utility_name}%"))
+            select(Utility).where(Utility.name.ilike(f"%{name}%"))
         ).scalars().all()
         if not rows:
-            raise SystemExit(f"No utility matching name {args.utility_name!r}")
-        return list(rows)
-    raise SystemExit("Provide --utility-name or --utility-id")
+            raise SystemExit(f"No utility matching name {name!r}")
+        for u in rows:
+            if u.id not in seen:
+                seen.add(u.id)
+                found.append(u)
+    return found
 
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
         description=(
-            "Create/update Newfoundland Power Rate #1.1S with all-in "
-            "seasonal ENERGY and soft-supersede the stale 2025 row"
+            "Create Newfoundland Power / NL Hydro Rate #1.1S with all-in "
+            "seasonal ENERGY and soft-supersede stale Flux-invisible rows"
         )
     )
     parser.add_argument(
         "--utility-name",
-        default="Newfoundland Power",
-        help="Substring match on utility name (default: Newfoundland Power)",
+        action="append",
+        dest="utility_names",
+        metavar="NAME",
+        help=(
+            "Substring match on utility name (repeatable). "
+            "Default: both Newfoundland Power and Newfoundland and "
+            "Labrador Hydro"
+        ),
     )
     parser.add_argument("--utility-id", type=int, help="Exact utility id")
     parser.add_argument(
@@ -427,16 +476,18 @@ def main(argv: list[str] | None = None) -> int:
                 f"across {totals['utilities']} utilities."
             )
 
+        winter = round(NF_11_BASE_ENERGY_2026 + NF_11S_WINTER_PREMIUM, 6)
+        nonwinter = round(NF_11_BASE_ENERGY_2026 + NF_11S_NONWINTER_CREDIT, 6)
         print(
-            "\nExpected NF outcome after --apply:\n"
-            f"  LIVE  {NF_11S_NAME} eff {NF_11S_EFFECTIVE}\n"
-            f"        ENERGY {NF_11S_WINTER_SEASON} "
-            f"{round(NF_11_BASE_ENERGY_2026 + NF_11S_WINTER_PREMIUM, 6)} $/kWh\n"
-            f"        ENERGY {NF_11S_NONWINTER_SEASON} "
-            f"{round(NF_11_BASE_ENERGY_2026 + NF_11S_NONWINTER_CREDIT, 6)} $/kWh\n"
+            "\nExpected outcome after --apply (Power and/or Hydro):\n"
+            f"  LIVE  #1.1S eff {NF_11S_EFFECTIVE}\n"
+            f"        ENERGY {NF_11S_WINTER_SEASON} {winter} $/kWh\n"
+            f"        ENERGY {NF_11S_NONWINTER_SEASON} {nonwinter} $/kWh\n"
             "  SUPERSEDE older Domestic Seasonal / #1.1S vintages "
             "(reason=vintage)\n"
-            "  Fixed amp-tier charges left on Rate #1.1 only"
+            "  Fixed amp-tier charges left on Rate #1.1 only\n"
+            "  Hydro and Power share the same provincial #1.1/#1.1S "
+            "energy figures"
         )
     return 0
 
