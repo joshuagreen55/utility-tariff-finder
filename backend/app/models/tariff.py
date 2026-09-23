@@ -78,7 +78,8 @@ class Tariff(Base):
     # the surviving tariff for that utility. The row is kept (audit trail)
     # but filtered out of default API queries. `supersede_reason` records
     # how the decision was made: 'matcher' (deterministic), 'llm_absorb'
-    # (LLM 1:N pairing), 'manual' (operator), etc.
+    # (LLM 1:N pairing), 'vintage' / 'ratebook_roll' (newer rate-book
+    # edition of the same product), 'manual' (operator), etc.
     superseded_by_tariff_id: Mapped[int | None] = mapped_column(
         Integer, ForeignKey("tariffs.id", ondelete="SET NULL"), nullable=True, index=True
     )

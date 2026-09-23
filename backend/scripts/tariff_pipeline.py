@@ -2266,6 +2266,7 @@ Rules:
 - If no relevant tariffs with rate values on this page, call the tool with an empty tariffs array
 - Convert all rates to $/kWh (divide cents by 100)
 - Set confidence to 0.9+ if values are clearly readable, 0.5-0.8 if some ambiguity, below 0.5 if guessing
+- If a minimum monthly charge equals the basic/customer charge for the same amp tier, emit one fixed row — not both fixed and minimum duplicates
 
 EXAMPLES:
 
@@ -2374,6 +2375,7 @@ Rules:
 - Skip industrial/lighting/irrigation/wholesale tariffs
 - If you cannot see any clear residential or commercial electricity rates in the image, return an empty tariffs array
 - Set confidence 0.9+ if values clearly readable, 0.5-0.8 if some ambiguity
+- If a minimum monthly charge equals the basic/customer charge for the same amp tier, emit one fixed row — not both fixed and minimum duplicates
 
 Use the store_tariffs tool to return results."""
 
@@ -2490,6 +2492,7 @@ Rules:
 - Include ALL tiers, periods, seasonal variations
 - Skip industrial/lighting/irrigation/wholesale tariffs
 - Set confidence 0.9+ if values clearly readable, 0.5-0.8 if some ambiguity
+- If a minimum monthly charge equals the basic/customer charge for the same amp tier, emit one fixed row — not both fixed and minimum duplicates
 
 Use the store_tariffs tool to return results."""
 
@@ -2627,6 +2630,7 @@ Rules:
 - Use exact numbers — do NOT estimate or round
 - Convert cents to dollars (divide by 100)
 - confidence: 0.9+ if clear, 0.5-0.8 if ambiguous, <0.5 if guessing
+- If a minimum monthly charge equals the basic/customer charge for the same amp tier, emit one fixed row — not both fixed and minimum duplicates
 
 Use the store_tariffs tool to return your result (array with one tariff).
 
@@ -3888,6 +3892,97 @@ def _normalize_component_units(t: ExtractedTariff, p99_energy: float) -> list[st
     return notes
 
 
+
+def _normalize_component_label(comp: dict) -> str:
+    """Normalize tier/period label for fixed/minimum duplicate detection.
+
+    Amp-tier wording varies ("0-10 Amp", "0 – 10 amps", "Basic Customer
+    Charge (0-10A)") — collapse to a stable token string so equal charges
+    for the same amp band match.
+    """
+    raw = (
+        comp.get("tier_label")
+        or comp.get("period_label")
+        or comp.get("label")
+        or ""
+    )
+    n = str(raw).lower()
+    n = re.sub(r"[–—−]", "-", n)
+    n = re.sub(r"[^a-z0-9\s\-]+", " ", n)
+    n = re.sub(r"\s+", " ", n).strip()
+    # Drop boilerplate words that differ between basic vs minimum rows.
+    drop = {
+        "basic", "customer", "charge", "charges", "minimum", "monthly",
+        "service", "the", "a", "an", "of", "for", "per", "month", "mo",
+    }
+    toks = [t for t in n.split() if t not in drop]
+    return " ".join(toks)
+
+
+def _component_dedupe_key(comp: dict) -> tuple:
+    """Match key for collapsing near-duplicate rate components."""
+    try:
+        rv = round(float(comp.get("rate_value", 0) or 0), 6)
+    except (TypeError, ValueError):
+        rv = 0.0
+    unit = str(comp.get("unit") or "").strip().lower()
+    season = str(comp.get("season") or "").strip().lower()
+    label = _normalize_component_label(comp)
+    return (label, unit, rv, season)
+
+
+def dedupe_rate_components(components: list[dict]) -> list[dict]:
+    """Collapse duplicate fixed/minimum rows and exact same-type duplicates.
+
+    Newfoundland Power Rate #1.1 publishes amp-tier basic customer charges
+    that equal the "minimum monthly charge" for the same amp band. LLMs
+    often emit both as separate components; Flux then renders fixed||minimum
+    with no UI dedupe. Prefer ``fixed`` when a minimum equals the basic
+    charge for the same amp tier. Exact same-type duplicates are also
+    collapsed. Energy/demand/adjustment rows are only collapsed when the
+    full match key AND component_type are identical.
+    """
+    if not components:
+        return components
+
+    kept: list[dict] = []
+    # key -> index in kept for fixed/minimum cross-type collapse
+    fixed_min_index: dict[tuple, int] = {}
+    # (type, key) -> index for exact same-type collapse
+    exact_index: dict[tuple, int] = {}
+
+    for comp in components:
+        if not isinstance(comp, dict):
+            kept.append(comp)
+            continue
+        ctype = str(comp.get("component_type") or "").strip().lower()
+        key = _component_dedupe_key(comp)
+
+        if ctype in ("fixed", "minimum"):
+            prev_i = fixed_min_index.get(key)
+            if prev_i is not None:
+                prev = kept[prev_i]
+                prev_type = str(prev.get("component_type") or "").lower()
+                # Prefer fixed over minimum when values/labels match.
+                if prev_type == "minimum" and ctype == "fixed":
+                    kept[prev_i] = comp
+                # else keep existing (already fixed, or same type)
+                continue
+            fixed_min_index[key] = len(kept)
+            exact_index[(ctype, key)] = len(kept)
+            kept.append(comp)
+            continue
+
+        exact_k = (ctype, key)
+        if exact_k in exact_index:
+            continue
+        exact_index[exact_k] = len(kept)
+        kept.append(comp)
+
+    return kept
+
+
+
 def phase4_validate(
     tariffs: list[ExtractedTariff], utility_name: str, state: str = ""
 ) -> tuple[dict, list[ExtractedTariff]]:
@@ -3917,6 +4012,17 @@ def phase4_validate(
         if unit_notes:
             needs_review = True
             log.info(f"    Unit normalization on '{t.name}': {'; '.join(unit_notes)}")
+
+        # Collapse fixed/minimum twins and exact same-type duplicates before
+        # bounds checks and persistence (NF Rate #1.1 amp-tier basic charge
+        # was stored twice — once as fixed, once as equal minimum).
+        before_n = len(t.components)
+        t.components = dedupe_rate_components(t.components)
+        if len(t.components) < before_n:
+            log.info(
+                f"    Component dedupe on '{t.name}': "
+                f"{before_n} → {len(t.components)}"
+            )
 
         if not t.name or t.name == "Unknown":
             tariff_issues.append("missing name")
@@ -4064,8 +4170,10 @@ def _calculate_confidence(
                 all_rates_normal = False
     factors["rates_normal"] = 0.15 if all_rates_normal else 0.0
 
-    # Signal 4: Multiple well-structured components (+0.10)
-    n_comp = len(et.components)
+    # Signal 4: Multiple well-structured components (+0.10).
+    # Count after fixed/minimum dedupe so near-duplicate basic+minimum
+    # twins do not inflate richness.
+    n_comp = len(dedupe_rate_components(et.components))
     if n_comp >= 2:
         factors["component_richness"] = 0.10
     elif n_comp == 1:
@@ -4196,6 +4304,10 @@ def store_tariffs(utility_id: int, tariffs: list[ExtractedTariff], dry_run: bool
                 )
                 session.add(tariff_obj)
 
+            # Safety net: phase4 already dedupes, but callers may invoke
+            # store_tariffs directly (browser_interaction, OEB, repair).
+            et.components = dedupe_rate_components(et.components)
+
             new_components = []
             for comp in et.components:
                 ct = COMP_MAP.get(comp.get("component_type"))
@@ -4262,6 +4374,21 @@ def store_tariffs(utility_id: int, tariffs: list[ExtractedTariff], dry_run: bool
                 log.info(
                     f"  Superseded: marked {absorbed} stale OpenEI siblings "
                     f"as absorbed by fresh extractions (soft supersede)"
+                )
+
+        # Vintage soft-supersede: among live same-utility + same customer
+        # class tariffs, collapse rate-book editions of the same product
+        # (shared #1.1 / Rate #1.1, or stem match ignoring optional "Flat").
+        # Keep newest effective_date; losers get supersede_reason='vintage'.
+        # Runs BEFORE count-based reconcile so the 75% guard cannot leave
+        # stale siblings both showing Flux "Current".
+        if stored >= 1:
+            session.flush()
+            vintage_absorbed = supersede_older_vintages(session, utility_id)
+            if vintage_absorbed:
+                log.info(
+                    f"  Vintage supersede: retired {vintage_absorbed} older "
+                    f"rate-book siblings (soft supersede)"
                 )
 
         # Reconcile: remove tariffs for this utility that were not in the
@@ -4813,6 +4940,246 @@ def tariffs_likely_same(name_a: str, name_b: str) -> bool:
     if (ca or cb) and not (ca & cb):
         return False
     return True
+
+
+# ---------------------------------------------------------------------------
+# Vintage (rate-book roll) soft-supersede helpers
+# ---------------------------------------------------------------------------
+# Distinct from tariffs_likely_same(): that matcher must keep TOU vs Flat as
+# different products. Vintage matching is for successive rate-book editions
+# of the SAME product (e.g. NL "Rate #1.1 Domestic Service" 2026-07-01 vs
+# "Domestic Service (Flat)" 2025-07-01). Optional shape words like "Flat"
+# do not differentiate vintages; shared rate codes like #1.1 bind them.
+
+_VINTAGE_OPTIONAL_SHAPE: frozenset[str] = frozenset({"flat"})
+
+_RATEBOOK_CODE_RE = re.compile(
+    r"(?:rate\s*)?#\s*(\d+(?:\.\d+)?)"
+    r"|(?:^|[^a-z0-9])rate\s+#?\s*(\d+\.\d+)(?![a-z0-9])",
+    re.IGNORECASE,
+)
+
+
+def extract_ratebook_codes(name: str, code: str | None = None) -> set[str]:
+    """Extract rate-book style codes such as #1.1 / Rate #1.1 / 1.1.
+
+    Also accepts alphanumeric codes from the ``code`` column or name via the
+    existing short-token extractor (SC1, RS, etc.).
+    """
+    out: set[str] = set()
+    for raw in (name or "", code or ""):
+        if not raw:
+            continue
+        for m in _RATEBOOK_CODE_RE.finditer(raw):
+            token = m.group(1) or m.group(2)
+            if token:
+                out.add(token.lower())
+        # Digits-only schedule codes stored in the code column ("1.1", "1")
+        c = str(raw).strip().lower()
+        if re.fullmatch(r"\d+(?:\.\d+)?", c):
+            out.add(c)
+        out |= {t for t in _extract_rate_code_tokens(raw)}
+    return out
+
+
+def _vintage_name_stem(name: str) -> str:
+    """Name stem for vintage identity: drop rate codes + optional 'flat'."""
+    n = _strip_tariff_blurb(name or "")
+    n = _RATEBOOK_CODE_RE.sub(" ", n)
+    n = _norm_tariff_name_for_match(n)
+    toks = [
+        t for t in n.split()
+        if t not in _VINTAGE_OPTIONAL_SHAPE
+        and t not in _TARIFF_NAME_STOPWORDS
+        and not re.fullmatch(r"\d+(?:\.\d+)?", t)
+    ]
+    return " ".join(toks)
+
+
+def _rate_type_family(rate_type) -> str:
+    s = rate_type.value if hasattr(rate_type, "value") else str(rate_type or "")
+    s = s.lower().strip()
+    if "tou" in s:
+        return "tou"
+    if "demand" in s:
+        return "demand"
+    if "tier" in s:
+        return "tiered"
+    if s in ("", "none", "null", "flat"):
+        return "flat"
+    return s or "flat"
+
+
+def _rate_types_compatible_for_vintage(a, b) -> bool:
+    fa, fb = _rate_type_family(a), _rate_type_family(b)
+    return fa == fb
+
+
+def _vintage_strong_discriminators(name: str) -> set[str]:
+    """Discriminators that still separate products for vintage purposes.
+
+    ``flat`` is intentionally excluded — rate books often label the default
+    domestic schedule "(Flat)" without meaning a distinct product.
+    """
+    stem = _vintage_name_stem(name)
+    return set(stem.split()) & (_TARIFF_DISCRIMINATORS - _VINTAGE_OPTIONAL_SHAPE)
+
+
+def same_vintage_product(
+    name_a: str,
+    name_b: str,
+    *,
+    code_a: str | None = None,
+    code_b: str | None = None,
+    rate_type_a=None,
+    rate_type_b=None,
+) -> bool:
+    """True if two live tariffs are vintages of the same product.
+
+    Prefer shared rate-book codes (#1.1). Fall back to conservative stem
+    match that ignores optional shape words like Flat. Does NOT widen
+    ``tariffs_likely_same`` — TOU vs Flat remain different products when
+    rate types or strong discriminators conflict (even one-sided TOU).
+    """
+    if not _rate_types_compatible_for_vintage(rate_type_a, rate_type_b):
+        return False
+
+    codes_a = extract_ratebook_codes(name_a, code_a)
+    codes_b = extract_ratebook_codes(name_b, code_b)
+    disc_a = _vintage_strong_discriminators(name_a)
+    disc_b = _vintage_strong_discriminators(name_b)
+
+    # Strong discriminators must agree on BOTH sides (including one-sided
+    # TOU / heating / optional). Optional "flat" is already stripped.
+    if disc_a != disc_b:
+        return False
+
+    if codes_a and codes_b and (codes_a & codes_b):
+        return True
+
+    stem_a = _vintage_name_stem(name_a)
+    stem_b = _vintage_name_stem(name_b)
+    if not stem_a or not stem_b:
+        return False
+    if stem_a == stem_b:
+        return True
+
+    ta, tb = set(stem_a.split()), set(stem_b.split())
+    if not ta or not tb:
+        return False
+    overlap = len(ta & tb) / min(len(ta), len(tb))
+    if overlap < 0.8:
+        return False
+
+    shorter, longer = (ta, tb) if len(ta) <= len(tb) else (tb, ta)
+    if not shorter <= longer:
+        return False
+
+    # One-sided rate code + shorter-stem subset binds (NF #1.1 vs Flat name).
+    # Without any code, require exact stem token-set equality (handled above)
+    # or full overlap of equal-size sets.
+    if codes_a or codes_b:
+        return True
+    return overlap >= 1.0 and len(ta) == len(tb)
+
+
+
+
+def choose_vintage_keeper(candidates: list) -> object:
+    """Keep newest effective_date; tie-break last_verified_at, then id."""
+    from datetime import date as _date, datetime as _datetime
+
+    def _key(t):
+        eff = getattr(t, "effective_date", None) or _date.min
+        ver = getattr(t, "last_verified_at", None)
+        if ver is None:
+            ver = _datetime.min.replace(tzinfo=timezone.utc)
+        elif ver.tzinfo is None:
+            ver = ver.replace(tzinfo=timezone.utc)
+        tid = getattr(t, "id", None) or 0
+        return (eff, ver, tid)
+
+    return max(candidates, key=_key)
+
+
+def group_live_tariffs_by_vintage(tariffs: list) -> list[list]:
+    """Union-find cluster of live tariffs that are vintages of one product."""
+    n = len(tariffs)
+    if n < 2:
+        return []
+    parent = list(range(n))
+
+    def find(i: int) -> int:
+        while parent[i] != i:
+            parent[i] = parent[parent[i]]
+            i = parent[i]
+        return i
+
+    def union(i: int, j: int) -> None:
+        ri, rj = find(i), find(j)
+        if ri != rj:
+            parent[rj] = ri
+
+    for i in range(n):
+        for j in range(i + 1, n):
+            a, b = tariffs[i], tariffs[j]
+            if same_vintage_product(
+                getattr(a, "name", ""),
+                getattr(b, "name", ""),
+                code_a=getattr(a, "code", None),
+                code_b=getattr(b, "code", None),
+                rate_type_a=getattr(a, "rate_type", None),
+                rate_type_b=getattr(b, "rate_type", None),
+            ):
+                union(i, j)
+
+    buckets: dict[int, list] = {}
+    for i in range(n):
+        buckets.setdefault(find(i), []).append(tariffs[i])
+    return [g for g in buckets.values() if len(g) > 1]
+
+
+def supersede_older_vintages(session, utility_id: int, reason: str = "vintage") -> int:
+    """Soft-supersede older live vintages of the same product for a utility.
+
+    Groups live tariffs by customer_class, clusters by vintage product key,
+    keeps the newest effective_date (then last_verified_at, then id), and
+    sets superseded_by_tariff_id + supersede_reason on losers. Never
+    hard-deletes. Returns the number of rows superseded.
+    """
+    from collections import defaultdict
+    from sqlalchemy import select
+    from app.models import Tariff
+
+    live = session.execute(
+        select(Tariff).where(
+            Tariff.utility_id == utility_id,
+            Tariff.superseded_by_tariff_id.is_(None),
+            Tariff.supersede_reason.is_(None),
+        )
+    ).scalars().all()
+    by_class: dict = defaultdict(list)
+    for t in live:
+        by_class[t.customer_class].append(t)
+
+    absorbed = 0
+    for _cc, rows in by_class.items():
+        for group in group_live_tariffs_by_vintage(rows):
+            keeper = choose_vintage_keeper(group)
+            for loser in group:
+                if loser.id == keeper.id:
+                    continue
+                loser.superseded_by_tariff_id = keeper.id
+                loser.supersede_reason = reason
+                absorbed += 1
+                log.info(
+                    f"  Vintage supersede: '{loser.name}' "
+                    f"(eff={loser.effective_date}) → keeper "
+                    f"'{keeper.name}' (eff={keeper.effective_date}) "
+                    f"reason={reason}"
+                )
+    return absorbed
+
 
 
 def _check_fingerprints(utility_id: int, pages: list[RatePage]) -> bool:
