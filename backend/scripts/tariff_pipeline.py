@@ -2267,6 +2267,7 @@ Rules:
 - Convert all rates to $/kWh (divide cents by 100)
 - Set confidence to 0.9+ if values are clearly readable, 0.5-0.8 if some ambiguity, below 0.5 if guessing
 - If a minimum monthly charge equals the basic/customer charge for the same amp tier, emit one fixed row — not both fixed and minimum duplicates
+- RELATIVE SEASONAL RIDERS: When energy charges equal another schedule's energy rate ± a seasonal premium/credit (or similar rider), emit one ENERGY component per season at the all-in $/kWh (base ± adjustment). Put month ranges in season and/or tier_label (e.g. "Winter (Dec–Apr)", "Non-Winter (May–Nov)"). Do NOT leave a season represented only by an ADJUSTMENT row — UIs group ENERGY by season and skip ADJUSTMENT. Optional ADJUSTMENT rows may remain for audit, but every season with a premium/credit must also have a matching all-in ENERGY row.
 
 EXAMPLES:
 
@@ -2281,6 +2282,10 @@ Output: one tariff type "tiered", confidence 0.9, with a fixed component ($8.00)
 Example 3 — Seasonal TOU:
 Input: "Rate TOU-D: Summer On-Peak (2pm-8pm) $0.35/kWh, Off-Peak $0.12/kWh. Winter On-Peak $0.22/kWh, Off-Peak $0.10/kWh. Service charge $10/mo."
 Output: one tariff type "seasonal_tou", confidence 0.9, with fixed ($10), and 4 energy components with season+period_label combinations.
+
+Example 4 — Relative seasonal rider (base rate ± seasonal premium/credit):
+Input: "Rate #1.1S Domestic Seasonal: Energy Charges from Rate #1.1 (15.587¢/kWh) apply, subject to Winter Season Premium Adjustment Dec–Apr billing months +0.953¢/kWh; Non-Winter Season Credit Adjustment May–Nov (1.297)¢/kWh."
+Output: one tariff type "seasonal", code "1.1S", with TWO energy components (all-in $/kWh): Winter (Dec–Apr) at $0.16540/kWh (= 0.15587 + 0.00953), and Non-Winter (May–Nov) at $0.14290/kWh (= 0.15587 − 0.01297). Do not emit adjustment-only seasons without matching ENERGY.
 
 Use the store_tariffs tool to return your results.
 
@@ -2376,6 +2381,7 @@ Rules:
 - If you cannot see any clear residential or commercial electricity rates in the image, return an empty tariffs array
 - Set confidence 0.9+ if values clearly readable, 0.5-0.8 if some ambiguity
 - If a minimum monthly charge equals the basic/customer charge for the same amp tier, emit one fixed row — not both fixed and minimum duplicates
+- Relative seasonal riders (energy = another rate ± seasonal premium/credit): emit all-in ENERGY per season with month ranges in season/tier_label — never leave a season as ADJUSTMENT-only
 
 Use the store_tariffs tool to return results."""
 
@@ -2493,6 +2499,7 @@ Rules:
 - Skip industrial/lighting/irrigation/wholesale tariffs
 - Set confidence 0.9+ if values clearly readable, 0.5-0.8 if some ambiguity
 - If a minimum monthly charge equals the basic/customer charge for the same amp tier, emit one fixed row — not both fixed and minimum duplicates
+- Relative seasonal riders (energy = another rate ± seasonal premium/credit): emit all-in ENERGY per season with month ranges in season/tier_label — never leave a season as ADJUSTMENT-only
 
 Use the store_tariffs tool to return results."""
 
@@ -2631,6 +2638,7 @@ Rules:
 - Convert cents to dollars (divide by 100)
 - confidence: 0.9+ if clear, 0.5-0.8 if ambiguous, <0.5 if guessing
 - If a minimum monthly charge equals the basic/customer charge for the same amp tier, emit one fixed row — not both fixed and minimum duplicates
+- Relative seasonal riders (energy = another rate ± seasonal premium/credit): emit all-in ENERGY per season with month ranges in season/tier_label — never leave a season as ADJUSTMENT-only
 
 Use the store_tariffs tool to return your result (array with one tariff).
 
@@ -3919,6 +3927,174 @@ def _normalize_component_label(comp: dict) -> str:
     return " ".join(toks)
 
 
+def _is_energy_unit(unit: str | None) -> bool:
+    """True when a component unit is energy ($/kWh or cents/kWh)."""
+    u = str(unit or "").strip().lower().replace(" ", "")
+    return "kwh" in u
+
+
+def _season_key(season: str | None) -> str:
+    """Normalize season labels for matching (ignore month-range suffixes)."""
+    s = str(season or "").strip().lower()
+    if not s:
+        return ""
+    # "Winter (Dec–Apr)" / "Non-Winter (May–Nov)" → leading token family
+    s = re.split(r"[(/]", s, maxsplit=1)[0].strip()
+    s = re.sub(r"[^a-z0-9\s\-]+", " ", s)
+    s = re.sub(r"\s+", " ", s).strip()
+    return s
+
+
+def count_energy_seasons(components: list[dict]) -> int:
+    """Count distinct non-empty ENERGY season labels on a component list."""
+    seasons: set[str] = set()
+    for comp in components or []:
+        if not isinstance(comp, dict):
+            continue
+        if str(comp.get("component_type") or "").strip().lower() != "energy":
+            continue
+        key = _season_key(comp.get("season"))
+        if key:
+            seasons.add(key)
+    return len(seasons)
+
+
+def expand_relative_seasonal_energy(
+    components: list[dict],
+    *,
+    keep_adjustments: bool = True,
+) -> list[dict]:
+    """Turn base ENERGY ± seasonal ADJUSTMENT riders into all-in ENERGY seasons.
+
+    Schedules like Newfoundland Power Rate #1.1S say energy charges from a
+    base rate apply subject to a winter premium and non-winter credit. LLMs
+    often emit one unseasoned (or mis-seasoned) ENERGY plus ADJUSTMENT rows;
+    Flux / Lookup only group ENERGY by season, so Non-Winter never appears.
+
+    When ≥2 distinct seasonal energy-unit ADJUSTMENT rows are present and a
+    single base ENERGY $/kWh can be inferred, emit ENERGY = base + adj for
+    each adjustment season. Fixed/demand/minimum rows are untouched.
+    ADJUSTMENT rows are kept by default for audit.
+    """
+    if not components:
+        return components
+
+    energy_rows: list[dict] = []
+    seasonal_adjs: list[dict] = []
+    other: list[dict] = []
+
+    for comp in components:
+        if not isinstance(comp, dict):
+            other.append(comp)
+            continue
+        ctype = str(comp.get("component_type") or "").strip().lower()
+        if ctype == "energy" and _is_energy_unit(comp.get("unit")):
+            energy_rows.append(comp)
+        elif ctype == "adjustment" and _is_energy_unit(comp.get("unit")):
+            if _season_key(comp.get("season")):
+                seasonal_adjs.append(comp)
+            else:
+                other.append(comp)
+        else:
+            other.append(comp)
+
+    # Need at least two seasons of relative adjustments to expand.
+    adj_by_season: dict[str, dict] = {}
+    for adj in seasonal_adjs:
+        key = _season_key(adj.get("season"))
+        if key and key not in adj_by_season:
+            adj_by_season[key] = adj
+    if len(adj_by_season) < 2:
+        return components
+
+    # Infer a single base energy rate.
+    base: float | None = None
+    unseasoned = [
+        e for e in energy_rows if not _season_key(e.get("season"))
+    ]
+    try:
+        if len(unseasoned) == 1:
+            base = float(unseasoned[0].get("rate_value"))
+        elif unseasoned:
+            vals = {round(float(e.get("rate_value") or 0), 6) for e in unseasoned}
+            if len(vals) == 1:
+                base = next(iter(vals))
+        if base is None and energy_rows:
+            # Mislabeled case: ENERGY tagged Winter but equal to the base,
+            # with ADJUSTMENTs carrying the true differentials.
+            vals = {round(float(e.get("rate_value") or 0), 6) for e in energy_rows}
+            if len(vals) == 1:
+                base = next(iter(vals))
+    except (TypeError, ValueError):
+        return components
+
+    if base is None:
+        return components
+
+    # Existing ENERGY by season key → prefer already-correct all-in rows.
+    energy_by_season: dict[str, dict] = {}
+    for e in energy_rows:
+        key = _season_key(e.get("season"))
+        if key and key not in energy_by_season:
+            energy_by_season[key] = e
+
+    new_energy: list[dict] = []
+    used_season_keys: set[str] = set()
+    for key, adj in adj_by_season.items():
+        try:
+            adj_val = float(adj.get("rate_value"))
+        except (TypeError, ValueError):
+            continue
+        all_in = round(base + adj_val, 6)
+        existing = energy_by_season.get(key)
+        season_label = str(adj.get("season") or "").strip() or key.title()
+        if existing is not None:
+            try:
+                existing_val = round(float(existing.get("rate_value") or 0), 6)
+            except (TypeError, ValueError):
+                existing_val = None
+            if existing_val is not None and abs(existing_val - all_in) < 1e-9:
+                # Already all-in for this season — keep as-is.
+                new_energy.append(existing)
+            else:
+                # Replace mislabeled base-as-season ENERGY with all-in.
+                row = dict(existing)
+                row["rate_value"] = all_in
+                row["unit"] = "$/kWh"
+                row["season"] = season_label or row.get("season")
+                if not row.get("tier_label"):
+                    row["tier_label"] = season_label
+                new_energy.append(row)
+        else:
+            new_energy.append({
+                "component_type": "energy",
+                "unit": "$/kWh",
+                "rate_value": all_in,
+                "tier_min_kwh": None,
+                "tier_max_kwh": None,
+                "tier_label": season_label,
+                "period_label": None,
+                "season": season_label,
+            })
+        used_season_keys.add(key)
+
+    if not new_energy:
+        return components
+
+    # Keep any ENERGY seasons that were not relative-adjustment seasons
+    # (e.g. absolute Summer/Winter already present alongside riders).
+    for key, e in energy_by_season.items():
+        if key not in used_season_keys:
+            new_energy.append(e)
+
+    out: list[dict] = []
+    out.extend(other)
+    if keep_adjustments:
+        out.extend(seasonal_adjs)
+    out.extend(new_energy)
+    return out
+
+
 def _component_dedupe_key(comp: dict) -> tuple:
     """Match key for collapsing near-duplicate rate components."""
     try:
@@ -3982,7 +4158,6 @@ def dedupe_rate_components(components: list[dict]) -> list[dict]:
     return kept
 
 
-
 def phase4_validate(
     tariffs: list[ExtractedTariff], utility_name: str, state: str = ""
 ) -> tuple[dict, list[ExtractedTariff]]:
@@ -4012,6 +4187,17 @@ def phase4_validate(
         if unit_notes:
             needs_review = True
             log.info(f"    Unit normalization on '{t.name}': {'; '.join(unit_notes)}")
+
+        # Relative seasonal riders: expand base ENERGY ± seasonal ADJUSTMENT
+        # into all-in ENERGY per season (NF Rate #1.1S pattern) before dedupe.
+        before_seasonal = list(t.components)
+        t.components = expand_relative_seasonal_energy(t.components)
+        if t.components != before_seasonal:
+            log.info(
+                f"    Seasonal rider expand on '{t.name}': "
+                f"{len(before_seasonal)} → {len(t.components)} comps, "
+                f"{count_energy_seasons(t.components)} ENERGY seasons"
+            )
 
         # Collapse fixed/minimum twins and exact same-type duplicates before
         # bounds checks and persistence (NF Rate #1.1 amp-tier basic charge
@@ -4051,6 +4237,13 @@ def phase4_validate(
         has_core_component = bool(comp_types & {"energy", "fixed", "demand"})
         if not has_core_component:
             tariff_issues.append("no energy/fixed/demand component (rate rider only)")
+
+        # Soft check: seasonal* tariffs should expose ≥2 ENERGY seasons after
+        # relative-rider expansion. Flag for review rather than hard-reject —
+        # some legitimate seasonal products may still be incomplete mid-extract.
+        rt_l = str(t.rate_type or "").lower()
+        if rt_l.startswith("seasonal") and count_energy_seasons(t.components) < 2:
+            needs_review = True
 
         for comp in t.components:
             if comp.get("component_type") not in VALID_COMPONENT_TYPES:
@@ -5718,6 +5911,7 @@ Rules for the JSON:
 - Include each schedule ONCE. Break tiers, seasons, and time-of-use periods out as separate components.
 - Read numbers EXACTLY as printed in the source — do not estimate or round.
 - If you use "$/kWh" as the unit, convert cents to dollars in rate_value. Otherwise use "cents/kWh" and leave rate_value as-is.
+- Relative seasonal riders (energy = another rate ± seasonal premium/credit): emit all-in ENERGY per season (base ± adjustment) with month ranges in season/tier_label. Do not leave a season as ADJUSTMENT-only.
 - If you cannot find the utility's current residential/commercial electric tariffs at all from authoritative sources, return an empty array [].
 """
 
