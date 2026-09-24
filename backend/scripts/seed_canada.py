@@ -98,7 +98,12 @@ CANADIAN_UTILITIES = [
     # Nova Scotia
     {"name": "Nova Scotia Power", "state_province": "NS", "utility_type": UtilityType.IOU,
      "website_url": "https://www.nspower.ca",
-     "tariff_page_urls": ["https://www.nspower.ca/about-us/electricity/rates-tariffs"]},
+     # Prefer the regulatory tariff book PDF (May 2026) over the marketing
+     # rates hub so refreshes extract Board’s Order columns + FAM/DSM riders.
+     "tariff_page_urls": [
+         "https://www.nspower.ca/docs/default-source/regulatory/tariff-book-2026.pdf",
+         "https://www.nspower.ca/about-us/electricity/rates-tariffs",
+     ]},
 
     # Prince Edward Island
     {"name": "Maritime Electric", "state_province": "PE", "utility_type": UtilityType.IOU,
