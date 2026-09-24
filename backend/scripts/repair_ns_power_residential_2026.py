@@ -1,24 +1,11 @@
-"""One-shot repair: Nova Scotia Power residential tariffs → May 2026 book.
+"""Repair: Nova Scotia Power residential tariffs → May 2026 book.
 
 Soft-supersedes incorrect live residential keepers and creates 2026 keepers
 matching the official tariff book (Tariffs May 2026):
 
   https://www.nspower.ca/docs/default-source/regulatory/tariff-book-2026.pdf
 
-Production ground truth (utility id **1739**): five live residential keepers,
-ALL from stale ``tariff-book-20250326.pdf`` (last_verified 2026-05-07), none
-approved / none default, and **no** clean standard Domestic Service:
-
-  46886 CPP (C)     FIXED $19.17; ENERGY Critical $1.42256 / Non-Critical $0.14222
-  46887 TOU (D)     FIXED $19.17; seasonal TOU ENERGY (pre-interim)
-  60200 Green Power FIXED $19.17; ENERGY $0.15744 + $5 ADJ — NOT clean Domestic
-  60201 TOD (05,06) FIXED $19.17; seasonal ENERGY
-  60202 MURB TOU    FIXED $21.28; seasonal ENERGY
-
-Repair CREATES Domestic Service ($20.08 / $0.19128 all-in) and soft-supersedes
-60200 (and the other four stale keepers) toward the May 2026 keepers.
-
-Gold (Board's Order / current column — NOT Jan 1 2027):
+Gold (Board's Order / Energy Charge — NOT Jan 1 2027 escalate columns):
 
   Domestic Service (02/03/04):
     fixed/min $20.08/mo; base energy 18.324 c/kWh
@@ -27,31 +14,30 @@ Gold (Board's Order / current column — NOT Jan 1 2027):
 
   Domestic TOD (05/06): seasonal/TOU schedule + same riders on energy
   Domestic CPP (70): interim = standard Domestic energy (no CPP events)
-  Domestic TOU (80): interim tracks standard offer while TVP systems down
-  MURB TOU (89): 5th residential-named schedule (General-class riders)
+  Domestic TOU (80): **ENERGY CHARGE seasonal TOU** (not flat interim):
+    Non-winter Apr–Oct all hours 12.860¢ base → $0.13664 all-in
+    Winter Nov–Mar on-peak 36.517¢ → $0.37321; off-peak 18.324¢ → $0.19128
+    (Winter weekends/holidays = off-peak — Note 1; documented on tariff.)
+  MURB TOU (89): General-class riders on seasonal TOU
+
+Post-PR #6 prod (utility **1739**): Domestic/TOD/CPP/MURB keepers may
+already match. Live code **80** keeper **67033** was wrongly flattened to
+a single interim ENERGY $0.19128 (rate_type=TOU). This repair soft-supersedes
+67033 and creates SEASONAL_TOU matching the 4-page Energy Charge schedule.
 
 Why Flux ENERGY must be all-in: Lookup / TariffDetail only render ENERGY
 (and fixed/demand). ADJUSTMENT-only FAM/DSM/Storm riders are invisible —
-same product pattern as NL Rate #1.1S all-in ENERGY work.
-
-Root cause (why we missed the May 2026 book):
-  1. Live ``source_url`` is still ``tariff-book-20250326.pdf``. The May 2026
-     PDF URL has **0 hits** in tariffs / monitoring / fingerprints.
-     Monitoring only polls HTML marketing pages (unchanged).
-  2. Sept 1 2026 refresh for utility 1739 **crashed**
-     (``StringDataRightTruncation`` on long season/period_label) so rates
-     were never rewritten after May.
-  3. Board's Order vs Jan 2027 columns + omitted FAM/DSM understate ENERGY
-     when extraction does run.
+same product pattern as NL Rate #1.1S / PR #6 all-in ENERGY work.
 
 Soft-supersede only (``supersede_reason='vintage'``). Never hard-delete.
 Dry-run is the default; pass ``--apply`` to write. Idempotent when live
-keepers already match the 2026 all-in shapes. Scoped to Nova Scotia Power
-(default utility id 1739).
+keepers already match the target shapes. Scoped to Nova Scotia Power
+(default utility id 1739). Optional ``--plan tou`` limits to rate code 80.
 
 Usage:
   python -m scripts.repair_ns_power_residential_2026
-  python -m scripts.repair_ns_power_residential_2026 --apply
+  python -m scripts.repair_ns_power_residential_2026 --plan tou
+  python -m scripts.repair_ns_power_residential_2026 --plan tou --apply
   python -m scripts.repair_ns_power_residential_2026 --utility-id 1739 --apply
 """
 from __future__ import annotations
@@ -86,9 +72,10 @@ NS_TARIFF_BOOK_2026_URL = (
 NS_STALE_SOURCE_FRAGMENT = "tariff-book-20250326.pdf"
 NS_EFFECTIVE = date(2026, 5, 1)  # Board Order / rates-in-effect date
 
-# Observed live residential keepers on utility 1739 (prod, Sep 2026) —
-# all from Mar 2025 book. Matching is by content heuristics; these ids are
-# printed in dry-run as the expected supersede set.
+# Expected supersede targets printed in dry-run. After PR #6 apply, most
+# plans may already match; code 80 keeper **67033** is the flat-interim
+# miss this repair corrects. Pre-PR #6 ids (46886/46887/60200/…) remain
+# documented for historical dry-run narratives.
 KNOWN_STALE_LIVE = {
     "cpp": {
         "id": 46886,
@@ -97,10 +84,14 @@ KNOWN_STALE_LIVE = {
         "note": "FIXED $19.17; ENERGY Critical $1.42256 / Non-Critical $0.14222",
     },
     "tou": {
-        "id": 46887,
+        "id": 67033,
         "name": "Domestic Service Time of Use Tariff",
-        "code": "D",
-        "note": "FIXED $19.17; pre-interim seasonal TOU ENERGY",
+        "code": "80",
+        "note": (
+            "PR #6 interim flatten: FIXED $20.08; single ENERGY $0.19128 "
+            "(all hours). Predecessor 46887 was SEASONAL_TOU — restore "
+            "Energy Charge seasonal TOU + FAM/DSM all-in."
+        ),
     },
     "domestic": {
         "id": 60200,
@@ -124,6 +115,18 @@ KNOWN_STALE_LIVE = {
         "note": "FIXED $21.28; seasonal ENERGY",
     },
 }
+
+# Rate code 80 Energy Charge bases (¢/kWh) — NOT Interim, NOT Jan 1 2027.
+NS_TOU_NONWINTER_BASE_CENTS = 12.860   # Eff Apr 1 2027 (only non-winter Energy Charge row)
+NS_TOU_WINTER_ONPEAK_CENTS = 36.517    # Eff Nov 1 2026
+NS_TOU_WINTER_OFFPEAK_CENTS = 18.324   # Eff Nov 1 2026
+NS_TOU_NONWINTER_SEASON = "Non-winter (Apr 1–Oct 31)"
+NS_TOU_WINTER_SEASON = "Winter (Nov 1–Mar 31)"
+NS_TOU_WEEKEND_NOTE = (
+    "Note 1: In Winter, off-peak also applies all hours on Saturdays, "
+    "Sundays, and holidays (Jan 1, NS Heritage Day, Good Friday, Easter "
+    "Monday, Nov 11, Dec 25–26; observed weekday if weekend)."
+)
 
 # Domestic-class stacking riders (¢/kWh → $/kWh)
 NS_DOMESTIC_FAM = 0.00156   # 0.156 ¢
@@ -244,7 +247,11 @@ def build_domestic_cpp_interim_components() -> list[dict]:
 
 
 def build_domestic_tou_interim_components() -> list[dict]:
-    """TOU code 80 — interim tracks standard Domestic while TVP down."""
+    """DEPRECATED — PR #6 interim flatten. Prefer seasonal Energy Charge.
+
+    Kept for regression tests that assert the old wrong shape must not
+    match the live target. Do not wire this into ``NS_RESIDENTIAL_PLANS``.
+    """
     return [
         {
             "component_type": "fixed",
@@ -260,6 +267,51 @@ def build_domestic_tou_interim_components() -> list[dict]:
             "tier_label": "Interim (= Domestic standard offer)",
         },
     ]
+
+
+def build_domestic_tou_seasonal_components() -> list[dict]:
+    """TOU code 80 — Energy Charge seasonal TOU + Domestic FAM/DSM all-in.
+
+    Uses the approved Energy Charge tables (4-page schedule), not the
+    Interim Energy Charge flat/standard-offer layer. Winter on/off-peak
+    from the Nov 1 2026 column (not Jan 1 2027 escalate). Non-winter
+    all-hours from the Apr 1 2027 Energy Charge row (sole non-winter
+    Energy Charge figure in the book).
+    """
+    comps: list[dict] = [
+        {
+            "component_type": "fixed",
+            "unit": "$/month",
+            "rate_value": NS_CUSTOMER_CHARGE,
+            "tier_label": "Customer Charge",
+        },
+        {
+            "component_type": "energy",
+            "unit": "$/kWh",
+            "rate_value": all_in_domestic(NS_TOU_NONWINTER_BASE_CENTS),
+            "period_label": "All hours",
+            "season": NS_TOU_NONWINTER_SEASON,
+            "tier_label": "Energy Charge non-winter (eff Apr 1 2027)",
+        },
+    ]
+    winter_periods = [
+        ("On-peak morning (7am–11am)", NS_TOU_WINTER_ONPEAK_CENTS),
+        ("Off-peak midday (11am–5pm)", NS_TOU_WINTER_OFFPEAK_CENTS),
+        ("On-peak evening (5pm–9pm)", NS_TOU_WINTER_ONPEAK_CENTS),
+        ("Off-peak night (9pm–7am)", NS_TOU_WINTER_OFFPEAK_CENTS),
+    ]
+    for label, cents in winter_periods:
+        comps.append(
+            {
+                "component_type": "energy",
+                "unit": "$/kWh",
+                "rate_value": all_in_domestic(cents),
+                "period_label": label,
+                "season": NS_TOU_WINTER_SEASON,
+                "tier_label": "Energy Charge winter (eff Nov 1 2026)",
+            }
+        )
+    return comps
 
 
 def build_murb_tou_components() -> list[dict]:
@@ -347,13 +399,16 @@ NS_RESIDENTIAL_PLANS: dict[str, dict[str, Any]] = {
     "tou": {
         "name": "Domestic Service Time of Use Tariff",
         "code": "80",
-        "rate_type": RateType.TOU,
+        "rate_type": RateType.SEASONAL_TOU,
         "description": (
-            "Domestic TOU (code 80). Interim energy tracks Domestic standard "
-            "offer while TVP system functionality is unavailable."
+            "Domestic TOU (code 80). Energy Charge seasonal TOU: Non-winter "
+            f"{NS_TOU_NONWINTER_SEASON} all hours; Winter "
+            f"{NS_TOU_WINTER_SEASON} on-peak morning/evening and off-peak "
+            "midday/night. All-in ENERGY includes FAM + DSM. "
+            f"{NS_TOU_WEEKEND_NOTE} Not the Interim Energy Charge layer."
         ),
         "matcher": "tou",
-        "build": build_domestic_tou_interim_components,
+        "build": build_domestic_tou_seasonal_components,
     },
     "murb": {
         "name": "Multi-Unit Residential Buildings Time of Use Tariff",
@@ -511,6 +566,14 @@ def _make_keeper(
             "repair": "repair_ns_power_residential_2026",
             "note": "May 2026 tariff book all-in ENERGY (base + FAM + DSM)",
             "plan": plan_key,
+            **(
+                {
+                    "energy_section": "Energy Charge (not Interim)",
+                    "weekend_holiday": NS_TOU_WEEKEND_NOTE,
+                }
+                if plan_key == "tou"
+                else {}
+            ),
         },
     )
     for c in target_comps:
@@ -547,7 +610,12 @@ def _fmt_comps(comps: list[dict]) -> list[str]:
     return lines
 
 
-def repair_utility(session: Session, utility: Utility, dry_run: bool) -> dict:
+def repair_utility(
+    session: Session,
+    utility: Utility,
+    dry_run: bool,
+    plan_filter: set[str] | None = None,
+) -> dict:
     live = session.execute(
         select(Tariff)
         .where(
@@ -558,6 +626,17 @@ def repair_utility(session: Session, utility: Utility, dry_run: bool) -> dict:
         )
         .options(selectinload(Tariff.rate_components))
     ).scalars().all()
+
+    plans_to_run = {
+        k: v
+        for k, v in NS_RESIDENTIAL_PLANS.items()
+        if plan_filter is None or k in plan_filter
+    }
+    if not plans_to_run:
+        raise SystemExit(
+            f"No plans matched filter {sorted(plan_filter or [])}; "
+            f"valid keys: {sorted(NS_RESIDENTIAL_PLANS)}"
+        )
 
     print(f"  [{utility.name}] {len(live)} live residential tariff(s)")
     for t in live:
@@ -572,30 +651,33 @@ def repair_utility(session: Session, utility: Utility, dry_run: bool) -> dict:
 
     print("  Expected prod supersede map (utility 1739):")
     for plan_key, info in KNOWN_STALE_LIVE.items():
+        if plan_key not in plans_to_run:
+            continue
         print(
             f"    {plan_key}: id={info['id']} '{info['name']}' "
             f"({info['code']}) — {info['note']}"
         )
 
-    by_plan: dict[str, list[Tariff]] = {k: [] for k in NS_RESIDENTIAL_PLANS}
+    by_plan: dict[str, list[Tariff]] = {k: [] for k in plans_to_run}
     unclassified: list[Tariff] = []
     for t in live:
         key = classify_residential_plan(t)
-        if key:
+        if key and key in plans_to_run:
             by_plan[key].append(t)
-        else:
+        elif key is None and plan_filter is None:
             unclassified.append(t)
+        # When --plan filters, leave other live plans untouched.
 
     created = 0
     superseded = 0
     kept = 0
     plan_results: dict[str, Any] = {}
 
-    for plan_key, meta in NS_RESIDENTIAL_PLANS.items():
+    for plan_key, meta in plans_to_run.items():
         target = meta["build"]()
         candidates = by_plan[plan_key]
         print(f"\n  -- plan {plan_key}: {meta['name']} (code {meta['code']})")
-        print(f"    target effective={NS_EFFECTIVE}")
+        print(f"    target effective={NS_EFFECTIVE} rate_type={meta['rate_type'].value}")
         for line in _fmt_comps(target):
             print(line)
 
@@ -612,6 +694,11 @@ def repair_utility(session: Session, utility: Utility, dry_run: bool) -> dict:
                 extra = (
                     "  # missing clean Domestic; supersede Green Power "
                     "stand-in (prod 60200)"
+                )
+            elif plan_key == "tou":
+                extra = (
+                    "  # supersede prod id 67033 (flat interim) → "
+                    "Energy Charge seasonal TOU"
                 )
             elif expected:
                 extra = f"  # supersede prod id {expected['id']}"
@@ -655,11 +742,9 @@ def repair_utility(session: Session, utility: Utility, dry_run: bool) -> dict:
             "keeper_id": getattr(keeper, "id", None) if keeper else None,
         }
 
-    # Soft-supersede unclassified live residential (e.g. Green Power as
-    # a fake schedule, stale marketing extracts) toward Domestic when
-    # present; otherwise leave a note — still soft-supersede to Domestic
-    # keeper so Flux no longer shows bad rows.
-    domestic_keeper_id = plan_results["domestic"].get("keeper_id")
+    # Soft-supersede unclassified live residential only when running the
+    # full plan set (not a scoped --plan filter).
+    domestic_keeper_id = (plan_results.get("domestic") or {}).get("keeper_id")
     for loser in unclassified:
         dest = (
             f"Domestic keeper {domestic_keeper_id}"
@@ -683,6 +768,7 @@ def repair_utility(session: Session, utility: Utility, dry_run: bool) -> dict:
         "superseded": superseded,
         "plans": plan_results,
         "live_before": len(live),
+        "plan_filter": sorted(plan_filter) if plan_filter else None,
     }
 
 
@@ -712,29 +798,48 @@ def resolve_utility(session: Session, args: argparse.Namespace) -> Utility:
     return rows[0]
 
 
-def print_expected_outcome() -> None:
+def print_expected_outcome(plan_filter: set[str] | None = None) -> None:
+    scoped = plan_filter == {"tou"}
     print(
         "\nExpected outcome after --apply (Nova Scotia Power id=1739):\n"
         f"  Source: {NS_TARIFF_BOOK_2026_URL}\n"
-        f"  Effective: {NS_EFFECTIVE} (Board's Order / May 2026 rates)\n"
-        f"  Domestic ENERGY all-in: {NS_DOMESTIC_ALL_IN} $/kWh "
-        f"(= 18.324 + 0.156 + 0.648 c)\n"
+        f"  Effective: {NS_EFFECTIVE} (Board's Order / May 2026 book)\n"
         f"  Customer charge: ${NS_CUSTOMER_CHARGE}/mo\n"
-        "  CREATE Domestic Service (missing today) + soft-supersede "
-        "60200 Green Power stand-in\n"
-        "  SUPERSEDE 46886 CPP, 46887 TOU, 60201 TOD, 60202 MURB "
-        "(reason=vintage)\n"
-        "  Five live residential keepers after apply: Domestic, TOD, "
-        "CPP interim, TOU interim, MURB TOU\n"
-        "  Jan 1 2027 column rates are NOT stored as current"
     )
+    if scoped or plan_filter is None or "tou" in (plan_filter or set()):
+        print(
+            "  Rate code 80 (Domestic TOU) — Energy Charge seasonal TOU:\n"
+            f"    SUPERSEDE 67033 (flat interim ENERGY $0.19128) → new "
+            f"SEASONAL_TOU keeper\n"
+            f"    Non-winter all hours: "
+            f"{all_in_domestic(NS_TOU_NONWINTER_BASE_CENTS)} $/kWh "
+            f"(= {NS_TOU_NONWINTER_BASE_CENTS:.3f} + 0.804 ¢)\n"
+            f"    Winter on-peak: "
+            f"{all_in_domestic(NS_TOU_WINTER_ONPEAK_CENTS)} $/kWh "
+            f"(= {NS_TOU_WINTER_ONPEAK_CENTS:.3f} + 0.804 ¢)\n"
+            f"    Winter off-peak: "
+            f"{all_in_domestic(NS_TOU_WINTER_OFFPEAK_CENTS)} $/kWh "
+            f"(= {NS_TOU_WINTER_OFFPEAK_CENTS:.3f} + 0.804 ¢)\n"
+            "    Do NOT use Jan 1 2027 winter column (38.281 / 19.067 ¢)\n"
+            f"    {NS_TOU_WEEKEND_NOTE}"
+        )
+    if not scoped:
+        print(
+            f"  Domestic ENERGY all-in: {NS_DOMESTIC_ALL_IN} $/kWh "
+            f"(= 18.324 + 0.156 + 0.648 ¢)\n"
+            "  Other plans (Domestic / TOD / CPP interim / MURB): KEEP when "
+            "already matching; CREATE+SUPERSEDE when not\n"
+            "  Code 70 CPP remains interim-only in this repair (Energy Charge "
+            "CPP events out of scope unless reopened)"
+        )
 
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
         description=(
             "Repair Nova Scotia Power (id 1739) residential tariffs to "
-            "May 2026 tariff-book all-in ENERGY (soft-supersede only)"
+            "May 2026 tariff-book all-in ENERGY (soft-supersede only). "
+            "Rate 80 uses Energy Charge seasonal TOU (not flat interim)."
         )
     )
     parser.add_argument(
@@ -749,6 +854,16 @@ def main(argv: list[str] | None = None) -> int:
         help=f"Exact utility id (default: {NS_POWER_UTILITY_ID} when present)",
     )
     parser.add_argument(
+        "--plan",
+        action="append",
+        choices=sorted(NS_RESIDENTIAL_PLANS.keys()),
+        default=None,
+        help=(
+            "Limit repair to one or more plan keys (repeatable). "
+            "Use --plan tou to scope to rate code 80 only."
+        ),
+    )
+    parser.add_argument(
         "--apply",
         action="store_true",
         help="Write changes (default is dry-run)",
@@ -757,13 +872,18 @@ def main(argv: list[str] | None = None) -> int:
 
     dry_run = not args.apply
     mode = "DRY RUN" if dry_run else "APPLY"
+    plan_filter = set(args.plan) if args.plan else None
     print(f"=== repair_ns_power_residential_2026 ({mode}) ===\n")
+    if plan_filter:
+        print(f"Plan filter: {sorted(plan_filter)}\n")
 
     engine = get_sync_engine()
     with Session(engine) as session:
         utility = resolve_utility(session, args)
         print(f"-- {utility.name} (id={utility.id})")
-        result = repair_utility(session, utility, dry_run=dry_run)
+        result = repair_utility(
+            session, utility, dry_run=dry_run, plan_filter=plan_filter
+        )
 
         if dry_run:
             session.rollback()
@@ -780,7 +900,7 @@ def main(argv: list[str] | None = None) -> int:
                 f"kept {result['kept']}, superseded {result['superseded']}."
             )
 
-        print_expected_outcome()
+        print_expected_outcome(plan_filter)
     return 0
 
 

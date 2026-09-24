@@ -48,13 +48,62 @@ class TestNsAllInMath(unittest.TestCase):
         # 24.384 + 0.804 = 25.188 ¢
         self.assertEqual(winter_peak["rate_value"], repair.all_in_domestic(24.384))
 
-    def test_cpp_and_tou_interim_track_domestic(self):
+    def test_cpp_interim_tracks_domestic(self):
         cpp = repair.build_domestic_cpp_interim_components()
-        tou = repair.build_domestic_tou_interim_components()
         cpp_e = [c for c in cpp if c["component_type"] == "energy"][0]
-        tou_e = [c for c in tou if c["component_type"] == "energy"][0]
         self.assertEqual(cpp_e["rate_value"], repair.NS_DOMESTIC_ALL_IN)
-        self.assertEqual(tou_e["rate_value"], repair.NS_DOMESTIC_ALL_IN)
+
+    def test_tou_seasonal_energy_charge_not_interim_flat(self):
+        comps = repair.build_domestic_tou_seasonal_components()
+        energy = [c for c in comps if c["component_type"] == "energy"]
+        fixed = [c for c in comps if c["component_type"] == "fixed"]
+        self.assertEqual(fixed[0]["rate_value"], 20.08)
+        # 1 non-winter + 4 winter periods (not a single interim row)
+        self.assertEqual(len(energy), 5)
+        nw = next(c for c in energy if "Non-winter" in c["season"])
+        self.assertEqual(nw["period_label"], "All hours")
+        # 12.860 + 0.804 = 13.664 ¢
+        self.assertEqual(nw["rate_value"], 0.13664)
+        self.assertEqual(nw["rate_value"], repair.all_in_domestic(12.860))
+        winter = [c for c in energy if c["season"].startswith("Winter")]
+        self.assertEqual(len(winter), 4)
+        onpeak = [c for c in winter if "On-peak" in c["period_label"]]
+        offpeak = [c for c in winter if "Off-peak" in c["period_label"]]
+        self.assertEqual(len(onpeak), 2)
+        self.assertEqual(len(offpeak), 2)
+        # 36.517 + 0.804 = 37.321 ¢; 18.324 + 0.804 = 19.128 ¢
+        self.assertEqual(onpeak[0]["rate_value"], 0.37321)
+        self.assertEqual(offpeak[0]["rate_value"], 0.19128)
+        # Jan 1 2027 escalate column must not appear
+        future_on = repair.all_in_domestic(38.281)
+        future_off = repair.all_in_domestic(19.067)
+        self.assertNotIn(future_on, {c["rate_value"] for c in energy})
+        self.assertNotIn(future_off, {c["rate_value"] for c in energy})
+
+    def test_tou_interim_shape_does_not_match_seasonal_target(self):
+        """PR #6 flat interim (prod 67033) must fail the seasonal match."""
+        interim = repair.build_domestic_tou_interim_components()
+        seasonal = repair.build_domestic_tou_seasonal_components()
+        fake = SimpleNamespace(
+            effective_date=repair.NS_EFFECTIVE,
+            rate_components=[
+                SimpleNamespace(
+                    component_type=c["component_type"],
+                    rate_value=c["rate_value"],
+                    season=c.get("season"),
+                    period_label=c.get("period_label"),
+                )
+                for c in interim
+            ],
+        )
+        self.assertFalse(repair.components_match_target(fake, seasonal))
+
+    def test_tou_plan_is_seasonal_tou(self):
+        meta = repair.NS_RESIDENTIAL_PLANS["tou"]
+        self.assertEqual(meta["rate_type"].value, "seasonal_tou")
+        self.assertIs(meta["build"], repair.build_domestic_tou_seasonal_components)
+        self.assertEqual(repair.KNOWN_STALE_LIVE["tou"]["id"], 67033)
+        self.assertEqual(repair.KNOWN_STALE_LIVE["tou"]["code"], "80")
 
     def test_murb_uses_general_class_riders(self):
         comps = repair.build_murb_tou_components()
@@ -143,7 +192,9 @@ class TestClassifyPlan(unittest.TestCase):
         self.assertEqual(repair.NS_POWER_UTILITY_ID, 1739)
         self.assertEqual(repair.KNOWN_STALE_LIVE["domestic"]["id"], 60200)
         self.assertEqual(repair.KNOWN_STALE_LIVE["cpp"]["id"], 46886)
-        self.assertEqual(repair.KNOWN_STALE_LIVE["tou"]["id"], 46887)
+        # Post-PR #6 flat-interim keeper for code 80 (not pre-PR #6 46887)
+        self.assertEqual(repair.KNOWN_STALE_LIVE["tou"]["id"], 67033)
+        self.assertEqual(repair.KNOWN_STALE_LIVE["tou"]["code"], "80")
         self.assertEqual(repair.KNOWN_STALE_LIVE["tod"]["id"], 60201)
         self.assertEqual(repair.KNOWN_STALE_LIVE["murb"]["id"], 60202)
 
@@ -313,6 +364,62 @@ class TestPreferredNsSource(unittest.TestCase):
         self.assertTrue(season.endswith("…") or len(season) <= tp._RC_SEASON_MAX)
         self.assertEqual(unit, "$/kWh")
         self.assertEqual(tier, "ok")
+
+
+class TestInterimVsEnergyChargePrompts(unittest.TestCase):
+    def test_main_extraction_prompt_prefers_energy_charge(self):
+        self.assertIn("INTERIM vs APPROVED ENERGY CHARGE", tp.EXTRACTION_PROMPT)
+        self.assertIn("Example 6", tp.EXTRACTION_PROMPT)
+        self.assertIn("seasonal_tou", tp.EXTRACTION_PROMPT)
+        self.assertIn("Do NOT emit a single flat interim ENERGY", tp.EXTRACTION_PROMPT)
+
+    def test_vision_and_twopass_prompts(self):
+        for prompt in (
+            tp.PAGE_SCREENSHOT_EXTRACTION_PROMPT_BASE,
+            tp.PDF_VISION_EXTRACTION_PROMPT_BASE,
+            tp.TWOPASS_EXTRACT_PROMPT,
+        ):
+            self.assertIn("Interim vs approved Energy Charge", prompt)
+
+    def test_tou_season_strings_fit_varchar(self):
+        self.assertLessEqual(len(repair.NS_TOU_NONWINTER_SEASON), tp._RC_SEASON_MAX)
+        self.assertLessEqual(len(repair.NS_TOU_WINTER_SEASON), tp._RC_SEASON_MAX)
+        for c in repair.build_domestic_tou_seasonal_components():
+            if c.get("period_label"):
+                self.assertLessEqual(len(c["period_label"]), tp._RC_PERIOD_LABEL_MAX)
+            if c.get("season"):
+                self.assertLessEqual(len(c["season"]), tp._RC_SEASON_MAX)
+
+
+class TestDryRunNarrativeRate80(unittest.TestCase):
+    """Simulate prod 67033 flat interim → seasonal CREATE+SUPERSEDE narrative."""
+
+    def test_before_after_numbers(self):
+        before = repair.build_domestic_tou_interim_components()
+        after = repair.build_domestic_tou_seasonal_components()
+        before_e = [c for c in before if c["component_type"] == "energy"]
+        after_e = [c for c in after if c["component_type"] == "energy"]
+        self.assertEqual(len(before_e), 1)
+        self.assertEqual(before_e[0]["rate_value"], 0.19128)
+        self.assertEqual(len(after_e), 5)
+        by_key = {
+            (c["season"], c["period_label"]): c["rate_value"] for c in after_e
+        }
+        self.assertEqual(
+            by_key[(repair.NS_TOU_NONWINTER_SEASON, "All hours")], 0.13664
+        )
+        self.assertEqual(
+            by_key[
+                (repair.NS_TOU_WINTER_SEASON, "On-peak morning (7am–11am)")
+            ],
+            0.37321,
+        )
+        self.assertEqual(
+            by_key[
+                (repair.NS_TOU_WINTER_SEASON, "Off-peak midday (11am–5pm)")
+            ],
+            0.19128,
+        )
 
 
 if __name__ == "__main__":

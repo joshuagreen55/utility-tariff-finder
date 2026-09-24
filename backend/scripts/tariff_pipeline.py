@@ -2382,6 +2382,7 @@ Rules:
 - RELATIVE SEASONAL RIDERS: When energy charges equal another schedule's energy rate ± a seasonal premium/credit (or similar rider), emit one ENERGY component per season at the all-in $/kWh (base ± adjustment). Put month ranges in season and/or tier_label (e.g. "Winter (Dec–Apr)", "Non-Winter (May–Nov)"). Do NOT leave a season represented only by an ADJUSTMENT row — UIs group ENERGY by season and skip ADJUSTMENT. Optional ADJUSTMENT rows may remain for audit, but every season with a premium/credit must also have a matching all-in ENERGY row.
 - CURRENT vs FUTURE COLUMNS: When a rate table has both a current column (e.g. "Effective upon the date of the Board’s Order", "currently in effect", a mid-year Order date) AND a future column (e.g. "Effective January 1, 2027"), extract ONLY the current/Board’s Order values as the live tariff. Do NOT store the future column as the current rate.
 - STACKING ENERGY RIDERS (FAM / DSM / Storm / fuel / cost-recovery ¢/kWh that apply in addition to the energy charge): emit ENERGY at the all-in $/kWh (base energy + applicable riders). UIs show ENERGY to customers and often hide ADJUSTMENT-only riders — understating the bill if ENERGY is base-only. Optional ADJUSTMENT rows may remain for audit.
+- INTERIM vs APPROVED ENERGY CHARGE (TVP / time-varying pricing): When a schedule publishes both an "Interim Energy Charge" (while metering/TVP systems are unavailable) AND a full "Energy Charge" seasonal TOU table, extract the **Energy Charge** seasonal/TOU structure — Non-winter all-hours plus Winter on-peak/off-peak periods as separate ENERGY rows, rate_type seasonal_tou. Do NOT flatten the tariff to a single interim all-hours ENERGY row equal to the standard Domestic offer. Fold FAM/DSM into each ENERGY period. Prefer the earliest Energy Charge effective column that is not a later calendar-year escalate (e.g. Nov 1 2026 winter rates, not Jan 1 2027). Put weekend/holiday off-peak rules in description when the tariff states them.
 
 EXAMPLES:
 
@@ -2404,6 +2405,10 @@ Output: one tariff type "seasonal", code "1.1S", with TWO energy components (all
 Example 5 — Current vs future columns + stacking riders (NS Power style):
 Input: "Domestic Service: Customer $20.08 (Board’s Order) / $21.04 (Jan 1 2027). Energy 18.324 ¢/kWh (Board’s Order) / 19.067 (Jan 1 2027). FAM AA/BA 0.156 ¢/kWh and DSM DCRR 0.648 ¢/kWh apply in addition to the energy charge."
 Output: one flat residential tariff with fixed $20.08/month and ENERGY $0.19128/kWh (= 0.18324 + 0.00156 + 0.00648). Do not use the 2027 column as current.
+
+Example 6 — Interim vs Energy Charge seasonal TOU (NS Power Rate Code 80):
+Input: "Domestic Service Time of Use (code 80): Customer $20.08. INTERIM ENERGY CHARGE while TVP unavailable equals Domestic standard offer. ENERGY CHARGE Non-winter Apr 1–Oct 31 all hours 12.860 ¢ (eff Apr 1 2027). Winter Nov 1–Mar 31: on-peak 7–11am / 5–9pm 36.517 ¢, off-peak 11am–5pm / 9pm–7am 18.324 ¢ (eff Nov 1 2026); Jan 1 2027 column 38.281 / 19.067. FAM 0.156 + DSM 0.648 apply. Note 1: winter weekends/holidays use off-peak."
+Output: one residential tariff type "seasonal_tou", code "80", fixed $20.08, and FIVE all-in ENERGY rows — Non-winter all hours $0.13664; Winter on-peak $0.37321 (morning + evening); Winter off-peak $0.19128 (midday + night). Do NOT emit a single flat interim ENERGY $0.19128. Do NOT use the Jan 1 2027 winter escalate column. Mention weekend/holiday off-peak in description.
 
 Use the store_tariffs tool to return your results.
 
@@ -2502,6 +2507,7 @@ Rules:
 - Relative seasonal riders (energy = another rate ± seasonal premium/credit): emit all-in ENERGY per season with month ranges in season/tier_label — never leave a season as ADJUSTMENT-only
 - Current vs future columns ("Board’s Order" vs later Jan 1 YYYY): extract ONLY the current column
 - Stacking energy riders (FAM / DSM / Storm): emit all-in ENERGY (base + riders)
+- Interim vs approved Energy Charge (TVP): when both Interim Energy Charge and a full Energy Charge seasonal TOU table appear, extract the Energy Charge seasons/periods (seasonal_tou) — do NOT flatten to a single interim all-hours ENERGY row
 
 Use the store_tariffs tool to return results."""
 
@@ -2622,6 +2628,7 @@ Rules:
 - Relative seasonal riders (energy = another rate ± seasonal premium/credit): emit all-in ENERGY per season with month ranges in season/tier_label — never leave a season as ADJUSTMENT-only
 - Current vs future columns ("Board’s Order" vs later Jan 1 YYYY): extract ONLY the current column
 - Stacking energy riders (FAM / DSM / Storm): emit all-in ENERGY (base + riders)
+- Interim vs approved Energy Charge (TVP): when both Interim Energy Charge and a full Energy Charge seasonal TOU table appear, extract the Energy Charge seasons/periods (seasonal_tou) — do NOT flatten to a single interim all-hours ENERGY row
 
 Use the store_tariffs tool to return results."""
 
@@ -2763,6 +2770,7 @@ Rules:
 - Relative seasonal riders (energy = another rate ± seasonal premium/credit): emit all-in ENERGY per season with month ranges in season/tier_label — never leave a season as ADJUSTMENT-only
 - Current vs future columns ("Board’s Order" vs a later Jan 1 YYYY): extract ONLY the current/Board’s Order values
 - Stacking energy riders (FAM / DSM / Storm ¢/kWh in addition to energy): emit all-in ENERGY (base + riders)
+- Interim vs approved Energy Charge (TVP): prefer Energy Charge seasonal TOU periods over a flattened Interim all-hours ENERGY row
 
 Use the store_tariffs tool to return your result (array with one tariff).
 
@@ -6204,6 +6212,7 @@ Rules for the JSON:
 - Relative seasonal riders (energy = another rate ± seasonal premium/credit): emit all-in ENERGY per season (base ± adjustment) with month ranges in season/tier_label. Do not leave a season as ADJUSTMENT-only.
 - Current vs future columns ("Board’s Order" / currently effective vs a later Jan 1 YYYY): extract ONLY the current column as live rates.
 - Stacking ¢/kWh riders (FAM, DSM/DCRR, Storm) that apply in addition to energy: emit all-in ENERGY (base + riders).
+- Interim vs approved Energy Charge (TVP / time-varying): when both Interim Energy Charge and Energy Charge seasonal TOU tables appear, extract Energy Charge seasons/periods — do not flatten to a single interim all-hours ENERGY.
 - If you cannot find the utility's current residential/commercial electric tariffs at all from authoritative sources, return an empty array [].
 """
 
