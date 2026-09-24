@@ -1047,6 +1047,14 @@ def score_search_result(
     if _is_superseded_url(url, f"{title} {description}"):
         score -= 50
 
+    # Prefer utility-published regulatory tariff books (NS Power style
+    # tariff-book-YYYY.pdf). Newer year wins; older books demoted.
+    book_year = _tariff_book_year(url)
+    if book_year:
+        score += 40 + max(0, book_year - 2020)  # e.g. 2026 >> 2024
+        if utility_domain and is_same_domain(url, f"https://{utility_domain}"):
+            score += 20
+
     url_domain = urlparse(url).netloc.replace("www.", "")
     if any(url_domain == d or url_domain.endswith(f".{d}") for d in THIRD_PARTY_DOMAINS):
         return -999  # Hard block — never use aggregator/comparison sites
@@ -1230,6 +1238,99 @@ def _is_superseded_url(url: str, title: str = "") -> bool:
     )
 
 
+# Canonical regulatory tariff-book PDFs for utilities whose marketing
+# "rates" hubs historically diverted discovery away from the authoritative
+# schedule. Prefer these over residential marketing pages when refreshing.
+_TARIFF_BOOK_YEAR_RE = re.compile(
+    r"tariff[-_]?book[-_]?(\d{4})\.pdf", re.IGNORECASE
+)
+
+# Nova Scotia Power — Tariffs May 2026 (NSUARB / NSEB approved).
+NS_POWER_TARIFF_BOOK_2026_URL = (
+    "https://www.nspower.ca/docs/default-source/regulatory/tariff-book-2026.pdf"
+)
+
+# Known preferred extraction sources by utility-name substring (lower).
+PREFERRED_RATE_PAGE_URLS: dict[str, str] = {
+    "nova scotia power": NS_POWER_TARIFF_BOOK_2026_URL,
+}
+
+
+def _tariff_book_year(url: str) -> int | None:
+    """Return YYYY from ``.../tariff-book-2026.pdf`` paths, else None."""
+    try:
+        path = unquote(urlparse(url).path)
+    except Exception:
+        path = url
+    m = _TARIFF_BOOK_YEAR_RE.search(path)
+    if not m:
+        return None
+    try:
+        return int(m.group(1))
+    except ValueError:
+        return None
+
+
+def preferred_rate_page_url(utility_name: str | None) -> str | None:
+    """Return a hard-coded preferred rate/tariff-book URL when known."""
+    if not utility_name:
+        return None
+    key = utility_name.strip().lower()
+    for needle, url in PREFERRED_RATE_PAGE_URLS.items():
+        if needle in key:
+            return url
+    return None
+
+
+def _looks_like_stale_ns_source(url: str) -> bool:
+    """True when a known NS Power URL should yield to the May 2026 book."""
+    if not url:
+        return True
+    u = url.lower()
+    year = _tariff_book_year(url)
+    if year is not None and year < 2026:
+        return True
+    # Marketing / explainer hubs — Phase 2 *can* find the PDF, but refreshes
+    # that stop at HTML often miss the Board’s Order column + riders.
+    marketing_bits = (
+        "/your-home/residential-rates",
+        "/about-us/electricity/rates-tariffs",
+        "rate-options",
+        "understanding",
+    )
+    if any(b in u for b in marketing_bits) and "tariff-book" not in u:
+        return True
+    return False
+
+
+def resolve_preferred_rate_page(
+    utility_name: str,
+    existing_url: str = "",
+    override_url: str = "",
+) -> tuple[str, list[str]]:
+    """Pick primary rate URL, injecting known tariff books when appropriate.
+
+    Returns ``(primary_url, alt_urls_to_prepend)``. Does not override an
+    explicit ``rate_page_url_override`` set by an operator.
+    """
+    preferred = preferred_rate_page_url(utility_name)
+    if override_url:
+        alts: list[str] = []
+        if preferred and preferred.rstrip("/") != override_url.split("?")[0].rstrip("/"):
+            alts.append(preferred)
+        return override_url, alts
+    if not preferred:
+        return existing_url or "", []
+    if not existing_url or _looks_like_stale_ns_source(existing_url):
+        alts = [existing_url] if existing_url and existing_url != preferred else []
+        return preferred, alts
+    # Existing looks fine (already a current tariff book) — keep it, but
+    # still offer the preferred URL as an alternate.
+    if preferred != existing_url:
+        return existing_url, [preferred]
+    return existing_url, []
+
+
 def _try_direct_rate_pages(website_url: str) -> str | None:
     """Try common rate page URL patterns on the utility's known website."""
     if not website_url:
@@ -1307,6 +1408,13 @@ def phase1_find_rate_page(utility_name: str, state: str, website_url: str | None
     utility_domain = urlparse(website_url).netloc if website_url else None
     clean_name = _clean_utility_name(utility_name)
     total_searches = 0
+
+    # Known regulatory tariff books beat marketing hubs — return early when
+    # we have a hard-coded current book (NS Power May 2026, etc.).
+    preferred = preferred_rate_page_url(utility_name)
+    if preferred:
+        log.info(f"  Phase 1: Using preferred tariff book URL: {preferred[:90]}")
+        return preferred, 1, []
 
     # If we don't know the utility's domain, discover it first
     if not utility_domain:
@@ -2268,6 +2376,8 @@ Rules:
 - Set confidence to 0.9+ if values are clearly readable, 0.5-0.8 if some ambiguity, below 0.5 if guessing
 - If a minimum monthly charge equals the basic/customer charge for the same amp tier, emit one fixed row — not both fixed and minimum duplicates
 - RELATIVE SEASONAL RIDERS: When energy charges equal another schedule's energy rate ± a seasonal premium/credit (or similar rider), emit one ENERGY component per season at the all-in $/kWh (base ± adjustment). Put month ranges in season and/or tier_label (e.g. "Winter (Dec–Apr)", "Non-Winter (May–Nov)"). Do NOT leave a season represented only by an ADJUSTMENT row — UIs group ENERGY by season and skip ADJUSTMENT. Optional ADJUSTMENT rows may remain for audit, but every season with a premium/credit must also have a matching all-in ENERGY row.
+- CURRENT vs FUTURE COLUMNS: When a rate table has both a current column (e.g. "Effective upon the date of the Board’s Order", "currently in effect", a mid-year Order date) AND a future column (e.g. "Effective January 1, 2027"), extract ONLY the current/Board’s Order values as the live tariff. Do NOT store the future column as the current rate.
+- STACKING ENERGY RIDERS (FAM / DSM / Storm / fuel / cost-recovery ¢/kWh that apply in addition to the energy charge): emit ENERGY at the all-in $/kWh (base energy + applicable riders). UIs show ENERGY to customers and often hide ADJUSTMENT-only riders — understating the bill if ENERGY is base-only. Optional ADJUSTMENT rows may remain for audit.
 
 EXAMPLES:
 
@@ -2286,6 +2396,10 @@ Output: one tariff type "seasonal_tou", confidence 0.9, with fixed ($10), and 4 
 Example 4 — Relative seasonal rider (base rate ± seasonal premium/credit):
 Input: "Rate #1.1S Domestic Seasonal: Energy Charges from Rate #1.1 (15.587¢/kWh) apply, subject to Winter Season Premium Adjustment Dec–Apr billing months +0.953¢/kWh; Non-Winter Season Credit Adjustment May–Nov (1.297)¢/kWh."
 Output: one tariff type "seasonal", code "1.1S", with TWO energy components (all-in $/kWh): Winter (Dec–Apr) at $0.16540/kWh (= 0.15587 + 0.00953), and Non-Winter (May–Nov) at $0.14290/kWh (= 0.15587 − 0.01297). Do not emit adjustment-only seasons without matching ENERGY.
+
+Example 5 — Current vs future columns + stacking riders (NS Power style):
+Input: "Domestic Service: Customer $20.08 (Board’s Order) / $21.04 (Jan 1 2027). Energy 18.324 ¢/kWh (Board’s Order) / 19.067 (Jan 1 2027). FAM AA/BA 0.156 ¢/kWh and DSM DCRR 0.648 ¢/kWh apply in addition to the energy charge."
+Output: one flat residential tariff with fixed $20.08/month and ENERGY $0.19128/kWh (= 0.18324 + 0.00156 + 0.00648). Do not use the 2027 column as current.
 
 Use the store_tariffs tool to return your results.
 
@@ -2382,6 +2496,8 @@ Rules:
 - Set confidence 0.9+ if values clearly readable, 0.5-0.8 if some ambiguity
 - If a minimum monthly charge equals the basic/customer charge for the same amp tier, emit one fixed row — not both fixed and minimum duplicates
 - Relative seasonal riders (energy = another rate ± seasonal premium/credit): emit all-in ENERGY per season with month ranges in season/tier_label — never leave a season as ADJUSTMENT-only
+- Current vs future columns ("Board’s Order" vs later Jan 1 YYYY): extract ONLY the current column
+- Stacking energy riders (FAM / DSM / Storm): emit all-in ENERGY (base + riders)
 
 Use the store_tariffs tool to return results."""
 
@@ -2500,6 +2616,8 @@ Rules:
 - Set confidence 0.9+ if values clearly readable, 0.5-0.8 if some ambiguity
 - If a minimum monthly charge equals the basic/customer charge for the same amp tier, emit one fixed row — not both fixed and minimum duplicates
 - Relative seasonal riders (energy = another rate ± seasonal premium/credit): emit all-in ENERGY per season with month ranges in season/tier_label — never leave a season as ADJUSTMENT-only
+- Current vs future columns ("Board’s Order" vs later Jan 1 YYYY): extract ONLY the current column
+- Stacking energy riders (FAM / DSM / Storm): emit all-in ENERGY (base + riders)
 
 Use the store_tariffs tool to return results."""
 
@@ -2639,6 +2757,8 @@ Rules:
 - confidence: 0.9+ if clear, 0.5-0.8 if ambiguous, <0.5 if guessing
 - If a minimum monthly charge equals the basic/customer charge for the same amp tier, emit one fixed row — not both fixed and minimum duplicates
 - Relative seasonal riders (energy = another rate ± seasonal premium/credit): emit all-in ENERGY per season with month ranges in season/tier_label — never leave a season as ADJUSTMENT-only
+- Current vs future columns ("Board’s Order" vs a later Jan 1 YYYY): extract ONLY the current/Board’s Order values
+- Stacking energy riders (FAM / DSM / Storm ¢/kWh in addition to energy): emit all-in ENERGY (base + riders)
 
 Use the store_tariffs tool to return your result (array with one tariff).
 
@@ -4095,6 +4215,107 @@ def expand_relative_seasonal_energy(
     return out
 
 
+_STACKING_RIDER_LABEL_RE = re.compile(
+    r"\b(?:fam|dsm|dcrr|scrr|storm|fuel\s*adjust|cost\s*recovery|"
+    r"actual\s*adjustment|balance\s*adjustment|aa/?ba)\b",
+    re.IGNORECASE,
+)
+
+
+def expand_stacking_energy_riders(
+    components: list[dict],
+    *,
+    keep_adjustments: bool = True,
+) -> list[dict]:
+    """Fold flat (unseasoned) ¢/kWh ADJUSTMENT riders into all-in ENERGY.
+
+    Nova Scotia Power (and similar) publish base ENERGY plus FAM / DSM /
+    Storm riders that apply "in addition to the energy charge". Flux and
+    Lookup only render ENERGY, so base-only ENERGY understates the bill.
+
+    When ≥1 unseasoned energy-unit ADJUSTMENT is present alongside ENERGY
+    rows, add the sum of those adjustments to every ENERGY ``rate_value``.
+    Seasonal ADJUSTMENTs are left for ``expand_relative_seasonal_energy``.
+    Idempotent when no unseasoned energy ADJUSTMENTs remain.
+    """
+    if not components:
+        return components
+
+    energy_rows: list[dict] = []
+    stacking_adjs: list[dict] = []
+    other: list[dict] = []
+
+    for comp in components:
+        if not isinstance(comp, dict):
+            other.append(comp)
+            continue
+        ctype = str(comp.get("component_type") or "").strip().lower()
+        if ctype == "energy" and _is_energy_unit(comp.get("unit")):
+            energy_rows.append(comp)
+        elif ctype == "adjustment" and _is_energy_unit(comp.get("unit")):
+            # Seasonal relative riders are handled elsewhere; only fold
+            # flat / stacking riders here.
+            if _season_key(comp.get("season")):
+                other.append(comp)
+                continue
+            label = " ".join(
+                str(comp.get(k) or "")
+                for k in ("tier_label", "period_label", "season")
+            )
+            # Prefer labeled FAM/DSM/Storm-style riders; also accept any
+            # unseasoned energy ADJUSTMENT (LLM often omits labels).
+            if label.strip() and not _STACKING_RIDER_LABEL_RE.search(label):
+                # Unlabeled or non-rider adjustment — still stack if it is
+                # a small ¢/kWh-scale add-on (already in $/kWh after norm).
+                try:
+                    rv = abs(float(comp.get("rate_value") or 0))
+                except (TypeError, ValueError):
+                    other.append(comp)
+                    continue
+                if rv > 0.05:  # >5¢/kWh unlikely as a stacking rider alone
+                    other.append(comp)
+                    continue
+            stacking_adjs.append(comp)
+        else:
+            other.append(comp)
+
+    if not energy_rows or not stacking_adjs:
+        return components
+
+    try:
+        rider_sum = sum(float(a.get("rate_value") or 0) for a in stacking_adjs)
+    except (TypeError, ValueError):
+        return components
+    if abs(rider_sum) < 1e-12:
+        return components
+
+    new_energy: list[dict] = []
+    for e in energy_rows:
+        row = dict(e)
+        try:
+            base = float(e.get("rate_value") or 0)
+        except (TypeError, ValueError):
+            new_energy.append(row)
+            continue
+        row["rate_value"] = round(base + rider_sum, 6)
+        # Annotate so operators can see all-in was applied.
+        note = (row.get("tier_label") or "").strip()
+        if "all-in" not in note.lower():
+            row["tier_label"] = (
+                f"{note} (all-in +riders)".strip()
+                if note
+                else "All-in (base + riders)"
+            )
+        new_energy.append(row)
+
+    out: list[dict] = []
+    out.extend(other)
+    if keep_adjustments:
+        out.extend(stacking_adjs)
+    out.extend(new_energy)
+    return out
+
+
 def _component_dedupe_key(comp: dict) -> tuple:
     """Match key for collapsing near-duplicate rate components."""
     try:
@@ -4197,6 +4418,16 @@ def phase4_validate(
                 f"    Seasonal rider expand on '{t.name}': "
                 f"{len(before_seasonal)} → {len(t.components)} comps, "
                 f"{count_energy_seasons(t.components)} ENERGY seasons"
+            )
+
+        # Flat stacking riders (FAM/DSM/Storm): fold unseasoned ADJUSTMENT
+        # ¢/kWh into all-in ENERGY so Flux/Lookup show the billed rate.
+        before_stack = list(t.components)
+        t.components = expand_stacking_energy_riders(t.components)
+        if t.components != before_stack:
+            log.info(
+                f"    Stacking rider expand on '{t.name}': "
+                f"{len(before_stack)} → {len(t.components)} comps"
             )
 
         # Collapse fixed/minimum twins and exact same-type duplicates before
@@ -5912,6 +6143,8 @@ Rules for the JSON:
 - Read numbers EXACTLY as printed in the source — do not estimate or round.
 - If you use "$/kWh" as the unit, convert cents to dollars in rate_value. Otherwise use "cents/kWh" and leave rate_value as-is.
 - Relative seasonal riders (energy = another rate ± seasonal premium/credit): emit all-in ENERGY per season (base ± adjustment) with month ranges in season/tier_label. Do not leave a season as ADJUSTMENT-only.
+- Current vs future columns ("Board’s Order" / currently effective vs a later Jan 1 YYYY): extract ONLY the current column as live rates.
+- Stacking ¢/kWh riders (FAM, DSM/DCRR, Storm) that apply in addition to energy: emit all-in ENERGY (base + riders).
 - If you cannot find the utility's current residential/commercial electric tariffs at all from authoritative sources, return an empty array [].
 """
 
@@ -6311,17 +6544,32 @@ def run_pipeline(
         log.info(f"=== Done (centralized{' + specialty' if additional_count else ''}): {utility_name} ===\n")
         return centralized
 
-    # Phase 1 — check for manual override first
+    # Phase 1 — check for manual override first, then inject known
+    # regulatory tariff-book URLs (e.g. NS Power May 2026 book) when the
+    # existing monitoring/seed URL is a marketing hub or older book year.
     rate_page_url_override = info.get("rate_page_url_override")
-    rate_page_url = existing_rate_url or rate_page_url_override or ""
-    alt_urls: list[str] = []
+    preferred_primary, preferred_alts = resolve_preferred_rate_page(
+        utility_name,
+        existing_url=existing_rate_url or "",
+        override_url=rate_page_url_override or "",
+    )
+    rate_page_url = preferred_primary or existing_rate_url or rate_page_url_override or ""
+    alt_urls: list[str] = list(preferred_alts)
     if rate_page_url_override:
         log.info(f"  Using manual rate page override: {rate_page_url_override}")
+    elif preferred_primary and preferred_primary != (existing_rate_url or ""):
+        log.info(
+            f"  Using preferred regulatory tariff source: {preferred_primary[:90]}"
+        )
     if not skip_search and not rate_page_url:
         try:
-            rate_page_url, num_results, alt_urls = phase1_find_rate_page(
+            rate_page_url, num_results, search_alts = phase1_find_rate_page(
                 utility_name, state, website_url
             )
+            # Keep preferred alts ahead of search alts.
+            for u in search_alts:
+                if u and u not in alt_urls and u != rate_page_url:
+                    alt_urls.append(u)
             result.phase1_rate_page_url = rate_page_url
             result.phase1_search_results = num_results
         except Exception as e:
