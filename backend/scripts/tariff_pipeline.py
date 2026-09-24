@@ -1290,15 +1290,19 @@ def _looks_like_stale_ns_source(url: str) -> bool:
     year = _tariff_book_year(url)
     if year is not None and year < 2026:
         return True
+    # Explicit Mar-2025 book still live in prod (utility 1739).
+    if "tariff-book-20250326" in u or "tariff-book-2025" in u:
+        return True
     # Marketing / explainer hubs — Phase 2 *can* find the PDF, but refreshes
     # that stop at HTML often miss the Board’s Order column + riders.
     marketing_bits = (
         "/your-home/residential-rates",
         "/about-us/electricity/rates-tariffs",
+        "/about-us/producing/rate-options",
         "rate-options",
         "understanding",
     )
-    if any(b in u for b in marketing_bits) and "tariff-book" not in u:
+    if any(b in u for b in marketing_bits) and "tariff-book-2026" not in u:
         return True
     return False
 
@@ -4624,6 +4628,53 @@ def _calculate_confidence(
     return round(score, 3), factors
 
 
+# Column lengths for rate_components string fields (see models/tariff.py).
+# LLM extraction from dense tariff books (NS Power May 2026) routinely
+# emits season/period labels longer than the original VARCHAR(50/100),
+# which crashed process_utility for utility 1739 on 2026-09-01 with
+# psycopg2.errors.StringDataRightTruncation.
+_RC_UNIT_MAX = 50
+_RC_TIER_LABEL_MAX = 100
+_RC_PERIOD_LABEL_MAX = 100
+_RC_SEASON_MAX = 50
+_TARIFF_CODE_MAX = 100
+
+
+def _clip_str(value: Any, max_len: int) -> str | None:
+    if value is None:
+        return None
+    s = str(value).strip()
+    if not s:
+        return None
+    if len(s) <= max_len:
+        return s
+    return s[: max_len - 1].rstrip() + "…"
+
+
+def _clip_component_strings(
+    comp: dict, *, tariff_name: str = ""
+) -> tuple[str, str | None, str | None, str | None]:
+    """Return (unit, tier_label, period_label, season) clipped to column limits."""
+    unit_raw = comp.get("unit") or "$/kWh"
+    unit = _clip_str(unit_raw, _RC_UNIT_MAX) or "$/kWh"
+    tier_label = _clip_str(comp.get("tier_label"), _RC_TIER_LABEL_MAX)
+    period_label = _clip_str(comp.get("period_label"), _RC_PERIOD_LABEL_MAX)
+    season = _clip_str(comp.get("season"), _RC_SEASON_MAX)
+    clipped = []
+    if comp.get("season") and season != str(comp.get("season") or "").strip():
+        clipped.append("season")
+    if comp.get("period_label") and period_label != str(comp.get("period_label") or "").strip():
+        clipped.append("period_label")
+    if comp.get("tier_label") and tier_label != str(comp.get("tier_label") or "").strip():
+        clipped.append("tier_label")
+    if clipped:
+        log.warning(
+            f"    Clipped {', '.join(clipped)} on '{tariff_name or '?'}' "
+            f"to fit VARCHAR limits (prevents StringDataRightTruncation)"
+        )
+    return unit, tier_label, period_label, season
+
+
 def store_tariffs(utility_id: int, tariffs: list[ExtractedTariff], dry_run: bool) -> int:
     """Store validated tariffs in the database via direct DB connection."""
     if dry_run:
@@ -4693,6 +4744,8 @@ def store_tariffs(utility_id: int, tariffs: list[ExtractedTariff], dry_run: bool
             if getattr(et, "needs_review", False):
                 conf_factors = {**conf_factors, "needs_review": True}
 
+            code_clipped = _clip_str(et.code, _TARIFF_CODE_MAX) if et.code else et.code
+
             existing = session.execute(
                 select(Tariff).where(
                     Tariff.utility_id == utility_id,
@@ -4706,7 +4759,7 @@ def store_tariffs(utility_id: int, tariffs: list[ExtractedTariff], dry_run: bool
                 existing.description = et.description or existing.description
                 existing.source_url = et.source_url or existing.source_url
                 existing.effective_date = eff_date or existing.effective_date
-                existing.code = et.code or existing.code
+                existing.code = code_clipped or existing.code
                 existing.last_verified_at = datetime.now(timezone.utc)
                 existing.confidence_score = conf_score
                 existing.confidence_factors = conf_factors
@@ -4715,7 +4768,7 @@ def store_tariffs(utility_id: int, tariffs: list[ExtractedTariff], dry_run: bool
                 tariff_obj = Tariff(
                     utility_id=utility_id,
                     name=et.name,
-                    code=et.code,
+                    code=code_clipped,
                     customer_class=cc,
                     rate_type=rt,
                     description=et.description,
@@ -4742,15 +4795,21 @@ def store_tariffs(utility_id: int, tariffs: list[ExtractedTariff], dry_run: bool
                 except (ValueError, TypeError):
                     log.warning(f"    Skipping component with unparseable rate_value: {comp.get('rate_value')}")
                     continue
+                # Clip VARCHAR fields — NS Power (and other rate books) emit
+                # long season/period labels that previously crashed refresh
+                # with StringDataRightTruncation (utility 1739, 2026-09-01).
+                unit, tier_label, period_label, season = _clip_component_strings(
+                    comp, tariff_name=et.name
+                )
                 new_components.append(RateComponent(
                     component_type=ct,
-                    unit=comp.get("unit", "$/kWh"),
+                    unit=unit,
                     rate_value=rv,
                     tier_min_kwh=comp.get("tier_min_kwh"),
                     tier_max_kwh=comp.get("tier_max_kwh"),
-                    tier_label=comp.get("tier_label"),
-                    period_label=comp.get("period_label"),
-                    season=comp.get("season"),
+                    tier_label=tier_label,
+                    period_label=period_label,
+                    season=season,
                 ))
 
             if not new_components:

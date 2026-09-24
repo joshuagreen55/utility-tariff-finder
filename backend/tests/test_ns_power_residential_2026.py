@@ -104,10 +104,48 @@ class TestClassifyPlan(unittest.TestCase):
             "murb",
         )
 
-    def test_green_power_unclassified(self):
-        self.assertIsNone(
-            repair.classify_residential_plan(self._t("Optional Green Power Rider"))
+    def test_green_power_standin_maps_to_domestic(self):
+        # Prod id 60200 is Green Power mis-baked as Domestic base.
+        self.assertEqual(
+            repair.classify_residential_plan(
+                self._t(
+                    "Domestic Service Tariff Optional Green Power Rider",
+                    "02, 03, 04",
+                )
+            ),
+            "domestic",
         )
+
+    def test_prod_codes_c_d_murb(self):
+        self.assertEqual(
+            repair.classify_residential_plan(
+                self._t("Domestic Service Critical Peak Pricing Tariff", "C")
+            ),
+            "cpp",
+        )
+        self.assertEqual(
+            repair.classify_residential_plan(
+                self._t("Domestic Service Time of Use Tariff", "D")
+            ),
+            "tou",
+        )
+        self.assertEqual(
+            repair.classify_residential_plan(
+                self._t(
+                    "Multi-Unit Residential Buildings Time-of-Use Tariff",
+                    "MURB",
+                )
+            ),
+            "murb",
+        )
+
+    def test_known_stale_live_ids(self):
+        self.assertEqual(repair.NS_POWER_UTILITY_ID, 1739)
+        self.assertEqual(repair.KNOWN_STALE_LIVE["domestic"]["id"], 60200)
+        self.assertEqual(repair.KNOWN_STALE_LIVE["cpp"]["id"], 46886)
+        self.assertEqual(repair.KNOWN_STALE_LIVE["tou"]["id"], 46887)
+        self.assertEqual(repair.KNOWN_STALE_LIVE["tod"]["id"], 60201)
+        self.assertEqual(repair.KNOWN_STALE_LIVE["murb"]["id"], 60202)
 
 
 class TestExpandStackingEnergyRiders(unittest.TestCase):
@@ -246,6 +284,35 @@ class TestPreferredNsSource(unittest.TestCase):
         self.assertFalse(repair.components_match_target(fake, target))
         fake.effective_date = repair.NS_EFFECTIVE
         self.assertTrue(repair.components_match_target(fake, target))
+
+    def test_stale_20250326_book_replaced(self):
+        primary, _ = tp.resolve_preferred_rate_page(
+            "Nova Scotia Power",
+            existing_url=(
+                "https://nspower.ca/docs/default-source/regulatory/"
+                "tariff-book-20250326.pdf"
+            ),
+        )
+        self.assertIn("tariff-book-2026.pdf", primary)
+
+    def test_clip_component_strings_prevents_truncation_crash(self):
+        long_season = "Non-winter Period April 1 through October 31 all hours " + (
+            "x" * 40
+        )
+        self.assertGreater(len(long_season), tp._RC_SEASON_MAX)
+        unit, tier, period, season = tp._clip_component_strings(
+            {
+                "unit": "$/kWh",
+                "season": long_season,
+                "period_label": "On-peak (morning) 7:00 am - 11:00 am weekday",
+                "tier_label": "ok",
+            },
+            tariff_name="Domestic TOU",
+        )
+        self.assertLessEqual(len(season), tp._RC_SEASON_MAX)
+        self.assertTrue(season.endswith("…") or len(season) <= tp._RC_SEASON_MAX)
+        self.assertEqual(unit, "$/kWh")
+        self.assertEqual(tier, "ok")
 
 
 if __name__ == "__main__":

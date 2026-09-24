@@ -5,12 +5,25 @@ matching the official tariff book (Tariffs May 2026):
 
   https://www.nspower.ca/docs/default-source/regulatory/tariff-book-2026.pdf
 
-Gold (Board’s Order / current column — NOT Jan 1 2027):
+Production ground truth (utility id **1739**): five live residential keepers,
+ALL from stale ``tariff-book-20250326.pdf`` (last_verified 2026-05-07), none
+approved / none default, and **no** clean standard Domestic Service:
+
+  46886 CPP (C)     FIXED $19.17; ENERGY Critical $1.42256 / Non-Critical $0.14222
+  46887 TOU (D)     FIXED $19.17; seasonal TOU ENERGY (pre-interim)
+  60200 Green Power FIXED $19.17; ENERGY $0.15744 + $5 ADJ — NOT clean Domestic
+  60201 TOD (05,06) FIXED $19.17; seasonal ENERGY
+  60202 MURB TOU    FIXED $21.28; seasonal ENERGY
+
+Repair CREATES Domestic Service ($20.08 / $0.19128 all-in) and soft-supersedes
+60200 (and the other four stale keepers) toward the May 2026 keepers.
+
+Gold (Board's Order / current column — NOT Jan 1 2027):
 
   Domestic Service (02/03/04):
-    fixed/min $20.08/mo; base energy 18.324 ¢/kWh
+    fixed/min $20.08/mo; base energy 18.324 c/kWh
     riders: FAM AA/BA 0.156 + DSM DCRR 0.648 + Storm SCRR 0.000
-    → all-in ENERGY 19.128 ¢/kWh ($0.19128/kWh)
+    → all-in ENERGY 19.128 c/kWh ($0.19128/kWh)
 
   Domestic TOD (05/06): seasonal/TOU schedule + same riders on energy
   Domestic CPP (70): interim = standard Domestic energy (no CPP events)
@@ -21,24 +34,25 @@ Why Flux ENERGY must be all-in: Lookup / TariffDetail only render ENERGY
 (and fixed/demand). ADJUSTMENT-only FAM/DSM/Storm riders are invisible —
 same product pattern as NL Rate #1.1S all-in ENERGY work.
 
-Root cause (why we missed this book):
-  1. Seed / monitoring preferred the marketing rates-tariffs HTML hub
-     instead of the regulatory ``tariff-book-YYYY.pdf`` as the primary
-     extraction source, so refreshes often never re-anchored on May 2026.
-  2. The book’s split-line “Effective upon the date of the Board’s Order”
-     vs “Effective January 1, 2027” columns confuse extraction into the
-     wrong vintage and/or omit stacking FAM+DSM riders, understating the
-     customer-facing energy charge (NS Power’s own bill copy says the
-     energy charge includes fuel + efficiency programs).
+Root cause (why we missed the May 2026 book):
+  1. Live ``source_url`` is still ``tariff-book-20250326.pdf``. The May 2026
+     PDF URL has **0 hits** in tariffs / monitoring / fingerprints.
+     Monitoring only polls HTML marketing pages (unchanged).
+  2. Sept 1 2026 refresh for utility 1739 **crashed**
+     (``StringDataRightTruncation`` on long season/period_label) so rates
+     were never rewritten after May.
+  3. Board's Order vs Jan 2027 columns + omitted FAM/DSM understate ENERGY
+     when extraction does run.
 
 Soft-supersede only (``supersede_reason='vintage'``). Never hard-delete.
 Dry-run is the default; pass ``--apply`` to write. Idempotent when live
-keepers already match the 2026 all-in shapes. Scoped to Nova Scotia Power.
+keepers already match the 2026 all-in shapes. Scoped to Nova Scotia Power
+(default utility id 1739).
 
 Usage:
   python -m scripts.repair_ns_power_residential_2026
   python -m scripts.repair_ns_power_residential_2026 --apply
-  python -m scripts.repair_ns_power_residential_2026 --utility-id 123 --apply
+  python -m scripts.repair_ns_power_residential_2026 --utility-id 1739 --apply
 """
 from __future__ import annotations
 
@@ -65,10 +79,51 @@ from app.models.tariff import (
 # ---------------------------------------------------------------------------
 
 NS_POWER_NAME = "Nova Scotia Power"
+NS_POWER_UTILITY_ID = 1739
 NS_TARIFF_BOOK_2026_URL = (
     "https://www.nspower.ca/docs/default-source/regulatory/tariff-book-2026.pdf"
 )
+NS_STALE_SOURCE_FRAGMENT = "tariff-book-20250326.pdf"
 NS_EFFECTIVE = date(2026, 5, 1)  # Board Order / rates-in-effect date
+
+# Observed live residential keepers on utility 1739 (prod, Sep 2026) —
+# all from Mar 2025 book. Matching is by content heuristics; these ids are
+# printed in dry-run as the expected supersede set.
+KNOWN_STALE_LIVE = {
+    "cpp": {
+        "id": 46886,
+        "name": "Domestic Service Critical Peak Pricing Tariff",
+        "code": "C",
+        "note": "FIXED $19.17; ENERGY Critical $1.42256 / Non-Critical $0.14222",
+    },
+    "tou": {
+        "id": 46887,
+        "name": "Domestic Service Time of Use Tariff",
+        "code": "D",
+        "note": "FIXED $19.17; pre-interim seasonal TOU ENERGY",
+    },
+    "domestic": {
+        "id": 60200,
+        "name": "Domestic Service Tariff Optional Green Power Rider",
+        "code": "02, 03, 04",
+        "note": (
+            "NOT clean Domestic — FIXED $19.17; ENERGY $0.15744 + $5 Green "
+            "Power ADJUSTMENT. Soft-supersede when creating Domestic Service."
+        ),
+    },
+    "tod": {
+        "id": 60201,
+        "name": "Domestic Service Time-Of-Day Tariff (Optional)",
+        "code": "05, 06",
+        "note": "FIXED $19.17; seasonal ENERGY (Summer/Winter)",
+    },
+    "murb": {
+        "id": 60202,
+        "name": "Multi-Unit Residential Buildings Time-of-Use Tariff",
+        "code": "MURB",
+        "note": "FIXED $21.28; seasonal ENERGY",
+    },
+}
 
 # Domestic-class stacking riders (¢/kWh → $/kWh)
 NS_DOMESTIC_FAM = 0.00156   # 0.156 ¢
@@ -315,38 +370,55 @@ NS_RESIDENTIAL_PLANS: dict[str, dict[str, Any]] = {
 
 
 def classify_residential_plan(t: Tariff) -> str | None:
-    """Map a live residential tariff to one of the five plan keys, or None."""
+    """Map a live residential tariff to one of the five plan keys, or None.
+
+    Prod id 60200 ("…Optional Green Power Rider", codes 02/03/04) is the
+    mis-labeled Domestic stand-in — classify as ``domestic`` so the repair
+    creates a clean Domestic Service keeper and soft-supersedes 60200.
+    """
     name = (t.name or "").lower()
     code = (t.code or "").lower().replace(" ", "")
+    code_nosep = code.replace(",", "").replace("/", "")
 
-    if "murb" in name or "multi-unit" in name or "multi unit" in name or code in {
-        "89", "rate89", "ratecode89"
-    }:
+    if (
+        "murb" in name
+        or "multi-unit" in name
+        or "multi unit" in name
+        or code in {"89", "rate89", "ratecode89", "murb"}
+        or code_nosep == "89"
+    ):
         return "murb"
     # TOD before TOU — "time-of-day" must not fall through to "time of use"
     if (
         "time-of-day" in name
         or "time of day" in name
-        or code in {"05", "06", "05/06", "05,06"}
+        or code in {"05", "06", "05/06", "05,06", "05,06"}
+        or code_nosep in {"05", "06", "0506"}
     ):
         return "tod"
-    if "critical peak" in name or re.search(r"\bcpp\b", name) or code in {
-        "70", "rate70"
-    }:
+    if (
+        "critical peak" in name
+        or re.search(r"\bcpp\b", name)
+        or code in {"70", "rate70", "c"}
+        or code_nosep == "70"
+    ):
         return "cpp"
     if (
         "time of use" in name
         or "time-of-use" in name
         or re.search(r"\btou\b", name)
-        or code in {"80", "rate80"}
+        or code in {"80", "rate80", "d"}
+        or code_nosep == "80"
     ):
         return "tou"
+    # Green Power mis-baked as Domestic base (prod 60200) → domestic bucket
     if "green power" in name:
-        return None  # optional rider — not one of the five rate schedules
+        return "domestic"
     if (
         "domestic" in name
         or "standard residential" in name
-        or code in {"02", "03", "04", "02/03/04"}
+        or code in {"02", "03", "04", "02/03/04", "02,03,04"}
+        or code_nosep in {"02", "03", "04", "020304"}
     ):
         return "domestic"
     return None
@@ -490,9 +562,19 @@ def repair_utility(session: Session, utility: Utility, dry_run: bool) -> dict:
     print(f"  [{utility.name}] {len(live)} live residential tariff(s)")
     for t in live:
         plan = classify_residential_plan(t) or "?"
+        src = (t.source_url or "")
+        stale = NS_STALE_SOURCE_FRAGMENT in src
         print(
             f"    live id={t.id} plan={plan} '{t.name}' "
             f"code={t.code!r} eff={t.effective_date}"
+            f"{' [stale Mar-2025 book]' if stale else ''}"
+        )
+
+    print("  Expected prod supersede map (utility 1739):")
+    for plan_key, info in KNOWN_STALE_LIVE.items():
+        print(
+            f"    {plan_key}: id={info['id']} '{info['name']}' "
+            f"({info['code']}) — {info['note']}"
         )
 
     by_plan: dict[str, list[Tariff]] = {k: [] for k in NS_RESIDENTIAL_PLANS}
@@ -524,9 +606,18 @@ def repair_utility(session: Session, utility: Utility, dry_run: bool) -> dict:
                 break
 
         if keeper is None:
+            expected = KNOWN_STALE_LIVE.get(plan_key)
+            extra = ""
+            if plan_key == "domestic":
+                extra = (
+                    "  # missing clean Domestic; supersede Green Power "
+                    "stand-in (prod 60200)"
+                )
+            elif expected:
+                extra = f"  # supersede prod id {expected['id']}"
             print(
                 f"    CREATE '{meta['name']}' code={meta['code']} "
-                f"eff={NS_EFFECTIVE}"
+                f"eff={NS_EFFECTIVE}{extra}"
             )
             if not dry_run:
                 keeper = _make_keeper(utility, plan_key, target)
@@ -601,13 +692,16 @@ def resolve_utility(session: Session, args: argparse.Namespace) -> Utility:
         if not u:
             raise SystemExit(f"No utility with id={args.utility_id}")
         return u
+    # Default: exact prod Nova Scotia Power id when present
+    u = session.get(Utility, NS_POWER_UTILITY_ID)
+    if u and "nova scotia" in (u.name or "").lower():
+        return u
     name = args.utility_name or NS_POWER_NAME
     rows = session.execute(
         select(Utility).where(Utility.name.ilike(f"%{name}%"))
     ).scalars().all()
     if not rows:
         raise SystemExit(f"No utility matching name {name!r}")
-    # Prefer exact Nova Scotia Power when multiple match
     for u in rows:
         if u.name.strip().lower() == NS_POWER_NAME.lower():
             return u
@@ -620,15 +714,18 @@ def resolve_utility(session: Session, args: argparse.Namespace) -> Utility:
 
 def print_expected_outcome() -> None:
     print(
-        "\nExpected outcome after --apply (Nova Scotia Power only):\n"
+        "\nExpected outcome after --apply (Nova Scotia Power id=1739):\n"
         f"  Source: {NS_TARIFF_BOOK_2026_URL}\n"
-        f"  Effective: {NS_EFFECTIVE} (Board’s Order / May 2026 rates)\n"
+        f"  Effective: {NS_EFFECTIVE} (Board's Order / May 2026 rates)\n"
         f"  Domestic ENERGY all-in: {NS_DOMESTIC_ALL_IN} $/kWh "
-        f"(= 18.324 + 0.156 + 0.648 ¢)\n"
+        f"(= 18.324 + 0.156 + 0.648 c)\n"
         f"  Customer charge: ${NS_CUSTOMER_CHARGE}/mo\n"
-        "  Five live residential keepers: Domestic, TOD, CPP interim, "
-        "TOU interim, MURB TOU\n"
-        "  Older / wrong live residential soft-superseded (reason=vintage)\n"
+        "  CREATE Domestic Service (missing today) + soft-supersede "
+        "60200 Green Power stand-in\n"
+        "  SUPERSEDE 46886 CPP, 46887 TOU, 60201 TOD, 60202 MURB "
+        "(reason=vintage)\n"
+        "  Five live residential keepers after apply: Domestic, TOD, "
+        "CPP interim, TOU interim, MURB TOU\n"
         "  Jan 1 2027 column rates are NOT stored as current"
     )
 
@@ -636,16 +733,21 @@ def print_expected_outcome() -> None:
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
         description=(
-            "Repair Nova Scotia Power residential tariffs to May 2026 "
-            "tariff-book all-in ENERGY (soft-supersede only)"
+            "Repair Nova Scotia Power (id 1739) residential tariffs to "
+            "May 2026 tariff-book all-in ENERGY (soft-supersede only)"
         )
     )
     parser.add_argument(
         "--utility-name",
         default=None,
-        help=f"Substring match (default: {NS_POWER_NAME!r})",
+        help=f"Substring match (default: {NS_POWER_NAME!r} / id {NS_POWER_UTILITY_ID})",
     )
-    parser.add_argument("--utility-id", type=int, help="Exact utility id")
+    parser.add_argument(
+        "--utility-id",
+        type=int,
+        default=None,
+        help=f"Exact utility id (default: {NS_POWER_UTILITY_ID} when present)",
+    )
     parser.add_argument(
         "--apply",
         action="store_true",

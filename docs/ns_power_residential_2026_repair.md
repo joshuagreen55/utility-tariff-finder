@@ -1,74 +1,42 @@
-# NS Power residential repair — dry-run before→after (May 2026 book)
+# NS Power residential repair — live DB before→after (May 2026 book)
 
 Authoritative source:
 https://www.nspower.ca/docs/default-source/regulatory/tariff-book-2026.pdf
 Cover: **Tariffs May 2026**. Current column = “Effective upon the date of the Board’s Order”
 (rates in effect **2026-05-01**). Do **not** store the Jan 1 2027 column as live.
 
-This artifact shows the **expected** dry-run shape from
-`python -m scripts.repair_ns_power_residential_2026` (no production DB write).
-Re-run on the VM after merge to capture live id→id supersedes.
+Live prod facts (utility **1739**, read-only pull — see uploads/live-db-summary):
+five residential keepers, all from **`tariff-book-20250326.pdf`**, last_verified
+**2026-05-07**, all `approved=false` / `is_default=false`. The May 2026 PDF URL
+has **0 hits** in tariffs / monitoring / fingerprints.
 
-## Root cause (why we didn’t have the latest from this doc)
+## Root cause
 
-1. **Source discovery** seeded / monitored the marketing hub
-   `…/about-us/electricity/rates-tariffs` (and residential marketing pages)
-   instead of anchoring on the regulatory `tariff-book-YYYY.pdf`. Refreshes
-   often never re-fetched the May 2026 book as the primary extraction source.
-2. **Table layout** splits “Board’s Order” vs “Effective January 1, 2027” across
-   lines; extraction can grab the **2027** vintage or omit **FAM + DSM** riders.
-3. **Product display**: Flux / Lookup only show **ENERGY** (not ADJUSTMENT).
-   Base-only ENERGY (18.324 ¢) understates the customer-facing charge
-   (19.128 ¢ all-in). NS Power’s own bill copy says the energy charge includes
-   fuel (FAM) and efficiency programs (DSM).
+1. **Stale source PDF**: Flux ENERGY/FIXED still come from the Mar 2025 book
+   (`…/tariff-book-20250326.pdf`). Monitoring only polls HTML marketing pages
+   (`residential-rates`, `rates-tariffs`, `rate-options`) — never the 2026 PDF.
+2. **Sept 1 refresh crash**: utility 1739 `refresh_last_reason` =
+   `crash: … StringDataRightTruncation` (long season/period_label vs VARCHAR).
+   Rates were **not** rewritten after May. Pipeline now clips those fields on
+   write so a future refresh cannot die the same way.
+3. **Missing Domestic + Green Power stand-in**: there is no clean Domestic
+   Service row. Id **60200** is “Domestic … Optional Green Power Rider” with
+   stale ENERGY $0.15744 + $5 ADJUSTMENT — not the May 2026 Domestic base.
+4. Even when extraction runs, Board’s Order vs Jan 2027 columns + omitted
+   FAM/DSM understate customer-facing ENERGY (Flux shows ENERGY only).
 
-## Riders (Domestic class, 2026)
+## Before (live) → after (repair targets)
 
-| Rider | ¢/kWh |
-|-------|------:|
-| FAM AA/BA combined | 0.156 |
-| DSM DCRR (PCR 0.642 + BA 0.006) | 0.648 |
-| Storm SCRR | 0.000 |
-| **Sum** | **0.804** |
+| id | Before (Mar 2025 book) | After (May 2026 all-in) |
+|---:|------------------------|-------------------------|
+| **60200** | Green Power stand-in: FIXED $19.17; ENERGY $0.15744 + $5 ADJ | **SUPERSEDE** → new Domestic Service |
+| *(new)* | *(missing standard Domestic)* | **CREATE** Domestic 02/03/04: FIXED **$20.08**; ENERGY **$0.19128**/kWh |
+| **46886** | CPP: FIXED $19.17; Critical $1.42256 / Non-Crit $0.14222 | **SUPERSEDE** → CPP interim ENERGY **$0.19128** all hours |
+| **46887** | TOU: FIXED $19.17; seasonal pre-interim ENERGY | **SUPERSEDE** → TOU interim ENERGY **$0.19128** all hours |
+| **60201** | TOD: FIXED $19.17; Summer/Winter ENERGY | **SUPERSEDE** → TOD Board’s Order + FAM/DSM all-in |
+| **60202** | MURB: FIXED $21.28; seasonal ENERGY | **SUPERSEDE** → MURB Board’s Order + General riders; min **$22.00** |
 
-## Before → after (five residential keepers)
-
-### 1. Domestic Service (codes 02/03/04)
-
-| | Before (typical wrong) | After (May 2026 all-in) |
-|--|------------------------|-------------------------|
-| Effective | stale / 2025 / wrong column | **2026-05-01** |
-| Fixed | often ≠ $20.08 | **$20.08/mo** |
-| ENERGY | 18.324 ¢ base-only **or** 19.067 ¢ (2027) | **19.128 ¢ = $0.19128/kWh** |
-
-### 2. Domestic Service Time-Of-Day (05/06)
-
-| Season / period | Board’s Order base ¢ | All-in ENERGY $/kWh |
-|-----------------|---------------------:|--------------------:|
-| Winter Dec–Feb weekday 7am–12pm | 24.384 | 0.25188 |
-| Winter 12pm–4pm | 19.459 | 0.20263 |
-| Winter 4pm–11pm | 24.384 | 0.25188 |
-| Winter 11pm–7am (also weekends/holidays) | 11.632 | 0.12436 |
-| Mar–Nov weekday 7am–11pm | 19.459 | 0.20263 |
-| Mar–Nov 11pm–7am | 11.632 | 0.12436 |
-| Customer charge | | **$20.08/mo** |
-
-### 3. Domestic CPP (70) — interim
-
-While TVP systems are down: ENERGY = Domestic all-in **$0.19128/kWh** all hours;
-CPP events **n/a**. Fixed **$20.08**. (Do not put Nov 2026 full CPP schedule live as current.)
-
-### 4. Domestic TOU (80) — interim
-
-Interim tracks standard Domestic offer: ENERGY **$0.19128/kWh** all hours.
-Fixed **$20.08**.
-
-### 5. MURB TOU (89)
-
-Fifth residential-named schedule in the book. Uses **General-class** riders
-(FAM 0.207 + DSM 0.749 ¢). Board’s Order energy periods → all-in ENERGY;
-minimum monthly **$22.00**. Soft-supersedes any other live residential that
-doesn’t match these five (e.g. Green Power extracted as a fake schedule).
+Domestic all-in = 18.324 + 0.156 (FAM) + 0.648 (DSM) + 0.000 (Storm) = **19.128 ¢/kWh**.
 
 ## How to run on the VM (after merge)
 
@@ -76,12 +44,9 @@ doesn’t match these five (e.g. Green Power extracted as a fake schedule).
 ./deploy/sync-to-vm.sh
 docker compose restart celery-worker celery-beat api
 
-# Dry-run (default)
+# Dry-run (defaults to utility 1739)
 ./deploy/run-on-vm.sh "python -m scripts.repair_ns_power_residential_2026" --name ns-repair
 
 # Apply soft-supersede + create keepers
 ./deploy/run-on-vm.sh "python -m scripts.repair_ns_power_residential_2026 --apply" --name ns-repair-apply
 ```
-
-Optional: set `utilities.rate_page_url_override` to the May 2026 PDF, or rely on
-the new preferred-URL injection in `tariff_pipeline` on the next refresh.
