@@ -4,13 +4,17 @@ Two passes:
   1. Retire tariffs that have ZERO energy/fixed/demand components (rate
      riders only) — supersede_reason='no_core_components'.
   2. Merge prefix-duplicate names within the same utility + customer class,
-     keeping the best version (verified first, then most core/total
-     components) and pointing the rest at it via superseded_by_tariff_id
-     (supersede_reason='dup_cleanup').
+     keeping the best version (protected first, then verified, then most
+     core/total components) and pointing the rest at it via
+     superseded_by_tariff_id (supersede_reason='dup_cleanup').
 
-Rows are never hard-deleted: the soft-supersede columns keep the audit
-trail and the API filters them out. Already-superseded rows and rows that
-other tariffs point at (absorb targets) are excluded from both passes.
+Protected rows (approved / repair / manual — see
+app.services.tariff_history.is_protected) are never retired by either
+pass; when both rows of a duplicate pair are protected the pair is left
+for a human. Rows are never hard-deleted: the soft-supersede columns keep
+the audit trail, each retirement is logged to tariff_change_events, and the
+API filters retired rows out. Already-superseded rows and rows that other
+tariffs point at (absorb targets) are excluded from both passes.
 
 Usage:
   # Dry run for Nova Scotia only
@@ -33,6 +37,8 @@ from collections import defaultdict
 from sqlalchemy import text
 from sqlalchemy.orm import Session
 from app.db.session import get_sync_engine
+from app.models import Tariff
+from app.services.tariff_history import is_protected, supersede_tariff
 
 
 def _normalize(name: str) -> str:
@@ -58,6 +64,10 @@ def _build_where(country: str | None, province: str | None, states: list[str] | 
     return where, params
 
 
+def _protected(approved, confidence_factors) -> bool:
+    return is_protected({"approved": approved, "confidence_factors": confidence_factors})
+
+
 def run_cleanup(country: str | None, province: str | None, states: list[str] | None, dry_run: bool):
     where, params = _build_where(country, province, states)
     engine = get_sync_engine()
@@ -81,7 +91,8 @@ def run_cleanup(country: str | None, province: str | None, states: list[str] | N
                    COUNT(rc.id) FILTER (
                        WHERE LOWER(rc.component_type::text) IN ('energy', 'fixed', 'demand')
                    ) as core_comps,
-                   STRING_AGG(DISTINCT rc.component_type::text, ', ') as comp_types
+                   STRING_AGG(DISTINCT rc.component_type::text, ', ') as comp_types,
+                   t.approved, t.confidence_factors
             FROM tariffs t
             JOIN utilities u ON u.id = t.utility_id
             LEFT JOIN rate_components rc ON rc.tariff_id = t.id
@@ -94,7 +105,10 @@ def run_cleanup(country: str | None, province: str | None, states: list[str] | N
             ) = 0
             ORDER BY u.state_province, u.name, t.name
         """), params).fetchall()
-        rows = [r for r in rows if r[0] not in successor_ids]
+        rows = [
+            r for r in rows
+            if r[0] not in successor_ids and not _protected(r[8], r[9])
+        ]
 
         no_core_ids = [r[0] for r in rows]
         print(f"Found {len(no_core_ids)} tariffs with no core components:")
@@ -111,7 +125,8 @@ def run_cleanup(country: str | None, province: str | None, states: list[str] | N
                    COUNT(rc.id) FILTER (
                        WHERE LOWER(rc.component_type::text) IN ('energy', 'fixed', 'demand')
                    ) as core_count,
-                   (t.last_verified_at IS NOT NULL) as is_verified
+                   (t.last_verified_at IS NOT NULL) as is_verified,
+                   t.approved, t.confidence_factors
             FROM tariffs t
             JOIN utilities u ON u.id = t.utility_id
             LEFT JOIN rate_components rc ON rc.tariff_id = t.id
@@ -156,10 +171,16 @@ def run_cleanup(country: str | None, province: str | None, states: list[str] | N
                     if not is_dup:
                         continue
 
-                    # Keeper: verified beats unverified (a fresh extraction
-                    # must never lose to a stale seed), then most core
-                    # components, then most total components.
-                    keep, lose = (ri, rj) if (ri[8], ri[7], ri[6]) >= (rj[8], rj[7], rj[6]) else (rj, ri)
+                    # Keeper: protected (approved / repair / manual) beats
+                    # scraped, then verified beats unverified (a fresh
+                    # extraction must never lose to a stale seed), then most
+                    # core components, then most total components. Two
+                    # protected rows are never auto-merged.
+                    pi, pj = _protected(ri[9], ri[10]), _protected(rj[9], rj[10])
+                    if pi and pj:
+                        print(f"  [{ri[5]}] {ri[4]:<35s} | HOLD both protected: '{ri[2]}' / '{rj[2]}'")
+                        continue
+                    keep, lose = (ri, rj) if (pi, ri[8], ri[7], ri[6]) >= (pj, rj[8], rj[7], rj[6]) else (rj, ri)
                     absorbed.add(lose[0])
                     dup_pairs.append((lose[0], keep[0]))
                     print(f"  [{lose[5]}] {lose[4]:<35s} | RETIRE '{lose[2]}' ({lose[6]} comp, {lose[7]} core, verified={lose[8]})")
@@ -190,16 +211,16 @@ def run_cleanup(country: str | None, province: str | None, states: list[str] | N
             return
 
         print(f"\n  Retiring {total} tariffs (soft supersede)...")
-        if pass1_only_ids:
-            session.execute(text(
-                "UPDATE tariffs SET supersede_reason = 'no_core_components' "
-                "WHERE id = ANY(:ids)"
-            ), {"ids": pass1_only_ids})
+        event_kw = {"actor_type": "cleanup", "actor_id": "cleanup_duplicate_tariffs"}
+        for tid in pass1_only_ids:
+            supersede_tariff(
+                session, session.get(Tariff, tid), reason="no_core_components", **event_kw
+            )
         for lose_id, keep_id in dup_pairs:
-            session.execute(text(
-                "UPDATE tariffs SET superseded_by_tariff_id = :keep, "
-                "supersede_reason = 'dup_cleanup' WHERE id = :lose"
-            ), {"keep": keep_id, "lose": lose_id})
+            supersede_tariff(
+                session, session.get(Tariff, lose_id),
+                successor_id=keep_id, reason="dup_cleanup", **event_kw,
+            )
         session.commit()
         print(f"  Retired {total} tariffs. Done.\n")
 
