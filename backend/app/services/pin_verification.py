@@ -19,15 +19,19 @@ gates in order, cheapest first; the first failing gate holds it:
  7. ``arbiter_rejected`` — Opus-tier typed verdict over old row, proposal and
     document.
 
+An adapter call that raises (Mercury / Anthropic down, bad response) holds
+as ``verifier_error`` at whichever of gates 3, 6, 7 it happened.
+
 Accept: insert the verified row (approved, origin ``agent_verified``),
 soft-supersede the pinned row (reason ``agent_verify_accept``), move the pin
 to the new row, log a change event with every gate verdict. Hold: the pinned
 row is untouched; the pin goes to state ``held`` with ``hold_reason`` and the
 next signal retries. Holds are visible on the verification rows.
 
-Verifier / arbiter adapters implement the small protocols below. None ships
-enabled: wire a Mercury ``jev_verify`` adapter and an Opus arbiter through
-``PIN_VERIFIER`` / ``PIN_ARBITER`` once their spike (audit §7.3) passes.
+Verifier / arbiter adapters implement the small protocols below. Defaults
+are the Null adapters; ``PIN_VERIFIER=jev`` / ``PIN_ARBITER=opus`` select the
+Mercury Jev verifier and the Opus arbiter in ``app.services.pin_adapters``.
+Jev alone never accepts: gate 0 requires both.
 """
 from __future__ import annotations
 
@@ -36,6 +40,7 @@ import logging
 import os
 from dataclasses import asdict, dataclass, field
 from datetime import date, datetime, timezone
+from decimal import Decimal, InvalidOperation
 from typing import Protocol
 
 from sqlalchemy import func, select
@@ -160,26 +165,75 @@ class Gates:
     daily_max: int = PIN_VERIFY_DAILY_MAX
 
 
+PIN_VERIFIERS = ("none", "jev")
+PIN_ARBITERS = ("none", "opus")
+
+
 def default_gates() -> Gates:
-    """Gates from env. Only ``none`` is built in for PIN_VERIFIER / PIN_ARBITER."""
-    for var in ("PIN_VERIFIER", "PIN_ARBITER"):
-        value = os.environ.get(var, "none").strip().lower()
-        if value != "none":
-            log.warning(f"{var}={value!r} has no adapter in this build; using none (holds)")
-    return Gates()
+    """Gates from env: PIN_VERIFIER ∈ {none, jev}, PIN_ARBITER ∈ {none, opus}.
+    Unknown values or missing credentials fall back to the Null adapter."""
+    from app.services import pin_adapters
+
+    gates = Gates()
+    verifier = os.environ.get("PIN_VERIFIER", "none").strip().lower()
+    arbiter = os.environ.get("PIN_ARBITER", "none").strip().lower()
+    if verifier not in PIN_VERIFIERS:
+        log.warning(f"PIN_VERIFIER={verifier!r} is not one of {PIN_VERIFIERS}; using none (holds)")
+    if arbiter not in PIN_ARBITERS:
+        log.warning(f"PIN_ARBITER={arbiter!r} is not one of {PIN_ARBITERS}; using none (holds)")
+    gates.verifier = pin_adapters.build_verifier(verifier) or gates.verifier
+    gates.arbiter = pin_adapters.build_arbiter(arbiter) or gates.arbiter
+    return gates
+
+
+def _is_all_in(c: dict) -> bool:
+    return c.get("component_type") == "energy" and "all-in" in str(c.get("tier_label") or "").lower()
+
+
+def _base_before_riders(c: dict, components: list[dict]) -> Decimal | None:
+    """All-in ENERGY minus the ``included_in_energy`` riders that apply to it
+    (same unit; season / period match when set). The book prints the base and
+    each rider verbatim, so those are what get verified; the all-in is their
+    sum by construction."""
+    riders = [
+        r for r in components
+        if r.get("included_in_energy")
+        and (r.get("unit") or "$/kWh") == (c.get("unit") or "$/kWh")
+        and (not r.get("season") or r.get("season") == c.get("season"))
+        and (not r.get("period_label") or r.get("period_label") == c.get("period_label"))
+    ]
+    if not riders:
+        return None
+    try:
+        base = Decimal(str(c["rate_value"])) - sum(Decimal(str(r["rate_value"])) for r in riders)
+    except (InvalidOperation, KeyError):
+        return None
+    return base if base > 0 else None
+
+
+def _fmt(v) -> str:
+    return format(Decimal(str(v)).normalize(), "f")
 
 
 def build_claims(proposal: dict) -> list[Claim]:
-    """Atomic, checkable claims for every proposed component."""
+    """Atomic, checkable claims for every proposed component. An all-in
+    ENERGY value is verified through its parts (base + each rider) when the
+    proposal carries its riders; otherwise it is one ``derived_rate`` claim."""
     claims: list[Claim] = []
-    for i, c in enumerate(proposal.get("components") or []):
+    components = proposal.get("components") or []
+    for i, c in enumerate(components):
         label = c.get("period_label") or c.get("tier_label") or c.get("season") or c["component_type"]
-        derived = "all-in" in str(c.get("tier_label") or "").lower() or c.get("included_in_energy")
-        claims.append(Claim(
-            "derived_rate" if derived else "rate",
-            f"{label}: {c['component_type']} charge {c['rate_value']} {c.get('unit') or ''}".strip(),
-            i,
-        ))
+        unit = c.get("unit") or ""
+        base = _base_before_riders(c, components) if _is_all_in(c) else None
+        if base is not None:
+            base_label = c.get("period_label") or c.get("season") or "Energy"
+            claims.append(Claim("rate", f"{base_label}: base energy charge {_fmt(base)} {unit} before riders".strip(), i))
+        else:
+            claims.append(Claim(
+                "derived_rate" if _is_all_in(c) else "rate",
+                f"{label}: {c['component_type']} charge {c['rate_value']} {unit}".strip(),
+                i,
+            ))
         if c.get("period_start_time") and c.get("period_end_time"):
             claims.append(Claim(
                 "clock",
@@ -382,7 +436,14 @@ def run_verification(session, verification, gates: Gates | None = None) -> str:
         results["fetch_error"] = str(e)[:300]
         return _hold(session, v, pin, current, "fetch_failed", results)
     v.new_source_hash = v.new_source_hash or doc_hash
-    if not gates.verifier.screen(text):
+    try:
+        safe = gates.verifier.screen(text)
+    except Exception as e:
+        results["verifier_error"] = f"screen: {e}"[:300]
+        return _hold(session, v, pin, current, "verifier_error", results)
+    if getattr(gates.verifier, "last_screen", None) is not None:
+        results["screen"] = gates.verifier.last_screen
+    if not safe:
         return _hold(session, v, pin, current, "injection_suspected", results)
 
     proposal = v.proposed or gates.extractor.extract(url, text, current)
@@ -394,7 +455,11 @@ def run_verification(session, verification, gates: Gates | None = None) -> str:
     if rule:
         return _hold(session, v, pin, current, rule, results)
 
-    verdicts = gates.verifier.verify(text, build_claims(proposal))
+    try:
+        verdicts = gates.verifier.verify(text, build_claims(proposal))
+    except Exception as e:
+        results["verifier_error"] = f"verify: {e}"[:300]
+        return _hold(session, v, pin, current, "verifier_error", results)
     results["claims"] = [
         {**asdict(vd.claim), "verdict": vd.verdict, "confidence": vd.confidence} for vd in verdicts
     ]
@@ -402,10 +467,14 @@ def run_verification(session, verification, gates: Gates | None = None) -> str:
     if failure:
         return _hold(session, v, pin, current, failure, results)
 
-    arb = gates.arbiter.decide(
-        current=_current_snapshot(current), proposal=proposal,
-        document_text=text, previous_text=None,
-    )
+    try:
+        arb = gates.arbiter.decide(
+            current=_current_snapshot(current), proposal=proposal,
+            document_text=text, previous_text=None,
+        )
+    except Exception as e:
+        results["verifier_error"] = f"arbiter: {e}"[:300]
+        return _hold(session, v, pin, current, "verifier_error", results)
     results["arbiter"] = asdict(arb)
     if not arb.accept:
         return _hold(session, v, pin, current, "arbiter_rejected", results)

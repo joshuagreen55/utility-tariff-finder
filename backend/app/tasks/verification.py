@@ -2,8 +2,9 @@
 
 Not on beat by default. With the default Null verifier/arbiter every
 proposal is held as ``verifier_unavailable`` without fetching or calling an
-LLM, so enabling the beat entry is safe; real accepts need PIN_VERIFIER /
-PIN_ARBITER adapters.
+LLM. With PIN_VERIFIER=jev and PIN_ARBITER=opus it spends Mercury + Opus
+money (recorded in the LLM cost ledger as ``pin_verifications``); schedule
+it only after a deliberate cost check.
 """
 import logging
 
@@ -13,7 +14,7 @@ from sqlalchemy.orm import Session
 from app.db.session import get_sync_engine
 from app.models import TariffVerification
 from app.services.corrections import CorrectionError, utility_lock
-from app.services.pin_verification import default_gates, run_verification
+from app.services.pin_verification import NullArbiter, NullVerifier, default_gates, run_verification
 from app.services.pins import open_periodic_verifications
 from app.tasks.celery_app import celery_app
 
@@ -26,8 +27,12 @@ log = logging.getLogger(__name__)
     soft_time_limit=1700,
 )
 def process_pin_verifications(limit: int = 20) -> dict:
+    from scripts import llm_cost
+
     engine = get_sync_engine()
     gates = default_gates()
+    spends = not (isinstance(gates.verifier, NullVerifier) and isinstance(gates.arbiter, NullArbiter))
+    llm_cost.reset()
     with Session(engine) as session:
         opened = open_periodic_verifications(session)
         session.commit()
@@ -51,5 +56,9 @@ def process_pin_verifications(limit: int = 20) -> dict:
             outcome = "error"
         outcomes[outcome] = outcomes.get(outcome, 0) + 1
     summary = {"periodic_opened": len(opened), "processed": len(pending), "outcomes": outcomes}
+    if spends:
+        summary["llm_cost_usd"] = llm_cost.summary()["total_usd"]
+        summary["jev_gateway_usd"] = round(getattr(gates.verifier, "gateway_usd", 0.0), 6)
+        llm_cost.append_ledger("pin_verifications")
     log.info(f"Pin verifications: {summary}")
     return summary

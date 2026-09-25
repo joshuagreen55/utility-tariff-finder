@@ -365,6 +365,55 @@ class TestPinVerification(PostgresTestCase, _SettingsPatch):
                 self.assertEqual((outcome, reason), ("held", expected))
                 self.assertIsNone(self.get_tariff(self.tid).supersede_reason)
 
+    def test_jev_verifier_and_opus_arbiter_end_to_end(self):
+        from app.services import pin_adapters as pa
+        from tests.test_pin_adapters import FakeMercury, opus_arbiter
+
+        mercury = FakeMercury()
+        arbiter = opus_arbiter(True)
+        outcome, reason, new_id = self._run(self._open(self._proposal()),
+                                            verifier=pa.JevVerifier(mercury), arbiter=arbiter)
+        self.assertEqual((outcome, reason), ("accepted", None))
+        self.assertEqual(self.get_tariff(self.tid).supersede_reason, "agent_verify_accept")
+        self.assertEqual([t for t, _ in mercury.calls], ["jev_screen", "jev_verify"])
+        self.assertEqual(mercury.calls[1][1]["claims"],
+                         ["energy: energy charge 0.21 $/kWh", "Rates effective 2027-05-01"])
+        self.assertEqual(len(arbiter._post.calls), 1)
+        ev = [e for e in self.events_for(self.uid) if e.decision == "supersede" and e.after_tariff_id == new_id]
+        gates = ev[0].payload["gates"]
+        self.assertEqual((gates["screen"]["action"], gates["arbiter"]["model"]), ("pass", "claude-opus-test"))
+
+    def test_jev_and_opus_adapter_holds(self):
+        from app.services import pin_adapters as pa
+        from tests.test_pin_adapters import FakeMercury, opus_arbiter
+
+        cases = [
+            (FakeMercury({"0.21": ("contradicted", 0.98, "auto")}), opus_arbiter(True), "claims_contradicted"),
+            (FakeMercury({"0.21": ("verified", 0.85, "review")}), opus_arbiter(True), "claims_unsupported"),
+            (FakeMercury(screen_action="review"), opus_arbiter(True), "injection_suspected"),
+            (FakeMercury(), opus_arbiter(False), "arbiter_rejected"),
+            (FakeMercury(fail=True), opus_arbiter(True), "verifier_error"),
+        ]
+        for mercury, arbiter, expected in cases:
+            with self.subTest(expected=expected):
+                outcome, reason, _ = self._run(self._open(self._proposal()),
+                                               verifier=pa.JevVerifier(mercury), arbiter=arbiter)
+                self.assertEqual((outcome, reason), ("held", expected))
+                self.assertIsNone(self.get_tariff(self.tid).supersede_reason)
+                if expected in ("claims_contradicted", "claims_unsupported", "injection_suspected"):
+                    self.assertEqual(arbiter._post.calls, [])
+
+    def test_jev_alone_never_accepts(self):
+        from app.services import pin_adapters as pa
+        from tests.test_pin_adapters import FakeMercury
+
+        mercury = FakeMercury()
+        outcome, reason, _ = self._run(self._open(self._proposal()),
+                                       verifier=pa.JevVerifier(mercury), arbiter=pv.NullArbiter())
+        self.assertEqual((outcome, reason), ("held", "verifier_unavailable"))
+        self.assertEqual(mercury.calls, [])
+        self.assertIsNone(self.get_tariff(self.tid).supersede_reason)
+
     def test_fingerprint_touch_skips_pinned_rows(self):
         other = self.make_tariff(self.uid, "Residential TOU", [_energy(0.1)])
         pinned_before = self.get_tariff(self.tid).last_verified_at
