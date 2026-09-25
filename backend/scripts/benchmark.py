@@ -56,6 +56,8 @@ class TariffMatch:
     expect_computable: bool | None = None
     db_computable: bool | None = None
     db_computable_reasons: list[str] = field(default_factory=list)
+    failure_modes: dict = field(default_factory=dict)
+    top_failure: str = ""
 
 
 @dataclass
@@ -222,6 +224,74 @@ def _compare_components(
     return round(precision, 3), round(recall, 3), errors
 
 
+FAILURE_MODES = (
+    "product_match", "wrong_price", "missing_clock", "day_type",
+    "missing_season", "tier_bounds", "missing_component", "extra_component",
+)
+
+
+def failure_taxonomy(gt_components: list[dict], db_components: list, errors: list[dict],
+                     tol: Tolerance = Tolerance()) -> dict[str, int]:
+    """Count why a matched tariff misses its gold, per gold component.
+
+    ``wrong_price``: a row with the gold structure exists but its value is
+    off. For a missing structure, the closest-priced DB row of the same type
+    names the field that differs: clock window, day type, season dates or
+    tier bounds; no same-priced row at all is ``missing_component``.
+    """
+    counts = {m: 0 for m in FAILURE_MODES}
+    get = lambda c, k: c.get(k) if isinstance(c, dict) else getattr(c, k, None)  # noqa: E731
+
+    def ctype(c) -> str:
+        v = get(c, "component_type")
+        return getattr(v, "value", v)
+
+    for e in errors:
+        if e.get("actual") is not None:
+            counts["wrong_price"] += 1
+            continue
+        gold = next(
+            (g for g in gt_components
+             if g["component_type"] == e["component_type"] and g["rate_value"] == e["expected"]
+             and list(_structure_key(g)) == (e.get("structure") or list(_structure_key(g)))),
+            None,
+        )
+        same_price = [
+            d for d in db_components
+            if ctype(d) == e["component_type"]
+            and _rate_close(e["expected"], float(get(d, "rate_value")), e["component_type"], tol)
+        ]
+        if gold is None or not same_price:
+            counts["missing_component"] += 1
+            continue
+        gk = _structure_key(gold)
+
+        def distance(d) -> int:
+            dk = _structure_key(d)
+            return sum(a != b for a, b in zip(gk, dk))
+
+        dk = _structure_key(min(same_price, key=distance))
+        if gk[0:2] != dk[0:2]:
+            counts["missing_clock"] += 1
+        elif gk[2] != dk[2]:
+            counts["day_type"] += 1
+        elif gk[3:7] != dk[3:7]:
+            counts["missing_season"] += 1
+        else:
+            counts["tier_bounds"] += 1
+    counts["extra_component"] = max(0, len(db_components) - len(gt_components))
+    return counts
+
+
+def top_failure(modes: dict[str, int], *, matched: bool) -> str:
+    if not matched:
+        return "product_match"
+    ranked = [m for m in FAILURE_MODES if m != "extra_component" and modes.get(m)]
+    if ranked:
+        return max(ranked, key=lambda m: modes[m])
+    return "extra_component" if modes.get("extra_component") else "none"
+
+
 def resolve_utility_id(session: Session, gt_entry: dict) -> int | None:
     if gt_entry.get("utility_id"):
         return gt_entry["utility_id"]
@@ -267,6 +337,7 @@ def benchmark_utility(session: Session, gt_entry: dict, tol: Tolerance = Toleran
             comps = list(best.rate_components)
             prec, rec, errs = _compare_components(gt_t["components"], comps, tol)
             verdict = evaluate_computable(best.rate_type, comps, name=best.name)
+            modes = failure_taxonomy(gt_t["components"], comps, errs, tol)
             result.matches.append(TariffMatch(
                 gt_name=gt_t["name"],
                 gt_class=gt_t["customer_class"],
@@ -279,6 +350,8 @@ def benchmark_utility(session: Session, gt_entry: dict, tol: Tolerance = Toleran
                 expect_computable=gt_t.get("expect_computable"),
                 db_computable=verdict.computable,
                 db_computable_reasons=list(verdict.reasons),
+                failure_modes=modes,
+                top_failure=top_failure(modes, matched=True),
             ))
         else:
             result.missing_tariffs.append(gt_t["name"])
@@ -286,6 +359,8 @@ def benchmark_utility(session: Session, gt_entry: dict, tol: Tolerance = Toleran
                 gt_name=gt_t["name"],
                 gt_class=gt_t["customer_class"],
                 matched=False,
+                expect_computable=gt_t.get("expect_computable"),
+                top_failure="product_match",
             ))
 
     for t in db_tariffs:
@@ -307,6 +382,11 @@ def main():
     parser.add_argument(
         "--fixtures", nargs="+", default=[str(p) for p in DEFAULT_FIXTURES],
         help="Ground-truth fixture files (default: flat/tiered + TOU/seasonal gold)",
+    )
+    parser.add_argument(
+        "--baseline", type=str,
+        help="Earlier --output report; exit 1 if computable agreement drops or "
+             "rate / structure errors rise against it",
     )
     args = parser.parse_args()
 
@@ -394,24 +474,73 @@ def main():
         n_errors = sum(len(m.rate_errors) for m in r.matches)
         print(f"  {r.name[:35]:35s} {r.state:3s} {status:8s} {n_matched}/{r.gt_tariff_count} tariffs  {n_errors} rate errors")
 
+    gold = [(r, m) for r in results for m in r.matches if m.expect_computable is not None]
+    mode_totals = {k: 0 for k in FAILURE_MODES}
+    for _r, m in gold:
+        for k, v in (m.failure_modes or {}).items():
+            mode_totals[k] = mode_totals.get(k, 0) + v
+        if not m.matched:
+            mode_totals["product_match"] += 1
+    if gold:
+        print("\nTOU / seasonal gold scoreboard (top failure per tariff):")
+        for r, m in gold:
+            verdict = "computable" if m.db_computable else "NOT computable" if m.matched else "-"
+            modes = ", ".join(f"{k}={v}" for k, v in (m.failure_modes or {}).items() if v)
+            print(f"  {r.name[:22]:22s} {m.gt_name[:40]:40s} {m.top_failure or 'none':17s} "
+                  f"{verdict:15s} {modes} {'; '.join(m.db_computable_reasons[:2])}")
+        print("  totals: " + ", ".join(f"{k}={v}" for k, v in mode_totals.items()))
+
+    summary = {
+        "utilities_tested": len(results),
+        "utilities_with_data": utilities_with_data,
+        "utilities_perfect": utilities_perfect,
+        "tariff_recall": round(total_matched / total_gt_tariffs, 3) if total_gt_tariffs else 0,
+        "avg_component_precision": round(avg_comp_precision, 3),
+        "avg_component_recall": round(avg_comp_recall, 3),
+        "total_rate_errors": total_rate_errors,
+        "structure_errors": structure_errors,
+        "computable_agreement": f"{computable_agree}/{len(computable_checked)}",
+        "computable_agree": computable_agree,
+        "computable_checked": len(computable_checked),
+        "gold_failure_modes": mode_totals,
+    }
+
+    regressions = []
+    if args.baseline:
+        with open(args.baseline) as f:
+            regressions = gold_regressions(json.load(f).get("summary") or {}, summary)
+        print("\nAgainst baseline " + args.baseline + ": "
+              + ("; ".join(regressions) if regressions else "no regression"))
+
     if args.output:
         report = {
-            "summary": {
-                "utilities_tested": len(results),
-                "utilities_with_data": utilities_with_data,
-                "utilities_perfect": utilities_perfect,
-                "tariff_recall": round(total_matched / total_gt_tariffs, 3) if total_gt_tariffs else 0,
-                "avg_component_precision": round(avg_comp_precision, 3),
-                "avg_component_recall": round(avg_comp_recall, 3),
-                "total_rate_errors": total_rate_errors,
-                "structure_errors": structure_errors,
-                "computable_agreement": f"{computable_agree}/{len(computable_checked)}",
-            },
+            "summary": summary,
             "utilities": [asdict(r) for r in results],
         }
         with open(args.output, "w") as f:
             json.dump(report, f, indent=2, default=str)
         log.info(f"\nReport written to {args.output}")
+    if regressions:
+        sys.exit(1)
+
+
+def _agree(summary: dict) -> int | None:
+    if "computable_agree" in summary:
+        return int(summary["computable_agree"])
+    raw = str(summary.get("computable_agreement") or "")
+    return int(raw.split("/")[0]) if "/" in raw else None
+
+
+def gold_regressions(baseline: dict, current: dict) -> list[str]:
+    """Human-readable regressions of ``current`` against ``baseline``."""
+    out = []
+    b, c = _agree(baseline), _agree(current)
+    if b is not None and c is not None and c < b:
+        out.append(f"computable agreement {c} < {b}")
+    for key, label in (("total_rate_errors", "rate errors"), ("structure_errors", "structure misses")):
+        if key in baseline and current.get(key, 0) > baseline[key]:
+            out.append(f"{label} {current[key]} > {baseline[key]}")
+    return out
 
 
 if __name__ == "__main__":

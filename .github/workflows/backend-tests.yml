@@ -53,5 +53,7 @@ jobs:
           alembic upgrade head
       - name: TOU / seasonal completeness suite
         run: python -m scripts.check_tou_seasonal_completeness
+      - name: Gold replay (every gold TOU / seasonal tariff survives Phase 4 + mapping)
+        run: python -m scripts.gold_replay --forms
       - name: All backend tests (unit + DB-backed regression)
         run: python -m unittest discover -s tests -v
