@@ -19,41 +19,56 @@ except ImportError:
     pdfplumber = None
 
 
+# Normalized text kept on the monitoring source for the next diff / for
+# verifiers comparing old vs new (Jev jev_compare passages are ≤20k chars).
+CONTENT_TEXT_MAX = 20_000
+
+
+def stable_text_hash(text: str) -> str:
+    """sha256 of normalized text: the document hash shared by monitoring,
+    pins and tariffs.source_document_hash (stable across markup/nonce churn)."""
+    return hashlib.sha256(_normalize_text(text or "").encode("utf-8")).hexdigest()
+
+
+async def fetch_document(url: str, *, timeout: int = 12) -> tuple[str, str]:
+    """(normalized text, stable hash) for a URL; raises on failure."""
+    t = httpx.Timeout(timeout, connect=6.0)
+    async with httpx.AsyncClient(
+        timeout=t,
+        follow_redirects=True,
+        max_redirects=5,
+        headers={"User-Agent": "UtilityTariffMonitor/0.1"},
+    ) as client:
+        resp = await asyncio.wait_for(client.get(url), timeout=timeout)
+        resp.raise_for_status()
+
+    content_type = resp.headers.get("content-type", "")
+    if "pdf" in content_type or url.lower().endswith(".pdf"):
+        text = _extract_pdf_text(resp.content)
+    else:
+        text = _extract_html_text(resp.text)
+    text = _normalize_text(text)
+    return text, hashlib.sha256(text.encode("utf-8")).hexdigest()
+
+
 async def fetch_and_hash_url(url: str, *, timeout: int = 12) -> dict:
     """Fetch a URL, extract meaningful text content, and return a content hash.
 
-    Returns dict with keys: content_hash, content_preview, error
+    Returns dict with keys: content_hash, content_preview, content_text, error
     """
     try:
-        t = httpx.Timeout(timeout, connect=6.0)
-        async with httpx.AsyncClient(
-            timeout=t,
-            follow_redirects=True,
-            max_redirects=5,
-            headers={"User-Agent": "UtilityTariffMonitor/0.1"},
-        ) as client:
-            resp = await asyncio.wait_for(client.get(url), timeout=timeout)
-            resp.raise_for_status()
-
-        content_type = resp.headers.get("content-type", "")
-
-        if "pdf" in content_type or url.lower().endswith(".pdf"):
-            text = _extract_pdf_text(resp.content)
-        else:
-            text = _extract_html_text(resp.text)
-
-        text = _normalize_text(text)
-        content_hash = hashlib.sha256(text.encode("utf-8")).hexdigest()
-
+        text, content_hash = await fetch_document(url, timeout=timeout)
         return {
             "content_hash": content_hash,
             "content_preview": text[:500],
+            "content_text": text[:CONTENT_TEXT_MAX],
             "error": None,
         }
     except Exception as e:
         return {
             "content_hash": None,
             "content_preview": None,
+            "content_text": None,
             "error": str(e),
         }
 

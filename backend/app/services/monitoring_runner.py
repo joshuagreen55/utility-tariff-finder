@@ -17,6 +17,7 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.models import MonitoringLog, MonitoringSource, MonitoringStatus, ReviewStatus
+from app.services import pins
 from app.services.monitor import compute_diff_summary, fetch_and_hash_url
 
 
@@ -69,17 +70,21 @@ def _persist_result(
 
         content_hash = result["content_hash"]
         changed = last_hash is not None and last_hash != content_hash
+        new_text = result.get("content_text") or result["content_preview"]
 
         if changed:
-            diff_summary = compute_diff_summary(None, result["content_preview"])
+            diff_summary = compute_diff_summary(source.last_content_text, new_text)
             source.status = MonitoringStatus.CHANGED
             source.last_changed_at = now
+            pins.on_source_changed(session, source.url, content_hash)
         else:
             diff_summary = None
             source.status = MonitoringStatus.UNCHANGED
+            pins.on_source_checked(session, source.url, content_hash)
 
         source.last_checked_at = now
         source.last_content_hash = content_hash
+        source.last_content_text = new_text
 
         session.add(
             MonitoringLog(
