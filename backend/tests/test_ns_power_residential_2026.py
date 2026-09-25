@@ -6,12 +6,18 @@ Runnable without a database:
 """
 from __future__ import annotations
 
+import copy
+import json
 import unittest
 from datetime import date
+from pathlib import Path
 from types import SimpleNamespace
 
+from app.services.computable import evaluate_computable
 from scripts import tariff_pipeline as tp
 from scripts import repair_ns_power_residential_2026 as repair
+
+FIXTURE_DIR = Path(__file__).parent / "fixtures"
 
 
 class TestNsAllInMath(unittest.TestCase):
@@ -58,22 +64,25 @@ class TestNsAllInMath(unittest.TestCase):
         energy = [c for c in comps if c["component_type"] == "energy"]
         fixed = [c for c in comps if c["component_type"] == "fixed"]
         self.assertEqual(fixed[0]["rate_value"], 20.08)
-        # 1 non-winter + 4 winter periods (not a single interim row)
-        self.assertEqual(len(energy), 5)
+        # 1 non-winter + 4 winter weekday + winter weekend + winter holiday
+        self.assertEqual(len(energy), 7)
         nw = next(c for c in energy if "Non-winter" in c["season"])
         self.assertEqual(nw["period_label"], "All hours")
+        self.assertEqual(nw["day_type"], "all")
         # 12.860 + 0.804 = 13.664 ¢
         self.assertEqual(nw["rate_value"], 0.13664)
         self.assertEqual(nw["rate_value"], repair.all_in_domestic(12.860))
         winter = [c for c in energy if c["season"].startswith("Winter")]
-        self.assertEqual(len(winter), 4)
-        onpeak = [c for c in winter if "On-peak" in c["period_label"]]
-        offpeak = [c for c in winter if "Off-peak" in c["period_label"]]
+        self.assertEqual(len(winter), 6)
+        weekday = [c for c in winter if c["day_type"] == "weekday"]
+        self.assertEqual(len(weekday), 4)
+        onpeak = [c for c in weekday if "On-peak" in c["period_label"]]
+        offpeak = [c for c in weekday if "Off-peak" in c["period_label"]]
         self.assertEqual(len(onpeak), 2)
         self.assertEqual(len(offpeak), 2)
         # 36.517 + 0.804 = 37.321 ¢; 18.324 + 0.804 = 19.128 ¢
-        self.assertEqual(onpeak[0]["rate_value"], 0.37321)
-        self.assertEqual(offpeak[0]["rate_value"], 0.19128)
+        self.assertEqual({c["rate_value"] for c in onpeak}, {0.37321})
+        self.assertEqual({c["rate_value"] for c in offpeak}, {0.19128})
         # Jan 1 2027 escalate column must not appear
         future_on = repair.all_in_domestic(38.281)
         future_off = repair.all_in_domestic(19.067)
@@ -89,6 +98,7 @@ class TestNsAllInMath(unittest.TestCase):
             rate_components=[
                 SimpleNamespace(
                     component_type=c["component_type"],
+                    unit=c["unit"],
                     rate_value=c["rate_value"],
                     season=c.get("season"),
                     period_label=c.get("period_label"),
@@ -97,6 +107,26 @@ class TestNsAllInMath(unittest.TestCase):
             ],
         )
         self.assertFalse(repair.components_match_target(fake, seasonal))
+
+    def test_tou_winter_note1_weekend_and_holiday_rows(self):
+        energy = [
+            c for c in repair.build_domestic_tou_seasonal_components()
+            if c["component_type"] == "energy"
+        ]
+        for day_type in ("weekend", "holiday"):
+            rows = [c for c in energy if c["day_type"] == day_type]
+            self.assertEqual(len(rows), 1, day_type)
+            row = rows[0]
+            self.assertEqual(row["rate_value"], 0.19128)
+            self.assertEqual(
+                (row["period_start_time"], row["period_end_time"]), ("00:00", "00:00")
+            )
+            self.assertEqual(row["season"], repair.NS_TOU_WINTER_SEASON)
+            self.assertEqual(
+                (row["season_start_month"], row["season_start_day"],
+                 row["season_end_month"], row["season_end_day"]),
+                (11, 1, 3, 31),
+            )
 
     def test_tou_plan_is_seasonal_tou(self):
         meta = repair.NS_RESIDENTIAL_PLANS["tou"]
@@ -115,6 +145,103 @@ class TestNsAllInMath(unittest.TestCase):
             if "Non-Winter" in c["season"] and "Off-Peak" in c["period_label"]
         )
         self.assertEqual(off["rate_value"], repair.all_in_murb(11.826))
+
+
+def _gold_ns_tou() -> dict:
+    data = json.loads((FIXTURE_DIR / "ground_truth_tou_seasonal.json").read_text())
+    return next(
+        t
+        for u in data["utilities"]
+        if u.get("utility_id") == repair.NS_POWER_UTILITY_ID
+        for t in u["tariffs"]
+        if t["code"] == "80"
+    )
+
+
+def _weekday_only_winter(comps: list[dict]) -> list[dict]:
+    """Pre-fix keeper shape: Note 1 weekend/holiday rows absent."""
+    return [c for c in comps if c.get("day_type") not in ("weekend", "holiday")]
+
+
+def _keeper(comps: list[dict]):
+    return repair._make_keeper(
+        SimpleNamespace(id=repair.NS_POWER_UTILITY_ID), "tou", comps
+    )
+
+
+class TestRate80ComputableAndMatch(unittest.TestCase):
+    def test_builder_matches_gold_fixture_exactly(self):
+        gold = _gold_ns_tou()
+        built = repair.build_domestic_tou_seasonal_components()
+        self.assertEqual(
+            gold["rate_type"], repair.NS_RESIDENTIAL_PLANS["tou"]["rate_type"].value
+        )
+        self.assertEqual(gold["effective_date"], repair.NS_EFFECTIVE.isoformat())
+        key = lambda c: json.dumps(c, sort_keys=True)  # noqa: E731
+        self.assertEqual(
+            sorted(map(key, gold["components"])), sorted(map(key, built))
+        )
+        self.assertEqual(
+            {c.get("day_type") for c in built if c["component_type"] == "energy"},
+            {"all", "weekday", "weekend", "holiday"},
+        )
+
+    def test_builder_output_is_computable(self):
+        comps = repair.build_domestic_tou_seasonal_components()
+        res = evaluate_computable("seasonal_tou", comps)
+        self.assertTrue(res.computable, res.reasons)
+        self.assertIn("holiday_rows_require_calendar", res.warnings)
+        self.assertTrue(_gold_ns_tou()["expect_computable"])
+
+    def test_created_keeper_is_computable(self):
+        keeper = _keeper(repair.build_domestic_tou_seasonal_components())
+        res = evaluate_computable(keeper.rate_type, keeper.rate_components)
+        self.assertTrue(res.computable, res.reasons)
+
+    def test_weekday_only_winter_is_not_computable(self):
+        broken = _weekday_only_winter(repair.build_domestic_tou_seasonal_components())
+        res = evaluate_computable("seasonal_tou", broken)
+        self.assertFalse(res.computable)
+        self.assertIn("tou_gap:weekend@11/01-03/31", res.reasons)
+
+    def test_keep_exact_keeper(self):
+        target = repair.build_domestic_tou_seasonal_components()
+        self.assertTrue(repair.components_match_target(_keeper(target), target))
+
+    def test_weekday_only_keeper_is_not_kept(self):
+        target = repair.build_domestic_tou_seasonal_components()
+        broken = _keeper(_weekday_only_winter(target))
+        self.assertFalse(repair.components_match_target(broken, target))
+
+    def test_match_does_not_ignore_day_type(self):
+        target = repair.build_domestic_tou_seasonal_components()
+        # Same (rate, season, period_label) rows; Note 1 rows mis-typed weekday.
+        mistyped = copy.deepcopy(target)
+        for c in mistyped:
+            if c.get("day_type") in ("weekend", "holiday"):
+                c["day_type"] = "weekday"
+        self.assertFalse(repair.components_match_target(_keeper(mistyped), target))
+
+    def test_match_does_not_ignore_clocks(self):
+        target = repair.build_domestic_tou_seasonal_components()
+        shifted = copy.deepcopy(target)
+        peak = next(c for c in shifted if c.get("period_start_time") == "07:00")
+        peak["period_start_time"] = "08:00"
+        self.assertFalse(repair.components_match_target(_keeper(shifted), target))
+
+    def test_every_plan_keeper_matches_its_own_target(self):
+        utility = SimpleNamespace(id=repair.NS_POWER_UTILITY_ID)
+        for key, meta in repair.NS_RESIDENTIAL_PLANS.items():
+            target = meta["build"]()
+            keeper = repair._make_keeper(utility, key, target)
+            self.assertTrue(repair.components_match_target(keeper, target), key)
+
+    def test_match_ignores_decorative_tier_label(self):
+        target = repair.build_domestic_tou_seasonal_components()
+        relabelled = copy.deepcopy(target)
+        for c in relabelled:
+            c["tier_label"] = "reworded"
+        self.assertTrue(repair.components_match_target(_keeper(relabelled), target))
 
 
 class TestClassifyPlan(unittest.TestCase):
@@ -320,12 +447,14 @@ class TestPreferredNsSource(unittest.TestCase):
             rate_components=[
                 SimpleNamespace(
                     component_type="energy",
+                    unit="$/kWh",
                     rate_value=0.19128,
                     season=None,
                     period_label=None,
                 ),
                 SimpleNamespace(
                     component_type="fixed",
+                    unit="$/month",
                     rate_value=20.08,
                     season=None,
                     period_label=None,
@@ -401,10 +530,14 @@ class TestDryRunNarrativeRate80(unittest.TestCase):
         after_e = [c for c in after if c["component_type"] == "energy"]
         self.assertEqual(len(before_e), 1)
         self.assertEqual(before_e[0]["rate_value"], 0.19128)
-        self.assertEqual(len(after_e), 5)
+        self.assertEqual(len(after_e), 7)
         by_key = {
             (c["season"], c["period_label"]): c["rate_value"] for c in after_e
         }
+        self.assertEqual(
+            by_key[(repair.NS_TOU_WINTER_SEASON, repair.NS_TOU_NOTE1_PERIOD_LABEL)],
+            0.19128,
+        )
         self.assertEqual(
             by_key[(repair.NS_TOU_NONWINTER_SEASON, "All hours")], 0.13664
         )

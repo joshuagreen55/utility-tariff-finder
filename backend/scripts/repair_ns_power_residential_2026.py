@@ -17,13 +17,17 @@ Gold (Board's Order / Energy Charge — NOT Jan 1 2027 escalate columns):
   Domestic TOU (80): **ENERGY CHARGE seasonal TOU** (not flat interim):
     Non-winter Apr–Oct all hours 12.860¢ base → $0.13664 all-in
     Winter Nov–Mar on-peak 36.517¢ → $0.37321; off-peak 18.324¢ → $0.19128
-    (Winter weekends/holidays = off-peak — Note 1; documented on tariff.)
+    Winter Sat/Sun/holidays = off-peak all hours (Note 1) → weekend and
+    holiday ENERGY rows 00:00–00:00 at $0.19128
   MURB TOU (89): General-class riders on seasonal TOU
 
 Post-PR #6 prod (utility **1739**): Domestic/TOD/CPP/MURB keepers may
 already match. Live code **80** keeper **67033** was wrongly flattened to
-a single interim ENERGY $0.19128 (rate_type=TOU). This repair soft-supersedes
-67033 and creates SEASONAL_TOU matching the 4-page Energy Charge schedule.
+a single interim ENERGY $0.19128 (rate_type=TOU). A seasonal keeper built
+before Note 1 was modelled has weekday-only winter rows and is not
+computable (``tou_gap:weekend@11/01-03/31``). Matching compares every
+structured ENERGY field (incl. ``day_type`` and clocks), so either shape is
+soft-superseded by a SEASONAL_TOU keeper that covers every winter day type.
 
 Why Flux ENERGY must be all-in: Lookup / TariffDetail only render ENERGY
 (and fixed/demand). ADJUSTMENT-only FAM/DSM/Storm riders are invisible —
@@ -59,6 +63,12 @@ from app.models.tariff import (
     RateComponent,
     RateType,
 )
+from app.services.computable import evaluate_computable
+from app.services.tariff_history import (
+    component_signature,
+    record_event,
+    supersede_tariff,
+)
 
 # ---------------------------------------------------------------------------
 # Published May 2026 book figures (cents → dollars at use sites)
@@ -71,6 +81,7 @@ NS_TARIFF_BOOK_2026_URL = (
 )
 NS_STALE_SOURCE_FRAGMENT = "tariff-book-20250326.pdf"
 NS_EFFECTIVE = date(2026, 5, 1)  # Board Order / rates-in-effect date
+_EVENT_KW = {"actor_type": "script", "actor_id": "repair_ns_power_residential_2026"}
 
 # Expected supersede targets printed in dry-run. After PR #6 apply, most
 # plans may already match; code 80 keeper **67033** is the flat-interim
@@ -127,6 +138,7 @@ NS_TOU_WEEKEND_NOTE = (
     "Sundays, and holidays (Jan 1, NS Heritage Day, Good Friday, Easter "
     "Monday, Nov 11, Dec 25–26; observed weekday if weekend)."
 )
+NS_TOU_NOTE1_PERIOD_LABEL = "Off-peak all day (Note 1)"
 
 # Domestic-class stacking riders (¢/kWh → $/kWh)
 NS_DOMESTIC_FAM = 0.00156   # 0.156 ¢
@@ -280,14 +292,18 @@ def build_domestic_tou_seasonal_components() -> list[dict]:
 
     Structured clock + season calendar fields are filled from the tariff
     book (never invented) so Flux can render "On-peak 7–11am".
+
+    Winter on/off-peak windows are weekday-only; Note 1 makes Saturdays,
+    Sundays and holidays off-peak all hours, emitted as ``weekend`` and
+    ``holiday`` rows so every winter day type partitions 24 h.
     """
-    winter_cal = dict(
+    winter_dates = dict(
         season_start_month=11,
         season_start_day=1,
         season_end_month=3,
         season_end_day=31,
-        day_type="weekday",
     )
+    winter_cal = dict(winter_dates, day_type="weekday")
     nonwinter_cal = dict(
         season_start_month=4,
         season_start_day=1,
@@ -332,6 +348,21 @@ def build_domestic_tou_seasonal_components() -> list[dict]:
                 "season": NS_TOU_WINTER_SEASON,
                 "tier_label": "Energy Charge winter (eff Nov 1 2026)",
                 **winter_cal,
+            }
+        )
+    for day_type in ("weekend", "holiday"):
+        comps.append(
+            {
+                "component_type": "energy",
+                "unit": "$/kWh",
+                "rate_value": all_in_domestic(NS_TOU_WINTER_OFFPEAK_CENTS),
+                "period_label": NS_TOU_NOTE1_PERIOD_LABEL,
+                "period_start_time": "00:00",
+                "period_end_time": "00:00",
+                "season": NS_TOU_WINTER_SEASON,
+                "tier_label": "Energy Charge winter (eff Nov 1 2026)",
+                **winter_dates,
+                "day_type": day_type,
             }
         )
     return comps
@@ -426,8 +457,9 @@ NS_RESIDENTIAL_PLANS: dict[str, dict[str, Any]] = {
         "description": (
             "Domestic TOU (code 80). Energy Charge seasonal TOU: Non-winter "
             f"{NS_TOU_NONWINTER_SEASON} all hours; Winter "
-            f"{NS_TOU_WINTER_SEASON} on-peak morning/evening and off-peak "
-            "midday/night. All-in ENERGY includes FAM + DSM. "
+            f"{NS_TOU_WINTER_SEASON} weekday on-peak morning/evening and "
+            "off-peak midday/night; weekends/holidays off-peak all hours. "
+            "All-in ENERGY includes FAM + DSM. "
             f"{NS_TOU_WEEKEND_NOTE} Not the Interim Energy Charge layer."
         ),
         "matcher": "tou",
@@ -506,37 +538,11 @@ def _is_live(t: Tariff) -> bool:
     return t.superseded_by_tariff_id is None and t.supersede_reason is None
 
 
-def _energy_signature(tariff: Tariff) -> set[tuple]:
-    """Comparable ENERGY fingerprint: (rate, season, period)."""
-    sig: set[tuple] = set()
-    for rc in tariff.rate_components or []:
-        ctype = (
-            rc.component_type.value
-            if hasattr(rc.component_type, "value")
-            else str(rc.component_type)
-        )
-        if ctype.lower() != "energy":
-            continue
-        sig.add(
-            (
-                round(float(rc.rate_value), 6),
-                (rc.season or "").strip().lower(),
-                (rc.period_label or "").strip().lower(),
-            )
-        )
-    return sig
-
-
-def _target_energy_signature(comps: list[dict]) -> set[tuple]:
-    return {
-        (
-            round(float(c["rate_value"]), 6),
-            str(c.get("season") or "").strip().lower(),
-            str(c.get("period_label") or "").strip().lower(),
-        )
-        for c in comps
-        if str(c.get("component_type") or "").lower() == "energy"
-    }
+def _energy_signature(components: list[Any]) -> tuple:
+    """ENERGY multiset over rate, unit, tiers, labels, clocks, day_type and
+    season dates — a keeper whose rows differ only in ``day_type`` or clock
+    window is not a match."""
+    return component_signature(components, types=("energy",))
 
 
 def _fixed_matches(tariff: Tariff, comps: list[dict]) -> bool:
@@ -562,7 +568,7 @@ def _fixed_matches(tariff: Tariff, comps: list[dict]) -> bool:
 def components_match_target(tariff: Tariff, target: list[dict]) -> bool:
     if tariff.effective_date != NS_EFFECTIVE:
         return False
-    if _energy_signature(tariff) != _target_energy_signature(target):
+    if _energy_signature(tariff.rate_components or []) != _energy_signature(target):
         return False
     return _fixed_matches(tariff, target)
 
@@ -599,22 +605,11 @@ def _make_keeper(
             ),
         },
     )
+    from scripts.tariff_pipeline import _structured_component_fields
+
     for c in target_comps:
         ctype = str(c["component_type"]).lower()
-        try:
-            from scripts.tariff_pipeline import _structured_component_fields
-
-            structured = _structured_component_fields(c)
-        except Exception:
-            structured = {
-                "period_start_time": None,
-                "period_end_time": None,
-                "day_type": None,
-                "season_start_month": None,
-                "season_start_day": None,
-                "season_end_month": None,
-                "season_end_day": None,
-            }
+        structured = _structured_component_fields(c)
         keeper.rate_components.append(
             RateComponent(
                 component_type=ComponentType(ctype),
@@ -635,14 +630,34 @@ def _make_keeper(
     return keeper
 
 
+def _computable_summary(rate_type: Any, comps: list[Any], utility: Utility) -> str:
+    res = evaluate_computable(
+        rate_type, comps, holiday_calendar=getattr(utility, "holiday_calendar", None)
+    )
+    verdict = "computable" if res.computable else "NOT computable"
+    parts = [verdict]
+    if res.reasons:
+        parts.append(f"reasons={list(res.reasons)}")
+    if res.warnings:
+        parts.append(f"warnings={list(res.warnings)}")
+    return " ".join(parts)
+
+
 def _fmt_comps(comps: list[dict]) -> list[str]:
     lines = []
     for c in comps:
         ctype = c["component_type"]
+        clock = (
+            f"{c['period_start_time']}–{c['period_end_time']}"
+            if c.get("period_start_time")
+            else ""
+        )
         extras = " ".join(
             x
             for x in (
                 c.get("season") or "",
+                c.get("day_type") or "",
+                clock,
                 c.get("period_label") or "",
                 c.get("tier_label") or "",
             )
@@ -724,6 +739,12 @@ def repair_utility(
         print(f"    target effective={NS_EFFECTIVE} rate_type={meta['rate_type'].value}")
         for line in _fmt_comps(target):
             print(line)
+        print(f"    target {_computable_summary(meta['rate_type'], target, utility)}")
+        for t in candidates:
+            print(
+                f"    live id={t.id} "
+                f"{_computable_summary(t.rate_type, t.rate_components, utility)}"
+            )
 
         keeper = None
         for t in candidates:
@@ -741,8 +762,8 @@ def repair_utility(
                 )
             elif plan_key == "tou":
                 extra = (
-                    "  # supersede prod id 67033 (flat interim) → "
-                    "Energy Charge seasonal TOU"
+                    "  # supersede weekday-only / flat-interim keeper → "
+                    "Energy Charge seasonal TOU incl. Note 1 weekend/holiday"
                 )
             elif expected:
                 extra = f"  # supersede prod id {expected['id']}"
@@ -754,6 +775,15 @@ def repair_utility(
                 keeper = _make_keeper(utility, plan_key, target)
                 session.add(keeper)
                 session.flush()
+                record_event(
+                    session,
+                    decision="insert",
+                    reason="repair",
+                    utility_id=utility.id,
+                    after_tariff_id=keeper.id,
+                    source_url=NS_TARIFF_BOOK_2026_URL,
+                    **_EVENT_KW,
+                )
             created += 1
         else:
             print(
@@ -775,8 +805,9 @@ def repair_utility(
                 f"eff={loser.effective_date} → {dest} (reason=vintage)"
             )
             if not dry_run and keeper is not None:
-                loser.superseded_by_tariff_id = keeper.id
-                loser.supersede_reason = "vintage"
+                supersede_tariff(
+                    session, loser, successor=keeper, reason="vintage", **_EVENT_KW
+                )
             superseded += 1
 
         plan_results[plan_key] = {
@@ -800,8 +831,13 @@ def repair_utility(
             f"eff={loser.effective_date} → {dest} (reason=vintage)"
         )
         if not dry_run and domestic_keeper_id:
-            loser.superseded_by_tariff_id = domestic_keeper_id
-            loser.supersede_reason = "vintage"
+            supersede_tariff(
+                session,
+                loser,
+                successor_id=domestic_keeper_id,
+                reason="vintage",
+                **_EVENT_KW,
+            )
         superseded += 1
 
     return {
@@ -853,8 +889,8 @@ def print_expected_outcome(plan_filter: set[str] | None = None) -> None:
     if scoped or plan_filter is None or "tou" in (plan_filter or set()):
         print(
             "  Rate code 80 (Domestic TOU) — Energy Charge seasonal TOU:\n"
-            f"    SUPERSEDE 67033 (flat interim ENERGY $0.19128) → new "
-            f"SEASONAL_TOU keeper\n"
+            "    SUPERSEDE live keeper (flat interim 67033, or weekday-only "
+            "winter seasonal) → new SEASONAL_TOU keeper\n"
             f"    Non-winter all hours: "
             f"{all_in_domestic(NS_TOU_NONWINTER_BASE_CENTS)} $/kWh "
             f"(= {NS_TOU_NONWINTER_BASE_CENTS:.3f} + 0.804 ¢)\n"
@@ -864,7 +900,11 @@ def print_expected_outcome(plan_filter: set[str] | None = None) -> None:
             f"    Winter off-peak: "
             f"{all_in_domestic(NS_TOU_WINTER_OFFPEAK_CENTS)} $/kWh "
             f"(= {NS_TOU_WINTER_OFFPEAK_CENTS:.3f} + 0.804 ¢)\n"
+            "    Winter weekend + holiday: off-peak 00:00–00:00 "
+            f"{all_in_domestic(NS_TOU_WINTER_OFFPEAK_CENTS)} $/kWh (Note 1)\n"
             "    Do NOT use Jan 1 2027 winter column (38.281 / 19.067 ¢)\n"
+            "    Computable: yes; warning holiday_rows_require_calendar "
+            "until utilities.holiday_calendar is populated\n"
             f"    {NS_TOU_WEEKEND_NOTE}"
         )
     if not scoped:

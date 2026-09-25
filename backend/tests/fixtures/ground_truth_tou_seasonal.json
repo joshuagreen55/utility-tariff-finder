@@ -496,6 +496,7 @@
               "period_end_time": "00:00",
               "day_type": "weekend",
               "season": "Winter (Nov 1–Mar 31)",
+              "tier_label": "Energy Charge winter (eff Nov 1 2026)",
               "season_start_month": 11,
               "season_start_day": 1,
               "season_end_month": 3,
@@ -510,13 +511,14 @@
               "period_end_time": "00:00",
               "day_type": "holiday",
               "season": "Winter (Nov 1–Mar 31)",
+              "tier_label": "Energy Charge winter (eff Nov 1 2026)",
               "season_start_month": 11,
               "season_start_day": 1,
               "season_end_month": 3,
               "season_end_day": 31
             }
           ],
-          "gold_note": "Winter weekend/holiday off-peak rows come from the tariff book's Note 1 (NS_TOU_WEEKEND_NOTE); the live repair keeper only has them in its description, so it is not computable (tou_gap:weekend) until re-repaired."
+          "gold_note": "Winter weekend/holiday off-peak rows come from the tariff book's Note 1 (NS_TOU_WEEKEND_NOTE) and are emitted by build_domestic_tou_seasonal_components(). Keepers created before that (winter weekday-only) are not computable (tou_gap:weekend@11/01-03/31) until re-run with --plan tou --apply. Holiday rows warn holiday_rows_require_calendar while utilities.holiday_calendar is unset."
         }
       ]
     },
