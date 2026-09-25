@@ -116,7 +116,8 @@ def main():
     args = ap.parse_args()
 
     url = os.environ.get("SYNC_DATABASE_URL") or os.environ["DATABASE_URL"].replace("+asyncpg", "")
-    engine = create_engine(url)
+    from app.db.session import normalize_sync_url
+    engine = create_engine(normalize_sync_url(url))
 
     print(f"\nSEED TRIAGE  {'(APPLY)' if (args.apply_oos or args.apply_dups) else '(dry-run)'}")
     print("=" * 78)

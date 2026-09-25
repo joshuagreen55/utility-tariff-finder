@@ -165,7 +165,8 @@ def main():
     min_conf = CONF_RANK[args.confidence]
 
     url = os.environ.get("SYNC_DATABASE_URL") or os.environ["DATABASE_URL"].replace("+asyncpg", "")
-    engine = create_engine(url)
+    from app.db.session import normalize_sync_url
+    engine = create_engine(normalize_sync_url(url))
     client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
 
     print(f"\nLLM-supersede {'LIVE' if args.apply else 'DRY-RUN'}  "
