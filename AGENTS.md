@@ -217,6 +217,8 @@ with real list prices.
 - `supersede_via_llm.py` — "Track B": LLM 1:N absorption of stranded old
   tariffs into a fresh one (sets `supersede_reason='llm_absorb'`).
 - `cleanup_duplicate_tariffs.py` / `dedup_tariffs.py` — retire duplicates via soft-supersede.
+- `repair_hydro_one_oeb_residential.py` — Hydro One RPP TOU → OEB seasonal
+  clocks (`period_*` / `season_*`); optional tiered/ULO if incomplete.
 - `seed_*.py` — `seed_eia861`, `seed_canada`, `seed_openei`, `seed_territories`, `seed_monitoring_sources`.
 - `opus_yield_probe.py` — live dry-run probe of extraction-tier yield for given utility IDs.
 - `benchmark.py` — score pipeline output vs `tests/fixtures/ground_truth.json`.

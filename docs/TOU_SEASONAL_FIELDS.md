@@ -64,6 +64,15 @@ structured rows on the next scrape (no mass backfill of existing keepers).
 
 ## Backfill
 
-**Deferred.** Existing incomplete live keepers (e.g. Hydro One label-only
-TOU) are not soft-repaired in this change. They become complete when
-refreshed/re-scraped with the updated pipeline.
+One-shot soft-repair for **Hydro One** residential RPP (label-only TOU →
+structured seasonal clocks):
+
+```bash
+python -m scripts.repair_hydro_one_oeb_residential          # dry-run
+python -m scripts.repair_hydro_one_oeb_residential --plan tou --apply
+```
+
+See that script’s docstring for VM apply steps. Other incomplete Ontario
+LDC keepers fill on the next `scrape_oeb_rates` run (structured persistence
+is wired; no mass soft-supersede of every LDC in the Hydro One repair).
+Do not invent times from labels.
