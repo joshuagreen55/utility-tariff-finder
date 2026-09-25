@@ -45,14 +45,22 @@ from collections import defaultdict
 log = logging.getLogger(__name__)
 
 # USD per 1M tokens. cache_read / cache_write apply to Anthropic prompt
-# caching (a cache hit bills ~10% of input; a cache write bills ~125%).
+# caching (cache_write = 5-minute write price).
 # Verify against current pricing pages; override via LLM_PRICING_JSON if they
 # drift. Updated 2026-08-27: opus -> Opus 5 ($5/$25, was 4.7 @ $15/$75),
 # gemini -> Gemini 3.8 Flash intro ($0.75/$3.75 through 2026-12-31, then
-# $1.50/$7.50).
+# $1.50/$7.50). Updated 2026-09-25 from docs.claude.com pricing: Sonnet 5
+# $2/$10 (the intro price is now standard), Opus 5.5 $4/$20 with cache hits
+# at 0.05x input.
+#
+# Keys are rollup families (``model_key``) or concrete model-id prefixes.
+# A call is priced by the longest id-prefix key matching its model, else by
+# its family, and always rolled up under its family.
 DEFAULT_PRICING: dict[str, dict[str, float]] = {
     "haiku":     {"in": 1.00,  "out": 5.00,  "cache_read": 0.10, "cache_write": 1.25},
+    "sonnet":    {"in": 2.00,  "out": 10.00, "cache_read": 0.20, "cache_write": 2.50},
     "opus":      {"in": 5.00,  "out": 25.00, "cache_read": 0.50, "cache_write": 6.25},
+    "claude-opus-5-5": {"in": 4.00, "out": 20.00, "cache_read": 0.20, "cache_write": 5.00},
     "gemini":    {"in": 0.75,  "out": 3.75,  "cache_read": 0.075, "cache_write": 0.0},
     # Deep Research (Phase 6) — same token prices as Flash by default, but
     # broken out so its (typically large) spend is separately visible.
@@ -212,9 +220,18 @@ def model_key(model: str) -> str:
         return "opus"
     if "haiku" in m:
         return "haiku"
+    if "sonnet" in m:
+        return "sonnet"
     if "gemini" in m:
         return "gemini"
     return m or "other"
+
+
+def pricing_key(model: str) -> str:
+    """Pricing row for a concrete model id: longest matching id prefix, else family."""
+    m = (model or "").lower()
+    ids = [k for k in PRICING if k.startswith(("claude-", "gemini-")) and m.startswith(k)]
+    return max(ids, key=len) if ids else model_key(model)
 
 
 def _cost(key: str, tin: int, tout: int, cache_read: int = 0, cache_write: int = 0) -> float:
@@ -227,14 +244,15 @@ def _cost(key: str, tin: int, tout: int, cache_read: int = 0, cache_write: int =
     ) / 1_000_000.0
 
 
-def _add(key: str, tin: int, tout: int, cache_read: int = 0, cache_write: int = 0) -> None:
+def _add(key: str, tin: int, tout: int, cache_read: int = 0, cache_write: int = 0,
+         *, price_key: str | None = None) -> None:
     rec = _acc()[(_phase.get(), key)]
     rec["calls"] += 1
     rec["in"] += tin
     rec["out"] += tout
     rec["cache_read"] += cache_read
     rec["cache_write"] += cache_write
-    rec["cost"] += _cost(key, tin, tout, cache_read, cache_write)
+    rec["cost"] += _cost(price_key or key, tin, tout, cache_read, cache_write)
 
 
 def record_anthropic(model: str, usage) -> None:
@@ -248,6 +266,7 @@ def record_anthropic(model: str, usage) -> None:
             int(getattr(usage, "output_tokens", 0) or 0),
             int(getattr(usage, "cache_read_input_tokens", 0) or 0),
             int(getattr(usage, "cache_creation_input_tokens", 0) or 0),
+            price_key=pricing_key(model),
         )
     except Exception as e:  # noqa: BLE001 — cost tracking must never break a call
         log.debug("record_anthropic failed: %s", e)
@@ -264,6 +283,7 @@ def record_gemini(model: str, usage_metadata) -> None:
             int(getattr(usage_metadata, "candidates_token_count", 0) or 0),
             int(getattr(usage_metadata, "cached_content_token_count", 0) or 0),
             0,
+            price_key=pricing_key(model) if model else None,
         )
     except Exception as e:  # noqa: BLE001
         log.debug("record_gemini failed: %s", e)

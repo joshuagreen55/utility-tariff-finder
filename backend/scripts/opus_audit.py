@@ -40,6 +40,7 @@ from app.models.tariff import (
     Tariff,
 )
 from app.models.utility import Utility
+from app.services import anthropic_compat
 
 from scripts import llm_cost
 from scripts.tariff_pipeline import (
@@ -262,7 +263,8 @@ def call_opus(prompt: str) -> dict | None:
     }
 
     try:
-        resp = httpx.post(
+        resp = anthropic_compat.post(
+            httpx.post,
             "https://api.anthropic.com/v1/messages",
             headers=headers,
             json=body,
@@ -281,7 +283,7 @@ def call_opus(prompt: str) -> dict | None:
                 "cache_read_input_tokens": usage.get("cache_read_input_tokens", 0),
                 "cache_creation_input_tokens": usage.get("cache_creation_input_tokens", 0),
             })())
-        raw_text = data["content"][0]["text"]
+        raw_text = anthropic_compat.response_text(data.get("content"))
 
         json_match = re.search(r"\{[\s\S]*\}", raw_text)
         if not json_match:

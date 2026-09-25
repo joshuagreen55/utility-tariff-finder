@@ -35,6 +35,7 @@ from sqlalchemy import create_engine, text, update as sa_update
 from sqlalchemy.orm import Session
 
 from app.models.tariff import Tariff
+from app.services import anthropic_compat
 
 HAIKU_MODEL = os.environ.get("HAIKU_MODEL", "claude-haiku-4-5-20251001")
 
@@ -137,7 +138,8 @@ def _pair_one_utility(client: anthropic.Anthropic, utility_name: str, state: str
     for i in range(0, len(stranded), STRANDED_BATCH):
         chunk = stranded[i:i + STRANDED_BATCH]
         user = _build_user_prompt(utility_name, state, fresh, chunk)
-        resp = client.messages.create(
+        resp = anthropic_compat.create(
+            client.messages,
             model=HAIKU_MODEL,
             max_tokens=8192,
             system=SYSTEM_PROMPT,

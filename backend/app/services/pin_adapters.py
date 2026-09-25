@@ -307,7 +307,10 @@ class OpusArbiter:
             previous=previous,
             document=document_text[: self.max_chars],
         )
-        resp = self._post(
+        from app.services import anthropic_compat
+
+        resp = anthropic_compat.post(
+            self._post,
             "https://api.anthropic.com/v1/messages",
             headers={
                 "x-api-key": self._api_key,

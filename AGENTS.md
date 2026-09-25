@@ -6,7 +6,7 @@ comprehensive; when in doubt, prefer what is written here over older docs
 (`PROJECT_SUMMARY.md` and `TECHNICAL_REVIEW.md` predate most of the current
 refresh/quarantine/cost/model systems).
 
-_Last updated: 2026-09-25 (audit remediation, issue #11)._
+_Last updated: 2026-09-25 (Wave 6 extract quality, issue #24)._
 
 ---
 
@@ -182,13 +182,32 @@ one Celery `process_utility` task = one `run_pipeline` call for one utility.
 ### Model-tier routing (Phase 3 extraction)
 `Gemini 3.8 Flash` (tier 1, cheap) → `Claude Haiku 4.5` (tier 2) → `Claude
 Opus 5` (tier 3, last resort). Opus is only invoked when a page has numeric
-rate signals AND the per-utility Opus budget isn't spent.
+rate signals AND the per-utility Opus budget isn't spent. Gemini gets a
+`response_schema` derived from the Claude `store_tariffs` tool schema.
+
+Every Anthropic call goes through `app/services/anthropic_compat.py`, which
+shapes the request per model: Sonnet 5 / Opus 5+ think by default and 400 on
+`temperature`/`top_p`/`top_k`; **Opus 5.5 400s on forced `tool_choice`** and
+cannot disable thinking. Knobs: `ANTHROPIC_THINKING` (`disabled` |
+`adaptive`), `ANTHROPIC_EFFORT`, `ANTHROPIC_THINKING_MIN_MAX_TOKENS`. Read
+responses with `anthropic_compat.response_text()`, never `content[0].text`.
+
+Prompts ask for numbers + units **as printed** (Phase 4 converts cents),
+`day_type` on every TOU row, 24 h coverage per season × day type from stated
+hours, and weekend/holiday rows. `normalize_structured_components()` (Phase
+4) maps model forms (`7:00 a.m.`, `:59` ends, "weekends and holidays", month
+names) onto the structured columns without filling empty fields. Component
+dedupe keys include clock / day type / season dates / tier bounds.
 
 **Key model/cost env vars** (all overridable):
 - `OPUS_MODEL` (default `claude-opus-5`) — tier-3 + long-doc identify, and
-  `opus_audit.py` unless `AUDITOR_MODEL` is set.
+  `opus_audit.py` / pin arbiter unless `AUDITOR_MODEL` is set. Wave 6
+  candidate `claude-opus-5-5` ($4/$20 vs $5/$25): **not promoted** until the
+  gold probe shows it holds (see `docs/LLM_MEASUREMENT.md`).
 - `HAIKU_MODEL` (default `claude-haiku-4-5-20251001`) — tier-2, vision, nav,
-  two-pass extract, Track B, browser CLI.
+  two-pass extract, Track B, browser CLI. Wave 6 candidate `claude-sonnet-5`
+  ($2/$10, ~30% more tokens, thinking): **env-only** unless the gold probe
+  shows a clear computable jump that justifies the spend.
 - `GEMINI_MODEL` (default `gemini-3.8-flash`) — tier-1.
 - `OPUS_MAX_PER_UTILITY` (default `2`) — cap on Opus escalations per utility
   per run (long-doc identify is not counted). Opus reportedly hit on ~8% of
@@ -257,8 +276,23 @@ list/detail/browse and `computable_residential_tariff_count` on lookup.
 Consumer rules: `docs/MYSA_CONSUMER_CONTRACT.md`. The health score reports a
 computable lens but keeps it out of the composite (history comparability).
 
+**Wave 6 guardrails.** Phase 4 records
+`confidence_factors.extract_not_computable` + `needs_review` on a `tou` /
+`seasonal*` extraction that fails the contract, and `store_tariffs` logs a
+`hold` (reason `computable_regression`) instead of superseding a computable
+live row with a structurally broken extraction.
+
+**Gold set** (`tests/fixtures/ground_truth_tou_seasonal.json`, 12 tariffs):
+`python -m scripts.gold_replay --forms` (CI; pipeline keeps a perfect
+extraction), `python -m scripts.gold_model_probe` (live LLM, no DB; model
+A/B with `--compare`), `python -m scripts.benchmark --fixtures
+tests/fixtures/ground_truth_tou_seasonal.json [--baseline old.json]` (live
+DB scoreboard; exit 1 on regression). How to read computable agreement and
+propose a model bump: `docs/LLM_MEASUREMENT.md`.
+
 CI: `.github/workflows/backend-tests.yml` runs
-`python -m scripts.check_tou_seasonal_completeness`. Optional Celery stub
+`python -m scripts.check_tou_seasonal_completeness` and
+`python -m scripts.gold_replay --forms`. Optional Celery stub
 `audit_tou_seasonal_completeness` exists but is not on beat by default.
 **Do not invent times/dates** in extraction; flag incomplete shapes
 `needs_review` + `confidence_factors.tou_seasonal_incomplete`.
@@ -281,7 +315,10 @@ spend outside refresh runs (Track B, campaigns, `opus_audit`) goes to
 `logs/llm_cost_ledger.jsonl`, which the report includes. The LLM cache key
 includes the concrete model id, so env-only model swaps never replay another
 model's output. Pricing lives in `DEFAULT_PRICING` (override via
-`LLM_PRICING_JSON`); keep it in sync with real list prices. How to probe a
+`LLM_PRICING_JSON`); keep it in sync with real list prices. Keys are
+families (`haiku`, `sonnet`, `opus`, `gemini`) or model-id prefixes
+(`claude-opus-5-5`); the longest id prefix wins and spend rolls up by family.
+How to probe a
 model change: `docs/LLM_MEASUREMENT.md`.
 
 ---
@@ -300,7 +337,10 @@ model change: `docs/LLM_MEASUREMENT.md`.
 - `seed_*.py` — `seed_eia861`, `seed_canada`, `seed_openei`, `seed_territories`, `seed_monitoring_sources`.
 - `opus_yield_probe.py` — live dry-run probe of extraction-tier yield for given utility IDs.
 - `benchmark.py` — score live tariffs vs `tests/fixtures/ground_truth.json` (flat/tiered, 15%) and
-  `ground_truth_tou_seasonal.json` (TOU/seasonal gold: exact values, clocks, season dates, computable).
+  `ground_truth_tou_seasonal.json` (TOU/seasonal gold: exact values, clocks, season dates, computable,
+  per-gold failure taxonomy; `--baseline` gate).
+- `gold_replay.py` — gold through Phase 4 + mapping, no LLM/DB (CI).
+- `gold_model_probe.py` — gold documents through Phase 3 + 4 with the env models (dry-run, spends LLM $).
 - `run_monitoring.py` — CLI monitoring runner (concurrent).
 
 Full inventory: run `ls backend/scripts/`. Many `*_audit.py` / `inspect_*.py`
@@ -418,6 +458,7 @@ Seed order: `seed_eia861` → `seed_canada` → `seed_openei` → `seed_territor
 `PIN_VERIFIER` (`none`|`jev`), `PIN_ARBITER` (`none`|`opus`), `MERCURY_URL`,
 `MERCURY_API_TOKEN`, `MERCURY_TIMEOUT_SEC`, `JEV_CHUNK_CHARS`, `JEV_MAX_CHUNKS`; model/cost: `OPUS_MODEL`, `HAIKU_MODEL`, `GEMINI_MODEL`,
 `AUDITOR_MODEL`, `OPUS_MAX_PER_UTILITY`, `PHASE6_ENABLED`, `LLM_PRICING_JSON`,
+`ANTHROPIC_THINKING`, `ANTHROPIC_EFFORT`, `ANTHROPIC_THINKING_MIN_MAX_TOKENS`,
 `LLM_CACHE_LEGACY_READ`,
 `MONTHLY_MAX_UTILITIES`, `CELERY_CONCURRENCY`, `QUARANTINE_RECHECK_DAYS`; auth:
 `AUTH_ENABLED`, `GOOGLE_OAUTH_CLIENT_ID/SECRET`, `AUTH_ALLOWED_EMAIL_DOMAIN`.

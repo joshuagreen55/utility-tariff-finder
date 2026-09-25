@@ -621,7 +621,10 @@ Return JSON array of tariff objects. Return ONLY the JSON, no other text.
 PAGE CONTENT:
 {combined_text[:30000]}"""
 
-    response = client.messages.create(
+    from app.services import anthropic_compat
+
+    response = anthropic_compat.create(
+        client.messages,
         model=LLM_MODEL,
         max_tokens=4000,
         messages=[{"role": "user", "content": prompt}],
@@ -631,7 +634,7 @@ PAGE CONTENT:
     llm_cost.record_anthropic(LLM_MODEL, getattr(response, "usage", None))
 
     try:
-        text = response.content[0].text.strip()
+        text = anthropic_compat.response_text(response.content).strip()
         if text.startswith("```"):
             text = re.sub(r"^```\w*\n?", "", text)
             text = re.sub(r"\n?```$", "", text)
