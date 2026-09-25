@@ -16,15 +16,42 @@ jobs:
     defaults:
       run:
         working-directory: backend
+    services:
+      postgres:
+        image: postgis/postgis:16-3.4
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      # Throwaway CI service container only — never a real deployment.
+      TEST_DATABASE_URL: postgresql://postgres:postgres@localhost:5432/postgres
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Install test dependencies
+      - name: Install dependencies (fresh resolve, no cache)
         run: |
-          pip install -r requirements.txt
+          pip install --no-cache-dir -r requirements.txt
+          pip freeze | grep -iE "^(sqlalchemy|alembic|psycopg2|asyncpg|geoalchemy2)=="
+      - name: Fresh migrate (upgrade head, step down one, upgrade head)
+        env:
+          SYNC_DATABASE_URL: postgresql://postgres:postgres@localhost:5432/utf_migrate
+        run: |
+          psql "$TEST_DATABASE_URL" -c "CREATE DATABASE utf_migrate"
+          psql "$SYNC_DATABASE_URL" -c "CREATE EXTENSION IF NOT EXISTS postgis"
+          alembic upgrade head
+          alembic downgrade -1
+          alembic upgrade head
       - name: TOU / seasonal completeness suite
         run: python -m scripts.check_tou_seasonal_completeness
-      - name: All backend unit tests
+      - name: All backend tests (unit + DB-backed regression)
         run: python -m unittest discover -s tests -v
