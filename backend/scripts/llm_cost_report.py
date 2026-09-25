@@ -13,6 +13,10 @@ Two modes:
   and print its per-phase / per-model cost. Useful to sanity-check pricing
   and attribution before a scheduled run:
       python /app/scripts/llm_cost_report.py --probe 1064
+
+The rollup also includes spend recorded by scripts outside refresh runs
+(Track B, campaign chunks, opus_audit) from logs/llm_cost_ledger.jsonl
+over the last --ledger-days days.
 """
 from __future__ import annotations
 
@@ -60,8 +64,8 @@ def _print_breakdown(cost: dict) -> None:
         print()
     outcomes = cost.get("tier_outcomes") or {}
     if outcomes:
-        print("  Extraction-tier yield (did the tier return any tariffs?):")
-        opus_cost = (cost.get("by_model") or {}).get("opus", 0.0) or 0.0
+        print("  Extraction-tier calls (did the tier return anything? — not correctness):")
+        opus_cost = _opus_escalation_cost(cost)
         for key in sorted(outcomes):
             rec = outcomes[key]
             hit, miss = rec.get("hit", 0), rec.get("miss", 0)
@@ -70,8 +74,37 @@ def _print_breakdown(cost: dict) -> None:
             extra = ""
             if key == "opus" and calls:
                 wasted = opus_cost * (miss / calls) if calls else 0.0
-                extra = f"  (~${wasted:.2f} on 0-yield escalations)"
+                extra = f"  (~${wasted:.2f} on 0-yield escalations; excludes identify)"
             print(f"    {key:<8} {hit:>4} hit / {miss:>4} miss  = {rate:4.0f}% hit rate{extra}")
+        print()
+    acceptance = cost.get("tier_acceptance") or {}
+    if acceptance:
+        print("  Accepted-after-validation yield (tariffs surviving Phase 4, per tier):")
+        for key in sorted(acceptance):
+            rec = acceptance[key]
+            ret, acc = rec.get("returned", 0), rec.get("accepted", 0)
+            rate = (100.0 * acc / ret) if ret else 0.0
+            print(f"    {key:<9} {acc:>5} accepted / {ret:>5} returned = {rate:4.0f}%")
+        print()
+    aborts = cost.get("aborts") or {}
+    if aborts:
+        print("  Aborted calls (still billed; unpriced = usage not reported):")
+        for key, rec in sorted(aborts.items()):
+            print(f"    {key:<9} {rec.get('aborted', 0):>4} aborted, {rec.get('unpriced', 0):>4} unpriced")
+        print()
+
+
+def _opus_escalation_cost(cost: dict) -> float:
+    """Opus spend on tier-3 escalations only (long-doc identify is tagged
+    phase3_identify and is not an escalation outcome)."""
+    detail = cost.get("detail") or {}
+    if not detail:
+        return (cost.get("by_model") or {}).get("opus", 0.0) or 0.0
+    return sum(
+        (models.get("opus") or {}).get("cost", 0.0)
+        for ph, models in detail.items()
+        if ph != "phase3_identify"
+    )
 
 
 def _print_pricing() -> None:
@@ -84,7 +117,20 @@ def _print_pricing() -> None:
     print()
 
 
-def rollup(runs: int, as_json: bool) -> None:
+def _print_ledger(rows: list[dict], days: int) -> None:
+    if not rows:
+        return
+    by_source: dict[str, float] = {}
+    for r in rows:
+        key = str(r.get("source", "?")).split(":", 1)[0]
+        by_source[key] = by_source.get(key, 0.0) + (r.get("cost") or {}).get("total_usd", 0.0)
+    print(f"  Script spend outside refresh runs (last {days}d, {len(rows)} runs):")
+    for src, c in sorted(by_source.items(), key=lambda x: -x[1]):
+        print(f"    {src:<14} ${c:>10.4f}")
+    print()
+
+
+def rollup(runs: int, as_json: bool, ledger_days: int = 90) -> None:
     engine = get_sync_engine()
     with Session(engine) as session:
         rows = (
@@ -107,9 +153,16 @@ def rollup(runs: int, as_json: bool) -> None:
             per_run.append((r.id, r.utilities_processed, cost.get("total_usd", 0.0)))
 
     merged = llm_cost.merge_summaries(summaries)
+    ledger = llm_cost.read_ledger(since_days=ledger_days)
+    ledger_merged = llm_cost.merge_summaries([r.get("cost") for r in ledger])
 
     if as_json:
-        print(json.dumps({"runs_analyzed": len(summaries), "merged": merged, "per_run": per_run}, indent=2))
+        print(json.dumps({
+            "runs_analyzed": len(summaries),
+            "merged": merged,
+            "per_run": per_run,
+            "script_ledger": {"days": ledger_days, "runs": len(ledger), "merged": ledger_merged},
+        }, indent=2))
         return
 
     print("=" * 60)
@@ -117,6 +170,7 @@ def rollup(runs: int, as_json: bool) -> None:
     print("=" * 60)
     print()
     _print_pricing()
+    _print_ledger(ledger, ledger_days)
     if not summaries:
         print("  No runs carry llm_cost yet. Run a refresh after deploying the")
         print("  cost-tracking change, or use --probe <utility_id> for a live test.")
@@ -150,12 +204,13 @@ def main(argv: list[str] | None = None) -> None:
     p.add_argument("--runs", type=int, default=5, help="How many recent runs to roll up")
     p.add_argument("--probe", type=int, help="Run one utility live (dry-run) and print its cost")
     p.add_argument("--json", action="store_true", help="JSON output (rollup mode)")
+    p.add_argument("--ledger-days", type=int, default=90, help="Script-ledger window (days)")
     args = p.parse_args(argv or sys.argv[1:])
 
     if args.probe:
         probe(args.probe)
     else:
-        rollup(args.runs, args.json)
+        rollup(args.runs, args.json, args.ledger_days)
 
 
 if __name__ == "__main__":

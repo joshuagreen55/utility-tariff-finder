@@ -19,7 +19,14 @@ Design
 * Capture is centralized by wrapping the Anthropic and Gemini client getters
   (see tariff_pipeline._get_*_client), so individual call sites need no
   changes. Phase 6 uses a separate Deep Research client and reports its own
-  token counts, which we price via record_manual().
+  token counts, which we price via record_manual() — on completion and on
+  every abort (timeout, token cap, poll error); aborts with no reported
+  usage are counted as ``unpriced``.
+* Scripts outside refresh runs (Track B, campaigns, auditor) record into the
+  same accumulator and call append_ledger(); llm_cost_report includes them.
+* Yield: ``tier_outcomes`` (did the tier return anything) is kept, but the
+  honest metric is ``tier_acceptance`` — tariffs per tier that survive
+  Phase 4 validation.
 
 Prices are USD per 1,000,000 tokens. Verify against the current pricing pages
 and override via LLM_PRICING_JSON if they drift, e.g.:
@@ -85,10 +92,24 @@ def _new_outcomes() -> dict:
     return defaultdict(lambda: {"hit": 0, "miss": 0})
 
 
+def _new_acceptance() -> dict:
+    # Per-tier tariff counts: `returned` into Phase 4, `accepted` after it.
+    # A tier "hit" that Phase 4 rejects is not a yield.
+    return defaultdict(lambda: {"returned": 0, "accepted": 0})
+
+
+def _new_aborts() -> dict:
+    # Calls that ended without a normal result (e.g. Phase 6 timeout /
+    # token cap). `unpriced` counts aborts whose usage was not reported.
+    return defaultdict(lambda: {"aborted": 0, "unpriced": 0})
+
+
 def reset() -> None:
     """Start a fresh accumulation window (call at the top of run_pipeline)."""
     _local.acc = _new_acc()
     _local.outcomes = _new_outcomes()
+    _local.acceptance = _new_acceptance()
+    _local.aborts = _new_aborts()
 
 
 def _acc() -> dict:
@@ -105,6 +126,36 @@ def _outcomes() -> dict:
         reset()
         oc = _local.outcomes
     return oc
+
+
+def _store(name: str) -> dict:
+    store = getattr(_local, name, None)
+    if store is None:
+        reset()
+        store = getattr(_local, name)
+    return store
+
+
+def record_tier_acceptance(returned_tiers: list[str], accepted_tiers: list[str]) -> None:
+    """Count tariffs per extraction tier going into and surviving Phase 4."""
+    try:
+        acc = _store("acceptance")
+        for tier in returned_tiers:
+            acc[tier or "unknown"]["returned"] += 1
+        for tier in accepted_tiers:
+            acc[tier or "unknown"]["accepted"] += 1
+    except Exception as e:  # noqa: BLE001 — telemetry must never break a call
+        log.debug("record_tier_acceptance failed: %s", e)
+
+
+def record_abort(key: str, *, priced: bool) -> None:
+    try:
+        rec = _store("aborts")[key]
+        rec["aborted"] += 1
+        if not priced:
+            rec["unpriced"] += 1
+    except Exception as e:  # noqa: BLE001
+        log.debug("record_abort failed: %s", e)
 
 
 def record_extraction_outcome(model: str, produced: bool) -> None:
@@ -244,6 +295,8 @@ def summary() -> dict:
         "by_model": {k: round(v, 6) for k, v in by_model.items()},
         "detail": detail,
         "tier_outcomes": {k: dict(v) for k, v in _outcomes().items()},
+        "tier_acceptance": {k: dict(v) for k, v in _store("acceptance").items()},
+        "aborts": {k: dict(v) for k, v in _store("aborts").items()},
     }
 
 
@@ -253,6 +306,8 @@ def merge_summaries(summaries: list[dict]) -> dict:
     by_model: dict[str, float] = defaultdict(float)
     detail: dict[str, dict] = {}
     tier_outcomes: dict[str, dict] = defaultdict(lambda: {"hit": 0, "miss": 0})
+    tier_acceptance: dict[str, dict] = defaultdict(lambda: {"returned": 0, "accepted": 0})
+    aborts: dict[str, dict] = defaultdict(lambda: {"aborted": 0, "unpriced": 0})
     total = 0.0
     for s in summaries:
         if not s:
@@ -273,10 +328,57 @@ def merge_summaries(summaries: list[dict]) -> dict:
         for key, rec in (s.get("tier_outcomes") or {}).items():
             tier_outcomes[key]["hit"] += rec.get("hit", 0)
             tier_outcomes[key]["miss"] += rec.get("miss", 0)
+        for key, rec in (s.get("tier_acceptance") or {}).items():
+            tier_acceptance[key]["returned"] += rec.get("returned", 0)
+            tier_acceptance[key]["accepted"] += rec.get("accepted", 0)
+        for key, rec in (s.get("aborts") or {}).items():
+            aborts[key]["aborted"] += rec.get("aborted", 0)
+            aborts[key]["unpriced"] += rec.get("unpriced", 0)
     return {
         "total_usd": round(total, 6),
         "by_phase": {k: round(v, 6) for k, v in by_phase.items()},
         "by_model": {k: round(v, 6) for k, v in by_model.items()},
         "detail": detail,
         "tier_outcomes": {k: dict(v) for k, v in tier_outcomes.items()},
+        "tier_acceptance": {k: dict(v) for k, v in tier_acceptance.items()},
+        "aborts": {k: dict(v) for k, v in aborts.items()},
     }
+
+
+# ---------------------------------------------------------------------------
+# Script ledger: spend outside refresh runs (Track B, campaigns, auditor)
+# ---------------------------------------------------------------------------
+
+def ledger_path() -> str:
+    return os.path.join(os.environ.get("APP_LOG_DIR", "/app/logs"), "llm_cost_ledger.jsonl")
+
+
+def append_ledger(source: str, cost: dict | None = None) -> None:
+    """Append one script run's cost summary so llm_cost_report sees it."""
+    from datetime import datetime, timezone
+
+    entry = {
+        "at": datetime.now(timezone.utc).isoformat(),
+        "source": source,
+        "cost": cost if cost is not None else summary(),
+    }
+    try:
+        os.makedirs(os.path.dirname(ledger_path()), exist_ok=True)
+        with open(ledger_path(), "a") as fh:
+            fh.write(json.dumps(entry) + "\n")
+    except OSError as e:
+        log.warning("Could not append LLM cost ledger: %s", e)
+
+
+def read_ledger(since_days: int | None = None) -> list[dict]:
+    from datetime import datetime, timedelta, timezone
+
+    try:
+        with open(ledger_path()) as fh:
+            rows = [json.loads(line) for line in fh if line.strip()]
+    except (OSError, json.JSONDecodeError):
+        return []
+    if since_days is None:
+        return rows
+    cutoff = datetime.now(timezone.utc) - timedelta(days=since_days)
+    return [r for r in rows if datetime.fromisoformat(r["at"]) >= cutoff]
