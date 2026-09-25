@@ -20,7 +20,8 @@ _Last updated: 2026-08-28._
 
 - **utilities** — who sells power, region, active flag, and refresh-quarantine bookkeeping.
 - **service_territories** — PostGIS polygons + zip arrays for address→utility matching.
-- **tariffs** + **rate_components** — rate schedules and their priced parts. Retired tariffs are **soft-superseded** (`superseded_by_tariff_id`), never deleted.
+- **tariffs** + **rate_components** — rate schedules and their priced parts. Retired or revised tariffs are **soft-superseded** (`superseded_by_tariff_id` / `supersede_reason` / `superseded_at`) and keep their components; rates are never edited in place. The refresh paths (`store_tariffs`, OEB, reconciliation, dup cleanup) never delete rows. A few legacy one-off scripts and `DELETE /api/tariffs/{id}` can still hard-delete; a DB trigger records a JSON snapshot of any such delete in `tariff_change_events`.
+- **tariff_change_events** — append-only audit log (insert / supersede / retire / hold / hard_delete, actor, before→after ids).
 - **monitoring_sources** / **monitoring_logs** — URLs watched for change + per-check history.
 - **refresh_runs** — one row per refresh run (targets, results, per-run LLM cost).
 - **rate_page_fingerprints** — content hashes so unchanged pages can be skipped.

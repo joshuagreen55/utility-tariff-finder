@@ -41,6 +41,11 @@ log = logging.getLogger("oeb_scraper")
 OEB_RATES_URL = "https://www.oeb.ca/consumer-information-and-protection/electricity-rates/historical-electricity-rates"
 SOURCE_URL = OEB_RATES_URL
 
+# The OEB RPP table only publishes commodity ENERGY. Delivery / FIXED rows on
+# an Ontario tariff come from elsewhere (repairs, manual corrections) and
+# are carried forward, never replaced, by the OEB path.
+OEB_OWNED_COMPONENT_TYPES = frozenset({"energy"})
+
 
 @dataclass
 class TOURates:
@@ -659,38 +664,113 @@ def build_tariff_entries(rates: OEBRateSet, customer_class: str) -> list[dict]:
     return tariffs
 
 
+def _oeb_rate_components(entry: dict) -> list:
+    from app.models import RateComponent, ComponentType
+    from scripts.tariff_pipeline import (
+        _parse_period_time,
+        _parse_day_type,
+        _parse_season_int,
+    )
+
+    comp_map = {"energy": ComponentType.ENERGY, "fixed": ComponentType.FIXED}
+    out = []
+    for comp in entry.get("components", []):
+        ct = comp_map.get(comp.get("component_type"))
+        if not ct:
+            continue
+        out.append(RateComponent(
+            component_type=ct,
+            unit=comp.get("unit", "$/kWh"),
+            rate_value=comp["rate_value"],
+            tier_min_kwh=comp.get("tier_min_kwh"),
+            tier_max_kwh=comp.get("tier_max_kwh"),
+            tier_label=comp.get("tier_label"),
+            period_label=comp.get("period_label"),
+            period_start_time=_parse_period_time(comp.get("period_start_time")),
+            period_end_time=_parse_period_time(comp.get("period_end_time")),
+            day_type=_parse_day_type(comp.get("day_type")),
+            season=comp.get("season"),
+            season_start_month=_parse_season_int(comp.get("season_start_month"), lo=1, hi=12),
+            season_start_day=_parse_season_int(comp.get("season_start_day"), lo=1, hi=31),
+            season_end_month=_parse_season_int(comp.get("season_end_month"), lo=1, hi=12),
+            season_end_day=_parse_season_int(comp.get("season_end_day"), lo=1, hi=31),
+        ))
+    return out
+
+
+_COMPONENT_COPY_FIELDS = (
+    "component_type", "unit", "rate_value", "tier_min_kwh", "tier_max_kwh",
+    "tier_label", "period_index", "period_label", "period_start_time",
+    "period_end_time", "day_type", "season", "season_start_month",
+    "season_start_day", "season_end_month", "season_end_day", "adjustment",
+)
+
+
+def _carry_forward_components(existing, provided_types: set[str]) -> list:
+    """Copy the predecessor's non-OEB-owned rows (FIXED delivery, minimum,
+    adjustments). The OEB table never carries them, so a revision must not
+    drop them."""
+    from app.models import RateComponent
+
+    skip = OEB_OWNED_COMPONENT_TYPES | provided_types
+    out = []
+    for rc in existing.rate_components or []:
+        if rc.component_type.value in skip:
+            continue
+        out.append(RateComponent(**{f: getattr(rc, f) for f in _COMPONENT_COPY_FIELDS}))
+    return out
+
+
 def store_oeb_tariffs(utility_id: int, tariff_entries: list[dict], dry_run: bool) -> int:
-    """Store OEB tariffs for a single Ontario utility."""
+    """Store OEB RPP tariffs for one Ontario utility — soft-supersede only.
+
+    The OEB table owns commodity ENERGY only. Each entry is matched to the
+    *live* row with the same (utility, name, customer_class):
+
+    - no live row → insert (approved, ``origin='oeb_feed'``);
+    - same rate_type, effective date and ENERGY → re-verify only;
+    - otherwise → insert a revision with the OEB ENERGY plus the
+      predecessor's non-ENERGY rows carried forward, and soft-supersede
+      the predecessor (reason ``oeb_refresh``);
+    - a manual/pinned live row whose ENERGY differs is held (logged as a
+      ``hold`` change event, not applied).
+    """
     if dry_run:
         return len(tariff_entries)
 
     from sqlalchemy import select
     from sqlalchemy.orm import Session
     from app.db.session import get_sync_engine
-    from app.models import Tariff, RateComponent, CustomerClass, RateType, ComponentType
+    from app.models import Tariff, CustomerClass, RateType
+    from app.services.tariff_history import (
+        component_signature,
+        is_manual_or_pinned,
+        record_event,
+        serialize_components,
+        supersede_tariff,
+    )
+    from scripts.tariff_pipeline import choose_vintage_keeper
 
-    CLASS_MAP = {
+    class_map = {
         "residential": CustomerClass.RESIDENTIAL,
         "commercial": CustomerClass.COMMERCIAL,
     }
-    TYPE_MAP = {
+    type_map = {
         "tou": RateType.TOU,
         "tiered": RateType.TIERED,
         "seasonal_tou": RateType.SEASONAL_TOU,
         "seasonal_tiered": RateType.SEASONAL_TIERED,
     }
-    COMP_MAP = {
-        "energy": ComponentType.ENERGY,
-        "fixed": ComponentType.FIXED,
-    }
 
     engine = get_sync_engine()
     stored = 0
+    now = datetime.now(timezone.utc)
+    event_kw = {"actor_type": "oeb", "actor_id": "scrape_oeb_rates"}
 
     with Session(engine) as session:
         for entry in tariff_entries:
-            cc = CLASS_MAP.get(entry["customer_class"])
-            rt = TYPE_MAP.get(entry["rate_type"])
+            cc = class_map.get(entry["customer_class"])
+            rt = type_map.get(entry["rate_type"])
             if not cc or not rt:
                 continue
 
@@ -701,85 +781,110 @@ def store_oeb_tariffs(utility_id: int, tariff_entries: list[dict], dry_run: bool
                 except ValueError:
                     pass
 
-            existing = session.execute(
+            oeb_components = _oeb_rate_components(entry)
+            if not oeb_components:
+                log.warning(f"  Skipping tariff '{entry['name']}' — 0 valid components")
+                continue
+
+            live_rows = session.execute(
                 select(Tariff).where(
                     Tariff.utility_id == utility_id,
                     Tariff.name == entry["name"],
                     Tariff.customer_class == cc,
+                    Tariff.superseded_by_tariff_id.is_(None),
+                    Tariff.supersede_reason.is_(None),
                 )
-            ).scalar_one_or_none()
-
-            if existing:
-                existing.rate_type = rt
-                existing.description = entry.get("description", "")
-                existing.source_url = entry.get("source_url", "")
-                existing.effective_date = eff_date
-                existing.code = entry.get("code", "")
-                existing.last_verified_at = datetime.now(timezone.utc)
-                tariff_obj = existing
-            else:
-                tariff_obj = Tariff(
-                    utility_id=utility_id,
-                    name=entry["name"],
-                    code=entry.get("code", ""),
-                    customer_class=cc,
-                    rate_type=rt,
-                    description=entry.get("description", ""),
-                    source_url=entry.get("source_url", ""),
-                    effective_date=eff_date,
-                    last_verified_at=datetime.now(timezone.utc),
-                    approved=True,
+            ).scalars().all()
+            if len(live_rows) > 1:
+                log.warning(
+                    f"  {len(live_rows)} live rows named '{entry['name']}' for utility "
+                    f"{utility_id} (ids {[t.id for t in live_rows]}); revising the newest"
                 )
-                session.add(tariff_obj)
+            existing = choose_vintage_keeper(live_rows) if live_rows else None
 
-            new_components = []
-            for comp in entry.get("components", []):
-                ct = COMP_MAP.get(comp.get("component_type"))
-                if not ct:
+            if existing is not None:
+                owned = OEB_OWNED_COMPONENT_TYPES
+                same_energy = (
+                    component_signature(existing.rate_components, types=owned)
+                    == component_signature(oeb_components, types=owned)
+                )
+                if same_energy and existing.rate_type == rt and existing.effective_date == eff_date:
+                    existing.last_verified_at = now
+                    stored += 1
                     continue
-                # Prefer pipeline parsers when available (shared TIME / day_type rules).
-                try:
-                    from scripts.tariff_pipeline import (
-                        _parse_period_time,
-                        _parse_day_type,
-                        _parse_season_int,
+                if is_manual_or_pinned(existing):
+                    record_event(
+                        session,
+                        decision="hold",
+                        reason="manual_row",
+                        utility_id=utility_id,
+                        before_tariff_id=existing.id,
+                        source_url=entry.get("source_url"),
+                        payload={"proposed": {
+                            "name": entry["name"],
+                            "rate_type": rt.value,
+                            "effective_date": eff_date.isoformat() if eff_date else None,
+                            "components": serialize_components(oeb_components),
+                        }},
+                        **event_kw,
                     )
-                    pst = _parse_period_time(comp.get("period_start_time"))
-                    pet = _parse_period_time(comp.get("period_end_time"))
-                    day_type = _parse_day_type(comp.get("day_type"))
-                    ssm = _parse_season_int(comp.get("season_start_month"), lo=1, hi=12)
-                    ssd = _parse_season_int(comp.get("season_start_day"), lo=1, hi=31)
-                    sem = _parse_season_int(comp.get("season_end_month"), lo=1, hi=12)
-                    sed = _parse_season_int(comp.get("season_end_day"), lo=1, hi=31)
-                except Exception:
-                    pst = pet = day_type = ssm = ssd = sem = sed = None
-                new_components.append(RateComponent(
-                    component_type=ct,
-                    unit=comp.get("unit", "$/kWh"),
-                    rate_value=comp["rate_value"],
-                    tier_min_kwh=comp.get("tier_min_kwh"),
-                    tier_max_kwh=comp.get("tier_max_kwh"),
-                    tier_label=comp.get("tier_label"),
-                    period_label=comp.get("period_label"),
-                    period_start_time=pst,
-                    period_end_time=pet,
-                    day_type=day_type,
-                    season=comp.get("season"),
-                    season_start_month=ssm,
-                    season_start_day=ssd,
-                    season_end_month=sem,
-                    season_end_day=sed,
-                ))
+                    log.warning(
+                        f"  HOLD '{entry['name']}': live row {existing.id} is a manual "
+                        f"correction — OEB proposal logged, not applied"
+                    )
+                    continue
 
-            if not new_components:
-                log.warning(f"  Skipping tariff '{entry['name']}' — 0 valid components")
-                continue
+            carried = (
+                _carry_forward_components(
+                    existing, {rc.component_type.value for rc in oeb_components}
+                )
+                if existing is not None
+                else []
+            )
+            factors: dict = {"origin": "oeb_feed"}
+            if carried:
+                factors["carried_forward_components"] = sorted(
+                    {rc.component_type.value for rc in carried}
+                )
+                factors["carried_forward_from"] = existing.id
+            if existing is not None and existing.confidence_factors:
+                prior = existing.confidence_factors
+                factors["predecessor_provenance"] = prior.get("predecessor_provenance") or prior
 
-            if existing:
-                tariff_obj.rate_components.clear()
-            for rc in new_components:
-                tariff_obj.rate_components.append(rc)
-
+            tariff_obj = Tariff(
+                utility_id=utility_id,
+                name=entry["name"],
+                code=entry.get("code", ""),
+                customer_class=cc,
+                rate_type=rt,
+                is_default=existing.is_default if existing is not None else False,
+                description=entry.get("description", ""),
+                source_url=entry.get("source_url", ""),
+                effective_date=eff_date,
+                last_verified_at=now,
+                approved=True,
+                confidence_factors=factors,
+            )
+            tariff_obj.rate_components.extend(carried + oeb_components)
+            session.add(tariff_obj)
+            session.flush()
+            if existing is None:
+                record_event(
+                    session,
+                    decision="insert",
+                    utility_id=utility_id,
+                    after_tariff_id=tariff_obj.id,
+                    source_url=entry.get("source_url"),
+                    **event_kw,
+                )
+            else:
+                supersede_tariff(
+                    session, existing,
+                    successor=tariff_obj,
+                    reason="oeb_refresh",
+                    source_url=entry.get("source_url"),
+                    **event_kw,
+                )
             stored += 1
 
         session.commit()

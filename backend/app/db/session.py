@@ -8,6 +8,19 @@ _async_engine = None
 _sync_engine = None
 
 
+def normalize_sync_url(url: str) -> str:
+    """Pin bare ``postgresql://`` / ``postgres://`` URLs to psycopg2.
+
+    The installed driver is psycopg2-binary; which DBAPI a bare URL selects
+    depends on the SQLAlchemy version (2.1 picks psycopg v3).
+    """
+    url = (url or "").strip()
+    for prefix in ("postgresql://", "postgres://"):
+        if url.startswith(prefix):
+            return "postgresql+psycopg2://" + url[len(prefix):]
+    return url
+
+
 def get_async_engine():
     global _async_engine
     if _async_engine is None:
@@ -18,7 +31,7 @@ def get_async_engine():
 def get_sync_engine():
     global _sync_engine
     if _sync_engine is None:
-        _sync_engine = create_engine(settings.sync_database_url, echo=False)
+        _sync_engine = create_engine(normalize_sync_url(settings.sync_database_url), echo=False)
     return _sync_engine
 
 

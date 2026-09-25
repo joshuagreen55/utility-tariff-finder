@@ -98,6 +98,10 @@ class Tariff(Base):
         Integer, ForeignKey("tariffs.id", ondelete="SET NULL"), nullable=True, index=True
     )
     supersede_reason: Mapped[str | None] = mapped_column(String(50), nullable=True)
+    # When the row stopped being live. A DB trigger stamps it on the
+    # live → superseded transition for every writer (ORM, raw SQL, scripts);
+    # NULL on rows superseded before the column existed.
+    superseded_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
 
     energy_schedule_weekday: Mapped[dict | None] = mapped_column(JSONB, nullable=True)
     energy_schedule_weekend: Mapped[dict | None] = mapped_column(JSONB, nullable=True)

@@ -6,6 +6,7 @@ from sqlalchemy import create_engine, pool
 
 from app.config import settings
 from app.db.base import Base
+from app.db.session import normalize_sync_url
 from app.models import *  # noqa: F401,F403
 
 config = context.config
@@ -24,7 +25,7 @@ def include_object(object, name, type_, reflected, compare_to):
 
 
 def _sync_db_url() -> str:
-    return (os.environ.get("SYNC_DATABASE_URL") or settings.sync_database_url).strip()
+    return normalize_sync_url(os.environ.get("SYNC_DATABASE_URL") or settings.sync_database_url)
 
 
 def run_migrations_offline() -> None:

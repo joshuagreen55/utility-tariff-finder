@@ -53,6 +53,7 @@ from app.models.tariff import (
     RateComponent,
     RateType,
 )
+from app.services.tariff_history import record_event, supersede_tariff
 from app.services.tou_seasonal_completeness import (
     evaluate_tariff_completeness,
     is_complete,
@@ -97,6 +98,8 @@ OEB_ULO_MID = 0.157          # 15.7 ¢
 OEB_ULO_ON = 0.391           # 39.1 ¢
 
 PLAN_KEYS = ("tou", "tiered", "ulo")
+
+_EVENT_KW = {"actor_type": "script", "actor_id": "repair_hydro_one_oeb_residential"}
 
 
 def gold_oeb_rate_set() -> OEBRateSet:
@@ -516,8 +519,9 @@ def repair_utility(
                     f"→ keeper {keeper.id} (reason=vintage)"
                 )
                 if not dry_run:
-                    loser.superseded_by_tariff_id = keeper.id
-                    loser.supersede_reason = "vintage"
+                    supersede_tariff(
+                        session, loser, successor=keeper, reason="vintage", **_EVENT_KW
+                    )
                 superseded += 1
             plan_results[plan_key] = {
                 "action": "keep",
@@ -581,6 +585,15 @@ def repair_utility(
             keeper = _make_keeper(utility, plan_key, target, fixed_comps)
             session.add(keeper)
             session.flush()
+            record_event(
+                session,
+                decision="insert",
+                reason="repair",
+                utility_id=utility.id,
+                after_tariff_id=keeper.id,
+                source_url=OEB_CONSUMER_URL,
+                **_EVENT_KW,
+            )
         created += 1
 
         for loser in candidates:
@@ -594,8 +607,9 @@ def repair_utility(
                 f"eff={loser.effective_date} → {dest} (reason=vintage)"
             )
             if not dry_run and keeper is not None:
-                loser.superseded_by_tariff_id = keeper.id
-                loser.supersede_reason = "vintage"
+                supersede_tariff(
+                    session, loser, successor=keeper, reason="vintage", **_EVENT_KW
+                )
             superseded += 1
 
         completeness = evaluate_tariff_completeness(meta["rate_type"], target)
