@@ -193,12 +193,36 @@ class TestTouSeasonalGold(unittest.TestCase):
         nl = gold[("Newfoundland Power", nf.NF_11S_CODE)]
         self.assertEqual(sorted(c["rate_value"] for c in nl["components"]),
                          sorted(c["rate_value"] for c in nf.build_nf_11s_all_in_components()))
+        ns_tod = gold[(ns.NS_POWER_NAME, ns.NS_RESIDENTIAL_PLANS["tod"]["code"])]
+        self.assertEqual({c["rate_value"] for c in ns_tod["components"]},
+                         {round(float(c["rate_value"]), 6) for c in ns.build_domestic_tod_components()})
+        self.assertEqual(gold[("Toronto Hydro", "OEB-RPP-TOU")]["components"],
+                         gold[("Hydro One", "OEB-RPP-TOU")]["components"])
 
     def test_gold_covers_tou_and_seasonal_and_is_computable(self):
         tariffs = [t for u in _gold()["utilities"] for t in u["tariffs"]]
         types = {t["rate_type"] for t in tariffs}
         self.assertTrue({"seasonal_tou", "tou", "seasonal", "seasonal_tiered"} <= types)
         self.assertTrue(all(t["expect_computable"] for t in tariffs))
+        us = [t for u in _gold()["utilities"] if u["country"] == "US" for t in u["tariffs"]]
+        self.assertGreaterEqual(len(us), 3)
+
+    def test_expect_computable_matches_contract(self):
+        from app.services.computable import evaluate_computable
+
+        for u in _gold()["utilities"]:
+            for t in u["tariffs"]:
+                verdict = evaluate_computable(t["rate_type"], t["components"], name=t["name"])
+                self.assertEqual(verdict.computable, t["expect_computable"],
+                                 (u["name"], t["code"], verdict.reasons))
+
+    def test_every_gold_tariff_self_scores_exactly(self):
+        tol = benchmark.Tolerance.from_meta(_gold()["_meta"])
+        for u in _gold()["utilities"]:
+            for t in u["tariffs"]:
+                self.assertTrue(t.get("gold_source"), (u["name"], t["code"]))
+                result = benchmark._compare_components(t["components"], _as_db(t["components"]), tol)
+                self.assertEqual(result, (1.0, 1.0, []), (u["name"], t["code"]))
 
     def test_strict_structural_comparison(self):
         tol = benchmark.Tolerance.from_meta(_gold()["_meta"])
