@@ -1,5 +1,5 @@
 import enum
-from datetime import date, datetime
+from datetime import date, datetime, time
 
 from sqlalchemy import (
     Boolean,
@@ -12,6 +12,7 @@ from sqlalchemy import (
     Numeric,
     String,
     Text,
+    Time,
     func,
 )
 from sqlalchemy.dialects.postgresql import JSONB
@@ -46,6 +47,19 @@ class ComponentType(str, enum.Enum):
     FIXED = "fixed"
     MINIMUM = "minimum"
     ADJUSTMENT = "adjustment"
+
+
+class DayType(str, enum.Enum):
+    """Which days a TOU clock window applies to.
+
+    Stored as varchar (not a Postgres ENUM) so extractors can emit the
+    string values without a migration when we extend the set later.
+    """
+
+    WEEKDAY = "weekday"
+    WEEKEND = "weekend"
+    HOLIDAY = "holiday"
+    ALL = "all"
 
 
 class Tariff(Base):
@@ -115,8 +129,22 @@ class RateComponent(Base):
 
     period_index: Mapped[int | None] = mapped_column(Integer, nullable=True)
     period_label: Mapped[str | None] = mapped_column(String(100), nullable=True)
+    # Structured TOU clock window (prefer over parsing period_label).
+    # When period_end_time is 00:00:00 and period_start_time is not, treat
+    # end as exclusive midnight (through end of calendar day). Both 00:00
+    # with day_type=all means all hours. Overnight wraps (e.g. 21:00→07:00)
+    # are allowed when end < start.
+    period_start_time: Mapped[time | None] = mapped_column(Time, nullable=True)
+    period_end_time: Mapped[time | None] = mapped_column(Time, nullable=True)
+    day_type: Mapped[str | None] = mapped_column(String(20), nullable=True)
 
     season: Mapped[str | None] = mapped_column(String(50), nullable=True)
+    # Inclusive season calendar window (month 1–12, day 1–31). Nov→Mar wrap
+    # is allowed when (end_month, end_day) < (start_month, start_day).
+    season_start_month: Mapped[int | None] = mapped_column(Integer, nullable=True)
+    season_start_day: Mapped[int | None] = mapped_column(Integer, nullable=True)
+    season_end_month: Mapped[int | None] = mapped_column(Integer, nullable=True)
+    season_end_day: Mapped[int | None] = mapped_column(Integer, nullable=True)
     adjustment: Mapped[float | None] = mapped_column(Float, nullable=True)
 
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())

@@ -1,4 +1,4 @@
-from datetime import date, datetime
+from datetime import date, datetime, time
 from typing import Any
 
 from pydantic import BaseModel, model_validator
@@ -38,7 +38,19 @@ class RateComponentRead(BaseModel):
     tier_label: str | None = None
     period_index: int | None = None
     period_label: str | None = None
+    # Structured TOU clock window — Flux should prefer these over parsing
+    # period_label. Times are wall-clock local to the utility; overnight
+    # wraps have end < start. end==00:00 with start!=00:00 means through
+    # end of calendar day.
+    period_start_time: time | None = None
+    period_end_time: time | None = None
+    day_type: str | None = None  # weekday | weekend | holiday | all
     season: str | None = None
+    # Inclusive season calendar (month 1–12, day 1–31). Nov→Mar wrap OK.
+    season_start_month: int | None = None
+    season_start_day: int | None = None
+    season_end_month: int | None = None
+    season_end_day: int | None = None
     adjustment: float | None = None
 
     model_config = {"from_attributes": True}

@@ -277,7 +277,24 @@ def build_domestic_tou_seasonal_components() -> list[dict]:
     from the Nov 1 2026 column (not Jan 1 2027 escalate). Non-winter
     all-hours from the Apr 1 2027 Energy Charge row (sole non-winter
     Energy Charge figure in the book).
+
+    Structured clock + season calendar fields are filled from the tariff
+    book (never invented) so Flux can render "On-peak 7–11am".
     """
+    winter_cal = dict(
+        season_start_month=11,
+        season_start_day=1,
+        season_end_month=3,
+        season_end_day=31,
+        day_type="weekday",
+    )
+    nonwinter_cal = dict(
+        season_start_month=4,
+        season_start_day=1,
+        season_end_month=10,
+        season_end_day=31,
+        day_type="all",
+    )
     comps: list[dict] = [
         {
             "component_type": "fixed",
@@ -290,25 +307,31 @@ def build_domestic_tou_seasonal_components() -> list[dict]:
             "unit": "$/kWh",
             "rate_value": all_in_domestic(NS_TOU_NONWINTER_BASE_CENTS),
             "period_label": "All hours",
+            "period_start_time": "00:00",
+            "period_end_time": "00:00",
             "season": NS_TOU_NONWINTER_SEASON,
             "tier_label": "Energy Charge non-winter (eff Apr 1 2027)",
+            **nonwinter_cal,
         },
     ]
     winter_periods = [
-        ("On-peak morning (7am–11am)", NS_TOU_WINTER_ONPEAK_CENTS),
-        ("Off-peak midday (11am–5pm)", NS_TOU_WINTER_OFFPEAK_CENTS),
-        ("On-peak evening (5pm–9pm)", NS_TOU_WINTER_ONPEAK_CENTS),
-        ("Off-peak night (9pm–7am)", NS_TOU_WINTER_OFFPEAK_CENTS),
+        ("On-peak morning (7am–11am)", "07:00", "11:00", NS_TOU_WINTER_ONPEAK_CENTS),
+        ("Off-peak midday (11am–5pm)", "11:00", "17:00", NS_TOU_WINTER_OFFPEAK_CENTS),
+        ("On-peak evening (5pm–9pm)", "17:00", "21:00", NS_TOU_WINTER_ONPEAK_CENTS),
+        ("Off-peak night (9pm–7am)", "21:00", "07:00", NS_TOU_WINTER_OFFPEAK_CENTS),
     ]
-    for label, cents in winter_periods:
+    for label, start, end, cents in winter_periods:
         comps.append(
             {
                 "component_type": "energy",
                 "unit": "$/kWh",
                 "rate_value": all_in_domestic(cents),
                 "period_label": label,
+                "period_start_time": start,
+                "period_end_time": end,
                 "season": NS_TOU_WINTER_SEASON,
                 "tier_label": "Energy Charge winter (eff Nov 1 2026)",
+                **winter_cal,
             }
         )
     return comps
@@ -578,6 +601,20 @@ def _make_keeper(
     )
     for c in target_comps:
         ctype = str(c["component_type"]).lower()
+        try:
+            from scripts.tariff_pipeline import _structured_component_fields
+
+            structured = _structured_component_fields(c)
+        except Exception:
+            structured = {
+                "period_start_time": None,
+                "period_end_time": None,
+                "day_type": None,
+                "season_start_month": None,
+                "season_start_day": None,
+                "season_end_month": None,
+                "season_end_day": None,
+            }
         keeper.rate_components.append(
             RateComponent(
                 component_type=ComponentType(ctype),
@@ -585,7 +622,14 @@ def _make_keeper(
                 rate_value=c["rate_value"],
                 tier_label=c.get("tier_label"),
                 period_label=c.get("period_label"),
+                period_start_time=structured["period_start_time"],
+                period_end_time=structured["period_end_time"],
+                day_type=structured["day_type"],
                 season=c.get("season"),
+                season_start_month=structured["season_start_month"],
+                season_start_day=structured["season_start_day"],
+                season_end_month=structured["season_end_month"],
+                season_end_day=structured["season_end_day"],
             )
         )
     return keeper

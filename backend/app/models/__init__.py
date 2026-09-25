@@ -1,5 +1,12 @@
 from app.models.utility import Utility, UtilityType, Country
-from app.models.tariff import Tariff, RateComponent, CustomerClass, RateType, ComponentType
+from app.models.tariff import (
+    Tariff,
+    RateComponent,
+    CustomerClass,
+    RateType,
+    ComponentType,
+    DayType,
+)
 from app.models.territory import ServiceTerritory
 from app.models.monitoring import MonitoringSource, MonitoringLog, MonitoringStatus, ReviewStatus
 from app.models.refresh_run import RefreshRun, RefreshType
@@ -14,6 +21,7 @@ __all__ = [
     "CustomerClass",
     "RateType",
     "ComponentType",
+    "DayType",
     "ServiceTerritory",
     "MonitoringSource",
     "MonitoringLog",

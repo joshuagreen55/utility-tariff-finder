@@ -58,7 +58,18 @@ export interface RateComponent {
   tier_label: string | null;
   period_index: number | null;
   period_label: string | null;
+  /** Wall-clock start (HH:MM:SS). Prefer over parsing period_label. */
+  period_start_time: string | null;
+  /** Wall-clock end. Overnight wraps have end < start; 00:00 with start≠00:00 = through end of day. */
+  period_end_time: string | null;
+  /** weekday | weekend | holiday | all */
+  day_type: string | null;
   season: string | null;
+  /** Inclusive season calendar (1–12 / 1–31). Nov→Mar wrap allowed. */
+  season_start_month: number | null;
+  season_start_day: number | null;
+  season_end_month: number | null;
+  season_end_day: number | null;
   adjustment: number | null;
 }
 

@@ -805,3 +805,57 @@ def recover_error_utilities():
 
     log.info(f"  Dispatched {len(error_ids)} tasks for run {run_id}")
     return {"run_id": run_id, "targeted": len(error_ids)}
+
+
+@celery_app.task(
+    name="app.tasks.refresh.audit_tou_seasonal_completeness",
+    time_limit=600,
+    soft_time_limit=580,
+)
+def audit_tou_seasonal_completeness(limit: int = 5000):
+    """Optional nightly stub: read-only scan of incomplete TOU/seasonal shapes.
+
+    Not registered on beat by default (operators can add a crontab entry when
+    ready). Logs counts; does not mutate rows or invent clock/season data.
+    Prefer ``python -m scripts.check_tou_seasonal_completeness --audit-db``.
+    """
+    from app.services.tou_seasonal_completeness import (
+        SEASONAL_FAMILY,
+        TOU_FAMILY,
+        evaluate_tariff_completeness,
+    )
+    from sqlalchemy.orm import selectinload
+
+    in_scope = TOU_FAMILY | SEASONAL_FAMILY
+    engine = get_sync_engine()
+    total = incomplete = 0
+    with Session(engine) as session:
+        rows = (
+            session.execute(
+                select(Tariff)
+                .options(selectinload(Tariff.rate_components))
+                .where(Tariff.superseded_by_tariff_id.is_(None))
+                .where(Tariff.supersede_reason.is_(None))
+                .order_by(Tariff.id)
+                .limit(limit)
+            )
+            .scalars()
+            .all()
+        )
+        for t in rows:
+            rt = t.rate_type.value if t.rate_type else ""
+            if rt not in in_scope:
+                continue
+            total += 1
+            if not evaluate_tariff_completeness(rt, t.rate_components or []).complete:
+                incomplete += 1
+    summary = {
+        "in_scope": total,
+        "incomplete": incomplete,
+        "limit": limit,
+    }
+    log.info(
+        "TOU/seasonal completeness audit: "
+        f"in_scope={total} incomplete={incomplete} (limit={limit})"
+    )
+    return summary
