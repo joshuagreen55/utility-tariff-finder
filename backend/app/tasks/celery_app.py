@@ -68,8 +68,9 @@ celery_app.conf.update(
         #     "schedule": crontab(hour=5, minute=30),
         # },
         # Optional: decide proposed pin verifications (manual-correction pins
-        # whose document changed). Holds everything until PIN_VERIFIER /
-        # PIN_ARBITER adapters exist, so it is off by default.
+        # whose document changed). Holds everything unless PIN_VERIFIER=jev
+        # and PIN_ARBITER=opus are set; with them it spends Mercury + Opus
+        # money, so keep it off until ops schedules it after a cost check.
         # "daily-pin-verifications": {
         #     "task": "app.tasks.verification.process_pin_verifications",
         #     "schedule": crontab(hour=7, minute=0),
