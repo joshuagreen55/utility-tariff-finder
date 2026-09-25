@@ -38,6 +38,8 @@ from app.models.tariff import Tariff
 
 HAIKU_MODEL = os.environ.get("HAIKU_MODEL", "claude-haiku-4-5-20251001")
 
+from scripts import llm_cost  # noqa: E402
+
 CONF_RANK = {"high": 3, "medium": 2, "low": 1}
 
 
@@ -143,6 +145,8 @@ def _pair_one_utility(client: anthropic.Anthropic, utility_name: str, state: str
             tools=[PAIRING_TOOL],
             tool_choice={"type": "tool", "name": "report_pairings"},
         )
+        with llm_cost.phase("trackb"):
+            llm_cost.record_anthropic(HAIKU_MODEL, getattr(resp, "usage", None))
         for block in resp.content:
             if block.type == "tool_use" and block.name == "report_pairings":
                 all_pairings.extend(block.input.get("pairings", []))
@@ -290,6 +294,9 @@ def main():
     print(f"  Failures:                 {len(failures)}")
     print(f"  Elapsed:                  {elapsed:.0f}s  "
           f"({elapsed / max(1, len(util_rows)):.2f}s/utility)")
+    cost = llm_cost.summary()
+    print(f"  LLM cost:                 ${cost['total_usd']:.4f}")
+    llm_cost.append_ledger("trackb", cost)
 
 
 if __name__ == "__main__":

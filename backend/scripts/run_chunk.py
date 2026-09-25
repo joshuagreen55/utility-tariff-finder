@@ -392,11 +392,18 @@ def main(argv: list[str] | None = None) -> None:
             out["retries"] = retry_utilities(session, spec)
 
     if phases["track_b"]:
+        from scripts import llm_cost
+
+        # Retries run the pipeline in-process (it resets the accumulator per
+        # utility); scope this window to Track B only.
+        llm_cost.reset()
         with Session(engine) as session:
             candidates = track_b_candidates(session, spec)
             out["track_b"] = track_b_utilities(
                 session, candidates, apply=args.apply
             )
+        out["track_b_llm_cost"] = llm_cost.summary()
+        llm_cost.append_ledger(f"trackb:chunk{spec.number}", out["track_b_llm_cost"])
 
     with Session(engine) as session:
         print_after_state(session, spec, before_detail)
