@@ -185,12 +185,15 @@ Opus 5` (tier 3, last resort). Opus is only invoked when a page has numeric
 rate signals AND the per-utility Opus budget isn't spent.
 
 **Key model/cost env vars** (all overridable):
-- `OPUS_MODEL` (default `claude-opus-5`) — tier-3 + long-doc identify.
-- `HAIKU_MODEL` (default `claude-haiku-4-5-20251001`) — tier-2.
+- `OPUS_MODEL` (default `claude-opus-5`) — tier-3 + long-doc identify, and
+  `opus_audit.py` unless `AUDITOR_MODEL` is set.
+- `HAIKU_MODEL` (default `claude-haiku-4-5-20251001`) — tier-2, vision, nav,
+  two-pass extract, Track B, browser CLI.
 - `GEMINI_MODEL` (default `gemini-3.8-flash`) — tier-1.
 - `OPUS_MAX_PER_UTILITY` (default `2`) — cap on Opus escalations per utility
-  per run. Opus historically hit on only ~8% of escalations while being ~70%
-  of run cost, so this cap matters.
+  per run (long-doc identify is not counted). Opus reportedly hit on ~8% of
+  escalations while being ~70% of run cost (claimed; "hit" meant "returned
+  anything" — judge it by `tier_acceptance` now), so this cap matters.
 - `PHASE6_ENABLED` (compose default `1`), `PHASE6_MAX_WAIT_SEC`,
   `PHASE6_MAX_TOKENS`.
 
@@ -270,10 +273,16 @@ runs and recovers after them). Run it to get the current scorecard.
 ### LLM cost tracking (`scripts/llm_cost.py` + `llm_cost_report.py`)
 Per-phase, per-model USD attribution from token counts. Recorded per utility,
 merged into each `RefreshRun.summary_json.llm_cost`, and reported by
-`llm_cost_report.py`. Also tracks **extraction-tier yield** (`tier_outcomes`:
-hit/miss per model) so you can see whether Opus is earning its spend. Pricing
-lives in `DEFAULT_PRICING` (override via `LLM_PRICING_JSON`); keep it in sync
-with real list prices.
+`llm_cost_report.py`. Yield: `tier_outcomes` (hit/miss = "returned
+anything") plus **`tier_acceptance`** (tariffs per tier accepted after Phase 4
+validation — the honest metric). Phase 6 aborts are priced from partial usage
+(`aborts`), long-doc identify is its own phase (`phase3_identify`), and script
+spend outside refresh runs (Track B, campaigns, `opus_audit`) goes to
+`logs/llm_cost_ledger.jsonl`, which the report includes. The LLM cache key
+includes the concrete model id, so env-only model swaps never replay another
+model's output. Pricing lives in `DEFAULT_PRICING` (override via
+`LLM_PRICING_JSON`); keep it in sync with real list prices. How to probe a
+model change: `docs/LLM_MEASUREMENT.md`.
 
 ---
 
@@ -290,7 +299,8 @@ with real list prices.
   clocks (`period_*` / `season_*`); optional tiered/ULO if incomplete.
 - `seed_*.py` — `seed_eia861`, `seed_canada`, `seed_openei`, `seed_territories`, `seed_monitoring_sources`.
 - `opus_yield_probe.py` — live dry-run probe of extraction-tier yield for given utility IDs.
-- `benchmark.py` — score pipeline output vs `tests/fixtures/ground_truth.json`.
+- `benchmark.py` — score live tariffs vs `tests/fixtures/ground_truth.json` (flat/tiered, 15%) and
+  `ground_truth_tou_seasonal.json` (TOU/seasonal gold: exact values, clocks, season dates, computable).
 - `run_monitoring.py` — CLI monitoring runner (concurrent).
 
 Full inventory: run `ls backend/scripts/`. Many `*_audit.py` / `inspect_*.py`
@@ -406,7 +416,8 @@ Seed order: `seed_eia861` → `seed_canada` → `seed_openei` → `seed_territor
 `GOOGLE_AI_API_KEY`, `GOOGLE_CSE_API_KEY`, `GOOGLE_CSE_CX`,
 `GOOGLE_MAPS_API_KEY`, `TARIFF_CORRECTIONS_API_KEY`; pins: `PIN_VERIFY_DAILY_MAX`,
 `PIN_VERIFIER`, `PIN_ARBITER`; model/cost: `OPUS_MODEL`, `HAIKU_MODEL`, `GEMINI_MODEL`,
-`OPUS_MAX_PER_UTILITY`, `PHASE6_ENABLED`, `LLM_PRICING_JSON`,
+`AUDITOR_MODEL`, `OPUS_MAX_PER_UTILITY`, `PHASE6_ENABLED`, `LLM_PRICING_JSON`,
+`LLM_CACHE_LEGACY_READ`,
 `MONTHLY_MAX_UTILITIES`, `CELERY_CONCURRENCY`, `QUARANTINE_RECHECK_DAYS`; auth:
 `AUTH_ENABLED`, `GOOGLE_OAUTH_CLIENT_ID/SECRET`, `AUTH_ALLOWED_EMAIL_DOMAIN`.
 
@@ -420,5 +431,6 @@ Seed order: `seed_eia861` → `seed_canada` → `seed_openei` → `seed_territor
 - `docs/TOU_SEASONAL_FIELDS.md` — structured TOU clock + season calendar columns.
 - `docs/MYSA_CONSUMER_CONTRACT.md` — how machine consumers price intervals and build TOU schedules from `computable` tariffs.
 - `docs/TARIFF_CORRECTIONS_AND_PINS.md` — correction API, document pins, automated re-verification.
+- `docs/LLM_MEASUREMENT.md` — measuring extraction quality / spend before any model change.
 - `README.md` — quick start + API endpoint list.
 - `PROJECT_SUMMARY.md`, `TECHNICAL_REVIEW.md` — **historical** (2026-03/04); superseded by this file for anything about the refresh/quarantine/cost/model systems.
