@@ -1,9 +1,10 @@
 from datetime import date, datetime, time
 from typing import Any
 
-from pydantic import BaseModel, model_validator
+from pydantic import BaseModel, ValidationInfo, model_validator
 
 from app.models.tariff import ComponentType, CustomerClass, RateType
+from app.services.computable import tariff_contract
 
 _CURRENT_CUTOFF_YEARS = 2
 _AGING_CUTOFF_YEARS = 5
@@ -52,11 +53,38 @@ class RateComponentRead(BaseModel):
     season_end_month: int | None = None
     season_end_day: int | None = None
     adjustment: float | None = None
+    # ADJUSTMENT already folded into the all-in ENERGY rates: do not add it.
+    included_in_energy: bool = False
 
     model_config = {"from_attributes": True}
 
 
-class TariffListRead(BaseModel):
+class _ComputableContract(BaseModel):
+    """Machine contract for cost / TOU consumers (docs/MYSA_CONSUMER_CONTRACT.md).
+
+    ``computable`` is False whenever the structured rows are not enough to
+    price every interval of the year; ``computable_reasons`` says why
+    (``code`` or ``code:detail``). ``computable_warnings`` are assumptions
+    the consumer must honour even when computable.
+    """
+
+    computable: bool = False
+    computable_reasons: list[str] = []
+    computable_warnings: list[str] = []
+    needs_review: bool = False
+
+    @model_validator(mode="before")
+    @classmethod
+    def _attach_contract(cls, data: Any, info: ValidationInfo) -> Any:
+        if isinstance(data, dict) or not hasattr(data, "rate_components"):
+            return data
+        out = {name: getattr(data, name) for name in cls.model_fields if hasattr(data, name)}
+        ctx = info.context or {}
+        out.update(tariff_contract(data, holiday_calendar=ctx.get("holiday_calendar")))
+        return out
+
+
+class TariffListRead(_ComputableContract):
     id: int
     utility_id: int
     name: str
@@ -81,6 +109,13 @@ class TariffListRead(BaseModel):
 class TariffDetailRead(TariffListRead):
     description: str | None = None
     source_url: str | None = None
+    # TOU clock windows are local wall-clock time at the service address.
+    # ``timezone`` is the utility fallback (None in multi-zone jurisdictions).
+    clock_basis: str = "local_wall_clock"
+    timezone: str | None = None
+    timezone_source: str | None = None
+    currency: str | None = None
+    holiday_calendar: str | None = None
     rate_components: list[RateComponentRead] = []
     energy_schedule_weekday: Any | None = None
     energy_schedule_weekend: Any | None = None
@@ -92,7 +127,7 @@ class TariffDetailRead(TariffListRead):
     model_config = {"from_attributes": True}
 
 
-class TariffBrowseRead(BaseModel):
+class TariffBrowseRead(_ComputableContract):
     """Tariff with utility context for the browse/filter view."""
     id: int
     utility_id: int

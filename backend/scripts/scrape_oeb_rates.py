@@ -703,6 +703,7 @@ _COMPONENT_COPY_FIELDS = (
     "tier_label", "period_index", "period_label", "period_start_time",
     "period_end_time", "day_type", "season", "season_start_month",
     "season_start_day", "season_end_month", "season_end_day", "adjustment",
+    "included_in_energy",
 )
 
 

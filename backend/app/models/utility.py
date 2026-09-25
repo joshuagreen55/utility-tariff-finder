@@ -47,6 +47,12 @@ class Utility(Base):
     tariff_page_urls: Mapped[dict | None] = mapped_column(JSONB, nullable=True)
     rate_page_url_override: Mapped[str | None] = mapped_column(Text, nullable=True)
     is_active: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
+    # IANA zone override for multi-zone jurisdictions; see
+    # app.services.timezones.utility_timezone for the state default.
+    timezone: Mapped[str | None] = mapped_column(String(64), nullable=True)
+    # Code of the holiday list used by day_type='holiday' TOU rows (e.g.
+    # "CA-ON", "US-NERC"). Not populated yet; see docs/MYSA_CONSUMER_CONTRACT.md.
+    holiday_calendar: Mapped[str | None] = mapped_column(String(40), nullable=True)
 
     # Refresh-quarantine bookkeeping. `refresh_fail_streak` counts consecutive
     # *structural* extraction failures (page reached but 0 tariffs / no rate

@@ -152,6 +152,7 @@ def component_key(comp: Any) -> tuple:
         _norm_int(_get(comp, "season_start_day")),
         _norm_int(_get(comp, "season_end_month")),
         _norm_int(_get(comp, "season_end_day")),
+        bool(_get(comp, "included_in_energy") or False),
     )
 
 
@@ -186,6 +187,7 @@ def serialize_components(components: Iterable[Any]) -> list[dict]:
             "season_start_day": _get(c, "season_start_day"),
             "season_end_month": _get(c, "season_end_month"),
             "season_end_day": _get(c, "season_end_day"),
+            "included_in_energy": bool(_get(c, "included_in_energy") or False),
         })
     return out
 

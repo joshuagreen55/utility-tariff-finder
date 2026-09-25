@@ -76,3 +76,11 @@ See that script’s docstring for VM apply steps. Other incomplete Ontario
 LDC keepers fill on the next `scrape_oeb_rates` run (structured persistence
 is wired; no mass soft-supersede of every LDC in the Hydro One repair).
 Do not invent times from labels.
+
+## Beyond completeness: the computable contract
+
+These fields being present (completeness v1) does not mean a tariff can be
+priced for every interval. `app/services/computable.py` checks that windows
+partition each day per season × day type, seasons cover the year, and tiers
+are contiguous; see `docs/MYSA_CONSUMER_CONTRACT.md` for the consumer rules
+and reason codes.

@@ -4005,7 +4005,8 @@ def _get_rate_bounds(state: str) -> tuple[float, float, float, float, float, flo
 
 _CENTS_UNIT_RE = re.compile(r"(?:¢|\bcents?\b|(?<![a-z])c/)", re.IGNORECASE)
 
-# Canonical dollar units per component type after normalization.
+# Canonical dollar units per component type after normalization, used only
+# when a cents unit names no denominator of its own.
 _DOLLAR_UNIT = {
     "energy": "$/kWh",
     "demand": "$/kW",
@@ -4013,6 +4014,33 @@ _DOLLAR_UNIT = {
     "minimum": "$/month",
     "adjustment": "$/kWh",
 }
+
+# Denominator in a cents unit string → dollar unit. Order matters: kWh
+# before kW, kVA before kW.
+_CENTS_DENOMINATORS = (
+    (re.compile(r"kwh", re.IGNORECASE), "$/kWh"),
+    (re.compile(r"kva", re.IGNORECASE), "$/kVA"),
+    (re.compile(r"kw", re.IGNORECASE), "$/kW"),
+    (re.compile(r"\b(?:day|daily|d)\b", re.IGNORECASE), "$/day"),
+    (re.compile(r"\b(?:month|monthly|mo)\b", re.IGNORECASE), "$/month"),
+    (re.compile(r"\b(?:bill|billing\s*period)\b", re.IGNORECASE), "$/bill"),
+    (re.compile(r"\b(?:year|yr|annual)\b", re.IGNORECASE), "$/year"),
+)
+
+# Monthly equivalents for bounds checks on periodic charges.
+_PERIODIC_TO_MONTH = {"$/day": 30.4, "$/year": 1 / 12}
+
+
+def _dollar_unit_for_cents(ctype: str, unit: str) -> str:
+    """Dollar unit keeping the cents unit's own billing period.
+
+    "45.5 ¢/day" is a daily charge: relabelling it "$/month" understated it
+    ~30x (audit F6b).
+    """
+    for pattern, dollar_unit in _CENTS_DENOMINATORS:
+        if pattern.search(unit):
+            return dollar_unit
+    return _DOLLAR_UNIT.get(ctype, "$/kWh")
 
 
 def _normalize_component_units(t: ExtractedTariff, p99_energy: float) -> list[str]:
@@ -4042,7 +4070,7 @@ def _normalize_component_units(t: ExtractedTariff, p99_energy: float) -> list[st
 
         if _CENTS_UNIT_RE.search(unit):
             new_rv = rv / 100.0
-            new_unit = _DOLLAR_UNIT.get(ctype, "$/kWh")
+            new_unit = _dollar_unit_for_cents(ctype, unit)
             comp["rate_value"] = new_rv
             comp["unit"] = new_unit
             notes.append(f"{ctype} {rv} {unit!r} -> {new_rv} {new_unit}")
@@ -4134,7 +4162,8 @@ def expand_relative_seasonal_energy(
     When ≥2 distinct seasonal energy-unit ADJUSTMENT rows are present and a
     single base ENERGY $/kWh can be inferred, emit ENERGY = base + adj for
     each adjustment season. Fixed/demand/minimum rows are untouched.
-    ADJUSTMENT rows are kept by default for audit.
+    ADJUSTMENT rows are kept by default for audit, flagged
+    ``included_in_energy`` so cost consumers do not add them twice.
     """
     if not components:
         return components
@@ -4250,7 +4279,7 @@ def expand_relative_seasonal_energy(
     out: list[dict] = []
     out.extend(other)
     if keep_adjustments:
-        out.extend(seasonal_adjs)
+        out.extend({**a, "included_in_energy": True} for a in seasonal_adjs)
     out.extend(new_energy)
     return out
 
@@ -4276,7 +4305,8 @@ def expand_stacking_energy_riders(
     When ≥1 unseasoned energy-unit ADJUSTMENT is present alongside ENERGY
     rows, add the sum of those adjustments to every ENERGY ``rate_value``.
     Seasonal ADJUSTMENTs are left for ``expand_relative_seasonal_energy``.
-    Idempotent when no unseasoned energy ADJUSTMENTs remain.
+    Retained ADJUSTMENT rows are flagged ``included_in_energy``. Idempotent:
+    already-flagged riders are not folded again.
     """
     if not components:
         return components
@@ -4295,7 +4325,7 @@ def expand_stacking_energy_riders(
         elif ctype == "adjustment" and _is_energy_unit(comp.get("unit")):
             # Seasonal relative riders are handled elsewhere; only fold
             # flat / stacking riders here.
-            if _season_key(comp.get("season")):
+            if _season_key(comp.get("season")) or comp.get("included_in_energy"):
                 other.append(comp)
                 continue
             label = " ".join(
@@ -4351,7 +4381,7 @@ def expand_stacking_energy_riders(
     out: list[dict] = []
     out.extend(other)
     if keep_adjustments:
-        out.extend(stacking_adjs)
+        out.extend({**a, "included_in_energy": True} for a in stacking_adjs)
     out.extend(new_energy)
     return out
 
@@ -4571,6 +4601,7 @@ def phase4_validate(
                         elif rv > p95_energy:
                             needs_review = True
                     elif ctype == "fixed":
+                        rv *= _PERIODIC_TO_MONTH.get(str(comp.get("unit") or "").strip(), 1.0)
                         if rv > p99_fixed * 3:
                             tariff_issues.append(
                                 f"fixed charge ${rv}/month > 3x 99th percentile "
@@ -4886,6 +4917,7 @@ def _build_rate_components(et: ExtractedTariff) -> list:
             season_start_day=structured["season_start_day"],
             season_end_month=structured["season_end_month"],
             season_end_day=structured["season_end_day"],
+            included_in_energy=bool(comp.get("included_in_energy")),
         ))
     return out
 

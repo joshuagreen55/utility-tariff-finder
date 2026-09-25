@@ -21,6 +21,11 @@ Composite Health Score = weighted blend:
     20%  Completeness (has energy + fixed charge + effective date)
     10%  Provenance (has a source URL)
 
+Also reported, but NOT in the composite (so the score stays comparable with
+its history): the COMPUTABLE lens — live, verified residential tariffs that
+satisfy the computable contract (app/services/computable.py), and how many
+active utilities have at least one. That is the bar for Mysa cost/TOU use.
+
 The score is deterministic and re-runnable. Pass --snapshot to append a
 JSON line to logs/health_score_history.jsonl so you can chart the trend
 after each refresh/cleanup run.
@@ -191,6 +196,48 @@ FROM monitoring_sources
 """)
 
 
+def compute_computable(session: Session) -> dict:
+    """Computable-contract lens over live, verified residential tariffs."""
+    from collections import Counter
+
+    from sqlalchemy import select
+    from sqlalchemy.orm import selectinload
+
+    from app.models import CustomerClass, Tariff, Utility
+    from app.services.computable import evaluate_computable
+
+    rows = session.execute(
+        select(Tariff, Utility.holiday_calendar)
+        .join(Utility, Utility.id == Tariff.utility_id)
+        .options(selectinload(Tariff.rate_components))
+        .where(
+            Utility.is_active.is_(True),
+            Tariff.customer_class == CustomerClass.RESIDENTIAL,
+            Tariff.last_verified_at.is_not(None),
+            Tariff.superseded_by_tariff_id.is_(None),
+            Tariff.supersede_reason.is_(None),
+        )
+    ).all()
+    ok = 0
+    utils_ok: set[int] = set()
+    reasons: Counter = Counter()
+    for t, holiday_calendar in rows:
+        res = evaluate_computable(
+            t.rate_type, t.rate_components, name=t.name, holiday_calendar=holiday_calendar
+        )
+        if res.computable:
+            ok += 1
+            utils_ok.add(t.utility_id)
+        else:
+            reasons.update(r.split(":", 1)[0] for r in res.reasons)
+    return {
+        "verified_residential_tariffs": len(rows),
+        "computable_residential_tariffs": ok,
+        "utilities_with_computable_residential": len(utils_ok),
+        "top_blocking_reasons": dict(reasons.most_common(8)),
+    }
+
+
 def compute(session: Session) -> dict:
     # ---- Coverage ----
     cov_rows = session.execute(COVERAGE_SQL).all()
@@ -278,6 +325,7 @@ def compute(session: Session) -> dict:
             "ok": mon.ok,
             "never_checked": mon.never_checked,
         },
+        "computable": compute_computable(session),
     }
 
 
@@ -321,6 +369,14 @@ def print_scorecard(r: dict) -> None:
     print("  FRESHNESS DISTRIBUTION (served tariffs)")
     for k, v in fb.items():
         print(f"    {k:<10}{v:>7,}  {bar(100*v/served, 30)}")
+    print()
+
+    k = r["computable"]
+    print("  COMPUTABLE CONTRACT (informational, not in composite)")
+    print(f"    {k['computable_residential_tariffs']:,} / {k['verified_residential_tariffs']:,} verified residential tariffs computable")
+    print(f"    {k['utilities_with_computable_residential']:,} / {r['coverage']['active_utilities']:,} active utilities have one")
+    for reason, n in k["top_blocking_reasons"].items():
+        print(f"      {reason:<36}{n:>7,}")
     print()
 
     m = r["monitoring"]
