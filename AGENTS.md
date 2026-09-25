@@ -6,7 +6,7 @@ comprehensive; when in doubt, prefer what is written here over older docs
 (`PROJECT_SUMMARY.md` and `TECHNICAL_REVIEW.md` predate most of the current
 refresh/quarantine/cost/model systems).
 
-_Last updated: 2026-09-02._
+_Last updated: 2026-09-25._
 
 ---
 
@@ -55,9 +55,10 @@ backend/
     config.py         # Pydantic Settings (all env vars)
     db/session.py     # async + sync engine singletons
     main.py           # FastAPI entrypoint
-  alembic/versions/   # DB migrations (head = b9c0d1e2f3a4)
+  alembic/versions/   # DB migrations (head = c0d1e2f3a4b5)
   scripts/            # the pipeline + seeds + campaigns + audits (see §5, §6)
-  tests/fixtures/     # ground_truth.json (no pytest suite; benchmark via scripts/benchmark.py)
+  tests/              # unittest suite (TOU/seasonal completeness, repairs, etc.)
+  tests/fixtures/     # ground_truth.json (benchmark via scripts/benchmark.py)
 frontend/src/         # React app (pages/, components/, api/client.ts)
 deploy/               # sync-to-vm.sh, run-on-vm.sh, vm-*.sh, Caddyfile, Dockerfile.web
 docs/                 # ARCHITECTURE.md, GCP*.md, DATABASE_ACCESS.md, CENTRALIZED_REGULATORS.md
@@ -84,7 +85,13 @@ Models live in `backend/app/models/`. Key tables and columns:
   (`matcher` | `llm_absorb` | `manual`). TOU schedules stored as JSONB.
 - **`rate_components`** (`tariff.py`) — `tariff_id`, `component_type`
   (energy/demand/fixed/minimum/adjustment), `unit`, `rate_value`
-  (`Numeric(16,6)`), tiering + TOU period fields.
+  (`Numeric(16,6)`), tiering + TOU period fields. **Structured TOU/season
+  (preferred over label parsing):** `period_start_time` / `period_end_time`
+  (`TIME`), `day_type` (`weekday`|`weekend`|`holiday`|`all`), and inclusive
+  season calendar `season_start_month`/`season_start_day`/
+  `season_end_month`/`season_end_day`. Keep `period_label` / `season` for
+  display. See `docs/TOU_SEASONAL_FIELDS.md`. Never invent clock times or
+  season dates from labels alone.
 - **`monitoring_sources`** (`monitoring.py`) — a URL to watch per utility;
   `status` (unchanged/changed/error/pending), `last_content_hash`,
   `last_changed_at`. **`monitoring_logs`** records each check.
@@ -172,6 +179,20 @@ is **soft-quarantined**: skipped by monthly **and** quarterly runs, re-checked
 only every `QUARANTINE_RECHECK_DAYS` (120) — unless a monitoring **CHANGED**
 signal overrides it. State is on the `utilities.refresh_*` columns (durable +
 queryable). `seed_sourceless_quarantine.py` pre-seeds known-dead utilities.
+
+### Completeness helper (`app/services/tou_seasonal_completeness.py`)
+Product rules on ENERGY rows using **structured** columns (not label regex):
+1. TOU-family (`tou`/`tou_tiered`/`demand_tou`/`seasonal_tou`) — every ENERGY
+   row must have `period_start_time` + `period_end_time` (and a rate).
+2. Seasonal-family (`seasonal`/`seasonal_tiered`/`seasonal_tou`) — every ENERGY
+   row must have inclusive `season_*` month/day fields (and a rate).
+3. `seasonal_tou` needs both.
+
+CI: `.github/workflows/backend-tests.yml` runs
+`python -m scripts.check_tou_seasonal_completeness`. Optional Celery stub
+`audit_tou_seasonal_completeness` exists but is not on beat by default.
+**Do not invent times/dates** in extraction; flag incomplete shapes
+`needs_review` + `confidence_factors.tou_seasonal_incomplete`.
 
 ### Health score (`scripts/health_score.py`)
 Composite 0–100 score, weighted: Coverage 40% / Freshness 30% / Completeness
@@ -267,7 +288,7 @@ Read-only DB access from a laptop: see `docs/DATABASE_ACCESS.md` (SSH tunnel).
    VM, bulk supersede/delete, or deactivating utilities. Read-only checks
    (health score, cost report, status queries) are fine to run freely.
 4. **Migrations are additive and reversible.** New Alembic revision →
-   `down_revision` = current head (`b9c0d1e2f3a4`) → test `upgrade` and
+   `down_revision` = current head (`c0d1e2f3a4b5`) → test `upgrade` and
    `downgrade`. Never edit an applied migration.
 5. **Preserve the live/superseded invariant** (§3). Soft-supersede, don't
    delete. Filter to live tariffs in any user-facing/metric query.
@@ -317,5 +338,6 @@ Seed order: `seed_eia861` → `seed_canada` → `seed_openei` → `seed_territor
 - `docs/GCP.md`, `docs/GCP_FIRST_TIME.md` — VM deployment.
 - `docs/DATABASE_ACCESS.md` — read-only DB access via SSH tunnel.
 - `docs/CENTRALIZED_REGULATORS.md` — jurisdictions with centralized rate-setting.
+- `docs/TOU_SEASONAL_FIELDS.md` — structured TOU clock + season calendar columns.
 - `README.md` — quick start + API endpoint list.
 - `PROJECT_SUMMARY.md`, `TECHNICAL_REVIEW.md` — **historical** (2026-03/04); superseded by this file for anything about the refresh/quarantine/cost/model systems.

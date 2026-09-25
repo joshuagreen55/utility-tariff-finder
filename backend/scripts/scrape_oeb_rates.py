@@ -397,48 +397,138 @@ def get_ontario_utilities() -> list[dict]:
         ]
 
 
+def _tod(hhmm: str) -> str:
+    """Normalize schedule HH:MM; map 24:00 → 00:00 for TIME columns."""
+    return "00:00" if hhmm in ("24:00", "24:00:00") else hhmm
+
+
+def _energy_window(
+    *,
+    rate_value: float,
+    period_label: str,
+    start: str,
+    end: str,
+    day_type: str,
+    season_label: str | None = None,
+    season_start_month: int | None = None,
+    season_start_day: int | None = None,
+    season_end_month: int | None = None,
+    season_end_day: int | None = None,
+) -> dict:
+    return {
+        "component_type": "energy",
+        "unit": "$/kWh",
+        "rate_value": rate_value,
+        "period_label": period_label,
+        "period_start_time": _tod(start),
+        "period_end_time": _tod(end),
+        "day_type": day_type,
+        "season": season_label,
+        "season_start_month": season_start_month,
+        "season_start_day": season_start_day,
+        "season_end_month": season_end_month,
+        "season_end_day": season_end_day,
+    }
+
+
+# Inclusive OEB TOU seasons (official schedule windows).
+_OEB_WINTER = dict(
+    season_label="Winter (Nov 1–Apr 30)",
+    season_start_month=11,
+    season_start_day=1,
+    season_end_month=4,
+    season_end_day=30,
+)
+_OEB_SUMMER = dict(
+    season_label="Summer (May 1–Oct 31)",
+    season_start_month=5,
+    season_start_day=1,
+    season_end_month=10,
+    season_end_day=31,
+)
+
+_PERIOD_LABEL = {
+    "on-peak": "On-Peak",
+    "mid-peak": "Mid-Peak",
+    "off-peak": "Off-Peak",
+    "ultra-low overnight": "Ultra-Low Overnight",
+    "weekend off-peak": "Weekend Off-Peak",
+}
+
+
+def _tou_price_for(rates: TOURates, period_key: str) -> float:
+    return {
+        "on-peak": rates.on_peak,
+        "mid-peak": rates.mid_peak,
+        "off-peak": rates.off_peak,
+    }[period_key]
+
+
+def _ulo_price_for(rates: ULORates, period_key: str) -> float:
+    return {
+        "on-peak": rates.on_peak,
+        "mid-peak": rates.mid_peak,
+        "ultra-low overnight": rates.ultra_low_overnight,
+        "weekend off-peak": rates.weekend_off_peak,
+    }[period_key]
+
+
 def build_tariff_entries(rates: OEBRateSet, customer_class: str) -> list[dict]:
     """Build tariff dicts from parsed OEB rates for a given customer class.
 
-    Returns entries compatible with the store_tariffs format.
+    Returns entries compatible with the store_tariffs format. TOU/ULO ENERGY
+    rows include structured clock windows (+ season calendar for TOU, whose
+    on/mid peak hours swap May↔Nov). Prices are never invented; hours come
+    from the fixed OEB schedules defined above.
     """
     tariffs = []
     class_label = "Residential" if customer_class == "residential" else "Small Business"
 
     if rates.tou:
+        components: list[dict] = []
+        for schedule, season_meta in (
+            (WINTER_TOU_SCHEDULE, _OEB_WINTER),
+            (SUMMER_TOU_SCHEDULE, _OEB_SUMMER),
+        ):
+            for slot in schedule["weekday"]:
+                key = slot["period"]
+                components.append(
+                    _energy_window(
+                        rate_value=_tou_price_for(rates.tou, key),
+                        period_label=_PERIOD_LABEL[key],
+                        start=slot["start"],
+                        end=slot["end"],
+                        day_type="weekday",
+                        **season_meta,
+                    )
+                )
+            # Weekends and holidays are off-peak all day (same price both seasons).
+            for day_type in ("weekend", "holiday"):
+                components.append(
+                    _energy_window(
+                        rate_value=rates.tou.off_peak,
+                        period_label="Off-Peak",
+                        start="00:00",
+                        end="00:00",
+                        day_type=day_type,
+                        **season_meta,
+                    )
+                )
         tariffs.append({
             "name": f"Time-of-Use (TOU) — {class_label}",
             "code": "OEB-RPP-TOU",
-            "customer_class": customer_class,
-            "rate_type": "tou",
+            # Seasonal clock assignment (summer vs winter) + TOU prices.
+            "rate_type": "seasonal_tou",
             "description": (
                 f"Ontario Regulated Price Plan — Time-of-Use pricing for {class_label.lower()} customers. "
                 f"Rates set by the Ontario Energy Board, effective {rates.tou.effective_date}. "
                 f"Prices vary by time of day: on-peak, mid-peak, and off-peak. "
-                f"Weekends and holidays are off-peak all day."
+                f"Weekends and holidays are off-peak all day. "
+                f"On/mid-peak hours swap between winter (Nov 1–Apr 30) and summer (May 1–Oct 31)."
             ),
             "source_url": SOURCE_URL,
             "effective_date": rates.tou.effective_date,
-            "components": [
-                {
-                    "component_type": "energy",
-                    "unit": "$/kWh",
-                    "rate_value": rates.tou.on_peak,
-                    "period_label": "On-Peak",
-                },
-                {
-                    "component_type": "energy",
-                    "unit": "$/kWh",
-                    "rate_value": rates.tou.mid_peak,
-                    "period_label": "Mid-Peak",
-                },
-                {
-                    "component_type": "energy",
-                    "unit": "$/kWh",
-                    "rate_value": rates.tou.off_peak,
-                    "period_label": "Off-Peak",
-                },
-            ],
+            "components": components,
         })
 
     if rates.tiered:
@@ -446,7 +536,7 @@ def build_tariff_entries(rates: OEBRateSet, customer_class: str) -> list[dict]:
             "name": f"Tiered Pricing — {class_label}",
             "code": "OEB-RPP-TIERED",
             "customer_class": customer_class,
-            "rate_type": "tiered",
+            "rate_type": "seasonal_tiered",
             "description": (
                 f"Ontario Regulated Price Plan — Tiered pricing for {class_label.lower()} customers. "
                 f"Rates set by the Ontario Energy Board, effective {rates.tiered.effective_date}. "
@@ -460,10 +550,14 @@ def build_tariff_entries(rates: OEBRateSet, customer_class: str) -> list[dict]:
                     "component_type": "energy",
                     "unit": "$/kWh",
                     "rate_value": rates.tiered.lower_tier_price,
-                    "tier_label": f"Lower Tier (up to {rates.tiered.summer_threshold_kwh}/{rates.tiered.winter_threshold_kwh} kWh)",
+                    "tier_label": f"Lower Tier (up to {rates.tiered.summer_threshold_kwh} kWh)",
                     "tier_min_kwh": 0,
                     "tier_max_kwh": rates.tiered.summer_threshold_kwh,
-                    "season": "summer",
+                    "season": _OEB_SUMMER["season_label"],
+                    **{k: _OEB_SUMMER[k] for k in (
+                        "season_start_month", "season_start_day",
+                        "season_end_month", "season_end_day",
+                    )},
                 },
                 {
                     "component_type": "energy",
@@ -472,7 +566,11 @@ def build_tariff_entries(rates: OEBRateSet, customer_class: str) -> list[dict]:
                     "tier_label": f"Lower Tier (up to {rates.tiered.winter_threshold_kwh} kWh)",
                     "tier_min_kwh": 0,
                     "tier_max_kwh": rates.tiered.winter_threshold_kwh,
-                    "season": "winter",
+                    "season": _OEB_WINTER["season_label"],
+                    **{k: _OEB_WINTER[k] for k in (
+                        "season_start_month", "season_start_day",
+                        "season_end_month", "season_end_day",
+                    )},
                 },
                 {
                     "component_type": "energy",
@@ -480,7 +578,11 @@ def build_tariff_entries(rates: OEBRateSet, customer_class: str) -> list[dict]:
                     "rate_value": rates.tiered.higher_tier_price,
                     "tier_label": "Higher Tier (above threshold)",
                     "tier_min_kwh": rates.tiered.summer_threshold_kwh,
-                    "season": "summer",
+                    "season": _OEB_SUMMER["season_label"],
+                    **{k: _OEB_SUMMER[k] for k in (
+                        "season_start_month", "season_start_day",
+                        "season_end_month", "season_end_day",
+                    )},
                 },
                 {
                     "component_type": "energy",
@@ -488,12 +590,51 @@ def build_tariff_entries(rates: OEBRateSet, customer_class: str) -> list[dict]:
                     "rate_value": rates.tiered.higher_tier_price,
                     "tier_label": "Higher Tier (above threshold)",
                     "tier_min_kwh": rates.tiered.winter_threshold_kwh,
-                    "season": "winter",
+                    "season": _OEB_WINTER["season_label"],
+                    **{k: _OEB_WINTER[k] for k in (
+                        "season_start_month", "season_start_day",
+                        "season_end_month", "season_end_day",
+                    )},
                 },
             ],
         })
 
     if rates.ulo:
+        ulo_components: list[dict] = []
+        for slot in ULO_SCHEDULE["weekday"]:
+            key = slot["period"]
+            ulo_components.append(
+                _energy_window(
+                    rate_value=_ulo_price_for(rates.ulo, key),
+                    period_label=_PERIOD_LABEL[key],
+                    start=slot["start"],
+                    end=slot["end"],
+                    day_type="weekday",
+                )
+            )
+        for slot in ULO_SCHEDULE["weekend"]:
+            key = slot["period"]
+            ulo_components.append(
+                _energy_window(
+                    rate_value=_ulo_price_for(rates.ulo, key),
+                    period_label=_PERIOD_LABEL[key],
+                    start=slot["start"],
+                    end=slot["end"],
+                    day_type="weekend",
+                )
+            )
+        # Holidays follow the weekend ULO schedule per OEB.
+        for slot in ULO_SCHEDULE["weekend"]:
+            key = slot["period"]
+            ulo_components.append(
+                _energy_window(
+                    rate_value=_ulo_price_for(rates.ulo, key),
+                    period_label=_PERIOD_LABEL[key],
+                    start=slot["start"],
+                    end=slot["end"],
+                    day_type="holiday",
+                )
+            )
         tariffs.append({
             "name": f"Ultra-Low Overnight (ULO) — {class_label}",
             "code": "OEB-RPP-ULO",
@@ -503,37 +644,16 @@ def build_tariff_entries(rates: OEBRateSet, customer_class: str) -> list[dict]:
                 f"Ontario Regulated Price Plan — Ultra-Low Overnight pricing for {class_label.lower()} customers. "
                 f"Rates set by the Ontario Energy Board, effective {rates.ulo.effective_date}. "
                 f"Designed for customers with significant overnight usage (e.g. EV charging). "
-                f"Very low overnight rate, higher on-peak rate."
+                f"Very low overnight rate, higher on-peak rate. Holidays follow the weekend schedule."
             ),
             "source_url": SOURCE_URL,
             "effective_date": rates.ulo.effective_date,
-            "components": [
-                {
-                    "component_type": "energy",
-                    "unit": "$/kWh",
-                    "rate_value": rates.ulo.on_peak,
-                    "period_label": "On-Peak",
-                },
-                {
-                    "component_type": "energy",
-                    "unit": "$/kWh",
-                    "rate_value": rates.ulo.mid_peak,
-                    "period_label": "Mid-Peak",
-                },
-                {
-                    "component_type": "energy",
-                    "unit": "$/kWh",
-                    "rate_value": rates.ulo.weekend_off_peak,
-                    "period_label": "Weekend Off-Peak",
-                },
-                {
-                    "component_type": "energy",
-                    "unit": "$/kWh",
-                    "rate_value": rates.ulo.ultra_low_overnight,
-                    "period_label": "Ultra-Low Overnight",
-                },
-            ],
+            "components": ulo_components,
         })
+
+    # Ensure customer_class is set on every entry (TOU path set it via append dict).
+    for t in tariffs:
+        t.setdefault("customer_class", customer_class)
 
     return tariffs
 
@@ -555,6 +675,8 @@ def store_oeb_tariffs(utility_id: int, tariff_entries: list[dict], dry_run: bool
     TYPE_MAP = {
         "tou": RateType.TOU,
         "tiered": RateType.TIERED,
+        "seasonal_tou": RateType.SEASONAL_TOU,
+        "seasonal_tiered": RateType.SEASONAL_TIERED,
     }
     COMP_MAP = {
         "energy": ComponentType.ENERGY,
@@ -614,6 +736,22 @@ def store_oeb_tariffs(utility_id: int, tariff_entries: list[dict], dry_run: bool
                 ct = COMP_MAP.get(comp.get("component_type"))
                 if not ct:
                     continue
+                # Prefer pipeline parsers when available (shared TIME / day_type rules).
+                try:
+                    from scripts.tariff_pipeline import (
+                        _parse_period_time,
+                        _parse_day_type,
+                        _parse_season_int,
+                    )
+                    pst = _parse_period_time(comp.get("period_start_time"))
+                    pet = _parse_period_time(comp.get("period_end_time"))
+                    day_type = _parse_day_type(comp.get("day_type"))
+                    ssm = _parse_season_int(comp.get("season_start_month"), lo=1, hi=12)
+                    ssd = _parse_season_int(comp.get("season_start_day"), lo=1, hi=31)
+                    sem = _parse_season_int(comp.get("season_end_month"), lo=1, hi=12)
+                    sed = _parse_season_int(comp.get("season_end_day"), lo=1, hi=31)
+                except Exception:
+                    pst = pet = day_type = ssm = ssd = sem = sed = None
                 new_components.append(RateComponent(
                     component_type=ct,
                     unit=comp.get("unit", "$/kWh"),
@@ -622,7 +760,14 @@ def store_oeb_tariffs(utility_id: int, tariff_entries: list[dict], dry_run: bool
                     tier_max_kwh=comp.get("tier_max_kwh"),
                     tier_label=comp.get("tier_label"),
                     period_label=comp.get("period_label"),
+                    period_start_time=pst,
+                    period_end_time=pet,
+                    day_type=day_type,
                     season=comp.get("season"),
+                    season_start_month=ssm,
+                    season_start_day=ssd,
+                    season_end_month=sem,
+                    season_end_day=sed,
                 ))
 
             if not new_components:

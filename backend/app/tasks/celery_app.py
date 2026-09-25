@@ -60,5 +60,11 @@ celery_app.conf.update(
             "task": "app.tasks.refresh.reap_stalled_runs",
             "schedule": crontab(minute=15),  # every hour at :15
         },
+        # Optional: TOU/seasonal structured completeness audit (read-only).
+        # Disabled by default — uncomment when operators want a nightly scan.
+        # "nightly-tou-seasonal-completeness": {
+        #     "task": "app.tasks.refresh.audit_tou_seasonal_completeness",
+        #     "schedule": crontab(hour=5, minute=30),
+        # },
     },
 )

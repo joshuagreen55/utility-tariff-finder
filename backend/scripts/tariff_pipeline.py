@@ -354,6 +354,9 @@ class ExtractedTariff:
     # suspicious band (above p95, or unit auto-corrected). Persisted in
     # confidence_factors so reviewers can query it.
     needs_review: bool = False
+    # Structured TOU/seasonal completeness gap reasons from Phase 4
+    # (e.g. tou_missing_clock_windows). Persisted under confidence_factors.
+    completeness_reasons: list[str] = field(default_factory=list)
 
 
 @dataclass
@@ -2366,11 +2369,17 @@ For each tariff, provide:
     - rate_value: Exact numeric value from the page (e.g. 0.0956). Convert cents to dollars.
     - tier_min_kwh / tier_max_kwh: For tiered rates (null otherwise)
     - tier_label: e.g. "Step 1", "First 1000 kWh"
-    - period_label: For TOU, e.g. "On-Peak", "Off-Peak" (null otherwise)
-    - season: "Summer" / "Winter" etc. (null if not seasonal)
+    - period_label: For TOU, e.g. "On-Peak", "Off-Peak" (null otherwise) — display only
+    - period_start_time / period_end_time: For TOU ENERGY rows, "HH:MM" 24h clock (e.g. "07:00", "11:00"). REQUIRED when the source states hours. Use "00:00"/"00:00" for all-hours. Overnight wraps OK (e.g. "21:00"→"07:00"). Use "24:00" only as end-of-day synonym for "00:00". NEVER invent times — if hours are not on the page, leave null.
+    - day_type: "weekday" | "weekend" | "holiday" | "all" when the source states which days the window applies to (null if unknown)
+    - season: "Summer" / "Winter" etc. (null if not seasonal) — display only
+    - season_start_month / season_start_day / season_end_month / season_end_day: Inclusive calendar integers (month 1–12, day 1–31). REQUIRED for seasonal ENERGY when the source states dates (e.g. Winter Nov 1–Mar 31 → 11,1,3,31). Nov→Mar wrap OK. NEVER invent dates — if only "Winter" with no months, leave null.
 
 Rules:
 - Include ALL tiers, periods, and seasonal variations as separate component entries
+- Prefer structured clock/season fields over label-only. Emit one ENERGY row per continuous clock window (split morning+evening on-peak into two rows if needed).
+- TOU / tou_tiered / demand_tou / seasonal_tou: every ENERGY row must include period_start_time + period_end_time when hours appear in the source. Label-only "On-Peak" without hours is incomplete — do NOT invent hours.
+- seasonal / seasonal_tiered / seasonal_tou: every ENERGY row must include season_* month/day when dates appear in the source. Vague "Winter" without months is incomplete — do NOT invent dates.
 - Use exact numbers from the page — do NOT estimate or round
 - ONLY include tariffs that have actual numeric rate values ($/kWh, cents/kWh, $/month, $/kW etc.)
 - Skip table-of-contents entries, index listings, or schedule names that lack rate values
@@ -2379,10 +2388,10 @@ Rules:
 - Convert all rates to $/kWh (divide cents by 100)
 - Set confidence to 0.9+ if values are clearly readable, 0.5-0.8 if some ambiguity, below 0.5 if guessing
 - If a minimum monthly charge equals the basic/customer charge for the same amp tier, emit one fixed row — not both fixed and minimum duplicates
-- RELATIVE SEASONAL RIDERS: When energy charges equal another schedule's energy rate ± a seasonal premium/credit (or similar rider), emit one ENERGY component per season at the all-in $/kWh (base ± adjustment). Put month ranges in season and/or tier_label (e.g. "Winter (Dec–Apr)", "Non-Winter (May–Nov)"). Do NOT leave a season represented only by an ADJUSTMENT row — UIs group ENERGY by season and skip ADJUSTMENT. Optional ADJUSTMENT rows may remain for audit, but every season with a premium/credit must also have a matching all-in ENERGY row.
+- RELATIVE SEASONAL RIDERS: When energy charges equal another schedule's energy rate ± a seasonal premium/credit (or similar rider), emit one ENERGY component per season at the all-in $/kWh (base ± adjustment). Put month ranges in season and/or tier_label (e.g. "Winter (Dec–Apr)", "Non-Winter (May–Nov)") AND fill season_start/end month/day when months are stated. Do NOT leave a season represented only by an ADJUSTMENT row — UIs group ENERGY by season and skip ADJUSTMENT. Optional ADJUSTMENT rows may remain for audit, but every season with a premium/credit must also have a matching all-in ENERGY row.
 - CURRENT vs FUTURE COLUMNS: When a rate table has both a current column (e.g. "Effective upon the date of the Board’s Order", "currently in effect", a mid-year Order date) AND a future column (e.g. "Effective January 1, 2027"), extract ONLY the current/Board’s Order values as the live tariff. Do NOT store the future column as the current rate.
 - STACKING ENERGY RIDERS (FAM / DSM / Storm / fuel / cost-recovery ¢/kWh that apply in addition to the energy charge): emit ENERGY at the all-in $/kWh (base energy + applicable riders). UIs show ENERGY to customers and often hide ADJUSTMENT-only riders — understating the bill if ENERGY is base-only. Optional ADJUSTMENT rows may remain for audit.
-- INTERIM vs APPROVED ENERGY CHARGE (TVP / time-varying pricing): When a schedule publishes both an "Interim Energy Charge" (while metering/TVP systems are unavailable) AND a full "Energy Charge" seasonal TOU table, extract the **Energy Charge** seasonal/TOU structure — Non-winter all-hours plus Winter on-peak/off-peak periods as separate ENERGY rows, rate_type seasonal_tou. Do NOT flatten the tariff to a single interim all-hours ENERGY row equal to the standard Domestic offer. Fold FAM/DSM into each ENERGY period. Prefer the earliest Energy Charge effective column that is not a later calendar-year escalate (e.g. Nov 1 2026 winter rates, not Jan 1 2027). Put weekend/holiday off-peak rules in description when the tariff states them.
+- INTERIM vs APPROVED ENERGY CHARGE (TVP / time-varying pricing): When a schedule publishes both an "Interim Energy Charge" (while metering/TVP systems are unavailable) AND a full "Energy Charge" seasonal TOU table, extract the **Energy Charge** seasonal/TOU structure — Non-winter all-hours plus Winter on-peak/off-peak periods as separate ENERGY rows, rate_type seasonal_tou. Do NOT flatten the tariff to a single interim all-hours ENERGY row equal to the standard Domestic offer. Fold FAM/DSM into each ENERGY period. Prefer the earliest Energy Charge effective column that is not a later calendar-year escalate (e.g. Nov 1 2026 winter rates, not Jan 1 2027). Put weekend/holiday off-peak rules in description when the tariff states them. Fill period_* times and season_* dates on each ENERGY row.
 
 EXAMPLES:
 
@@ -2395,12 +2404,12 @@ Input: "Schedule R: Basic charge $8.00/mo. First 500 kWh: $0.085/kWh. Over 500 k
 Output: one tariff type "tiered", confidence 0.9, with a fixed component ($8.00), energy tier 1 (0-500 kWh at $0.085), energy tier 2 (500+ kWh at $0.105).
 
 Example 3 — Seasonal TOU:
-Input: "Rate TOU-D: Summer On-Peak (2pm-8pm) $0.35/kWh, Off-Peak $0.12/kWh. Winter On-Peak $0.22/kWh, Off-Peak $0.10/kWh. Service charge $10/mo."
-Output: one tariff type "seasonal_tou", confidence 0.9, with fixed ($10), and 4 energy components with season+period_label combinations.
+Input: "Rate TOU-D: Summer (Jun 1–Sep 30) On-Peak (2pm-8pm) $0.35/kWh, Off-Peak $0.12/kWh. Winter (Oct 1–May 31) On-Peak $0.22/kWh, Off-Peak $0.10/kWh. Service charge $10/mo."
+Output: one tariff type "seasonal_tou", confidence 0.9, with fixed ($10), and 4 energy components each with season display label, season_start/end month/day, period_label, period_start/end_time (14:00–20:00 for on-peak; 00:00–00:00 or complementary windows for off-peak), and day_type when stated.
 
 Example 4 — Relative seasonal rider (base rate ± seasonal premium/credit):
 Input: "Rate #1.1S Domestic Seasonal: Energy Charges from Rate #1.1 (15.587¢/kWh) apply, subject to Winter Season Premium Adjustment Dec–Apr billing months +0.953¢/kWh; Non-Winter Season Credit Adjustment May–Nov (1.297)¢/kWh."
-Output: one tariff type "seasonal", code "1.1S", with TWO energy components (all-in $/kWh): Winter (Dec–Apr) at $0.16540/kWh (= 0.15587 + 0.00953), and Non-Winter (May–Nov) at $0.14290/kWh (= 0.15587 − 0.01297). Do not emit adjustment-only seasons without matching ENERGY.
+Output: one tariff type "seasonal", code "1.1S", with TWO energy components (all-in $/kWh): Winter (Dec–Apr) at $0.16540/kWh (= 0.15587 + 0.00953) with season dates 12/1–4/30, and Non-Winter (May–Nov) at $0.14290/kWh (= 0.15587 − 0.01297) with season dates 5/1–11/30. Do not emit adjustment-only seasons without matching ENERGY.
 
 Example 5 — Current vs future columns + stacking riders (NS Power style):
 Input: "Domestic Service: Customer $20.08 (Board’s Order) / $21.04 (Jan 1 2027). Energy 18.324 ¢/kWh (Board’s Order) / 19.067 (Jan 1 2027). FAM AA/BA 0.156 ¢/kWh and DSM DCRR 0.648 ¢/kWh apply in addition to the energy charge."
@@ -2408,7 +2417,7 @@ Output: one flat residential tariff with fixed $20.08/month and ENERGY $0.19128/
 
 Example 6 — Interim vs Energy Charge seasonal TOU (NS Power Rate Code 80):
 Input: "Domestic Service Time of Use (code 80): Customer $20.08. INTERIM ENERGY CHARGE while TVP unavailable equals Domestic standard offer. ENERGY CHARGE Non-winter Apr 1–Oct 31 all hours 12.860 ¢ (eff Apr 1 2027). Winter Nov 1–Mar 31: on-peak 7–11am / 5–9pm 36.517 ¢, off-peak 11am–5pm / 9pm–7am 18.324 ¢ (eff Nov 1 2026); Jan 1 2027 column 38.281 / 19.067. FAM 0.156 + DSM 0.648 apply. Note 1: winter weekends/holidays use off-peak."
-Output: one residential tariff type "seasonal_tou", code "80", fixed $20.08, and FIVE all-in ENERGY rows — Non-winter all hours $0.13664; Winter on-peak $0.37321 (morning + evening); Winter off-peak $0.19128 (midday + night). Do NOT emit a single flat interim ENERGY $0.19128. Do NOT use the Jan 1 2027 winter escalate column. Mention weekend/holiday off-peak in description.
+Output: one residential tariff type "seasonal_tou", code "80", fixed $20.08, and ENERGY rows with structured fields — Non-winter all hours (Apr 1–Oct 31, 00:00–00:00, day_type=all) $0.13664; Winter on-peak morning 07:00–11:00 and evening 17:00–21:00 $0.37321; Winter off-peak midday 11:00–17:00 and night 21:00–07:00 $0.19128. Do NOT emit a single flat interim ENERGY $0.19128. Do NOT use the Jan 1 2027 winter escalate column. Mention weekend/holiday off-peak in description.
 
 Use the store_tariffs tool to return your results.
 
@@ -2494,7 +2503,7 @@ The page may display rate information as images, charts, infographics, or styled
 ATTRIBUTION CHECK: This extraction is for a specific target utility (named below). If the screenshot shows rates for multiple utilities, only return those clearly attributed to the target. If you cannot confidently attribute rates to the target utility, return an empty tariffs array.
 
 For each tariff provide: name, code, customer_class ("residential"/"commercial"), rate_type, description, effective_date, confidence (0-1), and components array.
-Each component needs: component_type ("energy"/"demand"/"fixed"/"minimum"/"adjustment"), unit, rate_value, and optional tier_min_kwh, tier_max_kwh, tier_label, period_label, season.
+Each component needs: component_type ("energy"/"demand"/"fixed"/"minimum"/"adjustment"), unit, rate_value, and optional tier_min_kwh, tier_max_kwh, tier_label, period_label, period_start_time, period_end_time, day_type, season, season_start_month, season_start_day, season_end_month, season_end_day.
 
 Rules:
 - Read numbers exactly as shown — do NOT estimate
@@ -2616,7 +2625,7 @@ PDF_VISION_EXTRACTION_PROMPT_BASE = """Extract all residential and commercial el
 ATTRIBUTION CHECK: This extraction is for a specific target utility (named below). If the PDF contains rate sheets for multiple utilities, only return those clearly attributed to the target. If you cannot confidently attribute rates to the target utility, return an empty tariffs array.
 
 For each tariff provide: name, code, customer_class ("residential"/"commercial"), rate_type, description, effective_date, confidence (0-1), and components array.
-Each component needs: component_type ("energy"/"demand"/"fixed"/"minimum"/"adjustment"), unit, rate_value, and optional tier_min_kwh, tier_max_kwh, tier_label, period_label, season.
+Each component needs: component_type ("energy"/"demand"/"fixed"/"minimum"/"adjustment"), unit, rate_value, and optional tier_min_kwh, tier_max_kwh, tier_label, period_label, period_start_time, period_end_time, day_type, season, season_start_month, season_start_day, season_end_month, season_end_day.
 
 Rules:
 - Read numbers exactly as shown — do NOT estimate
@@ -2760,7 +2769,7 @@ Only extract rates this document explicitly attributes to the target utility. If
 
 Provide:
 - name, code, customer_class, rate_type, description, effective_date, confidence
-- components: ALL tiers, periods, seasons as separate entries with component_type, unit, rate_value, tier_min_kwh, tier_max_kwh, tier_label, period_label, season
+- components: ALL tiers, periods, seasons as separate entries with component_type, unit, rate_value, tier_min_kwh, tier_max_kwh, tier_label, period_label, period_start_time, period_end_time, day_type, season, season_start_month, season_start_day, season_end_month, season_end_day
 
 Rules:
 - Use exact numbers — do NOT estimate or round
@@ -3303,7 +3312,26 @@ TARIFF_EXTRACTION_TOOL = {
                                     "tier_max_kwh": {"type": ["number", "null"]},
                                     "tier_label": {"type": ["string", "null"]},
                                     "period_label": {"type": ["string", "null"]},
+                                    "period_start_time": {
+                                        "type": ["string", "null"],
+                                        "description": "HH:MM 24h clock start; null if not stated (do not invent)",
+                                    },
+                                    "period_end_time": {
+                                        "type": ["string", "null"],
+                                        "description": "HH:MM 24h clock end; overnight wrap OK; 24:00 = end of day",
+                                    },
+                                    "day_type": {
+                                        "type": ["string", "null"],
+                                        "description": "weekday | weekend | holiday | all",
+                                    },
                                     "season": {"type": ["string", "null"]},
+                                    "season_start_month": {
+                                        "type": ["integer", "null"],
+                                        "description": "1-12 inclusive season start month; null if not stated",
+                                    },
+                                    "season_start_day": {"type": ["integer", "null"]},
+                                    "season_end_month": {"type": ["integer", "null"]},
+                                    "season_end_day": {"type": ["integer", "null"]},
                                 },
                                 "required": ["component_type", "unit", "rate_value"],
                             },
@@ -4488,6 +4516,29 @@ def phase4_validate(
         if rt_l.startswith("seasonal") and count_energy_seasons(t.components) < 2:
             needs_review = True
 
+        # Structured TOU/seasonal completeness (clock windows + season calendar).
+        # Prefer structured columns; do NOT invent times/dates from labels.
+        # Incomplete shapes are flagged needs_review (existing soft pattern) —
+        # we still store rates so Flux has prices, but mark the gap.
+        try:
+            from app.services.tou_seasonal_completeness import (
+                evaluate_tariff_completeness,
+            )
+
+            completeness = evaluate_tariff_completeness(rt_l, t.components)
+            if not completeness.complete and (
+                rt_l in ("tou", "tou_tiered", "demand_tou", "seasonal_tou",
+                         "seasonal", "seasonal_tiered")
+            ):
+                needs_review = True
+                t.completeness_reasons = list(completeness.reasons)
+                log.info(
+                    f"    Incomplete TOU/seasonal shape on '{t.name}': "
+                    f"{', '.join(completeness.reasons)}"
+                )
+        except Exception as e:
+            log.warning(f"    Completeness check failed on '{t.name}': {e}")
+
         for comp in t.components:
             if comp.get("component_type") not in VALID_COMPONENT_TYPES:
                 tariff_issues.append(f"invalid component_type '{comp.get('component_type')}'")
@@ -4683,6 +4734,101 @@ def _clip_component_strings(
     return unit, tier_label, period_label, season
 
 
+_DAY_TYPE_ALLOWED = frozenset({"weekday", "weekend", "holiday", "all"})
+
+
+def _parse_period_time(value: Any) -> Any:
+    """Parse HH:MM / HH:MM:SS / 24:00 into datetime.time. Never invents.
+
+    Returns None when absent or unparseable. ``24:00`` maps to ``00:00``
+    (end-of-day convention; see RateComponent docs).
+    """
+    from datetime import time as _time
+
+    if value is None or value == "":
+        return None
+    if isinstance(value, _time):
+        return value
+    s = str(value).strip().lower()
+    if not s or s in ("null", "none", "n/a"):
+        return None
+    # Strip common am/pm if LLM emits "7:00 am"
+    meridiem = None
+    if s.endswith("am") or s.endswith("pm"):
+        meridiem = s[-2:]
+        s = s[:-2].strip()
+    s = s.replace(".", ":")
+    if s in ("24:00", "24:00:00"):
+        return _time(0, 0, 0)
+    parts = s.split(":")
+    try:
+        h = int(parts[0])
+        m = int(parts[1]) if len(parts) > 1 else 0
+        sec = int(float(parts[2])) if len(parts) > 2 else 0
+    except (ValueError, IndexError):
+        return None
+    if meridiem == "pm" and h < 12:
+        h += 12
+    elif meridiem == "am" and h == 12:
+        h = 0
+    if h == 24 and m == 0 and sec == 0:
+        return _time(0, 0, 0)
+    if not (0 <= h <= 23 and 0 <= m <= 59 and 0 <= sec <= 59):
+        return None
+    return _time(h, m, sec)
+
+
+def _parse_day_type(value: Any) -> str | None:
+    if value is None or value == "":
+        return None
+    s = str(value).strip().lower()
+    if s in _DAY_TYPE_ALLOWED:
+        return s
+    # Mild aliases — still source-derived, not invented windows
+    if s in ("weekdays", "wd"):
+        return "weekday"
+    if s in ("weekends", "we", "saturday/sunday", "sat/sun"):
+        return "weekend"
+    if s in ("holidays",):
+        return "holiday"
+    if s in ("all days", "every day", "everyday", "daily"):
+        return "all"
+    return None
+
+
+def _parse_season_int(value: Any, *, lo: int, hi: int) -> int | None:
+    if value is None or value == "":
+        return None
+    try:
+        n = int(value)
+    except (TypeError, ValueError):
+        return None
+    if lo <= n <= hi:
+        return n
+    return None
+
+
+def _structured_component_fields(comp: dict) -> dict:
+    """Extract validated structured TOU/season fields from an LLM component dict."""
+    return {
+        "period_start_time": _parse_period_time(comp.get("period_start_time")),
+        "period_end_time": _parse_period_time(comp.get("period_end_time")),
+        "day_type": _parse_day_type(comp.get("day_type")),
+        "season_start_month": _parse_season_int(
+            comp.get("season_start_month"), lo=1, hi=12
+        ),
+        "season_start_day": _parse_season_int(
+            comp.get("season_start_day"), lo=1, hi=31
+        ),
+        "season_end_month": _parse_season_int(
+            comp.get("season_end_month"), lo=1, hi=12
+        ),
+        "season_end_day": _parse_season_int(
+            comp.get("season_end_day"), lo=1, hi=31
+        ),
+    }
+
+
 def store_tariffs(utility_id: int, tariffs: list[ExtractedTariff], dry_run: bool) -> int:
     """Store validated tariffs in the database via direct DB connection."""
     if dry_run:
@@ -4751,6 +4897,13 @@ def store_tariffs(utility_id: int, tariffs: list[ExtractedTariff], dry_run: bool
             # so suspicious rows are queryable, not just logged.
             if getattr(et, "needs_review", False):
                 conf_factors = {**conf_factors, "needs_review": True}
+            reasons = getattr(et, "completeness_reasons", None) or []
+            if reasons:
+                conf_factors = {
+                    **conf_factors,
+                    "tou_seasonal_incomplete": True,
+                    "tou_seasonal_incomplete_reasons": list(reasons),
+                }
 
             code_clipped = _clip_str(et.code, _TARIFF_CODE_MAX) if et.code else et.code
 
@@ -4809,6 +4962,7 @@ def store_tariffs(utility_id: int, tariffs: list[ExtractedTariff], dry_run: bool
                 unit, tier_label, period_label, season = _clip_component_strings(
                     comp, tariff_name=et.name
                 )
+                structured = _structured_component_fields(comp)
                 new_components.append(RateComponent(
                     component_type=ct,
                     unit=unit,
@@ -4817,7 +4971,14 @@ def store_tariffs(utility_id: int, tariffs: list[ExtractedTariff], dry_run: bool
                     tier_max_kwh=comp.get("tier_max_kwh"),
                     tier_label=tier_label,
                     period_label=period_label,
+                    period_start_time=structured["period_start_time"],
+                    period_end_time=structured["period_end_time"],
+                    day_type=structured["day_type"],
                     season=season,
+                    season_start_month=structured["season_start_month"],
+                    season_start_day=structured["season_start_day"],
+                    season_end_month=structured["season_end_month"],
+                    season_end_day=structured["season_end_day"],
                 ))
 
             if not new_components:
@@ -6198,7 +6359,14 @@ Return your findings as a report ending with a fenced JSON block like this:
         "tier_max_kwh": <number or null>,
         "tier_label": <string or null>,
         "period_label": "on-peak" | "off-peak" | "shoulder" | null,
-        "season": "summer" | "winter" | null
+        "period_start_time": "HH:MM" or null,
+        "period_end_time": "HH:MM" or null,
+        "day_type": "weekday" | "weekend" | "holiday" | "all" | null,
+        "season": "summer" | "winter" | null,
+        "season_start_month": <1-12 or null>,
+        "season_start_day": <1-31 or null>,
+        "season_end_month": <1-12 or null>,
+        "season_end_day": <1-31 or null>
       }}
     ]
   }}
@@ -6207,6 +6375,7 @@ Return your findings as a report ending with a fenced JSON block like this:
 
 Rules for the JSON:
 - Include each schedule ONCE. Break tiers, seasons, and time-of-use periods out as separate components.
+- Prefer structured period_* / season_* fields over label-only. Never invent clock times or season dates.
 - Read numbers EXACTLY as printed in the source — do not estimate or round.
 - If you use "$/kWh" as the unit, convert cents to dollars in rate_value. Otherwise use "cents/kWh" and leave rate_value as-is.
 - Relative seasonal riders (energy = another rate ± seasonal premium/credit): emit all-in ENERGY per season (base ± adjustment) with month ranges in season/tier_label. Do not leave a season as ADJUSTMENT-only.
@@ -6309,7 +6478,14 @@ def _phase6_parse_tariffs(report_text: str, fallback_source: str) -> list[Extrac
                 "tier_max_kwh": c.get("tier_max_kwh"),
                 "tier_label": c.get("tier_label"),
                 "period_label": c.get("period_label"),
+                "period_start_time": c.get("period_start_time"),
+                "period_end_time": c.get("period_end_time"),
+                "day_type": c.get("day_type"),
                 "season": c.get("season"),
+                "season_start_month": c.get("season_start_month"),
+                "season_start_day": c.get("season_start_day"),
+                "season_end_month": c.get("season_end_month"),
+                "season_end_day": c.get("season_end_day"),
             })
         if not components:
             log.info(f"    Phase 6: dropping '{name}' (no numeric components)")

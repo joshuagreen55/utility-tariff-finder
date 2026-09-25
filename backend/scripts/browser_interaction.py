@@ -600,7 +600,11 @@ For each tariff found, provide:
   - component_type: "energy", "demand", or "fixed"
   - unit: "$/kWh", "$/kW", or "$/month"
   - rate_value: numeric value in dollars (e.g. 0.098 not 9.8 cents)
-  - period_label: for TOU rates (e.g. "On-Peak", "Mid-Peak", "Off-Peak")
+  - period_label: for TOU rates (e.g. "On-Peak", "Mid-Peak", "Off-Peak") — display only
+  - period_start_time / period_end_time: HH:MM when hours are stated (never invent)
+  - day_type: weekday | weekend | holiday | all when stated
+  - season: "Summer" / "Winter" etc. — display only
+  - season_start_month/day, season_end_month/day: inclusive calendar ints when stated
   - tier_label: for tiered rates (e.g. "First 600 kWh")
   - tier_min_kwh / tier_max_kwh: for tiered rates
   - season: "summer" or "winter" if applicable
