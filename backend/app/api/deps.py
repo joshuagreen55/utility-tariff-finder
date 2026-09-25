@@ -1,5 +1,7 @@
 """Shared FastAPI dependencies."""
 
+import hmac
+
 from fastapi import Header, HTTPException
 from starlette.requests import Request
 
@@ -14,6 +16,10 @@ def _token_from_headers(x_admin_key: str | None, authorization: str | None) -> s
     return token
 
 
+def _matches(token: str, expected: str) -> bool:
+    return bool(token) and hmac.compare_digest(token.encode(), expected.encode())
+
+
 def request_has_valid_admin_key(request: Request) -> bool:
     expected = (settings.admin_api_key or "").strip()
     if not expected:
@@ -21,7 +27,7 @@ def request_has_valid_admin_key(request: Request) -> bool:
     x = request.headers.get("x-admin-key")
     auth = request.headers.get("authorization")
     token = _token_from_headers(x, auth)
-    return bool(token) and token == expected
+    return _matches(token, expected)
 
 
 def verify_admin_key(
@@ -41,7 +47,7 @@ def verify_admin_key(
 
     token = _token_from_headers(x_admin_key, authorization)
 
-    if not token or token != expected:
+    if not _matches(token, expected):
         raise HTTPException(status_code=401, detail="Admin authentication required")
 
 
@@ -64,3 +70,32 @@ def verify_admin_or_session(request: Request) -> None:
     if request_has_valid_admin_key(request):
         return
     raise HTTPException(status_code=401, detail="Admin authentication required")
+
+
+def request_actor(request: Request) -> str:
+    """Who is calling an admin route, for the change log (no secrets)."""
+    if request_has_valid_admin_key(request):
+        return "admin_key"
+    raw = request.cookies.get(settings.auth_cookie_name)
+    payload = decode_session_token(raw) if raw and settings.auth_enabled else None
+    return (payload or {}).get("email") or "anonymous"
+
+
+def verify_corrections_key(request: Request) -> None:
+    """Only TARIFF_CORRECTIONS_API_KEY unlocks rate-content writes.
+
+    ADMIN_API_KEY (held by the Flux read proxy) and Google sessions are
+    intentionally not accepted here.
+    """
+    expected = (settings.tariff_corrections_api_key or "").strip()
+    if not expected:
+        raise HTTPException(
+            status_code=503,
+            detail="Tariff corrections are disabled (TARIFF_CORRECTIONS_API_KEY is not set)",
+        )
+    token = (request.headers.get("x-corrections-key") or "").strip()
+    auth = request.headers.get("authorization") or ""
+    if not token and auth.lower().startswith("bearer "):
+        token = auth[7:].strip()
+    if not _matches(token, expected):
+        raise HTTPException(status_code=401, detail="Tariff corrections credential required")

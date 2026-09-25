@@ -1,10 +1,12 @@
-from fastapi import APIRouter, Depends, HTTPException, Query
-from sqlalchemy import select, func, delete as sa_delete
+from fastapi import APIRouter, Depends, HTTPException, Query, Request
+from sqlalchemy import select, func
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
 from app.db.session import get_db
-from app.api.deps import verify_admin_or_session
+from app.api.deps import request_actor, verify_admin_or_session
+from app.services.pins import release_pins
+from app.services.tariff_history import supersede_tariff
 from app.models import Tariff, RateComponent, CustomerClass, RateType, Utility
 from app.services.computable import tariff_contract
 from app.services.timezones import utility_currency, utility_timezone
@@ -238,28 +240,48 @@ async def get_tariff_source(tariff_id: int, db: AsyncSession = Depends(get_db)):
     "/tariffs/{tariff_id}",
     dependencies=[Depends(verify_admin_or_session)],
 )
-async def delete_tariff(tariff_id: int, db: AsyncSession = Depends(get_db)):
-    stmt = select(Tariff).where(Tariff.id == tariff_id)
-    result = await db.execute(stmt)
-    tariff = result.scalar_one_or_none()
+async def retire_tariff(
+    tariff_id: int,
+    request: Request,
+    reason: str | None = None,
+    ticket_id: str | None = None,
+    db: AsyncSession = Depends(get_db),
+):
+    """Soft-retire a live tariff (``supersede_reason='manual_retire'``).
 
+    Never hard-deletes: the row and its components stay as audit history and
+    the retirement is logged to ``tariff_change_events`` with the caller.
+    Rate *corrections* go through ``POST /api/tariff-corrections``.
+    """
+    tariff = await db.get(Tariff, tariff_id)
     if not tariff:
         raise HTTPException(status_code=404, detail="Tariff not found")
-
-    # Deleting a tariff that absorbed others would strand its superseded
-    # seeds (FK is ON DELETE SET NULL: pointer clears, reason stays, the
-    # utility silently loses live plans). Block it.
-    inbound = (await db.execute(
-        select(func.count(Tariff.id)).where(Tariff.superseded_by_tariff_id == tariff_id)
-    )).scalar() or 0
-    if inbound:
+    if tariff.superseded_by_tariff_id is not None or tariff.supersede_reason is not None:
         raise HTTPException(
             status_code=409,
-            detail=f"Tariff {tariff_id} is the successor of {inbound} superseded "
-                   "tariff(s). Re-point or un-supersede them before deleting.",
+            detail={"reason": "already_superseded", "successor_tariff_id": tariff.superseded_by_tariff_id},
         )
 
-    await db.delete(tariff)
-    await db.commit()
+    actor = request_actor(request)
 
-    return {"ok": True, "deleted_tariff_id": tariff_id}
+    def _retire(session):
+        release_pins(session, tariff_id)
+        event = supersede_tariff(
+            session, session.get(Tariff, tariff_id),
+            reason="manual_retire",
+            actor_type="admin_api",
+            actor_id=actor,
+            ticket_id=ticket_id,
+            notes=reason,
+        )
+        session.flush()
+        return event.id
+
+    event_id = await db.run_sync(_retire)
+    await db.commit()
+    return {
+        "ok": True,
+        "retired_tariff_id": tariff_id,
+        "deleted_tariff_id": tariff_id,
+        "change_event_id": event_id,
+    }

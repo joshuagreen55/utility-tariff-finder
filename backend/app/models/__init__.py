@@ -12,6 +12,7 @@ from app.models.monitoring import MonitoringSource, MonitoringLog, MonitoringSta
 from app.models.refresh_run import RefreshRun, RefreshType
 from app.models.fingerprint import RatePageFingerprint
 from app.models.tariff_change_event import TariffChangeEvent
+from app.models.pin import TariffPin, TariffVerification
 
 __all__ = [
     "Utility",
@@ -32,4 +33,6 @@ __all__ = [
     "RefreshType",
     "RatePageFingerprint",
     "TariffChangeEvent",
+    "TariffPin",
+    "TariffVerification",
 ]

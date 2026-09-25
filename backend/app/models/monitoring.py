@@ -38,6 +38,9 @@ class MonitoringSource(Base):
     check_frequency_days: Mapped[int] = mapped_column(Integer, default=7, nullable=False)
     last_checked_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
     last_content_hash: Mapped[str | None] = mapped_column(String(64), nullable=True)
+    # Normalized text behind last_content_hash (capped), so the next CHANGED
+    # check can produce a real diff and verifiers can compare old vs new.
+    last_content_text: Mapped[str | None] = mapped_column(Text, nullable=True)
     last_changed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
     status: Mapped[MonitoringStatus] = mapped_column(Enum(MonitoringStatus), default=MonitoringStatus.PENDING, nullable=False)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())

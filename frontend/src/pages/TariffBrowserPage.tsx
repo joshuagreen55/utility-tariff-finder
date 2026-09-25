@@ -109,7 +109,7 @@ export default function TariffBrowserPage() {
   );
 
   const handleDelete = useCallback(async (tariff: TariffBrowseItem) => {
-    if (!window.confirm(`Delete "${tariff.name}" from ${tariff.utility_name}?`)) return;
+    if (!window.confirm(`Retire "${tariff.name}" from ${tariff.utility_name}? It is hidden from live results but kept in history.`)) return;
     setDeleting((prev) => new Set(prev).add(tariff.id));
     try {
       await api.deleteTariff(tariff.id);
@@ -122,7 +122,7 @@ export default function TariffBrowserPage() {
         };
       });
     } catch (err) {
-      alert(`Failed to delete: ${err instanceof Error ? err.message : err}`);
+      alert(`Failed to retire: ${err instanceof Error ? err.message : err}`);
     } finally {
       setDeleting((prev) => {
         const next = new Set(prev);
@@ -282,7 +282,7 @@ export default function TariffBrowserPage() {
                           className="btn-delete"
                           disabled={deleting.has(t.id)}
                           onClick={() => handleDelete(t)}
-                          title={`Delete ${t.name}`}
+                          title={`Retire ${t.name}`}
                         >
                           {deleting.has(t.id) ? "…" : "✕"}
                         </button>
