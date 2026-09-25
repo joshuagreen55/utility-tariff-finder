@@ -406,6 +406,12 @@ class TestMigrationRoundTrip(PostgresTestCase):
         with self.engine.connect() as c:
             self.assertIsNone(c.execute(text("SELECT to_regclass('tariff_change_events')")).scalar())
         run_alembic(self.db_url, "upgrade", "head")
+        from alembic.config import Config
+        from alembic.script import ScriptDirectory
+        from tests.pg_harness import BACKEND_DIR
+
+        cfg = Config(str(BACKEND_DIR / "alembic.ini"))
+        cfg.set_main_option("script_location", str(BACKEND_DIR / "alembic"))
         with self.engine.connect() as c:
             head = c.execute(text("SELECT version_num FROM alembic_version")).scalar()
-        self.assertEqual(head, "d1e2f3a4b5c6")
+        self.assertEqual(head, ScriptDirectory.from_config(cfg).get_current_head())

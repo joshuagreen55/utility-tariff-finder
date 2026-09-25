@@ -19,6 +19,8 @@ from pathlib import Path
 from sqlalchemy import create_engine, text
 from sqlalchemy.engine import make_url
 
+from app.services.tou_seasonal_completeness import _coerce_time
+
 BACKEND_DIR = Path(__file__).resolve().parents[1]
 TEST_DATABASE_URL = os.environ.get("TEST_DATABASE_URL", "").strip()
 
@@ -85,6 +87,53 @@ class PostgresTestCase(unittest.TestCase):
 
     # -- fixtures ---------------------------------------------------------
 
+    def api_client(self):
+        """TestClient for app.main with get_db bound to this test database."""
+        from fastapi.testclient import TestClient
+        from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
+        from sqlalchemy.pool import NullPool
+
+        from app.db.session import get_db
+        from app.main import app
+
+        async_url = make_url(self.db_url).set(drivername="postgresql+asyncpg").render_as_string(
+            hide_password=False
+        )
+
+        async def _get_db():
+            engine = create_async_engine(async_url, poolclass=NullPool)
+            factory = async_sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
+            try:
+                async with factory() as s:
+                    yield s
+            finally:
+                await engine.dispose()
+
+        app.dependency_overrides[get_db] = _get_db
+        self.addCleanup(app.dependency_overrides.pop, get_db, None)
+        return TestClient(app)
+
+    def async_session_run(self, fn):
+        """Run ``await fn(session)`` against this database; returns its result."""
+        import asyncio
+
+        from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
+        from sqlalchemy.pool import NullPool
+
+        async_url = make_url(self.db_url).set(drivername="postgresql+asyncpg").render_as_string(
+            hide_password=False
+        )
+
+        async def _run():
+            engine = create_async_engine(async_url, poolclass=NullPool)
+            try:
+                async with async_sessionmaker(engine, class_=AsyncSession)() as s:
+                    return await fn(s)
+            finally:
+                await engine.dispose()
+
+        return asyncio.run(_run())
+
     def session(self):
         from sqlalchemy.orm import Session
 
@@ -134,6 +183,9 @@ class PostgresTestCase(unittest.TestCase):
                 c = dict(c)
                 c["component_type"] = ComponentType(c["component_type"])
                 c.setdefault("unit", "$/kWh")
+                for k in ("period_start_time", "period_end_time"):
+                    if isinstance(c.get(k), str):
+                        c[k] = _coerce_time(c[k])
                 t.rate_components.append(RateComponent(**c))
             s.add(t)
             s.commit()
