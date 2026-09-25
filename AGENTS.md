@@ -6,7 +6,7 @@ comprehensive; when in doubt, prefer what is written here over older docs
 (`PROJECT_SUMMARY.md` and `TECHNICAL_REVIEW.md` predate most of the current
 refresh/quarantine/cost/model systems).
 
-_Last updated: 2026-09-25._
+_Last updated: 2026-09-25 (audit remediation, issue #11)._
 
 ---
 
@@ -55,9 +55,9 @@ backend/
     config.py         # Pydantic Settings (all env vars)
     db/session.py     # async + sync engine singletons
     main.py           # FastAPI entrypoint
-  alembic/versions/   # DB migrations (head = c0d1e2f3a4b5)
+  alembic/versions/   # DB migrations (head = d1e2f3a4b5c6)
   scripts/            # the pipeline + seeds + campaigns + audits (see §5, §6)
-  tests/              # unittest suite (TOU/seasonal completeness, repairs, etc.)
+  tests/              # unittest suite (+ DB-backed regressions when TEST_DATABASE_URL is set)
   tests/fixtures/     # ground_truth.json (benchmark via scripts/benchmark.py)
 frontend/src/         # React app (pages/, components/, api/client.ts)
 deploy/               # sync-to-vm.sh, run-on-vm.sh, vm-*.sh, Caddyfile, Dockerfile.web
@@ -81,8 +81,13 @@ Models live in `backend/app/models/`. Key tables and columns:
   `effective_date`, `end_date`, `source_url`, `last_verified_at`, `approved`,
   `confidence_score`, `confidence_factors` (JSONB — includes `needs_review`),
   `openei_id`, `raw_openei_data`. **Soft-supersede** (audit-preserving
-  retirement): `superseded_by_tariff_id` (self-FK) + `supersede_reason`
-  (`matcher` | `llm_absorb` | `manual`). TOU schedules stored as JSONB.
+  retirement): `superseded_by_tariff_id` (self-FK) + `supersede_reason` +
+  `superseded_at` (stamped by a DB trigger for every writer; NULL on rows
+  retired before 2026-09). Reasons written today: `refresh` (re-extraction
+  changed the rates), `oeb_refresh`, `matcher`, `vintage`, `llm_absorb`,
+  `dup_cleanup`, `dup_exact_name`, `dup_normalized`, `no_core_components`,
+  `reconcile_missing` (no successor), `out_of_scope`, plus reasons written by
+  `quality_cleanup.py`. TOU schedules stored as JSONB.
 - **`rate_components`** (`tariff.py`) — `tariff_id`, `component_type`
   (energy/demand/fixed/minimum/adjustment), `unit`, `rate_value`
   (`Numeric(16,6)`), tiering + TOU period fields. **Structured TOU/season
@@ -104,12 +109,39 @@ Models live in `backend/app/models/`. Key tables and columns:
   arrays for address→utility matching.
 - **`rate_page_fingerprints`** (`fingerprint.py`) — content hashes per
   (utility, url) so unchanged pages can be skipped (a cheap re-verify).
+- **`tariff_change_events`** (`tariff_change_event.py`) — **append-only**
+  audit log (UPDATE/DELETE/TRUNCATE rejected by trigger): `decision`
+  (`insert` | `supersede` | `retire` | `hold` | `hard_delete`), `reason`,
+  `actor_type` (`pipeline` | `oeb` | `cleanup` | `script` | …), before/after
+  tariff ids, source URL/hash, `idempotency_key`, `payload` (e.g. the
+  proposal a `hold` refused). Tariff ids are plain ints (no FK). Any hard
+  delete of a tariff appends a `hard_delete` event with a JSON snapshot of
+  the row and its components.
 
 ### "Live" vs "superseded" — a critical invariant
 A tariff is **live** only when `superseded_by_tariff_id IS NULL AND
 supersede_reason IS NULL`. Every user-facing query, coverage count, and health
 metric must filter to live tariffs. Do **not** hard-delete superseded rows —
 they are the audit trail.
+
+**Rate content is never edited in place.** A change to a live tariff's rates
+is a *new* row plus a soft-supersede of the old one, so the prior components
+stay queryable. Use `app.services.tariff_history.supersede_tariff()` (sets
+the supersede columns and writes a change event) rather than assigning the
+columns by hand. Identical re-extractions only touch `last_verified_at`.
+
+**Protected rows** (`is_protected()`: `approved=True`, or
+`confidence_factors` carrying `repair` / `manual` / curated `origin`) are
+never overwritten, retired or collapsed by heuristic paths (LLM
+re-extraction, reconciliation, dup cleanup, vintage collapse onto a scraped
+sibling). Those paths log a `hold` change event instead. The OEB feed owns
+only commodity ENERGY: it revises OEB/repair rows but carries every non-ENERGY
+row (e.g. Hydro One FIXED delivery) forward, and holds manual rows.
+
+Legacy scripts that still hard-delete (`purge_aggregator_contamination.py`,
+`clean_corrupted.py`, `deactivate_non_retail.py`, component deletes in
+`repair_vintage_tariffs.py`) and `DELETE /api/tariffs/{id}` are not the fix
+path for bad rates — soft-supersede instead.
 
 ---
 
@@ -123,7 +155,7 @@ one Celery `process_utility` task = one `run_pipeline` call for one utility.
 | 1 | `phase1_find_rate_page` | Find the utility's rate page via Brave Search (+ domain discovery / Google CSE fallback). Hard-blocks third-party aggregators. |
 | 2 | `phase2_discover_tariff_pages` | Crawl the rate page + one/two levels of sub-pages/PDFs into `RatePage` candidates. Skips aggregator/data domains (e.g. `eia.gov`) and regulator docket filings. |
 | 3 | `phase3_extract_tariffs` | LLM structured extraction (tool-call), detail-page-first dedup, two-pass for complex pages. **3-tier model routing** (see below). |
-| 4 | `phase4_validate` + `store_tariffs` | Validate against per-state percentile bounds (reject >p99, flag >p95 `needs_review`), normalize units, then persist + soft-supersede matching OpenEI seeds. |
+| 4 | `phase4_validate` + `store_tariffs` | Validate against hand-set per-state bounds (hard-reject >3× p99, flag >p95 `needs_review`), normalize units, then persist soft-supersede-only (see §3): new row on changed rates, re-verify on identical rates, hold on protected rows; soft-supersede matching OpenEI seeds / older vintages; retire (never delete) rows missing from a ≥75%-coverage extraction of the same customer class. |
 | 5 | `_phase5_smart_retry` | AI-guided nav fallback: load homepage, LLM picks nav links two levels deep, re-extract. |
 | 6 | `phase6_deep_research` | Gemini Deep Research (Interactions API) for the long tail. Last-resort, cost- and token-guarded. Gated by `PHASE6_ENABLED`. |
 
@@ -217,6 +249,9 @@ with real list prices.
 - `supersede_via_llm.py` — "Track B": LLM 1:N absorption of stranded old
   tariffs into a fresh one (sets `supersede_reason='llm_absorb'`).
 - `cleanup_duplicate_tariffs.py` / `dedup_tariffs.py` — retire duplicates via soft-supersede.
+  `cleanup_duplicate_tariffs` also runs automatically after every refresh
+  chord for the affected states; its keeper rule is protected → verified →
+  most core/total components, and it never retires a protected row.
 - `repair_hydro_one_oeb_residential.py` — Hydro One RPP TOU → OEB seasonal
   clocks (`period_*` / `season_*`); optional tiered/ULO if incomplete.
 - `seed_*.py` — `seed_eia861`, `seed_canada`, `seed_openei`, `seed_territories`, `seed_monitoring_sources`.
@@ -290,10 +325,11 @@ Read-only DB access from a laptop: see `docs/DATABASE_ACCESS.md` (SSH tunnel).
    VM, bulk supersede/delete, or deactivating utilities. Read-only checks
    (health score, cost report, status queries) are fine to run freely.
 4. **Migrations are additive and reversible.** New Alembic revision →
-   `down_revision` = current head (`c0d1e2f3a4b5`) → test `upgrade` and
+   `down_revision` = current head (`d1e2f3a4b5c6`) → test `upgrade` and
    `downgrade`. Never edit an applied migration.
 5. **Preserve the live/superseded invariant** (§3). Soft-supersede, don't
-   delete. Filter to live tariffs in any user-facing/metric query.
+   delete, don't edit rate components in place. Filter to live tariffs in any
+   user-facing/metric query.
 6. **After code changes, sync to the VM and restart the worker** or the
    running process keeps the old code (see §7).
 7. **Long jobs go through `run-on-vm.sh`** (tmux), never a raw SSH command.
@@ -311,6 +347,12 @@ pip install -r requirements.txt
 cp .env.example .env            # fill DB creds + API keys
 alembic upgrade head
 uvicorn app.main:app --reload
+
+# Backend tests. DB-backed regressions need a throwaway PostGIS server the
+# role can CREATE DATABASE on (CI uses a postgis/postgis:16-3.4 service):
+python -m unittest discover -s tests -v
+TEST_DATABASE_URL=postgresql://postgres:postgres@localhost:5432/postgres \
+  python -m unittest discover -s tests -v
 
 # Frontend
 cd frontend && npm install && npm run dev
