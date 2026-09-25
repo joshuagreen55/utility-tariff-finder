@@ -59,6 +59,15 @@ def _component_as_dict(rc: RateComponent) -> dict:
         "tier_label": rc.tier_label,
         "period_label": rc.period_label,
         "season": rc.season,
+        "tier_min_kwh": rc.tier_min_kwh,
+        "tier_max_kwh": rc.tier_max_kwh,
+        "period_start_time": rc.period_start_time,
+        "period_end_time": rc.period_end_time,
+        "day_type": rc.day_type,
+        "season_start_month": rc.season_start_month,
+        "season_start_day": rc.season_start_day,
+        "season_end_month": rc.season_end_month,
+        "season_end_day": rc.season_end_day,
         "_orm_id": rc.id,
     }
 

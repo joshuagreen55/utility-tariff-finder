@@ -9,6 +9,7 @@ import logging
 import os
 import unittest
 from datetime import time
+from pathlib import Path
 from types import SimpleNamespace
 from unittest import mock
 
@@ -461,6 +462,46 @@ class TestBenchmarkScoreboard(unittest.TestCase):
             "computable_agree": 9, "total_rate_errors": 40, "structure_errors": 10}), [])
         self.assertEqual(len(benchmark.gold_regressions(base, {
             "computable_agree": 2, "total_rate_errors": 158, "structure_errors": 121})), 3)
+
+
+class TestGoldModelProbe(unittest.TestCase):
+    """The live A/B probe scores a perfect extraction as a perfect score."""
+
+    def test_probe_scores_perfect_extraction(self):
+        import json
+        import tempfile
+
+        from scripts import gold_model_probe as probe
+
+        data = json.loads(benchmark.TOU_SEASONAL_GOLD_PATH.read_text())
+        by_name = {u["name"]: u for u in data["utilities"]}
+
+        def fake_phase3(pages, utility_name, stats=None, state=""):
+            return [tp.ExtractedTariff(
+                name=t["name"], customer_class=t["customer_class"], rate_type=t["rate_type"],
+                confidence=0.9, components=copy.deepcopy(t["components"]), extraction_tier="haiku",
+            ) for t in by_name[utility_name]["tariffs"]]
+
+        page = tp.RatePage(url="https://x", content="x")
+        with tempfile.TemporaryDirectory() as tmp, \
+                mock.patch.object(probe, "_fetch", return_value=page), \
+                mock.patch.object(tp, "phase3_extract_tariffs", side_effect=fake_phase3), \
+                mock.patch.object(llm_cost, "append_ledger"), \
+                mock.patch("builtins.print"):
+            logging.disable(logging.CRITICAL)
+            try:
+                out = f"{tmp}/r.json"
+                self.assertEqual(probe.main(["--output", out]), 0)
+                report = json.loads(Path(out).read_text())
+                self.assertEqual(probe.compare(out, out), 0)
+            finally:
+                logging.disable(logging.NOTSET)
+        s = report["summary"]
+        self.assertEqual(report["skipped"], ["Newfoundland Power"])
+        self.assertEqual(s["matched"], s["gold_tariffs"])
+        self.assertEqual(s["computable_agree"], s["gold_tariffs"])
+        self.assertEqual((s["rate_errors"], s["structure_errors"]), (0, 0))
+        self.assertEqual(report["models"]["haiku"], tp.HAIKU_MODEL)
 
 
 class TestStoreComputableHold(PostgresTestCase):
