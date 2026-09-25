@@ -48,14 +48,14 @@ backlog is the main quality lever.
 ```
 backend/
   app/
-    api/routes/       # FastAPI routers: lookup, utilities, tariffs, monitoring, auth
+    api/routes/       # FastAPI routers: lookup, utilities, tariffs, corrections, monitoring, auth
     models/           # SQLAlchemy models (see §3)
     services/         # geocoder, territory_lookup, monitor, monitoring_runner, google_oauth
     tasks/            # celery_app (beat schedule), monitoring, refresh
     config.py         # Pydantic Settings (all env vars)
     db/session.py     # async + sync engine singletons
     main.py           # FastAPI entrypoint
-  alembic/versions/   # DB migrations (head = e2f3a4b5c6d7)
+  alembic/versions/   # DB migrations (head = f3a4b5c6d7e8)
   scripts/            # the pipeline + seeds + campaigns + audits (see §5, §6)
   tests/              # unittest suite (+ DB-backed regressions when TEST_DATABASE_URL is set)
   tests/fixtures/     # ground_truth.json (benchmark via scripts/benchmark.py)
@@ -88,8 +88,11 @@ Models live in `backend/app/models/`. Key tables and columns:
   retired before 2026-09). Reasons written today: `refresh` (re-extraction
   changed the rates), `oeb_refresh`, `matcher`, `vintage`, `llm_absorb`,
   `dup_cleanup`, `dup_exact_name`, `dup_normalized`, `no_core_components`,
-  `reconcile_missing` (no successor), `out_of_scope`, plus reasons written by
-  `quality_cleanup.py`. TOU schedules stored as JSONB.
+  `reconcile_missing` (no successor), `out_of_scope`, `manual` /
+  `manual_retire` (correction API, DELETE), `agent_verify_accept`, plus
+  reasons written by `quality_cleanup.py`. `source_document_hash` = sha256 of
+  the source page's normalized text (`monitor.stable_text_hash`). TOU
+  schedules stored as JSONB.
 - **`rate_components`** (`tariff.py`) — `tariff_id`, `component_type`
   (energy/demand/fixed/minimum/adjustment), `unit`, `rate_value`
   (`Numeric(16,6)`), tiering + TOU period fields. **Structured TOU/season
@@ -121,6 +124,10 @@ Models live in `backend/app/models/`. Key tables and columns:
   proposal a `hold` refused). Tariff ids are plain ints (no FK). Any hard
   delete of a tariff appends a `hard_delete` event with a JSON snapshot of
   the row and its components.
+- **`tariff_pins`** / **`tariff_verifications`** (`pin.py`) — document-scoped
+  pins on manual / agent-verified rows, and the proposed refreshes an
+  automated verifier accepts or holds. See
+  `docs/TARIFF_CORRECTIONS_AND_PINS.md`.
 
 ### "Live" vs "superseded" — a critical invariant
 A tariff is **live** only when `superseded_by_tariff_id IS NULL AND
@@ -142,10 +149,19 @@ sibling). Those paths log a `hold` change event instead. The OEB feed owns
 only commodity ENERGY: it revises OEB/repair rows but carries every non-ENERGY
 row (e.g. Hydro One FIXED delivery) forward, and holds manual rows.
 
+**Manual corrections** arrive already approved (Mysa owns the second
+check) via `POST /api/tariff-corrections`, authenticated only by
+`TARIFF_CORRECTIONS_API_KEY` (not the admin key, not a session). They
+soft-supersede (`manual`), pin the row to its evidence document and log a
+change event; scraper refreshes then hold. A CHANGED signal on the pinned
+document, a scrape from a different document, or the yearly re-check opens
+a verification that an automated verifier accepts or holds — no human queue.
+`DELETE /api/tariffs/{id}` soft-retires (`manual_retire`); it never hard-deletes.
+
 Legacy scripts that still hard-delete (`purge_aggregator_contamination.py`,
 `clean_corrupted.py`, `deactivate_non_retail.py`, component deletes in
-`repair_vintage_tariffs.py`) and `DELETE /api/tariffs/{id}` are not the fix
-path for bad rates — soft-supersede instead.
+`repair_vintage_tariffs.py`) are not the fix path for bad rates —
+soft-supersede instead.
 
 ---
 
@@ -194,6 +210,7 @@ rate signals AND the per-utility Opus budget isn't spent.
 | **Monthly refresh** | `refresh_changed_tariffs` | 1st of month 08:00 |
 | **Quarterly recovery** | `recover_error_utilities` | 1st Jan/Apr/Jul/Oct 10:00 |
 | Stalled-run reaper | `reap_stalled_runs` | hourly at :15 |
+| (off by default) Pin verifications | `process_pin_verifications` | commented out in `celery_app.py` |
 
 - **Monthly** (`refresh.py`): targets utilities whose monitoring detected a
   **change**, plus **stale** utilities (no tariff verified in 90d, ordered
@@ -342,7 +359,7 @@ Read-only DB access from a laptop: see `docs/DATABASE_ACCESS.md` (SSH tunnel).
    VM, bulk supersede/delete, or deactivating utilities. Read-only checks
    (health score, cost report, status queries) are fine to run freely.
 4. **Migrations are additive and reversible.** New Alembic revision →
-   `down_revision` = current head (`e2f3a4b5c6d7`) → test `upgrade` and
+   `down_revision` = current head (`f3a4b5c6d7e8`) → test `upgrade` and
    `downgrade`. Never edit an applied migration.
 5. **Preserve the live/superseded invariant** (§3). Soft-supersede, don't
    delete, don't edit rate components in place. Filter to live tariffs in any
@@ -387,7 +404,8 @@ Seed order: `seed_eia861` → `seed_canada` → `seed_openei` → `seed_territor
 `DATABASE_URL`, `SYNC_DATABASE_URL`, `REDIS_URL`, `ADMIN_API_KEY`,
 `CORS_ORIGINS`, `OPENEI_API_KEY`, `BRAVE_API_KEY`, `ANTHROPIC_API_KEY`,
 `GOOGLE_AI_API_KEY`, `GOOGLE_CSE_API_KEY`, `GOOGLE_CSE_CX`,
-`GOOGLE_MAPS_API_KEY`; model/cost: `OPUS_MODEL`, `HAIKU_MODEL`, `GEMINI_MODEL`,
+`GOOGLE_MAPS_API_KEY`, `TARIFF_CORRECTIONS_API_KEY`; pins: `PIN_VERIFY_DAILY_MAX`,
+`PIN_VERIFIER`, `PIN_ARBITER`; model/cost: `OPUS_MODEL`, `HAIKU_MODEL`, `GEMINI_MODEL`,
 `OPUS_MAX_PER_UTILITY`, `PHASE6_ENABLED`, `LLM_PRICING_JSON`,
 `MONTHLY_MAX_UTILITIES`, `CELERY_CONCURRENCY`, `QUARANTINE_RECHECK_DAYS`; auth:
 `AUTH_ENABLED`, `GOOGLE_OAUTH_CLIENT_ID/SECRET`, `AUTH_ALLOWED_EMAIL_DOMAIN`.
@@ -401,5 +419,6 @@ Seed order: `seed_eia861` → `seed_canada` → `seed_openei` → `seed_territor
 - `docs/CENTRALIZED_REGULATORS.md` — jurisdictions with centralized rate-setting.
 - `docs/TOU_SEASONAL_FIELDS.md` — structured TOU clock + season calendar columns.
 - `docs/MYSA_CONSUMER_CONTRACT.md` — how machine consumers price intervals and build TOU schedules from `computable` tariffs.
+- `docs/TARIFF_CORRECTIONS_AND_PINS.md` — correction API, document pins, automated re-verification.
 - `README.md` — quick start + API endpoint list.
 - `PROJECT_SUMMARY.md`, `TECHNICAL_REVIEW.md` — **historical** (2026-03/04); superseded by this file for anything about the refresh/quarantine/cost/model systems.
