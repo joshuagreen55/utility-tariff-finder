@@ -4829,63 +4829,162 @@ def _structured_component_fields(comp: dict) -> dict:
     }
 
 
-def store_tariffs(utility_id: int, tariffs: list[ExtractedTariff], dry_run: bool) -> int:
-    """Store validated tariffs in the database via direct DB connection."""
+_STORE_CLASS_MAP_KEYS = ("residential", "commercial")
+_STORE_TYPE_MAP_RAW = {
+    "flat": "flat", "tiered": "tiered", "tou": "tou",
+    "demand": "demand", "seasonal": "seasonal",
+    "tou_tiered": "tou_tiered", "seasonal_tou": "seasonal_tou",
+    "seasonal_tiered": "seasonal_tiered", "demand_tou": "demand_tou",
+    "complex": "complex",
+    "tiered_demand": "complex", "demand_tiered": "complex",
+    "tiered_demand_seasonal": "complex",
+    "seasonal_demand": "complex", "demand_seasonal": "complex",
+    "seasonal_tiered_demand": "complex", "seasonal_tou_tiered": "complex",
+    "seasonal_tou_demand": "complex", "tou_demand": "complex",
+}
+
+# Reconciliation retires live rows missing from an extraction only when the
+# extraction covers at least this share of the class's live rows; below it
+# the extraction is treated as partial and nothing is retired.
+RECONCILE_MIN_COVERAGE = 0.75
+
+
+def _build_rate_components(et: ExtractedTariff) -> list:
+    from app.models import RateComponent, ComponentType
+
+    comp_map = {c.value: c for c in ComponentType}
+    out = []
+    for comp in et.components:
+        ct = comp_map.get(comp.get("component_type"))
+        if not ct:
+            continue
+        try:
+            rv = float(comp.get("rate_value", 0))
+        except (ValueError, TypeError):
+            log.warning(f"    Skipping component with unparseable rate_value: {comp.get('rate_value')}")
+            continue
+        # Clip VARCHAR fields — NS Power (and other rate books) emit
+        # long season/period labels that previously crashed refresh
+        # with StringDataRightTruncation (utility 1739, 2026-09-01).
+        unit, tier_label, period_label, season = _clip_component_strings(
+            comp, tariff_name=et.name
+        )
+        structured = _structured_component_fields(comp)
+        out.append(RateComponent(
+            component_type=ct,
+            unit=unit,
+            rate_value=rv,
+            tier_min_kwh=comp.get("tier_min_kwh"),
+            tier_max_kwh=comp.get("tier_max_kwh"),
+            tier_label=tier_label,
+            period_label=period_label,
+            period_start_time=structured["period_start_time"],
+            period_end_time=structured["period_end_time"],
+            day_type=structured["day_type"],
+            season=season,
+            season_start_month=structured["season_start_month"],
+            season_start_day=structured["season_start_day"],
+            season_end_month=structured["season_end_month"],
+            season_end_day=structured["season_end_day"],
+        ))
+    return out
+
+
+def _pick_live_row(rows: list):
+    """One live row per (utility, name, class) is the invariant; if history
+    left several, act on the newest and leave the rest to vintage/dup
+    cleanup instead of raising MultipleResultsFound."""
+    if not rows:
+        return None
+    if len(rows) > 1:
+        log.warning(
+            f"    {len(rows)} live rows share the name '{rows[0].name}' "
+            f"(ids {[r.id for r in rows]}); using the newest"
+        )
+    return choose_vintage_keeper(rows)
+
+
+def _content_matches(existing, rate_type, eff_date, new_components) -> bool:
+    from app.services.tariff_history import component_signature
+
+    if existing.rate_type != rate_type:
+        return False
+    if eff_date is not None and existing.effective_date != eff_date:
+        return False
+    return component_signature(existing.rate_components) == component_signature(new_components)
+
+
+def store_tariffs(
+    utility_id: int,
+    tariffs: list[ExtractedTariff],
+    dry_run: bool,
+    *,
+    actor_type: str = "pipeline",
+    actor_id: str | None = None,
+) -> int:
+    """Persist validated tariffs — soft-supersede only, never in place.
+
+    Each extracted tariff is matched to the *live* row with the same
+    (utility, name, customer_class):
+
+    - no live row → insert a new row;
+    - identical content (rate_type, effective_date, component signature)
+      → re-verify: touch ``last_verified_at`` only;
+    - changed content on an unprotected row → insert a new row and
+      soft-supersede the old one (reason ``refresh``). The prior components
+      stay on the superseded row;
+    - changed content on a protected row (approved / repair / manual) →
+      hold: the protected row stays live and untouched, and the proposal
+      is logged as a ``hold`` change event.
+
+    Returns the number of tariffs inserted, revised or re-verified.
+    """
     if dry_run:
         log.info(f"  DRY RUN: Would store {len(tariffs)} tariffs for utility {utility_id}")
         return len(tariffs)
 
+    from datetime import date
     from sqlalchemy import select
     from sqlalchemy.orm import Session
     from app.db.session import get_sync_engine
-    from app.models import Tariff, RateComponent, CustomerClass, RateType, ComponentType
+    from app.models import Tariff, CustomerClass, RateType
+    from app.services.tariff_history import (
+        is_protected,
+        merge_confidence_factors,
+        record_event,
+        serialize_components,
+        supersede_tariff,
+    )
 
-    CLASS_MAP = {
-        "residential": CustomerClass.RESIDENTIAL,
-        "commercial": CustomerClass.COMMERCIAL,
-    }
-    TYPE_MAP = {
-        "flat": RateType.FLAT, "tiered": RateType.TIERED, "tou": RateType.TOU,
-        "demand": RateType.DEMAND, "seasonal": RateType.SEASONAL,
-        "tou_tiered": RateType.TOU_TIERED, "seasonal_tou": RateType.SEASONAL_TOU,
-        "seasonal_tiered": RateType.SEASONAL_TIERED, "demand_tou": RateType.DEMAND_TOU,
-        "complex": RateType.COMPLEX,
-        "tiered_demand": RateType.COMPLEX, "demand_tiered": RateType.COMPLEX,
-        "tiered_demand_seasonal": RateType.COMPLEX,
-        "seasonal_demand": RateType.COMPLEX, "demand_seasonal": RateType.COMPLEX,
-        "seasonal_tiered_demand": RateType.COMPLEX, "seasonal_tou_tiered": RateType.COMPLEX,
-        "seasonal_tou_demand": RateType.COMPLEX, "tou_demand": RateType.COMPLEX,
-    }
-    COMP_MAP = {
-        "energy": ComponentType.ENERGY, "demand": ComponentType.DEMAND,
-        "fixed": ComponentType.FIXED, "minimum": ComponentType.MINIMUM,
-        "adjustment": ComponentType.ADJUSTMENT,
-    }
+    class_map = {k: CustomerClass(k) for k in _STORE_CLASS_MAP_KEYS}
+    type_map = {k: RateType(v) for k, v in _STORE_TYPE_MAP_RAW.items()}
 
     engine = get_sync_engine()
     stored = 0
+    held = 0
+    now = datetime.now(timezone.utc)
 
-    # Load utility info for confidence scoring
     info = get_utility_info(utility_id)
     u_name = info.get("name", "")
     u_state = info.get("state", "")
     u_website = info.get("website_url", "")
     u_domain = urlparse(u_website).netloc if u_website else None
+    event_kw = {"actor_type": actor_type, "actor_id": actor_id}
 
     with Session(engine) as session:
-        # (name, class) -> persisted Tariff object, used to point superseded
-        # OpenEI seeds at their surviving fresh row below.
+        # (name, class) -> the live row that now represents that product
+        # (inserted, revised, re-verified or held). Used by the OpenEI
+        # matcher and to keep reconciliation away from these rows.
         fresh_by_key: dict = {}
         for et in tariffs:
-            cc = CLASS_MAP.get(et.customer_class)
-            rt = TYPE_MAP.get(et.rate_type)
+            cc = class_map.get(et.customer_class)
+            rt = type_map.get(et.rate_type)
             if not cc or not rt:
                 continue
 
             eff_date = None
             if et.effective_date:
                 try:
-                    from datetime import date
                     eff_date = date.fromisoformat(et.effective_date)
                 except ValueError:
                     pass
@@ -4907,101 +5006,116 @@ def store_tariffs(utility_id: int, tariffs: list[ExtractedTariff], dry_run: bool
 
             code_clipped = _clip_str(et.code, _TARIFF_CODE_MAX) if et.code else et.code
 
-            existing = session.execute(
-                select(Tariff).where(
-                    Tariff.utility_id == utility_id,
-                    Tariff.name == et.name,
-                    Tariff.customer_class == cc,
-                )
-            ).scalar_one_or_none()
-
-            if existing:
-                existing.rate_type = rt
-                existing.description = et.description or existing.description
-                existing.source_url = et.source_url or existing.source_url
-                existing.effective_date = eff_date or existing.effective_date
-                existing.code = code_clipped or existing.code
-                existing.last_verified_at = datetime.now(timezone.utc)
-                existing.confidence_score = conf_score
-                existing.confidence_factors = conf_factors
-                tariff_obj = existing
-            else:
-                tariff_obj = Tariff(
-                    utility_id=utility_id,
-                    name=et.name,
-                    code=code_clipped,
-                    customer_class=cc,
-                    rate_type=rt,
-                    description=et.description,
-                    source_url=et.source_url,
-                    effective_date=eff_date,
-                    last_verified_at=datetime.now(timezone.utc),
-                    approved=False,
-                    confidence_score=conf_score,
-                    confidence_factors=conf_factors,
-                )
-                session.add(tariff_obj)
-
             # Safety net: phase4 already dedupes, but callers may invoke
             # store_tariffs directly (browser_interaction, OEB, repair).
             et.components = dedupe_rate_components(et.components)
-
-            new_components = []
-            for comp in et.components:
-                ct = COMP_MAP.get(comp.get("component_type"))
-                if not ct:
-                    continue
-                try:
-                    rv = float(comp.get("rate_value", 0))
-                except (ValueError, TypeError):
-                    log.warning(f"    Skipping component with unparseable rate_value: {comp.get('rate_value')}")
-                    continue
-                # Clip VARCHAR fields — NS Power (and other rate books) emit
-                # long season/period labels that previously crashed refresh
-                # with StringDataRightTruncation (utility 1739, 2026-09-01).
-                unit, tier_label, period_label, season = _clip_component_strings(
-                    comp, tariff_name=et.name
-                )
-                structured = _structured_component_fields(comp)
-                new_components.append(RateComponent(
-                    component_type=ct,
-                    unit=unit,
-                    rate_value=rv,
-                    tier_min_kwh=comp.get("tier_min_kwh"),
-                    tier_max_kwh=comp.get("tier_max_kwh"),
-                    tier_label=tier_label,
-                    period_label=period_label,
-                    period_start_time=structured["period_start_time"],
-                    period_end_time=structured["period_end_time"],
-                    day_type=structured["day_type"],
-                    season=season,
-                    season_start_month=structured["season_start_month"],
-                    season_start_day=structured["season_start_day"],
-                    season_end_month=structured["season_end_month"],
-                    season_end_day=structured["season_end_day"],
-                ))
-
+            new_components = _build_rate_components(et)
             if not new_components:
                 log.warning(f"    Skipping tariff '{et.name}' — 0 valid components")
                 continue
 
-            if existing:
-                tariff_obj.rate_components.clear()
-            for rc in new_components:
-                tariff_obj.rate_components.append(rc)
+            existing = _pick_live_row(session.execute(
+                select(Tariff).where(
+                    Tariff.utility_id == utility_id,
+                    Tariff.name == et.name,
+                    Tariff.customer_class == cc,
+                    Tariff.superseded_by_tariff_id.is_(None),
+                    Tariff.supersede_reason.is_(None),
+                )
+            ).scalars().all())
 
+            if existing is not None and _content_matches(existing, rt, eff_date, new_components):
+                existing.last_verified_at = now
+                if not is_protected(existing):
+                    existing.confidence_score = conf_score
+                    existing.confidence_factors = merge_confidence_factors(
+                        existing.confidence_factors, conf_factors
+                    )
+                    existing.description = existing.description or et.description
+                    existing.source_url = existing.source_url or et.source_url
+                    existing.code = existing.code or code_clipped
+                stored += 1
+                fresh_by_key[(et.name, cc)] = existing
+                continue
+
+            if existing is not None and is_protected(existing):
+                record_event(
+                    session,
+                    decision="hold",
+                    reason="protected_row",
+                    utility_id=utility_id,
+                    before_tariff_id=existing.id,
+                    source_url=et.source_url,
+                    payload={
+                        "proposed": {
+                            "name": et.name,
+                            "rate_type": rt.value,
+                            "effective_date": eff_date.isoformat() if eff_date else None,
+                            "components": serialize_components(new_components),
+                        },
+                    },
+                    **event_kw,
+                )
+                log.warning(
+                    f"    HOLD '{et.name}': live row {existing.id} is protected "
+                    f"(approved/repair/manual) and the extraction differs — "
+                    f"proposal logged, live row unchanged"
+                )
+                held += 1
+                fresh_by_key[(et.name, cc)] = existing
+                continue
+
+            tariff_obj = Tariff(
+                utility_id=utility_id,
+                name=et.name,
+                code=code_clipped or (existing.code if existing else None),
+                customer_class=cc,
+                rate_type=rt,
+                is_default=existing.is_default if existing else False,
+                description=et.description or (existing.description if existing else None),
+                source_url=et.source_url or (existing.source_url if existing else None),
+                effective_date=eff_date or (existing.effective_date if existing else None),
+                last_verified_at=now,
+                approved=False,
+                confidence_score=conf_score,
+                confidence_factors=conf_factors,
+            )
+            tariff_obj.rate_components.extend(new_components)
+            session.add(tariff_obj)
+            session.flush()
+            if existing is None:
+                record_event(
+                    session,
+                    decision="insert",
+                    utility_id=utility_id,
+                    after_tariff_id=tariff_obj.id,
+                    source_url=et.source_url,
+                    **event_kw,
+                )
+            else:
+                supersede_tariff(
+                    session, existing,
+                    successor=tariff_obj,
+                    reason="refresh",
+                    source_url=et.source_url,
+                    **event_kw,
+                )
+                log.info(
+                    f"    Revised '{et.name}': {existing.id} → {tariff_obj.id} "
+                    f"(soft supersede, prior components retained)"
+                )
             stored += 1
             fresh_by_key[(et.name, cc)] = tariff_obj
 
         # Targeted OpenEI supersede: when a freshly-extracted tariff
         # plausibly names the same product as a 2017-era OpenEI import
         # for the same utility+class, soft-supersede the OpenEI row
-        # (superseded_by_tariff_id + supersede_reason='matcher') so the
-        # API hides it while keeping the audit trail. This runs BEFORE
-        # the count-based reconciliation below so it works even on
+        # (supersede_reason='matcher') so the API hides it while keeping
+        # the audit trail. Runs BEFORE reconciliation so it works even on
         # partial extractions. See tariffs_likely_same() for the matcher.
-        if stored >= 1 and fresh_by_key:
-            session.flush()  # assign ids to newly inserted tariffs
+        if fresh_by_key:
+            session.flush()
+            fresh_ids = {obj.id for obj in fresh_by_key.values()}
             openei_siblings = session.execute(
                 select(Tariff).where(
                     Tariff.utility_id == utility_id,
@@ -5012,14 +5126,15 @@ def store_tariffs(utility_id: int, tariffs: list[ExtractedTariff], dry_run: bool
             ).scalars().all()
             absorbed = 0
             for ot in openei_siblings:
+                if ot.id in fresh_ids or is_protected(ot):
+                    continue  # re-verified this run, or curated
                 for (fresh_name, fresh_class), fresh_obj in fresh_by_key.items():
                     if ot.customer_class != fresh_class:
                         continue
-                    if fresh_obj.id is not None and ot.id == fresh_obj.id:
-                        continue  # the fresh row IS this OpenEI row (re-verified)
                     if tariffs_likely_same(ot.name, fresh_name):
-                        ot.superseded_by_tariff_id = fresh_obj.id
-                        ot.supersede_reason = "matcher"
+                        supersede_tariff(
+                            session, ot, successor=fresh_obj, reason="matcher", **event_kw
+                        )
                         absorbed += 1
                         break
             if absorbed:
@@ -5032,112 +5147,124 @@ def store_tariffs(utility_id: int, tariffs: list[ExtractedTariff], dry_run: bool
         # class tariffs, collapse rate-book editions of the same product
         # (shared #1.1 / Rate #1.1, or stem match ignoring optional "Flat").
         # Keep newest effective_date; losers get supersede_reason='vintage'.
-        # Runs BEFORE count-based reconcile so the 75% guard cannot leave
-        # stale siblings both showing Flux "Current".
         if stored >= 1:
             session.flush()
-            vintage_absorbed = supersede_older_vintages(session, utility_id)
+            vintage_absorbed = supersede_older_vintages(
+                session, utility_id, actor_type=actor_type, actor_id=actor_id
+            )
             if vintage_absorbed:
                 log.info(
                     f"  Vintage supersede: retired {vintage_absorbed} older "
                     f"rate-book siblings (soft supersede)"
                 )
 
-        # Reconcile: remove tariffs for this utility that were not in the
-        # current extraction, with guards to prevent destroying valid data.
         if stored >= 1:
-            stored_names = {(et.name, CLASS_MAP.get(et.customer_class)) for et in tariffs if CLASS_MAP.get(et.customer_class)}
-            has_residential = any(cc == CustomerClass.RESIDENTIAL for _, cc in stored_names)
-
-            if has_residential:
-                all_existing = session.execute(
-                    select(Tariff).where(Tariff.utility_id == utility_id)
-                ).scalars().all()
-
-                # Rows other tariffs point at (absorb targets) must never be
-                # deleted — that would strand their superseded seeds.
-                successor_ids = {
-                    t.superseded_by_tariff_id
-                    for t in all_existing
-                    if t.superseded_by_tariff_id is not None
-                }
-
-                # The 75% partial-extraction guard should compare against
-                # live rows only; superseded/retired rows aren't served.
-                existing_count = len([
-                    t for t in all_existing
-                    if t.superseded_by_tariff_id is None and t.supersede_reason is None
-                ])
-
-                # Count-based guard: if new extraction found significantly fewer
-                # tariffs than already exist, skip reconciliation to avoid
-                # destroying valid data from a partial extraction.
-                if stored < existing_count * 0.75 and existing_count >= 3:
-                    log.warning(
-                        f"  Reconciliation SKIPPED: new extraction found {stored} tariffs "
-                        f"vs {existing_count} existing (< 75%) — possible partial extraction"
-                    )
-                else:
-                    # Source-aware reconciliation: only consider deleting tariffs
-                    # whose source_url domain matches a page we processed in this run.
-                    fetched_domains = set()
-                    for et in tariffs:
-                        if et.source_url:
-                            d = urlparse(et.source_url).netloc.replace("www.", "")
-                            if d:
-                                fetched_domains.add(d)
-
-                    if not fetched_domains:
-                        log.warning(
-                            "  Reconciliation SKIPPED: no source domains in "
-                            "current extraction — cannot safely determine stale tariffs"
-                        )
-                        stale = []
-                    else:
-                        stale = []
-                        for t in all_existing:
-                            if (t.name, t.customer_class) in stored_names:
-                                continue
-                            # OpenEI seeds and already-superseded rows are
-                            # owned by the supersede model (matcher/Track B/
-                            # triage) — never hard-delete them here.
-                            if t.openei_id is not None:
-                                continue
-                            if t.superseded_by_tariff_id is not None or t.supersede_reason is not None:
-                                continue
-                            # Never delete a row that absorbed other tariffs.
-                            if t.id in successor_ids:
-                                continue
-                            if t.source_url:
-                                t_domain = urlparse(t.source_url).netloc.replace("www.", "")
-                                if t_domain and t_domain not in fetched_domains:
-                                    continue
-                            else:
-                                # No source_url on existing tariff — don't delete
-                                # without domain evidence
-                                continue
-                            stale.append(t)
-
-                    if stale:
-                        stale_ids = [t.id for t in stale]
-                        from sqlalchemy import delete as sa_delete
-                        session.execute(
-                            sa_delete(RateComponent).where(RateComponent.tariff_id.in_(stale_ids))
-                        )
-                        session.execute(
-                            sa_delete(Tariff).where(Tariff.id.in_(stale_ids))
-                        )
-                        log.info(
-                            f"  Reconciled: removed {len(stale)} stale tariffs "
-                            f"not found in current extraction"
-                        )
-                        for t in stale:
-                            log.info(f"    Removed: {t.name} ({t.customer_class.value})")
+            session.flush()
+            _reconcile_missing_tariffs(
+                session, utility_id, tariffs, fresh_by_key,
+                actor_type=actor_type, actor_id=actor_id,
+            )
 
         session.commit()
 
-    log.info(f"  Stored {stored} tariffs for utility {utility_id}")
+    log.info(
+        f"  Stored {stored} tariffs for utility {utility_id}"
+        + (f" ({held} held: protected live rows)" if held else "")
+    )
     return stored
+
+
+def _reconcile_missing_tariffs(
+    session,
+    utility_id: int,
+    tariffs: list[ExtractedTariff],
+    fresh_by_key: dict,
+    *,
+    actor_type: str,
+    actor_id: str | None,
+) -> int:
+    """Soft-retire live rows that a (near-)complete extraction no longer lists.
+
+    Scoped per customer class present in the extraction and to rows whose
+    source_url domain was fetched this run. Skipped for a class when the
+    extraction covers < RECONCILE_MIN_COVERAGE of its live rows (partial
+    extraction). OpenEI seeds, absorb targets and protected rows are never
+    retired here; a protected row gets a ``hold`` event instead. Nothing is
+    ever deleted. Returns the number of rows retired.
+    """
+    from sqlalchemy import select
+    from app.models import Tariff, CustomerClass
+    from app.services.tariff_history import is_live, is_protected, record_event, supersede_tariff
+
+    class_map = {k: CustomerClass(k) for k in _STORE_CLASS_MAP_KEYS}
+    names_by_class: dict = {}
+    for et in tariffs:
+        cc = class_map.get(et.customer_class)
+        if cc:
+            names_by_class.setdefault(cc, set()).add(et.name)
+
+    fetched_domains = {
+        urlparse(et.source_url).netloc.replace("www.", "")
+        for et in tariffs if et.source_url
+    } - {""}
+    if not fetched_domains:
+        log.warning(
+            "  Reconciliation SKIPPED: no source domains in current "
+            "extraction — cannot safely determine stale tariffs"
+        )
+        return 0
+
+    all_rows = session.execute(
+        select(Tariff).where(Tariff.utility_id == utility_id)
+    ).scalars().all()
+    successor_ids = {t.superseded_by_tariff_id for t in all_rows if t.superseded_by_tariff_id}
+    keep_ids = {obj.id for obj in fresh_by_key.values()}
+
+    retired = 0
+    for cc, names in names_by_class.items():
+        live = [t for t in all_rows if t.customer_class == cc and is_live(t)]
+        present = sum(1 for (_, c) in fresh_by_key if c == cc)
+        if present < len(live) * RECONCILE_MIN_COVERAGE:
+            log.warning(
+                f"  Reconciliation SKIPPED for {cc.value}: extraction covers "
+                f"{present} of {len(live)} live tariffs "
+                f"(< {RECONCILE_MIN_COVERAGE:.0%}) — possible partial extraction"
+            )
+            continue
+        for t in live:
+            if t.name in names or t.id in keep_ids:
+                continue
+            if t.openei_id is not None or t.id in successor_ids or not t.source_url:
+                continue
+            t_domain = urlparse(t.source_url).netloc.replace("www.", "")
+            if not t_domain or t_domain not in fetched_domains:
+                continue
+            if is_protected(t):
+                record_event(
+                    session,
+                    decision="hold",
+                    reason="missing_from_extraction",
+                    utility_id=utility_id,
+                    before_tariff_id=t.id,
+                    actor_type=actor_type,
+                    actor_id=actor_id,
+                )
+                log.info(f"    Kept protected '{t.name}' (absent from extraction)")
+                continue
+            supersede_tariff(
+                session, t,
+                reason="reconcile_missing",
+                actor_type=actor_type,
+                actor_id=actor_id,
+            )
+            retired += 1
+            log.info(f"    Retired (soft): {t.name} ({t.customer_class.value})")
+    if retired:
+        log.info(
+            f"  Reconciled: soft-retired {retired} tariffs not found in "
+            f"current extraction (components retained)"
+        )
+    return retired
 
 
 def update_monitoring_source(utility_id: int, rate_page_url: str, dry_run: bool):
@@ -5738,8 +5865,10 @@ def same_vintage_product(
 
 
 def choose_vintage_keeper(candidates: list) -> object:
-    """Keep newest effective_date; tie-break last_verified_at, then id."""
+    """Keep newest effective_date; tie-break protected (approved / repair /
+    manual) over scraped, then last_verified_at, then id."""
     from datetime import date as _date, datetime as _datetime
+    from app.services.tariff_history import is_protected
 
     def _key(t):
         eff = getattr(t, "effective_date", None) or _date.min
@@ -5749,7 +5878,7 @@ def choose_vintage_keeper(candidates: list) -> object:
         elif ver.tzinfo is None:
             ver = ver.replace(tzinfo=timezone.utc)
         tid = getattr(t, "id", None) or 0
-        return (eff, ver, tid)
+        return (eff, is_protected(t), ver, tid)
 
     return max(candidates, key=_key)
 
@@ -5791,17 +5920,27 @@ def group_live_tariffs_by_vintage(tariffs: list) -> list[list]:
     return [g for g in buckets.values() if len(g) > 1]
 
 
-def supersede_older_vintages(session, utility_id: int, reason: str = "vintage") -> int:
+def supersede_older_vintages(
+    session,
+    utility_id: int,
+    reason: str = "vintage",
+    *,
+    actor_type: str = "pipeline",
+    actor_id: str | None = None,
+) -> int:
     """Soft-supersede older live vintages of the same product for a utility.
 
     Groups live tariffs by customer_class, clusters by vintage product key,
-    keeps the newest effective_date (then last_verified_at, then id), and
-    sets superseded_by_tariff_id + supersede_reason on losers. Never
-    hard-deletes. Returns the number of rows superseded.
+    keeps the newest effective_date (see choose_vintage_keeper), and
+    soft-supersedes the losers. A protected loser (approved / repair /
+    manual) is never retired onto an unprotected keeper — both stay live
+    and a ``hold`` event is logged. Never hard-deletes. Returns the number
+    of rows superseded.
     """
     from collections import defaultdict
     from sqlalchemy import select
     from app.models import Tariff
+    from app.services.tariff_history import is_protected, record_event, supersede_tariff
 
     live = session.execute(
         select(Tariff).where(
@@ -5821,8 +5960,29 @@ def supersede_older_vintages(session, utility_id: int, reason: str = "vintage") 
             for loser in group:
                 if loser.id == keeper.id:
                     continue
-                loser.superseded_by_tariff_id = keeper.id
-                loser.supersede_reason = reason
+                if is_protected(loser) and not is_protected(keeper):
+                    record_event(
+                        session,
+                        decision="hold",
+                        reason="vintage_protected",
+                        utility_id=utility_id,
+                        before_tariff_id=loser.id,
+                        after_tariff_id=keeper.id,
+                        actor_type=actor_type,
+                        actor_id=actor_id,
+                    )
+                    log.info(
+                        f"  Vintage HOLD: protected '{loser.name}' kept live "
+                        f"alongside newer scraped '{keeper.name}'"
+                    )
+                    continue
+                supersede_tariff(
+                    session, loser,
+                    successor=keeper,
+                    reason=reason,
+                    actor_type=actor_type,
+                    actor_id=actor_id,
+                )
                 absorbed += 1
                 log.info(
                     f"  Vintage supersede: '{loser.name}' "
