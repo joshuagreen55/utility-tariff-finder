@@ -102,18 +102,19 @@ SUMMER_TOU_SCHEDULE = {
     "weekend_holiday": "off-peak (all day)",
 }
 
+# Official ULO clocks (same year-round). Overnight is 11pm–7am every day;
+# weekends/holidays use Weekend Off-Peak 7am–11pm instead of mid/on-peak.
+# See https://www.oeb.ca/consumer-information-and-protection/electricity-rates
 ULO_SCHEDULE = {
     "weekday": [
-        {"start": "00:00", "end": "07:00", "period": "ultra-low overnight"},
-        {"start": "07:00", "end": "11:00", "period": "on-peak"},
-        {"start": "11:00", "end": "17:00", "period": "mid-peak"},
-        {"start": "17:00", "end": "19:00", "period": "on-peak"},
-        {"start": "19:00", "end": "24:00", "period": "ultra-low overnight"},
+        {"start": "23:00", "end": "07:00", "period": "ultra-low overnight"},
+        {"start": "07:00", "end": "16:00", "period": "mid-peak"},
+        {"start": "16:00", "end": "21:00", "period": "on-peak"},
+        {"start": "21:00", "end": "23:00", "period": "mid-peak"},
     ],
     "weekend": [
-        {"start": "00:00", "end": "07:00", "period": "ultra-low overnight"},
-        {"start": "07:00", "end": "19:00", "period": "weekend off-peak"},
-        {"start": "19:00", "end": "24:00", "period": "ultra-low overnight"},
+        {"start": "23:00", "end": "07:00", "period": "ultra-low overnight"},
+        {"start": "07:00", "end": "23:00", "period": "weekend off-peak"},
     ],
 }
 
