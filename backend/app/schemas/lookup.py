@@ -22,6 +22,10 @@ class UtilityMatch(BaseModel):
     match_method: str
     residential_tariff_count: int = 0
     commercial_tariff_count: int = 0
+    # Live residential tariffs that satisfy the computable contract.
+    computable_residential_tariff_count: int = 0
+    timezone: str | None = None
+    currency: str | None = None
 
     model_config = {"from_attributes": True}
 

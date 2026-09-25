@@ -6,6 +6,8 @@ from sqlalchemy.orm import selectinload
 from app.db.session import get_db
 from app.api.deps import verify_admin_or_session
 from app.models import Tariff, RateComponent, CustomerClass, RateType, Utility
+from app.services.computable import tariff_contract
+from app.services.timezones import utility_currency, utility_timezone
 from app.schemas.tariff import (
     TariffListRead,
     TariffDetailRead,
@@ -84,6 +86,8 @@ async def browse_tariffs(
             Tariff.is_default,
             Tariff.effective_date,
             Tariff.last_verified_at,
+            Tariff.confidence_factors,
+            Utility.holiday_calendar,
             func.coalesce(component_count_sq.c.cnt, 0).label("component_count"),
         )
         .join(Utility, Tariff.utility_id == Utility.id)
@@ -118,7 +122,23 @@ async def browse_tariffs(
 
     rows = (await db.execute(rows_stmt)).mappings().all()
 
-    items = [TariffBrowseRead(**dict(r)) for r in rows]
+    comps_by_tariff: dict[int, list] = {}
+    if rows:
+        comps = (await db.execute(
+            select(RateComponent).where(RateComponent.tariff_id.in_([r["id"] for r in rows]))
+        )).scalars().all()
+        for rc in comps:
+            comps_by_tariff.setdefault(rc.tariff_id, []).append(rc)
+
+    items = []
+    for r in rows:
+        row = dict(r)
+        contract = tariff_contract(
+            {**row, "rate_components": comps_by_tariff.get(row["id"], [])},
+            holiday_calendar=row.pop("holiday_calendar"),
+        )
+        row.pop("confidence_factors")
+        items.append(TariffBrowseRead(**row, **contract))
     return TariffBrowseResponse(items=items, total=total, limit=limit, offset=offset)
 
 
@@ -151,7 +171,11 @@ async def list_tariffs_for_utility(
 
     stmt = stmt.order_by(Tariff.customer_class, Tariff.name).offset(offset).limit(limit)
     result = await db.execute(stmt)
-    return result.scalars().all()
+    holiday_calendar = (await db.execute(
+        select(Utility.holiday_calendar).where(Utility.id == utility_id)
+    )).scalar_one_or_none()
+    ctx = {"holiday_calendar": holiday_calendar}
+    return [TariffListRead.model_validate(t, context=ctx) for t in result.scalars().all()]
 
 
 @router.get("/tariffs/{tariff_id}", response_model=TariffDetailRead)
@@ -179,7 +203,17 @@ async def get_tariff(tariff_id: int, db: AsyncSession = Depends(get_db)):
             },
         )
 
-    return tariff
+    utility = await db.get(Utility, tariff.utility_id)
+    tz, tz_source = utility_timezone(utility)
+    holiday_calendar = getattr(utility, "holiday_calendar", None)
+    return TariffDetailRead.model_validate(
+        tariff, context={"holiday_calendar": holiday_calendar}
+    ).model_copy(update={
+        "timezone": tz,
+        "timezone_source": tz_source,
+        "currency": utility_currency(utility),
+        "holiday_calendar": holiday_calendar,
+    })
 
 
 @router.get("/tariffs/{tariff_id}/source", response_model=TariffSourceRead)

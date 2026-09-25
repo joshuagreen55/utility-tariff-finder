@@ -22,6 +22,10 @@ class UtilityRead(UtilityBase):
     id: int
     is_active: bool
     tariff_count: int = 0
+    timezone: str | None = None
+    timezone_source: str | None = None
+    currency: str | None = None
+    holiday_calendar: str | None = None
     created_at: datetime
     updated_at: datetime
 

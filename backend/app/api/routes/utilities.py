@@ -5,6 +5,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.db.session import get_db
 from app.models import Utility, Tariff, Country
 from app.schemas.utility import UtilityRead, UtilityListRead
+from app.services.timezones import utility_currency, utility_timezone
 
 router = APIRouter()
 
@@ -85,7 +86,12 @@ async def get_utility(utility_id: int, db: AsyncSession = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Utility not found")
 
     utility = row[0]
+    tz, tz_source = utility_timezone(utility)
     return UtilityRead(
+        timezone=tz,
+        timezone_source=tz_source,
+        currency=utility_currency(utility),
+        holiday_calendar=utility.holiday_calendar,
         id=utility.id,
         name=utility.name,
         eia_id=utility.eia_id,

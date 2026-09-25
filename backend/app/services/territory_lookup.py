@@ -6,7 +6,9 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models import Utility, ServiceTerritory, Tariff, CustomerClass, Country
 from app.schemas.lookup import AddressLookupResponse, GeocodedLocation, UtilityMatch
+from app.services.computable import evaluate_computable
 from app.services.geocoder import geocode_address
+from app.services.timezones import utility_currency, utility_timezone
 
 US_STATE_ABBREVS = {
     "alabama": "AL", "alaska": "AK", "arizona": "AZ", "arkansas": "AR",
@@ -119,7 +121,40 @@ async def lookup_utilities_by_address(address: str, db: AsyncSession) -> Address
         state_extras = await _state_fallback(state, country, matched_ids, db)
         utilities.extend(state_extras)
 
+    await _attach_contract_fields(utilities, db)
     return AddressLookupResponse(geocoded=geocoded, utilities=utilities)
+
+
+async def _attach_contract_fields(utilities: list[UtilityMatch], db: AsyncSession) -> None:
+    """Fill timezone / currency and the computable residential count."""
+    ids = [u.id for u in utilities]
+    if not ids:
+        return
+    rows = {
+        u.id: u
+        for u in (await db.execute(select(Utility).where(Utility.id.in_(ids)))).scalars().all()
+    }
+    tariffs = (await db.execute(
+        select(Tariff).where(
+            Tariff.utility_id.in_(ids),
+            Tariff.customer_class == CustomerClass.RESIDENTIAL,
+            Tariff.superseded_by_tariff_id.is_(None),
+            Tariff.supersede_reason.is_(None),
+        )
+    )).scalars().all()
+    computable: dict[int, int] = {}
+    for t in tariffs:
+        util = rows.get(t.utility_id)
+        if evaluate_computable(
+            t.rate_type, t.rate_components, name=t.name,
+            holiday_calendar=getattr(util, "holiday_calendar", None),
+        ).computable:
+            computable[t.utility_id] = computable.get(t.utility_id, 0) + 1
+    for match in utilities:
+        util = rows.get(match.id)
+        match.timezone = utility_timezone(util)[0] if util else None
+        match.currency = utility_currency(util) if util else None
+        match.computable_residential_tariff_count = computable.get(match.id, 0)
 
 
 async def _point_in_polygon_lookup(lat: float, lon: float, db: AsyncSession) -> list[UtilityMatch]:
