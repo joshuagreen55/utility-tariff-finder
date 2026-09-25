@@ -150,6 +150,11 @@ class RateComponent(Base):
     season_end_month: Mapped[int | None] = mapped_column(Integer, nullable=True)
     season_end_day: Mapped[int | None] = mapped_column(Integer, nullable=True)
     adjustment: Mapped[float | None] = mapped_column(Float, nullable=True)
+    # True on an ADJUSTMENT row whose value is already folded into the
+    # all-in ENERGY rates (kept for audit). Cost consumers must skip it.
+    included_in_energy: Mapped[bool] = mapped_column(
+        Boolean, default=False, server_default="false", nullable=False
+    )
 
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
 
