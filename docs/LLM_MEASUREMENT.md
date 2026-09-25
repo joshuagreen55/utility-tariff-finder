@@ -100,17 +100,138 @@ One OEB TOU gold, requires every `expect_computable` to equal the
    gold at strict tolerance. Also check computable agreement.
 4. **Cost per correct tariff** = probe `total_usd` ÷ gold-correct tariffs.
 
-## Follow-up A/B note (not done here)
+## Wave 6: gold-driven extraction quality (issue #24)
 
-Once a baseline with these metrics exists:
+### Three ways to run the gold set
 
-- **Tier 3:** try the newest Opus id via `OPUS_MODEL` with the same cap
-  (`OPUS_MAX_PER_UTILITY=2`); set `LLM_PRICING_JSON.opus` to its list price.
-- **Tier 2:** a global `HAIKU_MODEL` swap changes seven call sites (tier-2
-  extraction, vision, nav, identify, Track B, browser CLI). A/B a stronger
-  mid-tier on two-pass and vision only via a new per-site knob (code change).
-- **Tier 1:** keep Gemini Flash; add `response_schema` (code) and measure
-  JSON-shape failures.
-- **Gold set:** now 12 tariffs (9 Canadian, 3 US TOU). Keep
-  growing toward 30–40 with more US TOU / seasonal shapes, labelled from
-  source documents and human-checked (audit §7.3).
+| Command | Needs | Answers |
+|---|---|---|
+| `python -m scripts.gold_replay --forms` | nothing (CI step) | If a model returned the book exactly, does the pipeline keep it? Replays each gold tariff through Phase 4 + component mapping, once as gold and once in the forms models print (cents, `7:00 a.m.`, inclusive `:59` ends, one "weekends and holidays" row, month names). Exits 1 on any miss. |
+| `python -m scripts.gold_model_probe --no-cache --output X.json` | LLM keys, network; no DB | What do the env-selected models extract from the gold documents? Phase 3 + 4 on each `rate_url` (add pages with `--add-url "NAME=URL"`), strict score, failure taxonomy, computable, spend. `--compare A.json B.json` prints before/after. |
+| `python -m scripts.benchmark --fixtures tests/fixtures/ground_truth_tou_seasonal.json --output X.json [--baseline Y.json]` | live DB (VM) | What is live today? Adds a per-gold scoreboard (top failure per tariff) and `gold_failure_modes`; `--baseline` exits 1 if computable agreement drops or rate / structure errors rise. |
+
+Failure modes (per gold component, `benchmark.failure_taxonomy`):
+`product_match` (no live row matched the gold name), `wrong_price` (a row
+with the gold structure has another value), `missing_clock`, `day_type`,
+`missing_season`, `tier_bounds` (the closest same-priced row differs in
+that field), `missing_component` (no same-priced row), `extra_component`.
+
+**Computable agreement** is the number of gold tariffs whose live (or
+probed) rows get the same `evaluate_computable` verdict as the gold's
+`expect_computable` (all `true` today). Rate errors and structure misses
+count gold components; one tariff can carry many.
+
+### What the replay found on `main` (pre-Wave 6)
+
+A perfect extraction was kept computable for only **5/12** gold tariffs
+(82 structure misses), and **1/12** in model-printed forms (223 structure
+misses across both forms). Causes, all fixed here (the first row and the
+mapping row are what the replay measured; the others were found reading the
+code and are covered by unit tests):
+
+| Cause | Effect on gold |
+|---|---|
+| `dedupe_rate_components` keyed on (label, unit, rate, season) only | Equal-priced windows collapsed: Hydro One / Toronto TOU 14→6 rows, ULO 8→4, NS 80 8→4, NS 05/06 11→9, SDG&E 29→7, PG&E 9→7, SRP 44→12 → `tou_gap` |
+| Stacking riders re-added to an ENERGY row already all-in | NS Power all-in 0.19128 became 0.19932 when the model also emitted audit FAM/DSM rows |
+| Relative-seasonal expansion dropped the adjustment's season dates | NF / NL 1.1S `seasonal_missing_calendar_dates` when riders carried the dates |
+| No mapping for `a.m./p.m.`, `noon`, `:59` ends, `Monday to Friday`, "weekends and holidays", month names | clocks / day types / seasons nulled |
+| Prompt example for NS code 80 said "mention weekend/holiday off-peak in description" | `tou_gap:weekend` by instruction |
+| Gemini (tier 1) had no response schema | free-form keys; a top-level list was read as 0 tariffs |
+
+Prompts now also ask for numbers and units verbatim (Phase 4 converts
+cents deterministically), `day_type` on every TOU row, 24 h coverage per
+season × day type from stated hours only ("all other hours" is emitted as
+its complement), and exact month-only season bounds. Never invent clocks
+or dates. Prompt cache version is `v3`, so every page re-extracts once.
+
+### Guardrails
+
+- Phase 4 stores `confidence_factors.extract_not_computable` (reasons) and
+  `needs_review` on a `tou` / `seasonal*` extraction that fails the
+  computable contract.
+- `store_tariffs` **holds** (change event `hold`, reason
+  `computable_regression`, proposal in the payload) instead of
+  soft-superseding a computable live row with an extraction that is not
+  computable for a structural reason. Protected / pinned rows are held
+  earlier, as before. Nothing is deleted.
+
+### Anthropic model compatibility (`app/services/anthropic_compat.py`)
+
+All Anthropic calls (pipeline tiers, vision, nav, two-pass, Track B,
+browser CLI, `opus_audit`, pin arbiter) go through it. Per the Claude docs
+(checked 2026-09-25):
+
+| Model | Thinking | Forced `tool_choice` | `temperature`/`top_p`/`top_k` |
+|---|---|---|---|
+| `claude-haiku-4-5-20251001` | off | OK | OK |
+| `claude-sonnet-5` | on by default, may be disabled | OK | 400 |
+| `claude-opus-5` | on by default, may be disabled (≤ high effort) | OK | 400 |
+| `claude-opus-5-5` | on, **cannot** be disabled | **400** → sent as `auto` + "call the tool" instruction | 400 |
+
+The module strips sampling knobs, converts forced tool use where required,
+raises `max_tokens` to `ANTHROPIC_THINKING_MIN_MAX_TOKENS` (16000) while
+thinking is on (thinking counts against `max_tokens`), reads the first
+*text* block (the first block may be a thinking block), and retries once
+on a 400 that names one of these parameters. `ANTHROPIC_THINKING=disabled`
+turns thinking off where allowed (cheaper, Haiku-like);
+`ANTHROPIC_EFFORT` sets `output_config.effort`.
+
+### Pricing (`DEFAULT_PRICING`, USD / MTok, docs.claude.com 2026-09-25)
+
+| Key | In | Out | Cache hit | 5-min cache write |
+|---|---:|---:|---:|---:|
+| `haiku` (Haiku 4.5) | 1.00 | 5.00 | 0.10 | 1.25 |
+| `sonnet` (Sonnet 5; intro price is now standard) | 2.00 | 10.00 | 0.20 | 2.50 |
+| `opus` (Opus 5) | 5.00 | 25.00 | 0.50 | 6.25 |
+| `claude-opus-5-5` | 4.00 | 20.00 | 0.20 | 5.00 |
+
+A call is priced by the longest matching model-id key, else its family,
+and rolls up under its family (`opus` includes Opus 5.5). Claude 4.7+
+models (Sonnet 5, Opus 5, Opus 5.5) use a tokenizer that yields about 30%
+more tokens for the same text than Haiku 4.5, and thinking tokens bill as
+output — so Sonnet 5 per page is more than 2× Haiku. Measure it with the
+probe; do not assume $/utility.
+
+### Proposing an env model bump
+
+1. On the VM, baseline: `python -m scripts.benchmark --fixtures
+   tests/fixtures/ground_truth_tou_seasonal.json --output /tmp/gold_live.json`
+   and `python /app/scripts/llm_cost_report.py --runs 5`.
+2. Probe current defaults and the candidate on the same documents:
+   `python -m scripts.gold_model_probe --no-cache --output /tmp/gold_base.json`, then
+   `HAIKU_MODEL=claude-sonnet-5 python -m scripts.gold_model_probe --no-cache --output /tmp/gold_sonnet.json`,
+   and `OPUS_MODEL=claude-opus-5-5 ...` separately (one knob per run).
+   Add `--add-url "San Diego Gas & Electric=https://www.sdge.com/total-electric-rates"`
+   and a Newfoundland Power document so every gold tariff is scored.
+3. `python -m scripts.gold_model_probe --compare /tmp/gold_base.json /tmp/gold_sonnet.json`.
+4. Promote a default only if computable agreement rises (or holds, for a
+   cheaper model) with no rise in rate errors, and projected spend stays in
+   the ~$2k/year intent: scale the tier's share of recent `llm_cost_report`
+   spend by the probe's cost ratio. Put the table in the PR.
+5. Change the env (VM `.env`) first; change code defaults only in a PR
+   with that table. Restart `celery-worker celery-beat api`.
+
+### Wave 6 go / no-go on defaults
+
+No LLM keys or DB were available to the Wave 6 implementer, so no live
+before/after exists yet: **defaults are unchanged** (`HAIKU_MODEL`
+Haiku 4.5, `OPUS_MODEL` / `AUDITOR_MODEL` / pin arbiter Opus 5,
+`GEMINI_MODEL` Flash, `PHASE6_AGENT` as-is). Decision rules for the
+VM re-run:
+
+- **Opus → `claude-opus-5-5`:** go if the probe holds or improves gold.
+  List price is 0.8× Opus 5 and Opus is capped at `OPUS_MAX_PER_UTILITY=2`.
+  Risk to check in the probe: Opus 5.5 rejects forced tool use, so it
+  answers with `tool_choice: auto`; watch for text-only replies (parsed by
+  the JSON fallback) in `tier_acceptance`. `AUDITOR_MODEL` / the arbiter
+  follow `OPUS_MODEL` unless set.
+- **Haiku → `claude-sonnet-5`:** go only if gold computable agreement
+  jumps clearly and projected spend fits the intent (≥2× per token,
+  ~30% more tokens, plus thinking unless `ANTHROPIC_THINKING=disabled`).
+  Otherwise keep Haiku and use Sonnet via env for targeted runs.
+
+## Gold set growth
+
+Now 12 tariffs (9 Canadian, 3 US TOU). Keep growing toward 30–40 with
+more US TOU / seasonal shapes, labelled from source documents and
+human-checked (audit §7.3).

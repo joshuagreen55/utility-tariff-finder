@@ -59,6 +59,15 @@ of clock windows (show price + label only, or surface a data-quality hint).
 LLM tool schema + prompts ask for structured fields. Phase 4 flags
 incomplete TOU/seasonal shapes with `needs_review` and
 `confidence_factors.tou_seasonal_incomplete` (does not invent values).
+
+Phase 4 first runs `normalize_structured_components()`: it maps what the
+model returned (`7:00 a.m.`, `noon`, inclusive `10:59` ends → `11:00`,
+`Monday to Friday`, month names, `Nov 1` bounds) onto these columns and
+stores a "weekends and holidays" window once per day type. It never fills a
+field the model left empty. Extractions that fail the computable contract
+carry `confidence_factors.extract_not_computable` and cannot supersede a
+computable live row (`hold`, reason `computable_regression`). See
+`docs/LLM_MEASUREMENT.md` § Wave 6.
 OEB scraper expands TOU/ULO using the official fixed schedules into
 structured rows on the next scrape (no mass backfill of existing keepers).
 
