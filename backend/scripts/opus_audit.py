@@ -41,6 +41,7 @@ from app.models.tariff import (
 )
 from app.models.utility import Utility
 
+from scripts import llm_cost
 from scripts.tariff_pipeline import (
     _fetch_and_parse as pipeline_fetch_and_parse,
     fetch_pdf_text as pipeline_fetch_pdf_text,
@@ -54,7 +55,9 @@ logging.basicConfig(
 log = logging.getLogger("opus_audit")
 
 ANTHROPIC_API_KEY = os.environ.get("ANTHROPIC_API_KEY", "")
-OPUS_MODEL = "claude-opus-4-20250514"
+# Same knob as the pipeline's tier-3 model; AUDITOR_MODEL overrides it for
+# the auditor alone. Never a hardcoded id (audit F8).
+OPUS_MODEL = os.environ.get("AUDITOR_MODEL") or os.environ.get("OPUS_MODEL", "claude-opus-5")
 
 MAX_PAGE_CHARS = 25_000
 MAX_PAGES_PER_UTILITY = 5
@@ -107,8 +110,21 @@ def _format_component(rc: RateComponent) -> str:
         parts.append(f"range: {low}-{high} kWh")
     if rc.period_label:
         parts.append(f"period: {rc.period_label}")
+    if rc.period_start_time is not None and rc.period_end_time is not None:
+        parts.append(
+            f"clock: {rc.period_start_time.strftime('%H:%M')}-{rc.period_end_time.strftime('%H:%M')}"
+        )
+    if rc.day_type:
+        parts.append(f"days: {rc.day_type}")
     if rc.season:
         parts.append(f"season: {rc.season}")
+    if rc.season_start_month and rc.season_end_month:
+        parts.append(
+            f"season dates: {rc.season_start_month}/{rc.season_start_day}"
+            f"-{rc.season_end_month}/{rc.season_end_day}"
+        )
+    if getattr(rc, "included_in_energy", False):
+        parts.append("included in energy (do not add)")
     return " | ".join(parts)
 
 
@@ -172,7 +188,7 @@ Compare the database entries against the source page content. Evaluate:
 1. **Existence**: Does each database tariff actually appear on the source page?
 2. **Rate Accuracy**: Are the $/kWh, $/kW, $/month values in the database correct? Check EVERY rate component against the source page. Even small differences matter.
 3. **Classification**: Is the customer_class (residential/commercial) correct? Is the rate_type (flat/tiered/tou/etc.) correct?
-4. **Completeness**: Are ALL tiers, TOU periods, and seasonal variations captured? Are any rate components missing?
+4. **Completeness**: Are ALL tiers, TOU periods, and seasonal variations captured? Are any rate components missing? Check each structured TOU clock window (`clock`, `days`) and season calendar (`season dates`) against the page; a missing or wrong window or date is an issue even when the price is right.
 5. **Currency**: Does the effective_date match what's on the page? Are the rates current or stale?
 6. **Missing Tariffs**: Are there residential or small commercial tariffs on the source page that are NOT in the database?
 7. **Phantom Tariffs**: Are there tariffs in the database that DON'T appear anywhere on the source page?
@@ -257,6 +273,14 @@ def call_opus(prompt: str) -> dict | None:
             return None
 
         data = resp.json()
+        usage = data.get("usage") or {}
+        with llm_cost.phase("audit"):
+            llm_cost.record_anthropic(OPUS_MODEL, type("Usage", (), {
+                "input_tokens": usage.get("input_tokens", 0),
+                "output_tokens": usage.get("output_tokens", 0),
+                "cache_read_input_tokens": usage.get("cache_read_input_tokens", 0),
+                "cache_creation_input_tokens": usage.get("cache_creation_input_tokens", 0),
+            })())
         raw_text = data["content"][0]["text"]
 
         json_match = re.search(r"\{[\s\S]*\}", raw_text)
@@ -277,16 +301,25 @@ def call_opus(prompt: str) -> dict | None:
 # Single-utility audit
 # ---------------------------------------------------------------------------
 
+def load_live_tariffs(session: Session, utility_id: int) -> list[Tariff]:
+    """What the API serves: superseded / retired rows are not audited."""
+    return (
+        session.query(Tariff)
+        .options(joinedload(Tariff.rate_components))
+        .filter(
+            Tariff.utility_id == utility_id,
+            Tariff.superseded_by_tariff_id.is_(None),
+            Tariff.supersede_reason.is_(None),
+        )
+        .all()
+    )
+
+
 def audit_utility(session: Session, utility: Utility) -> dict:
     """Run the full audit for one utility. Returns the result dict."""
     log.info("Auditing: [%s] %s (id=%d)", utility.state_province, utility.name, utility.id)
 
-    tariffs = (
-        session.query(Tariff)
-        .options(joinedload(Tariff.rate_components))
-        .filter(Tariff.utility_id == utility.id)
-        .all()
-    )
+    tariffs = load_live_tariffs(session, utility.id)
 
     source_urls: list[str] = []
     seen_urls: set[str] = set()
@@ -567,6 +600,7 @@ def main():
         "audit_metadata": {
             "timestamp": datetime.now(timezone.utc).isoformat(),
             "model": OPUS_MODEL,
+            "llm_cost": llm_cost.summary(),
             "utilities_requested": args.count,
             "utilities_audited": len(results),
             "state_filter": states,
@@ -579,6 +613,7 @@ def main():
     with open(output_path, "w") as f:
         json.dump(report, f, indent=2, default=str)
     log.info("Report written to %s", output_path)
+    llm_cost.append_ledger("opus_audit", report["audit_metadata"]["llm_cost"])
 
     print_summary(summary, results)
 

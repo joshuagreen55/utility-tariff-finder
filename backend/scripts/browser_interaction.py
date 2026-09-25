@@ -47,7 +47,8 @@ logging.basicConfig(
 log = logging.getLogger("browser_agent")
 
 ANTHROPIC_API_KEY = os.environ.get("ANTHROPIC_API_KEY", "")
-LLM_MODEL = "claude-3-5-haiku-20241022"
+# Same knob as the pipeline's tier-2 model (was a hardcoded Haiku 3.5 id).
+LLM_MODEL = os.environ.get("HAIKU_MODEL", "claude-haiku-4-5-20251001")
 
 
 def _css_escape(text: str) -> str:
@@ -625,6 +626,9 @@ PAGE CONTENT:
         max_tokens=4000,
         messages=[{"role": "user", "content": prompt}],
     )
+    from scripts import llm_cost
+
+    llm_cost.record_anthropic(LLM_MODEL, getattr(response, "usage", None))
 
     try:
         text = response.content[0].text.strip()

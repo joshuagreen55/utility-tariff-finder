@@ -1,0 +1,606 @@
+{
+  "_meta": {
+    "version": "1.0",
+    "description": "TOU / seasonal gold set (residential, CA). Values come from the published documents the in-repo soft-repair scripts were built from (OEB RPP Nov 1 2025 consumer page, NS Power May 2026 tariff book, NL Rate #1.1S July 2026); each tariff names its source constant in gold_source. tests/test_benchmark_gold.py fails if they drift apart.",
+    "rate_abs_tolerance": 1e-05,
+    "fixed_abs_tolerance": 0.005,
+    "compare_structure": true,
+    "notes": "Utilities without utility_id are resolved by exact name + state. Structured clock windows (period_start_time/period_end_time/day_type) and season dates must match exactly. expect_computable is the computable-contract verdict for the gold shape. US TOU/seasonal gold still needs human labelling from source documents."
+  },
+  "utilities": [
+    {
+      "name": "Hydro One",
+      "state": "ON",
+      "country": "CA",
+      "rate_url": "https://www.oeb.ca/consumer-information-and-protection/electricity-rates",
+      "tariffs": [
+        {
+          "name": "Time-of-Use (TOU) — Residential",
+          "code": "OEB-RPP-TOU",
+          "customer_class": "residential",
+          "rate_type": "seasonal_tou",
+          "effective_date": "2025-11-01",
+          "expect_computable": true,
+          "gold_source": "scripts/repair_hydro_one_oeb_residential.py plan_meta('tou')",
+          "components": [
+            {
+              "component_type": "energy",
+              "unit": "$/kWh",
+              "rate_value": 0.098,
+              "period_label": "Off-Peak",
+              "period_start_time": "00:00",
+              "period_end_time": "07:00",
+              "day_type": "weekday",
+              "season": "Winter (Nov 1–Apr 30)",
+              "season_start_month": 11,
+              "season_start_day": 1,
+              "season_end_month": 4,
+              "season_end_day": 30
+            },
+            {
+              "component_type": "energy",
+              "unit": "$/kWh",
+              "rate_value": 0.203,
+              "period_label": "On-Peak",
+              "period_start_time": "07:00",
+              "period_end_time": "11:00",
+              "day_type": "weekday",
+              "season": "Winter (Nov 1–Apr 30)",
+              "season_start_month": 11,
+              "season_start_day": 1,
+              "season_end_month": 4,
+              "season_end_day": 30
+            },
+            {
+              "component_type": "energy",
+              "unit": "$/kWh",
+              "rate_value": 0.157,
+              "period_label": "Mid-Peak",
+              "period_start_time": "11:00",
+              "period_end_time": "17:00",
+              "day_type": "weekday",
+              "season": "Winter (Nov 1–Apr 30)",
+              "season_start_month": 11,
+              "season_start_day": 1,
+              "season_end_month": 4,
+              "season_end_day": 30
+            },
+            {
+              "component_type": "energy",
+              "unit": "$/kWh",
+              "rate_value": 0.203,
+              "period_label": "On-Peak",
+              "period_start_time": "17:00",
+              "period_end_time": "19:00",
+              "day_type": "weekday",
+              "season": "Winter (Nov 1–Apr 30)",
+              "season_start_month": 11,
+              "season_start_day": 1,
+              "season_end_month": 4,
+              "season_end_day": 30
+            },
+            {
+              "component_type": "energy",
+              "unit": "$/kWh",
+              "rate_value": 0.098,
+              "period_label": "Off-Peak",
+              "period_start_time": "19:00",
+              "period_end_time": "00:00",
+              "day_type": "weekday",
+              "season": "Winter (Nov 1–Apr 30)",
+              "season_start_month": 11,
+              "season_start_day": 1,
+              "season_end_month": 4,
+              "season_end_day": 30
+            },
+            {
+              "component_type": "energy",
+              "unit": "$/kWh",
+              "rate_value": 0.098,
+              "period_label": "Off-Peak",
+              "period_start_time": "00:00",
+              "period_end_time": "00:00",
+              "day_type": "weekend",
+              "season": "Winter (Nov 1–Apr 30)",
+              "season_start_month": 11,
+              "season_start_day": 1,
+              "season_end_month": 4,
+              "season_end_day": 30
+            },
+            {
+              "component_type": "energy",
+              "unit": "$/kWh",
+              "rate_value": 0.098,
+              "period_label": "Off-Peak",
+              "period_start_time": "00:00",
+              "period_end_time": "00:00",
+              "day_type": "holiday",
+              "season": "Winter (Nov 1–Apr 30)",
+              "season_start_month": 11,
+              "season_start_day": 1,
+              "season_end_month": 4,
+              "season_end_day": 30
+            },
+            {
+              "component_type": "energy",
+              "unit": "$/kWh",
+              "rate_value": 0.098,
+              "period_label": "Off-Peak",
+              "period_start_time": "00:00",
+              "period_end_time": "07:00",
+              "day_type": "weekday",
+              "season": "Summer (May 1–Oct 31)",
+              "season_start_month": 5,
+              "season_start_day": 1,
+              "season_end_month": 10,
+              "season_end_day": 31
+            },
+            {
+              "component_type": "energy",
+              "unit": "$/kWh",
+              "rate_value": 0.157,
+              "period_label": "Mid-Peak",
+              "period_start_time": "07:00",
+              "period_end_time": "11:00",
+              "day_type": "weekday",
+              "season": "Summer (May 1–Oct 31)",
+              "season_start_month": 5,
+              "season_start_day": 1,
+              "season_end_month": 10,
+              "season_end_day": 31
+            },
+            {
+              "component_type": "energy",
+              "unit": "$/kWh",
+              "rate_value": 0.203,
+              "period_label": "On-Peak",
+              "period_start_time": "11:00",
+              "period_end_time": "17:00",
+              "day_type": "weekday",
+              "season": "Summer (May 1–Oct 31)",
+              "season_start_month": 5,
+              "season_start_day": 1,
+              "season_end_month": 10,
+              "season_end_day": 31
+            },
+            {
+              "component_type": "energy",
+              "unit": "$/kWh",
+              "rate_value": 0.157,
+              "period_label": "Mid-Peak",
+              "period_start_time": "17:00",
+              "period_end_time": "19:00",
+              "day_type": "weekday",
+              "season": "Summer (May 1–Oct 31)",
+              "season_start_month": 5,
+              "season_start_day": 1,
+              "season_end_month": 10,
+              "season_end_day": 31
+            },
+            {
+              "component_type": "energy",
+              "unit": "$/kWh",
+              "rate_value": 0.098,
+              "period_label": "Off-Peak",
+              "period_start_time": "19:00",
+              "period_end_time": "00:00",
+              "day_type": "weekday",
+              "season": "Summer (May 1–Oct 31)",
+              "season_start_month": 5,
+              "season_start_day": 1,
+              "season_end_month": 10,
+              "season_end_day": 31
+            },
+            {
+              "component_type": "energy",
+              "unit": "$/kWh",
+              "rate_value": 0.098,
+              "period_label": "Off-Peak",
+              "period_start_time": "00:00",
+              "period_end_time": "00:00",
+              "day_type": "weekend",
+              "season": "Summer (May 1–Oct 31)",
+              "season_start_month": 5,
+              "season_start_day": 1,
+              "season_end_month": 10,
+              "season_end_day": 31
+            },
+            {
+              "component_type": "energy",
+              "unit": "$/kWh",
+              "rate_value": 0.098,
+              "period_label": "Off-Peak",
+              "period_start_time": "00:00",
+              "period_end_time": "00:00",
+              "day_type": "holiday",
+              "season": "Summer (May 1–Oct 31)",
+              "season_start_month": 5,
+              "season_start_day": 1,
+              "season_end_month": 10,
+              "season_end_day": 31
+            }
+          ]
+        },
+        {
+          "name": "Tiered Pricing — Residential",
+          "code": "OEB-RPP-TIERED",
+          "customer_class": "residential",
+          "rate_type": "seasonal_tiered",
+          "effective_date": "2025-11-01",
+          "expect_computable": true,
+          "gold_source": "scripts/repair_hydro_one_oeb_residential.py plan_meta('tiered')",
+          "components": [
+            {
+              "component_type": "energy",
+              "unit": "$/kWh",
+              "rate_value": 0.12,
+              "tier_label": "Lower Tier (up to 600 kWh)",
+              "tier_min_kwh": 0,
+              "tier_max_kwh": 600,
+              "season": "Summer (May 1–Oct 31)",
+              "season_start_month": 5,
+              "season_start_day": 1,
+              "season_end_month": 10,
+              "season_end_day": 31
+            },
+            {
+              "component_type": "energy",
+              "unit": "$/kWh",
+              "rate_value": 0.12,
+              "tier_label": "Lower Tier (up to 1000 kWh)",
+              "tier_min_kwh": 0,
+              "tier_max_kwh": 1000,
+              "season": "Winter (Nov 1–Apr 30)",
+              "season_start_month": 11,
+              "season_start_day": 1,
+              "season_end_month": 4,
+              "season_end_day": 30
+            },
+            {
+              "component_type": "energy",
+              "unit": "$/kWh",
+              "rate_value": 0.142,
+              "tier_label": "Higher Tier (above threshold)",
+              "tier_min_kwh": 600,
+              "season": "Summer (May 1–Oct 31)",
+              "season_start_month": 5,
+              "season_start_day": 1,
+              "season_end_month": 10,
+              "season_end_day": 31
+            },
+            {
+              "component_type": "energy",
+              "unit": "$/kWh",
+              "rate_value": 0.142,
+              "tier_label": "Higher Tier (above threshold)",
+              "tier_min_kwh": 1000,
+              "season": "Winter (Nov 1–Apr 30)",
+              "season_start_month": 11,
+              "season_start_day": 1,
+              "season_end_month": 4,
+              "season_end_day": 30
+            }
+          ]
+        },
+        {
+          "name": "Ultra-Low Overnight (ULO) — Residential",
+          "code": "OEB-RPP-ULO",
+          "customer_class": "residential",
+          "rate_type": "tou",
+          "effective_date": "2025-11-01",
+          "expect_computable": true,
+          "gold_source": "scripts/repair_hydro_one_oeb_residential.py plan_meta('ulo')",
+          "components": [
+            {
+              "component_type": "energy",
+              "unit": "$/kWh",
+              "rate_value": 0.039,
+              "period_label": "Ultra-Low Overnight",
+              "period_start_time": "23:00",
+              "period_end_time": "07:00",
+              "day_type": "weekday"
+            },
+            {
+              "component_type": "energy",
+              "unit": "$/kWh",
+              "rate_value": 0.157,
+              "period_label": "Mid-Peak",
+              "period_start_time": "07:00",
+              "period_end_time": "16:00",
+              "day_type": "weekday"
+            },
+            {
+              "component_type": "energy",
+              "unit": "$/kWh",
+              "rate_value": 0.391,
+              "period_label": "On-Peak",
+              "period_start_time": "16:00",
+              "period_end_time": "21:00",
+              "day_type": "weekday"
+            },
+            {
+              "component_type": "energy",
+              "unit": "$/kWh",
+              "rate_value": 0.157,
+              "period_label": "Mid-Peak",
+              "period_start_time": "21:00",
+              "period_end_time": "23:00",
+              "day_type": "weekday"
+            },
+            {
+              "component_type": "energy",
+              "unit": "$/kWh",
+              "rate_value": 0.039,
+              "period_label": "Ultra-Low Overnight",
+              "period_start_time": "23:00",
+              "period_end_time": "07:00",
+              "day_type": "weekend"
+            },
+            {
+              "component_type": "energy",
+              "unit": "$/kWh",
+              "rate_value": 0.098,
+              "period_label": "Weekend Off-Peak",
+              "period_start_time": "07:00",
+              "period_end_time": "23:00",
+              "day_type": "weekend"
+            },
+            {
+              "component_type": "energy",
+              "unit": "$/kWh",
+              "rate_value": 0.039,
+              "period_label": "Ultra-Low Overnight",
+              "period_start_time": "23:00",
+              "period_end_time": "07:00",
+              "day_type": "holiday"
+            },
+            {
+              "component_type": "energy",
+              "unit": "$/kWh",
+              "rate_value": 0.098,
+              "period_label": "Weekend Off-Peak",
+              "period_start_time": "07:00",
+              "period_end_time": "23:00",
+              "day_type": "holiday"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "utility_id": 1739,
+      "name": "Nova Scotia Power",
+      "state": "NS",
+      "country": "CA",
+      "rate_url": "https://www.nspower.ca/docs/default-source/regulatory/tariff-book-2026.pdf",
+      "tariffs": [
+        {
+          "name": "Domestic Service Tariff",
+          "code": "02/03/04",
+          "customer_class": "residential",
+          "rate_type": "flat",
+          "effective_date": "2026-05-01",
+          "expect_computable": true,
+          "gold_source": "scripts/repair_ns_power_residential_2026.py NS_RESIDENTIAL_PLANS['domestic']",
+          "components": [
+            {
+              "component_type": "fixed",
+              "unit": "$/month",
+              "rate_value": 20.08,
+              "tier_label": "Customer Charge"
+            },
+            {
+              "component_type": "energy",
+              "unit": "$/kWh",
+              "rate_value": 0.19128,
+              "tier_label": "All-in (base + FAM + DSM)"
+            }
+          ]
+        },
+        {
+          "name": "Domestic Service Time of Use Tariff",
+          "code": "80",
+          "customer_class": "residential",
+          "rate_type": "seasonal_tou",
+          "effective_date": "2026-05-01",
+          "expect_computable": true,
+          "gold_source": "scripts/repair_ns_power_residential_2026.py NS_RESIDENTIAL_PLANS['tou']",
+          "components": [
+            {
+              "component_type": "fixed",
+              "unit": "$/month",
+              "rate_value": 20.08,
+              "tier_label": "Customer Charge"
+            },
+            {
+              "component_type": "energy",
+              "unit": "$/kWh",
+              "rate_value": 0.13664,
+              "period_label": "All hours",
+              "period_start_time": "00:00",
+              "period_end_time": "00:00",
+              "season": "Non-winter (Apr 1–Oct 31)",
+              "tier_label": "Energy Charge non-winter (eff Apr 1 2027)",
+              "season_start_month": 4,
+              "season_start_day": 1,
+              "season_end_month": 10,
+              "season_end_day": 31,
+              "day_type": "all"
+            },
+            {
+              "component_type": "energy",
+              "unit": "$/kWh",
+              "rate_value": 0.37321,
+              "period_label": "On-peak morning (7am–11am)",
+              "period_start_time": "07:00",
+              "period_end_time": "11:00",
+              "season": "Winter (Nov 1–Mar 31)",
+              "tier_label": "Energy Charge winter (eff Nov 1 2026)",
+              "season_start_month": 11,
+              "season_start_day": 1,
+              "season_end_month": 3,
+              "season_end_day": 31,
+              "day_type": "weekday"
+            },
+            {
+              "component_type": "energy",
+              "unit": "$/kWh",
+              "rate_value": 0.19128,
+              "period_label": "Off-peak midday (11am–5pm)",
+              "period_start_time": "11:00",
+              "period_end_time": "17:00",
+              "season": "Winter (Nov 1–Mar 31)",
+              "tier_label": "Energy Charge winter (eff Nov 1 2026)",
+              "season_start_month": 11,
+              "season_start_day": 1,
+              "season_end_month": 3,
+              "season_end_day": 31,
+              "day_type": "weekday"
+            },
+            {
+              "component_type": "energy",
+              "unit": "$/kWh",
+              "rate_value": 0.37321,
+              "period_label": "On-peak evening (5pm–9pm)",
+              "period_start_time": "17:00",
+              "period_end_time": "21:00",
+              "season": "Winter (Nov 1–Mar 31)",
+              "tier_label": "Energy Charge winter (eff Nov 1 2026)",
+              "season_start_month": 11,
+              "season_start_day": 1,
+              "season_end_month": 3,
+              "season_end_day": 31,
+              "day_type": "weekday"
+            },
+            {
+              "component_type": "energy",
+              "unit": "$/kWh",
+              "rate_value": 0.19128,
+              "period_label": "Off-peak night (9pm–7am)",
+              "period_start_time": "21:00",
+              "period_end_time": "07:00",
+              "season": "Winter (Nov 1–Mar 31)",
+              "tier_label": "Energy Charge winter (eff Nov 1 2026)",
+              "season_start_month": 11,
+              "season_start_day": 1,
+              "season_end_month": 3,
+              "season_end_day": 31,
+              "day_type": "weekday"
+            },
+            {
+              "component_type": "energy",
+              "unit": "$/kWh",
+              "rate_value": 0.19128,
+              "period_label": "Off-peak all day (Note 1)",
+              "period_start_time": "00:00",
+              "period_end_time": "00:00",
+              "day_type": "weekend",
+              "season": "Winter (Nov 1–Mar 31)",
+              "season_start_month": 11,
+              "season_start_day": 1,
+              "season_end_month": 3,
+              "season_end_day": 31
+            },
+            {
+              "component_type": "energy",
+              "unit": "$/kWh",
+              "rate_value": 0.19128,
+              "period_label": "Off-peak all day (Note 1)",
+              "period_start_time": "00:00",
+              "period_end_time": "00:00",
+              "day_type": "holiday",
+              "season": "Winter (Nov 1–Mar 31)",
+              "season_start_month": 11,
+              "season_start_day": 1,
+              "season_end_month": 3,
+              "season_end_day": 31
+            }
+          ],
+          "gold_note": "Winter weekend/holiday off-peak rows come from the tariff book's Note 1 (NS_TOU_WEEKEND_NOTE); the live repair keeper only has them in its description, so it is not computable (tou_gap:weekend) until re-repaired."
+        }
+      ]
+    },
+    {
+      "name": "Newfoundland Power",
+      "state": "NL",
+      "country": "CA",
+      "rate_url": null,
+      "tariffs": [
+        {
+          "name": "Rate #1.1S Domestic Seasonal - Optional",
+          "code": "1.1S",
+          "customer_class": "residential",
+          "rate_type": "seasonal",
+          "effective_date": "2026-07-01",
+          "expect_computable": true,
+          "gold_source": "scripts/repair_nf_seasonal_11s.py build_nf_11s_all_in_components()",
+          "components": [
+            {
+              "component_type": "energy",
+              "unit": "$/kWh",
+              "rate_value": 0.1654,
+              "tier_label": "Winter (Dec–Apr)",
+              "season": "Winter (Dec–Apr)",
+              "season_start_month": 12,
+              "season_start_day": 1,
+              "season_end_month": 4,
+              "season_end_day": 30
+            },
+            {
+              "component_type": "energy",
+              "unit": "$/kWh",
+              "rate_value": 0.1429,
+              "tier_label": "Non-Winter (May–Nov)",
+              "season": "Non-Winter (May–Nov)",
+              "season_start_month": 5,
+              "season_start_day": 1,
+              "season_end_month": 11,
+              "season_end_day": 30
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Newfoundland and Labrador Hydro",
+      "state": "NL",
+      "country": "CA",
+      "rate_url": "https://nlhydro.com/wp-content/uploads/2026/07/Schedule-of-Rates-Rules-and-Regulations_Jul_2026.pdf",
+      "tariffs": [
+        {
+          "name": "Rate No. 1.1S Domestic - Optional",
+          "code": "1.1S",
+          "customer_class": "residential",
+          "rate_type": "seasonal",
+          "effective_date": "2026-07-01",
+          "expect_computable": true,
+          "gold_source": "scripts/repair_nf_seasonal_11s.py build_nf_11s_all_in_components()",
+          "components": [
+            {
+              "component_type": "energy",
+              "unit": "$/kWh",
+              "rate_value": 0.1654,
+              "tier_label": "Winter (Dec–Apr)",
+              "season": "Winter (Dec–Apr)",
+              "season_start_month": 12,
+              "season_start_day": 1,
+              "season_end_month": 4,
+              "season_end_day": 30
+            },
+            {
+              "component_type": "energy",
+              "unit": "$/kWh",
+              "rate_value": 0.1429,
+              "tier_label": "Non-Winter (May–Nov)",
+              "season": "Non-Winter (May–Nov)",
+              "season_start_month": 5,
+              "season_start_day": 1,
+              "season_end_month": 11,
+              "season_end_day": 30
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
