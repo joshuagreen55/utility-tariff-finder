@@ -357,6 +357,9 @@ class ExtractedTariff:
     # Structured TOU/seasonal completeness gap reasons from Phase 4
     # (e.g. tou_missing_clock_windows). Persisted under confidence_factors.
     completeness_reasons: list[str] = field(default_factory=list)
+    # Which extraction tier produced it (gemini / haiku / opus / twopass /
+    # vision / gemini_dr), for accepted-after-validation yield.
+    extraction_tier: str = ""
 
 
 @dataclass
@@ -650,24 +653,52 @@ LLM_CACHE_DIR = os.path.join(os.environ.get("APP_LOG_DIR", "/app/logs"), "llm_ex
 _LLM_PROMPT_VERSION = "v2"
 
 
+# Opt-in, for one transition run only: also read entries written under the
+# pre-2026-09 key (tier name without model id). Those may replay another
+# model's output, which is exactly what the model-aware key prevents.
+_LLM_CACHE_LEGACY_READ = os.environ.get("LLM_CACHE_LEGACY_READ", "0") == "1"
+
+
+def _cache_model_id(tier: str) -> str:
+    """Concrete model ids behind a cache tier. Part of the cache key so an
+    env-only model swap never silently replays another model's output."""
+    return {
+        "gemini": GEMINI_MODEL,
+        "haiku": HAIKU_MODEL,
+        "opus": OPUS_MODEL,
+        "vision": HAIKU_MODEL,
+        "twopass": f"{HAIKU_MODEL}+{OPUS_MODEL}",
+    }.get(tier, tier)
+
+
+def _llm_cache_path(content_hash: str, tier: str, *, legacy: bool = False) -> str:
+    material = (
+        f"{content_hash}:{tier}:{_LLM_PROMPT_VERSION}"
+        if legacy
+        else f"{content_hash}:{tier}:{_cache_model_id(tier)}:{_LLM_PROMPT_VERSION}"
+    )
+    return os.path.join(LLM_CACHE_DIR, f"{hashlib.sha256(material.encode()).hexdigest()}.json")
+
+
 def _get_llm_cache(content_hash: str, model: str) -> list[dict] | None:
-    """Return cached extraction result for a content hash + model, or None."""
-    cache_key = hashlib.sha256(f"{content_hash}:{model}:{_LLM_PROMPT_VERSION}".encode()).hexdigest()
-    cache_path = os.path.join(LLM_CACHE_DIR, f"{cache_key}.json")
-    if os.path.isfile(cache_path):
-        try:
-            with open(cache_path, "r") as f:
-                return json.load(f)
-        except (OSError, json.JSONDecodeError):
-            return None
+    """Return cached extraction result for a content hash + tier/model, or None."""
+    paths = [_llm_cache_path(content_hash, model)]
+    if _LLM_CACHE_LEGACY_READ:
+        paths.append(_llm_cache_path(content_hash, model, legacy=True))
+    for cache_path in paths:
+        if os.path.isfile(cache_path):
+            try:
+                with open(cache_path, "r") as f:
+                    return json.load(f)
+            except (OSError, json.JSONDecodeError):
+                return None
     return None
 
 
 def _set_llm_cache(content_hash: str, model: str, tariffs: list[dict]) -> None:
-    """Store LLM extraction result keyed by content hash + model."""
+    """Store LLM extraction result keyed by content hash + tier + model id."""
     os.makedirs(LLM_CACHE_DIR, exist_ok=True)
-    cache_key = hashlib.sha256(f"{content_hash}:{model}:{_LLM_PROMPT_VERSION}".encode()).hexdigest()
-    cache_path = os.path.join(LLM_CACHE_DIR, f"{cache_key}.json")
+    cache_path = _llm_cache_path(content_hash, model)
     try:
         with open(cache_path, "w") as f:
             json.dump(tariffs, f)
@@ -2838,10 +2869,13 @@ def _extract_two_pass(
     # rate-book PDFs (HQ, Manitoba Hydro, BC Hydro, etc.).
     use_opus_for_identify = len(content_for_llm) >= 30_000
     try:
-        raw_text = _call_claude(
-            identify_prompt,
-            model=OPUS_MODEL if use_opus_for_identify else None,
-        )
+        # Own phase tag: identify spend is not an extraction-tier outcome and
+        # must not be counted as "wasted" escalation spend.
+        with llm_cost.phase("phase3_identify"):
+            raw_text = _call_claude(
+                identify_prompt,
+                model=OPUS_MODEL if use_opus_for_identify else None,
+            )
         llm_calls += 1
         identified = _parse_text_response(raw_text)
     except Exception as e:
@@ -3115,6 +3149,8 @@ def phase3_extract_tariffs(
             tariffs, calls = _extract_pdf_vision(
                 page.pdf_bytes, page.url, utility_name=utility_name, state=state,
             )
+            for t in tariffs:
+                t.extraction_tier = "vision"
             llm_calls += calls
             accepted = 0
             for t in tariffs:
@@ -3151,6 +3187,8 @@ def phase3_extract_tariffs(
         if _is_complex_page(page.content):
             log.info(f"    Using two-pass extraction (complex page, {len(page.content)} chars)")
             tariffs, calls = _extract_two_pass(page, utility_name, state=state, stats=stats)
+            for t in tariffs:
+                t.extraction_tier = "twopass"
             llm_calls += calls
         else:
             content_for_llm = _select_rate_content(page.content, max_chars=20000)
@@ -3164,6 +3202,8 @@ def phase3_extract_tariffs(
             try:
                 raw_tariffs, model_used = _extract_with_model_routing(prompt, page)
                 tariffs = _parse_extraction_response(raw_tariffs, page.url)
+                for t in tariffs:
+                    t.extraction_tier = model_used
                 log.info(f"    Model used: {model_used}")
             except Exception as e:
                 log.error(f"    Extraction failed: {e}")
@@ -3221,6 +3261,8 @@ def phase3_extract_tariffs(
                     vision_tariffs, vision_calls = _extract_page_screenshot_vision(
                         page.url, utility_name=utility_name, state=state,
                     )
+                    for t in vision_tariffs:
+                        t.extraction_tier = "vision"
                     llm_calls += vision_calls
                     vision_accepted = 0
                     for t in vision_tariffs:
@@ -4627,6 +4669,11 @@ def phase4_validate(
             valid_tariffs.append(t)
             if needs_review:
                 flagged_tariffs.append(t.name)
+
+    llm_cost.record_tier_acceptance(
+        [getattr(t, "extraction_tier", "") for t in tariffs],
+        [getattr(t, "extraction_tier", "") for t in valid_tariffs],
+    )
 
     report = {
         "total_extracted": len(tariffs),
@@ -6730,12 +6777,40 @@ def _phase6_parse_tariffs(report_text: str, fallback_source: str) -> list[Extrac
             effective_date=str(item.get("effective_date") or "").strip() or "",
             components=components,
             confidence=max(0.0, min(1.0, confidence)),
+            extraction_tier="gemini_dr",
         ))
 
     return tariffs
 
 
 @llm_cost.with_phase("phase6")
+def _phase6_meter(interaction, stats: dict) -> None:
+    """Price Deep Research usage on every exit, not only on completion.
+
+    Timeouts and token-cap aborts still bill; previously they were never
+    recorded (audit F7). When usage has a total but no in/out split, the
+    total is priced at the input rate (a lower bound).
+    """
+    usage = getattr(interaction, "usage", None)
+    if usage is not None:
+        for attr, key in (
+            ("total_tokens", "phase6_total_tokens"),
+            ("total_input_tokens", "phase6_input_tokens"),
+            ("total_output_tokens", "phase6_output_tokens"),
+        ):
+            try:
+                value = int(getattr(usage, attr, 0) or 0)
+            except (TypeError, ValueError):
+                continue
+            stats[key] = max(stats.get(key) or 0, value)
+    tin, tout = stats.get("phase6_input_tokens") or 0, stats.get("phase6_output_tokens") or 0
+    if not (tin or tout) and stats.get("phase6_total_tokens"):
+        tin = stats["phase6_total_tokens"]
+    llm_cost.record_manual("gemini_dr", tin, tout)
+    if stats.get("phase6_status") != "completed":
+        llm_cost.record_abort("gemini_dr", priced=bool(tin or tout))
+
+
 def phase6_deep_research(
     utility_name: str,
     state: str,
@@ -6849,6 +6924,7 @@ def phase6_deep_research(
                 client.interactions.cancel(iid)
             except Exception:
                 pass
+            _phase6_meter(final_interaction, stats)
             return [], stats
 
         try:
@@ -6858,6 +6934,7 @@ def phase6_deep_research(
             stats["phase6_error"] = str(e)
             stats["phase6_elapsed_sec"] = round(elapsed, 1)
             log.warning(f"  Phase 6: poll failed ({e})")
+            _phase6_meter(final_interaction, stats)
             return [], stats
 
         # Mid-flight token ceiling: usage grows as the agent runs, so we can
@@ -6886,6 +6963,7 @@ def phase6_deep_research(
                     client.interactions.cancel(iid)
                 except Exception:
                     pass
+                _phase6_meter(final_interaction, stats)
                 return [], stats
 
         st = getattr(final_interaction, "status", None)
@@ -6908,25 +6986,12 @@ def phase6_deep_research(
             f"  Phase 6: finished with status={stats['phase6_status']} in "
             f"{elapsed:.0f}s — {stats['phase6_error']}"
         )
+        _phase6_meter(final_interaction, stats)
         return [], stats
 
-    # Collect usage stats if available
-    usage = getattr(final_interaction, "usage", None)
-    if usage is not None:
-        for attr, key in (
-            ("total_tokens", "phase6_total_tokens"),
-            ("total_input_tokens", "phase6_input_tokens"),
-            ("total_output_tokens", "phase6_output_tokens"),
-        ):
-            try:
-                stats[key] = int(getattr(usage, attr, 0) or 0)
-            except (TypeError, ValueError):
-                pass
-    # Price Deep Research separately (it uses its own client, so it bypasses
-    # the metered Gemini proxy). Broken out under the "gemini_dr" key.
-    llm_cost.record_manual(
-        "gemini_dr", stats["phase6_input_tokens"], stats["phase6_output_tokens"]
-    )
+    # Deep Research uses its own client (bypasses the metered Gemini proxy);
+    # priced under the "gemini_dr" key.
+    _phase6_meter(final_interaction, stats)
 
     # Concatenate ALL text outputs — Deep Research returns multiple (exec
     # summary, analysis+JSON, citations, ...) and the JSON block is usually
