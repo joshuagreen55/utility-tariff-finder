@@ -10,6 +10,7 @@ celery_app = Celery(
     include=[
         "app.tasks.monitoring",
         "app.tasks.refresh",
+        "app.tasks.verification",
     ],
 )
 
@@ -65,6 +66,13 @@ celery_app.conf.update(
         # "nightly-tou-seasonal-completeness": {
         #     "task": "app.tasks.refresh.audit_tou_seasonal_completeness",
         #     "schedule": crontab(hour=5, minute=30),
+        # },
+        # Optional: decide proposed pin verifications (manual-correction pins
+        # whose document changed). Holds everything until PIN_VERIFIER /
+        # PIN_ARBITER adapters exist, so it is off by default.
+        # "daily-pin-verifications": {
+        #     "task": "app.tasks.verification.process_pin_verifications",
+        #     "schedule": crontab(hour=7, minute=0),
         # },
     },
 )
