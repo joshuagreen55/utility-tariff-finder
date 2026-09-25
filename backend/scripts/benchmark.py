@@ -7,9 +7,15 @@ metrics.
 Usage:
     cd backend
     python -m scripts.benchmark [--run-pipeline] [--output report.json]
+    python -m scripts.benchmark --fixtures tests/fixtures/ground_truth_tou_seasonal.json
 
-Without --run-pipeline, it only compares what's already in the DB.
-With --run-pipeline, it re-runs the pipeline for each ground truth utility first.
+Without --run-pipeline, it only compares what's already in the DB (live rows
+only). With --run-pipeline, it re-runs the pipeline for each utility first.
+
+Fixtures: ground_truth.json (flat / tiered, 15% legacy tolerance) and
+ground_truth_tou_seasonal.json (TOU / seasonal, exact to 1e-5 $/kWh plus
+exact clock windows and season dates). A fixture's ``_meta`` may set
+``rate_abs_tolerance``, ``fixed_abs_tolerance`` and ``compare_structure``.
 """
 import argparse
 import json
@@ -28,7 +34,10 @@ from app.models import Tariff, RateComponent
 log = logging.getLogger("benchmark")
 logging.basicConfig(level=logging.INFO, format="%(message)s")
 
-GROUND_TRUTH_PATH = Path(__file__).parent.parent / "tests" / "fixtures" / "ground_truth.json"
+FIXTURE_DIR = Path(__file__).parent.parent / "tests" / "fixtures"
+GROUND_TRUTH_PATH = FIXTURE_DIR / "ground_truth.json"
+TOU_SEASONAL_GOLD_PATH = FIXTURE_DIR / "ground_truth_tou_seasonal.json"
+DEFAULT_FIXTURES = (GROUND_TRUTH_PATH, TOU_SEASONAL_GOLD_PATH)
 
 RATE_TOLERANCE = 0.15  # 15% relative tolerance for rate value comparison
 FIXED_TOLERANCE = 5.0  # $5 absolute tolerance for fixed charges
@@ -44,6 +53,9 @@ class TariffMatch:
     component_precision: float = 0.0
     component_recall: float = 0.0
     rate_errors: list[dict] = field(default_factory=list)
+    expect_computable: bool | None = None
+    db_computable: bool | None = None
+    db_computable_reasons: list[str] = field(default_factory=list)
 
 
 @dataclass
@@ -67,12 +79,51 @@ def _normalize(name: str) -> str:
     return " ".join(n.split())
 
 
-def _rate_close(expected: float, actual: float, ctype: str) -> bool:
+@dataclass(frozen=True)
+class Tolerance:
+    rate_rel: float = RATE_TOLERANCE
+    rate_abs: float | None = None
+    fixed_abs: float = FIXED_TOLERANCE
+    structure: bool = False
+
+    @classmethod
+    def from_meta(cls, meta: dict) -> "Tolerance":
+        return cls(
+            rate_abs=meta.get("rate_abs_tolerance"),
+            fixed_abs=meta.get("fixed_abs_tolerance", FIXED_TOLERANCE),
+            structure=bool(meta.get("compare_structure")),
+        )
+
+
+def _rate_close(expected: float, actual: float, ctype: str, tol: Tolerance = Tolerance()) -> bool:
     if ctype == "fixed":
-        return abs(expected - actual) <= FIXED_TOLERANCE
+        return abs(expected - actual) <= tol.fixed_abs
+    if tol.rate_abs is not None:
+        return abs(expected - actual) <= tol.rate_abs
     if expected == 0:
         return actual == 0
-    return abs(actual - expected) / abs(expected) <= RATE_TOLERANCE
+    return abs(actual - expected) / abs(expected) <= tol.rate_rel
+
+
+def _hhmm(v) -> str | None:
+    if v is None or v == "":
+        return None
+    if hasattr(v, "strftime"):
+        return v.strftime("%H:%M")
+    s = str(v).strip()
+    return "00:00" if s in ("24:00", "24:00:00") else s[:5]
+
+
+def _structure_key(c) -> tuple:
+    get = c.get if isinstance(c, dict) else (lambda k, d=None: getattr(c, k, d))
+    return (
+        _hhmm(get("period_start_time")),
+        _hhmm(get("period_end_time")),
+        (get("day_type") or None),
+        get("season_start_month"), get("season_start_day"),
+        get("season_end_month"), get("season_end_day"),
+        get("tier_min_kwh"), get("tier_max_kwh"),
+    )
 
 
 def _find_best_match(gt_tariff: dict, db_tariffs: list[Tariff]) -> Tariff | None:
@@ -108,9 +159,13 @@ def _find_best_match(gt_tariff: dict, db_tariffs: list[Tariff]) -> Tariff | None
     return None
 
 
-def _compare_components(gt_components: list[dict], db_components: list[RateComponent]) -> tuple[float, float, list[dict]]:
+def _compare_components(
+    gt_components: list[dict], db_components: list[RateComponent], tol: Tolerance = Tolerance(),
+) -> tuple[float, float, list[dict]]:
     """Compare ground truth components against DB components.
 
+    With ``tol.structure`` a DB component only matches a gold component when
+    its clock window, day type, season dates and tier bounds are identical.
     Returns (precision, recall, rate_errors).
     """
     if not gt_components:
@@ -132,6 +187,8 @@ def _compare_components(gt_components: list[dict], db_components: list[RateCompo
                 continue
             if dc.component_type.value != gc_type:
                 continue
+            if tol.structure and _structure_key(dc) != _structure_key(gc):
+                continue
             diff = abs(float(dc.rate_value) - gc_rate)
             if diff < best_diff:
                 best_diff = diff
@@ -139,7 +196,7 @@ def _compare_components(gt_components: list[dict], db_components: list[RateCompo
 
         if best_di is not None:
             dc = db_components[best_di]
-            if _rate_close(gc_rate, float(dc.rate_value), gc_type):
+            if _rate_close(gc_rate, float(dc.rate_value), gc_type, tol):
                 matched_gt.add(gi)
                 matched_db.add(best_di)
             else:
@@ -156,7 +213,8 @@ def _compare_components(gt_components: list[dict], db_components: list[RateCompo
                 "component_type": gc_type,
                 "expected": gc_rate,
                 "actual": None,
-                "issue": "missing_in_db",
+                "issue": "missing_structure" if tol.structure else "missing_in_db",
+                "structure": list(_structure_key(gc)) if tol.structure else None,
             })
 
     precision = len(matched_db) / len(db_components) if db_components else 0.0
@@ -164,18 +222,38 @@ def _compare_components(gt_components: list[dict], db_components: list[RateCompo
     return round(precision, 3), round(recall, 3), errors
 
 
-def benchmark_utility(session: Session, gt_entry: dict) -> UtilityResult:
-    uid = gt_entry["utility_id"]
+def resolve_utility_id(session: Session, gt_entry: dict) -> int | None:
+    if gt_entry.get("utility_id"):
+        return gt_entry["utility_id"]
+    from app.models import Utility
+
+    rows = session.execute(
+        select(Utility.id).where(
+            Utility.name == gt_entry["name"],
+            Utility.state_province == gt_entry["state"],
+        )
+    ).scalars().all()
+    return rows[0] if len(rows) == 1 else None
+
+
+def benchmark_utility(session: Session, gt_entry: dict, tol: Tolerance = Tolerance()) -> UtilityResult:
+    from app.services.computable import evaluate_computable
+
+    uid = resolve_utility_id(session, gt_entry)
     result = UtilityResult(
-        utility_id=uid,
+        utility_id=uid or 0,
         name=gt_entry["name"],
         state=gt_entry["state"],
         gt_tariff_count=len(gt_entry["tariffs"]),
     )
 
-    db_tariffs = list(
+    db_tariffs = [] if uid is None else list(
         session.execute(
-            select(Tariff).where(Tariff.utility_id == uid)
+            select(Tariff).where(
+                Tariff.utility_id == uid,
+                Tariff.superseded_by_tariff_id.is_(None),
+                Tariff.supersede_reason.is_(None),
+            )
         ).scalars().all()
     )
     result.db_tariff_count = len(db_tariffs)
@@ -187,7 +265,8 @@ def benchmark_utility(session: Session, gt_entry: dict) -> UtilityResult:
         if best:
             matched_db_ids.add(best.id)
             comps = list(best.rate_components)
-            prec, rec, errs = _compare_components(gt_t["components"], comps)
+            prec, rec, errs = _compare_components(gt_t["components"], comps, tol)
+            verdict = evaluate_computable(best.rate_type, comps, name=best.name)
             result.matches.append(TariffMatch(
                 gt_name=gt_t["name"],
                 gt_class=gt_t["customer_class"],
@@ -197,6 +276,9 @@ def benchmark_utility(session: Session, gt_entry: dict) -> UtilityResult:
                 component_precision=prec,
                 component_recall=rec,
                 rate_errors=errs,
+                expect_computable=gt_t.get("expect_computable"),
+                db_computable=verdict.computable,
+                db_computable_reasons=list(verdict.reasons),
             ))
         else:
             result.missing_tariffs.append(gt_t["name"])
@@ -222,19 +304,29 @@ def main():
     parser = argparse.ArgumentParser(description="Benchmark pipeline against ground truth")
     parser.add_argument("--run-pipeline", action="store_true", help="Re-run pipeline before benchmarking")
     parser.add_argument("--output", type=str, help="Write JSON report to file")
+    parser.add_argument(
+        "--fixtures", nargs="+", default=[str(p) for p in DEFAULT_FIXTURES],
+        help="Ground-truth fixture files (default: flat/tiered + TOU/seasonal gold)",
+    )
     args = parser.parse_args()
 
-    with open(GROUND_TRUTH_PATH) as f:
-        gt_data = json.load(f)
-
-    gt_utilities = gt_data["utilities"]
-    log.info(f"Ground truth: {len(gt_utilities)} utilities")
+    gt_utilities: list[tuple[dict, Tolerance]] = []
+    for path in args.fixtures:
+        with open(path) as f:
+            data = json.load(f)
+        tol = Tolerance.from_meta(data.get("_meta") or {})
+        gt_utilities.extend((u, tol) for u in data["utilities"])
+    log.info(f"Ground truth: {len(gt_utilities)} utilities from {len(args.fixtures)} fixture(s)")
 
     if args.run_pipeline:
         from scripts.tariff_pipeline import run_pipeline, cleanup_between_utilities
         log.info("Re-running pipeline for ground truth utilities...")
-        for i, gt in enumerate(gt_utilities, 1):
-            uid = gt["utility_id"]
+        with Session(get_sync_engine()) as session:
+            resolved = [(gt, resolve_utility_id(session, gt)) for gt, _tol in gt_utilities]
+        for i, (gt, uid) in enumerate(resolved, 1):
+            if uid is None:
+                log.warning(f"  [{i}/{len(resolved)}] {gt['name']}: utility not found, skipped")
+                continue
             log.info(f"  [{i}/{len(gt_utilities)}] {gt['name']} (id={uid})")
             try:
                 run_pipeline(uid, dry_run=False)
@@ -246,8 +338,8 @@ def main():
     results: list[UtilityResult] = []
 
     with Session(engine) as session:
-        for gt in gt_utilities:
-            r = benchmark_utility(session, gt)
+        for gt, tol in gt_utilities:
+            r = benchmark_utility(session, gt, tol)
             results.append(r)
 
     # Summary statistics
@@ -265,6 +357,13 @@ def main():
     if matched_entries:
         avg_comp_precision = sum(m.component_precision for m in matched_entries) / len(matched_entries)
         avg_comp_recall = sum(m.component_recall for m in matched_entries) / len(matched_entries)
+
+    structure_errors = sum(
+        1 for r in results for m in r.matches for e in m.rate_errors
+        if e.get("issue") == "missing_structure"
+    )
+    computable_checked = [m for m in matched_entries if m.expect_computable is not None]
+    computable_agree = sum(1 for m in computable_checked if m.db_computable == m.expect_computable)
 
     utilities_with_data = sum(1 for r in results if r.db_tariff_count > 0)
     utilities_perfect = sum(
@@ -284,6 +383,8 @@ def main():
     print(f"Component-level precision:  {avg_comp_precision:.1%}")
     print(f"Component-level recall:     {avg_comp_recall:.1%}")
     print(f"Rate value errors:          {total_rate_errors}")
+    print(f"  of which clock/season/tier structure missing: {structure_errors}")
+    print(f"Computable agreement:       {computable_agree}/{len(computable_checked)}")
     print(f"")
 
     print("Per-utility breakdown:")
@@ -303,6 +404,8 @@ def main():
                 "avg_component_precision": round(avg_comp_precision, 3),
                 "avg_component_recall": round(avg_comp_recall, 3),
                 "total_rate_errors": total_rate_errors,
+                "structure_errors": structure_errors,
+                "computable_agreement": f"{computable_agree}/{len(computable_checked)}",
             },
             "utilities": [asdict(r) for r in results],
         }
