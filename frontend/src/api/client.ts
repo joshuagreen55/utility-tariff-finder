@@ -226,7 +226,7 @@ export const api = {
     request<Record<string, { states: Record<string, { id: number; name: string }[]> }>>("/tariffs/filters"),
 
   deleteTariff: (id: number) =>
-    request<{ ok: boolean; deleted_tariff_id: number }>(`/tariffs/${id}`, {
+    request<{ ok: boolean; retired_tariff_id: number; deleted_tariff_id: number; change_event_id: number }>(`/tariffs/${id}`, {
       method: "DELETE",
     }),
 

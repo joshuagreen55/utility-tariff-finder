@@ -10,6 +10,8 @@ from app.api.deps import request_has_valid_admin_key
 from app.auth.session_tokens import decode_session_token
 from app.config import settings
 
+CORRECTIONS_PATH = "/api/tariff-corrections"
+
 
 def _session_payload(request: Request) -> dict | None:
     raw = request.cookies.get(settings.auth_cookie_name)
@@ -29,6 +31,11 @@ class SessionAuthGateMiddleware(BaseHTTPMiddleware):
         path = request.url.path
 
         if path == "/api/health" or path.startswith("/api/auth/"):
+            return await call_next(request)
+
+        # Authenticated by its own scoped credential in the route dependency
+        # (verify_corrections_key); sessions / the admin key do not apply.
+        if path == CORRECTIONS_PATH:
             return await call_next(request)
 
         if path.startswith("/api/"):

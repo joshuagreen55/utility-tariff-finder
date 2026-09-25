@@ -12,6 +12,10 @@ class Settings(BaseSettings):
     cors_origins: str = "http://localhost:5173,http://localhost:3000"
     # If set, X-Admin-Key / Authorization: Bearer unlocks /api/* (gate) and /api/admin/* deps
     admin_api_key: str = ""
+    # Scoped server-to-server credential for POST /api/tariff-corrections
+    # (Mysa cloud, after Mysa-side approval). Deliberately separate from
+    # ADMIN_API_KEY and Google sessions; the endpoint is disabled when empty.
+    tariff_corrections_api_key: str = ""
 
     # --- Pipeline API keys ---
     brave_api_key: str = ""

@@ -4,7 +4,7 @@ from fastapi import Depends, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.api.deps import verify_admin_or_session
-from app.api.routes import auth, lookup, monitoring, tariffs, utilities
+from app.api.routes import auth, corrections, lookup, monitoring, tariffs, utilities
 from app.config import settings
 from app.middleware.auth_gate import SessionAuthGateMiddleware
 
@@ -43,6 +43,7 @@ app.include_router(auth.router, prefix="/api", tags=["Auth"])
 app.include_router(lookup.router, prefix="/api", tags=["Address Lookup"])
 app.include_router(utilities.router, prefix="/api", tags=["Utilities"])
 app.include_router(tariffs.router, prefix="/api", tags=["Tariffs"])
+app.include_router(corrections.router, prefix="/api", tags=["Tariff Corrections"])
 app.include_router(
     monitoring.router,
     prefix="/api/admin",
