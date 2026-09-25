@@ -17,8 +17,9 @@ class TariffChangeEvent(Base):
     ``decision`` values: ``insert`` (new live row), ``supersede`` (row
     retired in favour of ``after_tariff_id``), ``retire`` (retired with no
     successor), ``hold`` (a write was refused because the live row is
-    protected; the proposal is in ``payload``), ``hard_delete`` (written by
-    the DB trigger with a row snapshot).
+    protected; the proposal is in ``payload``), ``metadata`` (non-rate field
+    filled on a live row, e.g. reason ``effective_date_fill``),
+    ``hard_delete`` (written by the DB trigger with a row snapshot).
     """
 
     __tablename__ = "tariff_change_events"
