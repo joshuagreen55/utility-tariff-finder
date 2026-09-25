@@ -427,6 +427,7 @@ Seed order: `seed_eia861` → `seed_canada` → `seed_openei` → `seed_territor
 - `docs/ARCHITECTURE.md` — system overview + diagrams.
 - `docs/GCP.md`, `docs/GCP_FIRST_TIME.md` — VM deployment.
 - `docs/DATABASE_ACCESS.md` — read-only DB access via SSH tunnel.
+- `docs/FLUX_MIGRATION_DISCOVERY.md` — open questions to answer before any data-plane move to Flux (no cutover).
 - `docs/CENTRALIZED_REGULATORS.md` — jurisdictions with centralized rate-setting.
 - `docs/TOU_SEASONAL_FIELDS.md` — structured TOU clock + season calendar columns.
 - `docs/MYSA_CONSUMER_CONTRACT.md` — how machine consumers price intervals and build TOU schedules from `computable` tariffs.
