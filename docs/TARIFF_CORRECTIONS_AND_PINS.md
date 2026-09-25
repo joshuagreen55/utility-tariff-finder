@@ -104,8 +104,8 @@ A manual row is **protected** (`is_protected`) and **pinned** (`tariff_pins`):
 
 ## 4. Automated verification (no human queue)
 
-`process_pin_verifications` (Celery; add the commented beat entry in
-`celery_app.py` to schedule it daily) decides each `proposed` verification
+`process_pin_verifications` (Celery; not scheduled, see **Enabling** below)
+decides each `proposed` verification
 with gates, cheapest first. The first failure **holds**: the pinned row
 stays live, the pin moves to state `held` with `hold_reason`, and the next
 signal retries.
@@ -120,21 +120,69 @@ signal retries.
 | 5 | Same class, computable, effective date newer (≥ for `source_error` pins), rates actually differ | `customer_class_changed`, `not_computable`, `effective_date_not_newer`, `no_rate_change` |
 | 6 | Every rate / clock / season / effective-date claim verified against the text (≥0.90; ≥0.95 for derived all-in values) | `claims_contradicted`, `claims_unsupported` |
 | 7 | Arbiter (Opus-tier typed verdict) accepts | `arbiter_rejected` |
+| 3/6/7 | A verifier or arbiter call raised (Mercury / Anthropic down, bad response) | `verifier_error` |
 
 **Accept:** insert the verified row (`origin='agent_verified'`, approved)
 and soft-supersede the pinned row (`agent_verify_accept`). The pin moves to
 the new row with the new document hash, and a change event carries every
 gate verdict.
 
-**Adapters.** None ships enabled. With the defaults every proposal holds at
-gate 0 without fetching or calling an LLM, so scheduling the task is safe
-before adapters exist. Implement `ClaimVerifier` (`screen`, `verify`) with
-Mercury `jev_screen` / `jev_verify`: claims are atomic sentences, verdicts
-are `verified` / `contradicted` / `unsupported` plus confidence. Implement
-`Arbiter` (`decide`) as an Opus-tier call returning a typed accept/reject.
-Select them via `PIN_VERIFIER` / `PIN_ARBITER` in `default_gates()`. Run the
-audit's §7.3 offline spike (perturbation catch rate, false contradictions)
-before enabling accepts in production.
+**Adapters** (`app/services/pin_adapters.py`). The defaults are
+`PIN_VERIFIER=none` / `PIN_ARBITER=none`: every proposal holds at gate 0
+without fetching or calling an LLM. Gate 0 needs **both** real adapters, so
+Jev alone never accepts a pinned row.
+
+| Env | Values | Adapter |
+|---|---|---|
+| `PIN_VERIFIER` | `none` (default), `jev` | `JevVerifier`: Mercury `jev_screen` (gate 3) + `jev_verify` (gate 6) |
+| `PIN_ARBITER` | `none` (default), `opus` | `OpusArbiter`: one Anthropic call, forced `record_verdict` tool (typed accept/reject) |
+
+Required when enabled (values live in the VM env / `.env`, never the repo):
+
+- `jev`: `MERCURY_URL` (Mercury's MCP HTTP endpoint) and `MERCURY_API_TOKEN`
+  (bearer token of a Mercury actor scoped for `jev.verify` / `jev.screen`).
+  Optional: `MERCURY_TIMEOUT_SEC` (120), `JEV_CHUNK_CHARS` (40000),
+  `JEV_MAX_CHUNKS` (5).
+- `opus`: `ANTHROPIC_API_KEY`. Model: `AUDITOR_MODEL`, else `OPUS_MODEL`
+  (default `claude-opus-5`), the same knobs as `opus_audit.py`.
+
+A value that is unknown, or whose credentials are missing, logs a warning
+and falls back to the Null adapter (holds).
+
+How the adapters decide:
+
+- **Screen.** The document is split into `JEV_CHUNK_CHARS` chunks and every
+  chunk must come back `pass`; `review` / `block` / `skip` hold as
+  `injection_suspected`. A document longer than `JEV_MAX_CHUNKS` chunks is
+  not screened and holds, so no unscreened text reaches the extractor,
+  Jev or Opus. The screen result is stored in `gate_results.screen`.
+- **Claims.** Atomic sentences, one per rate, clock window, season and
+  effective date, verified against the chunked document (`auto_accept`
+  0.90). Verdicts are `verified` / `contradicted` / `unsupported` plus
+  confidence. A Jev verdict flagged `review` never counts as verified, and a
+  missing or malformed row is `unsupported`.
+- **All-in values.** Claims use the book's verbatim numbers. When a proposal
+  carries the `included_in_energy` riders of an all-in ENERGY row, the claims
+  are the base (all-in minus riders) and each rider, so the all-in is their
+  sum by construction. Without riders it stays one `derived_rate` claim at
+  the ≥0.95 floor.
+- **Arbiter.** Sees the current row, the proposal and the (same capped)
+  document, treats the document as untrusted data, and rejects when in
+  doubt. A reply without a typed verdict is a reject.
+
+Cost: Opus usage is priced as `opus` under phase `pin_arbiter`; Jev tokens
+are recorded as `jev` (priced 0 unless `LLM_PRICING_JSON` sets `jev`). Each
+task run appends a `pin_verifications` entry to the LLM cost ledger and
+returns `llm_cost_usd` and `jev_gateway_usd` (Mercury's `cost.usd`, which
+reported $0.00 in the spike: treat that as unverified billing).
+
+**Enabling.** Set the env, restart `celery-worker`, and run
+`process_pin_verifications` by hand on a few proposals first. The
+`daily-pin-verifications` beat entry in `celery_app.py` stays **commented
+out**: ops schedules it deliberately after checking Mercury billing and Opus
+spend per decision (`PIN_VERIFY_DAILY_MAX` caps decisions per day). The
+§7.3 offline spike (9 gold tariffs, 100% perturbation catch, 0% false
+contradictions on verbatim book numbers) is the basis for the Jev gate.
 
 ## 5. Observability
 

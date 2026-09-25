@@ -213,7 +213,7 @@ rate signals AND the per-utility Opus budget isn't spent.
 | **Monthly refresh** | `refresh_changed_tariffs` | 1st of month 08:00 |
 | **Quarterly recovery** | `recover_error_utilities` | 1st Jan/Apr/Jul/Oct 10:00 |
 | Stalled-run reaper | `reap_stalled_runs` | hourly at :15 |
-| (off by default) Pin verifications | `process_pin_verifications` | commented out in `celery_app.py` |
+| (off by default) Pin verifications | `process_pin_verifications` | commented out in `celery_app.py`; real adapters via `PIN_VERIFIER=jev` / `PIN_ARBITER=opus` (see `docs/TARIFF_CORRECTIONS_AND_PINS.md` §4) |
 
 - **Monthly** (`refresh.py`): targets utilities whose monitoring detected a
   **change**, plus **stale** utilities (no tariff verified in 90d, ordered
@@ -415,7 +415,8 @@ Seed order: `seed_eia861` → `seed_canada` → `seed_openei` → `seed_territor
 `CORS_ORIGINS`, `OPENEI_API_KEY`, `BRAVE_API_KEY`, `ANTHROPIC_API_KEY`,
 `GOOGLE_AI_API_KEY`, `GOOGLE_CSE_API_KEY`, `GOOGLE_CSE_CX`,
 `GOOGLE_MAPS_API_KEY`, `TARIFF_CORRECTIONS_API_KEY`; pins: `PIN_VERIFY_DAILY_MAX`,
-`PIN_VERIFIER`, `PIN_ARBITER`; model/cost: `OPUS_MODEL`, `HAIKU_MODEL`, `GEMINI_MODEL`,
+`PIN_VERIFIER` (`none`|`jev`), `PIN_ARBITER` (`none`|`opus`), `MERCURY_URL`,
+`MERCURY_API_TOKEN`, `MERCURY_TIMEOUT_SEC`, `JEV_CHUNK_CHARS`, `JEV_MAX_CHUNKS`; model/cost: `OPUS_MODEL`, `HAIKU_MODEL`, `GEMINI_MODEL`,
 `AUDITOR_MODEL`, `OPUS_MAX_PER_UTILITY`, `PHASE6_ENABLED`, `LLM_PRICING_JSON`,
 `LLM_CACHE_LEGACY_READ`,
 `MONTHLY_MAX_UTILITIES`, `CELERY_CONCURRENCY`, `QUARANTINE_RECHECK_DAYS`; auth:
