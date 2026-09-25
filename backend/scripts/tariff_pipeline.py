@@ -4953,6 +4953,7 @@ def store_tariffs(
     *,
     actor_type: str = "pipeline",
     actor_id: str | None = None,
+    source_hashes: dict[str, str] | None = None,
 ) -> int:
     """Persist validated tariffs — soft-supersede only, never in place.
 
@@ -4967,7 +4968,13 @@ def store_tariffs(
       stay on the superseded row;
     - changed content on a protected row (approved / repair / manual) →
       hold: the protected row stays live and untouched, and the proposal
-      is logged as a ``hold`` change event.
+      is logged as a ``hold`` change event. If the row is pinned and the
+      extract comes from a different document than the pinned one, a
+      verification is opened for the automated verifier.
+
+    ``source_hashes`` maps source_url → stable document hash
+    (``monitor.stable_text_hash``) and is persisted as
+    ``source_document_hash``.
 
     Returns the number of tariffs inserted, revised or re-verified.
     """
@@ -4980,6 +4987,7 @@ def store_tariffs(
     from sqlalchemy.orm import Session
     from app.db.session import get_sync_engine
     from app.models import Tariff, CustomerClass, RateType
+    from app.services.pins import active_pin_for, propose_verification
     from app.services.tariff_history import (
         is_protected,
         merge_confidence_factors,
@@ -4988,6 +4996,7 @@ def store_tariffs(
         supersede_tariff,
     )
 
+    source_hashes = source_hashes or {}
     class_map = {k: CustomerClass(k) for k in _STORE_CLASS_MAP_KEYS}
     type_map = {k: RateType(v) for k, v in _STORE_TYPE_MAP_RAW.items()}
 
@@ -5037,6 +5046,7 @@ def store_tariffs(
                 }
 
             code_clipped = _clip_str(et.code, _TARIFF_CODE_MAX) if et.code else et.code
+            doc_hash = source_hashes.get(et.source_url) if et.source_url else None
 
             # Safety net: phase4 already dedupes, but callers may invoke
             # store_tariffs directly (browser_interaction, OEB, repair).
@@ -5066,11 +5076,21 @@ def store_tariffs(
                     existing.description = existing.description or et.description
                     existing.source_url = existing.source_url or et.source_url
                     existing.code = existing.code or code_clipped
+                    if doc_hash and existing.source_url == et.source_url:
+                        existing.source_document_hash = doc_hash
                 stored += 1
                 fresh_by_key[(et.name, cc)] = existing
                 continue
 
             if existing is not None and is_protected(existing):
+                proposal = {
+                    "name": et.name,
+                    "code": code_clipped or None,
+                    "customer_class": cc.value,
+                    "rate_type": rt.value,
+                    "effective_date": eff_date.isoformat() if eff_date else None,
+                    "components": serialize_components(new_components),
+                }
                 record_event(
                     session,
                     decision="hold",
@@ -5078,16 +5098,21 @@ def store_tariffs(
                     utility_id=utility_id,
                     before_tariff_id=existing.id,
                     source_url=et.source_url,
-                    payload={
-                        "proposed": {
-                            "name": et.name,
-                            "rate_type": rt.value,
-                            "effective_date": eff_date.isoformat() if eff_date else None,
-                            "components": serialize_components(new_components),
-                        },
-                    },
+                    source_document_hash=doc_hash,
+                    payload={"proposed": proposal},
                     **event_kw,
                 )
+                # Same pinned document: an extraction disagreement, kept as
+                # evidence on the hold event. A different document may be a
+                # newer rate book the pin would otherwise never see.
+                pin = active_pin_for(session, existing.id)
+                if pin is not None and et.source_url and et.source_url != pin.pinned_source_url:
+                    propose_verification(
+                        session, pin,
+                        trigger="new_document",
+                        new_source_url=et.source_url,
+                        proposed=proposal,
+                    )
                 log.warning(
                     f"    HOLD '{et.name}': live row {existing.id} is protected "
                     f"(approved/repair/manual) and the extraction differs — "
@@ -5106,6 +5131,7 @@ def store_tariffs(
                 is_default=existing.is_default if existing else False,
                 description=et.description or (existing.description if existing else None),
                 source_url=et.source_url or (existing.source_url if existing else None),
+                source_document_hash=doc_hash,
                 effective_date=eff_date or (existing.effective_date if existing else None),
                 last_verified_at=now,
                 approved=False,
@@ -6108,12 +6134,15 @@ def _touch_tariff_verified(utility_id: int):
     else. Blanket-touching every row used to mark 2017 OpenEI seeds (never
     re-extracted) as "verified", silently corrupting freshness metrics and
     Track B's fresh/stranded split. Superseded/retired rows are skipped
-    too — they are not served, so they should not look fresh.
+    too — they are not served, so they should not look fresh. Pinned rows
+    are skipped: only a verification of their own document re-verifies them.
     """
     from sqlalchemy.orm import Session
-    from sqlalchemy import update
+    from sqlalchemy import select, update
     from app.db.session import get_sync_engine
+    from app.models import TariffPin
     from app.models.tariff import Tariff
+    from app.services.pins import OPEN_PIN_STATES
 
     now = datetime.now(timezone.utc)
     engine = get_sync_engine()
@@ -6125,6 +6154,9 @@ def _touch_tariff_verified(utility_id: int):
                 Tariff.last_verified_at.is_not(None),
                 Tariff.superseded_by_tariff_id.is_(None),
                 Tariff.supersede_reason.is_(None),
+                ~Tariff.id.in_(
+                    select(TariffPin.tariff_id).where(TariffPin.state.in_(OPEN_PIN_STATES))
+                ),
             )
             .values(last_verified_at=now)
         )
@@ -7028,7 +7060,10 @@ def run_pipeline(
                 validation, valid_tariffs = phase4_validate(tariffs, utility_name, state)
                 result.phase4_validation = validation
                 if valid_tariffs and not dry_run:
-                    store_tariffs(utility_id, valid_tariffs, dry_run)
+                    store_tariffs(
+                        utility_id, valid_tariffs, dry_run,
+                        source_hashes=_page_document_hashes(smart_pages),
+                    )
                     update_monitoring_source(utility_id, smart_pages[0].url if smart_pages else "", dry_run)
                 total = len(valid_tariffs)
                 log.info(f"=== Done (via Phase 5): {utility_name} — {total} tariffs ===\n")
@@ -7290,7 +7325,9 @@ def run_pipeline(
     successful_url = result.phase1_rate_page_url or rate_page_url
 
     if valid_tariffs and not dry_run:
-        stored = store_tariffs(utility_id, valid_tariffs, dry_run)
+        stored = store_tariffs(
+            utility_id, valid_tariffs, dry_run, source_hashes=_page_document_hashes(pages),
+        )
         update_monitoring_source(utility_id, successful_url, dry_run)
         _store_fingerprints(utility_id, pages)
     elif dry_run:
@@ -7314,6 +7351,13 @@ def run_pipeline(
     total = len(valid_tariffs) + additional_count
     log.info(f"=== Done: {utility_name} — {len(valid_tariffs)} base + {additional_count} specialty = {total} tariffs ===\n")
     return result
+
+
+def _page_document_hashes(pages) -> dict[str, str]:
+    """source_url → stable normalized-text hash for persisted provenance."""
+    from app.services.monitor import stable_text_hash
+
+    return {p.url: stable_text_hash(p.content) for p in (pages or []) if getattr(p, "content", "")}
 
 
 def cleanup_between_utilities():
