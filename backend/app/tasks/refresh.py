@@ -83,6 +83,8 @@ UTILITY_LOCK_TTL = 1900
 LLM_RATE_LIMIT = "8/m"
 DOMAIN_RATE_LIMIT = "1/s"
 
+_LIVE_TARIFF = Tariff.superseded_by_tariff_id.is_(None) & Tariff.supersede_reason.is_(None)
+
 
 def _get_redis():
     """Best-effort Redis client for locks/quarantine. Returns None when
@@ -129,6 +131,7 @@ def _get_stale_utility_ids(session: Session, threshold_days: int = STALE_THRESHO
             Tariff.utility_id.label("uid"),
             func.max(Tariff.last_verified_at).label("last_verified"),
         )
+        .where(_LIVE_TARIFF)
         .group_by(Tariff.utility_id)
         .subquery()
     )
@@ -139,7 +142,8 @@ def _get_stale_utility_ids(session: Session, threshold_days: int = STALE_THRESHO
         .where(
             ~Utility.id.in_(
                 select(distinct(Tariff.utility_id)).where(
-                    Tariff.last_verified_at >= cutoff
+                    Tariff.last_verified_at >= cutoff,
+                    _LIVE_TARIFF,
                 )
             )
         )
@@ -204,12 +208,12 @@ def _filter_quarantined(session: Session, ids: list[int]) -> tuple[list[int], li
 
 
 def _count_tariffs(session: Session, utility_ids: list[int]) -> dict[int, int]:
-    """Count tariffs per utility."""
+    """Count live tariffs per utility (a revision adds a row but not a plan)."""
     if not utility_ids:
         return {}
     rows = session.execute(
         select(Tariff.utility_id, func.count(Tariff.id))
-        .where(Tariff.utility_id.in_(utility_ids))
+        .where(Tariff.utility_id.in_(utility_ids), _LIVE_TARIFF)
         .group_by(Tariff.utility_id)
     ).all()
     return {uid: cnt for uid, cnt in rows}
@@ -457,6 +461,7 @@ def finalize_refresh_run(results: list[dict], run_id: int, before_counts_json: s
         stale_result = session.execute(
             select(func.count(Tariff.id)).where(
                 Tariff.utility_id.in_(utility_ids),
+                _LIVE_TARIFF,
                 (Tariff.last_verified_at < cutoff) | (Tariff.last_verified_at.is_(None)),
             )
         )
