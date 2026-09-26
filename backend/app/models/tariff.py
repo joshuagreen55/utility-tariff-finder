@@ -13,6 +13,7 @@ from sqlalchemy import (
     String,
     Text,
     Time,
+    event,
     func,
 )
 from sqlalchemy.dialects.postgresql import JSONB
@@ -78,6 +79,13 @@ class Tariff(Base):
     end_date: Mapped[date | None] = mapped_column(Date, nullable=True)
 
     source_url: Mapped[str | None] = mapped_column(Text, nullable=True)
+    # official | third_party | unknown — who published source_url relative to
+    # this utility (app.services.source_type). Stamped on every ORM flush that
+    # inserts a row or changes source_url; see _stamp_source_type below.
+    source_type: Mapped[str] = mapped_column(
+        String(20), nullable=False, server_default="unknown", index=True
+    )
+    source_type_reason: Mapped[str | None] = mapped_column(String(40), nullable=True)
     source_document_hash: Mapped[str | None] = mapped_column(String(64), nullable=True)
     last_verified_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
     approved: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
@@ -162,6 +170,14 @@ class RateComponent(Base):
 
     def __repr__(self) -> str:
         return f"<RateComponent(id={self.id}, type={self.component_type.value}, rate={self.rate_value})>"
+
+
+@event.listens_for(Tariff, "before_insert")
+@event.listens_for(Tariff, "before_update")
+def _stamp_source_type(mapper, connection, target) -> None:
+    from app.services.source_type import stamp_source_type
+
+    stamp_source_type(connection, target)
 
 
 from app.models.utility import Utility  # noqa: E402
