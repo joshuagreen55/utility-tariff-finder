@@ -37,7 +37,7 @@ import re
 import sys
 import time
 from dataclasses import dataclass, field, asdict
-from datetime import datetime, timedelta, timezone
+from datetime import date, datetime, timedelta, timezone
 from typing import Any
 from urllib.parse import unquote, urljoin, urlparse
 
@@ -5205,12 +5205,91 @@ def _pick_live_row(rows: list):
     return choose_vintage_keeper(rows)
 
 
+_EFFECTIVE_DATE_MIN = date(1990, 1, 1)
+# Rate books announce the next edition ahead of time; anything further out
+# is a misread (a docket number, a sunset date) that "newest wins" would pin.
+_EFFECTIVE_DATE_MAX_AHEAD_DAYS = 400
+
+
+def _parse_effective_date(raw, *, today: date | None = None) -> date | None:
+    """A full calendar date from an extracted ``effective_date``, else None.
+
+    Accepts ISO dates (optionally with a time suffix), ``YYYY/MM/DD``,
+    month-name forms ("January 1, 2026", "1 Jan 2026") and ``M/D/YYYY`` only
+    when day and month cannot be swapped. Partial dates (year or month only)
+    and implausible years return None: a day is never invented.
+    """
+    if raw is None or raw == "":
+        return None
+    if isinstance(raw, datetime):
+        d = raw.date()
+    elif isinstance(raw, date):
+        d = raw
+    else:
+        d = _parse_effective_date_str(str(raw).strip())
+    if d is None:
+        return None
+    today = today or date.today()
+    if d < _EFFECTIVE_DATE_MIN or (d - today).days > _EFFECTIVE_DATE_MAX_AHEAD_DAYS:
+        return None
+    return d
+
+
+def _parse_effective_date_str(s: str) -> date | None:
+    def _mk(y, m, d):
+        try:
+            return date(int(y), int(m), int(d))
+        except (TypeError, ValueError):
+            return None
+
+    m = re.match(r"^(\d{4})[-/.](\d{1,2})[-/.](\d{1,2})(?:$|[T\s])", s)
+    if m:
+        return _mk(*m.groups())
+    m = re.fullmatch(r"(\d{1,2})/(\d{1,2})/(\d{4})", s)
+    if m:
+        a, b, y = (int(x) for x in m.groups())
+        if a == b or b > 12:
+            return _mk(y, a, b)
+        if a > 12:
+            return _mk(y, b, a)
+        return None
+    cleaned = re.sub(r"[,.]", " ", s.lower())
+    cleaned = re.sub(r"(\d)(st|nd|rd|th)\b", r"\1", cleaned).split()
+    if len(cleaned) == 3:
+        mon = _MONTHS.get(cleaned[0])
+        if mon and cleaned[1].isdigit() and re.fullmatch(r"\d{4}", cleaned[2]):
+            return _mk(cleaned[2], mon, cleaned[1])
+        mon = _MONTHS.get(cleaned[1])
+        if mon and cleaned[0].isdigit() and re.fullmatch(r"\d{4}", cleaned[2]):
+            return _mk(cleaned[2], mon, cleaned[0])
+    return None
+
+
+def _is_newer_effective_date(existing_date, extracted_date) -> bool:
+    return (
+        existing_date is not None
+        and extracted_date is not None
+        and extracted_date > existing_date
+    )
+
+
+def _should_fill_effective_date(existing_date, extracted_date) -> bool:
+    return existing_date is None and extracted_date is not None
+
+
 def _content_matches(existing, rate_type, eff_date, new_components) -> bool:
+    """Same rates as the live row, for re-verify purposes.
+
+    The effective date only breaks a match when the extract carries a newer
+    date (a new rate-book edition → soft-supersede). An undated extract, an
+    older date, or a date for a row that has none all re-verify; the
+    blank-date case is then filled in place by ``store_tariffs``.
+    """
     from app.services.tariff_history import component_signature
 
     if existing.rate_type != rate_type:
         return False
-    if eff_date is not None and existing.effective_date != eff_date:
+    if _is_newer_effective_date(existing.effective_date, eff_date):
         return False
     return component_signature(existing.rate_components) == component_signature(new_components)
 
@@ -5246,8 +5325,12 @@ def store_tariffs(
     (utility, name, customer_class):
 
     - no live row → insert a new row;
-    - identical content (rate_type, effective_date, component signature)
-      → re-verify: touch ``last_verified_at`` only;
+    - identical content (rate_type, component signature, and no newer
+      effective_date) → re-verify: touch ``last_verified_at``. A blank
+      ``effective_date`` is filled from the extract (event ``metadata`` /
+      ``effective_date_fill``; a ``hold`` on protected rows); an undated or
+      older-dated extract never changes the stored date;
+    - identical rates with a newer effective_date count as changed content;
     - changed content on an unprotected row → insert a new row and
       soft-supersede the old one (reason ``refresh``). The prior components
       stay on the superseded row;
@@ -5267,7 +5350,6 @@ def store_tariffs(
         log.info(f"  DRY RUN: Would store {len(tariffs)} tariffs for utility {utility_id}")
         return len(tariffs)
 
-    from datetime import date
     from sqlalchemy import select
     from sqlalchemy.orm import Session
     from app.db.session import get_sync_engine
@@ -5314,12 +5396,12 @@ def store_tariffs(
             if not cc or not rt:
                 continue
 
-            eff_date = None
-            if et.effective_date:
-                try:
-                    eff_date = date.fromisoformat(et.effective_date)
-                except ValueError:
-                    pass
+            eff_date = _parse_effective_date(et.effective_date)
+            if et.effective_date and eff_date is None:
+                log.info(
+                    f"    Ignoring unparseable/implausible effective_date "
+                    f"{et.effective_date!r} for '{et.name}'"
+                )
 
             conf_score, conf_factors = _calculate_confidence(
                 et, u_name, u_state, u_domain,
@@ -5387,6 +5469,35 @@ def store_tariffs(
                     existing.code = existing.code or code_clipped
                     if doc_hash and existing.source_url == et.source_url:
                         existing.source_document_hash = doc_hash
+                if _should_fill_effective_date(existing.effective_date, eff_date):
+                    date_event = {
+                        "session": session,
+                        "utility_id": utility_id,
+                        "before_tariff_id": existing.id,
+                        "source_url": et.source_url,
+                        "source_document_hash": doc_hash,
+                        **event_kw,
+                    }
+                    if is_protected(existing):
+                        record_event(
+                            decision="hold",
+                            reason="protected_row",
+                            payload={"proposed": {"effective_date": eff_date.isoformat()}},
+                            **date_event,
+                        )
+                    else:
+                        existing.effective_date = eff_date
+                        record_event(
+                            decision="metadata",
+                            reason="effective_date_fill",
+                            after_tariff_id=existing.id,
+                            payload={"effective_date": {"from": None, "to": eff_date.isoformat()}},
+                            **date_event,
+                        )
+                        log.info(
+                            f"    Filled blank effective_date on '{et.name}' "
+                            f"({existing.id}) → {eff_date.isoformat()}"
+                        )
                 stored += 1
                 fresh_by_key[(et.name, cc)] = existing
                 continue

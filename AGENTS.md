@@ -6,7 +6,8 @@ comprehensive; when in doubt, prefer what is written here over older docs
 (`PROJECT_SUMMARY.md` and `TECHNICAL_REVIEW.md` predate most of the current
 refresh/quarantine/cost/model systems).
 
-_Last updated: 2026-09-26 (official vs third-party sources + Provenance, issue #28)._
+_Last updated: 2026-09-26 (official vs third-party sources + Provenance, issue #28;
+effective_date fill on re-extract match, issue #26)._
 
 ---
 
@@ -126,8 +127,8 @@ Models live in `backend/app/models/`. Key tables and columns:
 - **`rate_page_fingerprints`** (`fingerprint.py`) — content hashes per
   (utility, url) so unchanged pages can be skipped (a cheap re-verify).
 - **`tariff_change_events`** (`tariff_change_event.py`) — **append-only**
-  audit log (UPDATE/DELETE/TRUNCATE rejected by trigger): `decision`
-  (`insert` | `supersede` | `retire` | `hold` | `hard_delete`), `reason`,
+ audit log (UPDATE/DELETE/TRUNCATE rejected by trigger): `decision`
+ (`insert` | `supersede` | `retire` | `hold` | `metadata` | `hard_delete`), `reason`,
   `actor_type` (`pipeline` | `oeb` | `cleanup` | `script` | …), before/after
   tariff ids, source URL/hash, `idempotency_key`, `payload` (e.g. the
   proposal a `hold` refused). Tariff ids are plain ints (no FK). Any hard
@@ -148,7 +149,8 @@ they are the audit trail.
 is a *new* row plus a soft-supersede of the old one, so the prior components
 stay queryable. Use `app.services.tariff_history.supersede_tariff()` (sets
 the supersede columns and writes a change event) rather than assigning the
-columns by hand. Identical re-extractions only touch `last_verified_at`.
+columns by hand. Identical re-extractions only touch `last_verified_at`
+(plus filling a blank `effective_date`, see §5 Health score).
 
 **Protected rows** (`is_protected()`: `approved=True`, or
 `confidence_factors` carrying `repair` / `manual` / curated `origin`) are
@@ -326,6 +328,18 @@ tariffs score official 1.0 / unknown 0.4 / third_party 0.2, so expect a
 one-time drop versus older snapshots. Class counts and an informational
 "best residential tariff is official" utility lens are in the output. Run it
 to get the current scorecard.
+
+**Freshness has two inputs: `last_verified_at` and `effective_date`.** A
+recent `last_verified_at` with a blank `effective_date` is a recording gap to
+fix, not proof the rate is current. On a re-extract whose rates match the
+live row, `store_tariffs` fills a blank `effective_date` from the extract in
+place (change event `metadata` / `effective_date_fill`; protected rows get a
+`hold` instead). A newer extract date is a new edition (soft-supersede,
+reason `refresh`). An undated or older-dated extract never changes the stored
+date. Dates come only from the document: `_parse_effective_date` accepts
+full calendar dates and rejects partial or ambiguous ones (`May 2026`,
+`6/7/2026`) as well as implausible ones. Unchanged-fingerprint re-verifies
+skip extraction, so they cannot fill dates.
 
 ### LLM cost tracking (`scripts/llm_cost.py` + `llm_cost_report.py`)
 Per-phase, per-model USD attribution from token counts. Recorded per utility,
