@@ -88,6 +88,7 @@ async def browse_tariffs(
             Tariff.is_default,
             Tariff.effective_date,
             Tariff.last_verified_at,
+            Tariff.source_type,
             Tariff.confidence_factors,
             Utility.holiday_calendar,
             func.coalesce(component_count_sq.c.cnt, 0).label("component_count"),
@@ -230,6 +231,8 @@ async def get_tariff_source(tariff_id: int, db: AsyncSession = Depends(get_db)):
     return TariffSourceRead(
         tariff_id=tariff.id,
         source_url=tariff.source_url,
+        source_type=tariff.source_type,
+        source_type_reason=tariff.source_type_reason,
         source_document_hash=tariff.source_document_hash,
         last_verified_at=tariff.last_verified_at,
         approved=tariff.approved,
