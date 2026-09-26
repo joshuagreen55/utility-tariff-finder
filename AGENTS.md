@@ -6,7 +6,7 @@ comprehensive; when in doubt, prefer what is written here over older docs
 (`PROJECT_SUMMARY.md` and `TECHNICAL_REVIEW.md` predate most of the current
 refresh/quarantine/cost/model systems).
 
-_Last updated: 2026-09-25 (Wave 6 extract quality, issue #24)._
+_Last updated: 2026-09-26 (official vs third-party sources + Provenance, issue #28)._
 
 ---
 
@@ -55,7 +55,7 @@ backend/
     config.py         # Pydantic Settings (all env vars)
     db/session.py     # async + sync engine singletons
     main.py           # FastAPI entrypoint
-  alembic/versions/   # DB migrations (head = f3a4b5c6d7e8)
+  alembic/versions/   # DB migrations (head = a4b5c6d7e8f9)
   scripts/            # the pipeline + seeds + campaigns + audits (see §5, §6)
   tests/              # unittest suite (+ DB-backed regressions when TEST_DATABASE_URL is set)
   tests/fixtures/     # ground_truth.json (benchmark via scripts/benchmark.py)
@@ -89,10 +89,19 @@ Models live in `backend/app/models/`. Key tables and columns:
   changed the rates), `oeb_refresh`, `matcher`, `vintage`, `llm_absorb`,
   `dup_cleanup`, `dup_exact_name`, `dup_normalized`, `no_core_components`,
   `reconcile_missing` (no successor), `out_of_scope`, `manual` /
-  `manual_retire` (correction API, DELETE), `agent_verify_accept`, plus
+  `manual_retire` (correction API, DELETE), `agent_verify_accept`,
+  `source_upgrade` (same rates re-read from the utility's own document),
+  `source_repair` (`repair_hq_official_source.py`), plus
   reasons written by `quality_cleanup.py`. `source_document_hash` = sha256 of
   the source page's normalized text (`monitor.stable_text_hash`). TOU
-  schedules stored as JSONB.
+  schedules stored as JSONB. **`source_type`** (`official` | `third_party` |
+  `unknown`) + `source_type_reason`: who published `source_url` relative to
+  the utility (`app/services/source_type.py` — utility's own domain /
+  configured rate URLs / rate-publishing board → official; aggregator
+  blocklist or foreign domain → third_party; no URL, generic file host,
+  government docket copy → unknown). Stamped by an ORM flush hook on every
+  insert or `source_url` change; re-run with `scripts/backfill_source_type.py`
+  after editing a utility's website / rate URLs.
 - **`rate_components`** (`tariff.py`) — `tariff_id`, `component_type`
   (energy/demand/fixed/minimum/adjustment), `unit`, `rate_value`
   (`Numeric(16,6)`), tiering + TOU period fields. **Structured TOU/season
@@ -175,9 +184,18 @@ one Celery `process_utility` task = one `run_pipeline` call for one utility.
 | 1 | `phase1_find_rate_page` | Find the utility's rate page via Brave Search (+ domain discovery / Google CSE fallback). Hard-blocks third-party aggregators. |
 | 2 | `phase2_discover_tariff_pages` | Crawl the rate page + one/two levels of sub-pages/PDFs into `RatePage` candidates. Skips aggregator/data domains (e.g. `eia.gov`) and regulator docket filings. |
 | 3 | `phase3_extract_tariffs` | LLM structured extraction (tool-call), detail-page-first dedup, two-pass for complex pages. **3-tier model routing** (see below). |
-| 4 | `phase4_validate` + `store_tariffs` | Validate against hand-set per-state bounds (hard-reject >3× p99, flag >p95 `needs_review`), normalize units, then persist soft-supersede-only (see §3): new row on changed rates, re-verify on identical rates, hold on protected rows; soft-supersede matching OpenEI seeds / older vintages; retire (never delete) rows missing from a ≥75%-coverage extraction of the same customer class. |
+| 4 | `phase4_validate` + `store_tariffs` | Validate against hand-set per-state bounds (hard-reject >3× p99, flag >p95 `needs_review`), normalize units, then persist soft-supersede-only (see §3): new row on changed rates, re-verify on identical rates, hold on protected rows; soft-supersede matching OpenEI seeds / older vintages; retire (never delete) rows missing from a ≥75%-coverage extraction of the same customer class. Identical rates from an official doc replace a third-party row (`source_upgrade`); a third-party extraction never replaces an official row (`hold`, `source_downgrade`). |
 | 5 | `_phase5_smart_retry` | AI-guided nav fallback: load homepage, LLM picks nav links two levels deep, re-extract. |
 | 6 | `phase6_deep_research` | Gemini Deep Research (Interactions API) for the long tail. Last-resort, cost- and token-guarded. Gated by `PHASE6_ENABLED`. |
+
+**Prefer official sources.** Fetch targets (search result, alternates,
+`tariff_page_urls`, monitoring sources) are ranked official → unknown →
+third-party; an operator `rate_page_url_override` / preferred tariff book
+stays primary. `THIRD_PARTY_DOMAINS` (in `app/services/source_type.py`) is
+hard-blocked in search, crawl and Phase 6. A third-party success is never
+terminal when an official URL is known: the unchanged-fingerprint skip is
+bypassed while live rows still cite a third party. Third-party URLs are
+demoted, not deleted (they may be a utility's only source).
 
 ### Model-tier routing (Phase 3 extraction)
 `Gemini 3.8 Flash` (tier 1, cheap) → `Claude Haiku 4.5` (tier 2) → `Claude
@@ -302,7 +320,12 @@ Composite 0–100 score, weighted: Coverage 40% / Freshness 30% / Completeness
 20% / Provenance 10%. Coverage counts a utility as covered only if it has a
 **live, verified residential tariff with an energy component**. Freshness
 decays as tariffs age past 90 days (that's why the score drifts down between
-runs and recovers after them). Run it to get the current scorecard.
+runs and recovers after them). **Provenance measures source quality**, not
+URL presence (since issue #28, `provenance_method: source_type_v2`): served
+tariffs score official 1.0 / unknown 0.4 / third_party 0.2, so expect a
+one-time drop versus older snapshots. Class counts and an informational
+"best residential tariff is official" utility lens are in the output. Run it
+to get the current scorecard.
 
 ### LLM cost tracking (`scripts/llm_cost.py` + `llm_cost_report.py`)
 Per-phase, per-model USD attribution from token counts. Recorded per utility,
@@ -334,6 +357,14 @@ model change: `docs/LLM_MEASUREMENT.md`.
   most core/total components, and it never retires a protected row.
 - `repair_hydro_one_oeb_residential.py` — Hydro One RPP TOU → OEB seasonal
   clocks (`period_*` / `season_*`); optional tiered/ULO if incomplete.
+- `repair_hq_official_source.py` — Hydro-Québec (1737) residential rows
+  citing `callmepower.ca` → HQ's rate book PDF / rates page. Carries a row
+  only when every rate value and tier bound is printed in the official doc;
+  `--reextract` (LLM $) re-reads the PDF for the rest; unmatched rows stay
+  live. Soft-supersede (`source_repair`) + change event. Dry run by default:
+  `./deploy/run-on-vm.sh "python -m scripts.repair_hq_official_source" --name hq`,
+  review, then add `--apply` (needs approval, §8.3).
+- `backfill_source_type.py` — re-run the source classifier (dry run; `--apply`).
 - `seed_*.py` — `seed_eia861`, `seed_canada`, `seed_openei`, `seed_territories`, `seed_monitoring_sources`.
 - `opus_yield_probe.py` — live dry-run probe of extraction-tier yield for given utility IDs.
 - `benchmark.py` — score live tariffs vs `tests/fixtures/ground_truth.json` (flat/tiered, 15%) and
@@ -409,7 +440,7 @@ Read-only DB access from a laptop: see `docs/DATABASE_ACCESS.md` (SSH tunnel).
    VM, bulk supersede/delete, or deactivating utilities. Read-only checks
    (health score, cost report, status queries) are fine to run freely.
 4. **Migrations are additive and reversible.** New Alembic revision →
-   `down_revision` = current head (`f3a4b5c6d7e8`) → test `upgrade` and
+   `down_revision` = current head (`a4b5c6d7e8f9`) → test `upgrade` and
    `downgrade`. Never edit an applied migration.
 5. **Preserve the live/superseded invariant** (§3). Soft-supersede, don't
    delete, don't edit rate components in place. Filter to live tariffs in any
