@@ -260,57 +260,9 @@ HOMEPAGE_ONLY_PATH = re.compile(r"^/?$")
 
 # Aggregator / comparison / non-utility domains. Results from these are
 # HARD-BLOCKED in search scoring (score = -999) so the pipeline never
-# extracts tariffs from them.  Government / regulatory sites are NOT
-# included here — they can be legitimate sources.
-THIRD_PARTY_DOMAINS = frozenset({
-    # Social / directory / review
-    "wikipedia.org", "yelp.com", "yellowpages.com", "bbb.org",
-    "facebook.com", "twitter.com", "linkedin.com", "reddit.com",
-    "nextdoor.com", "glassdoor.com", "mapquest.com",
-    # News / press
-    "opb.org", "prnewswire.com", "businesswire.com", "koin.com",
-    "azfamily.com", "ecowatch.com",
-    # Rate comparison / aggregator
-    "openei.org", "utility-rates.com", "costcheckusa.com",
-    "findenergy.com", "energysage.com", "choosetexaspower.org",
-    "electricityplans.com", "saveonenergy.com", "electricrate.com",
-    "wattbuy.com", "energybot.com", "electricitylocal.com",
-    "energypal.com", "electricchoice.com", "paylesspower.com",
-    "texaselectricityratings.com", "powertochoose.org",
-    "electricityrates.com", "utilitygenius.com", "switchwise.com",
-    "energyrates.ca", "ratehub.ca", "chooseenergy.com",
-    "smartenergyusa.com", "gatby.com", "poweroutage.us",
-    "njenergyratings.com", "energypricing.com",
-    "power2switch.com", "homeotter.com", "nyenergyratings.com",
-    "texaschoicepower.com", "compareelectricity.com",
-    "electricalratesgeorgia.com", "electricityrate.com",
-    "gotelectric.com", "ratetruth.com",
-    # Added 2026-05-05 after detecting historical contamination from
-    # multi-utility aggregator pages that listed rates for several
-    # utilities side-by-side (the LLM extracted them all and our
-    # pipeline attributed every row to whichever utility we were
-    # searching for at the time). See contamination cleanup commit.
-    "comparepower.com", "ohenergyratings.com", "vaultelectricity.com",
-    "maenergyratings.com", "energysavings.com", "getcurrents.com",
-    "utilitiesformyhome.com", "uselectricgrid.com", "qmerit.com",
-    # Retail-electric-provider promotional offer sites (not the
-    # utility's own default tariff)
-    "xoomenergy.com",
-    # Added 2026-05-12 after Chunk 1 caught these polluting ComEd's
-    # tariff list with REP promotional plans and "price to compare"
-    # blurbs that aren't ComEd's own filings.
-    "ilagg.com", "ilenergyratings.com", "goananta.com",
-    # Solar / green energy marketing
-    "solar.com", "nrgcleanpower.com", "greenridgesolar.com",
-    "madison.com", "sandboxsolar.com",
-    # Government DATA aggregators (not a utility's own tariff source).
-    # Unlike a utility's .gov site (bpa.gov, tva.gov) or a state PSC, these
-    # host generic multi-utility statistics. eia.gov in particular sent the
-    # crawler into an archive of state electricity PDFs going back decades
-    # (sep2011.pdf, ...062905.pdf), burning minutes + tokens for zero rates.
-    # Added 2026-07-08.
-    "eia.gov",
-})
+# extracts tariffs from them. The set lives with the source classifier so a
+# tariff sourced from any of them is labelled ``third_party``.
+from app.services.source_type import THIRD_PARTY_DOMAINS  # noqa: E402
 
 
 def _is_third_party_domain(url: str) -> bool:
@@ -5344,6 +5296,12 @@ def store_tariffs(
     u_website = info.get("website_url", "")
     u_domain = urlparse(u_website).netloc if u_website else None
     event_kw = {"actor_type": actor_type, "actor_id": actor_id}
+    from app.services.source_type import OFFICIAL, THIRD_PARTY, classify_source
+
+    source_ctx = _source_context(info)
+
+    def _source_type(url: str | None) -> str:
+        return classify_source(url, source_ctx).source_type
 
     with Session(engine) as session:
         # (name, class) -> the live row that now represents that product
@@ -5402,7 +5360,22 @@ def store_tariffs(
                 )
             ).scalars().all())
 
-            if existing is not None and _content_matches(existing, rt, eff_date, new_components):
+            new_source_type = _source_type(et.source_url)
+            old_source_type = _source_type(existing.source_url) if existing is not None else None
+            # Same rates, but now read from the utility's own document while
+            # the live row still cites a third party: revise (new row +
+            # soft-supersede) so the provenance change is auditable.
+            content_same = existing is not None and _content_matches(
+                existing, rt, eff_date, new_components
+            )
+            source_upgrade = (
+                content_same
+                and not is_protected(existing)
+                and old_source_type == THIRD_PARTY
+                and new_source_type == OFFICIAL
+            )
+
+            if content_same and not source_upgrade:
                 existing.last_verified_at = now
                 if not is_protected(existing):
                     existing.confidence_score = conf_score
@@ -5453,6 +5426,34 @@ def store_tariffs(
                     f"    HOLD '{et.name}': live row {existing.id} is protected "
                     f"(approved/repair/manual) and the extraction differs — "
                     f"proposal logged, live row unchanged"
+                )
+                held += 1
+                fresh_by_key[(et.name, cc)] = existing
+                continue
+
+            if old_source_type == OFFICIAL and new_source_type == THIRD_PARTY:
+                record_event(
+                    session,
+                    decision="hold",
+                    reason="source_downgrade",
+                    utility_id=utility_id,
+                    before_tariff_id=existing.id,
+                    source_url=et.source_url,
+                    source_document_hash=doc_hash,
+                    payload={
+                        "proposed": {
+                            "name": et.name,
+                            "rate_type": rt.value,
+                            "effective_date": eff_date.isoformat() if eff_date else None,
+                            "components": serialize_components(new_components),
+                        },
+                        "live_source_url": existing.source_url,
+                    },
+                    **event_kw,
+                )
+                log.warning(
+                    f"    HOLD '{et.name}': live row {existing.id} cites the utility's own "
+                    f"document; a third-party extraction ({et.source_url[:60]}) may not replace it"
                 )
                 held += 1
                 fresh_by_key[(et.name, cc)] = existing
@@ -5522,13 +5523,17 @@ def store_tariffs(
                 supersede_tariff(
                     session, existing,
                     successor=tariff_obj,
-                    reason="refresh",
+                    reason="source_upgrade" if source_upgrade else "refresh",
                     source_url=et.source_url,
                     **event_kw,
                 )
                 log.info(
                     f"    Revised '{et.name}': {existing.id} → {tariff_obj.id} "
-                    f"(soft supersede, prior components retained)"
+                    + (
+                        "(same rates, third-party → official source)"
+                        if source_upgrade
+                        else "(soft supersede, prior components retained)"
+                    )
                 )
             stored += 1
             fresh_by_key[(et.name, cc)] = tariff_obj
@@ -5699,12 +5704,17 @@ def update_monitoring_source(utility_id: int, rate_page_url: str, dry_run: bool)
     if dry_run:
         log.info(f"  DRY RUN: Would update monitoring source for utility {utility_id}")
         return
+    if not rate_page_url:
+        return
 
     from sqlalchemy import select
     from sqlalchemy.orm import Session
     from app.db.session import get_sync_engine
     from app.models.monitoring import MonitoringSource, MonitoringStatus
+    from app.services.source_type import classify_source, source_rank
 
+    ctx = _source_context(get_utility_info(utility_id))
+    new_rank = source_rank(classify_source(rate_page_url, ctx).source_type)
     engine = get_sync_engine()
     with Session(engine) as session:
         stmt = (
@@ -5714,7 +5724,12 @@ def update_monitoring_source(utility_id: int, rate_page_url: str, dry_run: bool)
             .limit(1)
         )
         source = session.execute(stmt).scalar_one_or_none()
-        if source:
+        if source and new_rank > source_rank(classify_source(source.url, ctx).source_type):
+            log.info(
+                f"  Kept monitoring source {source.id} on {source.url[:80]} "
+                f"(more official than {rate_page_url[:80]})"
+            )
+        elif source:
             source.url = rate_page_url
             session.commit()
             log.info(f"  Updated monitoring source {source.id} → {rate_page_url[:80]}")
@@ -5729,7 +5744,7 @@ def get_utility_info(utility_id: int) -> dict:
     from sqlalchemy import select
     from sqlalchemy.orm import Session
     from app.db.session import get_sync_engine
-    from app.models import Utility
+    from app.models import MonitoringSource, MonitoringStatus, Utility
 
     engine = get_sync_engine()
     with Session(engine) as session:
@@ -5738,6 +5753,12 @@ def get_utility_info(utility_id: int) -> dict:
         ).scalar_one_or_none()
         if not u:
             return {"id": utility_id, "name": f"Utility #{utility_id}"}
+        monitored = session.execute(
+            select(MonitoringSource.url)
+            .where(MonitoringSource.utility_id == utility_id)
+            .where(MonitoringSource.status != MonitoringStatus.ERROR)
+            .order_by(MonitoringSource.id)
+        ).scalars().all()
         return {
             "id": u.id,
             "name": u.name,
@@ -5745,7 +5766,87 @@ def get_utility_info(utility_id: int) -> dict:
             "country": u.country.value if u.country else "",
             "website_url": u.website_url,
             "rate_page_url_override": getattr(u, "rate_page_url_override", None),
+            "tariff_page_urls": u.tariff_page_urls,
+            "monitoring_urls": [m for m in monitored if m],
         }
+
+
+def _source_context(info: dict):
+    """Classifier context (official hosts) for a ``get_utility_info`` dict."""
+    from app.services.source_type import UtilitySourceContext, configured_urls
+
+    return UtilitySourceContext(
+        website_url=info.get("website_url"),
+        official_urls=configured_urls(info.get("tariff_page_urls"), info.get("rate_page_url_override")),
+        country=info.get("country"),
+        state_province=info.get("state"),
+    )
+
+
+def _known_rate_urls(info: dict) -> list[str]:
+    """Rate URLs already on file for the utility: configured, then monitored."""
+    from app.services.source_type import configured_urls
+
+    return list(dict.fromkeys([
+        *configured_urls(info.get("tariff_page_urls")),
+        *(info.get("monitoring_urls") or []),
+    ]))
+
+
+def prefer_official_targets(
+    primary: str,
+    alts: list[str],
+    known_urls: list[str],
+    ctx,
+    *,
+    locked: bool = False,
+) -> tuple[str, list[str]]:
+    """Order fetch targets official → unknown → third-party.
+
+    When the primary is not official (or missing) and an official candidate
+    is known, the official one becomes primary and the old primary is
+    demoted into the alternates. An operator override / preferred tariff
+    book (``locked``) stays primary. Nothing is dropped: a third-party URL
+    that is the only candidate is still tried.
+    """
+    from app.services.source_type import OFFICIAL, classify_source, rank_urls
+
+    pool = rank_urls([u for u in [*alts, *known_urls] if u and u != primary], ctx)
+    if locked:
+        return primary, pool
+
+    def _is_official(u: str) -> bool:
+        return classify_source(u, ctx).source_type == OFFICIAL
+
+    if pool and _is_official(pool[0]) and (not primary or not _is_official(primary)):
+        new_primary = pool.pop(0)
+        if primary:
+            log.info(f"  Preferring official URL {new_primary[:80]} over {primary[:80]}")
+            pool = rank_urls([primary, *pool], ctx)
+        return new_primary, pool
+    return primary, pool
+
+
+def _third_party_upgrade_pending(utility_id: int, pages: list, ctx) -> bool:
+    """Live tariffs still sourced from a third party while this run reached an
+    official page — worth extracting even if the page fingerprint is unchanged."""
+    from sqlalchemy import select
+    from sqlalchemy.orm import Session
+    from app.db.session import get_sync_engine
+    from app.models import Tariff
+    from app.services.source_type import OFFICIAL, THIRD_PARTY, classify_source
+
+    if not any(classify_source(p.url, ctx).source_type == OFFICIAL for p in pages or []):
+        return False
+    with Session(get_sync_engine()) as session:
+        urls = session.execute(
+            select(Tariff.source_url).where(
+                Tariff.utility_id == utility_id,
+                Tariff.superseded_by_tariff_id.is_(None),
+                Tariff.supersede_reason.is_(None),
+            )
+        ).scalars().all()
+    return any(classify_source(u, ctx).source_type == THIRD_PARTY for u in urls)
 
 
 CENTRALIZED_PROVINCES = {"ON"}
@@ -7090,13 +7191,18 @@ def _phase6_parse_tariffs(report_text: str, fallback_source: str) -> list[Extrac
         except (TypeError, ValueError):
             confidence = 0.7
 
+        source_url = str(item.get("source_url") or fallback_source or "").strip()
+        if source_url and _is_third_party_domain(source_url):
+            log.info(f"    Phase 6: dropping '{name}' (third-party source {source_url[:60]})")
+            continue
+
         tariffs.append(ExtractedTariff(
             name=name,
             code=str(item.get("code") or "").strip(),
             customer_class=cclass,
             rate_type=str(item.get("rate_type") or "").strip().lower(),
             description=f"Phase 6 Deep Research (item {idx})",
-            source_url=str(item.get("source_url") or fallback_source or "").strip(),
+            source_url=source_url,
             effective_date=str(item.get("effective_date") or "").strip() or "",
             components=components,
             confidence=max(0.0, min(1.0, confidence)),
@@ -7435,6 +7541,16 @@ def run_pipeline(
     else:
         result.phase1_rate_page_url = rate_page_url
 
+    source_ctx = _source_context(info)
+    rate_page_url, alt_urls = prefer_official_targets(
+        rate_page_url,
+        alt_urls,
+        _known_rate_urls(info),
+        source_ctx,
+        locked=bool(rate_page_url_override or preferred_primary),
+    )
+    result.phase1_rate_page_url = rate_page_url or result.phase1_rate_page_url
+
     if not rate_page_url:
         log.warning("  No rate page found — trying AI-guided navigation")
         if website_url:
@@ -7524,26 +7640,34 @@ def run_pipeline(
     }
 
     def _pick_next_alt() -> str | None:
-        # Prefer alternates on a DIFFERENT domain than any we've already tried.
+        from app.services.source_type import classify_source, source_rank
+
+        # Official alternates before unknown before third-party; within a
+        # class, prefer a DIFFERENT domain than any we've already tried.
         # When our initial pick was on a wrong-utility look-alike domain (e.g.
         # lynchesriver.com when the real coop is at lreci.coop), jumping
         # straight to a fresh domain is the fastest path to success.
-        for alt in remaining_alts:
-            alt_prefix = _path_prefix(alt)
-            alt_dom = _alt_domain(alt)
-            if alt_prefix not in tried_prefixes and alt_dom not in tried_domains:
-                log.warning(
-                    f"  Retrying with different-domain URL: {alt[:70]}"
-                )
-                remaining_alts.remove(alt)
-                return alt
-        # Fall back to same-domain different-section alternates.
-        for alt in remaining_alts:
-            alt_prefix = _path_prefix(alt)
-            if alt_prefix not in tried_prefixes:
-                log.warning(f"  Retrying with different site section: {alt[:70]}")
-                remaining_alts.remove(alt)
-                return alt
+        for rank in sorted({source_rank(classify_source(a, source_ctx).source_type) for a in remaining_alts}):
+            tier = [
+                a for a in remaining_alts
+                if source_rank(classify_source(a, source_ctx).source_type) == rank
+            ]
+            for alt in tier:
+                alt_prefix = _path_prefix(alt)
+                alt_dom = _alt_domain(alt)
+                if alt_prefix not in tried_prefixes and alt_dom not in tried_domains:
+                    log.warning(
+                        f"  Retrying with different-domain URL: {alt[:70]}"
+                    )
+                    remaining_alts.remove(alt)
+                    return alt
+            # Fall back to same-domain different-section alternates.
+            for alt in tier:
+                alt_prefix = _path_prefix(alt)
+                if alt_prefix not in tried_prefixes:
+                    log.warning(f"  Retrying with different site section: {alt[:70]}")
+                    remaining_alts.remove(alt)
+                    return alt
         return None
 
     def _merge_stats(src: dict):
@@ -7587,7 +7711,12 @@ def run_pipeline(
             continue
 
         # Incremental check: skip LLM extraction if page content unchanged
-        if not force_extract and not dry_run and _check_fingerprints(utility_id, pages):
+        if (
+            not force_extract
+            and not dry_run
+            and _check_fingerprints(utility_id, pages)
+            and not _third_party_upgrade_pending(utility_id, pages, source_ctx)
+        ):
             _touch_fingerprints(utility_id, pages)
             _touch_tariff_verified(utility_id)
             result.phase3_tariffs = []

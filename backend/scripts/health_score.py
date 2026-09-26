@@ -19,12 +19,34 @@ Composite Health Score = weighted blend:
     40%  Coverage (type-weighted)
     30%  Freshness
     20%  Completeness (has energy + fixed charge + effective date)
-    10%  Provenance (has a source URL)
+    10%  Provenance (source quality: official / unknown / third-party)
+
+PROVENANCE BEHAVIOUR CHANGE (2026-09, issue #28 — "provenance_method":
+"source_type_v2" in the JSON). Provenance used to be "served tariff has a
+non-null source_url", which sat at ~100 while live rows cited rate blogs.
+It now scores each served tariff by ``tariffs.source_type``
+(app/services/source_type.py):
+
+    official     1.0   utility's own site / documents (or the board that
+                       publishes the rate, e.g. OEB for Ontario)
+    unknown      0.4   no URL, generic file host, government docket copy,
+                       or no official host on file to compare against
+    third_party  0.2   aggregator / rate blog / a host that differs from
+                       every official host for the utility
+
+Expect a one-time Provenance drop (at most -8 composite points, if every
+row were third-party) on the first run after the deploy; it is a change of yardstick,
+not a data regression. Snapshots before the change have no
+"provenance_method" key. The composite weights are unchanged, and the
+old "has_source_url" count is still reported. Unknown is 0.4 rather than
+0.0 so a missing/unclassifiable URL is scored above a known blog copy.
 
 Also reported, but NOT in the composite (so the score stays comparable with
 its history): the COMPUTABLE lens — live, verified residential tariffs that
 satisfy the computable contract (app/services/computable.py), and how many
 active utilities have at least one. That is the bar for Mysa cost/TOU use.
+And the OFFICIAL-SOURCE lens — how many active utilities' best live, verified
+residential tariff cites an official source.
 
 The score is deterministic and re-runnable. Pass --snapshot to append a
 JSON line to logs/health_score_history.jsonl so you can chart the trend
@@ -56,6 +78,26 @@ COMPOSITE_WEIGHTS = {
     "completeness": 0.20,
     "provenance": 0.10,
 }
+
+# Provenance credit per served tariff by tariffs.source_type.
+PROVENANCE_WEIGHTS = {
+    "official": 1.0,
+    "unknown": 0.4,
+    "third_party": 0.2,
+}
+PROVENANCE_METHOD = "source_type_v2"
+
+
+def provenance_score(counts: dict[str, int]) -> float:
+    """0-100 Provenance from source_type counts; unrecognized types score as unknown."""
+    total = sum(counts.values())
+    if not total:
+        return 0.0
+    points = sum(
+        PROVENANCE_WEIGHTS.get(st, PROVENANCE_WEIGHTS["unknown"]) * n
+        for st, n in counts.items()
+    )
+    return 100.0 * points / total
 
 # Relative importance of a utility by type (proxy for customers served, since
 # we don't store customer counts). Used for the type-weighted coverage score.
@@ -142,6 +184,7 @@ WITH pt AS (
     SELECT t.id,
            t.last_verified_at,
            t.source_url,
+           t.source_type,
            t.effective_date,
            t.openei_id,
            bool_or(lower(rc.component_type::text) = 'energy')             AS has_energy,
@@ -170,8 +213,37 @@ SELECT
     COUNT(*) FILTER (WHERE has_energy)                              AS has_energy_n,
     COUNT(*) FILTER (WHERE has_fixed)                               AS has_fixed_n,
     COUNT(*) FILTER (WHERE effective_date IS NOT NULL)             AS has_eff_n,
-    COUNT(*) FILTER (WHERE source_url IS NOT NULL)                 AS has_source_n
+    COUNT(*) FILTER (WHERE source_url IS NOT NULL)                 AS has_source_n,
+    -- provenance classes (tariffs.source_type)
+    COUNT(*) FILTER (WHERE source_type = 'official')               AS src_official_n,
+    COUNT(*) FILTER (WHERE source_type = 'third_party')            AS src_third_party_n,
+    COUNT(*) FILTER (WHERE source_type NOT IN ('official', 'third_party')) AS src_unknown_n
 FROM pt
+""")
+
+# Best live, verified residential source per active utility
+# (official > unknown > third_party).
+OFFICIAL_LENS_SQL = text("""
+WITH best AS (
+    SELECT t.utility_id,
+           MIN(CASE t.source_type WHEN 'official' THEN 0
+                                  WHEN 'third_party' THEN 2
+                                  ELSE 1 END) AS best_rank
+    FROM tariffs t
+    JOIN utilities u ON u.id = t.utility_id
+    WHERE u.is_active
+      AND lower(t.customer_class::text) = 'residential'
+      AND t.last_verified_at IS NOT NULL
+      AND t.superseded_by_tariff_id IS NULL
+      AND t.supersede_reason IS NULL
+    GROUP BY t.utility_id
+)
+SELECT
+    COUNT(*)                                  AS utilities_with_residential,
+    COUNT(*) FILTER (WHERE best_rank = 0)     AS best_official,
+    COUNT(*) FILTER (WHERE best_rank = 1)     AS best_unknown,
+    COUNT(*) FILTER (WHERE best_rank = 2)     AS best_third_party
+FROM best
 """)
 
 FRESHNESS_BUCKETS_SQL = text("""
@@ -273,7 +345,12 @@ def compute(session: Session) -> dict:
     completeness = 100.0 * (
         0.5 * q.has_energy_n + 0.25 * q.has_fixed_n + 0.25 * q.has_eff_n
     ) / served
-    provenance = 100.0 * q.has_source_n / served
+    source_type_counts = {
+        "official": q.src_official_n or 0,
+        "unknown": q.src_unknown_n or 0,
+        "third_party": q.src_third_party_n or 0,
+    }
+    provenance = provenance_score(source_type_counts)
 
     # ---- Composite ----
     composite = (
@@ -285,6 +362,7 @@ def compute(session: Session) -> dict:
 
     fb = session.execute(FRESHNESS_BUCKETS_SQL).first()
     mon = session.execute(MONITORING_SQL).first()
+    ol = session.execute(OFFICIAL_LENS_SQL).first()
 
     return {
         "generated_at": datetime.now(timezone.utc).isoformat(),
@@ -311,6 +389,22 @@ def compute(session: Session) -> dict:
             "has_fixed_charge": q.has_fixed_n,
             "has_effective_date": q.has_eff_n,
             "has_source_url": q.has_source_n,
+            "source_type_counts": source_type_counts,
+        },
+        "provenance_method": PROVENANCE_METHOD,
+        "provenance": {
+            "method": PROVENANCE_METHOD,
+            "weights": dict(PROVENANCE_WEIGHTS),
+            "source_type_counts": source_type_counts,
+        },
+        "official_source": {
+            "utilities_with_verified_residential": ol.utilities_with_residential,
+            "best_residential_official": ol.best_official,
+            "best_residential_unknown": ol.best_unknown,
+            "best_residential_third_party_only": ol.best_third_party,
+            "pct_active_utilities_official": round(
+                100.0 * ol.best_official / max(total_utils, 1), 1
+            ),
         },
         "freshness_buckets": {
             "<=90d": fb.d90,
@@ -363,6 +457,24 @@ def print_scorecard(r: dict) -> None:
     print(f"    has fixed/customer chg:  {q['has_fixed_charge']:,}  ({100*q['has_fixed_charge']/served:.0f}%)")
     print(f"    has effective date:      {q['has_effective_date']:,}  ({100*q['has_effective_date']/served:.0f}%)")
     print(f"    has source URL:          {q['has_source_url']:,}  ({100*q['has_source_url']/served:.0f}%)")
+    print()
+
+    sc = q["source_type_counts"]
+    print(f"  PROVENANCE (source quality, method {r['provenance_method']})")
+    for st in ("official", "unknown", "third_party"):
+        print(
+            f"    {st:<12} ×{PROVENANCE_WEIGHTS[st]:.1f}  {sc[st]:>8,}  "
+            f"({100*sc[st]/served:.0f}%)"
+        )
+    o = r["official_source"]
+    print(
+        f"    {o['best_residential_official']:,} / {r['coverage']['active_utilities']:,} active utilities "
+        f"({o['pct_active_utilities_official']:.1f}%) have an official-sourced verified residential tariff"
+    )
+    print(
+        f"    ({o['best_residential_third_party_only']:,} third-party only, "
+        f"{o['best_residential_unknown']:,} best is unknown)"
+    )
     print()
 
     fb = r["freshness_buckets"]

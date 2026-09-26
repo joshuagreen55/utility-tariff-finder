@@ -86,11 +86,15 @@ export interface Tariff {
   approved: boolean;
   last_verified_at: string | null;
   data_freshness: "current" | "aging" | "stale";
+  source_type: TariffSourceType;
 }
+
+export type TariffSourceType = "official" | "third_party" | "unknown";
 
 export interface TariffDetail extends Tariff {
   description: string | null;
   source_url: string | null;
+  source_type_reason: string | null;
   rate_components: RateComponent[];
   energy_schedule_weekday: number[][] | null;
   energy_schedule_weekend: number[][] | null;
@@ -112,6 +116,7 @@ export interface TariffBrowseItem {
   effective_date: string | null;
   component_count: number;
   data_freshness: "current" | "aging" | "stale";
+  source_type: TariffSourceType;
 }
 
 export interface TariffBrowseResponse {

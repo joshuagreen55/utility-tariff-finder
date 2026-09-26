@@ -16,6 +16,7 @@ Every tariff returned by `GET /api/utilities/{id}/tariffs`,
 | `computable_reasons` | Why not (empty when computable). Each entry is `code` or `code:detail`; match on the part before `:`. **Treat an unknown code as blocking.** |
 | `computable_warnings` | Assumptions you must honour even when computable (§4). |
 | `needs_review` | The pipeline flagged the values (above p95, unit auto-corrected, incomplete TOU/season shape). Prices may still be usable; show with caution. |
+| `source_type` | `official` (utility's own site / documents, or the board that publishes the rate), `third_party` (aggregator / rate blog / foreign domain) or `unknown`. Informational; prefer `official` rows when a utility has alternatives. |
 
 `GET /api/lookup` adds `computable_residential_tariff_count`, `timezone`
 and `currency` per matched utility.

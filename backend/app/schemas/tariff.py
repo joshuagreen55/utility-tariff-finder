@@ -97,6 +97,8 @@ class TariffListRead(_ComputableContract):
     approved: bool
     last_verified_at: datetime | None = None
     data_freshness: str = "stale"
+    # official | third_party | unknown (app/services/source_type.py)
+    source_type: str = "unknown"
 
     model_config = {"from_attributes": True}
 
@@ -109,6 +111,7 @@ class TariffListRead(_ComputableContract):
 class TariffDetailRead(TariffListRead):
     description: str | None = None
     source_url: str | None = None
+    source_type_reason: str | None = None
     # TOU clock windows are local wall-clock time at the service address.
     # ``timezone`` is the utility fallback (None in multi-zone jurisdictions).
     clock_basis: str = "local_wall_clock"
@@ -141,6 +144,7 @@ class TariffBrowseRead(_ComputableContract):
     is_default: bool
     effective_date: date | None = None
     last_verified_at: datetime | None = None
+    source_type: str = "unknown"
     component_count: int = 0
     data_freshness: str = "stale"
 
@@ -162,6 +166,8 @@ class TariffBrowseResponse(BaseModel):
 class TariffSourceRead(BaseModel):
     tariff_id: int
     source_url: str | None = None
+    source_type: str = "unknown"
+    source_type_reason: str | None = None
     source_document_hash: str | None = None
     last_verified_at: datetime | None = None
     approved: bool
