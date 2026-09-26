@@ -7,7 +7,8 @@ comprehensive; when in doubt, prefer what is written here over older docs
 refresh/quarantine/cost/model systems).
 
 _Last updated: 2026-09-26 (official vs third-party sources + Provenance, issue #28;
-effective_date fill on re-extract match, issue #26)._
+effective_date fill on re-extract match, issue #26; website_url backfill +
+reclassify tooling, issue #30)._
 
 ---
 
@@ -101,8 +102,9 @@ Models live in `backend/app/models/`. Key tables and columns:
   configured rate URLs / rate-publishing board → official; aggregator
   blocklist or foreign domain → third_party; no URL, generic file host,
   government docket copy → unknown). Stamped by an ORM flush hook on every
-  insert or `source_url` change; re-run with `scripts/backfill_source_type.py`
-  after editing a utility's website / rate URLs.
+ insert or `source_url` change; re-run with `scripts/backfill_source_type.py`
+ after editing a utility's website / rate URLs (`scripts/backfill_website_url.py`
+ fills blank websites and reclassifies in one step, §6).
 - **`rate_components`** (`tariff.py`) — `tariff_id`, `component_type`
   (energy/demand/fixed/minimum/adjustment), `unit`, `rate_value`
   (`Numeric(16,6)`), tiering + TOU period fields. **Structured TOU/season
@@ -379,6 +381,25 @@ model change: `docs/LLM_MEASUREMENT.md`.
   `./deploy/run-on-vm.sh "python -m scripts.repair_hq_official_source" --name hq`,
   review, then add `--apply` (needs approval, §8.3).
 - `backfill_source_type.py` — re-run the source classifier (dry run; `--apply`).
+- `backfill_website_url.py` — issue #30: most `unknown` tariffs are
+ `no_official_host` because `utilities.website_url` is blank. Audits active
+ utilities with a blank website, infers one from the majority registrable
+ domain of their live verified residential `source_url`s (blocklist,
+ generic hosts and regulator publishers excluded; thin / split / government
+ / shared-domain candidates go to `review`), and prints counts, samples and
+ the projected `source_type` shift. `--export-csv` → edit → `--csv` feeds
+ reviewed rows back. `--apply` writes only still-blank `website_url`
+ (`--force` also replaces a differing one) and then runs
+ `reclassify_tariffs` for those utilities — `source_type` /
+ `source_type_reason` only, never rates — logging old → new to
+ `logs/website_url_backfill.jsonl`. Dry run by default:
+ `./deploy/run-on-vm.sh "python -m scripts.backfill_website_url --samples 50" --name web`.
+ **Production `--apply` needs approval (§8.3) and runs between freshness
+ batches or after the campaign**, not mid-chord. Workers read
+ `website_url` per task, so it needs no worker restart; don't restart
+ workers mid-chord for it. Filled websites also steer pipeline Phase 1 /
+ Phase 5 search, and tariffs from a foreign domain become `third_party`
+ (`domain_mismatch`) — check both in the dry-run output.
 - `seed_*.py` — `seed_eia861`, `seed_canada`, `seed_openei`, `seed_territories`, `seed_monitoring_sources`.
 - `opus_yield_probe.py` — live dry-run probe of extraction-tier yield for given utility IDs.
 - `benchmark.py` — score live tariffs vs `tests/fixtures/ground_truth.json` (flat/tiered, 15%) and
