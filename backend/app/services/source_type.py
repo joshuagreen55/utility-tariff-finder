@@ -224,6 +224,22 @@ def _is_government_host(host: str) -> bool:
     return False
 
 
+def is_generic_host(url_or_host: str | None) -> bool:
+    host = normalize_host(url_or_host)
+    return bool(host) and _is_generic_host(host)
+
+
+def is_government_host(url_or_host: str | None) -> bool:
+    host = normalize_host(url_or_host)
+    return bool(host) and _is_government_host(host)
+
+
+def is_regulator_publisher_host(url_or_host: str | None) -> bool:
+    """Host of a board on ``REGULATOR_PUBLISHERS`` (any jurisdiction)."""
+    host = normalize_host(url_or_host)
+    return bool(host) and any(_host_in(host, doms) for doms in REGULATOR_PUBLISHERS.values())
+
+
 def configured_urls(tariff_page_urls: Any, rate_page_url_override: str | None = None) -> tuple[str, ...]:
     """Flatten ``utilities.tariff_page_urls`` (list or dict JSONB) + override."""
     out: list[str] = []
