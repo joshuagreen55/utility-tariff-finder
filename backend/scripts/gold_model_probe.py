@@ -1,15 +1,16 @@
 """Live model A/B on the TOU / seasonal gold set (dry-run: no DB reads or writes).
 
 Fetches each gold utility's source document(s), runs Phase 3 extraction with
-whatever models the env selects (``GEMINI_MODEL`` / ``HAIKU_MODEL`` /
-``OPUS_MODEL``) and Phase 4 validation, then scores the result against the
-gold with the benchmark's strict comparison, the failure taxonomy and the
-computable contract, and prices the calls with ``llm_cost``. Every config
-reads the same documents, so two runs are a fair before/after.
+whatever models the env selects (``GEMINI_MODEL`` / ``CLAUDE_MODEL`` /
+``HAIKU_MODEL`` / ``SONNET_MODEL`` — one Claude scrape tier) and Phase 4
+validation, then scores the result against the gold with the benchmark's
+strict comparison, the failure taxonomy and the computable contract, and
+prices the calls with ``llm_cost``. Every config reads the same documents,
+so two runs are a fair before/after.
 
     cd backend   # on the VM: inside the api container
     python -m scripts.gold_model_probe --no-cache --output /tmp/gold_base.json
-    HAIKU_MODEL=claude-sonnet-5 OPUS_MODEL=claude-opus-5-5 \\
+    CLAUDE_MODEL=claude-sonnet-5-5 \\
         python -m scripts.gold_model_probe --no-cache --output /tmp/gold_cand.json
     python -m scripts.gold_model_probe --compare /tmp/gold_base.json /tmp/gold_cand.json
 
@@ -181,8 +182,12 @@ def main(argv: list[str] | None = None) -> int:
         name, _, url = spec.partition("=")
         extra.setdefault(name.strip(), []).append(url.strip())
 
-    models = {"gemini": tp.GEMINI_MODEL, "haiku": tp.HAIKU_MODEL, "opus": tp.OPUS_MODEL,
-              "opus_max_per_utility": tp.OPUS_MAX_PER_UTILITY}
+    models = {
+        "gemini": tp.GEMINI_MODEL,
+        "claude": tp.CLAUDE_MODEL,
+        "haiku": tp.HAIKU_MODEL,  # alias of claude
+        "opus": tp.OPUS_MODEL,    # defaults to same Claude model; not a scrape tier
+    }
     with tempfile.TemporaryDirectory() as tmp, \
             mock.patch.object(tp, "LLM_CACHE_DIR", tmp if args.no_cache else tp.LLM_CACHE_DIR):
         results, skipped = [], []

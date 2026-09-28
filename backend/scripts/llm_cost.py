@@ -3,7 +3,7 @@
 Goal: turn the opaque "LLM line item" on the cloud bill into an attributable
 breakdown — how much each pipeline phase (Phase 3 extraction, Phase 5
 navigation, Phase 6 Deep Research, Track B absorption) and each model
-(Gemini Flash, Claude Haiku, Claude Opus) actually costs per utility and
+(Gemini Flash, Claude Sonnet / Haiku / Opus) actually costs per utility and
 per refresh run.
 
 Design
@@ -51,7 +51,9 @@ log = logging.getLogger(__name__)
 # gemini -> Gemini 3.8 Flash intro ($0.75/$3.75 through 2026-12-31, then
 # $1.50/$7.50). Updated 2026-09-25 from docs.claude.com pricing: Sonnet 5
 # $2/$10 (the intro price is now standard), Opus 5.5 $4/$20 with cache hits
-# at 0.05x input.
+# at 0.05x input. Updated 2026-09-28: scrape ladder defaults to Sonnet 5.5
+# ($2/$10, cache read $0.20) — same list price as Sonnet 5; priced by
+# concrete model id when a prefix row exists, else by family.
 #
 # Keys are rollup families (``model_key``) or concrete model-id prefixes.
 # A call is priced by the longest id-prefix key matching its model, else by
@@ -59,6 +61,7 @@ log = logging.getLogger(__name__)
 DEFAULT_PRICING: dict[str, dict[str, float]] = {
     "haiku":     {"in": 1.00,  "out": 5.00,  "cache_read": 0.10, "cache_write": 1.25},
     "sonnet":    {"in": 2.00,  "out": 10.00, "cache_read": 0.20, "cache_write": 2.50},
+    "claude-sonnet-5-5": {"in": 2.00, "out": 10.00, "cache_read": 0.20, "cache_write": 2.50},
     "opus":      {"in": 5.00,  "out": 25.00, "cache_read": 0.50, "cache_write": 6.25},
     "claude-opus-5-5": {"in": 4.00, "out": 20.00, "cache_read": 0.20, "cache_write": 5.00},
     "gemini":    {"in": 0.75,  "out": 3.75,  "cache_read": 0.075, "cache_write": 0.0},

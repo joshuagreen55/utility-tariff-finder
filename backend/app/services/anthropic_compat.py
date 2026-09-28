@@ -2,15 +2,18 @@
 
 Every call site in this repo was written for Haiku 4.5 / pre-4.7 behaviour:
 forced ``tool_choice`` and ``resp.content[0].text``. Newer models differ
-(per docs.claude.com "Thinking", checked 2026-09-25):
+(per docs.claude.com "Thinking" / Sonnet 5.5 migration guide, checked
+2026-09-28):
 
-- Opus 4.7+, Opus 5, Opus 5.5, Sonnet 5, Fable, Mythos: thinking is on by
-  default, thinking tokens count against ``max_tokens``, the first content
-  block can be a thinking block, and non-default ``temperature`` / ``top_p``
-  / ``top_k`` return 400 on every request.
-- Opus 5.5, Fable 5.1, Mythos 5.1: forced tool use (``tool_choice`` type
-  ``tool`` / ``any``) returns 400 on every request; ``auto`` is required.
+- Opus 4.7+, Opus 5, Opus 5.5, Sonnet 5, Sonnet 5.5, Fable, Mythos: thinking
+  is on by default, thinking tokens count against ``max_tokens``, the first
+  content block can be a thinking block, and non-default ``temperature`` /
+  ``top_p`` / ``top_k`` return 400 on every request.
+- Opus 5.5, Sonnet 5.5, Fable 5.1, Mythos 5.1: forced tool use
+  (``tool_choice`` type ``tool`` / ``any``) returns 400; ``auto`` is required.
 - Opus 5.5, Fable, Mythos: ``thinking: {"type": "disabled"}`` returns 400.
+- Sonnet 5.5: ``disabled`` also 400s; use ``between_tools`` instead (lowest
+  thinking mode). Adaptive thinking remains the default when unset.
 
 ``adapt_request`` rewrites a request body (SDK kwargs or raw HTTP JSON, same
 keys) so it is valid for its model; ``create`` / ``post`` also retry once on
@@ -19,8 +22,8 @@ know yet degrades instead of failing open to "0 tariffs".
 
 Env knobs (all optional):
 - ``ANTHROPIC_THINKING``: ``disabled`` turns thinking off where the model
-  allows it (Sonnet 5, Opus 5); ``adaptive`` asks for it explicitly.
-  Unset keeps the model default.
+  allows it (Sonnet 5 / Opus 5 → ``disabled``; Sonnet 5.5 → ``between_tools``);
+  ``adaptive`` asks for it explicitly. Unset keeps the model default.
 - ``ANTHROPIC_EFFORT``: ``output_config.effort`` for thinking models.
 - ``ANTHROPIC_THINKING_MIN_MAX_TOKENS`` (default 16000): ``max_tokens``
   floor while thinking is on, so reasoning cannot crowd out the tool call.
@@ -36,9 +39,12 @@ from typing import Any, Callable
 log = logging.getLogger(__name__)
 
 _THINKING_DEFAULT_ON = re.compile(r"claude-(?:opus-(?:4-7|4-8|5)|sonnet-5|fable|mythos)", re.I)
-_FORCED_TOOL_REJECTED = re.compile(r"claude-(?:opus-5-5|fable-5-1|mythos-5-1)", re.I)
-_THINKING_DISABLE_REJECTED = re.compile(r"claude-(?:opus-5-5|fable|mythos)", re.I)
+_FORCED_TOOL_REJECTED = re.compile(r"claude-(?:opus-5-5|sonnet-5-5|fable-5-1|mythos-5-1)", re.I)
+_THINKING_DISABLE_REJECTED = re.compile(r"claude-(?:opus-5-5|sonnet-5-5|fable|mythos)", re.I)
+# Sonnet 5.5 rejects ``disabled``; lowest mode is ``between_tools``.
+_BETWEEN_TOOLS_THINKING = re.compile(r"claude-sonnet-5-5", re.I)
 _SAMPLING_KEYS = ("temperature", "top_p", "top_k")
+_THINKING_OFF_TYPES = frozenset({"disabled", "between_tools"})
 
 
 def thinking_default_on(model: str) -> bool:
@@ -50,7 +56,13 @@ def forced_tool_rejected(model: str) -> bool:
 
 
 def thinking_disable_allowed(model: str) -> bool:
+    """True when ``thinking: {type: disabled}`` is accepted."""
     return thinking_default_on(model) and not _THINKING_DISABLE_REJECTED.search(model or "")
+
+
+def thinking_between_tools_allowed(model: str) -> bool:
+    """True when lowest thinking mode is ``between_tools`` (Sonnet 5.5)."""
+    return bool(_BETWEEN_TOOLS_THINKING.search(model or ""))
 
 
 def _min_max_tokens() -> int:
@@ -91,7 +103,7 @@ def _thinking_mode(body: dict) -> str:
         thinking = (body.get("extra_body") or {}).get("thinking")
     if thinking is None:
         return "on" if thinking_default_on(body.get("model", "")) else "off"
-    return "off" if thinking.get("type") == "disabled" else "on"
+    return "off" if thinking.get("type") in _THINKING_OFF_TYPES else "on"
 
 
 def adapt_request(body: dict, *, sdk: bool = False) -> dict:
@@ -109,12 +121,22 @@ def adapt_request(body: dict, *, sdk: bool = False) -> dict:
             out.pop(k, None)
 
     mode = (os.environ.get("ANTHROPIC_THINKING") or "").strip().lower()
-    if mode == "disabled" and thinking_disable_allowed(model):
-        extra["thinking"] = {"type": "disabled"}
+    if mode == "disabled":
+        if thinking_between_tools_allowed(model):
+            # Sonnet 5.5: ``disabled`` 400s; ``between_tools`` is the lowest mode.
+            extra["thinking"] = {"type": "between_tools"}
+        elif thinking_disable_allowed(model):
+            extra["thinking"] = {"type": "disabled"}
     elif mode == "adaptive" and thinking_default_on(model):
         extra["thinking"] = {"type": "adaptive"}
     effort = (os.environ.get("ANTHROPIC_EFFORT") or "").strip().lower()
-    if effort and thinking_default_on(model) and extra.get("thinking", {}).get("type") != "disabled":
+    thinking_type = (extra.get("thinking") or {}).get("type")
+    if (
+        effort
+        and thinking_default_on(model)
+        and thinking_type != "disabled"
+    ):
+        # ``between_tools`` accepts effort at low/medium/high (not xhigh/max).
         extra["output_config"] = {**extra.get("output_config", {}), "effort": effort}
 
     if forced_tool_rejected(model):
@@ -149,8 +171,24 @@ def degrade_for_error(body: dict, message: str) -> dict | None:
         for k in _SAMPLING_KEYS:
             changed |= out.pop(k, None) is not None
     if "thinking" in msg:
-        changed |= out.pop("thinking", None) is not None
-        changed |= extra.pop("thinking", None) is not None
+        # Prefer Sonnet 5.5's between_tools when disabled was rejected.
+        model = str(out.get("model") or "")
+        if (
+            thinking_between_tools_allowed(model)
+            and ("disabled" in msg or "thinking" in msg)
+            and (out.get("thinking") or {}).get("type") == "disabled"
+        ):
+            out["thinking"] = {"type": "between_tools"}
+            changed = True
+        elif (
+            thinking_between_tools_allowed(model)
+            and (extra.get("thinking") or {}).get("type") == "disabled"
+        ):
+            extra["thinking"] = {"type": "between_tools"}
+            changed = True
+        else:
+            changed |= out.pop("thinking", None) is not None
+            changed |= extra.pop("thinking", None) is not None
     if "output_config" in msg or "effort" in msg:
         changed |= out.pop("output_config", None) is not None
         changed |= extra.pop("output_config", None) is not None

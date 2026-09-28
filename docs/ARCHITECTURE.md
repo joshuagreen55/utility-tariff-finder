@@ -54,8 +54,8 @@ flowchart LR
 
 ## Flow: extraction pipeline (per utility)
 `run_pipeline()` runs up to six phases: **1** find rate page (Brave/CSE) → **2**
-crawl for tariff pages/PDFs → **3** LLM extraction with 3-tier model routing
-(Gemini Flash → Haiku → Opus) → **4** validate (percentile bounds, unit
+crawl for tariff pages/PDFs → **3** LLM extraction with 2-model routing
+(Gemini Flash → Claude Sonnet 5.5) → **4** validate (percentile bounds, unit
 normalization) + store + soft-supersede matching seeds → **5** AI-guided
 navigation fallback → **6** Gemini Deep Research for the long tail. See
 [`AGENTS.md` §4](../AGENTS.md).

@@ -275,6 +275,19 @@ class TestAnthropicCompat(unittest.TestCase):
         self.assertIn("store_tariffs", out["system"][-1]["text"])
         self.assertEqual(out["max_tokens"], 16000)
 
+    def test_sonnet_5_5_unforces_tool_and_maps_disabled_to_between_tools(self):
+        out = ac.adapt_request(
+            {**self.TOOL_REQ, "model": "claude-sonnet-5-5", "temperature": 0},
+            sdk=True,
+        )
+        self.assertEqual(out["tool_choice"], {"type": "auto"})
+        self.assertNotIn("temperature", out)
+        self.assertEqual(out["max_tokens"], 16000)
+        os.environ["ANTHROPIC_THINKING"] = "disabled"
+        off = ac.adapt_request({**self.TOOL_REQ, "model": "claude-sonnet-5-5"}, sdk=True)
+        self.assertEqual(off["extra_body"]["thinking"], {"type": "between_tools"})
+        self.assertEqual(off["max_tokens"], 8192)
+
     def test_sonnet_5_keeps_forced_tool_and_drops_sampling(self):
         out = ac.adapt_request({**self.TOOL_REQ, "model": "claude-sonnet-5", "temperature": 0.0, "top_k": 5})
         self.assertEqual(out["tool_choice"]["type"], "tool")
@@ -356,14 +369,17 @@ class TestPricing(unittest.TestCase):
         self.assertEqual(llm_cost.pricing_key("claude-opus-5-5-20261101"), "claude-opus-5-5")
         self.assertEqual(llm_cost.pricing_key("claude-opus-5"), "opus")
         self.assertEqual(llm_cost.pricing_key("claude-sonnet-5"), "sonnet")
+        self.assertEqual(llm_cost.pricing_key("claude-sonnet-5-5"), "claude-sonnet-5-5")
         self.assertEqual(llm_cost.pricing_key("claude-haiku-4-5-20251001"), "haiku")
         self.assertEqual(llm_cost.model_key("claude-sonnet-5"), "sonnet")
+        self.assertEqual(llm_cost.model_key("claude-sonnet-5-5"), "sonnet")
 
     def test_costs_use_list_prices(self):
         usage = SimpleNamespace(input_tokens=1_000_000, output_tokens=1_000_000,
                                 cache_read_input_tokens=0, cache_creation_input_tokens=0)
         for model, usd in (("claude-opus-5-5", 24.0), ("claude-opus-5", 30.0),
-                           ("claude-sonnet-5", 12.0), ("claude-haiku-4-5-20251001", 6.0)):
+                           ("claude-sonnet-5", 12.0), ("claude-sonnet-5-5", 12.0),
+                           ("claude-haiku-4-5-20251001", 6.0)):
             llm_cost.reset()
             llm_cost.record_anthropic(model, usage)
             self.assertAlmostEqual(llm_cost.summary()["total_usd"], usd, places=6, msg=model)
@@ -373,6 +389,12 @@ class TestPricing(unittest.TestCase):
                                 cache_read_input_tokens=0, cache_creation_input_tokens=0)
         llm_cost.record_anthropic("claude-opus-5-5", usage)
         self.assertIn("opus", llm_cost.summary()["by_model"])
+
+    def test_sonnet_5_5_rolls_up_under_sonnet(self):
+        usage = SimpleNamespace(input_tokens=10, output_tokens=10,
+                                cache_read_input_tokens=0, cache_creation_input_tokens=0)
+        llm_cost.record_anthropic("claude-sonnet-5-5", usage)
+        self.assertIn("sonnet", llm_cost.summary()["by_model"])
 
 
 def _energy(start, end, day, rate=0.1):
