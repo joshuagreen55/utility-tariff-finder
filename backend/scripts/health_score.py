@@ -1,19 +1,24 @@
 """Database health score for utility tariff coverage & quality.
 
+RESIDENTIAL-ONLY. Commercial / industrial / lighting tariffs are excluded
+from every composite input and every printed lens. Mysa abandoned
+commercial clients for this product; the scorecard measures residential
+readiness only. JSON output carries ``"scope": "residential"``.
+
 Produces a single 0-100 Health Score from two lenses, each of which is
 also reported on its own so you can see WHERE the score comes from:
 
   LENS 1 — COVERAGE (breadth): of the active utilities we are supposed to
            serve, what fraction have what the product actually needs — a
            live, verified RESIDENTIAL tariff with an energy component?
-           A looser "any verified tariff with components" count is also
-           reported for context. Reported unweighted AND weighted by
-           utility type (an IOU serving millions matters more than a
-           500-meter coop).
+           A looser "any verified residential tariff with components"
+           count is also reported for context. Reported unweighted AND
+           weighted by utility type (an IOU serving millions matters more
+           than a 500-meter coop). Commercial-only utilities do not count
+           as covered.
 
-  LENS 2 — QUALITY (depth): for the tariffs we actually serve to users
-           (everything not superseded — the API returns these), how fresh,
-           complete, and well-sourced are they?
+  LENS 2 — QUALITY (depth): for live (non-superseded) RESIDENTIAL tariffs,
+           how fresh, complete, and well-sourced are they?
 
 Composite Health Score = weighted blend:
     40%  Coverage (type-weighted)
@@ -24,7 +29,7 @@ Composite Health Score = weighted blend:
 PROVENANCE BEHAVIOUR CHANGE (2026-09, issue #28 — "provenance_method":
 "source_type_v2" in the JSON). Provenance used to be "served tariff has a
 non-null source_url", which sat at ~100 while live rows cited rate blogs.
-It now scores each served tariff by ``tariffs.source_type``
+It now scores each served residential tariff by ``tariffs.source_type``
 (app/services/source_type.py):
 
     official     1.0   utility's own site / documents (or the board that
@@ -86,6 +91,8 @@ PROVENANCE_WEIGHTS = {
     "third_party": 0.2,
 }
 PROVENANCE_METHOD = "source_type_v2"
+# JSON / scorecard scope: every tariff lens filters to residential.
+SCORE_SCOPE = "residential"
 
 
 def provenance_score(counts: dict[str, int]) -> float:
@@ -156,9 +163,9 @@ def bar(pct: float, width: int = 40) -> str:
 
 COVERAGE_SQL = text("""
 WITH good_tariffs AS (
+    -- Residential only: commercial-only utilities never count as covered.
     SELECT t.utility_id,
-           MAX(CASE WHEN lower(t.customer_class::text) = 'residential'
-                     AND EXISTS (SELECT 1 FROM rate_components rc
+           MAX(CASE WHEN EXISTS (SELECT 1 FROM rate_components rc
                                  WHERE rc.tariff_id = t.id
                                    AND lower(rc.component_type::text) = 'energy')
                 THEN 1 ELSE 0 END) AS has_res_energy
@@ -166,6 +173,7 @@ WITH good_tariffs AS (
     WHERE t.last_verified_at IS NOT NULL
       AND t.superseded_by_tariff_id IS NULL
       AND t.supersede_reason IS NULL
+      AND lower(t.customer_class::text) = 'residential'
       AND EXISTS (SELECT 1 FROM rate_components rc WHERE rc.tariff_id = t.id)
     GROUP BY t.utility_id
 )
@@ -193,6 +201,7 @@ WITH pt AS (
     LEFT JOIN rate_components rc ON rc.tariff_id = t.id
     WHERE t.superseded_by_tariff_id IS NULL
       AND t.supersede_reason IS NULL
+      AND lower(t.customer_class::text) = 'residential'
     GROUP BY t.id
 )
 SELECT
@@ -256,6 +265,7 @@ SELECT
 FROM tariffs
 WHERE superseded_by_tariff_id IS NULL
   AND supersede_reason IS NULL
+  AND lower(customer_class::text) = 'residential'
 """)
 
 MONITORING_SQL = text("""
@@ -366,6 +376,7 @@ def compute(session: Session) -> dict:
 
     return {
         "generated_at": datetime.now(timezone.utc).isoformat(),
+        "scope": SCORE_SCOPE,
         "health_score": round(composite, 1),
         "grade": letter_grade(composite),
         "components": {
@@ -426,7 +437,8 @@ def compute(session: Session) -> dict:
 def print_scorecard(r: dict) -> None:
     c = r["components"]
     print("=" * 64)
-    print(f"  DATABASE HEALTH SCORE: {r['health_score']}/100   (grade {r['grade']})")
+    print(f"  DATABASE HEALTH SCORE (residential-only): {r['health_score']}/100   (grade {r['grade']})")
+    print(f"  scope: residential tariffs only — commercial/other classes excluded")
     print(f"  generated {r['generated_at']}")
     print("=" * 64)
     print()
@@ -439,9 +451,9 @@ def print_scorecard(r: dict) -> None:
     print()
 
     cov = r["coverage"]
-    print("  LENS 1 — COVERAGE (breadth)")
+    print("  LENS 1 — COVERAGE (breadth, residential)")
     print(f"    {cov['utilities_with_res_energy_tariff']:,} / {cov['active_utilities']:,} active utilities have a verified residential tariff w/ energy rate")
-    print(f"    ({cov['utilities_with_any_good_tariff']:,} have any verified tariff with components)")
+    print(f"    ({cov['utilities_with_any_good_tariff']:,} have any verified residential tariff with components)")
     print(f"    {'type':<22}{'res+kWh':>9}{'any':>6}{'total':>8}{'pct':>7}  wt")
     for t in cov["by_type"]:
         print(f"    {t['type']:<22}{t['covered']:>9}{t['covered_any']:>6}{t['total']:>8}{t['pct']:>6.0f}%  {t['weight']}")
@@ -449,8 +461,8 @@ def print_scorecard(r: dict) -> None:
 
     q = r["quality"]
     served = q["served_tariffs"] or 1
-    print("  LENS 2 — QUALITY (depth, of served tariffs)")
-    print(f"    served (non-superseded): {q['served_tariffs']:,}")
+    print("  LENS 2 — QUALITY (depth, live residential tariffs)")
+    print(f"    served (non-superseded residential): {q['served_tariffs']:,}")
     print(f"    verified:                {q['verified']:,}  ({100*q['verified']/served:.0f}%)")
     print(f"    stale OpenEI seeds:      {q['stale_seeds_served']:,}  ({100*q['stale_seeds_served']/served:.0f}%)")
     print(f"    has energy component:    {q['has_energy_component']:,}  ({100*q['has_energy_component']/served:.0f}%)")
@@ -460,7 +472,7 @@ def print_scorecard(r: dict) -> None:
     print()
 
     sc = q["source_type_counts"]
-    print(f"  PROVENANCE (source quality, method {r['provenance_method']})")
+    print(f"  PROVENANCE (residential source quality, method {r['provenance_method']})")
     for st in ("official", "unknown", "third_party"):
         print(
             f"    {st:<12} ×{PROVENANCE_WEIGHTS[st]:.1f}  {sc[st]:>8,}  "
@@ -478,7 +490,7 @@ def print_scorecard(r: dict) -> None:
     print()
 
     fb = r["freshness_buckets"]
-    print("  FRESHNESS DISTRIBUTION (served tariffs)")
+    print("  FRESHNESS DISTRIBUTION (live residential tariffs)")
     for k, v in fb.items():
         print(f"    {k:<10}{v:>7,}  {bar(100*v/served, 30)}")
     print()

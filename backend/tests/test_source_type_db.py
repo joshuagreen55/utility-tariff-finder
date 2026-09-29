@@ -183,6 +183,9 @@ class TestHealthScoreProvenance(_HQCase):
 
         from scripts import health_score
 
+        with Session(self.engine) as s:
+            before = health_score.compute(s)
+
         uid = self.make_hq()
         self.make_tariff(uid, "Rate DM", [_energy(0.07)], source_url=HQ_PDF)
         self.make_tariff(uid, "Rate DP", [_energy(0.07)], source_url=HQ_PAGE)
@@ -192,21 +195,104 @@ class TestHealthScoreProvenance(_HQCase):
 
         with Session(self.engine) as s:
             r = health_score.compute(s)
+        # Delta vs class-shared DB baseline (4 live residential; superseded "Old" excluded).
+        before_c = before["quality"]["source_type_counts"]
         counts = r["quality"]["source_type_counts"]
-        self.assertEqual(counts, {"official": 2, "unknown": 1, "third_party": 1})
-        self.assertEqual(r["components"]["provenance"], round(100 * (2 + 0.4 + 0.2) / 4, 1))
-        self.assertEqual(r["quality"]["has_source_url"], 3)  # legacy key kept
+        self.assertEqual(counts["official"] - before_c["official"], 2)
+        self.assertEqual(counts["unknown"] - before_c["unknown"], 1)
+        self.assertEqual(counts["third_party"] - before_c["third_party"], 1)
+        self.assertEqual(
+            r["quality"]["has_source_url"] - before["quality"]["has_source_url"], 3
+        )
         self.assertEqual(r["provenance_method"], "source_type_v2")
+        self.assertEqual(r["scope"], "residential")
         self.assertEqual(r["provenance"]["weights"], health_score.PROVENANCE_WEIGHTS)
-        self.assertEqual(r["official_source"]["best_residential_official"], 1)
-        self.assertEqual(r["official_source"]["utilities_with_verified_residential"], 1)
+        self.assertEqual(
+            r["official_source"]["best_residential_official"]
+            - before["official_source"]["best_residential_official"],
+            1,
+        )
+        self.assertEqual(
+            r["official_source"]["utilities_with_verified_residential"]
+            - before["official_source"]["utilities_with_verified_residential"],
+            1,
+        )
+        # Provenance score of the four rows we added alone: (2 + 0.4 + 0.2) / 4
+        added_points = 2 * 1.0 + 1 * 0.4 + 1 * 0.2
+        before_served = before["quality"]["served_tariffs"] or 0
+        before_points = (
+            before_c["official"] * 1.0
+            + before_c["unknown"] * 0.4
+            + before_c["third_party"] * 0.2
+        )
+        expected = round(100 * (before_points + added_points) / (before_served + 4), 1)
+        self.assertEqual(r["components"]["provenance"], expected)
 
         out = io.StringIO()
         with contextlib.redirect_stdout(out):
             health_score.print_scorecard(r)
-        self.assertIn("PROVENANCE (source quality", out.getvalue())
-        self.assertIn("third_party", out.getvalue())
+        printed = out.getvalue()
+        self.assertIn("residential-only", printed)
+        self.assertIn("PROVENANCE (residential source quality", printed)
+        self.assertIn("third_party", printed)
 
+    def test_scope_excludes_commercial_tariffs(self):
+        """Commercial rows must not inflate served/provenance or cover a utility alone."""
+        from sqlalchemy.orm import Session
+
+        from scripts import health_score
+
+        with Session(self.engine) as s:
+            before = health_score.compute(s)
+
+        uid = self.make_hq("HQ Residential Scope")
+        self.make_tariff(uid, "Rate D", [_energy(0.07)], source_url=HQ_PDF)
+
+        with Session(self.engine) as s:
+            mid = health_score.compute(s)
+
+        # Live commercial on the same utility + a commercial-only utility.
+        self.make_tariff(
+            uid, "General Service", [_energy(0.09)],
+            source_url=CALLMEPOWER, customer_class="commercial",
+        )
+        commercial_only = self.make_utility(
+            "Commercial Only Co-op", state="QC", country="CA", website_url=HQ_SITE,
+        )
+        self.make_tariff(
+            commercial_only, "Small Business", [_energy(0.11)],
+            source_url=HQ_PDF, customer_class="commercial",
+        )
+
+        with Session(self.engine) as s:
+            after = health_score.compute(s)
+
+        self.assertEqual(after["scope"], "residential")
+        # One new residential tariff moves the quality / coverage lenses.
+        self.assertEqual(mid["quality"]["served_tariffs"], before["quality"]["served_tariffs"] + 1)
+        self.assertEqual(
+            mid["coverage"]["utilities_with_res_energy_tariff"],
+            before["coverage"]["utilities_with_res_energy_tariff"] + 1,
+        )
+        # Adding commercial tariffs / a commercial-only utility must not move them.
+        self.assertEqual(after["quality"]["served_tariffs"], mid["quality"]["served_tariffs"])
+        self.assertEqual(after["quality"]["verified"], mid["quality"]["verified"])
+        self.assertEqual(
+            after["quality"]["source_type_counts"], mid["quality"]["source_type_counts"]
+        )
+        self.assertEqual(after["freshness_buckets"], mid["freshness_buckets"])
+        self.assertEqual(after["components"]["provenance"], mid["components"]["provenance"])
+        self.assertEqual(
+            after["coverage"]["utilities_with_res_energy_tariff"],
+            mid["coverage"]["utilities_with_res_energy_tariff"],
+        )
+        self.assertEqual(
+            after["coverage"]["utilities_with_any_good_tariff"],
+            mid["coverage"]["utilities_with_any_good_tariff"],
+        )
+        self.assertEqual(
+            after["coverage"]["active_utilities"], mid["coverage"]["active_utilities"] + 1
+        )
 
 class TestHqRepair(_HQCase):
     DOC = "Rate D access charge 46.154¢/day; first 40 kWh 6.905¢; balance 10.652¢. Rate DT 4.250¢"

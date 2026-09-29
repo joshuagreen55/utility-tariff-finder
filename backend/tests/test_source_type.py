@@ -197,6 +197,83 @@ class TestProvenanceScore(unittest.TestCase):
             {"coverage": 0.40, "freshness": 0.30, "completeness": 0.20, "provenance": 0.10},
         )
 
+    def test_health_score_sql_is_residential_only(self):
+        """Quality / freshness / coverage tariff lenses must filter residential."""
+        from scripts.health_score import (
+            COVERAGE_SQL,
+            FRESHNESS_BUCKETS_SQL,
+            OFFICIAL_LENS_SQL,
+            QUALITY_SQL,
+            SCORE_SCOPE,
+        )
+
+        self.assertEqual(SCORE_SCOPE, "residential")
+        res_filter = "lower(t.customer_class::text) = 'residential'"
+        res_filter_bare = "lower(customer_class::text) = 'residential'"
+        for sql in (QUALITY_SQL, COVERAGE_SQL, OFFICIAL_LENS_SQL):
+            self.assertIn(res_filter, str(sql))
+        self.assertIn(res_filter_bare, str(FRESHNESS_BUCKETS_SQL))
+
+    def test_scorecard_header_says_residential_only(self):
+        import contextlib
+        import io
+
+        from scripts.health_score import print_scorecard
+
+        sample = {
+            "generated_at": "2026-09-29T00:00:00+00:00",
+            "scope": "residential",
+            "health_score": 50.0,
+            "grade": "F",
+            "components": {
+                "coverage_weighted": 50.0,
+                "coverage_raw": 50.0,
+                "freshness": 50.0,
+                "completeness": 50.0,
+                "provenance": 50.0,
+            },
+            "coverage": {
+                "active_utilities": 1,
+                "utilities_with_res_energy_tariff": 0,
+                "utilities_with_any_good_tariff": 0,
+                "by_type": [],
+            },
+            "quality": {
+                "served_tariffs": 0,
+                "verified": 0,
+                "stale_seeds_served": 0,
+                "has_energy_component": 0,
+                "has_fixed_charge": 0,
+                "has_effective_date": 0,
+                "has_source_url": 0,
+                "source_type_counts": {"official": 0, "unknown": 0, "third_party": 0},
+            },
+            "provenance_method": "source_type_v2",
+            "official_source": {
+                "utilities_with_verified_residential": 0,
+                "best_residential_official": 0,
+                "best_residential_unknown": 0,
+                "best_residential_third_party_only": 0,
+                "pct_active_utilities_official": 0.0,
+            },
+            "freshness_buckets": {
+                "<=90d": 0, "91-180d": 0, "181-365d": 0, ">365d": 0, "never": 0,
+            },
+            "computable": {
+                "verified_residential_tariffs": 0,
+                "computable_residential_tariffs": 0,
+                "utilities_with_computable_residential": 0,
+                "top_blocking_reasons": {},
+            },
+            "monitoring": {"sources": 0, "errors": 0, "ok": 0, "never_checked": 0},
+        }
+        out = io.StringIO()
+        with contextlib.redirect_stdout(out):
+            print_scorecard(sample)
+        text = out.getvalue()
+        self.assertIn("residential-only", text)
+        self.assertIn("commercial/other classes excluded", text)
+
 
 class TestHqRepairVerification(unittest.TestCase):
     DOC = (

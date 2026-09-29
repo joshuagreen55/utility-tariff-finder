@@ -6,9 +6,9 @@ comprehensive; when in doubt, prefer what is written here over older docs
 (`PROJECT_SUMMARY.md` and `TECHNICAL_REVIEW.md` predate most of the current
 refresh/quarantine/cost/model systems).
 
-_Last updated: 2026-09-26 (official vs third-party sources + Provenance, issue #28;
-effective_date fill on re-extract match, issue #26; website_url backfill +
-reclassify tooling, issue #30)._
+_Last updated: 2026-09-29 (residential-only health score; official vs third-party
+sources + Provenance, issue #28; effective_date fill on re-extract match, issue #26;
+website_url backfill + reclassify tooling, issue #30)._
 
 ---
 
@@ -320,16 +320,19 @@ CI: `.github/workflows/backend-tests.yml` runs
 `needs_review` + `confidence_factors.tou_seasonal_incomplete`.
 
 ### Health score (`scripts/health_score.py`)
-Composite 0–100 score, weighted: Coverage 40% / Freshness 30% / Completeness
-20% / Provenance 10%. Coverage counts a utility as covered only if it has a
-**live, verified residential tariff with an energy component**. Freshness
-decays as tariffs age past 90 days (that's why the score drifts down between
-runs and recovers after them). **Provenance measures source quality**, not
-URL presence (since issue #28, `provenance_method: source_type_v2`): served
-tariffs score official 1.0 / unknown 0.4 / third_party 0.2, so expect a
-one-time drop versus older snapshots. Class counts and an informational
-"best residential tariff is official" utility lens are in the output. Run it
-to get the current scorecard.
+**Residential-only** composite 0–100 score (commercial / other classes are
+excluded from every lens). Weighted: Coverage 40% / Freshness 30% /
+Completeness 20% / Provenance 10%. Coverage counts a utility as covered only
+if it has a **live, verified residential tariff with an energy component**
+(commercial-only utilities do not count). Freshness, completeness, provenance,
+served/verified/stale-seed counts, and freshness buckets all filter to live
+residential rows. Freshness decays as tariffs age past 90 days (that's why the
+score drifts down between runs and recovers after them). **Provenance measures
+source quality**, not URL presence (since issue #28, `provenance_method:
+source_type_v2`): served residential tariffs score official 1.0 / unknown 0.4 /
+third_party 0.2. An informational "best residential tariff is official"
+utility lens and the computable contract section are also residential-only.
+JSON carries `"scope": "residential"`. Run it to get the current scorecard.
 
 **Freshness has two inputs: `last_verified_at` and `effective_date`.** A
 recent `last_verified_at` with a blank `effective_date` is a recording gap to
