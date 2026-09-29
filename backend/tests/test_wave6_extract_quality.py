@@ -202,7 +202,12 @@ class TestPrompts(unittest.TestCase):
         self.assertNotIn("Mention weekend/holiday off-peak in description", tp.EXTRACTION_PROMPT)
 
     def test_prompt_version_bumped(self):
-        self.assertEqual(tp._LLM_PROMPT_VERSION, "v3")
+        self.assertEqual(tp._LLM_PROMPT_VERSION, "v4")
+
+    def test_phase6_and_browser_share_mysa_rules(self):
+        phase6 = tp._phase6_prompt("U", "CA", None)
+        self.assertIn("MYSA FIELDS", phase6)
+        self.assertIn("seasonal_tou", phase6)
 
 
 class TestGeminiSchema(unittest.TestCase):

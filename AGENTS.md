@@ -6,8 +6,9 @@ comprehensive; when in doubt, prefer what is written here over older docs
 (`PROJECT_SUMMARY.md` and `TECHNICAL_REVIEW.md` predate most of the current
 refresh/quarantine/cost/model systems).
 
-_Last updated: 2026-09-29 (Mysa Completeness rewrite; residential-only health score;
-official vs third-party sources + Provenance, issue #28; effective_date fill on
+_Last updated: 2026-09-29 (Mysa structured extract fields on general pipeline;
+Mysa Completeness rewrite; residential-only health score; official vs
+third-party sources + Provenance, issue #28; effective_date fill on
 re-extract match, issue #26; website_url backfill + reclassify tooling, issue #30)._
 
 ---
@@ -215,8 +216,14 @@ cannot disable thinking. Knobs: `ANTHROPIC_THINKING` (`disabled` |
 responses with `anthropic_compat.response_text()`, never `content[0].text`.
 
 Prompts ask for numbers + units **as printed** (Phase 4 converts cents),
-`day_type` on every TOU row, 24 h coverage per season × day type from stated
-hours, and weekend/holiday rows. `normalize_structured_components()` (Phase
+and for Mysa Completeness structured columns on every ENERGY row when the
+source states them: `period_start_time` / `period_end_time` + `day_type`
+(TOU family), inclusive `season_start/end` month/day (seasonal family),
+both for `seasonal_tou`. `period_label` / `season` stay display-only —
+never invent clocks or season dates from labels alone; leave null and let
+Phase 4 flag `needs_review` / incompleteness. Shared `_STRUCTURED_RULES`
+is injected into text, two-pass, vision, Phase 6 Deep Research, and the
+browser-CLI extract prompts. `normalize_structured_components()` (Phase
 4) maps model forms (`7:00 a.m.`, `:59` ends, "weekends and holidays", month
 names) onto the structured columns without filling empty fields. Component
 dedupe keys include clock / day type / season dates / tier bounds.
