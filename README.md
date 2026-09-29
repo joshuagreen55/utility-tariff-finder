@@ -14,7 +14,7 @@ Lookup electricity utility providers and rate tariffs by US or Canadian address.
 - **Backend**: Python/FastAPI + PostgreSQL/PostGIS
 - **Frontend**: React + Vite + TypeScript
 - **Task Queue**: Celery + Redis — weekly monitoring, monthly refresh, quarterly recovery
-- **Extraction pipeline**: 6-phase LLM tariff extractor (`backend/scripts/tariff_pipeline.py`), 3-tier model routing (Gemini Flash → Claude Haiku → Claude Opus) + Gemini Deep Research fallback
+- **Extraction pipeline**: 6-phase LLM tariff extractor (`backend/scripts/tariff_pipeline.py`), 2-model scrape ladder (Gemini 3.8 Flash → Claude Sonnet 5.5) + Gemini Deep Research fallback
 
 ## Data Sources
 

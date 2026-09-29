@@ -1,21 +1,22 @@
 # Measuring extraction quality and LLM spend before changing models
 
-Model choices stay behind env vars (`GEMINI_MODEL`, `HAIKU_MODEL`,
-`OPUS_MODEL`, `AUDITOR_MODEL`, `PHASE6_AGENT`). This page covers how to
-judge an env-only swap honestly. **Production defaults are unchanged by
-this work.**
+Model choices stay behind env vars (`GEMINI_MODEL`, `CLAUDE_MODEL` /
+`SONNET_MODEL` / `HAIKU_MODEL`, `OPUS_MODEL` for auditor only,
+`AUDITOR_MODEL`, `PHASE6_AGENT`). The scrape ladder is **two models**:
+Gemini 3.8 Flash → Claude Sonnet 5.5. This page covers how to judge an
+env-only swap honestly.
 
 ## What changed (audit F7 / F8)
 
 | Gap | Now |
 |---|---|
-| LLM extraction cache keyed on tier name, so an env model swap replayed the old model's output | Key = content hash + tier + **concrete model id(s)** + prompt version (`_cache_model_id`). `twopass` keys on both Haiku and Opus ids. |
-| Tier "hit" meant "returned anything" | `tier_outcomes` is kept for continuity, and `tier_acceptance` adds per-tier tariffs **returned into Phase 4 vs accepted after it**. Every extracted tariff carries `extraction_tier` (`gemini` / `haiku` / `opus` / `twopass` / `vision` / `gemini_dr`). |
-| Long-document Opus *identify* spend counted as "wasted escalation" | Tagged `phase3_identify`; the report's wasted-Opus estimate excludes it. |
+| LLM extraction cache keyed on tier name, so an env model swap replayed the old model's output | Key = content hash + tier + **concrete model id(s)** + prompt version (`_cache_model_id`). `twopass` / `vision` / Claude extract key on the single Claude scrape model id. |
+| Tier "hit" meant "returned anything" | `tier_outcomes` is kept for continuity, and `tier_acceptance` adds per-tier tariffs **returned into Phase 4 vs accepted after it**. Every extracted tariff carries `extraction_tier` (`gemini` / `haiku` / `opus` / `twopass` / `vision` / `gemini_dr`). Claude scrape outcomes still use the historical `haiku` key. |
+| Long-document Opus *identify* spend counted as "wasted escalation" | Tagged `phase3_identify`; the report's wasted-Opus estimate excludes it. Identify now uses the same Claude scrape model (no third tier). |
 | Phase 6 spend unrecorded on timeout / token cap / poll error | `_phase6_meter` prices partial usage on every exit. `aborts.gemini_dr` counts aborts, and `unpriced` marks aborts with no reported usage. |
 | Track B, campaign Track B, `opus_audit`, browser CLI unmetered | Metered into `llm_cost`. Script runs append to `logs/llm_cost_ledger.jsonl`, which `llm_cost_report.py` rolls up next to refresh runs. |
-| `opus_audit.py` hardcoded `claude-opus-4-20250514`, read superseded rows, ignored clocks/seasons | Model from `AUDITOR_MODEL` or `OPUS_MODEL`; live rows only; prompt includes clock windows, day types, season dates and `included_in_energy`. |
-| `browser_interaction.py` CLI hardcoded Haiku 3.5 | Uses `HAIKU_MODEL`. |
+| `opus_audit.py` hardcoded `claude-opus-4-20250514`, read superseded rows, ignored clocks/seasons | Model from `AUDITOR_MODEL` / `OPUS_MODEL` / `CLAUDE_MODEL` (default Sonnet 5.5); live rows only; prompt includes clock windows, day types, season dates and `included_in_energy`. |
+| `browser_interaction.py` CLI hardcoded Haiku 3.5 | Uses `CLAUDE_MODEL` / `HAIKU_MODEL` (default Sonnet 5.5). |
 | Benchmark: 35 flat/tiered tariffs, 15% tolerance, 0 TOU/seasonal, superseded rows counted | Adds `tests/fixtures/ground_truth_tou_seasonal.json`, now **12** residential TOU / seasonal / seasonal-tiered tariffs across 8 utilities (Canada and US; see "TOU / seasonal gold set" below). It matches **exactly** to 1e-5 $/kWh, with exact clock windows, day types, season dates and tier bounds, and reports computable-contract agreement. The benchmark reads live rows only. |
 
 ### Cache transition cost
@@ -157,14 +158,15 @@ or dates. Prompt cache version is `v3`, so every page re-extracts once.
 
 ### Anthropic model compatibility (`app/services/anthropic_compat.py`)
 
-All Anthropic calls (pipeline tiers, vision, nav, two-pass, Track B,
+All Anthropic calls (pipeline Claude tier, vision, nav, two-pass, Track B,
 browser CLI, `opus_audit`, pin arbiter) go through it. Per the Claude docs
-(checked 2026-09-25):
+(checked 2026-09-28, including Sonnet 5.5 migration guide):
 
 | Model | Thinking | Forced `tool_choice` | `temperature`/`top_p`/`top_k` |
 |---|---|---|---|
 | `claude-haiku-4-5-20251001` | off | OK | OK |
 | `claude-sonnet-5` | on by default, may be disabled | OK | 400 |
+| `claude-sonnet-5-5` | on by default; `disabled` **400** → use `between_tools` | **400** → `auto` + "call the tool" | 400 |
 | `claude-opus-5` | on by default, may be disabled (≤ high effort) | OK | 400 |
 | `claude-opus-5-5` | on, **cannot** be disabled | **400** → sent as `auto` + "call the tool" instruction | 400 |
 
@@ -173,24 +175,24 @@ raises `max_tokens` to `ANTHROPIC_THINKING_MIN_MAX_TOKENS` (16000) while
 thinking is on (thinking counts against `max_tokens`), reads the first
 *text* block (the first block may be a thinking block), and retries once
 on a 400 that names one of these parameters. `ANTHROPIC_THINKING=disabled`
-turns thinking off where allowed (cheaper, Haiku-like);
-`ANTHROPIC_EFFORT` sets `output_config.effort`.
+turns thinking off where allowed (Sonnet 5 / Opus 5 → `disabled`; Sonnet
+5.5 → `between_tools`); `ANTHROPIC_EFFORT` sets `output_config.effort`.
 
-### Pricing (`DEFAULT_PRICING`, USD / MTok, docs.claude.com 2026-09-25)
+### Pricing (`DEFAULT_PRICING`, USD / MTok, docs.claude.com 2026-09-28)
 
 | Key | In | Out | Cache hit | 5-min cache write |
 |---|---:|---:|---:|---:|
 | `haiku` (Haiku 4.5) | 1.00 | 5.00 | 0.10 | 1.25 |
-| `sonnet` (Sonnet 5; intro price is now standard) | 2.00 | 10.00 | 0.20 | 2.50 |
+| `sonnet` / `claude-sonnet-5-5` (Sonnet 5 / 5.5) | 2.00 | 10.00 | 0.20 | 2.50 |
 | `opus` (Opus 5) | 5.00 | 25.00 | 0.50 | 6.25 |
 | `claude-opus-5-5` | 4.00 | 20.00 | 0.20 | 5.00 |
 
 A call is priced by the longest matching model-id key, else its family,
-and rolls up under its family (`opus` includes Opus 5.5). Claude 4.7+
-models (Sonnet 5, Opus 5, Opus 5.5) use a tokenizer that yields about 30%
-more tokens for the same text than Haiku 4.5, and thinking tokens bill as
-output — so Sonnet 5 per page is more than 2× Haiku. Measure it with the
-probe; do not assume $/utility.
+and rolls up under its family (`sonnet` includes Sonnet 5.5 when that
+prefix row is not hit first). Claude 4.7+ models use a tokenizer that
+yields about 30% more tokens for the same text than Haiku 4.5, and
+thinking tokens bill as output — measure with the probe; do not assume
+$/utility.
 
 ### Proposing an env model bump
 
@@ -199,11 +201,11 @@ probe; do not assume $/utility.
    and `python /app/scripts/llm_cost_report.py --runs 5`.
 2. Probe current defaults and the candidate on the same documents:
    `python -m scripts.gold_model_probe --no-cache --output /tmp/gold_base.json`, then
-   `HAIKU_MODEL=claude-sonnet-5 python -m scripts.gold_model_probe --no-cache --output /tmp/gold_sonnet.json`,
-   and `OPUS_MODEL=claude-opus-5-5 ...` separately (one knob per run).
+   `CLAUDE_MODEL=<candidate> python -m scripts.gold_model_probe --no-cache --output /tmp/gold_cand.json`
+   (one Claude knob — there is no separate Opus scrape tier).
    Add `--add-url "San Diego Gas & Electric=https://www.sdge.com/total-electric-rates"`
    and a Newfoundland Power document so every gold tariff is scored.
-3. `python -m scripts.gold_model_probe --compare /tmp/gold_base.json /tmp/gold_sonnet.json`.
+3. `python -m scripts.gold_model_probe --compare /tmp/gold_base.json /tmp/gold_cand.json`.
 4. Promote a default only if computable agreement rises (or holds, for a
    cheaper model) with no rise in rate errors, and projected spend stays in
    the ~$2k/year intent: scale the tier's share of recent `llm_cost_report`
@@ -211,24 +213,12 @@ probe; do not assume $/utility.
 5. Change the env (VM `.env`) first; change code defaults only in a PR
    with that table. Restart `celery-worker celery-beat api`.
 
-### Wave 6 go / no-go on defaults
+### Current defaults (two-model scrape ladder)
 
-No LLM keys or DB were available to the Wave 6 implementer, so no live
-before/after exists yet: **defaults are unchanged** (`HAIKU_MODEL`
-Haiku 4.5, `OPUS_MODEL` / `AUDITOR_MODEL` / pin arbiter Opus 5,
-`GEMINI_MODEL` Flash, `PHASE6_AGENT` as-is). Decision rules for the
-VM re-run:
-
-- **Opus → `claude-opus-5-5`:** go if the probe holds or improves gold.
-  List price is 0.8× Opus 5 and Opus is capped at `OPUS_MAX_PER_UTILITY=2`.
-  Risk to check in the probe: Opus 5.5 rejects forced tool use, so it
-  answers with `tool_choice: auto`; watch for text-only replies (parsed by
-  the JSON fallback) in `tier_acceptance`. `AUDITOR_MODEL` / the arbiter
-  follow `OPUS_MODEL` unless set.
-- **Haiku → `claude-sonnet-5`:** go only if gold computable agreement
-  jumps clearly and projected spend fits the intent (≥2× per token,
-  ~30% more tokens, plus thinking unless `ANTHROPIC_THINKING=disabled`).
-  Otherwise keep Haiku and use Sonnet via env for targeted runs.
+Defaults are **Gemini 3.8 Flash → Claude Sonnet 5.5** (`GEMINI_MODEL` /
+`CLAUDE_MODEL`). `OPUS_MODEL` / pin arbiter / `opus_audit` also default to
+Sonnet 5.5 when unset; PIN switches stay `none`. Phase 6 Deep Research is
+unchanged (Gemini-only).
 
 ## Gold set growth
 

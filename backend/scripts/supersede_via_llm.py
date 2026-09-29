@@ -37,7 +37,12 @@ from sqlalchemy.orm import Session
 from app.models.tariff import Tariff
 from app.services import anthropic_compat
 
-HAIKU_MODEL = os.environ.get("HAIKU_MODEL", "claude-haiku-4-5-20251001")
+HAIKU_MODEL = (
+    os.environ.get("CLAUDE_MODEL")
+    or os.environ.get("SONNET_MODEL")
+    or os.environ.get("HAIKU_MODEL")
+    or "claude-sonnet-5-5"
+)
 
 from scripts import llm_cost  # noqa: E402
 

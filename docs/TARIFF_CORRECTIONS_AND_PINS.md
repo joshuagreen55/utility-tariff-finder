@@ -144,7 +144,8 @@ Required when enabled (values live in the VM env / `.env`, never the repo):
   Optional: `MERCURY_TIMEOUT_SEC` (120), `JEV_CHUNK_CHARS` (40000),
   `JEV_MAX_CHUNKS` (5).
 - `opus`: `ANTHROPIC_API_KEY`. Model: `AUDITOR_MODEL`, else `OPUS_MODEL`
-  (default `claude-opus-5`), the same knobs as `opus_audit.py`.
+  / `CLAUDE_MODEL` (default `claude-sonnet-5-5`), the same knobs as
+  `opus_audit.py`.
 
 A value that is unknown, or whose credentials are missing, logs a warning
 and falls back to the Null adapter (holds).

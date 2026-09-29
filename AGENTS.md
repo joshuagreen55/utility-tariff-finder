@@ -203,17 +203,21 @@ bypassed while live rows still cite a third party. Third-party URLs are
 demoted, not deleted (they may be a utility's only source).
 
 ### Model-tier routing (Phase 3 extraction)
-`Gemini 3.8 Flash` (tier 1, cheap) → `Claude Haiku 4.5` (tier 2) → `Claude
-Opus 5` (tier 3, last resort). Opus is only invoked when a page has numeric
-rate signals AND the per-utility Opus budget isn't spent. Gemini gets a
-`response_schema` derived from the Claude `store_tariffs` tool schema.
+**Two-model scrape ladder:** `Gemini 3.8 Flash` (tier 1, cheap) → `Claude
+Sonnet 5.5` (tier 2, only Claude tier). PDFs / complex pages / Gemini down
+skip straight to Claude (same skip rules as before). There is no separate
+Haiku mid-tier or Opus last-resort tier. Gemini gets a `response_schema`
+derived from the Claude `store_tariffs` tool schema.
 
 Every Anthropic call goes through `app/services/anthropic_compat.py`, which
-shapes the request per model: Sonnet 5 / Opus 5+ think by default and 400 on
-`temperature`/`top_p`/`top_k`; **Opus 5.5 400s on forced `tool_choice`** and
-cannot disable thinking. Knobs: `ANTHROPIC_THINKING` (`disabled` |
-`adaptive`), `ANTHROPIC_EFFORT`, `ANTHROPIC_THINKING_MIN_MAX_TOKENS`. Read
-responses with `anthropic_compat.response_text()`, never `content[0].text`.
+shapes the request per model: Sonnet 5 / Sonnet 5.5 / Opus 5+ think by
+default and 400 on `temperature`/`top_p`/`top_k`; **Opus 5.5 and Sonnet 5.5
+400 on forced `tool_choice`** (sent as `auto` + "call the tool" instruction).
+Sonnet 5.5 also 400s on `thinking: disabled` — use `between_tools` instead
+(`ANTHROPIC_THINKING=disabled` maps to that). Knobs: `ANTHROPIC_THINKING`
+(`disabled` | `adaptive`), `ANTHROPIC_EFFORT`,
+`ANTHROPIC_THINKING_MIN_MAX_TOKENS`. Read responses with
+`anthropic_compat.response_text()`, never `content[0].text`.
 
 Prompts ask for numbers + units **as printed** (Phase 4 converts cents),
 and for Mysa Completeness structured columns on every ENERGY row when the
@@ -229,21 +233,17 @@ names) onto the structured columns without filling empty fields. Component
 dedupe keys include clock / day type / season dates / tier bounds.
 
 **Key model/cost env vars** (all overridable):
-- `OPUS_MODEL` (default `claude-opus-5`) — tier-3 + long-doc identify, and
-  `opus_audit.py` / pin arbiter unless `AUDITOR_MODEL` is set. Wave 6
-  candidate `claude-opus-5-5` ($4/$20 vs $5/$25): **not promoted** until the
-  gold probe shows it holds (see `docs/LLM_MEASUREMENT.md`).
-- `HAIKU_MODEL` (default `claude-haiku-4-5-20251001`) — tier-2, vision, nav,
-  two-pass extract, Track B, browser CLI. Wave 6 candidate `claude-sonnet-5`
-  ($2/$10, ~30% more tokens, thinking): **env-only** unless the gold probe
-  shows a clear computable jump that justifies the spend.
-- `GEMINI_MODEL` (default `gemini-3.8-flash`) — tier-1.
-- `OPUS_MAX_PER_UTILITY` (default `2`) — cap on Opus escalations per utility
-  per run (long-doc identify is not counted). Opus reportedly hit on ~8% of
-  escalations while being ~70% of run cost (claimed; "hit" meant "returned
-  anything" — judge it by `tier_acceptance` now), so this cap matters.
+- `GEMINI_MODEL` (default `gemini-3.8-flash`) — tier-1 cheap pass.
+- `CLAUDE_MODEL` / `SONNET_MODEL` / `HAIKU_MODEL` (default
+  `claude-sonnet-5-5`) — the single Claude scrape model (page extract,
+  two-pass identify + per-tariff extract, PDF/page vision, Phase 5 nav,
+  Track B, browser CLI). Prefer `CLAUDE_MODEL`; the others are aliases.
+- `OPUS_MODEL` (default = same as `CLAUDE_MODEL`) — **not a scrape tier**.
+  Used by `opus_audit.py` / pin arbiter unless `AUDITOR_MODEL` is set.
+- `OPUS_MAX_PER_UTILITY` — retained for env compatibility; scrape path
+  ignores it (no third-tier budget).
 - `PHASE6_ENABLED` (compose default `1`), `PHASE6_MAX_WAIT_SEC`,
-  `PHASE6_MAX_TOKENS`.
+  `PHASE6_MAX_TOKENS`. Phase 6 Deep Research is Gemini-only and unchanged.
 
 > **Model choices are behind env vars on purpose.** To try a model, override
 > the env var in `docker-compose.yml` (or the container env) and restart the
@@ -514,7 +514,7 @@ Read-only DB access from a laptop: see `docs/DATABASE_ACCESS.md` (SSH tunnel).
 7. **Long jobs go through `run-on-vm.sh`** (tmux), never a raw SSH command.
 8. **Cost awareness**: extraction spends real LLM money. Prefer dry-run
    (`opus_yield_probe.py`, `run_pipeline(dry_run=True)`) to validate before a
-   full run. Opus is the priciest tier — respect `OPUS_MAX_PER_UTILITY`.
+   full run. Prefer dry-run probes before spending Sonnet on a full campaign.
 
 ---
 
@@ -551,8 +551,8 @@ Seed order: `seed_eia861` → `seed_canada` → `seed_openei` → `seed_territor
 `GOOGLE_AI_API_KEY`, `GOOGLE_CSE_API_KEY`, `GOOGLE_CSE_CX`,
 `GOOGLE_MAPS_API_KEY`, `TARIFF_CORRECTIONS_API_KEY`; pins: `PIN_VERIFY_DAILY_MAX`,
 `PIN_VERIFIER` (`none`|`jev`), `PIN_ARBITER` (`none`|`opus`), `MERCURY_URL`,
-`MERCURY_API_TOKEN`, `MERCURY_TIMEOUT_SEC`, `JEV_CHUNK_CHARS`, `JEV_MAX_CHUNKS`; model/cost: `OPUS_MODEL`, `HAIKU_MODEL`, `GEMINI_MODEL`,
-`AUDITOR_MODEL`, `OPUS_MAX_PER_UTILITY`, `PHASE6_ENABLED`, `LLM_PRICING_JSON`,
+`MERCURY_API_TOKEN`, `MERCURY_TIMEOUT_SEC`, `JEV_CHUNK_CHARS`, `JEV_MAX_CHUNKS`; model/cost: `CLAUDE_MODEL`, `SONNET_MODEL`, `HAIKU_MODEL`, `OPUS_MODEL`, `GEMINI_MODEL`,
+`AUDITOR_MODEL`, `OPUS_MAX_PER_UTILITY` (unused by scrape), `PHASE6_ENABLED`, `LLM_PRICING_JSON`,
 `ANTHROPIC_THINKING`, `ANTHROPIC_EFFORT`, `ANTHROPIC_THINKING_MIN_MAX_TOKENS`,
 `LLM_CACHE_LEGACY_READ`,
 `MONTHLY_MAX_UTILITIES`, `CELERY_CONCURRENCY`, `QUARANTINE_RECHECK_DAYS`; auth:

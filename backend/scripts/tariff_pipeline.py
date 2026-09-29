@@ -75,31 +75,36 @@ ANTHROPIC_API_KEY = _load_setting("anthropic_api_key", "ANTHROPIC_API_KEY")
 GOOGLE_CSE_API_KEY = _load_setting("google_cse_api_key", "GOOGLE_CSE_API_KEY")
 GOOGLE_CSE_CX = _load_setting("google_cse_cx", "GOOGLE_CSE_CX")
 GOOGLE_AI_API_KEY = _load_setting("google_ai_api_key", "GOOGLE_AI_API_KEY")
-HAIKU_MODEL = os.environ.get("HAIKU_MODEL", "claude-haiku-4-5-20251001")
-# Tier-3 escalation / long-doc identify model. Opus 5 (May 2026) is a strict
-# upgrade over Opus 4.7: ~3x cheaper ($5/$25 vs $15/$75) and higher quality.
-OPUS_MODEL = os.environ.get("OPUS_MODEL", "claude-opus-5")
-# Tier-1 extraction model. Moved off the deprecated 3-flash-preview to GA
-# Gemini 3.8 Flash (Sep 2026) — smarter, so more pages resolve at tier 1
-# without escalating to Haiku/Opus.
+# Two-model scrape ladder: Gemini (cheap) → one Claude model (strong).
+# CLAUDE_MODEL / SONNET_MODEL are preferred knobs; HAIKU_MODEL remains an
+# alias so existing env overrides keep working. Unset → Sonnet 5.5.
+_DEFAULT_CLAUDE = "claude-sonnet-5-5"
+CLAUDE_MODEL = (
+    os.environ.get("CLAUDE_MODEL")
+    or os.environ.get("SONNET_MODEL")
+    or os.environ.get("HAIKU_MODEL")
+    or _DEFAULT_CLAUDE
+)
+# Legacy alias used throughout the scrape path (extract / vision / nav /
+# two-pass / Track B / browser). Same value as CLAUDE_MODEL.
+HAIKU_MODEL = CLAUDE_MODEL
+# No longer a third scrape tier. Defaults to the same Claude model so
+# opus_audit / pin arbiter also land on Sonnet 5.5 when unset. An explicit
+# OPUS_MODEL env still overrides those non-scrape paths.
+OPUS_MODEL = os.environ.get("OPUS_MODEL") or CLAUDE_MODEL
+# Tier-1 extraction model. Gemini 3.8 Flash — pages that skip Gemini
+# (PDF / complex / Gemini down) go straight to Claude.
 GEMINI_MODEL = os.environ.get("GEMINI_MODEL", "gemini-3.8-flash")
 GEMINI_TIMEOUT_MS = int(os.environ.get("GEMINI_TIMEOUT_MS", "60000"))
 
-# Hard cap on how many times a single utility may escalate to the expensive
-# Opus tier within one pipeline run. Opus escalations hit on only ~8% of
-# pages (measured), so a pathological utility firing 5+ escalations burns
-# Opus tokens for near-zero yield. Cap keeps the worst cases bounded.
-OPUS_MAX_PER_UTILITY = int(os.environ.get("OPUS_MAX_PER_UTILITY", "2"))
-
-# Per-utility Opus escalation budget (reset at the top of each run_pipeline).
-# Celery prefork runs one pipeline per process at a time, so a module global
-# is safe here.
-_opus_escalations_this_util = 0
+# Retained for env/report compatibility; the scrape path no longer has a
+# separate Opus escalation budget (one Claude tier only).
+OPUS_MAX_PER_UTILITY = int(os.environ.get("OPUS_MAX_PER_UTILITY", "0"))
 
 
 def _reset_opus_budget() -> None:
-    global _opus_escalations_this_util
-    _opus_escalations_this_util = 0
+    """No-op: Opus third-tier budget removed (two-model ladder)."""
+    return
 
 FETCH_TIMEOUT = httpx.Timeout(15.0, connect=8.0)
 PDF_TIMEOUT = httpx.Timeout(30.0, connect=10.0)
@@ -619,10 +624,13 @@ def _cache_model_id(tier: str) -> str:
     env-only model swap never silently replays another model's output."""
     return {
         "gemini": GEMINI_MODEL,
+        # "haiku" / "sonnet" / "opus" cache slots all key on the single Claude
+        # scrape model (legacy "opus" entries still invalidate on swap).
         "haiku": HAIKU_MODEL,
+        "sonnet": HAIKU_MODEL,
         "opus": OPUS_MODEL,
         "vision": HAIKU_MODEL,
-        "twopass": f"{HAIKU_MODEL}+{OPUS_MODEL}",
+        "twopass": HAIKU_MODEL,
     }.get(tier, tier)
 
 
@@ -2834,34 +2842,19 @@ def _extract_two_pass(
         utility_name=utility_name,
         state=state,
     )
-    # Long-document identify needs higher recall than Haiku reliably
-    # delivers. Opus is one call per utility, so the cost delta is
-    # bounded; the win is enumerating every named rate in consolidated
-    # rate-book PDFs (HQ, Manitoba Hydro, BC Hydro, etc.).
-    use_opus_for_identify = len(content_for_llm) >= 30_000
+    # Identify + per-tariff extract both use the single Claude scrape model
+    # (Sonnet 5.5 by default). Long rate-book PDFs used to escalate identify
+    # to a separate Opus id; that third tier is gone.
     try:
         # Own phase tag: identify spend is not an extraction-tier outcome and
         # must not be counted as "wasted" escalation spend.
         with llm_cost.phase("phase3_identify"):
-            raw_text = _call_claude(
-                identify_prompt,
-                model=OPUS_MODEL if use_opus_for_identify else None,
-            )
+            raw_text = _call_claude(identify_prompt)
         llm_calls += 1
         identified = _parse_text_response(raw_text)
     except Exception as e:
         log.error(f"    Two-pass identification failed: {e}")
-        # Retry with Haiku if Opus failed (rate-limit, transient error)
-        if use_opus_for_identify:
-            try:
-                raw_text = _call_claude(identify_prompt)
-                llm_calls += 1
-                identified = _parse_text_response(raw_text)
-            except Exception as e2:
-                log.error(f"    Identify retry with Haiku also failed: {e2}")
-                return [], llm_calls
-        else:
-            return [], llm_calls
+        return [], llm_calls
 
     if not identified:
         return [], llm_calls
@@ -2872,7 +2865,7 @@ def _extract_two_pass(
     ]
     log.info(
         f"    Two-pass: identified {len(relevant)} relevant tariffs "
-        f"(model={'opus' if use_opus_for_identify else 'haiku'})"
+        f"(model={HAIKU_MODEL})"
     )
 
     # Pass 2: Extract each tariff individually. Cap at 20 to bound LLM
@@ -3413,10 +3406,8 @@ def _get_anthropic_client():
 def _call_claude(prompt: str, model: str | None = None) -> str:
     """Text-only Claude call (used by two-pass identification step).
 
-    Defaults to Haiku for cost. Pass `model=OPUS_MODEL` from callers
-    that need higher recall (e.g. enumerating all named rates in a
-    consolidated rate-book PDF — Haiku is stochastic at scale and will
-    silently drop tariffs from the list).
+    Defaults to the single Claude scrape model (HAIKU_MODEL / CLAUDE_MODEL,
+    Sonnet 5.5 when unset). Pass an explicit ``model`` only for overrides.
     """
     from app.services.anthropic_compat import response_text
 
@@ -3679,7 +3670,8 @@ def _call_gemini(prompt: str) -> list[dict]:
 
 def _select_model(page: "RatePage") -> str:
     """Choose which LLM to use based on page characteristics.
-    Returns 'gemini' or 'haiku'. Respects the circuit breaker."""
+    Returns 'gemini' or 'haiku' (haiku = the Claude scrape tier). Respects
+    the circuit breaker."""
     if not GOOGLE_AI_API_KEY or not _gemini_sdk_available():
         return "haiku"
 
@@ -3696,44 +3688,12 @@ def _select_model(page: "RatePage") -> str:
 
 
 def _call_opus_tool(prompt: str) -> list[dict]:
-    """Call Claude Opus (see OPUS_MODEL) for structured tariff extraction.
+    """Deprecated alias: scrape path no longer has a third Opus tier.
 
-    Only used as the last-resort third tier when both Gemini 3 Flash
-    and Haiku fail to extract any tariffs.  More expensive but
-    significantly better at complex rate structures, PDFs, and edge cases.
+    Kept so older probes/scripts that imported the name still resolve; calls
+    the same Claude scrape model as ``_call_claude_tool``.
     """
-    client = _get_anthropic_client()
-    try:
-        resp = client.messages.create(
-            model=OPUS_MODEL,
-            max_tokens=8192,
-            system=[
-                {
-                    "type": "text",
-                    "text": _CACHED_SYSTEM_PROMPT,
-                    "cache_control": {"type": "ephemeral"},
-                }
-            ],
-            messages=[{"role": "user", "content": prompt}],
-            tools=[
-                {
-                    **TARIFF_EXTRACTION_TOOL,
-                    "cache_control": {"type": "ephemeral"},
-                }
-            ],
-            tool_choice={"type": "tool", "name": "store_tariffs"},
-        )
-        for block in resp.content:
-            if block.type == "tool_use" and block.name == "store_tariffs":
-                return block.input.get("tariffs", [])
-        log.warning("    No tool_use block in Opus response, falling back to text parse")
-        for block in resp.content:
-            if hasattr(block, "text"):
-                return _parse_text_response(block.text)
-        return []
-    except Exception as e:
-        log.warning(f"    Opus extraction failed: {e}")
-        return []
+    return _call_claude_tool(prompt)
 
 
 _NUMERIC_RATE_SIGNAL = re.compile(
@@ -3747,38 +3707,32 @@ _NUMERIC_RATE_SIGNAL = re.compile(
 
 
 def _page_has_numeric_rates(content: str) -> bool:
-    """Does the page contain at least one rate-amount-shaped number?
-
-    Pages where both Haiku and Gemini returned 0 AND which contain no
-    numeric rate values cannot produce extractable tariffs no matter
-    which LLM we use — so we skip escalating to the expensive Opus tier.
-    """
+    """Does the page contain at least one rate-amount-shaped number?"""
     if not content:
         return False
     return bool(_NUMERIC_RATE_SIGNAL.search(content))
 
 
 def _extract_with_model_routing(prompt: str, page: "RatePage") -> tuple[list[dict], str]:
-    """Extract tariffs using a 3-tier model strategy.
+    """Extract tariffs using a 2-tier model strategy.
 
-    Tier 1: Gemini 3.8 Flash (fast, cheap, good for most pages)
-    Tier 2: Claude Haiku     (better at complex HTML, tool use)
-    Tier 3: Claude Opus      (last resort — only invoked if the page has at
-                              least one rate-amount-shaped number AND the
-                              per-utility Opus budget isn't exhausted, so we
-                              don't burn Opus tokens on pages without data)
+    Tier 1: Gemini 3.8 Flash (fast, cheap; skipped for PDFs / complex pages
+            / Gemini down — same skip rules as before)
+    Tier 2: Claude (HAIKU_MODEL / CLAUDE_MODEL, default Sonnet 5.5) — the
+            only Claude scrape tier (extract, and previously separate Opus
+            last-resort + Haiku mid-tier are collapsed here)
 
     Returns (tariff_dicts, model_used). Uses LLM extraction cache to avoid
-    redundant API calls.
+    redundant API calls. Legacy ``opus`` cache entries are still checked so
+    prior escalations are not re-paid.
     """
     model = _select_model(page)
 
     if page.content_hash:
         # Check ALL tiers, not just the selected model: if a previous run
-        # escalated to Opus for this exact content, re-running Gemini and
-        # Haiku first just burns two calls to rediscover the same answer.
+        # stored under haiku/opus/gemini for this exact content, reuse it.
         seen_models = []
-        for m in (model, "gemini", "haiku", "opus"):
+        for m in (model, "gemini", "haiku", "sonnet", "opus"):
             if m in seen_models:
                 continue
             seen_models.append(m)
@@ -3794,50 +3748,16 @@ def _extract_with_model_routing(prompt: str, page: "RatePage") -> tuple[list[dic
             if page.content_hash:
                 _set_llm_cache(page.content_hash, "gemini", result)
             return result, "gemini"
-        log.info("    Gemini returned no tariffs, escalating to Haiku")
+        log.info("    Gemini returned no tariffs, escalating to Claude")
 
     result = _call_claude_tool(prompt)
+    # Outcome key stays "haiku" for historical tier_acceptance continuity;
+    # spend rolls up under model_key(HAIKU_MODEL) → "sonnet" when on 5.5.
     llm_cost.record_extraction_outcome("haiku", bool(result))
     if result:
         if page.content_hash:
             _set_llm_cache(page.content_hash, "haiku", result)
-        return result, "haiku"
-
-    # Only escalate to Opus if the page actually contains numeric rate data.
-    # Pages with rate-themed titles but no numbers (e.g. marketing pages
-    # that link to PDFs) can't yield tariffs from any LLM, so escalating
-    # to the expensive Opus tier wastes tokens.
-    if not _page_has_numeric_rates(page.content):
-        log.info(
-            "    Haiku returned 0; skipping Opus escalation "
-            "(page has no numeric rate signals)"
-        )
-        return [], "haiku"
-
-    # Per-utility Opus budget: Opus escalations hit on only ~8% of pages, so
-    # cap how many times one utility may fire the expensive tier per run.
-    global _opus_escalations_this_util
-    if _opus_escalations_this_util >= OPUS_MAX_PER_UTILITY:
-        log.info(
-            f"    Haiku returned 0; skipping Opus escalation "
-            f"(per-utility cap of {OPUS_MAX_PER_UTILITY} reached)"
-        )
-        return [], "haiku"
-    _opus_escalations_this_util += 1
-
-    log.info(
-        f"    Haiku returned no tariffs, escalating to Opus "
-        f"({_opus_escalations_this_util}/{OPUS_MAX_PER_UTILITY})"
-    )
-    result = _call_opus_tool(prompt)
-    # Telemetry: track whether the expensive Opus escalation actually pays
-    # off (returns tariffs) or burns tokens for nothing. Rolled into the
-    # run summary as tier_outcomes so we can see Opus's hit rate per run.
-    llm_cost.record_extraction_outcome("opus", bool(result))
-    if result:
-        if page.content_hash:
-            _set_llm_cache(page.content_hash, "opus", result)
-    return result, "opus"
+    return result, "haiku"
 
 
 def _parse_extraction_response(items: list[dict], source_url: str) -> list[ExtractedTariff]:
@@ -7592,7 +7512,7 @@ def run_pipeline(
     force_extract: bool = False,
 ) -> PipelineResult:
     llm_cost.reset()  # start a fresh per-utility cost accumulation window
-    _reset_opus_budget()  # reset the per-utility Opus escalation cap
+    _reset_opus_budget()  # no-op; retained for call-site compatibility
     info = get_utility_info(utility_id)
     if not info or info.get("name", "").startswith("Utility #"):
         raise ValueError(f"Utility {utility_id} not found in database")

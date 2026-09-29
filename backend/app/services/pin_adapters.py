@@ -6,8 +6,9 @@ both default to ``none`` (Null adapters, hold at gate 0, zero spend).
 * ``JevVerifier`` — Mercury ``jev_screen`` (gate 3) and ``jev_verify``
   (gate 6) over Mercury's MCP endpoint (``MERCURY_URL`` + ``MERCURY_API_TOKEN``).
   Jev verdicts flagged ``review`` never count as verified.
-* ``OpusArbiter`` — one Opus-tier Anthropic call with a forced tool so the
-  verdict is typed; model from ``AUDITOR_MODEL`` / ``OPUS_MODEL``.
+* ``OpusArbiter`` — one Anthropic call with a forced tool so the
+  verdict is typed; model from ``AUDITOR_MODEL`` / ``OPUS_MODEL`` /
+  ``CLAUDE_MODEL`` (default Sonnet 5.5). PIN switches stay off by default.
 
 Every adapter fails closed: an unreadable answer is a reject / unsupported,
 and a transport error raises (``run_verification`` holds as
@@ -288,7 +289,14 @@ class OpusArbiter:
     def __init__(self, api_key: str, model: str | None = None, *, max_chars: int | None = None,
                  timeout: float = 180.0, post=None):
         self._api_key = api_key
-        self.model = model or os.environ.get("AUDITOR_MODEL") or os.environ.get("OPUS_MODEL", "claude-opus-5")
+        self.model = model or (
+            os.environ.get("AUDITOR_MODEL")
+            or os.environ.get("OPUS_MODEL")
+            or os.environ.get("CLAUDE_MODEL")
+            or os.environ.get("SONNET_MODEL")
+            or os.environ.get("HAIKU_MODEL")
+            or "claude-sonnet-5-5"
+        )
         self.max_chars = max_chars or (
             _env_int("JEV_CHUNK_CHARS", 40_000) * _env_int("JEV_MAX_CHUNKS", 5)
         )
