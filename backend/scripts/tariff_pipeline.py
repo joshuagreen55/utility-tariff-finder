@@ -605,7 +605,7 @@ def _set_pdf_cache(content_hash: str, text: str) -> None:
 
 # LLM extraction result cache — avoids re-calling the LLM for the same content
 LLM_CACHE_DIR = os.path.join(os.environ.get("APP_LOG_DIR", "/app/logs"), "llm_extraction_cache")
-_LLM_PROMPT_VERSION = "v3"
+_LLM_PROMPT_VERSION = "v4"
 
 
 # Opt-in, for one transition run only: also read entries written under the
@@ -2333,10 +2333,11 @@ def _page_has_rate_content(text: str, title: str = "", url: str = "") -> bool:
 # Shared by every Phase 3 prompt (text, two-pass, vision). No braces: it is
 # substituted before str.format runs on the prompts.
 _STRUCTURED_RULES = """- UNITS: copy each number and its unit exactly as printed ("¢/kWh" stays 9.56 "¢/kWh"; "$/kWh" stays 0.0956 "$/kWh"). Do not convert cents to dollars — the pipeline does it deterministically. When you add riders into an all-in rate, add them in the printed unit.
-- TOU CLOCKS: every ENERGY row of a TOU / seasonal_tou tariff needs period_start_time + period_end_time taken from hours the source states. Emit one ENERGY row per continuous window (morning and evening on-peak are two rows). A rate stated for "all other hours" / "all remaining hours" covers exactly the hours not in the other stated windows — emit those complementary windows explicitly (e.g. on-peak 16:00–21:00 → off-peak 21:00–16:00). Label-only "On-Peak" with no hours anywhere in the source stays null — do NOT invent hours.
+- MYSA FIELDS (Completeness): period_start_time, period_end_time, day_type, and season_start/end month/day are first-class columns — not optional labels. Fill them whenever the source states hours or season dates. period_label / season strings are display-only and never substitute for clocks or calendar dates. Leave structured fields null when the source does not state them; Phase 4 will flag needs_review / incompleteness rather than inventing values.
+- TOU CLOCKS: every ENERGY row of a TOU / tou_tiered / demand_tou / seasonal_tou tariff needs period_start_time + period_end_time taken from hours the source states. Emit one ENERGY row per continuous window (morning and evening on-peak are two rows). A rate stated for "all other hours" / "all remaining hours" covers exactly the hours not in the other stated windows — emit those complementary windows explicitly (e.g. on-peak 16:00–21:00 → off-peak 21:00–16:00). Label-only "On-Peak" with no hours anywhere in the source stays null — do NOT invent hours.
 - DAY TYPES: every TOU ENERGY row needs day_type. Use "all" when the source says the windows apply every day (or states no weekday/weekend distinction), "weekday" when it says Monday–Friday / weekdays. When the source prices weekends and/or holidays differently (e.g. "weekends and holidays: off-peak all day"), emit separate rows with day_type "weekend" and "holiday" for them — do not leave that rule only in the description.
 - COVERAGE: for each season and each day type, the ENERGY windows must cover all 24 hours exactly once. If the source genuinely leaves hours unpriced, keep what it states and lower confidence — do not fill gaps with guesses.
-- SEASONS: every ENERGY row of a seasonal / seasonal_tiered / seasonal_tou tariff needs season_start/end month/day. A month-only range is exact: "June through September" → 6/1–9/30; "Dec–Apr" → 12/1–4/30. Seasons must cover the whole year once. Only "Summer"/"Winter" with no months anywhere in the source stays null — do NOT invent dates.
+- SEASONS: every ENERGY row of a seasonal / seasonal_tiered / seasonal_tou tariff needs season_start/end month/day. A month-only range is exact: "June through September" → 6/1–9/30; "Dec–Apr" → 12/1–4/30. Seasons must cover the whole year once. Only "Summer"/"Winter" with no months anywhere in the source stays null — do NOT invent dates. seasonal_tou needs both clocks/day_type AND season dates on every ENERGY row.
 - One tariff per product: keep all seasons, periods and day types of a schedule inside that one tariff, named with the schedule's official title as printed."""
 
 EXTRACTION_PROMPT = """Extract ONLY residential and small/general commercial electricity tariffs from this page.
@@ -7128,7 +7129,11 @@ def _phase6_prompt(utility_name: str, state: str, attempted_urls: list[str] | No
         else "- Filings on the relevant state Public Utility / Service Commission."
     )
 
-    return f"""Research task (scope-bounded, 10 minutes maximum):
+    # Keep Phase 6 on the same Mysa Completeness field contract as Phase 3.
+    # Concatenate rather than nest braces inside the f-string body.
+    structured_rules = _STRUCTURED_RULES
+    return (
+        f"""Research task (scope-bounded, 10 minutes maximum):
 
 Find the current published residential and commercial electricity tariffs for {utility_name} in {state}, {country_name}.
 
@@ -7152,23 +7157,23 @@ Return your findings as a report ending with a fenced JSON block like this:
     "name": "official tariff name",
     "code": "schedule code",
     "customer_class": "residential" or "commercial",
-    "rate_type": "flat" | "tiered" | "tou" | "demand" | "seasonal",
+    "rate_type": "flat" | "tiered" | "tou" | "demand" | "seasonal" | "tou_tiered" | "seasonal_tou" | "seasonal_tiered" | "demand_tou" | "complex",
     "effective_date": "YYYY-MM-DD" or null,
     "source_url": "URL you used",
     "confidence": 0.0-1.0,
     "components": [
       {{
         "component_type": "energy" | "fixed" | "demand" | "minimum" | "adjustment",
-        "unit": "$/kWh" | "$/kW" | "$/month" | "cents/kWh",
-        "rate_value": <number>,
+        "unit": "¢/kWh" | "$/kWh" | "$/kW" | "$/month" | "¢/day" (as printed),
+        "rate_value": <number as printed in that unit — do not convert cents>,
         "tier_min_kwh": <number or null>,
         "tier_max_kwh": <number or null>,
         "tier_label": <string or null>,
-        "period_label": "on-peak" | "off-peak" | "shoulder" | null,
+        "period_label": "On-Peak" | "Off-Peak" | "Mid-Peak" | null (display only),
         "period_start_time": "HH:MM" or null,
         "period_end_time": "HH:MM" or null,
         "day_type": "weekday" | "weekend" | "holiday" | "all" | null,
-        "season": "summer" | "winter" | null,
+        "season": "Summer" | "Winter" | null (display only),
         "season_start_month": <1-12 or null>,
         "season_start_day": <1-31 or null>,
         "season_end_month": <1-12 or null>,
@@ -7181,15 +7186,17 @@ Return your findings as a report ending with a fenced JSON block like this:
 
 Rules for the JSON:
 - Include each schedule ONCE. Break tiers, seasons, and time-of-use periods out as separate components.
-- Prefer structured period_* / season_* fields over label-only. Never invent clock times or season dates.
 - Read numbers EXACTLY as printed in the source — do not estimate or round.
-- If you use "$/kWh" as the unit, convert cents to dollars in rate_value. Otherwise use "cents/kWh" and leave rate_value as-is.
-- Relative seasonal riders (energy = another rate ± seasonal premium/credit): emit all-in ENERGY per season (base ± adjustment) with month ranges in season/tier_label. Do not leave a season as ADJUSTMENT-only.
+"""
+        + structured_rules
+        + """
+- Relative seasonal riders (energy = another rate ± seasonal premium/credit): emit all-in ENERGY per season (base ± adjustment) with month ranges in season/tier_label AND season_start/end month/day when months are stated. Do not leave a season as ADJUSTMENT-only.
 - Current vs future columns ("Board’s Order" / currently effective vs a later Jan 1 YYYY): extract ONLY the current column as live rates.
 - Stacking ¢/kWh riders (FAM, DSM/DCRR, Storm) that apply in addition to energy: emit all-in ENERGY (base + riders).
 - Interim vs approved Energy Charge (TVP / time-varying): when both Interim Energy Charge and Energy Charge seasonal TOU tables appear, extract Energy Charge seasons/periods — do not flatten to a single interim all-hours ENERGY.
 - If you cannot find the utility's current residential/commercial electric tariffs at all from authoritative sources, return an empty array [].
 """
+    )
 
 
 # Regex to extract a fenced JSON code block from the Deep Research report.
