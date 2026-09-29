@@ -197,6 +197,32 @@ class TestProvenanceScore(unittest.TestCase):
             {"coverage": 0.40, "freshness": 0.30, "completeness": 0.20, "provenance": 0.10},
         )
 
+    def test_completeness_method_and_score(self):
+        from scripts.health_score import COMPLETENESS_METHOD, completeness_score
+
+        self.assertEqual(COMPLETENESS_METHOD, "mysa_energy_tou_season_v1")
+        self.assertAlmostEqual(completeness_score(0, 0), 0.0)
+        self.assertAlmostEqual(completeness_score(5, 10), 50.0)
+        self.assertAlmostEqual(completeness_score(10, 10), 100.0)
+
+    def test_completeness_does_not_use_fixed_charge_in_formula(self):
+        """Old Completeness blended has_fixed; the Mysa formula must not."""
+        import inspect
+
+        from scripts import health_score
+
+        src = inspect.getsource(health_score.compute)
+        self.assertIn("completeness_score", src)
+        self.assertIn("mysa_ready_tariffs", src)
+        # has_fixed_n may still be selected for informational quality counts,
+        # but must not appear in the Completeness arithmetic.
+        completeness_line = [
+            line for line in src.splitlines() if "completeness =" in line and "completeness_score" in line
+        ]
+        self.assertTrue(completeness_line)
+        self.assertNotIn("has_fixed", completeness_line[0])
+        self.assertNotIn("has_eff", completeness_line[0])
+
     def test_health_score_sql_is_residential_only(self):
         """Quality / freshness / coverage tariff lenses must filter residential."""
         from scripts.health_score import (
@@ -248,6 +274,18 @@ class TestProvenanceScore(unittest.TestCase):
                 "has_source_url": 0,
                 "source_type_counts": {"official": 0, "unknown": 0, "third_party": 0},
             },
+            "completeness_method": "mysa_energy_tou_season_v1",
+            "completeness": {
+                "method": "mysa_energy_tou_season_v1",
+                "mysa_ready_tariffs": 0,
+                "served_tariffs": 0,
+                "has_energy_rates": 0,
+                "missing_energy_rates": 0,
+                "tou_missing_clock_windows": 0,
+                "tou_missing_day_type": 0,
+                "seasonal_missing_calendar_dates": 0,
+                "top_blocking_reasons": {},
+            },
             "provenance_method": "source_type_v2",
             "official_source": {
                 "utilities_with_verified_residential": 0,
@@ -273,6 +311,97 @@ class TestProvenanceScore(unittest.TestCase):
         text = out.getvalue()
         self.assertIn("residential-only", text)
         self.assertIn("commercial/other classes excluded", text)
+        self.assertIn("COMPLETENESS (Mysa-ready", text)
+        self.assertIn("mysa_energy_tou_season_v1", text)
+        self.assertIn("TOU missing clock windows", text)
+        self.assertIn("seasonal missing dates", text)
+        # Fixed charge may appear as informational, but not as a Completeness driver.
+        self.assertIn("not in Completeness", text)
+        self.assertNotIn("has energy component:", text)  # old Completeness-adjacent line
+
+
+class TestMysaCompletenessUnit(unittest.TestCase):
+    """Pure unit tests: Completeness reuses computable reason codes, ignores fixed."""
+
+    def _tariff(self, rate_type, components, name="T", utility_id=1):
+        from types import SimpleNamespace
+
+        comps = [SimpleNamespace(**c) for c in components]
+        return SimpleNamespace(
+            rate_type=rate_type,
+            rate_components=comps,
+            name=name,
+            utility_id=utility_id,
+        )
+
+    def test_flat_energy_ready_fixed_does_not_matter(self):
+        from scripts.health_score import _mysa_ready_stats, completeness_score
+
+        energy = {"component_type": "energy", "unit": "$/kWh", "rate_value": 0.12}
+        fixed = {"component_type": "fixed", "unit": "$/month", "rate_value": 10.0}
+        rows = [
+            (self._tariff("flat", [energy], utility_id=1), None),
+            (self._tariff("flat", [energy, fixed], utility_id=2), None),
+        ]
+        stats = _mysa_ready_stats(rows)
+        self.assertEqual(stats["mysa_ready"], 2)
+        self.assertEqual(stats["served"], 2)
+        self.assertEqual(stats["has_energy_rates"], 2)
+        self.assertEqual(stats["missing_energy_rates"], 0)
+        self.assertEqual(completeness_score(stats["mysa_ready"], stats["served"]), 100.0)
+
+    def test_tou_missing_clocks_reduces_ready(self):
+        from scripts.health_score import _mysa_ready_stats
+
+        ready = [
+            {"component_type": "energy", "unit": "$/kWh", "rate_value": 0.1,
+             "period_start_time": "00:00", "period_end_time": "00:00", "day_type": "weekday"},
+            {"component_type": "energy", "unit": "$/kWh", "rate_value": 0.08,
+             "period_start_time": "00:00", "period_end_time": "00:00", "day_type": "weekend"},
+        ]
+        broken = [
+            {"component_type": "energy", "unit": "$/kWh", "rate_value": 0.1},
+            {"component_type": "energy", "unit": "$/kWh", "rate_value": 0.2},
+        ]
+        stats = _mysa_ready_stats([
+            (self._tariff("tou", ready, utility_id=1), None),
+            (self._tariff("tou", broken, utility_id=2), None),
+        ])
+        self.assertEqual(stats["mysa_ready"], 1)
+        self.assertEqual(stats["tou_missing_clock_windows"], 1)
+        self.assertIn("tou_missing_clock_windows", stats["top_blocking_reasons"])
+
+    def test_seasonal_missing_dates_reduces_ready(self):
+        from scripts.health_score import _mysa_ready_stats
+
+        ready = [
+            {"component_type": "energy", "unit": "$/kWh", "rate_value": 0.11,
+             "season_start_month": 5, "season_start_day": 1,
+             "season_end_month": 10, "season_end_day": 31},
+            {"component_type": "energy", "unit": "$/kWh", "rate_value": 0.09,
+             "season_start_month": 11, "season_start_day": 1,
+             "season_end_month": 4, "season_end_day": 30},
+        ]
+        broken = [
+            {"component_type": "energy", "unit": "$/kWh", "rate_value": 0.11},
+            {"component_type": "energy", "unit": "$/kWh", "rate_value": 0.09},
+        ]
+        stats = _mysa_ready_stats([
+            (self._tariff("seasonal", ready, utility_id=1), None),
+            (self._tariff("seasonal", broken, utility_id=2), None),
+        ])
+        self.assertEqual(stats["mysa_ready"], 1)
+        self.assertEqual(stats["seasonal_missing_calendar_dates"], 1)
+        self.assertIn("seasonal_missing_calendar_dates", stats["top_blocking_reasons"])
+
+    def test_fixed_only_counts_missing_energy(self):
+        from scripts.health_score import _mysa_ready_stats
+
+        fixed = {"component_type": "fixed", "unit": "$/month", "rate_value": 12.0}
+        stats = _mysa_ready_stats([(self._tariff("flat", [fixed]), None)])
+        self.assertEqual(stats["mysa_ready"], 0)
+        self.assertEqual(stats["missing_energy_rates"], 1)
+        self.assertIn("missing_energy_rates", stats["top_blocking_reasons"])
 
 
 class TestHqRepairVerification(unittest.TestCase):

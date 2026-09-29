@@ -23,8 +23,22 @@ also reported on its own so you can see WHERE the score comes from:
 Composite Health Score = weighted blend:
     40%  Coverage (type-weighted)
     30%  Freshness
-    20%  Completeness (has energy + fixed charge + effective date)
+    20%  Completeness (Mysa-ready share — energy + TOU clocks/day type +
+         season calendar dates when the rate type needs them; fixed /
+         customer charges and bare effective_date are NOT scored)
     10%  Provenance (source quality: official / unknown / third-party)
+
+COMPLETENESS BEHAVIOUR CHANGE (2026-09, ``completeness_method``:
+``mysa_energy_tou_season_v1``). Completeness used to be a weighted blend of
+``has_energy`` (50%) + ``has_fixed/minimum`` (25%) + ``effective_date``
+(25%). Mysa prices kWh and builds TOU schedules — it does not need a fixed
+charge to show cost, and ``effective_date`` is the wrong proxy for season
+calendar dates. Completeness is now the share of live residential tariffs
+that pass the computable contract (``app/services/computable.py``): energy
+rates present; TOU family also needs clock windows + day type (and a 24 h
+partition); seasonal family also needs inclusive season start/end dates.
+Snapshots before the change have no ``completeness_method`` key. Fixed-
+charge and effective-date counts remain informational only.
 
 PROVENANCE BEHAVIOUR CHANGE (2026-09, issue #28 — "provenance_method":
 "source_type_v2" in the JSON). Provenance used to be "served tariff has a
@@ -47,11 +61,10 @@ old "has_source_url" count is still reported. Unknown is 0.4 rather than
 0.0 so a missing/unclassifiable URL is scored above a known blog copy.
 
 Also reported, but NOT in the composite (so the score stays comparable with
-its history): the COMPUTABLE lens — live, verified residential tariffs that
-satisfy the computable contract (app/services/computable.py), and how many
-active utilities have at least one. That is the bar for Mysa cost/TOU use.
-And the OFFICIAL-SOURCE lens — how many active utilities' best live, verified
-residential tariff cites an official source.
+its history on the other axes): the COMPUTABLE lens mirrors the Mysa-ready
+denominator used for Completeness (verified subset + utilities with one),
+and the OFFICIAL-SOURCE lens — how many active utilities' best live,
+verified residential tariff cites an official source.
 
 The score is deterministic and re-runnable. Pass --snapshot to append a
 JSON line to logs/health_score_history.jsonl so you can chart the trend
@@ -68,6 +81,7 @@ import argparse
 import json
 import os
 import sys
+from collections import Counter
 from datetime import datetime, timezone
 
 from sqlalchemy import text
@@ -91,6 +105,9 @@ PROVENANCE_WEIGHTS = {
     "third_party": 0.2,
 }
 PROVENANCE_METHOD = "source_type_v2"
+# Completeness = share of live residential tariffs Mysa can price
+# (evaluate_computable). Old formula used has_energy/has_fixed/effective_date.
+COMPLETENESS_METHOD = "mysa_energy_tou_season_v1"
 # JSON / scorecard scope: every tariff lens filters to residential.
 SCORE_SCOPE = "residential"
 
@@ -105,6 +122,13 @@ def provenance_score(counts: dict[str, int]) -> float:
         for st, n in counts.items()
     )
     return 100.0 * points / total
+
+
+def completeness_score(mysa_ready: int, served: int) -> float:
+    """0-100 Completeness: share of live residential tariffs that are Mysa-ready."""
+    if served <= 0:
+        return 0.0
+    return 100.0 * mysa_ready / served
 
 # Relative importance of a utility by type (proxy for customers served, since
 # we don't store customer counts). Used for the type-weighted coverage score.
@@ -218,7 +242,7 @@ SELECT
           WHEN last_verified_at IS NOT NULL                    THEN 0.1
           ELSE 0.0
         END)                                                        AS freshness_points,
-    -- completeness points (only meaningful for verified rows)
+    -- informational component counts (not used in Completeness)
     COUNT(*) FILTER (WHERE has_energy)                              AS has_energy_n,
     COUNT(*) FILTER (WHERE has_fixed)                               AS has_fixed_n,
     COUNT(*) FILTER (WHERE effective_date IS NOT NULL)             AS has_eff_n,
@@ -278,45 +302,103 @@ FROM monitoring_sources
 """)
 
 
-def compute_computable(session: Session) -> dict:
-    """Computable-contract lens over live, verified residential tariffs."""
-    from collections import Counter
-
+def _live_residential_rows(session: Session, *, verified_only: bool = False):
+    """Load live residential tariffs (+ holiday calendar) for Mysa-readiness checks."""
     from sqlalchemy import select
     from sqlalchemy.orm import selectinload
 
     from app.models import CustomerClass, Tariff, Utility
-    from app.services.computable import evaluate_computable
 
-    rows = session.execute(
+    stmt = (
         select(Tariff, Utility.holiday_calendar)
         .join(Utility, Utility.id == Tariff.utility_id)
         .options(selectinload(Tariff.rate_components))
         .where(
-            Utility.is_active.is_(True),
             Tariff.customer_class == CustomerClass.RESIDENTIAL,
-            Tariff.last_verified_at.is_not(None),
             Tariff.superseded_by_tariff_id.is_(None),
             Tariff.supersede_reason.is_(None),
         )
-    ).all()
+    )
+    if verified_only:
+        stmt = stmt.where(
+            Utility.is_active.is_(True),
+            Tariff.last_verified_at.is_not(None),
+        )
+    return session.execute(stmt).all()
+
+
+def _mysa_ready_stats(rows) -> dict:
+    """Evaluate the computable contract over tariff rows; return counts + reasons."""
+    from app.services.computable import evaluate_computable
+
     ok = 0
     utils_ok: set[int] = set()
     reasons: Counter = Counter()
+    # Mysa-relevant axis counters (informational breakdown for the scorecard).
+    has_energy = 0
+    missing_energy = 0
+    tou_missing_clocks = 0
+    tou_missing_day_type = 0
+    seasonal_missing_dates = 0
     for t, holiday_calendar in rows:
         res = evaluate_computable(
             t.rate_type, t.rate_components, name=t.name, holiday_calendar=holiday_calendar
         )
+        reason_codes = {r.split(":", 1)[0] for r in res.reasons}
+        # evaluate_computable emits missing_energy_rates when no numeric ENERGY
+        # rows exist — that is the same gate Mysa uses for flat tariffs.
+        if "missing_energy_rates" in reason_codes:
+            missing_energy += 1
+        else:
+            has_energy += 1
+        if "tou_missing_clock_windows" in reason_codes:
+            tou_missing_clocks += 1
+        if "tou_missing_day_type" in reason_codes:
+            tou_missing_day_type += 1
+        if "seasonal_missing_calendar_dates" in reason_codes:
+            seasonal_missing_dates += 1
         if res.computable:
             ok += 1
             utils_ok.add(t.utility_id)
         else:
             reasons.update(r.split(":", 1)[0] for r in res.reasons)
     return {
-        "verified_residential_tariffs": len(rows),
-        "computable_residential_tariffs": ok,
-        "utilities_with_computable_residential": len(utils_ok),
+        "served": len(rows),
+        "mysa_ready": ok,
+        "utilities_with_mysa_ready": len(utils_ok),
+        "has_energy_rates": has_energy,
+        "missing_energy_rates": missing_energy,
+        "tou_missing_clock_windows": tou_missing_clocks,
+        "tou_missing_day_type": tou_missing_day_type,
+        "seasonal_missing_calendar_dates": seasonal_missing_dates,
         "top_blocking_reasons": dict(reasons.most_common(8)),
+    }
+
+
+def compute_mysa_completeness(session: Session) -> dict:
+    """Mysa Completeness over all live (served) residential tariffs."""
+    stats = _mysa_ready_stats(_live_residential_rows(session, verified_only=False))
+    return {
+        "method": COMPLETENESS_METHOD,
+        "served_tariffs": stats["served"],
+        "mysa_ready_tariffs": stats["mysa_ready"],
+        "has_energy_rates": stats["has_energy_rates"],
+        "missing_energy_rates": stats["missing_energy_rates"],
+        "tou_missing_clock_windows": stats["tou_missing_clock_windows"],
+        "tou_missing_day_type": stats["tou_missing_day_type"],
+        "seasonal_missing_calendar_dates": stats["seasonal_missing_calendar_dates"],
+        "top_blocking_reasons": stats["top_blocking_reasons"],
+    }
+
+
+def compute_computable(session: Session) -> dict:
+    """Computable-contract lens over live, verified residential tariffs."""
+    stats = _mysa_ready_stats(_live_residential_rows(session, verified_only=True))
+    return {
+        "verified_residential_tariffs": stats["served"],
+        "computable_residential_tariffs": stats["mysa_ready"],
+        "utilities_with_computable_residential": stats["utilities_with_mysa_ready"],
+        "top_blocking_reasons": stats["top_blocking_reasons"],
     }
 
 
@@ -352,9 +434,12 @@ def compute(session: Session) -> dict:
     q = session.execute(QUALITY_SQL).first()
     served = q.served or 1
     freshness = 100.0 * float(q.freshness_points or 0) / served
-    completeness = 100.0 * (
-        0.5 * q.has_energy_n + 0.25 * q.has_fixed_n + 0.25 * q.has_eff_n
-    ) / served
+
+    mysa = compute_mysa_completeness(session)
+    # Denominator matches QUALITY_SQL served (live residential); mysa stats
+    # use the same filter so the ratio is consistent.
+    completeness = completeness_score(mysa["mysa_ready_tariffs"], mysa["served_tariffs"] or served)
+
     source_type_counts = {
         "official": q.src_official_n or 0,
         "unknown": q.src_unknown_n or 0,
@@ -401,6 +486,18 @@ def compute(session: Session) -> dict:
             "has_effective_date": q.has_eff_n,
             "has_source_url": q.has_source_n,
             "source_type_counts": source_type_counts,
+        },
+        "completeness_method": COMPLETENESS_METHOD,
+        "completeness": {
+            "method": COMPLETENESS_METHOD,
+            "mysa_ready_tariffs": mysa["mysa_ready_tariffs"],
+            "served_tariffs": mysa["served_tariffs"],
+            "has_energy_rates": mysa["has_energy_rates"],
+            "missing_energy_rates": mysa["missing_energy_rates"],
+            "tou_missing_clock_windows": mysa["tou_missing_clock_windows"],
+            "tou_missing_day_type": mysa["tou_missing_day_type"],
+            "seasonal_missing_calendar_dates": mysa["seasonal_missing_calendar_dates"],
+            "top_blocking_reasons": mysa["top_blocking_reasons"],
         },
         "provenance_method": PROVENANCE_METHOD,
         "provenance": {
@@ -465,10 +562,42 @@ def print_scorecard(r: dict) -> None:
     print(f"    served (non-superseded residential): {q['served_tariffs']:,}")
     print(f"    verified:                {q['verified']:,}  ({100*q['verified']/served:.0f}%)")
     print(f"    stale OpenEI seeds:      {q['stale_seeds_served']:,}  ({100*q['stale_seeds_served']/served:.0f}%)")
-    print(f"    has energy component:    {q['has_energy_component']:,}  ({100*q['has_energy_component']/served:.0f}%)")
-    print(f"    has fixed/customer chg:  {q['has_fixed_charge']:,}  ({100*q['has_fixed_charge']/served:.0f}%)")
-    print(f"    has effective date:      {q['has_effective_date']:,}  ({100*q['has_effective_date']/served:.0f}%)")
     print(f"    has source URL:          {q['has_source_url']:,}  ({100*q['has_source_url']/served:.0f}%)")
+    print(f"    has fixed/customer chg:  {q['has_fixed_charge']:,}  ({100*q['has_fixed_charge']/served:.0f}%)  [informational — not in Completeness]")
+    print(f"    has effective date:      {q['has_effective_date']:,}  ({100*q['has_effective_date']/served:.0f}%)  [informational — not in Completeness]")
+    print()
+
+    cm = r["completeness"]
+    cm_served = cm["served_tariffs"] or 1
+    print(f"  COMPLETENESS (Mysa-ready, method {r['completeness_method']})")
+    print(
+        f"    {cm['mysa_ready_tariffs']:,} / {cm['served_tariffs']:,} live residential tariffs "
+        f"Mysa can price ({100*cm['mysa_ready_tariffs']/cm_served:.0f}%)"
+    )
+    print(
+        f"    has energy rates:          {cm['has_energy_rates']:,}  "
+        f"({100*cm['has_energy_rates']/cm_served:.0f}%)"
+    )
+    print(
+        f"    missing energy rates:      {cm['missing_energy_rates']:,}  "
+        f"({100*cm['missing_energy_rates']/cm_served:.0f}%)"
+    )
+    print(
+        f"    TOU missing clock windows: {cm['tou_missing_clock_windows']:,}  "
+        f"({100*cm['tou_missing_clock_windows']/cm_served:.0f}%)"
+    )
+    print(
+        f"    TOU missing day type:      {cm['tou_missing_day_type']:,}  "
+        f"({100*cm['tou_missing_day_type']/cm_served:.0f}%)"
+    )
+    print(
+        f"    seasonal missing dates:    {cm['seasonal_missing_calendar_dates']:,}  "
+        f"({100*cm['seasonal_missing_calendar_dates']/cm_served:.0f}%)"
+    )
+    if cm["top_blocking_reasons"]:
+        print("    top blocking reasons:")
+        for reason, n in cm["top_blocking_reasons"].items():
+            print(f"      {reason:<36}{n:>7,}")
     print()
 
     sc = q["source_type_counts"]
@@ -496,7 +625,7 @@ def print_scorecard(r: dict) -> None:
     print()
 
     k = r["computable"]
-    print("  COMPUTABLE CONTRACT (informational, not in composite)")
+    print("  COMPUTABLE CONTRACT (verified subset; Completeness uses all live rows)")
     print(f"    {k['computable_residential_tariffs']:,} / {k['verified_residential_tariffs']:,} verified residential tariffs computable")
     print(f"    {k['utilities_with_computable_residential']:,} / {r['coverage']['active_utilities']:,} active utilities have one")
     for reason, n in k["top_blocking_reasons"].items():
