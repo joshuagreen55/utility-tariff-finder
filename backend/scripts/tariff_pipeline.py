@@ -1777,6 +1777,11 @@ def phase2_discover_tariff_pages(rate_page_url: str) -> list[RatePage]:
     # Level 0: fetch the main rates page
     domain = urlparse(rate_page_url).netloc
     bare_domain = domain.replace("www.", "")
+    # Always bind before the Playwright/httpx branch. The browser path has
+    # no Content-Type header; referencing an unbound `ctype` below raises
+    # UnboundLocalError (campaign overnight failures on JS-rendered domains
+    # that Phase 1 already marked in `_js_rendered_domains`).
+    content, ctype, status = "", "", 0
 
     # If this domain is known to need a browser, skip httpx entirely
     if bare_domain in _BROWSER_REQUIRED_DOMAINS or domain in _js_rendered_domains:
