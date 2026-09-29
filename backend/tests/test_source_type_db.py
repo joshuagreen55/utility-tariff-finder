@@ -294,6 +294,166 @@ class TestHealthScoreProvenance(_HQCase):
             after["coverage"]["active_utilities"], mid["coverage"]["active_utilities"] + 1
         )
 
+
+class TestHealthScoreCompleteness(_HQCase):
+    """Mysa Completeness: energy + TOU clocks/seasons; fixed charges ignored."""
+
+    def _delta_completeness(self, before, after):
+        return (
+            after["completeness"]["mysa_ready_tariffs"] - before["completeness"]["mysa_ready_tariffs"],
+            after["completeness"]["served_tariffs"] - before["completeness"]["served_tariffs"],
+            after["components"]["completeness"],
+            before["components"]["completeness"],
+        )
+
+    def test_flat_energy_is_mysa_ready_fixed_charge_ignored(self):
+        from sqlalchemy.orm import Session
+
+        from scripts import health_score
+
+        with Session(self.engine) as s:
+            before = health_score.compute(s)
+
+        uid = self.make_hq("HQ Completeness Flat")
+        # Energy-only flat: Mysa-ready.
+        self.make_tariff(uid, "Flat Energy", [_energy(0.12)], rate_type="flat", source_url=HQ_PDF)
+        # Same shape plus a fixed charge — must NOT change Mysa-ready count.
+        self.make_tariff(
+            uid, "Flat + Fixed",
+            [_energy(0.12), _fixed(0.45)],
+            rate_type="flat", source_url=HQ_PDF,
+        )
+        # Effective date alone must not be required for Completeness.
+        from datetime import date
+        self.make_tariff(
+            uid, "Flat Dated",
+            [_energy(0.12)],
+            rate_type="flat", source_url=HQ_PDF, effective_date=date(2026, 1, 1),
+        )
+
+        with Session(self.engine) as s:
+            after = health_score.compute(s)
+
+        self.assertEqual(after["completeness_method"], "mysa_energy_tou_season_v1")
+        self.assertEqual(after["completeness"]["method"], "mysa_energy_tou_season_v1")
+        d_ready, d_served, _, _ = self._delta_completeness(before, after)
+        self.assertEqual(d_served, 3)
+        self.assertEqual(d_ready, 3, "all three flat tariffs with energy are Mysa-ready")
+        # Fixed charge count rose by 1, but Completeness ready count did not prefer it.
+        self.assertEqual(
+            after["quality"]["has_fixed_charge"] - before["quality"]["has_fixed_charge"], 1
+        )
+        # Completeness score is mysa_ready / served (same formula with or without fixed).
+        expected = round(
+            100.0
+            * (before["completeness"]["mysa_ready_tariffs"] + 3)
+            / (before["completeness"]["served_tariffs"] + 3),
+            1,
+        )
+        self.assertEqual(after["components"]["completeness"], expected)
+
+        out = io.StringIO()
+        with contextlib.redirect_stdout(out):
+            health_score.print_scorecard(after)
+        printed = out.getvalue()
+        self.assertIn("COMPLETENESS (Mysa-ready", printed)
+        self.assertIn("not in Completeness", printed)
+
+    def test_tou_missing_clocks_and_seasonal_missing_dates_reduce_completeness(self):
+        from sqlalchemy.orm import Session
+
+        from scripts import health_score
+
+        with Session(self.engine) as s:
+            before = health_score.compute(s)
+
+        uid = self.make_hq("HQ Completeness TOU")
+        # Complete flat — ready.
+        self.make_tariff(uid, "Flat OK", [_energy(0.10)], rate_type="flat", source_url=HQ_PDF)
+        # TOU without clocks — not ready (tou_missing_clock_windows / day_type).
+        self.make_tariff(
+            uid, "TOU No Clocks",
+            [_energy(0.08), _energy(0.20)],
+            rate_type="tou", source_url=HQ_PDF,
+        )
+        # Seasonal without calendar dates — not ready.
+        self.make_tariff(
+            uid, "Seasonal No Dates",
+            [_energy(0.09), _energy(0.15)],
+            rate_type="seasonal", source_url=HQ_PDF,
+        )
+        # Full TOU (weekday + weekend all-day partitions) — ready.
+        self.make_tariff(
+            uid, "TOU OK",
+            [
+                _energy(0.10, period_start_time="00:00", period_end_time="00:00", day_type="weekday"),
+                _energy(0.08, period_start_time="00:00", period_end_time="00:00", day_type="weekend"),
+            ],
+            rate_type="tou", source_url=HQ_PDF,
+        )
+        # Full seasonal — ready.
+        self.make_tariff(
+            uid, "Seasonal OK",
+            [
+                _energy(
+                    0.11,
+                    season_start_month=5, season_start_day=1,
+                    season_end_month=10, season_end_day=31,
+                ),
+                _energy(
+                    0.09,
+                    season_start_month=11, season_start_day=1,
+                    season_end_month=4, season_end_day=30,
+                ),
+            ],
+            rate_type="seasonal", source_url=HQ_PDF,
+        )
+
+        with Session(self.engine) as s:
+            after = health_score.compute(s)
+
+        d_ready, d_served, _, _ = self._delta_completeness(before, after)
+        self.assertEqual(d_served, 5)
+        self.assertEqual(d_ready, 3, "flat + full TOU + full seasonal ready; broken TOU/seasonal not")
+        self.assertGreaterEqual(
+            after["completeness"]["tou_missing_clock_windows"]
+            - before["completeness"]["tou_missing_clock_windows"],
+            1,
+        )
+        self.assertGreaterEqual(
+            after["completeness"]["seasonal_missing_calendar_dates"]
+            - before["completeness"]["seasonal_missing_calendar_dates"],
+            1,
+        )
+        # Broken shapes pull Completeness below 100% of the added set.
+        added_pct = 100.0 * d_ready / d_served
+        self.assertLess(added_pct, 100.0)
+        self.assertEqual(added_pct, 60.0)
+
+    def test_fixed_only_tariff_is_not_mysa_ready(self):
+        from sqlalchemy.orm import Session
+
+        from scripts import health_score
+
+        with Session(self.engine) as s:
+            before = health_score.compute(s)
+
+        uid = self.make_hq("HQ Completeness Fixed Only")
+        self.make_tariff(uid, "Customer Charge Only", [_fixed(0.50)], rate_type="flat", source_url=HQ_PDF)
+
+        with Session(self.engine) as s:
+            after = health_score.compute(s)
+
+        d_ready, d_served, _, _ = self._delta_completeness(before, after)
+        self.assertEqual(d_served, 1)
+        self.assertEqual(d_ready, 0)
+        self.assertGreaterEqual(
+            after["completeness"]["missing_energy_rates"]
+            - before["completeness"]["missing_energy_rates"],
+            1,
+        )
+
+
 class TestHqRepair(_HQCase):
     DOC = "Rate D access charge 46.154¢/day; first 40 kWh 6.905¢; balance 10.652¢. Rate DT 4.250¢"
 

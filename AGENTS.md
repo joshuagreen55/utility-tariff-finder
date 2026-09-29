@@ -6,9 +6,9 @@ comprehensive; when in doubt, prefer what is written here over older docs
 (`PROJECT_SUMMARY.md` and `TECHNICAL_REVIEW.md` predate most of the current
 refresh/quarantine/cost/model systems).
 
-_Last updated: 2026-09-29 (residential-only health score; official vs third-party
-sources + Provenance, issue #28; effective_date fill on re-extract match, issue #26;
-website_url backfill + reclassify tooling, issue #30)._
+_Last updated: 2026-09-29 (Mysa Completeness rewrite; residential-only health score;
+official vs third-party sources + Provenance, issue #28; effective_date fill on
+re-extract match, issue #26; website_url backfill + reclassify tooling, issue #30)._
 
 ---
 
@@ -295,8 +295,11 @@ Demand, TOU+tiered, complex, critical-peak/event and dynamic pricing are
 `computable=false` by design. The API exposes `computable`,
 `computable_reasons`, `computable_warnings`, `needs_review` on tariff
 list/detail/browse and `computable_residential_tariff_count` on lookup.
-Consumer rules: `docs/MYSA_CONSUMER_CONTRACT.md`. The health score reports a
-computable lens but keeps it out of the composite (history comparability).
+Consumer rules: `docs/MYSA_CONSUMER_CONTRACT.md`. Health-score Completeness is
+the share of live residential tariffs that pass this contract
+(`completeness_method: mysa_energy_tou_season_v1`); a separate verified-only
+computable lens is still printed for operators but is not an extra composite
+weight.
 
 **Wave 6 guardrails.** Phase 4 records
 `confidence_factors.extract_not_computable` + `needs_review` on a `tou` /
@@ -324,15 +327,31 @@ CI: `.github/workflows/backend-tests.yml` runs
 excluded from every lens). Weighted: Coverage 40% / Freshness 30% /
 Completeness 20% / Provenance 10%. Coverage counts a utility as covered only
 if it has a **live, verified residential tariff with an energy component**
-(commercial-only utilities do not count). Freshness, completeness, provenance,
+(commercial-only utilities do not count). Freshness, Completeness, Provenance,
 served/verified/stale-seed counts, and freshness buckets all filter to live
 residential rows. Freshness decays as tariffs age past 90 days (that's why the
-score drifts down between runs and recovers after them). **Provenance measures
-source quality**, not URL presence (since issue #28, `provenance_method:
-source_type_v2`): served residential tariffs score official 1.0 / unknown 0.4 /
-third_party 0.2. An informational "best residential tariff is official"
-utility lens and the computable contract section are also residential-only.
-JSON carries `"scope": "residential"`. Run it to get the current scorecard.
+score drifts down between runs and recovers after them).
+
+**Completeness is Mysa-ready share** (`completeness_method:
+mysa_energy_tou_season_v1`): the percent of live residential tariffs that pass
+the computable contract (`app/services/computable.py`). In plain English — a
+tariff counts as complete when Mysa can price kWh and build a TOU schedule from
+it: flat/tiered need an energy (kWh) rate; TOU also needs clock windows + day
+type; seasonal / seasonal+TOU also need inclusive season start/end calendar
+dates. Fixed / customer / monthly charges and bare `effective_date` are **not**
+part of Completeness (they may still appear as informational lines on the
+scorecard). Blocking reason codes on the scorecard
+(`missing_energy_rates`, `tou_missing_clock_windows`, `tou_missing_day_type`,
+`seasonal_missing_calendar_dates`, …) are the same codes the computable
+contract already prints. Snapshots before this change have no
+`completeness_method` key.
+
+**Provenance measures source quality**, not URL presence (since issue #28,
+`provenance_method: source_type_v2`): served residential tariffs score official
+1.0 / unknown 0.4 / third_party 0.2. An informational "best residential tariff
+is official" utility lens and the computable contract section (verified subset)
+are also residential-only. JSON carries `"scope": "residential"`. Run it to get
+the current scorecard.
 
 **Freshness has two inputs: `last_verified_at` and `effective_date`.** A
 recent `last_verified_at` with a blank `effective_date` is a recording gap to
