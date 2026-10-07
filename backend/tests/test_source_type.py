@@ -9,6 +9,7 @@ import unittest
 from types import SimpleNamespace
 
 from app.services.source_type import (
+    GENERIC_HOSTS,
     OFFICIAL,
     THIRD_PARTY,
     UNKNOWN,
@@ -16,6 +17,7 @@ from app.services.source_type import (
     classify_source,
     configured_urls,
     context_from_utility,
+    is_generic_host,
     normalize_host,
     rank_urls,
     registrable_domain,
@@ -71,6 +73,12 @@ class TestClassifier(unittest.TestCase):
         self.assertEqual((r.source_type, r.reason), (OFFICIAL, "configured_url"))
         r = classify_source("https://static1.squarespace.com/static/zzz/rates.pdf", ctx)
         self.assertEqual((r.source_type, r.reason), (UNKNOWN, "generic_host"))
+
+    def test_ctfassets_is_generic_host(self):
+        # PGE's saved website_url was assets.ctfassets.net — treat as CDN.
+        self.assertIn("ctfassets.net", GENERIC_HOSTS)
+        self.assertTrue(is_generic_host("https://assets.ctfassets.net/abc/rates.pdf"))
+        self.assertFalse(is_generic_host("https://portlandgeneral.com/rates"))
 
     def test_regulator_publisher_only_in_its_jurisdiction(self):
         on = UtilitySourceContext(website_url="https://www.torontohydro.com", country="CA", state_province="ON")

@@ -261,7 +261,12 @@ HOMEPAGE_ONLY_PATH = re.compile(r"^/?$")
 # HARD-BLOCKED in search scoring (score = -999) so the pipeline never
 # extracts tariffs from them. The set lives with the source classifier so a
 # tariff sourced from any of them is labelled ``third_party``.
-from app.services.source_type import THIRD_PARTY_DOMAINS  # noqa: E402
+from app.services.source_type import (  # noqa: E402
+    THIRD_PARTY_DOMAINS,
+    is_generic_host,
+    normalize_host,
+    registrable_domain,
+)
 
 
 def _is_third_party_domain(url: str) -> bool:
@@ -604,7 +609,7 @@ def _set_pdf_cache(content_hash: str, text: str) -> None:
 
 # LLM extraction result cache — avoids re-calling the LLM for the same content
 LLM_CACHE_DIR = os.path.join(os.environ.get("APP_LOG_DIR", "/app/logs"), "llm_extraction_cache")
-_LLM_PROMPT_VERSION = "v6"
+_LLM_PROMPT_VERSION = "v7"
 
 
 # Opt-in, for one transition run only: also read entries written under the
@@ -2465,8 +2470,8 @@ Input: "Domestic Service: Customer $20.08 (Board’s Order) / $21.04 (Jan 1 2027
 Output: one flat residential tariff with fixed 20.08 "$/month" and ENERGY 19.128 "¢/kWh" (= 18.324 + 0.156 + 0.648), tier_label "All-in (base + FAM + DSM)". Do not use the 2027 column as current.
 
 Example 6 — Interim vs Energy Charge seasonal TOU (NS Power Rate Code 80):
-Input: "Domestic Service Time of Use (code 80): Customer $20.08. INTERIM ENERGY CHARGE while TVP unavailable equals Domestic standard offer. ENERGY CHARGE Non-winter Apr 1–Oct 31 all hours 12.860 ¢ (eff Apr 1 2027). Winter Nov 1–Mar 31: on-peak 7–11am / 5–9pm 36.517 ¢, off-peak 11am–5pm / 9pm–7am 18.324 ¢ (eff Nov 1 2026); Jan 1 2027 column 38.281 / 19.067. FAM 0.156 + DSM 0.648 apply. Note 1: winter weekends and holidays are billed at the off-peak price all day."
-Output: one residential tariff type "seasonal_tou", code "80", fixed 20.08 "$/month", and all-in ENERGY rows in "¢/kWh": Non-winter (4/1–10/31) 00:00–00:00 day_type "all" 13.664; Winter (11/1–3/31) day_type "weekday": on-peak 07:00–11:00 and 17:00–21:00 at 37.321, off-peak 11:00–17:00 and 21:00–07:00 at 19.128; Winter (11/1–3/31) off-peak 00:00–00:00 at 19.128 once with day_type "weekend" and once with day_type "holiday" (Note 1). Do NOT emit a single flat interim ENERGY 19.128. Do NOT use the Jan 1 2027 winter escalate column.
+Input: "Domestic Service Time of Use (code 80): Customer $20.08. INTERIM ENERGY CHARGE while TVP unavailable equals Domestic standard offer. ENERGY CHARGE Non-winter Apr 1–Oct 31 all hours 18.324 ¢ (Board’s Order / currently in effect). Winter Nov 1–Mar 31: on-peak 7–11am / 5–9pm 36.517 ¢, off-peak 11am–5pm / 9pm–7am 18.324 ¢ (eff Nov 1 2026); future columns: Non-winter 12.860 (eff Apr 1 2027), Winter 38.281 / 19.067 (Jan 1 2027). FAM 0.156 + DSM 0.648 apply. Note 1: winter weekends and holidays are billed at the off-peak price all day."
+Output: one residential tariff type "seasonal_tou", code "80", fixed 20.08 "$/month", and all-in ENERGY rows in "¢/kWh": Non-winter (4/1–10/31) 00:00–00:00 day_type "all" 19.128; Winter (11/1–3/31) day_type "weekday": on-peak 07:00–11:00 and 17:00–21:00 at 37.321, off-peak 11:00–17:00 and 21:00–07:00 at 19.128; Winter (11/1–3/31) off-peak 00:00–00:00 at 19.128 once with day_type "weekend" and once with day_type "holiday" (Note 1). Do NOT emit a single flat interim ENERGY 19.128. Do NOT use the future Apr 1 2027 Non-winter or Jan 1 2027 winter columns — extract ONLY currently effective / Board’s Order values.
 
 Example 7 — Weekday TOU with weekend/holiday all-day price:
 Input: "Plan TOU-R: Weekdays: On-peak 4pm–9pm 32.1¢/kWh; Off-peak all other hours 11.4¢/kWh. Weekends and holidays: 11.4¢/kWh all day. Year-round."
@@ -2830,6 +2835,28 @@ _COMPLEXITY_SIGNALS = re.compile(
     re.IGNORECASE,
 )
 
+def _content_looks_like_rider_schedule(content: str) -> bool:
+    """True when page text looks like a rider/adjustment schedule (no base plan).
+
+    Used when two-pass identify returns empty so we still extract per-kWh
+    ADJUSTMENT amounts from long rider PDFs.
+    """
+    if not content or len(content.strip()) < 80:
+        return False
+    if not _RIDER_DOC_HINT_RE.search(content):
+        return False
+    # Prefer pages that talk about add-on ¢/kWh charges.
+    return bool(
+        re.search(
+            r"(?:¢|cents?)\s*/\s*kwh|\$\s*/\s*kwh|per[\s-]*kwh|"
+            r"in\s+addition\s+to\s+the\s+energy|applies?\s+to\s+all\s+"
+            r"(?:kwh|energy|customers?)",
+            content,
+            re.IGNORECASE,
+        )
+    )
+
+
 TWOPASS_IDENTIFY_PROMPT = """List EVERY DISTINCT residential or commercial electricity rate/tariff/schedule named in this document for the TARGET UTILITY.
 
 TARGET UTILITY: {utility_name} ({state})
@@ -2848,7 +2875,7 @@ For each tariff, provide ONLY:
 
 ATTRIBUTION RULE: Only list rates the document explicitly attributes to the target utility. PROVINCE-WIDE REGULATED PRICES: regulator pages (e.g. OEB RPP) with jurisdiction-wide commodity prices for LDCs in the target's province/state count as attributable. If the document is a comparison/aggregator and lists rates for several utilities, exclude rates not labeled for the target. If you cannot tell (and the regulator exception does not apply), return [].
 
-SKIP: industrial-only, lighting-only, irrigation-only, wholesale-only, riders that aren't standalone rates
+SKIP: industrial-only, lighting-only, irrigation-only, wholesale-only. Do NOT list per-kWh riders/adjustments (FAM, DSM, fuel, power-cost, Schedule 1xx, etc.) as separate plans when base residential/commercial schedules are also in this document — those riders are folded into ENERGY later. If this document contains ONLY rider/adjustment schedules (no base plans), still list each named rider/adjustment schedule so their ¢/kWh amounts can be extracted as ADJUSTMENT components.
 
 Return a JSON array of objects with keys: name, customer_class, location_hint
 If no relevant tariffs, return [].
@@ -3005,6 +3032,37 @@ def _extract_two_pass(
             return [], llm_calls
 
     if not identified:
+        # Rider-only documents (NSP FAM pages, PGE Schedule 1xx) used to
+        # return [] here because identify skipped "riders that aren't
+        # standalone rates". Fall back to single-pass extraction so
+        # per-kWh ADJUSTMENT amounts still reach Phase 4.
+        if _content_looks_like_rider_schedule(content_for_llm):
+            log.info(
+                "    Two-pass: identify empty on rider-like content — "
+                "falling back to single-pass extraction"
+            )
+            try:
+                prompt = EXTRACTION_PROMPT.format(
+                    url=page.url,
+                    title=page.title or "",
+                    content=content_for_llm[:60000],
+                    utility_name=utility_name,
+                    state=state,
+                )
+                raw = _call_claude_tool(prompt)
+                llm_calls += 1
+                tariffs = _parse_extraction_response(raw, page.url)
+                for t in tariffs:
+                    t.source_url = page.url
+                if tariffs and page.content_hash:
+                    _set_llm_cache(
+                        page.content_hash, "twopass",
+                        [asdict(t) for t in tariffs],
+                    )
+                return tariffs, llm_calls
+            except Exception as e:
+                log.warning(f"    Rider-schedule single-pass fallback failed: {e}")
+                return [], llm_calls
         return [], llm_calls
 
     relevant = [
@@ -5017,9 +5075,71 @@ def _rider_search_hints(tariffs: list[ExtractedTariff]) -> list[str]:
 def _same_registrable_domain(url: str, utility_domain: str) -> bool:
     if not utility_domain:
         return False
-    host = urlparse(url).netloc.replace("www.", "").lower()
-    base = utility_domain.replace("www.", "").lower()
-    return host == base or host.endswith(f".{base}") or base.endswith(f".{host}")
+    host = normalize_host(url) or ""
+    base = normalize_host(utility_domain) or utility_domain.replace("www.", "").lower()
+    if not host or not base:
+        return False
+    try:
+        host_reg = registrable_domain(host)
+        base_reg = registrable_domain(base)
+    except Exception:
+        host_reg, base_reg = host, base
+    return host_reg == base_reg or host.endswith(f".{base_reg}") or base.endswith(f".{host_reg}")
+
+
+def _url_in_allowed_domains(url: str, allowed: set[str]) -> bool:
+    """True when url's registrable domain is in the official-domain allowlist."""
+    if not allowed:
+        return False
+    host = normalize_host(url) or ""
+    if not host:
+        return False
+    try:
+        reg = registrable_domain(host)
+    except Exception:
+        reg = host
+    return reg in allowed or any(
+        host == d or host.endswith(f".{d}") or reg.endswith(f".{d}") for d in allowed
+    )
+
+
+def _official_domains_for_rider_fetch(
+    website_url: str = "",
+    tariffs: list[ExtractedTariff] | None = None,
+    existing_pages: list[RatePage] | None = None,
+) -> set[str]:
+    """Official domains allowed when fetching missing rider documents.
+
+    Includes the utility's saved ``website_url`` when it is not a generic
+    file host/CDN (ctfassets, cloudfront, …), plus registrable domains from
+    existing verified tariff ``source_url``s and already-fetched pages.
+    Third-party aggregators and generic hosts are always excluded — so PGE
+    adjustment schedules on portlandgeneral.com are kept even when the
+    saved website is ``assets.ctfassets.net``.
+    """
+    allowed: set[str] = set()
+
+    def _maybe_add(url_or_host: str | None) -> None:
+        if not url_or_host:
+            return
+        if _is_third_party_domain(url_or_host if "://" in url_or_host else f"https://{url_or_host}"):
+            return
+        if is_generic_host(url_or_host):
+            return
+        host = normalize_host(url_or_host)
+        if not host:
+            return
+        try:
+            allowed.add(registrable_domain(host))
+        except Exception:
+            allowed.add(host)
+
+    _maybe_add(website_url)
+    for t in tariffs or []:
+        _maybe_add(getattr(t, "source_url", None))
+    for p in existing_pages or []:
+        _maybe_add(getattr(p, "url", None))
+    return allowed
 
 
 def fetch_and_extract_referenced_riders(
@@ -5034,10 +5154,12 @@ def fetch_and_extract_referenced_riders(
 ) -> tuple[list[ExtractedTariff], list[RatePage], list[str]]:
     """Fetch official rider docs referenced by residential extracts but missing.
 
-    Bounded (default 6 docs). Same-utility-domain results preferred; third-
-    party aggregators hard-blocked. Returns (extra_tariffs, pages_fetched,
-    unresolved_hints). Callers merge extras into the Phase 4 batch and flag
-    ``needs_review`` when hints remain unresolved.
+    Bounded (default 6 docs). Official utility domains preferred (saved
+    website when not a CDN/file host, plus domains from verified tariff
+    source URLs); third-party aggregators hard-blocked. Returns
+    (extra_tariffs, pages_fetched, unresolved_hints). Callers merge extras
+    into the Phase 4 batch and flag ``needs_review`` when hints remain
+    unresolved.
     """
     if stats is None:
         stats = {}
@@ -5045,9 +5167,16 @@ def fetch_and_extract_referenced_riders(
     if not hints:
         return [], [], []
 
-    utility_domain = ""
-    if website_url:
-        utility_domain = urlparse(website_url).netloc.replace("www.", "")
+    allowed_domains = _official_domains_for_rider_fetch(
+        website_url, tariffs, existing_pages,
+    )
+    # Prefer a non-CDN website domain for site: queries; else first official.
+    site_query_domain = ""
+    if website_url and not is_generic_host(website_url) and not _is_third_party_domain(website_url):
+        site_query_domain = registrable_domain(normalize_host(website_url) or "")
+    if not site_query_domain and allowed_domains:
+        site_query_domain = next(iter(sorted(allowed_domains)))
+
     existing_urls = {
         (p.url or "").split("?")[0].rstrip("/").lower()
         for p in (existing_pages or [])
@@ -5062,8 +5191,8 @@ def fetch_and_extract_referenced_riders(
     seen_url: set[str] = set()
     for hint in hints:
         queries = []
-        if utility_domain:
-            queries.append(f'site:{utility_domain} {hint}')
+        if site_query_domain:
+            queries.append(f'site:{site_query_domain} {hint}')
         queries.append(f'"{utility_name}" {hint} {state}'.strip())
         for q in queries:
             try:
@@ -5071,11 +5200,11 @@ def fetch_and_extract_referenced_riders(
             except Exception as e:
                 log.info(f"    Rider-doc search failed for {q[:60]}: {e}")
                 continue
-            # Prefer same-domain official hits first.
+            # Prefer official-domain hits first.
             ranked = sorted(
                 results,
                 key=lambda r: (
-                    0 if _same_registrable_domain(r.get("url") or "", utility_domain) else 1,
+                    0 if _url_in_allowed_domains(r.get("url") or "", allowed_domains) else 1,
                     0 if _RIDER_DOC_HINT_RE.search(
                         f"{r.get('title', '')} {r.get('url', '')} {r.get('description', '')}"
                     ) else 1,
@@ -5083,11 +5212,14 @@ def fetch_and_extract_referenced_riders(
             )
             for r in ranked:
                 url = (r.get("url") or "").strip()
-                if not url or _is_third_party_domain(url):
+                if not url or _is_third_party_domain(url) or is_generic_host(url):
                     continue
-                if utility_domain and not _same_registrable_domain(url, utility_domain):
-                    # Allow unknown host only when no utility domain known.
-                    continue
+                if allowed_domains:
+                    if not _url_in_allowed_domains(url, allowed_domains):
+                        continue
+                # When no official domain is known yet, still accept
+                # non-aggregator / non-CDN hosts (same as pre-#42 behaviour
+                # for utilities with a blank website_url).
                 key = url.split("?")[0].rstrip("/").lower()
                 if key in existing_urls or key in seen_url:
                     continue
