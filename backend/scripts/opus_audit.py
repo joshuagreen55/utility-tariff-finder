@@ -58,7 +58,7 @@ log = logging.getLogger("opus_audit")
 ANTHROPIC_API_KEY = os.environ.get("ANTHROPIC_API_KEY", "")
 # Same knob as the pipeline's tier-3 model; AUDITOR_MODEL overrides it for
 # the auditor alone. Never a hardcoded id (audit F8).
-OPUS_MODEL = os.environ.get("AUDITOR_MODEL") or os.environ.get("OPUS_MODEL", "claude-opus-5")
+OPUS_MODEL = os.environ.get("AUDITOR_MODEL") or os.environ.get("OPUS_MODEL", "claude-opus-5-5")
 
 MAX_PAGE_CHARS = 25_000
 MAX_PAGES_PER_UTILITY = 5

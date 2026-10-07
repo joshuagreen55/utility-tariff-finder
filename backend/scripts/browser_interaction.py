@@ -48,7 +48,7 @@ log = logging.getLogger("browser_agent")
 
 ANTHROPIC_API_KEY = os.environ.get("ANTHROPIC_API_KEY", "")
 # Same knob as the pipeline's tier-2 model (was a hardcoded Haiku 3.5 id).
-LLM_MODEL = os.environ.get("HAIKU_MODEL", "claude-haiku-4-5-20251001")
+LLM_MODEL = os.environ.get("SONNET_MODEL", "claude-sonnet-5-5")
 
 
 def _css_escape(text: str) -> str:

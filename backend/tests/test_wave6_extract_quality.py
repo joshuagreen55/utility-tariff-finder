@@ -202,47 +202,82 @@ class TestPrompts(unittest.TestCase):
         self.assertNotIn("Mention weekend/holiday off-peak in description", tp.EXTRACTION_PROMPT)
 
     def test_prompt_version_bumped(self):
-        self.assertEqual(tp._LLM_PROMPT_VERSION, "v4")
+        self.assertEqual(tp._LLM_PROMPT_VERSION, "v5")
 
     def test_phase6_and_browser_share_mysa_rules(self):
         phase6 = tp._phase6_prompt("U", "CA", None)
         self.assertIn("MYSA FIELDS", phase6)
         self.assertIn("seasonal_tou", phase6)
 
+    def test_regulator_attribution_exception_in_prompts(self):
+        self.assertIn("PROVINCE-WIDE REGULATED PRICES", tp.EXTRACTION_PROMPT)
+        self.assertIn("Ontario Energy Board", tp.EXTRACTION_PROMPT)
+        self.assertIn("PROVINCE-WIDE REGULATED PRICES", tp.PAGE_SCREENSHOT_EXTRACTION_PROMPT_BASE)
+        self.assertIn("PROVINCE-WIDE REGULATED PRICES", tp.PDF_VISION_EXTRACTION_PROMPT_BASE)
+        # Wrong-utility guard still present.
+        self.assertIn("different utility's name", tp.EXTRACTION_PROMPT)
+        self.assertIn("neighboring IOU", tp.EXTRACTION_PROMPT)
 
-class TestGeminiSchema(unittest.TestCase):
-    def test_no_type_unions(self):
-        def walk(node):
-            if isinstance(node, dict):
-                self.assertFalse(isinstance(node.get("type"), list), node)
-                self.assertNotIn("cache_control", node)
-                for v in node.values():
-                    walk(v)
-            elif isinstance(node, list):
-                for v in node:
-                    walk(v)
 
-        schema = tp._gemini_response_schema()
-        walk(schema)
-        comp = schema["properties"]["tariffs"]["items"]["properties"]["components"]["items"]
-        self.assertEqual(comp["properties"]["period_start_time"], {
-            "type": "string", "nullable": True,
-            "description": "HH:MM 24h clock start; null if not stated (do not invent)",
-        })
+class TestAnthropicOnlyStack(unittest.TestCase):
+    def test_defaults_are_55_ids(self):
+        self.assertEqual(tp.HAIKU_MODEL, "claude-haiku-5-5")
+        self.assertEqual(tp.SONNET_MODEL, "claude-sonnet-5-5")
+        self.assertEqual(tp.OPUS_MODEL, "claude-opus-5-5")
+        self.assertFalse(hasattr(tp, "GEMINI_MODEL"))
+        self.assertFalse(hasattr(tp, "_call_gemini"))
 
-    def test_sdk_accepts_schema(self):
-        try:
-            from google.genai import types
-        except ImportError:
-            self.skipTest("google-genai not installed")
-        types.GenerateContentConfig(response_mime_type="application/json",
-                                    response_schema=tp._gemini_response_schema())
+    def test_phase6_is_removed_stub(self):
+        self.assertFalse(tp._phase6_enabled())
+        tariffs, stats = tp.phase6_deep_research("U", "ON")
+        self.assertEqual(tariffs, [])
+        self.assertEqual(stats["phase6_status"], "removed")
+        self.assertFalse(stats["phase6_enabled"])
 
-    def test_top_level_list_response_is_used(self):
-        fake = SimpleNamespace(text='[{"name": "R", "components": []}]', usage_metadata=None)
-        client = SimpleNamespace(models=SimpleNamespace(generate_content=lambda **kw: fake))
-        with mock.patch.object(tp, "_get_gemini_client", return_value=client):
-            self.assertEqual(tp._call_gemini("p"), [{"name": "R", "components": []}])
+    def test_select_model_skips_haiku_for_complex(self):
+        page = SimpleNamespace(page_type="html", pdf_bytes=None, content="x" * 50_000)
+        with mock.patch.object(tp, "_is_complex_page", return_value=True):
+            self.assertEqual(tp._select_model(page), "sonnet")
+        with mock.patch.object(tp, "_is_complex_page", return_value=False):
+            self.assertEqual(tp._select_model(page), "haiku")
+
+    def test_oeb_style_cents_heading_counts_as_numeric(self):
+        oeb = (
+            "Electricity prices\n"
+            "Time-of-use\n"
+            "Off-peak  Mid-peak  On-peak\n"
+            "(¢/kWh)   (¢/kWh)   (¢/kWh)\n"
+            "9.8       15.7      20.3\n"
+        )
+        self.assertTrue(tp._page_has_numeric_rates(oeb))
+        self.assertFalse(tp._page_has_numeric_rates("Welcome to our rates page. See PDF."))
+        self.assertTrue(tp._page_has_numeric_rates("Energy charge $0.1234/kWh"))
+
+    def test_routing_escalates_haiku_sonnet_opus(self):
+        page = SimpleNamespace(
+            page_type="html", pdf_bytes=None,
+            content="Off-peak (¢/kWh)\n9.8\n", content_hash=None,
+        )
+        calls = []
+
+        def fake_tool(prompt, model=None):
+            calls.append(model)
+            return []
+
+        def fake_opus(prompt):
+            calls.append("opus")
+            return [{"name": "RPP"}]
+
+        with mock.patch.object(tp, "_select_model", return_value="haiku"), \
+             mock.patch.object(tp, "_call_claude_tool", side_effect=fake_tool), \
+             mock.patch.object(tp, "_call_opus_tool", side_effect=fake_opus), \
+             mock.patch.object(tp, "_page_has_numeric_rates", return_value=True), \
+             mock.patch.object(tp, "OPUS_MAX_PER_UTILITY", 2):
+            tp._reset_opus_budget()
+            result, used = tp._extract_with_model_routing("p", page)
+        self.assertEqual(used, "opus")
+        self.assertEqual(result, [{"name": "RPP"}])
+        self.assertEqual(calls, [tp.HAIKU_MODEL, tp.SONNET_MODEL, "opus"])
 
 
 class _BadRequest(Exception):
@@ -269,16 +304,20 @@ class TestAnthropicCompat(unittest.TestCase):
         for k in ("ANTHROPIC_THINKING", "ANTHROPIC_EFFORT", "ANTHROPIC_THINKING_MIN_MAX_TOKENS"):
             os.environ.pop(k, None)
 
-    def test_haiku_request_unchanged(self):
+    def test_haiku_4_5_request_unchanged(self):
         body = {**self.TOOL_REQ, "model": "claude-haiku-4-5-20251001", "temperature": 0}
         self.assertEqual(ac.adapt_request(body, sdk=True), body)
 
-    def test_opus_5_5_unforces_tool_choice_and_keeps_cache_prefix(self):
-        out = ac.adapt_request({**self.TOOL_REQ, "model": "claude-opus-5-5"}, sdk=True)
-        self.assertEqual(out["tool_choice"], {"type": "auto"})
-        self.assertEqual(out["system"][0], self.TOOL_REQ["system"][0])
-        self.assertIn("store_tariffs", out["system"][-1]["text"])
-        self.assertEqual(out["max_tokens"], 16000)
+    def test_all_55_models_unforce_tool_choice_for_thinking(self):
+        for model in ("claude-haiku-5-5", "claude-sonnet-5-5", "claude-opus-5-5"):
+            with self.subTest(model=model):
+                out = ac.adapt_request({**self.TOOL_REQ, "model": model}, sdk=True)
+                self.assertEqual(out["tool_choice"], {"type": "auto"})
+                self.assertEqual(out["system"][0], self.TOOL_REQ["system"][0])
+                self.assertIn("store_tariffs", out["system"][-1]["text"])
+                self.assertEqual(out["max_tokens"], 16000)
+                self.assertTrue(ac.thinking_default_on(model))
+                self.assertTrue(ac.forced_tool_rejected(model))
 
     def test_sonnet_5_keeps_forced_tool_and_drops_sampling(self):
         out = ac.adapt_request({**self.TOOL_REQ, "model": "claude-sonnet-5", "temperature": 0.0, "top_k": 5})
@@ -293,8 +332,11 @@ class TestAnthropicCompat(unittest.TestCase):
         self.assertEqual(sonnet["max_tokens"], 8192)
         opus = ac.adapt_request({**self.TOOL_REQ, "model": "claude-opus-5-5"}, sdk=True)
         self.assertNotIn("thinking", opus.get("extra_body", {}))
-        haiku = ac.adapt_request({**self.TOOL_REQ, "model": "claude-haiku-4-5-20251001"}, sdk=True)
-        self.assertNotIn("extra_body", haiku)
+        # Haiku 5.5 allows disable (unlike Opus 5.5).
+        haiku55 = ac.adapt_request({**self.TOOL_REQ, "model": "claude-haiku-5-5"}, sdk=True)
+        self.assertEqual(haiku55["extra_body"]["thinking"], {"type": "disabled"})
+        haiku45 = ac.adapt_request({**self.TOOL_REQ, "model": "claude-haiku-4-5-20251001"}, sdk=True)
+        self.assertNotIn("extra_body", haiku45)
 
     def test_effort_goes_to_output_config(self):
         os.environ["ANTHROPIC_EFFORT"] = "low"
@@ -359,16 +401,25 @@ class TestPricing(unittest.TestCase):
     def test_pricing_keys(self):
         self.assertEqual(llm_cost.pricing_key("claude-opus-5-5"), "claude-opus-5-5")
         self.assertEqual(llm_cost.pricing_key("claude-opus-5-5-20261101"), "claude-opus-5-5")
+        self.assertEqual(llm_cost.pricing_key("claude-sonnet-5-5"), "claude-sonnet-5-5")
+        self.assertEqual(llm_cost.pricing_key("claude-haiku-5-5"), "claude-haiku-5-5")
         self.assertEqual(llm_cost.pricing_key("claude-opus-5"), "opus")
         self.assertEqual(llm_cost.pricing_key("claude-sonnet-5"), "sonnet")
         self.assertEqual(llm_cost.pricing_key("claude-haiku-4-5-20251001"), "haiku")
-        self.assertEqual(llm_cost.model_key("claude-sonnet-5"), "sonnet")
+        self.assertEqual(llm_cost.model_key("claude-sonnet-5-5"), "sonnet")
+        self.assertEqual(llm_cost.model_key("claude-haiku-5-5"), "haiku")
 
     def test_costs_use_list_prices(self):
         usage = SimpleNamespace(input_tokens=1_000_000, output_tokens=1_000_000,
                                 cache_read_input_tokens=0, cache_creation_input_tokens=0)
-        for model, usd in (("claude-opus-5-5", 24.0), ("claude-opus-5", 30.0),
-                           ("claude-sonnet-5", 12.0), ("claude-haiku-4-5-20251001", 6.0)):
+        for model, usd in (
+            ("claude-opus-5-5", 24.0),
+            ("claude-opus-5", 30.0),
+            ("claude-sonnet-5", 12.0),
+            ("claude-sonnet-5-5", 12.0),
+            ("claude-haiku-4-5-20251001", 6.0),
+            ("claude-haiku-5-5", 0.60),  # $0.10 + $0.50 — not Haiku 4.5's $6
+        ):
             llm_cost.reset()
             llm_cost.record_anthropic(model, usage)
             self.assertAlmostEqual(llm_cost.summary()["total_usd"], usd, places=6, msg=model)
@@ -378,6 +429,12 @@ class TestPricing(unittest.TestCase):
                                 cache_read_input_tokens=0, cache_creation_input_tokens=0)
         llm_cost.record_anthropic("claude-opus-5-5", usage)
         self.assertIn("opus", llm_cost.summary()["by_model"])
+
+    def test_haiku_5_5_rolls_up_under_haiku(self):
+        usage = SimpleNamespace(input_tokens=10, output_tokens=10,
+                                cache_read_input_tokens=0, cache_creation_input_tokens=0)
+        llm_cost.record_anthropic("claude-haiku-5-5", usage)
+        self.assertIn("haiku", llm_cost.summary()["by_model"])
 
 
 def _energy(start, end, day, rate=0.1):

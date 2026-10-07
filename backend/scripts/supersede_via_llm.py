@@ -37,7 +37,10 @@ from sqlalchemy.orm import Session
 from app.models.tariff import Tariff
 from app.services import anthropic_compat
 
-HAIKU_MODEL = os.environ.get("HAIKU_MODEL", "claude-haiku-4-5-20251001")
+# Track B uses the main extract tier (Sonnet 5.5). HAIKU_MODEL is kept as an
+# import alias for chunk*_followup.py — it is NOT the tier-1 Haiku env var.
+SONNET_MODEL = os.environ.get("SONNET_MODEL", "claude-sonnet-5-5")
+HAIKU_MODEL = SONNET_MODEL
 
 from scripts import llm_cost  # noqa: E402
 

@@ -38,9 +38,9 @@ class TestModelAwareCache(unittest.TestCase):
             self.assertIsNone(tp._get_llm_cache("abc", "opus"))
 
     def test_twopass_key_tracks_both_models(self):
-        with mock.patch.object(tp, "HAIKU_MODEL", "h1"), mock.patch.object(tp, "OPUS_MODEL", "o1"):
+        with mock.patch.object(tp, "SONNET_MODEL", "s1"), mock.patch.object(tp, "OPUS_MODEL", "o1"):
             a = tp._llm_cache_path("abc", "twopass")
-        with mock.patch.object(tp, "HAIKU_MODEL", "h1"), mock.patch.object(tp, "OPUS_MODEL", "o2"):
+        with mock.patch.object(tp, "SONNET_MODEL", "s1"), mock.patch.object(tp, "OPUS_MODEL", "o2"):
             b = tp._llm_cache_path("abc", "twopass")
         self.assertNotEqual(a, b)
 
@@ -107,7 +107,8 @@ class TestYieldAndMetering(unittest.TestCase):
         client = SimpleNamespace(messages=SimpleNamespace(create=lambda **kw: resp))
         stranded = [{"id": 1, "name": "x", "customer_class": "residential", "rate_type": "flat"}]
         supersede_via_llm._pair_one_utility(client, "U", "NS", [], stranded)
-        self.assertIn("haiku", llm_cost.summary()["detail"]["trackb"])
+        # Track B runs on SONNET_MODEL (family rollup "sonnet").
+        self.assertIn("sonnet", llm_cost.summary()["detail"]["trackb"])
 
     def test_report_excludes_identify_from_wasted_opus(self):
         cost = {"by_model": {"opus": 10.0}, "detail": {
@@ -152,10 +153,10 @@ class TestAuditorAndCliModels(unittest.TestCase):
     def test_browser_cli_model_comes_from_env(self):
         from scripts import browser_interaction
 
-        with mock.patch.dict(os.environ, {"HAIKU_MODEL": "claude-haiku-next"}):
-            self.assertEqual(importlib.reload(browser_interaction).LLM_MODEL, "claude-haiku-next")
+        with mock.patch.dict(os.environ, {"SONNET_MODEL": "claude-sonnet-next"}):
+            self.assertEqual(importlib.reload(browser_interaction).LLM_MODEL, "claude-sonnet-next")
         importlib.reload(browser_interaction)
-        self.assertNotIn("3-5-haiku", browser_interaction.LLM_MODEL)
+        self.assertEqual(browser_interaction.LLM_MODEL, "claude-sonnet-5-5")
 
 
 def _gold():

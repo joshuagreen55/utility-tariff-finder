@@ -2,9 +2,8 @@
 
 Goal: turn the opaque "LLM line item" on the cloud bill into an attributable
 breakdown — how much each pipeline phase (Phase 3 extraction, Phase 5
-navigation, Phase 6 Deep Research, Track B absorption) and each model
-(Gemini Flash, Claude Haiku, Claude Opus) actually costs per utility and
-per refresh run.
+navigation, Track B absorption) and each model (Claude Haiku 5.5, Sonnet
+5.5, Opus 5.5) actually costs per utility and per refresh run.
 
 Design
 ------
@@ -16,12 +15,9 @@ Design
   prefork children process one pipeline at a time, so a thread-local store is
   safe; the current phase is tracked in a contextvar so nested calls restore
   cleanly.
-* Capture is centralized by wrapping the Anthropic and Gemini client getters
-  (see tariff_pipeline._get_*_client), so individual call sites need no
-  changes. Phase 6 uses a separate Deep Research client and reports its own
-  token counts, which we price via record_manual() — on completion and on
-  every abort (timeout, token cap, poll error); aborts with no reported
-  usage are counted as ``unpriced``.
+* Capture is centralized by wrapping the Anthropic client getter
+  (see tariff_pipeline._get_anthropic_client), so individual call sites need
+  no changes.
 * Scripts outside refresh runs (Track B, campaigns, auditor) record into the
   same accumulator and call append_ledger(); llm_cost_report includes them.
 * Yield: ``tier_outcomes`` (did the tier return anything) is kept, but the
@@ -30,7 +26,7 @@ Design
 
 Prices are USD per 1,000,000 tokens. Verify against the current pricing pages
 and override via LLM_PRICING_JSON if they drift, e.g.:
-    LLM_PRICING_JSON='{"gemini": {"in": 0.30, "out": 2.50}}'
+    LLM_PRICING_JSON='{"claude-haiku-5-5": {"in": 0.10, "out": 0.50}}'
 """
 from __future__ import annotations
 
@@ -46,12 +42,15 @@ log = logging.getLogger(__name__)
 
 # USD per 1M tokens. cache_read / cache_write apply to Anthropic prompt
 # caching (cache_write = 5-minute write price).
-# Verify against current pricing pages; override via LLM_PRICING_JSON if they
-# drift. Updated 2026-08-27: opus -> Opus 5 ($5/$25, was 4.7 @ $15/$75),
-# gemini -> Gemini 3.8 Flash intro ($0.75/$3.75 through 2026-12-31, then
-# $1.50/$7.50). Updated 2026-09-25 from docs.claude.com pricing: Sonnet 5
-# $2/$10 (the intro price is now standard), Opus 5.5 $4/$20 with cache hits
-# at 0.05x input.
+# Updated 2026-10-07 from platform.claude.com/docs/en/about-claude/pricing
+# and the Haiku 5.5 launch post (Sonnet 5.5 cache reads halved to $0.10):
+#   claude-haiku-5-5  ≤100k prompts: $0.10 / $0.50 (cache 0.01 / 0.125)
+#   claude-haiku-5-5  >100k prompts: $0.50 / $2.50 — override via
+#     LLM_PRICING_JSON when a call exceeds 100k input (rare in this pipeline)
+#   claude-sonnet-5-5: $2 / $10 (cache 0.10 / 2.50)
+#   claude-opus-5-5:   $4 / $20 (cache 0.20 / 5.00)
+# Family keys remain for older model ids still present in historical ledgers.
+# Legacy gemini / gemini_dr rows price historical Phase 6 / Flash spend only.
 #
 # Keys are rollup families (``model_key``) or concrete model-id prefixes.
 # A call is priced by the longest id-prefix key matching its model, else by
@@ -60,10 +59,12 @@ DEFAULT_PRICING: dict[str, dict[str, float]] = {
     "haiku":     {"in": 1.00,  "out": 5.00,  "cache_read": 0.10, "cache_write": 1.25},
     "sonnet":    {"in": 2.00,  "out": 10.00, "cache_read": 0.20, "cache_write": 2.50},
     "opus":      {"in": 5.00,  "out": 25.00, "cache_read": 0.50, "cache_write": 6.25},
-    "claude-opus-5-5": {"in": 4.00, "out": 20.00, "cache_read": 0.20, "cache_write": 5.00},
+    "claude-haiku-5-5":  {"in": 0.10, "out": 0.50, "cache_read": 0.01, "cache_write": 0.125},
+    "claude-sonnet-5-5": {"in": 2.00, "out": 10.00, "cache_read": 0.10, "cache_write": 2.50},
+    "claude-opus-5-5":   {"in": 4.00, "out": 20.00, "cache_read": 0.20, "cache_write": 5.00},
+    # Legacy — Gemini was removed from the runtime stack (2026-10); kept so
+    # old refresh_run / ledger rows still price.
     "gemini":    {"in": 0.75,  "out": 3.75,  "cache_read": 0.075, "cache_write": 0.0},
-    # Deep Research (Phase 6) — same token prices as Flash by default, but
-    # broken out so its (typically large) spend is separately visible.
     "gemini_dr": {"in": 0.75,  "out": 3.75,  "cache_read": 0.0,  "cache_write": 0.0},
 }
 
