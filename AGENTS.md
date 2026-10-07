@@ -6,9 +6,9 @@ comprehensive; when in doubt, prefer what is written here over older docs
 (`PROJECT_SUMMARY.md` and `TECHNICAL_REVIEW.md` predate most of the current
 refresh/quarantine/cost/model systems).
 
-_Last updated: 2026-10-07 (Anthropic-only 5.5 stack: drop Gemini; Haiku 5.5 /
-Sonnet 5.5 / Opus 5.5 defaults; adaptive thinking on extraction; Haiku 5.5
-pricing; OEB regulator attribution + ¢/kWh numeric gate)._
+_Last updated: 2026-10-07 (FULL-BILL residential ENERGY: fold per-kWh riders
+into stored energy; rider-only salvage; CPP/event outlier exception; Anthropic
+5.5 stack)._
 
 ---
 
@@ -113,9 +113,18 @@ Models live in `backend/app/models/`. Key tables and columns:
   season calendar `season_start_month`/`season_start_day`/
   `season_end_month`/`season_end_day`. Keep `period_label` / `season` for
   display. See `docs/TOU_SEASONAL_FIELDS.md`. Never invent clock times or
-  season dates from labels alone. `included_in_energy` marks an ADJUSTMENT
-  row already folded into all-in ENERGY (kept for audit; consumers skip it).
-  Cents units keep their period on conversion (`¢/day` → `$/day`).
+  season dates from labels alone. **FULL-BILL ENERGY (product rule,
+  2026-10-07):** stored residential ENERGY is the full per-kWh price the
+  customer pays — base tariff plus applicable per-kWh riders/adjustments
+  (fuel, FAM, DSM/efficiency, storm, power-cost/PCA, interim, cost-recovery,
+  etc.). Fixed monthly charges stay as FIXED. `included_in_energy` marks an
+  ADJUSTMENT row already folded into all-in ENERGY (kept for audit;
+  consumers skip it). Phase 4 folds stacking and relative seasonal riders,
+  salvages rider-only extracts by combining them with a sibling base (NL
+  1.1S), and applies shared riders published on a separate page. Critical-
+  peak / CPP / event ENERGY above 3× p99 is kept with `needs_review` when
+  labelled as such (NS Power ~182¢). Cents units keep their period on
+  conversion (`¢/day` → `$/day`).
 - **`monitoring_sources`** (`monitoring.py`) — a URL to watch per utility;
   `status` (unchanged/changed/error/pending), `last_content_hash`,
   `last_changed_at`. **`monitoring_logs`** records each check.
@@ -219,19 +228,25 @@ runs on extraction. Opus 5.5 cannot disable thinking. Knobs:
 `anthropic_compat.response_text()`, never `content[0].text`.
 
 Prompts ask for numbers + units **as printed** (Phase 4 converts cents),
-and for Mysa Completeness structured columns on every ENERGY row when the
-source states them: `period_start_time` / `period_end_time` + `day_type`
-(TOU family), inclusive `season_start/end` month/day (seasonal family),
-both for `seasonal_tou`. `period_label` / `season` stay display-only —
-never invent clocks or season dates from labels alone; leave null and let
-Phase 4 flag `needs_review` / incompleteness. Shared `_STRUCTURED_RULES`
-is injected into text, two-pass, vision, and the browser-CLI extract
-prompts. Province-wide regulator commodity prices (e.g. OEB RPP) count as
-attributable to LDCs in that province without opening the wrong-utility
-guard. `normalize_structured_components()` (Phase 4) maps model forms
+FULL-BILL residential ENERGY (base + applicable per-kWh riders; fixed
+charges stay separate), and Mysa Completeness structured columns on every
+ENERGY row when the source states them: `period_start_time` /
+`period_end_time` + `day_type` (TOU family), inclusive `season_start/end`
+month/day (seasonal family), both for `seasonal_tou`. `period_label` /
+`season` stay display-only — never invent clocks or season dates from
+labels alone; leave null and let Phase 4 flag `needs_review` /
+incompleteness. Shared `_STRUCTURED_RULES` is injected into text, two-pass,
+vision, and the browser-CLI extract prompts. Province-wide regulator
+commodity prices (e.g. OEB RPP) count as attributable to LDCs in that
+province without opening the wrong-utility guard.
+`normalize_structured_components()` (Phase 4) maps model forms
 (`7:00 a.m.`, `:59` ends, "weekends and holidays", month names) onto the
 structured columns without filling empty fields. Component dedupe keys
-include clock / day type / season dates / tier bounds.
+include clock / day type / season dates / tier bounds. Phase 4 also runs
+`expand_relative_seasonal_energy` / `expand_stacking_energy_riders`, batch
+rider salvage (`salvage_relative_rider_only_tariffs`,
+`apply_shared_stacking_riders_across_batch`), and a labelled CPP/event
+outlier exception.
 
 **Key model/cost env vars** (all overridable):
 - `HAIKU_MODEL` (default `claude-haiku-5-5`) — tier-1 cheap first pass

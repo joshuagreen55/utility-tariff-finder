@@ -108,7 +108,7 @@ class TestMysaPromptContract(unittest.TestCase):
         self.assertIn("do not invent", props["period_start_time"]["description"].lower())
 
     def test_prompt_version_bumped_for_mysa_rules(self):
-        self.assertEqual(tp._LLM_PROMPT_VERSION, "v5")
+        self.assertEqual(tp._LLM_PROMPT_VERSION, "v6")
 
 
 class TestStructuredRoundTrip(unittest.TestCase):
