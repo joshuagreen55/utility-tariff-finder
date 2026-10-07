@@ -112,6 +112,12 @@ THIRD_PARTY_DOMAINS = frozenset({
     # Rate blogs that republish utility rates (issue #28: Hydro-Québec
     # Rate D / DT / Flex D / DPC were live from callmepower.ca).
     "callmepower.ca", "callmepower.com", "energyhub.org",
+    # Seen in the 2026-10-07 all-5.5 12-utility dry run (SRP / Pedernales
+    # / Glendale / PGE / NL Hydro): multi-utility rate sites, rate blogs,
+    # document mirrors and local news picked ahead of the utility's own page.
+    "utilitycheck.co", "kadoa.com", "zipelectricity.com", "solartopps.com",
+    "scribd.com", "powernw.com", "offgridsolarsystem.ca", "iamhome.app",
+    "spotlightdelaware.org", "dailytrib.com", "12news.com",
 })
 
 # File/CDN/site-builder hosts shared by many unrelated organisations. A host

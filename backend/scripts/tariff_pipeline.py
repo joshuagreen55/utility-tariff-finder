@@ -1578,8 +1578,45 @@ def _extract_links(soup: BeautifulSoup, base_url: str) -> list[tuple[str, str]]:
         if _is_relevant_link(full_url, link_text, base_url):
             seen.add(full_url)
             links.append((full_url, link_text))
+    links = _drop_translation_duplicates(links)
     links.sort(key=lambda x: _link_priority(x[0], x[1]))
     return links
+
+
+# Language-switcher prefixes seen on US/CA utility sites (PG&E links every
+# page in ~12 languages). Only used to collapse translation sets, never to
+# drop a lone link, so state-code paths like /ar/ are safe.
+_LANG_PREFIX_RE = re.compile(
+    r"^/(en|es|zh|zh-hans|zh-hant|zh-cn|zh-tw|ko|tl|ja|hmn|ar|fa|hi|km|vi|ru|pa|"
+    r"hy|th|pt|so|am|uk|pl|ht|ne|ur|bn|lo|my|mn|ta|te|gu|pa)(?=/)",
+    re.IGNORECASE,
+)
+
+
+def _drop_translation_duplicates(links: list[tuple[str, str]]) -> list[tuple[str, str]]:
+    """Collapse the same page linked under several language prefixes.
+
+    When a page is linked in English (``/en/...`` or unprefixed) AND under at
+    least two other language prefixes, keep only the English link. A run on
+    PG&E spent 11 of its 20 LLM calls on /zh/, /ko/, /tl/ ... copies of one
+    SmartRate page and never reached the base residential plans.
+    """
+    groups: dict[tuple[str, str], list[tuple[str, str, str]]] = {}
+    for url, text in links:
+        parsed = urlparse(url)
+        m = _LANG_PREFIX_RE.match(parsed.path)
+        lang = m.group(1).lower() if m else ""
+        rest = parsed.path[m.end():] if m else parsed.path
+        groups.setdefault((parsed.netloc.lower(), rest), []).append((lang, url, text))
+    drop: set[str] = set()
+    for members in groups.values():
+        english = [u for lang, u, _ in members if lang in ("", "en")]
+        foreign = [u for lang, u, _ in members if lang not in ("", "en")]
+        if english and len(foreign) >= 2:
+            drop.update(foreign)
+    if drop:
+        log.info(f"  Phase 2: skipped {len(drop)} translated duplicate link(s)")
+    return [(u, t) for u, t in links if u not in drop]
 
 
 def _find_relevant_links(html: str, base_url: str) -> list[tuple[str, str]]:
@@ -2431,6 +2468,41 @@ Content:
 {content}""".replace("{structured_rules}", _STRUCTURED_RULES)
 
 
+_GENERIC_NAME_TAIL_WORDS = {
+    "tariff", "service", "services", "rate", "rates", "schedule", "plan",
+    "residential", "domestic", "standard", "basic", "electric", "electricity",
+    "option", "the", "of", "for", "and", "customers", "customer", "pricing",
+}
+
+
+def _energy_values(t: ExtractedTariff) -> set[float]:
+    out: set[float] = set()
+    for c in t.components or []:
+        if isinstance(c, dict) and c.get("component_type") == "energy":
+            try:
+                out.add(round(float(c.get("rate_value")), 4))
+            except (TypeError, ValueError):
+                continue
+    return out
+
+
+def _distinct_variant(tail: str, a: ExtractedTariff, b: ExtractedTariff) -> bool:
+    """True when two prefix-related names are separate products.
+
+    A tail made only of generic words ("Domestic Service" vs "Domestic
+    Service Tariff") is the same plan. Otherwise, when both sides carry
+    energy prices and neither price set contains the other, they are
+    distinct products (HQ "Rate D" vs "Rate D T").
+    """
+    words = [w for w in re.split(r"[^a-z0-9]+", tail.lower()) if w]
+    if not words or all(w in _GENERIC_NAME_TAIL_WORDS for w in words):
+        return False
+    ea, eb = _energy_values(a), _energy_values(b)
+    if not ea or not eb:
+        return False
+    return not (ea <= eb or eb <= ea)
+
+
 def _merge_prefix_duplicates(tariffs: list[ExtractedTariff]) -> list[ExtractedTariff]:
     """Merge tariffs where one name is a prefix of another (same customer class).
 
@@ -2476,6 +2548,13 @@ def _merge_prefix_duplicates(tariffs: list[ExtractedTariff]) -> list[ExtractedTa
                     and (len(longer) == len(shorter) or longer[len(shorter)] == " ")
                 )
                 if not is_prefix:
+                    continue
+                if len(longer) > len(shorter) and _distinct_variant(
+                    longer[len(shorter):], t_i, t_j
+                ):
+                    # e.g. "Rate D" vs "Rate D T" (HQ dual-energy) or
+                    # "Rate G" vs "Rate G Short-Term Contract": a separate
+                    # product with its own prices, not a detail-level dupe.
                     continue
                 # One is a prefix of the other — keep the richer one
                 if len(t_i.components) >= len(t_j.components):
@@ -2789,6 +2868,54 @@ Content:
 {content}""".replace("{structured_rules}", _STRUCTURED_RULES)
 
 
+TWOPASS_WINDOW_BEFORE = 1500
+TWOPASS_WINDOW_AFTER = 6000
+# A section "has prices" when it carries at least this many rate-looking
+# numbers. Table-of-contents hits score ~0 (page numbers, rate codes).
+TWOPASS_MIN_SECTION_SCORE = 3
+TWOPASS_MAX_HITS = 6
+TWOPASS_MAX_SECTION_CHARS = 60000
+_DECIMAL_RATE_RE = re.compile(r"(?<![\d.])\d+\.\d{3,}(?![\d.])")
+
+
+def _rate_number_score(text: str) -> int:
+    return len(_RATE_AMOUNT_RE.findall(text)) + len(_DECIMAL_RATE_RE.findall(text))
+
+
+def _twopass_section(content: str, name: str, hint: str) -> str:
+    """Pick the slice(s) of ``content`` most likely to hold ``name``'s prices.
+
+    The identify ``location_hint`` (or, failing that, the tariff name) often
+    appears several times: in the table of contents, in cross-references and
+    at the tariff's own page. Only looking at the first hit sent table-of-
+    contents windows with no prices to the extract call. Instead, merge a
+    window around every hit (up to ``TWOPASS_MAX_HITS``) so the real section
+    is always included; fall back to the full content when no window has
+    rate-looking numbers.
+    """
+    if len(content) <= 4000:
+        return content
+    lower = content.lower()
+    for needle in ((hint or "").lower()[:30].strip(), (name or "").lower()[:30].strip()):
+        if not needle:
+            continue
+        hits = [m.start() for m in re.finditer(re.escape(needle), lower)][:TWOPASS_MAX_HITS]
+        if not hits:
+            continue
+        spans: list[list[int]] = []
+        for h in hits:
+            start = max(0, h - TWOPASS_WINDOW_BEFORE)
+            end = min(len(content), h + TWOPASS_WINDOW_AFTER)
+            if spans and start <= spans[-1][1]:
+                spans[-1][1] = max(spans[-1][1], end)
+            else:
+                spans.append([start, end])
+        section = "\n...\n".join(content[a:b] for a, b in spans)[:TWOPASS_MAX_SECTION_CHARS]
+        if _rate_number_score(section) >= TWOPASS_MIN_SECTION_SCORE:
+            return section
+    return content
+
+
 def _is_complex_page(content: str) -> bool:
     """Detect pages likely to benefit from two-pass extraction."""
     if len(content) < 8000:
@@ -2851,14 +2978,14 @@ def _extract_two_pass(
         identified = _parse_text_response(raw_text)
     except Exception as e:
         log.error(f"    Two-pass identification failed: {e}")
-        # Retry with Haiku if Opus failed (rate-limit, transient error)
+        # Retry with Sonnet (default tier) if Opus failed (rate-limit, transient error)
         if use_opus_for_identify:
             try:
                 raw_text = _call_claude(identify_prompt)
                 llm_calls += 1
                 identified = _parse_text_response(raw_text)
             except Exception as e2:
-                log.error(f"    Identify retry with Haiku also failed: {e2}")
+                log.error(f"    Identify retry with Sonnet also failed: {e2}")
                 return [], llm_calls
         else:
             return [], llm_calls
@@ -2872,7 +2999,7 @@ def _extract_two_pass(
     ]
     log.info(
         f"    Two-pass: identified {len(relevant)} relevant tariffs "
-        f"(model={'opus' if use_opus_for_identify else 'haiku'})"
+        f"(model={'opus' if use_opus_for_identify else 'sonnet'})"
     )
 
     # Pass 2: Extract each tariff individually. Cap at 20 to bound LLM
@@ -2894,15 +3021,11 @@ def _extract_two_pass(
         cc = item.get("customer_class", "residential")
         hint = item.get("location_hint", "")
 
-        # Find the relevant section around the location hint
-        section = content_for_llm
-        if hint and len(content_for_llm) > 4000:
-            hint_lower = hint.lower()
-            idx = content_for_llm.lower().find(hint_lower[:30])
-            if idx >= 0:
-                start = max(0, idx - 1500)
-                end = min(len(content_for_llm), idx + 3000)
-                section = content_for_llm[start:end]
+        # Find the section that actually carries this tariff's prices. The
+        # identify hint often also appears in the document's table of
+        # contents; a narrow window there has no numbers and the extract
+        # call returns 0 (NS Power CPP/TOU, HQ Rate D — 2026-10-07).
+        section = _twopass_section(content_for_llm, name, hint)
 
         extract_prompt = TWOPASS_EXTRACT_PROMPT.format(
             tariff_name=name,
@@ -2916,6 +3039,21 @@ def _extract_two_pass(
             raw_tariffs = _call_claude_tool(extract_prompt)
             tariffs = _parse_extraction_response(raw_tariffs, page.url)
             llm_calls += 1
+            if not tariffs and section is not content_for_llm:
+                # Window missed the prices — one retry on the full selected
+                # content (same bound as the identify pass).
+                log.info(f"    Two-pass: 0 from section for '{name}' — retrying on full content")
+                raw_tariffs = _call_claude_tool(
+                    TWOPASS_EXTRACT_PROMPT.format(
+                        tariff_name=name,
+                        customer_class=cc,
+                        content=content_for_llm[:60000],
+                        utility_name=utility_name,
+                        state=state,
+                    )
+                )
+                tariffs = _parse_extraction_response(raw_tariffs, page.url)
+                llm_calls += 1
             for t in tariffs:
                 t.source_url = page.url
                 all_tariffs.append(t)
@@ -7277,7 +7415,9 @@ def run_pipeline(
         log.info(
             f"  Using preferred regulatory tariff source: {preferred_primary[:90]}"
         )
+    search_ran = False
     if not skip_search and not rate_page_url:
+        search_ran = True
         try:
             rate_page_url, num_results, search_alts = phase1_find_rate_page(
                 utility_name, state, website_url
@@ -7441,6 +7581,35 @@ def run_pipeline(
                 # — keep the most recent value instead of trying to sum.
                 combined_stats[k] = v
 
+    def _search_after_dead_override(dead_url: str) -> str | None:
+        """A manual override that 404s/fails used to lock the run onto
+        stale known URLs (PGE: dead override -> commercial Sched 489 PDF,
+        2026-10-07). Run the Phase 1 search once and try its best hit next."""
+        nonlocal search_ran
+        if (
+            search_ran
+            or skip_search
+            or not rate_page_url_override
+            or dead_url != rate_page_url_override
+        ):
+            return None
+        search_ran = True
+        log.warning("  Manual rate page override is unreachable — falling back to search")
+        try:
+            best, _n, s_alts = phase1_find_rate_page(utility_name, state, website_url)
+        except Exception as e:
+            log.warning(f"  Fallback search failed: {e}")
+            return None
+        fresh = [
+            u for u in [best, *s_alts]
+            if u and u != dead_url and u not in remaining_alts
+            and _path_prefix(u) not in tried_prefixes
+        ]
+        if not fresh:
+            return None
+        remaining_alts[:0] = fresh[1:]
+        return fresh[0]
+
     while current_url and attempts < MAX_ATTEMPTS:
         attempts += 1
         prefix = _path_prefix(current_url)
@@ -7457,11 +7626,11 @@ def run_pipeline(
         except Exception as e:
             result.errors.append(f"Phase 2 error on {current_url[:60]}: {e}")
             log.error(f"  Phase 2 failed: {e}")
-            current_url = _pick_next_alt()
+            current_url = _search_after_dead_override(current_url) or _pick_next_alt()
             continue
 
         if not pages:
-            current_url = _pick_next_alt()
+            current_url = _search_after_dead_override(current_url) or _pick_next_alt()
             continue
 
         # Incremental check: skip LLM extraction if page content unchanged
