@@ -95,6 +95,15 @@ class TestRiderFolding(unittest.TestCase):
         energy = [r for r in tp.expand_stacking_energy_riders(rows) if r["component_type"] == "energy"]
         self.assertAlmostEqual(energy[0]["rate_value"], 0.19128, places=6)
 
+    def test_fuel_efficiency_labels_fold(self):
+        rows = [
+            {"component_type": "energy", "unit": "$/kWh", "rate_value": 0.1122},
+            {"component_type": "adjustment", "unit": "$/kWh", "rate_value": 0.084,
+             "tier_label": "Power Cost Adjustment"},
+        ]
+        energy = [r for r in tp.expand_stacking_energy_riders(rows) if r["component_type"] == "energy"]
+        self.assertAlmostEqual(energy[0]["rate_value"], 0.1962, places=6)
+
     def test_relative_seasonal_expansion_keeps_season_dates(self):
         rows = [
             {"component_type": "energy", "unit": "$/kWh", "rate_value": 0.15587},
@@ -107,6 +116,160 @@ class TestRiderFolding(unittest.TestCase):
         by_season = {r["season"]: r for r in energy}
         self.assertEqual(by_season["Winter"]["season_start_month"], 12)
         self.assertEqual(by_season["Non-Winter"]["season_end_day"], 30)
+
+
+class TestFullBillBatchRiderSalvage(unittest.TestCase):
+    """FULL-BILL: riders on a separate extract must fold into ENERGY."""
+
+    def setUp(self):
+        logging.disable(logging.CRITICAL)
+
+    def tearDown(self):
+        logging.disable(logging.NOTSET)
+
+    def test_shared_stacking_riders_from_rider_only_page(self):
+        # NSP-style: Domestic base on one extract; FAM+DSM on a rider page.
+        domestic = tp.ExtractedTariff(
+            name="Domestic Service", code="02", customer_class="residential",
+            rate_type="flat", confidence=0.9,
+            components=[
+                {"component_type": "energy", "unit": "¢/kWh", "rate_value": 18.324},
+                {"component_type": "fixed", "unit": "$/month", "rate_value": 20.08},
+            ],
+        )
+        riders = tp.ExtractedTariff(
+            name="Fuel Adjustment Mechanism and DSM Rider",
+            customer_class="residential", rate_type="flat", confidence=0.9,
+            components=[
+                {"component_type": "adjustment", "unit": "¢/kWh", "rate_value": 0.156,
+                 "tier_label": "FAM AA/BA"},
+                {"component_type": "adjustment", "unit": "¢/kWh", "rate_value": 0.648,
+                 "tier_label": "DSM DCRR"},
+            ],
+        )
+        report, valid = tp.phase4_validate([domestic, riders], "Nova Scotia Power", "NS")
+        self.assertEqual(report["valid"], 1)
+        self.assertEqual(report.get("absorbed_rider_only"), 1)
+        energy = [c for c in valid[0].components if c["component_type"] == "energy"][0]
+        self.assertAlmostEqual(energy["rate_value"], 0.19128, places=5)
+        adjs = [c for c in valid[0].components if c["component_type"] == "adjustment"]
+        self.assertTrue(adjs)
+        self.assertTrue(all(c.get("included_in_energy") for c in adjs))
+
+    def test_nl_11s_rider_only_combined_with_base(self):
+        base = tp.ExtractedTariff(
+            name="Domestic Service", code="1.1", customer_class="residential",
+            rate_type="flat", confidence=0.9,
+            components=[
+                {"component_type": "energy", "unit": "¢/kWh", "rate_value": 15.587},
+                {"component_type": "fixed", "unit": "$/month", "rate_value": 17.36},
+            ],
+        )
+        seasonal = tp.ExtractedTariff(
+            name="Domestic Seasonal Rate #1.1S", code="1.1S",
+            customer_class="residential", rate_type="seasonal", confidence=0.9,
+            components=[
+                {"component_type": "adjustment", "unit": "¢/kWh", "rate_value": 0.953,
+                 "season": "Winter (Dec–Apr)",
+                 "season_start_month": 12, "season_start_day": 1,
+                 "season_end_month": 4, "season_end_day": 30},
+                {"component_type": "adjustment", "unit": "¢/kWh", "rate_value": -1.297,
+                 "season": "Non-Winter (May–Nov)",
+                 "season_start_month": 5, "season_start_day": 1,
+                 "season_end_month": 11, "season_end_day": 30},
+            ],
+        )
+        report, valid = tp.phase4_validate([base, seasonal], "Newfoundland Labrador Hydro", "NL")
+        self.assertEqual(report["valid"], 2)
+        seasonal_v = next(t for t in valid if "1.1S" in (t.code or t.name))
+        energy = [c for c in seasonal_v.components if c["component_type"] == "energy"]
+        self.assertEqual(tp.count_energy_seasons(seasonal_v.components), 2)
+        by_season = {
+            tp._season_key(c.get("season")): round(float(c["rate_value"]), 5)
+            for c in energy
+        }
+        self.assertEqual(by_season["winter"], 0.16540)
+        self.assertEqual(by_season["non-winter"], 0.14290)
+
+    def test_pge_style_power_cost_rider_folds(self):
+        sched7 = tp.ExtractedTariff(
+            name="Schedule 7 Residential", code="7", customer_class="residential",
+            rate_type="flat", confidence=0.9,
+            components=[
+                {"component_type": "energy", "unit": "¢/kWh", "rate_value": 11.22},
+                {"component_type": "fixed", "unit": "$/month", "rate_value": 11.0},
+            ],
+        )
+        pca = tp.ExtractedTariff(
+            name="Schedule 125 Power Cost Adjustment", code="125",
+            customer_class="residential", rate_type="flat", confidence=0.9,
+            components=[
+                {"component_type": "adjustment", "unit": "¢/kWh", "rate_value": 8.4,
+                 "tier_label": "Power Cost Adjustment"},
+            ],
+        )
+        _report, valid = tp.phase4_validate([sched7, pca], "Portland General Electric", "OR")
+        energy = [c for c in valid[0].components if c["component_type"] == "energy"][0]
+        self.assertAlmostEqual(energy["rate_value"], 0.1962, places=4)
+
+
+class TestCriticalPeakOutlier(unittest.TestCase):
+    def setUp(self):
+        logging.disable(logging.CRITICAL)
+
+    def tearDown(self):
+        logging.disable(logging.NOTSET)
+
+    def test_ns_cpp_event_price_passes_outlier_check(self):
+        # NS default p99=0.60 → 3×=1.80; CPP event ~182¢ = $1.82.
+        et = tp.ExtractedTariff(
+            name="Domestic Service Critical Peak Pricing Tariff",
+            code="70", customer_class="residential", rate_type="tou",
+            confidence=0.9,
+            components=[
+                {"component_type": "energy", "unit": "¢/kWh", "rate_value": 182.0,
+                 "period_label": "Critical Peak", "tier_label": "CPP event"},
+                {"component_type": "energy", "unit": "¢/kWh", "rate_value": 14.222,
+                 "period_label": "Non-Critical"},
+                {"component_type": "fixed", "unit": "$/month", "rate_value": 20.08},
+            ],
+        )
+        report, valid = tp.phase4_validate([et], "Nova Scotia Power", "NS")
+        self.assertEqual(report["valid"], 1, report.get("issues"))
+        self.assertTrue(valid[0].needs_review)
+        energy_vals = sorted(
+            float(c["rate_value"])
+            for c in valid[0].components
+            if c["component_type"] == "energy"
+        )
+        self.assertAlmostEqual(energy_vals[-1], 1.82, places=4)
+
+    def test_unlabelled_high_energy_still_rejected(self):
+        # Value must sit above 3×p99 AND outside the cents-mislabel rescue
+        # band (value/100 ≤ p99), otherwise Phase 4 converts rather than rejects.
+        et = tp.ExtractedTariff(
+            name="Residential Service", customer_class="residential",
+            rate_type="flat", confidence=0.5,
+            components=[
+                {"component_type": "energy", "unit": "$/kWh", "rate_value": 100.0},
+            ],
+        )
+        report, valid = tp.phase4_validate([et], "Some Utility", "NS")
+        self.assertEqual(valid, [])
+        self.assertTrue(any("3x 99th" in i for i in report["issues"][0]["issues"]))
+
+    def test_cpp_not_rescued_as_cents_mislabeled(self):
+        et = tp.ExtractedTariff(
+            name="Critical Peak Pricing", customer_class="residential",
+            rate_type="tou", confidence=0.9,
+            components=[
+                {"component_type": "energy", "unit": "$/kWh", "rate_value": 1.82,
+                 "period_label": "Critical Peak Event"},
+            ],
+        )
+        notes = tp._normalize_component_units(et, 0.60)
+        self.assertEqual(notes, [])
+        self.assertAlmostEqual(et.components[0]["rate_value"], 1.82)
 
 
 class TestStructuredNormalization(unittest.TestCase):
@@ -202,7 +365,12 @@ class TestPrompts(unittest.TestCase):
         self.assertNotIn("Mention weekend/holiday off-peak in description", tp.EXTRACTION_PROMPT)
 
     def test_prompt_version_bumped(self):
-        self.assertEqual(tp._LLM_PROMPT_VERSION, "v5")
+        self.assertEqual(tp._LLM_PROMPT_VERSION, "v6")
+
+    def test_full_bill_energy_rule_in_prompts(self):
+        self.assertIn("FULL-BILL ENERGY", tp._STRUCTURED_RULES)
+        self.assertIn("FULL-BILL", tp.EXTRACTION_PROMPT)
+        self.assertIn("included_in_energy", tp.EXTRACTION_PROMPT)
 
     def test_phase6_and_browser_share_mysa_rules(self):
         phase6 = tp._phase6_prompt("U", "CA", None)

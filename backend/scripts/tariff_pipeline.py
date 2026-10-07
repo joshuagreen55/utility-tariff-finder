@@ -604,7 +604,7 @@ def _set_pdf_cache(content_hash: str, text: str) -> None:
 
 # LLM extraction result cache — avoids re-calling the LLM for the same content
 LLM_CACHE_DIR = os.path.join(os.environ.get("APP_LOG_DIR", "/app/logs"), "llm_extraction_cache")
-_LLM_PROMPT_VERSION = "v5"
+_LLM_PROMPT_VERSION = "v6"
 
 
 # Opt-in, for one transition run only: also read entries written under the
@@ -2387,6 +2387,7 @@ def _page_has_rate_content(text: str, title: str = "", url: str = "") -> bool:
 # Shared by every Phase 3 prompt (text, two-pass, vision). No braces: it is
 # substituted before str.format runs on the prompts.
 _STRUCTURED_RULES = """- UNITS: copy each number and its unit exactly as printed ("¢/kWh" stays 9.56 "¢/kWh"; "$/kWh" stays 0.0956 "$/kWh"). Do not convert cents to dollars — the pipeline does it deterministically. When you add riders into an all-in rate, add them in the printed unit.
+- FULL-BILL ENERGY (product rule): Residential ENERGY must be the FULL per-kWh price the customer pays — base energy charge PLUS every applicable per-kWh rider/adjustment (fuel, FAM/AA/BA, DSM/DCRR/efficiency, storm/SCRR, power-cost/PCA, interim, cost-recovery, rate riders, etc.). Fixed monthly customer/basic charges stay as FIXED and are never folded into ENERGY. When riders live on a different page, section, or appendix of the same rate book, still include them. Emit ENERGY at the all-in total and keep optional ADJUSTMENT rows for audit with included_in_energy=true when their amounts are already in the ENERGY total. Never store base-only ENERGY when per-kWh riders apply.
 - MYSA FIELDS (Completeness): period_start_time, period_end_time, day_type, and season_start/end month/day are first-class columns — not optional labels. Fill them whenever the source states hours or season dates. period_label / season strings are display-only and never substitute for clocks or calendar dates. Leave structured fields null when the source does not state them; Phase 4 will flag needs_review / incompleteness rather than inventing values.
 - TOU CLOCKS: every ENERGY row of a TOU / tou_tiered / demand_tou / seasonal_tou tariff needs period_start_time + period_end_time taken from hours the source states. Emit one ENERGY row per continuous window (morning and evening on-peak are two rows). A rate stated for "all other hours" / "all remaining hours" covers exactly the hours not in the other stated windows — emit those complementary windows explicitly (e.g. on-peak 16:00–21:00 → off-peak 21:00–16:00). Label-only "On-Peak" with no hours anywhere in the source stays null — do NOT invent hours.
 - DAY TYPES: every TOU ENERGY row needs day_type. Use "all" when the source says the windows apply every day (or states no weekday/weekend distinction), "weekday" when it says Monday–Friday / weekdays. When the source prices weekends and/or holidays differently (e.g. "weekends and holidays: off-peak all day"), emit separate rows with day_type "weekend" and "holiday" for them — do not leave that rule only in the description.
@@ -2438,7 +2439,7 @@ Rules:
 - If a minimum monthly charge equals the basic/customer charge for the same amp tier, emit one fixed row — not both fixed and minimum duplicates
 - RELATIVE SEASONAL RIDERS: When energy charges equal another schedule's energy rate ± a seasonal premium/credit (or similar rider), emit one ENERGY component per season at the all-in rate (base ± adjustment, in the printed unit). Put month ranges in season and/or tier_label (e.g. "Winter (Dec–Apr)", "Non-Winter (May–Nov)") AND fill season_start/end month/day when months are stated. Do NOT leave a season represented only by an ADJUSTMENT row — UIs group ENERGY by season and skip ADJUSTMENT. Optional ADJUSTMENT rows may remain for audit, but every season with a premium/credit must also have a matching all-in ENERGY row.
 - CURRENT vs FUTURE COLUMNS: When a rate table has both a current column (e.g. "Effective upon the date of the Board’s Order", "currently in effect", a mid-year Order date) AND a future column (e.g. "Effective January 1, 2027"), extract ONLY the current/Board’s Order values as the live tariff. Do NOT store the future column as the current rate.
-- STACKING ENERGY RIDERS (FAM / DSM / Storm / fuel / cost-recovery ¢/kWh that apply in addition to the energy charge): emit ENERGY at the all-in rate (base energy + applicable riders, in the printed unit) and put "all-in" in its tier_label. UIs show ENERGY to customers and often hide ADJUSTMENT-only riders — understating the bill if ENERGY is base-only. Optional ADJUSTMENT rows may remain for audit.
+- STACKING ENERGY RIDERS (FAM / DSM / Storm / fuel / efficiency / power-cost / PCA / cost-recovery / interim ¢/kWh that apply in addition to the energy charge): emit ENERGY at the FULL-BILL all-in rate (base energy + every applicable per-kWh rider, in the printed unit) and put "all-in" in its tier_label. UIs show ENERGY to customers and often hide ADJUSTMENT-only riders — understating the bill if ENERGY is base-only. Optional ADJUSTMENT rows may remain for audit with included_in_energy=true. If a page lists only riders, still emit them as ADJUSTMENT so the pipeline can combine them with the base schedule.
 - INTERIM vs APPROVED ENERGY CHARGE (TVP / time-varying pricing): When a schedule publishes both an "Interim Energy Charge" (while metering/TVP systems are unavailable) AND a full "Energy Charge" seasonal TOU table, extract the **Energy Charge** seasonal/TOU structure — Non-winter all-hours plus Winter on-peak/off-peak periods as separate ENERGY rows, rate_type seasonal_tou. Do NOT flatten the tariff to a single interim all-hours ENERGY row equal to the standard Domestic offer. Fold FAM/DSM into each ENERGY period. Prefer the earliest Energy Charge effective column that is not a later calendar-year escalate (e.g. Nov 1 2026 winter rates, not Jan 1 2027). When the tariff states weekend/holiday pricing, emit it as ENERGY rows (day_type weekend / holiday), not only in the description. Fill period_* times, day_type and season_* dates on each ENERGY row.
 
 EXAMPLES:
@@ -2609,7 +2610,7 @@ Rules:
 - If a minimum monthly charge equals the basic/customer charge for the same amp tier, emit one fixed row — not both fixed and minimum duplicates
 - Relative seasonal riders (energy = another rate ± seasonal premium/credit): emit all-in ENERGY per season with month ranges in season/tier_label — never leave a season as ADJUSTMENT-only
 - Current vs future columns ("Board’s Order" vs later Jan 1 YYYY): extract ONLY the current column
-- Stacking energy riders (FAM / DSM / Storm): emit all-in ENERGY (base + riders)
+- Stacking energy riders (FAM / DSM / Storm / fuel / efficiency / power-cost): emit FULL-BILL all-in ENERGY (base + riders); keep ADJUSTMENT audit rows with included_in_energy=true
 - Interim vs approved Energy Charge (TVP): when both Interim Energy Charge and a full Energy Charge seasonal TOU table appear, extract the Energy Charge seasons/periods (seasonal_tou) — do NOT flatten to a single interim all-hours ENERGY row
 
 Use the store_tariffs tool to return results.""".replace("{structured_rules}", _STRUCTURED_RULES)
@@ -2730,7 +2731,7 @@ Rules:
 - If a minimum monthly charge equals the basic/customer charge for the same amp tier, emit one fixed row — not both fixed and minimum duplicates
 - Relative seasonal riders (energy = another rate ± seasonal premium/credit): emit all-in ENERGY per season with month ranges in season/tier_label — never leave a season as ADJUSTMENT-only
 - Current vs future columns ("Board’s Order" vs later Jan 1 YYYY): extract ONLY the current column
-- Stacking energy riders (FAM / DSM / Storm): emit all-in ENERGY (base + riders)
+- Stacking energy riders (FAM / DSM / Storm / fuel / efficiency / power-cost): emit FULL-BILL all-in ENERGY (base + riders); keep ADJUSTMENT audit rows with included_in_energy=true
 - Interim vs approved Energy Charge (TVP): when both Interim Energy Charge and a full Energy Charge seasonal TOU table appear, extract the Energy Charge seasons/periods (seasonal_tou) — do NOT flatten to a single interim all-hours ENERGY row
 
 Use the store_tariffs tool to return results.""".replace("{structured_rules}", _STRUCTURED_RULES)
@@ -2872,7 +2873,7 @@ Rules:
 - If a minimum monthly charge equals the basic/customer charge for the same amp tier, emit one fixed row — not both fixed and minimum duplicates
 - Relative seasonal riders (energy = another rate ± seasonal premium/credit): emit all-in ENERGY per season with month ranges in season/tier_label — never leave a season as ADJUSTMENT-only
 - Current vs future columns ("Board’s Order" vs a later Jan 1 YYYY): extract ONLY the current/Board’s Order values
-- Stacking energy riders (FAM / DSM / Storm ¢/kWh in addition to energy): emit all-in ENERGY (base + riders)
+- Stacking energy riders (FAM / DSM / Storm / fuel / efficiency / power-cost ¢/kWh in addition to energy): emit FULL-BILL all-in ENERGY (base + riders); keep ADJUSTMENT audit rows with included_in_energy=true
 - Interim vs approved Energy Charge (TVP): prefer Energy Charge seasonal TOU periods over a flattened Interim all-hours ENERGY row
 
 Use the store_tariffs tool to return your result (array with one tariff).
@@ -4084,6 +4085,41 @@ def _dollar_unit_for_cents(ctype: str, unit: str) -> str:
     return _DOLLAR_UNIT.get(ctype, "$/kWh")
 
 
+_CRITICAL_PEAK_RE = re.compile(
+    r"critical[\s-]*peak|\bcpp\b|peak[\s-]*time[\s-]*rebate|\bptr\b|"
+    r"\bevent[\s-]*(?:price|rate|period|hour|energy)|"
+    r"peak[\s-]*day[\s-]*pricing|critical[\s-]*period|"
+    r"non[\s-]*critical",
+    re.IGNORECASE,
+)
+
+
+def _is_critical_peak_price(
+    comp: dict,
+    tariff: "ExtractedTariff | None" = None,
+) -> bool:
+    """True when a component/tariff is labelled critical-peak / CPP / event.
+
+    Nova Scotia Power CPP event energy (~182¢/kWh) is a legitimate outlier
+    and must not be hard-rejected or mistreated as cents-mislabeled dollars.
+    """
+    parts = [
+        str(comp.get("tier_label") or ""),
+        str(comp.get("period_label") or ""),
+        str(comp.get("season") or ""),
+    ]
+    if tariff is not None:
+        parts.extend(
+            [
+                str(tariff.name or ""),
+                str(tariff.code or ""),
+                str(tariff.rate_type or ""),
+                str(tariff.description or ""),
+            ]
+        )
+    return bool(_CRITICAL_PEAK_RE.search(" ".join(parts)))
+
+
 def _normalize_component_units(t: ExtractedTariff, p99_energy: float) -> list[str]:
     """Normalize cents-denominated components to dollars, in place.
 
@@ -4096,7 +4132,8 @@ def _normalize_component_units(t: ExtractedTariff, p99_energy: float) -> list[st
          large it would be hard-rejected (>3x p99) while value/100 lands
          in the plausible band — almost certainly cents mislabeled as
          dollars. Convert instead of discarding. Legit critical-peak rates
-         below the hard-reject line are never touched.
+         (labelled CPP / event / critical-peak) are never touched, even
+         above the hard-reject line.
 
     Returns a list of notes (empty when nothing changed).
     """
@@ -4119,6 +4156,7 @@ def _normalize_component_units(t: ExtractedTariff, p99_energy: float) -> list[st
             ctype == "energy"
             and rv > p99_energy * 3
             and 0.01 <= rv / 100.0 <= p99_energy
+            and not _is_critical_peak_price(comp, t)
         ):
             new_rv = rv / 100.0
             comp["rate_value"] = new_rv
@@ -4333,8 +4371,18 @@ def expand_relative_seasonal_energy(
 
 
 _STACKING_RIDER_LABEL_RE = re.compile(
-    r"\b(?:fam|dsm|dcrr|scrr|storm|fuel\s*adjust|cost\s*recovery|"
-    r"actual\s*adjustment|balance\s*adjustment|aa/?ba)\b",
+    r"\b(?:fam|dsm|dcrr|scrr|storm|fuel(?:\s*(?:adjust(?:ment)?|cost|efficiency))?|"
+    r"efficiency|cost\s*recovery|actual\s*adjustment|balance\s*adjustment|"
+    r"aa/?ba|power\s*cost|\bpca\b|\bbac\b|rate\s*rider|energy\s*rider|"
+    r"interim\s*adjust|purchased\s*power|resource\s*adequacy|"
+    r"deferred\s*accounting|transition\s*adjust|supply\s*cost)\b",
+    re.IGNORECASE,
+)
+
+_RIDER_DONOR_NAME_RE = re.compile(
+    r"\b(?:rider|adjustment|surcharge|fuel\s*cost|fuel\s*adjust|"
+    r"power\s*cost|cost\s*recovery|fam|dsm|scrr|dcrr|pca|bac|"
+    r"efficiency|interim\s*adjust)\b",
     re.IGNORECASE,
 )
 
@@ -4386,14 +4434,16 @@ def expand_stacking_energy_riders(
             # Prefer labeled FAM/DSM/Storm-style riders; also accept any
             # unseasoned energy ADJUSTMENT (LLM often omits labels).
             if label.strip() and not _STACKING_RIDER_LABEL_RE.search(label):
-                # Unlabeled or non-rider adjustment — still stack if it is
-                # a small ¢/kWh-scale add-on (already in $/kWh after norm).
+                # Labeled but not a known rider name — still stack small
+                # ¢/kWh-scale add-ons (already in $/kWh after norm). Larger
+                # unlabeled add-ons (e.g. PGE power-cost ~8¢) need a
+                # matching rider label to fold.
                 try:
                     rv = abs(float(comp.get("rate_value") or 0))
                 except (TypeError, ValueError):
                     other.append(comp)
                     continue
-                if rv > 0.05:  # >5¢/kWh unlikely as a stacking rider alone
+                if rv > 0.12:  # >12¢/kWh unlikely as an unlabeled stacking rider
                     other.append(comp)
                     continue
             stacking_adjs.append(comp)
@@ -4532,6 +4582,239 @@ def dedupe_rate_components(components: list[dict]) -> list[dict]:
 _TOU_OR_SEASONAL_TYPES = frozenset({"tou", "seasonal_tou", "seasonal", "seasonal_tiered"})
 
 
+def _tariff_comp_types(t: ExtractedTariff) -> set[str]:
+    return {
+        str(c.get("component_type") or "").strip().lower()
+        for c in (t.components or [])
+        if isinstance(c, dict)
+    }
+
+
+def _is_rider_only_tariff(t: ExtractedTariff) -> bool:
+    """True when a tariff has only ADJUSTMENT(/minimum) rows — no core rate."""
+    types = _tariff_comp_types(t)
+    return bool(types) and not (types & {"energy", "fixed", "demand"})
+
+
+def _energy_unit_adjustments(t: ExtractedTariff, *, seasonal: bool | None = None) -> list[dict]:
+    out: list[dict] = []
+    for c in t.components or []:
+        if not isinstance(c, dict):
+            continue
+        if str(c.get("component_type") or "").strip().lower() != "adjustment":
+            continue
+        if not _is_energy_unit(c.get("unit")):
+            continue
+        if c.get("included_in_energy"):
+            continue
+        has_season = bool(_season_key(c.get("season")))
+        if seasonal is True and not has_season:
+            continue
+        if seasonal is False and has_season:
+            continue
+        out.append(c)
+    return out
+
+
+def _rider_fingerprint(comp: dict) -> tuple:
+    """Identity for deduping shared riders already present on a tariff."""
+    try:
+        rv = round(float(comp.get("rate_value") or 0), 6)
+    except (TypeError, ValueError):
+        rv = 0.0
+    label = " ".join(
+        str(comp.get(k) or "").strip().lower()
+        for k in ("tier_label", "period_label", "season")
+    )
+    return (rv, label, _season_key(comp.get("season")))
+
+
+def _find_sibling_base_energy(
+    rider: ExtractedTariff,
+    batch: list[ExtractedTariff],
+) -> dict | None:
+    """Locate a base ENERGY row for a relative seasonal rider-only extract.
+
+    NL Hydro / Newfoundland Power Rate #1.1S often arrives as Winter /
+    Non-Winter ADJUSTMENTs only; the base lives on Rate #1.1 in the same
+    batch. Prefer a same-class sibling whose code/name is a prefix of the
+    rider's code (``1.1`` ⊂ ``1.1S``) or is referenced in the rider name.
+    """
+    rider_code = str(rider.code or "").strip().lower()
+    rider_name = str(rider.name or "").strip().lower()
+    rider_class = str(rider.customer_class or "").strip().lower()
+
+    candidates: list[tuple[int, dict]] = []
+    for other in batch:
+        if other is rider:
+            continue
+        if _is_rider_only_tariff(other):
+            continue
+        other_class = str(other.customer_class or "").strip().lower()
+        if rider_class and other_class and rider_class != other_class:
+            continue
+        other_code = str(other.code or "").strip().lower()
+        other_name = str(other.name or "").strip().lower()
+        score = 0
+        if rider_code and other_code and rider_code != other_code:
+            if rider_code.startswith(other_code) or other_code.startswith(
+                re.sub(r"[a-z]+$", "", rider_code)
+            ):
+                score += 3
+        if other_code and other_code in rider_name:
+            score += 2
+        if other_name and (
+            other_name in rider_name or rider_name.startswith(other_name[:12])
+        ):
+            score += 1
+        energy_rows = [
+            c
+            for c in (other.components or [])
+            if isinstance(c, dict)
+            and str(c.get("component_type") or "").lower() == "energy"
+            and _is_energy_unit(c.get("unit"))
+            and not _season_key(c.get("season"))
+        ]
+        if not energy_rows:
+            # Fall back to any single-valued ENERGY (all seasons equal = base).
+            all_e = [
+                c
+                for c in (other.components or [])
+                if isinstance(c, dict)
+                and str(c.get("component_type") or "").lower() == "energy"
+                and _is_energy_unit(c.get("unit"))
+            ]
+            try:
+                vals = {round(float(c.get("rate_value") or 0), 6) for c in all_e}
+            except (TypeError, ValueError):
+                vals = set()
+            if len(vals) == 1 and all_e:
+                energy_rows = [all_e[0]]
+        if not energy_rows:
+            continue
+        if score == 0 and len(batch) > 2:
+            # Ambiguous multi-tariff batch with no name/code link — skip.
+            continue
+        candidates.append((score, dict(energy_rows[0])))
+
+    if not candidates:
+        return None
+    candidates.sort(key=lambda x: x[0], reverse=True)
+    base = candidates[0][1]
+    # Strip season tags so expand_relative_seasonal_energy treats it as base.
+    base["season"] = None
+    for k in _SEASON_DATE_KEYS:
+        base[k] = None
+    return base
+
+
+def salvage_relative_rider_only_tariffs(tariffs: list[ExtractedTariff]) -> int:
+    """Inject sibling base ENERGY into seasonal rider-only extracts.
+
+    Returns the number of rider-only tariffs salvaged (NL 1.1S pattern).
+    """
+    salvaged = 0
+    for t in tariffs:
+        if not _is_rider_only_tariff(t):
+            continue
+        seasonal_adjs = _energy_unit_adjustments(t, seasonal=True)
+        seasons = {
+            _season_key(a.get("season"))
+            for a in seasonal_adjs
+            if _season_key(a.get("season"))
+        }
+        if len(seasons) < 2:
+            continue
+        base = _find_sibling_base_energy(t, tariffs)
+        if base is None:
+            continue
+        t.components = [base, *list(t.components)]
+        if not t.rate_type or t.rate_type == "flat":
+            t.rate_type = "seasonal"
+        salvaged += 1
+        log.info(
+            f"    Salvaged rider-only '{t.name}': injected base ENERGY "
+            f"{base.get('rate_value')} {base.get('unit')} from sibling"
+        )
+    return salvaged
+
+
+def apply_shared_stacking_riders_across_batch(tariffs: list[ExtractedTariff]) -> int:
+    """Copy unseasoned per-kWh riders from donor extracts onto ENERGY tariffs.
+
+    Riders often live on a separate rate-book page (NSP FAM/DSM, PGE power
+    cost) and arrive as rider-only or rider-named extracts. Injecting them
+    here lets ``expand_stacking_energy_riders`` fold FULL-BILL ENERGY.
+    Returns the number of recipient tariffs that received new riders.
+    """
+    shared: list[dict] = []
+    seen: set[tuple] = set()
+    for t in tariffs:
+        is_donor = _is_rider_only_tariff(t) or bool(
+            _RIDER_DONOR_NAME_RE.search(str(t.name or ""))
+        )
+        if not is_donor:
+            continue
+        for adj in _energy_unit_adjustments(t, seasonal=False):
+            fp = _rider_fingerprint(adj)
+            if fp in seen:
+                continue
+            # Prefer labeled stacking riders; also accept unlabeled small ones.
+            label = " ".join(
+                str(adj.get(k) or "")
+                for k in ("tier_label", "period_label", "season")
+            )
+            try:
+                rv = abs(float(adj.get("rate_value") or 0))
+            except (TypeError, ValueError):
+                continue
+            if label.strip() and not _STACKING_RIDER_LABEL_RE.search(label):
+                if rv > 0.12:
+                    continue
+            elif not label.strip() and rv > 0.12:
+                continue
+            if abs(rv) < 1e-12:
+                continue
+            seen.add(fp)
+            shared.append(dict(adj))
+
+    if not shared:
+        return 0
+
+    applied = 0
+    for t in tariffs:
+        if _is_rider_only_tariff(t):
+            continue
+        energy_rows = [
+            c
+            for c in (t.components or [])
+            if isinstance(c, dict)
+            and str(c.get("component_type") or "").lower() == "energy"
+            and _is_energy_unit(c.get("unit"))
+        ]
+        if not energy_rows:
+            continue
+        # Skip if ENERGY already labelled all-in (LLM folded riders itself).
+        if any(
+            _ALL_IN_LABEL_RE.search(
+                " ".join(str(e.get(k) or "") for k in ("tier_label", "period_label"))
+            )
+            for e in energy_rows
+        ):
+            continue
+        existing = {_rider_fingerprint(a) for a in _energy_unit_adjustments(t)}
+        to_add = [dict(a) for a in shared if _rider_fingerprint(a) not in existing]
+        if not to_add:
+            continue
+        t.components = list(t.components) + to_add
+        applied += 1
+        log.info(
+            f"    Shared stacking riders → '{t.name}': "
+            f"added {len(to_add)} ADJUSTMENT(s) from batch donors"
+        )
+    return applied
+
+
 def phase4_validate(
     tariffs: list[ExtractedTariff], utility_name: str, state: str = ""
 ) -> tuple[dict, list[ExtractedTariff]]:
@@ -4540,9 +4823,13 @@ def phase4_validate(
     Uses state-level percentile bounds for rate validation:
     - Above 99th percentile: hard reject
     - Above 95th percentile: accepted but flagged as needs_review
+    - Critical-peak / CPP / event ENERGY above 3× p99: keep + needs_review
 
     Units are normalized first (cents -> dollars) so magnitude checks run
-    against comparable values.
+    against comparable values. Before per-tariff checks, the batch salvages
+    relative seasonal rider-only extracts (NL 1.1S) and applies shared
+    stacking per-kWh riders from separate rider pages onto ENERGY tariffs
+    (FULL-BILL product rule).
     """
     bounds = _get_rate_bounds(state)
     p95_energy, p99_energy, p95_fixed, p99_fixed, p95_demand, p99_demand = bounds
@@ -4550,19 +4837,56 @@ def phase4_validate(
     issues = []
     valid_tariffs = []
     flagged_tariffs = []
+    absorbed_rider_only = 0
+
+    # Pass 0: structured normalize + unit normalize on every tariff so
+    # batch rider salvage compares $/kWh values.
+    for t in tariffs:
+        t.components = normalize_structured_components(t.components)
+        unit_notes = _normalize_component_units(t, p99_energy)
+        if unit_notes:
+            t.needs_review = True
+            log.info(f"    Unit normalization on '{t.name}': {'; '.join(unit_notes)}")
+
+    n_salvaged = salvage_relative_rider_only_tariffs(tariffs)
+    n_shared = apply_shared_stacking_riders_across_batch(tariffs)
+    if n_salvaged or n_shared:
+        log.info(
+            f"    Batch rider salvage: {n_salvaged} relative rider-only, "
+            f"{n_shared} tariffs received shared stacking riders"
+        )
 
     for t in tariffs:
         tariff_issues = []
-        needs_review = False
+        needs_review = bool(t.needs_review)
 
-        t.components = normalize_structured_components(t.components)
-
-        # Normalize units BEFORE bounds checks so cents-denominated values
-        # don't get rejected (or worse, accepted) as dollar amounts.
-        unit_notes = _normalize_component_units(t, p99_energy)
-        if unit_notes:
-            needs_review = True
-            log.info(f"    Unit normalization on '{t.name}': {'; '.join(unit_notes)}")
+        # Rider-only extracts that donated stacking riders (and were not
+        # salvaged into a seasonal schedule) are absorbed — not rejected —
+        # when an ENERGY sibling in the batch could receive them.
+        if _is_rider_only_tariff(t):
+            seasonal_adjs = _energy_unit_adjustments(t, seasonal=True)
+            seasons = {
+                _season_key(a.get("season"))
+                for a in seasonal_adjs
+                if _season_key(a.get("season"))
+            }
+            has_energy_sibling = any(
+                o is not t
+                and not _is_rider_only_tariff(o)
+                and any(
+                    isinstance(c, dict)
+                    and str(c.get("component_type") or "").lower() == "energy"
+                    for c in (o.components or [])
+                )
+                for o in tariffs
+            )
+            if len(seasons) < 2 and has_energy_sibling:
+                absorbed_rider_only += 1
+                log.info(
+                    f"    Absorbed rider-only '{t.name}' after sharing "
+                    f"adjustments with ENERGY tariffs"
+                )
+                continue
 
         # Relative seasonal riders: expand base ENERGY ± seasonal ADJUSTMENT
         # into all-in ENERGY per season (NF Rate #1.1S pattern) before dedupe.
@@ -4575,8 +4899,8 @@ def phase4_validate(
                 f"{count_energy_seasons(t.components)} ENERGY seasons"
             )
 
-        # Flat stacking riders (FAM/DSM/Storm): fold unseasoned ADJUSTMENT
-        # ¢/kWh into all-in ENERGY so Flux/Lookup show the billed rate.
+        # Flat stacking riders (FAM/DSM/Storm/fuel): fold unseasoned
+        # ADJUSTMENT ¢/kWh into all-in ENERGY so Flux/Lookup show FULL-BILL.
         before_stack = list(t.components)
         t.components = expand_stacking_energy_riders(t.components)
         if t.components != before_stack:
@@ -4688,12 +5012,22 @@ def phase4_validate(
                     # dynamic-pricing, or critical-period rates that can
                     # legitimately exceed the typical bound (e.g. HQ's Rate
                     # DT dual-fuel pricing, ConEd's critical peak, etc.).
+                    # Labelled CPP / critical-peak / event ENERGY above
+                    # 3× p99 is kept with needs_review (NS Power ~182¢).
                     if ctype == "energy":
                         if rv > p99_energy * 3:
-                            tariff_issues.append(
-                                f"energy rate {rv} $/kWh > 3x 99th percentile "
-                                f"for {state or 'US'} ({p99_energy}) — likely hallucination"
-                            )
+                            if _is_critical_peak_price(comp, t):
+                                needs_review = True
+                                log.info(
+                                    f"    CPP/event energy {rv} $/kWh on "
+                                    f"'{t.name}' exceeds 3x p99 "
+                                    f"({p99_energy}) — kept for review"
+                                )
+                            else:
+                                tariff_issues.append(
+                                    f"energy rate {rv} $/kWh > 3x 99th percentile "
+                                    f"for {state or 'US'} ({p99_energy}) — likely hallucination"
+                                )
                         elif rv > p95_energy:
                             needs_review = True
                     elif ctype == "fixed":
@@ -4729,10 +5063,14 @@ def phase4_validate(
         [getattr(t, "extraction_tier", "") for t in valid_tariffs],
     )
 
+    # Absorbed rider-only extracts are neither valid nor invalid — they
+    # donated adjustments to ENERGY tariffs and should not inflate "invalid".
+    invalid_count = len(tariffs) - len(valid_tariffs) - absorbed_rider_only
     report = {
         "total_extracted": len(tariffs),
         "valid": len(valid_tariffs),
-        "invalid": len(tariffs) - len(valid_tariffs),
+        "invalid": max(0, invalid_count),
+        "absorbed_rider_only": absorbed_rider_only,
         "issues": issues,
         "flagged_needs_review": flagged_tariffs,
         "has_residential": any(t.customer_class == "residential" for t in valid_tariffs),
@@ -4740,6 +5078,8 @@ def phase4_validate(
     }
 
     log.info(f"  Phase 4: {report['valid']} valid, {report['invalid']} invalid tariffs")
+    if absorbed_rider_only:
+        log.info(f"    Absorbed {absorbed_rider_only} rider-only extract(s) into ENERGY")
     if flagged_tariffs:
         log.info(f"    Flagged for review (above 95th pctl): {flagged_tariffs}")
     if issues:
@@ -7170,7 +7510,7 @@ Rules for the JSON:
         + """
 - Relative seasonal riders (energy = another rate ± seasonal premium/credit): emit all-in ENERGY per season (base ± adjustment) with month ranges in season/tier_label AND season_start/end month/day when months are stated. Do not leave a season as ADJUSTMENT-only.
 - Current vs future columns ("Board’s Order" / currently effective vs a later Jan 1 YYYY): extract ONLY the current column as live rates.
-- Stacking ¢/kWh riders (FAM, DSM/DCRR, Storm) that apply in addition to energy: emit all-in ENERGY (base + riders).
+- Stacking ¢/kWh riders (FAM, DSM/DCRR, Storm, fuel, efficiency, power-cost) that apply in addition to energy: emit FULL-BILL all-in ENERGY (base + riders); keep ADJUSTMENT audit rows with included_in_energy=true.
 - Interim vs approved Energy Charge (TVP / time-varying): when both Interim Energy Charge and Energy Charge seasonal TOU tables appear, extract Energy Charge seasons/periods — do not flatten to a single interim all-hours ENERGY.
 - If you cannot find the utility's current residential/commercial electric tariffs at all from authoritative sources, return an empty array [].
 """
