@@ -510,6 +510,177 @@ class TestReferencedRiderDocFetch(unittest.TestCase):
             )
         self.assertTrue(merged[0].needs_review)
 
+    def test_official_domains_from_source_urls_when_website_is_cdn(self):
+        """PGE: saved website is Contentful CDN; verified tariffs cite portlandgeneral.com."""
+        from app.services.source_type import is_generic_host
+
+        self.assertTrue(is_generic_host("https://assets.ctfassets.net/abc/rates.pdf"))
+        tariffs = [
+            tp.ExtractedTariff(
+                name="Schedule 7", customer_class="residential", rate_type="flat",
+                source_url="https://portlandgeneral.com/about/info/pricing",
+                description="Subject to Schedule 125 Power Cost Adjustment",
+                components=[
+                    {"component_type": "energy", "unit": "¢/kWh", "rate_value": 11.224},
+                ],
+            )
+        ]
+        domains = tp._official_domains_for_rider_fetch(
+            website_url="https://assets.ctfassets.net/abc/pge-site",
+            tariffs=tariffs,
+            existing_pages=[],
+        )
+        self.assertIn("portlandgeneral.com", domains)
+        self.assertNotIn("ctfassets.net", domains)
+        # Aggregator blocklist never enters the allowlist.
+        bad = tp._official_domains_for_rider_fetch(
+            website_url="https://callmepower.ca",
+            tariffs=[tp.ExtractedTariff(
+                name="X", customer_class="residential", rate_type="flat",
+                source_url="https://utilitycheck.co/pge",
+                components=[],
+            )],
+        )
+        self.assertNotIn("callmepower.ca", bad)
+        self.assertNotIn("utilitycheck.co", bad)
+
+    def test_pge_cdn_website_still_fetches_portlandgeneral_rider_docs(self):
+        sched7 = tp.ExtractedTariff(
+            name="Schedule 7", customer_class="residential", rate_type="flat",
+            source_url="https://portlandgeneral.com/about/info/pricing",
+            description="Subject to Schedule 125 Power Cost Adjustment; "
+                        "not shown on this page",
+            components=[
+                {"component_type": "energy", "unit": "¢/kWh", "rate_value": 11.224},
+            ],
+        )
+        rider_url = "https://portlandgeneral.com/rates/schedule-125-pca.pdf"
+        rider_page = tp.RatePage(
+            url=rider_url,
+            title="Schedule 125 Power Cost Adjustment",
+            page_type="pdf",
+            content=(
+                "Portland General Electric Schedule 125 Power Cost Adjustment. "
+                "PCA 8.400 ¢/kWh applies in addition to the energy charge for "
+                "all residential customers."
+            ),
+        )
+        rider_extract = [
+            tp.ExtractedTariff(
+                name="Schedule 125 Power Cost Adjustment",
+                customer_class="residential", rate_type="flat",
+                source_url=rider_url,
+                components=[
+                    {"component_type": "adjustment", "unit": "¢/kWh", "rate_value": 8.4,
+                     "tier_label": "Power Cost Adjustment"},
+                ],
+            )
+        ]
+        search_hits = [
+            {"url": rider_url, "title": "Schedule 125", "description": "PCA rider"},
+            # CDN / aggregator noise must be dropped even if ranked first.
+            {"url": "https://assets.ctfassets.net/pge/sched125.pdf",
+             "title": "CDN copy", "description": "PCA"},
+            {"url": "https://utilitycheck.co/pge-pca",
+             "title": "Aggregator", "description": "PCA"},
+        ]
+        with mock.patch.object(tp, "brave_search", return_value=search_hits), \
+             mock.patch.object(tp, "_fetch_as_pdf_via_download", return_value=rider_page) as fetch_pdf, \
+             mock.patch.object(tp, "phase3_extract_tariffs", return_value=rider_extract):
+            merged, pages = tp.enrich_tariffs_with_referenced_rider_docs(
+                [sched7], "Portland General Electric", "OR",
+                website_url="https://assets.ctfassets.net/abc/pge",
+                pages=[],
+            )
+        fetch_pdf.assert_called()
+        fetched_url = fetch_pdf.call_args[0][0]
+        self.assertIn("portlandgeneral.com", fetched_url)
+        self.assertNotIn("ctfassets", fetched_url)
+        self.assertEqual(len(pages), 1)
+        report, valid = tp.phase4_validate(merged, "Portland General Electric", "OR")
+        self.assertEqual(report["valid"], 1)
+        energy = [c for c in valid[0].components if c["component_type"] == "energy"][0]
+        self.assertAlmostEqual(energy["rate_value"], 0.19624, places=4)
+
+
+class TestTwopassRiderOnlyFallback(unittest.TestCase):
+    """Long rider PDFs must still yield ADJUSTMENT amounts end-to-end."""
+
+    def setUp(self):
+        logging.disable(logging.CRITICAL)
+
+    def tearDown(self):
+        logging.disable(logging.NOTSET)
+
+    def test_content_looks_like_rider_schedule(self):
+        nsp = (
+            "Nova Scotia Power Fuel Adjustment Mechanism (FAM) and DSM Cost "
+            "Recovery Rider. FAM AA/BA 0.156 ¢/kWh applies in addition to the "
+            "energy charge. DSM DCRR 0.648 ¢/kWh applies in addition to the "
+            "energy charge for all customers."
+        )
+        self.assertTrue(tp._content_looks_like_rider_schedule(nsp))
+        self.assertFalse(tp._content_looks_like_rider_schedule("About our company history."))
+        self.assertFalse(tp._content_looks_like_rider_schedule("short"))
+
+    def test_empty_identify_falls_back_to_single_pass_on_rider_pdf(self):
+        content = (
+            "Nova Scotia Power Tariff Book — Riders and Adjustments Appendix. "
+            "Fuel Adjustment Mechanism FAM AA/BA 0.156 ¢/kWh applies in addition "
+            "to the energy charge. DSM DCRR Cost Recovery Rider 0.648 ¢/kWh "
+            "applies in addition to the energy charge for all residential "
+            "customers. Storm Cost Recovery Rider SCRR 0.000 ¢/kWh."
+            + (" padding" * 2000)
+        )
+        page = tp.RatePage(
+            url="https://www.nspower.ca/docs/riders.pdf",
+            title="NSP Riders",
+            content=content,
+            page_type="pdf",
+        )
+        page.content_hash = ""
+        rider_rows = [{
+            "name": "Fuel Adjustment Mechanism and DSM Rider",
+            "customer_class": "residential",
+            "rate_type": "flat",
+            "confidence": 0.9,
+            "components": [
+                {"component_type": "adjustment", "unit": "¢/kWh", "rate_value": 0.156,
+                 "tier_label": "FAM AA/BA"},
+                {"component_type": "adjustment", "unit": "¢/kWh", "rate_value": 0.648,
+                 "tier_label": "DSM DCRR"},
+            ],
+        }]
+        with mock.patch.object(tp, "_call_claude", return_value="[]"), \
+             mock.patch.object(tp, "_call_claude_tool", return_value=rider_rows), \
+             mock.patch.object(tp.time, "sleep"):
+            tariffs, n = tp._extract_two_pass(page, "Nova Scotia Power", "NS")
+        self.assertEqual(n, 2)  # identify + single-pass fallback
+        self.assertEqual(len(tariffs), 1)
+        adjs = [c for c in tariffs[0].components if c["component_type"] == "adjustment"]
+        self.assertEqual(len(adjs), 2)
+        self.assertAlmostEqual(sum(c["rate_value"] for c in adjs), 0.804, places=3)
+
+    def test_empty_identify_on_non_rider_still_returns_empty(self):
+        content = (
+            "Company history and board biographies. No rate information here. "
+            + (" padding" * 2000)
+        )
+        page = tp.RatePage(
+            url="https://www.examplecoop.coop/about.pdf",
+            title="About",
+            content=content,
+            page_type="pdf",
+        )
+        page.content_hash = ""
+        with mock.patch.object(tp, "_call_claude", return_value="[]"), \
+             mock.patch.object(tp, "_call_claude_tool") as tool, \
+             mock.patch.object(tp.time, "sleep"):
+            tariffs, n = tp._extract_two_pass(page, "Example Coop", "OR")
+        tool.assert_not_called()
+        self.assertEqual(tariffs, [])
+        self.assertEqual(n, 1)
+
 
 class TestCriticalPeakOutlier(unittest.TestCase):
     def setUp(self):
@@ -663,12 +834,31 @@ class TestPrompts(unittest.TestCase):
         self.assertNotIn("Mention weekend/holiday off-peak in description", tp.EXTRACTION_PROMPT)
 
     def test_prompt_version_bumped(self):
-        self.assertEqual(tp._LLM_PROMPT_VERSION, "v6")
+        self.assertEqual(tp._LLM_PROMPT_VERSION, "v7")
 
     def test_full_bill_energy_rule_in_prompts(self):
         self.assertIn("FULL-BILL ENERGY", tp._STRUCTURED_RULES)
         self.assertIn("FULL-BILL", tp.EXTRACTION_PROMPT)
         self.assertIn("included_in_energy", tp.EXTRACTION_PROMPT)
+
+    def test_twopass_identify_still_lists_rider_only_documents(self):
+        self.assertIn("Do NOT list per-kWh riders", tp.TWOPASS_IDENTIFY_PROMPT)
+        self.assertIn("ONLY rider/adjustment schedules", tp.TWOPASS_IDENTIFY_PROMPT)
+        self.assertNotIn(
+            "SKIP: industrial-only, lighting-only, irrigation-only, wholesale-only, riders that aren't standalone rates",
+            tp.TWOPASS_IDENTIFY_PROMPT,
+        )
+
+    def test_example_6_uses_currently_effective_nonwinter(self):
+        example = tp.EXTRACTION_PROMPT.split("Example 6")[1].split("Example 7")[0]
+        self.assertIn("currently in effect", example.lower())
+        # Future Apr 2027 Non-winter may appear as a column to reject, but
+        # the extracted Non-winter all-in must be the current 19.128, not 13.664.
+        self.assertIn("19.128", example)
+        self.assertNotIn("13.664", example)
+        self.assertIn("Do NOT use the future Apr 1 2027", example)
+        # Output Non-winter uses Board's Order / current, not the 2027 column.
+        self.assertIn('Non-winter (4/1–10/31) 00:00–00:00 day_type "all" 19.128', example)
 
     def test_phase6_and_browser_share_mysa_rules(self):
         phase6 = tp._phase6_prompt("U", "CA", None)

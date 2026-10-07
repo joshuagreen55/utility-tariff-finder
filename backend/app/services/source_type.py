@@ -133,6 +133,7 @@ GENERIC_HOSTS = frozenset({
     "hubspot.net", "hubspotusercontent-na1.net", "hs-sites.com",
     "issuu.com", "scribd.com", "yumpu.com", "mailchimp.com", "list-manage.com",
     "cdn-website.com", "multiscreensite.com", "sharepoint.com",
+    "ctfassets.net",  # Contentful CDN (e.g. PGE's saved website_url)
 })
 
 # Boards that publish the rate itself for every utility in the jurisdiction.
