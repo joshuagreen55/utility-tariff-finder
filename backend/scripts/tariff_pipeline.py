@@ -74,16 +74,15 @@ BRAVE_API_KEY = _load_setting("brave_api_key", "BRAVE_API_KEY")
 ANTHROPIC_API_KEY = _load_setting("anthropic_api_key", "ANTHROPIC_API_KEY")
 GOOGLE_CSE_API_KEY = _load_setting("google_cse_api_key", "GOOGLE_CSE_API_KEY")
 GOOGLE_CSE_CX = _load_setting("google_cse_cx", "GOOGLE_CSE_CX")
-GOOGLE_AI_API_KEY = _load_setting("google_ai_api_key", "GOOGLE_AI_API_KEY")
-HAIKU_MODEL = os.environ.get("HAIKU_MODEL", "claude-haiku-4-5-20251001")
-# Tier-3 escalation / long-doc identify model. Opus 5 (May 2026) is a strict
-# upgrade over Opus 4.7: ~3x cheaper ($5/$25 vs $15/$75) and higher quality.
-OPUS_MODEL = os.environ.get("OPUS_MODEL", "claude-opus-5")
-# Tier-1 extraction model. Moved off the deprecated 3-flash-preview to GA
-# Gemini 3.8 Flash (Sep 2026) — smarter, so more pages resolve at tier 1
-# without escalating to Haiku/Opus.
-GEMINI_MODEL = os.environ.get("GEMINI_MODEL", "gemini-3.8-flash")
-GEMINI_TIMEOUT_MS = int(os.environ.get("GEMINI_TIMEOUT_MS", "60000"))
+# Anthropic-only extraction stack (Gemini removed 2026-10). Exact model ids —
+# override via env without code change. Role map:
+#   HAIKU_MODEL  — tier-1 cheap first pass (was Gemini Flash)
+#   SONNET_MODEL — tier-2 main extract + vision/nav/Track B/browser/two-pass
+#                  (was Haiku 4.5)
+#   OPUS_MODEL   — tier-3 escalation + long-doc identify (was Opus 5)
+HAIKU_MODEL = os.environ.get("HAIKU_MODEL", "claude-haiku-5-5")
+SONNET_MODEL = os.environ.get("SONNET_MODEL", "claude-sonnet-5-5")
+OPUS_MODEL = os.environ.get("OPUS_MODEL", "claude-opus-5-5")
 
 # Hard cap on how many times a single utility may escalate to the expensive
 # Opus tier within one pipeline run. Opus escalations hit on only ~8% of
@@ -312,8 +311,8 @@ class ExtractedTariff:
     # Computable-contract reasons (app.services.computable) for TOU/seasonal
     # rate types that cannot price every interval, e.g. tou_gap:weekend.
     computable_reasons: list[str] = field(default_factory=list)
-    # Which extraction tier produced it (gemini / haiku / opus / twopass /
-    # vision / gemini_dr), for accepted-after-validation yield.
+    # Which extraction tier produced it (haiku / sonnet / opus / twopass /
+    # vision), for accepted-after-validation yield.
     extraction_tier: str = ""
 
 
@@ -605,7 +604,7 @@ def _set_pdf_cache(content_hash: str, text: str) -> None:
 
 # LLM extraction result cache — avoids re-calling the LLM for the same content
 LLM_CACHE_DIR = os.path.join(os.environ.get("APP_LOG_DIR", "/app/logs"), "llm_extraction_cache")
-_LLM_PROMPT_VERSION = "v4"
+_LLM_PROMPT_VERSION = "v5"
 
 
 # Opt-in, for one transition run only: also read entries written under the
@@ -618,11 +617,11 @@ def _cache_model_id(tier: str) -> str:
     """Concrete model ids behind a cache tier. Part of the cache key so an
     env-only model swap never silently replays another model's output."""
     return {
-        "gemini": GEMINI_MODEL,
         "haiku": HAIKU_MODEL,
+        "sonnet": SONNET_MODEL,
         "opus": OPUS_MODEL,
-        "vision": HAIKU_MODEL,
-        "twopass": f"{HAIKU_MODEL}+{OPUS_MODEL}",
+        "vision": SONNET_MODEL,
+        "twopass": f"{SONNET_MODEL}+{OPUS_MODEL}",
     }.get(tier, tier)
 
 
@@ -2352,9 +2351,10 @@ SKIP: industrial, large commercial/power, irrigation, fleet, street lighting, tr
 
 ATTRIBUTION CHECK (applies to every page you extract from):
 - A target utility is provided below. Only return rates that the page explicitly attributes to the target utility or one of its named operating subsidiaries.
+- PROVINCE-WIDE REGULATED PRICES: If the page is published by a provincial or state energy regulator (e.g. Ontario Energy Board / OEB) and lists Regulated Price Plan (RPP) or other commodity prices that apply province-wide / jurisdiction-wide to local distribution companies in that jurisdiction, treat those rates as attributable to the target utility when the target operates in that same province or state. Extract them. Do NOT invent utility-specific delivery or distribution charges that are not printed on the page.
 - If the page is a comparison / aggregator page that lists rates for multiple utilities side-by-side, only include rows unambiguously labeled for the target utility. If you cannot tell, return an empty tariffs array.
 - If a section, table, or rate sheet is labeled with a different utility's name (a neighboring IOU, a sister utility in another state, a competitive REP/marketer), DO NOT include those rates.
-- If the page contains no rates clearly attributable to the target utility, return an empty tariffs array — do NOT guess.
+- If the page contains no rates clearly attributable to the target utility (and the regulator exception above does not apply), return an empty tariffs array — do NOT guess.
 
 For each tariff, provide:
 - name: Official schedule name (e.g. "Residential Service", "Schedule GS-1")
@@ -2502,7 +2502,7 @@ PAGE_SCREENSHOT_EXTRACTION_PROMPT_BASE = """Extract all residential and commerci
 
 The page may display rate information as images, charts, infographics, or styled tables that don't appear in the raw HTML text.
 
-ATTRIBUTION CHECK: This extraction is for a specific target utility (named below). If the screenshot shows rates for multiple utilities, only return those clearly attributed to the target. If you cannot confidently attribute rates to the target utility, return an empty tariffs array.
+ATTRIBUTION CHECK: This extraction is for a specific target utility (named below). If the screenshot shows rates for multiple utilities, only return those clearly attributed to the target. PROVINCE-WIDE REGULATED PRICES: regulator pages (e.g. OEB RPP) that publish jurisdiction-wide commodity prices for LDCs in the target's province/state count as attributable — extract them; do not invent delivery charges not shown. If you cannot confidently attribute rates to the target utility (and the regulator exception does not apply), return an empty tariffs array.
 
 For each tariff provide: name, code, customer_class ("residential"/"commercial"), rate_type, description, effective_date, confidence (0-1), and components array.
 Each component needs: component_type ("energy"/"demand"/"fixed"/"minimum"/"adjustment"), unit, rate_value, and optional tier_min_kwh, tier_max_kwh, tier_label, period_label, period_start_time, period_end_time, day_type, season, season_start_month, season_start_day, season_end_month, season_end_day.
@@ -2604,7 +2604,7 @@ def _extract_page_screenshot_vision(
     client = _get_anthropic_client()
     try:
         resp = client.messages.create(
-            model=HAIKU_MODEL,
+            model=SONNET_MODEL,
             max_tokens=4096,
             messages=[{"role": "user", "content": content_blocks}],
             tools=[TARIFF_EXTRACTION_TOOL],
@@ -2624,7 +2624,7 @@ def _extract_page_screenshot_vision(
 
 PDF_VISION_EXTRACTION_PROMPT_BASE = """Extract all residential and commercial electricity tariffs visible in these PDF page images.
 
-ATTRIBUTION CHECK: This extraction is for a specific target utility (named below). If the PDF contains rate sheets for multiple utilities, only return those clearly attributed to the target. If you cannot confidently attribute rates to the target utility, return an empty tariffs array.
+ATTRIBUTION CHECK: This extraction is for a specific target utility (named below). If the PDF contains rate sheets for multiple utilities, only return those clearly attributed to the target. PROVINCE-WIDE REGULATED PRICES: regulator documents (e.g. OEB RPP) that publish jurisdiction-wide commodity prices for LDCs in the target's province/state count as attributable — extract them; do not invent delivery charges not shown. If you cannot confidently attribute rates to the target utility (and the regulator exception does not apply), return an empty tariffs array.
 
 For each tariff provide: name, code, customer_class ("residential"/"commercial"), rate_type, description, effective_date, confidence (0-1), and components array.
 Each component needs: component_type ("energy"/"demand"/"fixed"/"minimum"/"adjustment"), unit, rate_value, and optional tier_min_kwh, tier_max_kwh, tier_label, period_label, period_start_time, period_end_time, day_type, season, season_start_month, season_start_day, season_end_month, season_end_day.
@@ -2710,7 +2710,7 @@ def _extract_pdf_vision(
     client = _get_anthropic_client()
     try:
         resp = client.messages.create(
-            model=HAIKU_MODEL,
+            model=SONNET_MODEL,
             max_tokens=8192,
             messages=[{"role": "user", "content": content_blocks}],
             tools=[TARIFF_EXTRACTION_TOOL],
@@ -2753,7 +2753,7 @@ For each tariff, provide ONLY:
 - customer_class: "residential" or "commercial"
 - location_hint: A short phrase (5-10 words) from the text near where the rate details appear
 
-ATTRIBUTION RULE: Only list rates the document explicitly attributes to the target utility. If the document is a comparison/aggregator and lists rates for several utilities, exclude rates not labeled for the target. If you cannot tell, return [].
+ATTRIBUTION RULE: Only list rates the document explicitly attributes to the target utility. PROVINCE-WIDE REGULATED PRICES: regulator pages (e.g. OEB RPP) with jurisdiction-wide commodity prices for LDCs in the target's province/state count as attributable. If the document is a comparison/aggregator and lists rates for several utilities, exclude rates not labeled for the target. If you cannot tell (and the regulator exception does not apply), return [].
 
 SKIP: industrial-only, lighting-only, irrigation-only, wholesale-only, riders that aren't standalone rates
 
@@ -3413,16 +3413,16 @@ def _get_anthropic_client():
 def _call_claude(prompt: str, model: str | None = None) -> str:
     """Text-only Claude call (used by two-pass identification step).
 
-    Defaults to Haiku for cost. Pass `model=OPUS_MODEL` from callers
-    that need higher recall (e.g. enumerating all named rates in a
-    consolidated rate-book PDF — Haiku is stochastic at scale and will
-    silently drop tariffs from the list).
+    Defaults to Sonnet (main extract tier). Pass `model=OPUS_MODEL` from
+    callers that need higher recall (e.g. enumerating all named rates in a
+    consolidated rate-book PDF — mid-tier models are stochastic at scale
+    and will silently drop tariffs from the list).
     """
     from app.services.anthropic_compat import response_text
 
     client = _get_anthropic_client()
     resp = client.messages.create(
-        model=model or HAIKU_MODEL,
+        model=model or SONNET_MODEL,
         max_tokens=8192,
         messages=[{"role": "user", "content": prompt}],
     )
@@ -3435,19 +3435,20 @@ def _call_claude(prompt: str, model: str | None = None) -> str:
 _CACHED_SYSTEM_PROMPT = EXTRACTION_PROMPT.split("TARGET UTILITY:")[0].strip()
 
 
-def _call_claude_tool(prompt: str) -> list[dict]:
+def _call_claude_tool(prompt: str, model: str | None = None) -> list[dict]:
     """Call Claude with tool use for structured tariff extraction.
 
-    Uses Anthropic prompt caching: the static system prompt and tool schema
-    are marked ephemeral so repeated calls within a session pay only 10%
-    of normal input cost for the cached portion.
+    ``model`` defaults to ``SONNET_MODEL`` (tier-2). Pass ``HAIKU_MODEL`` for
+    the cheap tier-1 pass. Uses Anthropic prompt caching: the static system
+    prompt and tool schema are marked ephemeral so repeated calls within a
+    session pay only 10% of normal input cost for the cached portion.
 
     Returns the parsed tariff dicts directly from the tool call input,
     guaranteed to match the schema. Falls back to text parsing on error.
     """
     client = _get_anthropic_client()
     resp = client.messages.create(
-        model=HAIKU_MODEL,
+        model=model or SONNET_MODEL,
         max_tokens=8192,
         system=[
             {
@@ -3492,215 +3493,27 @@ def _parse_text_response(text: str) -> list[dict]:
     return [item for item in raw if isinstance(item, dict)]
 
 
-class _GeminiModelsProxy:
-    """Wraps client.models so every generate_content() records token cost."""
-
-    def __init__(self, models):
-        self._m = models
-
-    def generate_content(self, *args, **kwargs):
-        resp = self._m.generate_content(*args, **kwargs)
-        llm_cost.record_gemini(kwargs.get("model", ""), getattr(resp, "usage_metadata", None))
-        return resp
-
-    def __getattr__(self, name):
-        return getattr(self._m, name)
-
-
-class _GeminiCostProxy:
-    """Transparent proxy over a GenAI client that meters .models.generate_content."""
-
-    def __init__(self, client):
-        self._c = client
-
-    @property
-    def models(self):
-        return _GeminiModelsProxy(self._c.models)
-
-    def __getattr__(self, name):
-        return getattr(self._c, name)
-
-
-def _get_gemini_client():
-    """Lazy-init Google GenAI client (new SDK) with configurable HTTP timeout.
-
-    Default is 60s — Gemini 3 Flash Preview occasionally takes 30-50s on
-    large pages and was hitting DEADLINE_EXCEEDED on a shorter timeout.
-
-    Wrapped to meter per-call token cost (Phase 6 Deep Research uses its own
-    client and is priced separately via llm_cost.record_manual).
-    """
-    client = getattr(_thread_local, "gemini_client", None)
-    if client is None:
-        from google import genai
-        client = genai.Client(
-            api_key=GOOGLE_AI_API_KEY,
-            http_options={"timeout": GEMINI_TIMEOUT_MS},
-        )
-        _thread_local.gemini_client = client
-    return _GeminiCostProxy(client)
-
-
-# Circuit breaker: after N consecutive Gemini failures in a single process,
-# stop trying Gemini and go straight to Haiku for the rest of the run.
-_GEMINI_MAX_CONSECUTIVE_FAILURES = 3
-_gemini_consecutive_failures = 0
-_gemini_circuit_lock = threading.Lock()
-
-
-def _gemini_circuit_open() -> bool:
-    """Returns True if Gemini has failed too many times and should be skipped."""
-    with _gemini_circuit_lock:
-        return _gemini_consecutive_failures >= _GEMINI_MAX_CONSECUTIVE_FAILURES
-
-
-def _gemini_record_success():
-    global _gemini_consecutive_failures
-    with _gemini_circuit_lock:
-        _gemini_consecutive_failures = 0
-
-
-def _gemini_record_failure():
-    global _gemini_consecutive_failures
-    with _gemini_circuit_lock:
-        _gemini_consecutive_failures += 1
-        if _gemini_consecutive_failures == _GEMINI_MAX_CONSECUTIVE_FAILURES:
-            log.warning(
-                f"    Gemini circuit breaker OPEN after {_GEMINI_MAX_CONSECUTIVE_FAILURES} "
-                "consecutive failures — falling back to Haiku for remaining pages"
-            )
-
-
-# Cache for whether google-genai SDK is installed. Checked once so we
-# don't spam import errors in hot paths and so _select_model can skip
-# Gemini entirely when the SDK is missing.
-_GEMINI_SDK_AVAILABLE: bool | None = None
-
-
-def _gemini_sdk_available() -> bool:
-    """Return True iff the google-genai package can be imported.
-
-    Cached after first call. If False, _select_model will skip Gemini
-    entirely and route directly to Haiku.
-    """
-    global _GEMINI_SDK_AVAILABLE
-    if _GEMINI_SDK_AVAILABLE is not None:
-        return _GEMINI_SDK_AVAILABLE
-    try:
-        import google.genai  # noqa: F401
-        _GEMINI_SDK_AVAILABLE = True
-    except ImportError:
-        log.warning(
-            "google-genai SDK is not installed — Gemini tier disabled, "
-            "routing all requests to Haiku/Opus"
-        )
-        _GEMINI_SDK_AVAILABLE = False
-    return _GEMINI_SDK_AVAILABLE
-
-
-def _to_gemini_schema(node: Any) -> Any:
-    """JSON Schema (Claude tool input_schema) → Gemini OpenAPI-subset schema.
-
-    Gemini has no ``["string", "null"]`` type unions; it uses ``nullable``.
-    """
-    if isinstance(node, list):
-        return [_to_gemini_schema(n) for n in node]
-    if not isinstance(node, dict):
-        return node
-    out = {}
-    for k, v in node.items():
-        if k == "type" and isinstance(v, list):
-            non_null = [t for t in v if t != "null"]
-            out["type"] = non_null[0] if non_null else "string"
-            if "null" in v:
-                out["nullable"] = True
-        elif k in ("properties",):
-            out[k] = {pk: _to_gemini_schema(pv) for pk, pv in v.items()}
-        elif k == "cache_control":
-            continue
-        else:
-            out[k] = _to_gemini_schema(v)
-    return out
-
-
-def _gemini_response_schema() -> dict:
-    return _to_gemini_schema(TARIFF_EXTRACTION_TOOL["input_schema"])
-
-
-def _call_gemini(prompt: str) -> list[dict]:
-    """Call Gemini Flash for structured tariff extraction.
-    Uses the google-genai SDK with JSON schema enforcement.
-    Feeds into a circuit breaker on repeated failures.
-    Returns list of tariff dicts matching the same schema as Claude tool use.
-
-    Returns [] and records a circuit-breaker failure on any error
-    (including ImportError when the SDK isn't installed), so the
-    caller can fall back to Haiku without crashing the page.
-    """
-    try:
-        from google.genai import types  # type: ignore
-    except ImportError as e:
-        _gemini_record_failure()
-        log.warning(f"    Gemini SDK unavailable: {e}")
-        return []
-
-    try:
-        client = _get_gemini_client()
-        config_kw = dict(
-            response_mime_type="application/json",
-            temperature=0.0,
-            max_output_tokens=8192,
-        )
-        try:
-            config = types.GenerateContentConfig(
-                **config_kw, response_schema=_gemini_response_schema(),
-            )
-        except Exception as e:  # noqa: BLE001 — older SDK: schema-less JSON
-            log.debug(f"    Gemini response_schema unsupported: {e}")
-            config = types.GenerateContentConfig(**config_kw)
-        resp = client.models.generate_content(
-            model=GEMINI_MODEL,
-            contents=prompt,
-            config=config,
-        )
-        raw = json.loads(resp.text)
-        if isinstance(raw, list):
-            tariffs = [t for t in raw if isinstance(t, dict)]
-        else:
-            tariffs = raw.get("tariffs", []) if isinstance(raw, dict) else []
-        if tariffs:
-            _gemini_record_success()
-        return tariffs
-    except Exception as e:
-        _gemini_record_failure()
-        log.warning(f"    Gemini extraction failed: {e}")
-        return []
-
-
 def _select_model(page: "RatePage") -> str:
-    """Choose which LLM to use based on page characteristics.
-    Returns 'gemini' or 'haiku'. Respects the circuit breaker."""
-    if not GOOGLE_AI_API_KEY or not _gemini_sdk_available():
-        return "haiku"
+    """Choose which Anthropic tier to start with based on page characteristics.
 
-    if _gemini_circuit_open():
-        return "haiku"
-
+    Returns ``haiku`` (cheap first pass) or ``sonnet`` (skip straight to the
+    main extract tier for PDFs / complex HTML — same heuristic that used to
+    skip Gemini and start at Haiku 4.5).
+    """
     if page.page_type == "pdf" and page.pdf_bytes:
-        return "haiku"
+        return "sonnet"
 
     if page.content and _is_complex_page(page.content):
-        return "haiku"
+        return "sonnet"
 
-    return "gemini"
+    return "haiku"
 
 
 def _call_opus_tool(prompt: str) -> list[dict]:
     """Call Claude Opus (see OPUS_MODEL) for structured tariff extraction.
 
-    Only used as the last-resort third tier when both Gemini 3 Flash
-    and Haiku fail to extract any tariffs.  More expensive but
-    significantly better at complex rate structures, PDFs, and edge cases.
+    Last-resort third tier when Haiku 5.5 and Sonnet 5.5 both return nothing.
+    More expensive but better at complex rate structures, PDFs, and edge cases.
     """
     client = _get_anthropic_client()
     try:
@@ -3744,29 +3557,37 @@ _NUMERIC_RATE_SIGNAL = re.compile(
     r"\$\d+\s*/\s*month",                     # $12/month
     re.IGNORECASE,
 )
+# OEB-style tables print bare decimals (9.8, 15.7) under a "(¢/kWh)" heading
+# with no "$" or "cents" adjacent to the number.
+_CENTS_KWH_HEADING = re.compile(r"(?:¢|cents)\s*/\s*k[wW]h", re.IGNORECASE)
+_BARE_RATE_DECIMAL = re.compile(r"\b\d{1,3}\.\d{1,4}\b")
 
 
 def _page_has_numeric_rates(content: str) -> bool:
     """Does the page contain at least one rate-amount-shaped number?
 
-    Pages where both Haiku and Gemini returned 0 AND which contain no
-    numeric rate values cannot produce extractable tariffs no matter
-    which LLM we use — so we skip escalating to the expensive Opus tier.
+    Pages where the cheaper tiers returned 0 AND which contain no numeric
+    rate values cannot produce extractable tariffs no matter which LLM we
+    use — so we skip escalating to the expensive Opus tier.
     """
     if not content:
         return False
-    return bool(_NUMERIC_RATE_SIGNAL.search(content))
+    if _NUMERIC_RATE_SIGNAL.search(content):
+        return True
+    # Regulator-style tables: ¢/kWh (or cents/kWh) heading + bare decimals.
+    if _CENTS_KWH_HEADING.search(content) and _BARE_RATE_DECIMAL.search(content):
+        return True
+    return False
 
 
 def _extract_with_model_routing(prompt: str, page: "RatePage") -> tuple[list[dict], str]:
-    """Extract tariffs using a 3-tier model strategy.
+    """Extract tariffs using a 3-tier Anthropic model strategy.
 
-    Tier 1: Gemini 3.8 Flash (fast, cheap, good for most pages)
-    Tier 2: Claude Haiku     (better at complex HTML, tool use)
-    Tier 3: Claude Opus      (last resort — only invoked if the page has at
+    Tier 1: Claude Haiku 5.5  (cheap first pass — was Gemini Flash)
+    Tier 2: Claude Sonnet 5.5 (main extract — was Haiku 4.5)
+    Tier 3: Claude Opus 5.5   (last resort — only invoked if the page has at
                               least one rate-amount-shaped number AND the
-                              per-utility Opus budget isn't exhausted, so we
-                              don't burn Opus tokens on pages without data)
+                              per-utility Opus budget isn't exhausted)
 
     Returns (tariff_dicts, model_used). Uses LLM extraction cache to avoid
     redundant API calls.
@@ -3775,10 +3596,10 @@ def _extract_with_model_routing(prompt: str, page: "RatePage") -> tuple[list[dic
 
     if page.content_hash:
         # Check ALL tiers, not just the selected model: if a previous run
-        # escalated to Opus for this exact content, re-running Gemini and
-        # Haiku first just burns two calls to rediscover the same answer.
+        # escalated to Opus for this exact content, re-running Haiku and
+        # Sonnet first just burns two calls to rediscover the same answer.
         seen_models = []
-        for m in (model, "gemini", "haiku", "opus"):
+        for m in (model, "haiku", "sonnet", "opus"):
             if m in seen_models:
                 continue
             seen_models.append(m)
@@ -3787,21 +3608,23 @@ def _extract_with_model_routing(prompt: str, page: "RatePage") -> tuple[list[dic
                 log.info(f"    Using cached {m} extraction ({len(cached)} tariffs)")
                 return cached, m
 
-    if model == "gemini":
-        result = _call_gemini(prompt)
-        llm_cost.record_extraction_outcome("gemini", bool(result))
+    last_tier = "haiku"
+    if model == "haiku":
+        result = _call_claude_tool(prompt, model=HAIKU_MODEL)
+        llm_cost.record_extraction_outcome("haiku", bool(result))
         if result:
             if page.content_hash:
-                _set_llm_cache(page.content_hash, "gemini", result)
-            return result, "gemini"
-        log.info("    Gemini returned no tariffs, escalating to Haiku")
+                _set_llm_cache(page.content_hash, "haiku", result)
+            return result, "haiku"
+        log.info("    Haiku returned no tariffs, escalating to Sonnet")
 
-    result = _call_claude_tool(prompt)
-    llm_cost.record_extraction_outcome("haiku", bool(result))
+    last_tier = "sonnet"
+    result = _call_claude_tool(prompt, model=SONNET_MODEL)
+    llm_cost.record_extraction_outcome("sonnet", bool(result))
     if result:
         if page.content_hash:
-            _set_llm_cache(page.content_hash, "haiku", result)
-        return result, "haiku"
+            _set_llm_cache(page.content_hash, "sonnet", result)
+        return result, "sonnet"
 
     # Only escalate to Opus if the page actually contains numeric rate data.
     # Pages with rate-themed titles but no numbers (e.g. marketing pages
@@ -3809,24 +3632,24 @@ def _extract_with_model_routing(prompt: str, page: "RatePage") -> tuple[list[dic
     # to the expensive Opus tier wastes tokens.
     if not _page_has_numeric_rates(page.content):
         log.info(
-            "    Haiku returned 0; skipping Opus escalation "
+            f"    {last_tier.capitalize()} returned 0; skipping Opus escalation "
             "(page has no numeric rate signals)"
         )
-        return [], "haiku"
+        return [], last_tier
 
     # Per-utility Opus budget: Opus escalations hit on only ~8% of pages, so
     # cap how many times one utility may fire the expensive tier per run.
     global _opus_escalations_this_util
     if _opus_escalations_this_util >= OPUS_MAX_PER_UTILITY:
         log.info(
-            f"    Haiku returned 0; skipping Opus escalation "
+            f"    {last_tier.capitalize()} returned 0; skipping Opus escalation "
             f"(per-utility cap of {OPUS_MAX_PER_UTILITY} reached)"
         )
-        return [], "haiku"
+        return [], last_tier
     _opus_escalations_this_util += 1
 
     log.info(
-        f"    Haiku returned no tariffs, escalating to Opus "
+        f"    {last_tier.capitalize()} returned no tariffs, escalating to Opus "
         f"({_opus_escalations_this_util}/{OPUS_MAX_PER_UTILITY})"
     )
     result = _call_opus_tool(prompt)
@@ -6965,7 +6788,7 @@ def _phase5_smart_retry(
     try:
         client = _get_anthropic_client()
         resp = client.messages.create(
-            model=HAIKU_MODEL,
+            model=SONNET_MODEL,
             max_tokens=1024,
             messages=[{"role": "user", "content": prompt}],
         )
@@ -7059,32 +6882,21 @@ def _phase5_smart_retry(
 # Phase 6: Deep Research fallback (Gemini Interactions API)
 # ---------------------------------------------------------------------------
 #
-# Last-resort recovery tier for utilities that fail Phases 1-5. The Gemini
-# Deep Research agent performs a long-horizon, multi-source web investigation
-# on our behalf and returns a cited report. Typical cost per call is on the
-# order of $1.50-$2.50 and latency is 5-15 minutes, so we only run this on
-# the ~5% long tail where all faster tiers struck out.
-#
-# Cost/safety guardrails:
-#   - Gated behind env var PHASE6_ENABLED (default off)
-#   - Client-side wall-clock cap via PHASE6_MAX_WAIT_SEC (default 1200s);
-#     the Interactions cancel() API does NOT actually abort a running task,
-#     so we simply stop polling and let the server-side work time out.
-#   - Skips instantly if google-genai SDK isn't installed or no API key.
-#   - Never raises — returns ([], stats_with_error) so the pipeline continues.
+# Phase 6 was Gemini Deep Research. The 2026-10 Anthropic-only stack drop
+# removed the runtime Gemini dependency; helpers below (_phase6_prompt /
+# parse) remain so Mysa Completeness rules stay unit-tested, but
+# phase6_deep_research never calls an LLM. PHASE6_ENABLED is ignored.
 
-PHASE6_AGENT_DEFAULT = "deep-research-preview-04-2026"
+PHASE6_AGENT_DEFAULT = "deep-research-preview-04-2026"  # legacy; unused
 PHASE6_MAX_WAIT_SEC_DEFAULT = 1200
 PHASE6_POLL_INTERVAL_SEC = 20
-# Per-call token ceiling. Deep Research calls normally use 800k–3M tokens;
-# anything above ~3M indicates the agent is spinning on a pathological target
-# (our 16-utility retest had one utility balloon to 9.27M tokens ≈ $13 for an
-# empty report). We cancel client-side once we observe usage exceeding this.
 PHASE6_MAX_TOKENS_DEFAULT = 3_000_000
 
 
 def _phase6_enabled() -> bool:
-    return os.environ.get("PHASE6_ENABLED", "").strip().lower() in ("1", "true", "yes", "on")
+    """Phase 6 Gemini Deep Research was removed; always False."""
+    return False
+
 
 
 _CA_PROVINCE_CODES = {
@@ -7371,15 +7183,16 @@ def phase6_deep_research(
     agent: str | None = None,
     max_wait_sec: int | None = None,
 ) -> tuple[list[ExtractedTariff], dict]:
-    """Gemini Deep Research fallback for utilities that failed Phases 1-5.
+    """Phase 6 stub — Gemini Deep Research was removed (Anthropic-only stack).
 
-    Returns (tariffs, stats). Never raises; all errors surface via
-    `stats["phase6_error"]` and the returned tariff list is empty.
+    Always returns no tariffs. Never raises. Kept so call sites in
+    ``run_pipeline`` need no structural rewrite.
     """
+    del utility_name, state, attempted_urls, agent, max_wait_sec  # unused
     stats: dict = {
-        "phase6_attempted": True,
-        "phase6_enabled": _phase6_enabled(),
-        "phase6_status": None,
+        "phase6_attempted": False,
+        "phase6_enabled": False,
+        "phase6_status": "removed",
         "phase6_elapsed_sec": 0.0,
         "phase6_interaction_id": None,
         "phase6_total_tokens": 0,
@@ -7387,195 +7200,13 @@ def phase6_deep_research(
         "phase6_output_tokens": 0,
         "phase6_raw_tariffs_returned": 0,
         "phase6_accepted_tariffs": 0,
-        "phase6_error": None,
+        "phase6_error": (
+            "Phase 6 Gemini Deep Research removed; pipeline is Anthropic-only "
+            "(HAIKU_MODEL / SONNET_MODEL / OPUS_MODEL)"
+        ),
     }
-
-    if not _phase6_enabled():
-        stats["phase6_status"] = "disabled"
-        log.info("  Phase 6: skipped (PHASE6_ENABLED is not set)")
-        return [], stats
-    if not _gemini_sdk_available():
-        stats["phase6_status"] = "sdk_missing"
-        stats["phase6_error"] = "google-genai SDK not available"
-        log.warning("  Phase 6: skipped — google-genai SDK not available")
-        return [], stats
-    if not GOOGLE_AI_API_KEY:
-        stats["phase6_status"] = "no_api_key"
-        stats["phase6_error"] = "GOOGLE_AI_API_KEY not set"
-        log.warning("  Phase 6: skipped — GOOGLE_AI_API_KEY not set")
-        return [], stats
-
-    agent_id = agent or os.environ.get("PHASE6_AGENT", PHASE6_AGENT_DEFAULT)
-    try:
-        wait_cap = int(max_wait_sec if max_wait_sec is not None
-                       else os.environ.get("PHASE6_MAX_WAIT_SEC", PHASE6_MAX_WAIT_SEC_DEFAULT))
-    except ValueError:
-        wait_cap = PHASE6_MAX_WAIT_SEC_DEFAULT
-    try:
-        token_cap = int(os.environ.get(
-            "PHASE6_MAX_TOKENS", PHASE6_MAX_TOKENS_DEFAULT
-        ))
-    except ValueError:
-        token_cap = PHASE6_MAX_TOKENS_DEFAULT
-
-    log.info(
-        f"  Phase 6: Deep Research fallback — agent={agent_id} "
-        f"wait_cap={wait_cap}s token_cap={token_cap}"
-    )
-
-    prompt = _phase6_prompt(utility_name, state, attempted_urls)
-
-    try:
-        from google import genai  # type: ignore
-    except ImportError as e:
-        stats["phase6_status"] = "sdk_import_error"
-        stats["phase6_error"] = str(e)
-        return [], stats
-
-    try:
-        client = genai.Client(api_key=GOOGLE_AI_API_KEY)
-    except Exception as e:
-        stats["phase6_status"] = "client_init_error"
-        stats["phase6_error"] = str(e)
-        log.warning(f"  Phase 6: client init failed ({e})")
-        return [], stats
-
-    t0 = time.time()
-    try:
-        interaction = client.interactions.create(
-            input=prompt,
-            agent=agent_id,
-            background=True,
-        )
-    except Exception as e:
-        stats["phase6_elapsed_sec"] = round(time.time() - t0, 1)
-        stats["phase6_status"] = "create_failed"
-        stats["phase6_error"] = str(e)
-        log.warning(f"  Phase 6: create failed ({e})")
-        return [], stats
-
-    iid = getattr(interaction, "id", None)
-    stats["phase6_interaction_id"] = iid
-    log.info(f"  Phase 6: submitted interaction id={iid}")
-
-    last_status: str | None = None
-    last_log_t = 0.0
-    final_interaction = interaction
-    while True:
-        elapsed = time.time() - t0
-        if elapsed > wait_cap:
-            stats["phase6_status"] = "client_timeout"
-            stats["phase6_error"] = f"exceeded client wall-clock cap of {wait_cap}s"
-            stats["phase6_elapsed_sec"] = round(elapsed, 1)
-            log.warning(
-                f"  Phase 6: aborting after {elapsed:.0f}s — agent still "
-                f"in_progress (cancel API is non-functional; task will be "
-                f"abandoned server-side)"
-            )
-            try:
-                client.interactions.cancel(iid)
-            except Exception:
-                pass
-            _phase6_meter(final_interaction, stats)
-            return [], stats
-
-        try:
-            final_interaction = client.interactions.get(iid)
-        except Exception as e:
-            stats["phase6_status"] = "poll_error"
-            stats["phase6_error"] = str(e)
-            stats["phase6_elapsed_sec"] = round(elapsed, 1)
-            log.warning(f"  Phase 6: poll failed ({e})")
-            _phase6_meter(final_interaction, stats)
-            return [], stats
-
-        # Mid-flight token ceiling: usage grows as the agent runs, so we can
-        # abort a runaway call long before wait_cap expires. Guards us against
-        # the occasional pathological target that otherwise burns $10+ before
-        # returning an empty report.
-        mid_usage = getattr(final_interaction, "usage", None)
-        if mid_usage is not None:
-            try:
-                so_far = int(getattr(mid_usage, "total_tokens", 0) or 0)
-            except (TypeError, ValueError):
-                so_far = 0
-            if so_far and so_far > token_cap:
-                stats["phase6_status"] = "token_cap"
-                stats["phase6_error"] = (
-                    f"exceeded client token cap of {token_cap} "
-                    f"(observed {so_far})"
-                )
-                stats["phase6_elapsed_sec"] = round(elapsed, 1)
-                stats["phase6_total_tokens"] = so_far
-                log.warning(
-                    f"  Phase 6: aborting after {elapsed:.0f}s — "
-                    f"token usage {so_far} exceeded cap {token_cap}"
-                )
-                try:
-                    client.interactions.cancel(iid)
-                except Exception:
-                    pass
-                _phase6_meter(final_interaction, stats)
-                return [], stats
-
-        st = getattr(final_interaction, "status", None)
-        if st != last_status or (time.time() - last_log_t) > 120:
-            log.info(f"  Phase 6: t={elapsed:.0f}s status={st}")
-            last_status = st
-            last_log_t = time.time()
-        if st in ("completed", "failed", "cancelled"):
-            break
-        time.sleep(PHASE6_POLL_INTERVAL_SEC)
-
-    elapsed = time.time() - t0
-    stats["phase6_elapsed_sec"] = round(elapsed, 1)
-    stats["phase6_status"] = getattr(final_interaction, "status", "unknown")
-
-    if stats["phase6_status"] != "completed":
-        err = getattr(final_interaction, "error", None)
-        stats["phase6_error"] = str(err) if err else "non-completed status"
-        log.warning(
-            f"  Phase 6: finished with status={stats['phase6_status']} in "
-            f"{elapsed:.0f}s — {stats['phase6_error']}"
-        )
-        _phase6_meter(final_interaction, stats)
-        return [], stats
-
-    # Deep Research uses its own client (bypasses the metered Gemini proxy);
-    # priced under the "gemini_dr" key.
-    _phase6_meter(final_interaction, stats)
-
-    # Concatenate ALL text outputs — Deep Research returns multiple (exec
-    # summary, analysis+JSON, citations, ...) and the JSON block is usually
-    # NOT in the last one.
-    outputs = getattr(final_interaction, "outputs", None) or []
-    combined_text = "\n\n".join(
-        (getattr(o, "text", "") or "") for o in outputs
-    )
-    log.info(
-        f"  Phase 6: completed in {elapsed:.0f}s — "
-        f"{len(outputs)} outputs, {len(combined_text)} chars, "
-        f"{stats['phase6_total_tokens']} tokens"
-    )
-
-    tariffs = _phase6_parse_tariffs(
-        combined_text,
-        fallback_source=f"gemini-deep-research://{iid}",
-    )
-    stats["phase6_raw_tariffs_returned"] = len(tariffs)
-    # We still need to dedupe inside the caller, but count what we accepted
-    stats["phase6_accepted_tariffs"] = len(tariffs)
-
-    if tariffs:
-        log.info(
-            f"  Phase 6: recovered {len(tariffs)} tariffs from Deep Research"
-        )
-    else:
-        log.warning(
-            "  Phase 6: Deep Research returned no usable tariffs"
-        )
-
-    return tariffs, stats
+    log.info("  Phase 6: skipped (Gemini Deep Research removed)")
+    return [], stats
 
 
 def run_pipeline(

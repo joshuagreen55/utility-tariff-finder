@@ -288,7 +288,7 @@ class OpusArbiter:
     def __init__(self, api_key: str, model: str | None = None, *, max_chars: int | None = None,
                  timeout: float = 180.0, post=None):
         self._api_key = api_key
-        self.model = model or os.environ.get("AUDITOR_MODEL") or os.environ.get("OPUS_MODEL", "claude-opus-5")
+        self.model = model or os.environ.get("AUDITOR_MODEL") or os.environ.get("OPUS_MODEL", "claude-opus-5-5")
         self.max_chars = max_chars or (
             _env_int("JEV_CHUNK_CHARS", 40_000) * _env_int("JEV_MAX_CHUNKS", 5)
         )

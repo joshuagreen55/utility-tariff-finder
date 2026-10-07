@@ -2,14 +2,16 @@
 
 Every call site in this repo was written for Haiku 4.5 / pre-4.7 behaviour:
 forced ``tool_choice`` and ``resp.content[0].text``. Newer models differ
-(per docs.claude.com "Thinking", checked 2026-09-25):
+(per docs.claude.com "Thinking", checked 2026-10-07):
 
-- Opus 4.7+, Opus 5, Opus 5.5, Sonnet 5, Fable, Mythos: thinking is on by
-  default, thinking tokens count against ``max_tokens``, the first content
-  block can be a thinking block, and non-default ``temperature`` / ``top_p``
-  / ``top_k`` return 400 on every request.
-- Opus 5.5, Fable 5.1, Mythos 5.1: forced tool use (``tool_choice`` type
-  ``tool`` / ``any``) returns 400 on every request; ``auto`` is required.
+- Opus 4.7+, Opus 5 / 5.5, Sonnet 5 / 5.5, Haiku 5 / 5.5, Fable, Mythos:
+  thinking is on by default (adaptive), thinking tokens count against
+  ``max_tokens``, the first content block can be a thinking block, and
+  non-default ``temperature`` / ``top_p`` / ``top_k`` return 400.
+- Opus 5.5, Sonnet 5.5, Haiku 5.5, Fable 5.1, Mythos 5.1: forced tool use
+  (``tool_choice`` type ``tool`` / ``any``) returns 400 **or** silently
+  disables thinking. We always rewrite forced tool use to ``auto`` plus a
+  "call the tool exactly once" system line so extraction actually thinks.
 - Opus 5.5, Fable, Mythos: ``thinking: {"type": "disabled"}`` returns 400.
 
 ``adapt_request`` rewrites a request body (SDK kwargs or raw HTTP JSON, same
@@ -19,8 +21,8 @@ know yet degrades instead of failing open to "0 tariffs".
 
 Env knobs (all optional):
 - ``ANTHROPIC_THINKING``: ``disabled`` turns thinking off where the model
-  allows it (Sonnet 5, Opus 5); ``adaptive`` asks for it explicitly.
-  Unset keeps the model default.
+  allows it (Sonnet 5, Opus 5, Haiku 5.5); ``adaptive`` asks for it
+  explicitly. Unset keeps the model default.
 - ``ANTHROPIC_EFFORT``: ``output_config.effort`` for thinking models.
 - ``ANTHROPIC_THINKING_MIN_MAX_TOKENS`` (default 16000): ``max_tokens``
   floor while thinking is on, so reasoning cannot crowd out the tool call.
@@ -35,8 +37,15 @@ from typing import Any, Callable
 
 log = logging.getLogger(__name__)
 
-_THINKING_DEFAULT_ON = re.compile(r"claude-(?:opus-(?:4-7|4-8|5)|sonnet-5|fable|mythos)", re.I)
-_FORCED_TOOL_REJECTED = re.compile(r"claude-(?:opus-5-5|fable-5-1|mythos-5-1)", re.I)
+# Thinking-on by default (strips sampling knobs; may raise max_tokens floor).
+# haiku-5 covers claude-haiku-5 and claude-haiku-5-5; sonnet-5 covers 5 and 5.5.
+_THINKING_DEFAULT_ON = re.compile(
+    r"claude-(?:opus-(?:4-7|4-8|5)|sonnet-5|haiku-5|fable|mythos)", re.I
+)
+# Forced tool_choice either 400s or turns thinking off — rewrite to auto.
+_FORCED_TOOL_REJECTED = re.compile(
+    r"claude-(?:(?:opus|sonnet|haiku)-5-5|fable-5-1|mythos-5-1)", re.I
+)
 _THINKING_DISABLE_REJECTED = re.compile(r"claude-(?:opus-5-5|fable|mythos)", re.I)
 _SAMPLING_KEYS = ("temperature", "top_p", "top_k")
 

@@ -6,10 +6,9 @@ comprehensive; when in doubt, prefer what is written here over older docs
 (`PROJECT_SUMMARY.md` and `TECHNICAL_REVIEW.md` predate most of the current
 refresh/quarantine/cost/model systems).
 
-_Last updated: 2026-09-29 (Mysa structured extract fields on general pipeline;
-Mysa Completeness rewrite; residential-only health score; official vs
-third-party sources + Provenance, issue #28; effective_date fill on
-re-extract match, issue #26; website_url backfill + reclassify tooling, issue #30)._
+_Last updated: 2026-10-07 (Anthropic-only 5.5 stack: drop Gemini; Haiku 5.5 /
+Sonnet 5.5 / Opus 5.5 defaults; adaptive thinking on extraction; Haiku 5.5
+pricing; OEB regulator attribution + ¢/kWh numeric gate)._
 
 ---
 
@@ -45,7 +44,7 @@ backlog is the main quality lever.
 - **Backend**: Python 3.12, FastAPI (async), SQLAlchemy, Pydantic. PostgreSQL 16 + PostGIS.
 - **Task queue**: Celery + Redis (beat scheduler for monitoring & refresh).
 - **Frontend**: React 18 + TypeScript + Vite 5, `react-router-dom`. Served by Caddy.
-- **LLMs**: Anthropic Claude (Haiku, Opus) + Google Gemini (Flash + Deep Research).
+- **LLMs**: Anthropic Claude only — Haiku 5.5 / Sonnet 5.5 / Opus 5.5.
 - **Deploy**: Docker Compose on a single GCP VM (`utility-tariff-finder`, `us-central1-a`).
 
 ```
@@ -191,29 +190,33 @@ one Celery `process_utility` task = one `run_pipeline` call for one utility.
 | 3 | `phase3_extract_tariffs` | LLM structured extraction (tool-call), detail-page-first dedup, two-pass for complex pages. **3-tier model routing** (see below). |
 | 4 | `phase4_validate` + `store_tariffs` | Validate against hand-set per-state bounds (hard-reject >3× p99, flag >p95 `needs_review`), normalize units, then persist soft-supersede-only (see §3): new row on changed rates, re-verify on identical rates, hold on protected rows; soft-supersede matching OpenEI seeds / older vintages; retire (never delete) rows missing from a ≥75%-coverage extraction of the same customer class. Identical rates from an official doc replace a third-party row (`source_upgrade`); a third-party extraction never replaces an official row (`hold`, `source_downgrade`). |
 | 5 | `_phase5_smart_retry` | AI-guided nav fallback: load homepage, LLM picks nav links two levels deep, re-extract. |
-| 6 | `phase6_deep_research` | Gemini Deep Research (Interactions API) for the long tail. Last-resort, cost- and token-guarded. Gated by `PHASE6_ENABLED`. |
+| 6 | `phase6_deep_research` | **Removed** (was Gemini Deep Research). Stub always returns empty; no Gemini runtime dependency. |
 
 **Prefer official sources.** Fetch targets (search result, alternates,
 `tariff_page_urls`, monitoring sources) are ranked official → unknown →
 third-party; an operator `rate_page_url_override` / preferred tariff book
 stays primary. `THIRD_PARTY_DOMAINS` (in `app/services/source_type.py`) is
-hard-blocked in search, crawl and Phase 6. A third-party success is never
-terminal when an official URL is known: the unchanged-fingerprint skip is
-bypassed while live rows still cite a third party. Third-party URLs are
-demoted, not deleted (they may be a utility's only source).
+hard-blocked in search and crawl. A third-party success is never terminal
+when an official URL is known: the unchanged-fingerprint skip is bypassed
+while live rows still cite a third party. Third-party URLs are demoted, not
+deleted (they may be a utility's only source).
 
 ### Model-tier routing (Phase 3 extraction)
-`Gemini 3.8 Flash` (tier 1, cheap) → `Claude Haiku 4.5` (tier 2) → `Claude
-Opus 5` (tier 3, last resort). Opus is only invoked when a page has numeric
-rate signals AND the per-utility Opus budget isn't spent. Gemini gets a
-`response_schema` derived from the Claude `store_tariffs` tool schema.
+`Claude Haiku 5.5` (tier 1, cheap first pass) → `Claude Sonnet 5.5` (tier 2,
+main extract) → `Claude Opus 5.5` (tier 3, last resort). Complex HTML / PDF
+pages skip straight to Sonnet. Opus is only invoked when a page has numeric
+rate signals (including OEB-style bare decimals under a ¢/kWh heading) AND
+the per-utility Opus budget isn't spent.
 
 Every Anthropic call goes through `app/services/anthropic_compat.py`, which
-shapes the request per model: Sonnet 5 / Opus 5+ think by default and 400 on
-`temperature`/`top_p`/`top_k`; **Opus 5.5 400s on forced `tool_choice`** and
-cannot disable thinking. Knobs: `ANTHROPIC_THINKING` (`disabled` |
-`adaptive`), `ANTHROPIC_EFFORT`, `ANTHROPIC_THINKING_MIN_MAX_TOKENS`. Read
-responses with `anthropic_compat.response_text()`, never `content[0].text`.
+shapes the request per model: Haiku 5.5 / Sonnet 5 / 5.5 / Opus 5+ think by
+default and 400 on `temperature`/`top_p`/`top_k`. **All three 5.5 models
+reject or nullify forced `tool_choice`** — compat rewrites to `auto` plus a
+"call the tool exactly once" system line so adaptive thinking actually
+runs on extraction. Opus 5.5 cannot disable thinking. Knobs:
+`ANTHROPIC_THINKING` (`disabled` | `adaptive`), `ANTHROPIC_EFFORT`,
+`ANTHROPIC_THINKING_MIN_MAX_TOKENS`. Read responses with
+`anthropic_compat.response_text()`, never `content[0].text`.
 
 Prompts ask for numbers + units **as printed** (Phase 4 converts cents),
 and for Mysa Completeness structured columns on every ENERGY row when the
@@ -222,28 +225,26 @@ source states them: `period_start_time` / `period_end_time` + `day_type`
 both for `seasonal_tou`. `period_label` / `season` stay display-only —
 never invent clocks or season dates from labels alone; leave null and let
 Phase 4 flag `needs_review` / incompleteness. Shared `_STRUCTURED_RULES`
-is injected into text, two-pass, vision, Phase 6 Deep Research, and the
-browser-CLI extract prompts. `normalize_structured_components()` (Phase
-4) maps model forms (`7:00 a.m.`, `:59` ends, "weekends and holidays", month
-names) onto the structured columns without filling empty fields. Component
-dedupe keys include clock / day type / season dates / tier bounds.
+is injected into text, two-pass, vision, and the browser-CLI extract
+prompts. Province-wide regulator commodity prices (e.g. OEB RPP) count as
+attributable to LDCs in that province without opening the wrong-utility
+guard. `normalize_structured_components()` (Phase 4) maps model forms
+(`7:00 a.m.`, `:59` ends, "weekends and holidays", month names) onto the
+structured columns without filling empty fields. Component dedupe keys
+include clock / day type / season dates / tier bounds.
 
 **Key model/cost env vars** (all overridable):
-- `OPUS_MODEL` (default `claude-opus-5`) — tier-3 + long-doc identify, and
-  `opus_audit.py` / pin arbiter unless `AUDITOR_MODEL` is set. Wave 6
-  candidate `claude-opus-5-5` ($4/$20 vs $5/$25): **not promoted** until the
-  gold probe shows it holds (see `docs/LLM_MEASUREMENT.md`).
-- `HAIKU_MODEL` (default `claude-haiku-4-5-20251001`) — tier-2, vision, nav,
-  two-pass extract, Track B, browser CLI. Wave 6 candidate `claude-sonnet-5`
-  ($2/$10, ~30% more tokens, thinking): **env-only** unless the gold probe
-  shows a clear computable jump that justifies the spend.
-- `GEMINI_MODEL` (default `gemini-3.8-flash`) — tier-1.
+- `HAIKU_MODEL` (default `claude-haiku-5-5`) — tier-1 cheap first pass
+  (replaced Gemini Flash).
+- `SONNET_MODEL` (default `claude-sonnet-5-5`) — tier-2 main extract, PDF /
+  screenshot vision, Phase 5 nav, two-pass extract, Track B, browser CLI
+  (replaced Haiku 4.5).
+- `OPUS_MODEL` (default `claude-opus-5-5`) — tier-3 + long-doc identify, and
+  `opus_audit.py` / pin arbiter unless `AUDITOR_MODEL` is set.
 - `OPUS_MAX_PER_UTILITY` (default `2`) — cap on Opus escalations per utility
-  per run (long-doc identify is not counted). Opus reportedly hit on ~8% of
-  escalations while being ~70% of run cost (claimed; "hit" meant "returned
-  anything" — judge it by `tier_acceptance` now), so this cap matters.
-- `PHASE6_ENABLED` (compose default `1`), `PHASE6_MAX_WAIT_SEC`,
-  `PHASE6_MAX_TOKENS`.
+  per run (long-doc identify is not counted).
+- `PHASE6_ENABLED` — ignored (Gemini Deep Research removed; compose default
+  `0`).
 
 > **Model choices are behind env vars on purpose.** To try a model, override
 > the env var in `docker-compose.yml` (or the container env) and restart the
@@ -384,8 +385,11 @@ spend outside refresh runs (Track B, campaigns, `opus_audit`) goes to
 includes the concrete model id, so env-only model swaps never replay another
 model's output. Pricing lives in `DEFAULT_PRICING` (override via
 `LLM_PRICING_JSON`); keep it in sync with real list prices. Keys are
-families (`haiku`, `sonnet`, `opus`, `gemini`) or model-id prefixes
-(`claude-opus-5-5`); the longest id prefix wins and spend rolls up by family.
+families (`haiku`, `sonnet`, `opus`) or model-id prefixes
+(`claude-haiku-5-5`, `claude-sonnet-5-5`, `claude-opus-5-5`); the longest
+id prefix wins and spend rolls up by family. Haiku 5.5 must use the
+id-prefix row ($0.10/$0.50) — the `haiku` family key is Haiku 4.5's
+$1/$5 and would overstate spend ~10×.
 How to probe a
 model change: `docs/LLM_MEASUREMENT.md`.
 
@@ -548,11 +552,11 @@ Seed order: `seed_eia861` → `seed_canada` → `seed_openei` → `seed_territor
 ## 10. Key env vars (names only — values live in the VM env / `.env`)
 `DATABASE_URL`, `SYNC_DATABASE_URL`, `REDIS_URL`, `ADMIN_API_KEY`,
 `CORS_ORIGINS`, `OPENEI_API_KEY`, `BRAVE_API_KEY`, `ANTHROPIC_API_KEY`,
-`GOOGLE_AI_API_KEY`, `GOOGLE_CSE_API_KEY`, `GOOGLE_CSE_CX`,
+`GOOGLE_CSE_API_KEY`, `GOOGLE_CSE_CX`,
 `GOOGLE_MAPS_API_KEY`, `TARIFF_CORRECTIONS_API_KEY`; pins: `PIN_VERIFY_DAILY_MAX`,
 `PIN_VERIFIER` (`none`|`jev`), `PIN_ARBITER` (`none`|`opus`), `MERCURY_URL`,
-`MERCURY_API_TOKEN`, `MERCURY_TIMEOUT_SEC`, `JEV_CHUNK_CHARS`, `JEV_MAX_CHUNKS`; model/cost: `OPUS_MODEL`, `HAIKU_MODEL`, `GEMINI_MODEL`,
-`AUDITOR_MODEL`, `OPUS_MAX_PER_UTILITY`, `PHASE6_ENABLED`, `LLM_PRICING_JSON`,
+`MERCURY_API_TOKEN`, `MERCURY_TIMEOUT_SEC`, `JEV_CHUNK_CHARS`, `JEV_MAX_CHUNKS`; model/cost: `HAIKU_MODEL`, `SONNET_MODEL`, `OPUS_MODEL`,
+`AUDITOR_MODEL`, `OPUS_MAX_PER_UTILITY`, `LLM_PRICING_JSON`,
 `ANTHROPIC_THINKING`, `ANTHROPIC_EFFORT`, `ANTHROPIC_THINKING_MIN_MAX_TOKENS`,
 `LLM_CACHE_LEGACY_READ`,
 `MONTHLY_MAX_UTILITIES`, `CELERY_CONCURRENCY`, `QUARANTINE_RECHECK_DAYS`; auth:
