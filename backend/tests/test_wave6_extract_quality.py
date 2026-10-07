@@ -118,6 +118,36 @@ class TestRiderFolding(unittest.TestCase):
         self.assertEqual(by_season["Non-Winter"]["season_end_day"], 30)
 
 
+class TestResidentialOnlyExtractFilter(unittest.TestCase):
+    """New scrapes drop commercial; existing commercial DB rows are out of scope."""
+
+    def setUp(self):
+        logging.disable(logging.CRITICAL)
+
+    def tearDown(self):
+        logging.disable(logging.NOTSET)
+
+    def test_phase4_drops_commercial_extracts(self):
+        res = tp.ExtractedTariff(
+            name="Residential Service", customer_class="residential",
+            rate_type="flat", confidence=0.9,
+            components=[
+                {"component_type": "energy", "unit": "¢/kWh", "rate_value": 10.0},
+            ],
+        )
+        com = tp.ExtractedTariff(
+            name="General Service", customer_class="commercial",
+            rate_type="flat", confidence=0.9,
+            components=[
+                {"component_type": "energy", "unit": "¢/kWh", "rate_value": 12.0},
+            ],
+        )
+        report, valid = tp.phase4_validate([res, com], "Example Electric", "OR")
+        self.assertEqual(report["valid"], 1)
+        self.assertEqual([t.name for t in valid], ["Residential Service"])
+        self.assertTrue(all(t.customer_class == "residential" for t in valid))
+
+
 class TestFullBillBatchRiderSalvage(unittest.TestCase):
     """FULL-BILL: riders on a separate extract must fold into ENERGY."""
 
@@ -824,8 +854,8 @@ class TestPrompts(unittest.TestCase):
 
     def test_prompts_still_format(self):
         tp.EXTRACTION_PROMPT.format(url="u", title="t", content="c", utility_name="n", state="s")
-        tp.TWOPASS_EXTRACT_PROMPT.format(tariff_name="a", customer_class="r",
-                                         utility_name="n", state="s", content="c")
+        tp.EXTRACTION_USER_PROMPT.format(url="u", title="t", content="c", utility_name="n", state="s")
+        tp.TWOPASS_EXTRACT_PROMPT.format(tariff_name="a", utility_name="n", state="s", content="c")
 
     def test_ns_code_80_example_emits_weekend_and_holiday_rows(self):
         example = tp.EXTRACTION_PROMPT.split("Example 6")[1].split("Example 7")[0]
@@ -834,12 +864,57 @@ class TestPrompts(unittest.TestCase):
         self.assertNotIn("Mention weekend/holiday off-peak in description", tp.EXTRACTION_PROMPT)
 
     def test_prompt_version_bumped(self):
-        self.assertEqual(tp._LLM_PROMPT_VERSION, "v7")
+        self.assertEqual(tp._LLM_PROMPT_VERSION, "v8")
 
     def test_full_bill_energy_rule_in_prompts(self):
         self.assertIn("FULL-BILL ENERGY", tp._STRUCTURED_RULES)
         self.assertIn("FULL-BILL", tp.EXTRACTION_PROMPT)
         self.assertIn("included_in_energy", tp.EXTRACTION_PROMPT)
+
+    def test_residential_only_in_pipeline_prompts(self):
+        for prompt in (
+            tp.EXTRACTION_SYSTEM_PROMPT,
+            tp.TWOPASS_IDENTIFY_PROMPT,
+            tp.TWOPASS_EXTRACT_PROMPT,
+            tp.PAGE_SCREENSHOT_EXTRACTION_PROMPT_BASE,
+            tp.PDF_VISION_EXTRACTION_PROMPT_BASE,
+            tp.NAVIGATE_PROMPT,
+        ):
+            with self.subTest(prompt=prompt[:40]):
+                self.assertIn("residential", prompt.lower())
+                self.assertNotIn("small/general commercial", prompt)
+                self.assertNotIn("small business / general service", prompt)
+                self.assertNotIn('customer_class: "residential" or "commercial"', prompt)
+                self.assertNotIn('customer_class ("residential"/"commercial")', prompt)
+        self.assertEqual(tp.EXTRACT_CLASSES, {"residential"})
+        self.assertIn("commercial", tp.VALID_CLASSES)  # schema/history still know it
+
+    def test_no_guessing_rule_in_shared_and_vision(self):
+        self.assertIn("NO GUESSING", tp._STRUCTURED_RULES)
+        self.assertIn("never reuse", tp._STRUCTURED_RULES.lower())
+        self.assertIn("format illustrations ONLY", tp.EXTRACTION_SYSTEM_PROMPT)
+        for prompt in (
+            tp.PAGE_SCREENSHOT_EXTRACTION_PROMPT_BASE,
+            tp.PDF_VISION_EXTRACTION_PROMPT_BASE,
+            tp.TWOPASS_EXTRACT_PROMPT,
+        ):
+            self.assertIn("NO GUESSING", prompt)
+
+    def test_main_extraction_user_message_has_no_rules(self):
+        """Rules live in system only — user message is TARGET UTILITY + content."""
+        user = tp.EXTRACTION_USER_PROMPT.format(
+            url="https://example.com", title="Rates", content="body",
+            utility_name="Example", state="OR",
+        )
+        self.assertIn("TARGET UTILITY", user)
+        self.assertNotIn("NO GUESSING", user)
+        self.assertNotIn("FULL-BILL ENERGY", user)
+        self.assertNotIn("Example 1", user)
+        self.assertEqual(tp._CACHED_SYSTEM_PROMPT, tp.EXTRACTION_SYSTEM_PROMPT)
+        self.assertNotIn("TARGET UTILITY", tp._CACHED_SYSTEM_PROMPT)
+        # User message must stay tiny vs the cached system rules.
+        self.assertLess(len(user), 500)
+        self.assertGreater(len(tp._CACHED_SYSTEM_PROMPT), 10_000)
 
     def test_twopass_identify_still_lists_rider_only_documents(self):
         self.assertIn("Do NOT list per-kWh riders", tp.TWOPASS_IDENTIFY_PROMPT)

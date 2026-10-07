@@ -591,11 +591,11 @@ def extract_tariffs_from_snapshots(
 
     from scripts.tariff_pipeline import _STRUCTURED_RULES
 
-    prompt = f"""Extract ALL electricity rate tariffs from the following page content for {utility_name}.
+    prompt = f"""Extract ONLY residential electricity rate tariffs from the following page content for {utility_name}.
 
 For each tariff found, provide:
 - name: descriptive name (e.g. "Time-of-Use (TOU) — Residential")
-- customer_class: "residential" or "commercial"
+- customer_class: always "residential"
 - rate_type: one of flat, tiered, tou, demand, seasonal, tou_tiered, seasonal_tou, seasonal_tiered, demand_tou, complex
 - effective_date: in YYYY-MM-DD format if shown
 - description: brief description
@@ -613,9 +613,9 @@ For each tariff found, provide:
 
 IMPORTANT:
 {_STRUCTURED_RULES}
-- Only include residential and small business/commercial rates
-- Skip industrial, large power, and lighting rates
-- Include all rate plans: TOU, Tiered, Ultra-Low Overnight, Flat, etc.
+- Only include residential / domestic rates
+- Ignore commercial, small-business, general-service, industrial, large power, and lighting rates
+- Include all residential rate plans: TOU, Tiered, Ultra-Low Overnight, Flat, etc.
 
 Return JSON array of tariff objects. Return ONLY the JSON, no other text.
 
