@@ -6,9 +6,8 @@ comprehensive; when in doubt, prefer what is written here over older docs
 (`PROJECT_SUMMARY.md` and `TECHNICAL_REVIEW.md` predate most of the current
 refresh/quarantine/cost/model systems).
 
-_Last updated: 2026-10-07 (FULL-BILL residential ENERGY: fold per-kWh riders
-into stored energy; rider-only salvage; CPP/event outlier exception; Anthropic
-5.5 stack)._
+_Last updated: 2026-10-07 (QUARTERLY_ERROR_LIMIT env-configurable; FULL-BILL
+residential ENERGY riders; Anthropic 5.5 stack)._
 
 ---
 
@@ -285,7 +284,8 @@ outlier exception.
   Dispatches `process_utility` tasks as a Celery chord; `finalize_refresh_run`
   aggregates results (incl. per-run LLM cost) into the `RefreshRun`.
 - **Quarterly**: blind re-extraction of utilities whose monitoring sources are
-  all in error state.
+  all in error state. Capped at `QUARTERLY_ERROR_LIMIT` (default **200**,
+  env-overridable — set `0` to hold the job without a code change).
 - **Reaper**: if a chord callback never fires, reconstructs the run summary
   from the DB audit trail so the dashboard never sticks on "running".
 
@@ -574,7 +574,8 @@ Seed order: `seed_eia861` → `seed_canada` → `seed_openei` → `seed_territor
 `AUDITOR_MODEL`, `OPUS_MAX_PER_UTILITY`, `LLM_PRICING_JSON`,
 `ANTHROPIC_THINKING`, `ANTHROPIC_EFFORT`, `ANTHROPIC_THINKING_MIN_MAX_TOKENS`,
 `LLM_CACHE_LEGACY_READ`,
-`MONTHLY_MAX_UTILITIES`, `CELERY_CONCURRENCY`, `QUARANTINE_RECHECK_DAYS`; auth:
+`MONTHLY_MAX_UTILITIES`, `QUARTERLY_ERROR_LIMIT`, `CELERY_CONCURRENCY`,
+`QUARANTINE_RECHECK_DAYS`; auth:
 `AUTH_ENABLED`, `GOOGLE_OAUTH_CLIENT_ID/SECRET`, `AUTH_ALLOWED_EMAIL_DOMAIN`.
 
 ---

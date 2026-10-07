@@ -40,7 +40,11 @@ from app.tasks.celery_app import celery_app
 log = logging.getLogger(__name__)
 
 STALE_THRESHOLD_DAYS = 90
-QUARTERLY_ERROR_LIMIT = 200
+
+# Cap on utilities targeted by a single quarterly error-recovery run.
+# Overridable via env so operators can hold the job at 0 (e.g. through a
+# dry-run / campaign window) without a code change; unset → 200.
+QUARTERLY_ERROR_LIMIT = int(os.environ.get("QUARTERLY_ERROR_LIMIT", "200"))
 
 # Hard cap on a single monthly run. Without it, one bad month (monitoring
 # flapping + a large stale backlog) dispatches thousands of tasks that take
