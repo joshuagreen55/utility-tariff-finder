@@ -6,8 +6,9 @@ comprehensive; when in doubt, prefer what is written here over older docs
 (`PROJECT_SUMMARY.md` and `TECHNICAL_REVIEW.md` predate most of the current
 refresh/quarantine/cost/model systems).
 
-_Last updated: 2026-10-07 (QUARTERLY_ERROR_LIMIT env-configurable; FULL-BILL
-residential ENERGY riders; Anthropic 5.5 stack)._
+_Last updated: 2026-10-07 (FULL-BILL rider guards: exclude optional/scoped/TOD
+overlays, dedupe shared riders, family-matched sibling salvage, bounded
+official rider-doc fetch; QUARTERLY_ERROR_LIMIT env; Anthropic 5.5 stack)._
 
 ---
 
@@ -241,11 +242,19 @@ province without opening the wrong-utility guard.
 `normalize_structured_components()` (Phase 4) maps model forms
 (`7:00 a.m.`, `:59` ends, "weekends and holidays", month names) onto the
 structured columns without filling empty fields. Component dedupe keys
-include clock / day type / season dates / tier bounds. Phase 4 also runs
+include clock / day type / season dates / tier bounds.   Phase 4 also runs
 `expand_relative_seasonal_energy` / `expand_stacking_energy_riders`, batch
 rider salvage (`salvage_relative_rider_only_tariffs`,
 `apply_shared_stacking_riders_across_batch`), and a labelled CPP/event
-outlier exception.
+outlier exception. Shared riders must apply to **every** customer on the
+plan (optional credits, community-solar / source-specific, and TOD
+overlays are excluded; TOD never copies onto flat/tiered). Sibling
+salvage requires the same rate-family code (`1.2DS` → `1.2D`, never
+`1.2G`). When residential extracts reference adjustment schedules missing
+from the page batch, `enrich_tariffs_with_referenced_rider_docs` does a
+bounded official same-domain fetch (cap `MAX_RIDER_DOCS_FETCH`, default 6)
+and folds universal per-kWh riders; unresolved references get
+`needs_review` rather than guessed amounts.
 
 **Key model/cost env vars** (all overridable):
 - `HAIKU_MODEL` (default `claude-haiku-5-5`) — tier-1 cheap first pass
