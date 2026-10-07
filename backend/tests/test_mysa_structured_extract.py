@@ -92,6 +92,9 @@ class TestMysaPromptContract(unittest.TestCase):
         self.assertIn("MYSA FIELDS", prompt)
         self.assertIn("period_start_time", prompt)
         self.assertIn("season_start_month", prompt)
+        self.assertIn("NO GUESSING", prompt)
+        self.assertIn("ONLY residential", prompt)
+        self.assertNotIn("small business/commercial", prompt)
         self.assertNotIn("Convert cents/kWh to $/kWh", prompt)
 
     def test_tool_schema_has_structured_fields(self):
@@ -108,7 +111,7 @@ class TestMysaPromptContract(unittest.TestCase):
         self.assertIn("do not invent", props["period_start_time"]["description"].lower())
 
     def test_prompt_version_bumped_for_mysa_rules(self):
-        self.assertEqual(tp._LLM_PROMPT_VERSION, "v7")
+        self.assertEqual(tp._LLM_PROMPT_VERSION, "v8")
 
 
 class TestStructuredRoundTrip(unittest.TestCase):
