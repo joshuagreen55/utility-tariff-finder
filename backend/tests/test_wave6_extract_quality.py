@@ -212,6 +212,304 @@ class TestFullBillBatchRiderSalvage(unittest.TestCase):
         energy = [c for c in valid[0].components if c["component_type"] == "energy"][0]
         self.assertAlmostEqual(energy["rate_value"], 0.1962, places=4)
 
+    def test_optional_smartrate_credit_not_folded_into_every_plan(self):
+        e1 = tp.ExtractedTariff(
+            name="Schedule E-1", code="E-1", customer_class="residential",
+            rate_type="tiered", confidence=0.9,
+            components=[
+                {"component_type": "energy", "unit": "¢/kWh", "rate_value": 33.0,
+                 "tier_min_kwh": 0, "tier_max_kwh": 300},
+                {"component_type": "energy", "unit": "¢/kWh", "rate_value": 41.0,
+                 "tier_min_kwh": 300, "tier_max_kwh": None},
+            ],
+        )
+        smart = tp.ExtractedTariff(
+            name="SmartRate Optional Credit", code="E-SR",
+            customer_class="residential", rate_type="flat", confidence=0.9,
+            components=[
+                {"component_type": "adjustment", "unit": "¢/kWh", "rate_value": -0.803,
+                 "tier_label": "SmartRate participation credit"},
+            ],
+        )
+        _report, valid = tp.phase4_validate([e1, smart], "Pacific Gas and Electric", "CA")
+        e1_v = next(t for t in valid if "E-1" in (t.code or t.name))
+        energy = sorted(
+            (float(c["rate_value"]) for c in e1_v.components if c["component_type"] == "energy")
+        )
+        self.assertAlmostEqual(energy[0], 0.33, places=4)
+        self.assertAlmostEqual(energy[1], 0.41, places=4)
+
+    def test_smartrate_on_same_tariff_not_folded(self):
+        et = tp.ExtractedTariff(
+            name="Schedule E-1", customer_class="residential", rate_type="flat",
+            confidence=0.9,
+            components=[
+                {"component_type": "energy", "unit": "$/kWh", "rate_value": 0.33},
+                {"component_type": "adjustment", "unit": "$/kWh", "rate_value": -0.00803,
+                 "tier_label": "SmartRate optional credit"},
+            ],
+        )
+        out = tp.expand_stacking_energy_riders(et.components, rate_type="flat")
+        energy = [c for c in out if c["component_type"] == "energy"][0]
+        self.assertAlmostEqual(energy["rate_value"], 0.33, places=5)
+
+    def test_community_solar_not_donated_and_not_duplicated(self):
+        tou = tp.ExtractedTariff(
+            name="Time-of-Use Rate", code="500.2.5", customer_class="residential",
+            rate_type="tou", confidence=0.9,
+            components=[
+                {"component_type": "energy", "unit": "¢/kWh", "rate_value": 4.35,
+                 "period_label": "Off-Peak"},
+                {"component_type": "energy", "unit": "¢/kWh", "rate_value": 9.32,
+                 "period_label": "Mid-Peak"},
+                {"component_type": "energy", "unit": "¢/kWh", "rate_value": 16.18,
+                 "period_label": "On-Peak"},
+                {"component_type": "adjustment", "unit": "¢/kWh", "rate_value": 2.25,
+                 "tier_label": "Delivery"},
+                {"component_type": "adjustment", "unit": "¢/kWh", "rate_value": 2.07,
+                 "tier_label": "TCOS"},
+            ],
+        )
+        solar_a = tp.ExtractedTariff(
+            name="Community Solar Charges", customer_class="residential",
+            rate_type="flat", confidence=0.9,
+            components=[
+                {"component_type": "adjustment", "unit": "¢/kWh", "rate_value": 6.108,
+                 "tier_label": "Community Solar energy"},
+                {"component_type": "adjustment", "unit": "¢/kWh", "rate_value": 1.655,
+                 "tier_label": "Community Solar admin"},
+            ],
+        )
+        solar_b = tp.ExtractedTariff(
+            name="Community Solar Rider (solar received kWh)",
+            customer_class="residential", rate_type="flat", confidence=0.9,
+            components=[
+                {"component_type": "adjustment", "unit": "¢/kWh", "rate_value": 6.108,
+                 "tier_label": "Solar received charge"},
+                {"component_type": "adjustment", "unit": "¢/kWh", "rate_value": 1.655,
+                 "tier_label": "Solar received admin"},
+            ],
+        )
+        _report, valid = tp.phase4_validate(
+            [tou, solar_a, solar_b], "Pedernales Electric Cooperative", "TX",
+        )
+        tou_v = next(t for t in valid if "Time-of-Use" in t.name)
+        off = next(
+            c for c in tou_v.components
+            if c["component_type"] == "energy" and "Off" in str(c.get("period_label") or "")
+        )
+        # base 4.35 + delivery 2.25 + TCOS 2.07 = 8.67¢ — not +2× community solar
+        self.assertAlmostEqual(off["rate_value"], 0.0867, places=4)
+
+    def test_rider_dedupe_same_value_different_labels(self):
+        a = {"component_type": "adjustment", "unit": "$/kWh", "rate_value": 0.06108,
+             "tier_label": "Community Solar A"}
+        b = {"component_type": "adjustment", "unit": "$/kWh", "rate_value": 0.06108,
+             "tier_label": "Solar received charge"}
+        self.assertEqual(tp._rider_fingerprint(a), tp._rider_fingerprint(b))
+
+    def test_nl_12ds_picks_12d_not_government_diesel(self):
+        domestic = tp.ExtractedTariff(
+            name="Rate 1.2D Domestic Diesel", code="1.2D",
+            customer_class="residential", rate_type="seasonal", confidence=0.9,
+            components=[
+                {"component_type": "energy", "unit": "¢/kWh", "rate_value": 15.587,
+                 "season": "Winter", "tier_min_kwh": 0, "tier_max_kwh": 1000},
+                {"component_type": "energy", "unit": "¢/kWh", "rate_value": 15.587,
+                 "season": "Non-Winter", "tier_min_kwh": 0, "tier_max_kwh": 1000},
+                {"component_type": "energy", "unit": "¢/kWh", "rate_value": 20.0,
+                 "season": "Winter", "tier_min_kwh": 1000, "tier_max_kwh": None},
+            ],
+        )
+        government = tp.ExtractedTariff(
+            name="Rate 1.2G Government Diesel", code="1.2G",
+            customer_class="residential", rate_type="flat", confidence=0.9,
+            components=[
+                {"component_type": "energy", "unit": "¢/kWh", "rate_value": 100.145},
+            ],
+        )
+        seasonal = tp.ExtractedTariff(
+            name="Rate 1.2DS Domestic Diesel Seasonal", code="1.2DS",
+            customer_class="residential", rate_type="seasonal", confidence=0.9,
+            components=[
+                {"component_type": "adjustment", "unit": "¢/kWh", "rate_value": 0.953,
+                 "season": "Winter (Dec–Apr)"},
+                {"component_type": "adjustment", "unit": "¢/kWh", "rate_value": -1.297,
+                 "season": "Non-Winter (May–Nov)"},
+            ],
+        )
+        report, valid = tp.phase4_validate(
+            [domestic, government, seasonal], "Newfoundland Labrador Hydro", "NL",
+        )
+        self.assertGreaterEqual(report["valid"], 2)
+        ds = next(t for t in valid if (t.code or "") == "1.2DS")
+        by_season = {
+            tp._season_key(c.get("season")): round(float(c["rate_value"]), 5)
+            for c in ds.components if c["component_type"] == "energy"
+        }
+        self.assertEqual(by_season["winter"], 0.16540)
+        self.assertEqual(by_season["non-winter"], 0.14290)
+        self.assertNotIn(1.011, by_season.values())
+
+    def test_tod_overlay_not_copied_onto_flat_or_tiered(self):
+        tiered = tp.ExtractedTariff(
+            name="Residential Inclining Block", customer_class="residential",
+            rate_type="tiered", confidence=0.9,
+            components=[
+                {"component_type": "energy", "unit": "¢/kWh", "rate_value": 11.87,
+                 "tier_min_kwh": 0, "tier_max_kwh": 1350},
+                {"component_type": "energy", "unit": "¢/kWh", "rate_value": 14.08,
+                 "tier_min_kwh": 1350, "tier_max_kwh": None},
+            ],
+        )
+        flat = tp.ExtractedTariff(
+            name="Residential Flat Rate", customer_class="residential",
+            rate_type="flat", confidence=0.9,
+            components=[
+                {"component_type": "energy", "unit": "¢/kWh", "rate_value": 12.7},
+            ],
+        )
+        tod = tp.ExtractedTariff(
+            name="Time-of-Day Adjustment", customer_class="residential",
+            rate_type="tou", confidence=0.9,
+            components=[
+                {"component_type": "adjustment", "unit": "¢/kWh", "rate_value": 5.0,
+                 "tier_label": "TOD surcharge on-peak"},
+                {"component_type": "adjustment", "unit": "¢/kWh", "rate_value": -5.0,
+                 "tier_label": "TOD discount off-peak"},
+            ],
+        )
+        _report, valid = tp.phase4_validate(
+            [tiered, flat, tod], "British Columbia Hydro", "BC",
+        )
+        by_name = {t.name: t for t in valid}
+        t_energy = [
+            round(float(c["rate_value"]), 5)
+            for c in by_name["Residential Inclining Block"].components
+            if c["component_type"] == "energy"
+        ]
+        f_energy = [
+            round(float(c["rate_value"]), 5)
+            for c in by_name["Residential Flat Rate"].components
+            if c["component_type"] == "energy"
+        ]
+        self.assertEqual(sorted(t_energy), [0.1187, 0.1408])
+        self.assertEqual(f_energy, [0.127])
+        # TOD rows must not appear as ADJUSTMENT on flat/tiered either.
+        for name in ("Residential Inclining Block", "Residential Flat Rate"):
+            adjs = [
+                c for c in by_name[name].components
+                if c["component_type"] == "adjustment"
+            ]
+            self.assertEqual(adjs, [])
+
+    def test_delivery_all_in_label_still_receives_pca(self):
+        sched7 = tp.ExtractedTariff(
+            name="Schedule 7", code="7", customer_class="residential",
+            rate_type="flat", confidence=0.9,
+            components=[
+                {"component_type": "energy", "unit": "¢/kWh", "rate_value": 11.224,
+                 "tier_label": "All-in (energy + transmission + distribution)"},
+            ],
+        )
+        pca = tp.ExtractedTariff(
+            name="Schedule 125 Power Cost Adjustment", code="125",
+            customer_class="residential", rate_type="flat", confidence=0.9,
+            components=[
+                {"component_type": "adjustment", "unit": "¢/kWh", "rate_value": 8.4,
+                 "tier_label": "Power Cost Adjustment"},
+            ],
+        )
+        _report, valid = tp.phase4_validate([sched7, pca], "Portland General Electric", "OR")
+        energy = [c for c in valid[0].components if c["component_type"] == "energy"][0]
+        self.assertAlmostEqual(energy["rate_value"], 0.19624, places=4)
+
+
+class TestReferencedRiderDocFetch(unittest.TestCase):
+    def setUp(self):
+        logging.disable(logging.CRITICAL)
+
+    def tearDown(self):
+        logging.disable(logging.NOTSET)
+
+    def test_hints_detected_when_riders_not_on_page(self):
+        et = tp.ExtractedTariff(
+            name="Domestic Service", customer_class="residential", rate_type="flat",
+            description="FAM/DSM/Storm not shown on this page",
+            components=[
+                {"component_type": "energy", "unit": "¢/kWh", "rate_value": 18.324},
+            ],
+        )
+        self.assertTrue(tp._residential_needs_external_riders(et))
+        hints = tp._rider_search_hints([et])
+        self.assertTrue(any("FAM" in h or "Fuel" in h for h in hints))
+
+    def test_fetch_merges_official_rider_docs(self):
+        domestic = tp.ExtractedTariff(
+            name="Domestic Service", customer_class="residential", rate_type="flat",
+            description="FAM/DSM riders apply in addition to the energy charge; "
+                        "not shown on this page",
+            components=[
+                {"component_type": "energy", "unit": "¢/kWh", "rate_value": 18.324},
+                {"component_type": "fixed", "unit": "$/month", "rate_value": 20.08},
+            ],
+        )
+        rider_page = tp.RatePage(
+            url="https://www.nspower.ca/docs/fam-dsm.pdf",
+            title="FAM and DSM Riders",
+            page_type="pdf",
+            content=(
+                "Nova Scotia Power Fuel Adjustment Mechanism and DSM Cost Recovery "
+                "Rider. FAM AA/BA 0.156 ¢/kWh applies in addition to the energy charge. "
+                "DSM DCRR 0.648 ¢/kWh applies in addition to the energy charge. "
+                "Storm SCRR 0.000 ¢/kWh."
+            ),
+        )
+        rider_extract = [
+            tp.ExtractedTariff(
+                name="Fuel Adjustment Mechanism and DSM Rider",
+                customer_class="residential", rate_type="flat",
+                source_url=rider_page.url,
+                components=[
+                    {"component_type": "adjustment", "unit": "¢/kWh", "rate_value": 0.156,
+                     "tier_label": "FAM AA/BA"},
+                    {"component_type": "adjustment", "unit": "¢/kWh", "rate_value": 0.648,
+                     "tier_label": "DSM DCRR"},
+                ],
+            )
+        ]
+        with mock.patch.object(tp, "brave_search", return_value=[
+            {"url": rider_page.url, "title": rider_page.title, "description": "FAM DSM"},
+        ]), mock.patch.object(tp, "_fetch_as_pdf_via_download", return_value=rider_page), \
+             mock.patch.object(tp, "phase3_extract_tariffs", return_value=rider_extract):
+            merged, pages = tp.enrich_tariffs_with_referenced_rider_docs(
+                [domestic], "Nova Scotia Power", "NS",
+                website_url="https://www.nspower.ca",
+                pages=[],
+            )
+        self.assertEqual(len(merged), 2)
+        self.assertEqual(len(pages), 1)
+        report, valid = tp.phase4_validate(merged, "Nova Scotia Power", "NS")
+        self.assertEqual(report["valid"], 1)
+        energy = [c for c in valid[0].components if c["component_type"] == "energy"][0]
+        self.assertAlmostEqual(energy["rate_value"], 0.19128, places=5)
+
+    def test_unresolved_riders_flag_needs_review(self):
+        et = tp.ExtractedTariff(
+            name="Schedule 7", customer_class="residential", rate_type="flat",
+            description="Subject to Schedule 125 Power Cost Adjustment",
+            components=[
+                {"component_type": "energy", "unit": "¢/kWh", "rate_value": 11.224},
+            ],
+        )
+        with mock.patch.object(tp, "brave_search", return_value=[]):
+            merged, _pages = tp.enrich_tariffs_with_referenced_rider_docs(
+                [et], "Portland General Electric", "OR",
+                website_url="https://portlandgeneral.com",
+                pages=[],
+            )
+        self.assertTrue(merged[0].needs_review)
+
 
 class TestCriticalPeakOutlier(unittest.TestCase):
     def setUp(self):
