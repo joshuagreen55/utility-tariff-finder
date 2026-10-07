@@ -117,7 +117,7 @@ THIRD_PARTY_DOMAINS = frozenset({
     # document mirrors and local news picked ahead of the utility's own page.
     "utilitycheck.co", "kadoa.com", "zipelectricity.com", "solartopps.com",
     "scribd.com", "powernw.com", "offgridsolarsystem.ca", "iamhome.app",
-    "spotlightdelaware.org", "dailytrib.com", "12news.com",
+    "spotlightdelaware.org", "dailytrib.com", "12news.com", "financenewstalk.com",
 })
 
 # File/CDN/site-builder hosts shared by many unrelated organisations. A host

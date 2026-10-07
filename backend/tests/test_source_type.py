@@ -140,6 +140,17 @@ class TestRanking(unittest.TestCase):
         primary, alts = prefer_official_targets("", [], [HQ_PDF], HQ)
         self.assertEqual((primary, alts), (HQ_PDF, []))
 
+    def test_pipeline_falls_back_to_known_unknown_url_when_search_empty(self):
+        from scripts.tariff_pipeline import prefer_official_targets
+
+        # SRP: no website_url on record, so its own ratebook URL classifies
+        # as unknown, not official. With no search hit, still try it.
+        srp = UtilitySourceContext(country="US", state_province="AZ")
+        book = "https://azure-na-assets.contentstack.com/v3/assets/x/ratebook.pdf"
+        blog = "https://utilitycheck.co/utilities/salt-river-project/rate-per-kwh"
+        self.assertEqual(prefer_official_targets("", [], [blog, book], srp), (book, [blog]))
+        self.assertEqual(prefer_official_targets("", [], [blog], srp), ("", [blog]))
+
     def test_pipeline_keeps_locked_or_already_official_primary(self):
         from scripts.tariff_pipeline import prefer_official_targets
 

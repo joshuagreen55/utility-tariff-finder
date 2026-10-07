@@ -1495,7 +1495,9 @@ def phase1_find_rate_page(utility_name: str, state: str, website_url: str | None
         log.warning(f"  Phase 1: Best URL returned {status}, trying next")
 
         # If httpx can't connect or gets blocked (403), try Playwright
-        if status in (0, 403) and best_score >= 50:
+        # 403 = bot-blocked, usually fine in a browser (SRP srpnet.com scored
+        # 18 and was dropped once the aggregators above it were blocked).
+        if (status == 403 and best_score >= 10) or (status == 0 and best_score >= 50):
             log.info(f"  Phase 1: httpx returned {status} — trying Playwright for {best_url[:60]}")
             html_js, title_js = fetch_page_js(best_url)
             if html_js == FETCH_JS_DOWNLOAD_SENTINEL:
@@ -1508,12 +1510,23 @@ def phase1_find_rate_page(utility_name: str, state: str, website_url: str | None
                     _js_rendered_domains.add(best_domain)
                 return best_url, len(results), all_alt_urls
 
-        for score, r in scored[1:3]:
+        for score, r in scored[1:4]:
             alt_url = r["url"]
             _, _, alt_status = fetch_page(alt_url)
             if alt_status == 200:
                 best_url = alt_url
                 break
+            # Bot-blocked official pages (Pedernales mypec.com → 403 to
+            # httpx, fine in a browser) used to end the run with "No rate
+            # page found". Phase 2 already retries 403s in Playwright.
+            if alt_status == 403 and score >= 10:
+                html_js, _title = fetch_page_js(alt_url)
+                if html_js == FETCH_JS_DOWNLOAD_SENTINEL or (html_js and len(html_js.strip()) > 200):
+                    log.info(f"  Phase 1: Playwright reached alternate {alt_url[:60]}")
+                    with _js_rendered_lock:
+                        _js_rendered_domains.add(urlparse(alt_url).netloc.replace("www.", ""))
+                    best_url = alt_url
+                    break
         else:
             log.warning("  Phase 1: No reachable result found")
             return "", len(results), []
@@ -5887,7 +5900,7 @@ def prefer_official_targets(
     book (``locked``) stays primary. Nothing is dropped: a third-party URL
     that is the only candidate is still tried.
     """
-    from app.services.source_type import OFFICIAL, classify_source, rank_urls
+    from app.services.source_type import OFFICIAL, THIRD_PARTY, classify_source, rank_urls
 
     pool = rank_urls([u for u in [*alts, *known_urls] if u and u != primary], ctx)
     if locked:
@@ -5901,6 +5914,16 @@ def prefer_official_targets(
         if primary:
             log.info(f"  Preferring official URL {new_primary[:80]} over {primary[:80]}")
             pool = rank_urls([primary, *pool], ctx)
+        return new_primary, pool
+    usable = [u for u in pool if classify_source(u, ctx).source_type != THIRD_PARTY]
+    if not primary and usable:
+        # Search found nothing reachable, but a rate URL is already on file
+        # (configured / monitored). Try it rather than stopping with
+        # "No rate page found" — utilities with no website_url on record
+        # (SRP, PG&E, Pedernales) never classify their own URLs as official.
+        new_primary = usable[0]
+        pool.remove(new_primary)
+        log.info(f"  No search hit — falling back to known rate URL {new_primary[:80]}")
         return new_primary, pool
     return primary, pool
 
