@@ -271,3 +271,17 @@ class ProtectedTie(Quiet):
                 mock.patch("app.services.tariff_history.is_protected", lambda t: bool(t.approved)):
             tp.supersede_older_vintages(session, 1)
         self.assertEqual(retired, [(31, 30)])
+
+
+class CrawlNewestFirst(Quiet):
+    def test_current_tariff_before_purpa_and_old_sheets(self):
+        base = "https://nj.pseg.com/-/media/pseg/public-site/documents/"
+        links = [(base + f"purpa/pep_-rates_20{y}_12.ashx", "PEP") for y in range(14, 24)]
+        links += [(base + "purpa/new_rates_residual_2026.ashx", "residual")]
+        links += [(base + "current-electric-tariff/reconciliation-charge---dec-2023-qtr.ashx", "recon 2023")]
+        links += [("https://nj.pseg.com/aboutpseg/regulatorypage/pricetocompare", "ptc")]
+        links += [(PSEG_BOOK, "Electric Tariff")]
+        out = tp.order_links_newest_first(links, today=TODAY)
+        self.assertEqual(out[0][0], PSEG_BOOK)
+        self.assertLess(out.index(links[-2]), out.index(links[0]))  # undated page before PURPA
+        self.assertTrue(all("purpa" in u for u, _ in out[-11:]) or "dec-2023" in out[-12][0])
