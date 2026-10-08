@@ -221,12 +221,19 @@ def evaluate_computable(
     if rt == "complex":
         reasons.append("complex_rate_type_unsupported")
 
-    label_blob = " ".join(
-        str(_get(c, k) or "") for c in comps for k in ("period_label", "tier_label", "season")
+    # Event / dynamic pricing is a property of the *plan's ENERGY rows* (or
+    # the tariff name). Do NOT scan ADJUSTMENT rider labels — NSP's DCRR
+    # tier_label lists "Critical Peak Pricing" as a class it applies to,
+    # which must not mark every Domestic plan as event-priced (R8b).
+    energy_label_blob = " ".join(
+        str(_get(c, k) or "")
+        for c in comps
+        if _val(_get(c, "component_type")) == "energy"
+        for k in ("period_label", "tier_label", "season")
     ) + " " + (name or "")
-    if _EVENT_RE.search(label_blob):
+    if _EVENT_RE.search(energy_label_blob):
         reasons.append("event_pricing_unsupported")
-    if _DYNAMIC_RE.search(label_blob):
+    if _DYNAMIC_RE.search(energy_label_blob):
         reasons.append("dynamic_pricing_unsupported")
 
     energy = []

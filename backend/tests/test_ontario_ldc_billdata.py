@@ -232,6 +232,12 @@ class TestBuildTariffEntriesWithLdc(unittest.TestCase):
         self.assertEqual(tou["energy_scope"], "delivery_plus_default_supply")
         adder = ldc.per_kwh_adder
         lf = ldc.loss_factor or 1.0
+        # R8b: adder = DC + (Net+Conn+WMSR+RRRP)×LF
+        self.assertAlmostEqual(
+            adder,
+            float(ldc.distribution_kwh or 0) + ldc.loss_sensitive_kwh * lf,
+            places=6,
+        )
         off = [c for c in tou["components"]
                if c["component_type"] == "energy" and c["period_label"] == "Off-Peak"][0]
         self.assertAlmostEqual(
