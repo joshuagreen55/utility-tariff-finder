@@ -1,0 +1,93 @@
+Portland General Electric Company Second Revision of Sheet No. 136-1
+P.U.C. Oregon No. E-19 Canceling First Revision of Sheet No. 136-1
+SCHEDULE 136
+OREGON COMMUNITY SOLAR PROGRAM
+COST RECOVERY MECHANISM
+PURPOSE
+The purpose of this Schedule is to recover costs incurred during and for the development (or
+modification) of the Oregon Community Solar Program (Oregon CSP) including the costs
+associated with the State of Oregon’s Program Administrator, Low Income Facilitator, the
+company’s prudently incurred costs associated with implementing the Community Solar Program
+that are not otherwise included in rates, and payments to participants in the Oregon CSP.
+Company incurred costs to implement the state program do not include costs associated with the
+company developing a community solar project. This cost recovery mechanism is authorized by
+ORS 757.386 (7)(c) and OAR 860-088-0160. The Oregon CSP is an optional program that will
+provide PGE customers the opportunity to voluntarily subscribe to the generation output of eligible
+community solar projects. This adjustment schedule is implemented as an automatic adjustment
+clause as provided under ORS 757.210 to allow recovery of operations and maintenance start-
+up costs as soon as the cost data is approved by the Commission.
+AVAILABLE
+In all territory served by the Company.
+APPLICABLE
+To all bills for Electricity Service except Schedules 76R and 576R.
+ADUSTMENT RATE
+The Adjustment Rate, applicable for service on and after the effective date of this schedule are:
+Schedule Adjustment Rate
+7 0.040 ¢ per kWh (I)
+15/515 0.031 ¢ per kWh
+32/532 0.038 ¢ per kWh
+38/538 0.039 ¢ per kWh
+47 0.053 ¢ per kWh
+49/549 0.047 ¢ per kWh
+75/575
+Secondary 0.019 ¢ per kWh
+Primary 0.019 ¢ per kWh
+Subtransmission 0.019 ¢ per kWh (I)
+Advice No. 26-11
+Issued February 12, 2026 Effective for service
+Angelica Espinosa, Senior Vice President on and after April 1, 2026
+
+Portland General Electric Company Third Revision of Sheet No. 136-2
+P.U.C. Oregon No. E-19 Canceling Second Revision of Sheet No. 136-2
+SCHEDULE 136 (Continued)
+ADJUSTMENT RATE (Continued)
+Schedule Adjustment Rate
+83/583 0.028 ¢ per kWh
+85/485/585
+Secondary 0.024 ¢ per kWh
+Primary 0.022 ¢ per kWh
+89/489/589/689
+Secondary 0.019 ¢ per kWh
+Primary 0.019 ¢ per kWh
+Subtransmission 0.019 ¢ per kWh
+90/490/590
+Primary 30-250 Mwa 0.016 ¢ per kWh
+Primary >250 Mwa 0.016 ¢ per kWh
+Subtransmission 0.016 ¢ per kWh
+91/491/591 0.031 ¢ per kWh
+92/492/592 0.021 ¢ per kWh
+95/495/595 0.031 ¢ per kWh
+(N)
+96/496/596/696 0.018 ¢ per kWh
+BALANCING ACCOUNT
+The Company will maintain a balancing account to accrue differences between incremental costs
+associated with the Oregon CSP and the revenues collected under this schedule. This balancing
+account will accrue interest at the Commission-authorized rate for deferred accounts.
+DEFERRAL MECHANISM
+Each year the Company may file a deferral request to defer the incremental costs associated with
+the Oregon CSP.
+SPECIAL CONDITIONS
+1. Pursuant to OAR 860-088-0160 (1), Oregon CSP start-up costs are:
+• Costs associated with the Program Administrator and Low-Income Facilitator; and
+• Each utility’s prudently incurred start-up costs associated with implementing the
+Community Solar Program. These costs include, but are not limited to, costs
+associated with customer account information transfer and on-bill crediting and
+payment, but exclude any costs associated with the electric utility developing a project.
+Advice No. 26-24
+Issued June 3, 2026 Effective for service
+Angelica Espinosa, Senior Vice President on and after July 8, 2026
+
+Portland General Electric Company
+P.U.C. Oregon No. E-19 Original Sheet No. 136-3
+SCHEDULE 136 (Concluded)
+SPECIAL CONDITIONS (Continued)
+2. PGE will remit payments to the Program Administrator on a monthly basis for program costs
+including performing work as provided in OAR 860-088-0020 and OAR 860-088-0030 within
+15 days receipt of the Commission’s approval of eligible costs.
+3. Costs recovered through this schedule will be allocated to each schedule using the
+applicable schedule’s forecasted energy on the basis of an equal percent of revenue applied
+on a cents per kWh basis to each applicable rate schedule, with long-term opt out and new
+load direct access customers priced at the equivalent cost of service rate schedule.
+Advice No. 23-40
+Issued December 19, 2023 Effective for service
+Brett Sims, Vice President on and after January 1, 2024

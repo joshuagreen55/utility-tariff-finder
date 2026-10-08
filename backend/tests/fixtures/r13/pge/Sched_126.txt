@@ -1,0 +1,239 @@
+Portland General Electric Company First Revision of Sheet No. 126-1
+P.U.C. Oregon No. E-19 Canceling Original Sheet No. 126-1
+SCHEDULE 126
+ANNUAL POWER COST VARIANCE MECHANISM
+PURPOSE
+To recognize in rates part of the difference for a given year between Actual Net Variable Power
+Costs and the Net Variable Power Costs forecast pursuant to Schedule 125, Annual Power Cost
+Update and in accordance with Commission Order No. 07-015. This schedule is an automatic
+adjustment clause as defined in ORS 757.210.
+APPLICABLE
+To all Customers for Electricity Service except those who were served on Schedule 76R and
+576R, 485, 489, 490, 491, 492, 495, 496, 515, 532, 538, 549, 583, 585, 589, 591, 592, 595, 596, (C)
+689 and 696, or served under Schedules 83, 85, 89 or 90 Daily Price Option for the entire calendar (C)
+year that the Annual Power Cost Variance accrued. Customers served on Schedules 538, 583,
+585, 589, 590, 591, 592, 595, and 596 who received the Schedule 128 Balance of Year Transition (C)
+Adjustment will be subject to this adjustment.
+ANNUAL POWER COST VARIANCE
+Subject to the Earnings Test, the Annual Power Cost Variance (PCV) is 90% of the amount that
+the Annual Variance exceeds either the Positive Annual Power Cost Deadband for a Positive
+Annual Variance or the Negative Annual Power Cost Deadband for a Negative Annual Variance.
+RELIABILITY CONTINGENCY EVENT POWER COST MECHANISM
+Reliability Contingency Event (RCE) power costs are the amount of annual actual power costs
+prudently incurred during RCEs. Through an RCE Power Cost Mechanism, RCE Power Costs,
+adjusted by any amount of RCE forecast included within Schedule 125 for the associated calendar
+year, qualify for 80% cost recovery or refund. The remaining RCE costs not recovered through
+the RCE Power Cost Mechanism will flow through the Annual Power Cost Variance, subject to
+deadbands and 90% sharing.
+The RCE power costs recoverable through the RCE Power Cost Mechanism will not be subject
+to the earnings test or deadbands for the Annual Power Cost Variance.
+Pursuant to Commission Order No. 23-386, the RCE Power Cost Mechanism will be in effect for
+PGE’s filings under this schedule submitted on or around July 1, 2025 for 2024 power costs and
+submitted on or around July 1, 2026 for 2025 power costs and shall not apply thereafter unless
+otherwise ordered by the Commission.
+Advice No. 26-24
+Issued June 3, 2026 Effective for service
+Angelica Espinosa, Senior Vice President on and after July 8, 2026
+
+Portland General Electric Company First Revision of Sheet No. 126-2
+P.U.C. Oregon No. E-19 Canceling Original Sheet No. 126-2
+SCHEDULE 126 (Continued)
+POWER COST VARIANCE ACCOUNT
+The Company will maintain a PCV Account to record both the Annual Power Cost Variance
+amounts and the RCE Power Cost Variance Amounts. The Account will contain the difference
+between the Adjustment Amount and amounts credited to or collected from Customers. This
+account will accrue interest at the Commission-authorized rate for deferred accounts. At the end
+of each year the Adjustment Amount for the calendar year will be adjusted by 50% of the annual
+interest calculated at the Commission-authorized rate. This amount will be added to the
+Adjustment
+Any balance in the PCV Account will be amortized to rates over a period determined by the
+Commission. Annually, the Company will propose to the Commission PCV Adjustment Rates that
+will amortize the PCV to rates over a period recommended by the Company. The amount accruing
+to Customers, whether positive or negative, will be multiplied by a revenue sensitive factor of
+(C)
+1.0350 to account for franchise fees, uncollectibles, and OPUC fees.
+EARNINGS TEST
+The recovery from or refund to Customers of any Adjustment Amount will be subject to an
+earnings review for the year that the power costs were incurred. The Company will recover the
+Adjustment Amount that is not the Exempted RCE Power Cost to the extent that such recovery
+will not cause the Company’s Actual Return on Equity (ROE) for the year to exceed its Authorized
+ROE minus 100 basis points. The Company will refund the Adjustment Amount that is not the
+Exempted RCE Power Cost to the extent that such refunding will not cause the Company’s Actual
+Return on Equity (ROE) for the year to fall below its Authorized ROE plus 100 basis points.
+DEFINITIONS
+Actual Loads - Actual loads are total annual calendar retail loads adjusted to exclude loads of
+Customers to whom this adjustment schedule does not apply.
+Actual NVPC - Incurred cost of power based on the definition for NVPC described here in. Actual
+NVPC will be increased by the value of the energy associated with those Customers that received
+the Schedule 128 Balance of Year Transition Adjustment for the period during the year that the
+Customers received the Schedule 128 adjustment.
+Actual Unit NVPC - The Actual Unit NVPC is calculated based on the following formula:
+(Actual NVPC – 80% RCE costs) / (Actual Loads – 80% RCE Loads)
+Advice No. 24-39
+Issued December 23, 2024 Effective for service
+Angelica Espinosa, Senior Vice President on and after January 1, 2025
+
+Portland General Electric Company First Revision of Sheet No. 126-3
+P.U.C. Oregon No. E-19 Canceling Original Sheet No. 126-3
+SCHEDULE 126 (Continued)
+DEFINITIONS (Continued)
+Annual Variance (AV) - The Annual Variance (AV) is the dollar amount calculated annually based
+on the following formula:
+(Actual Unit NVPC – Adjusted Base Unit NVPC) * (Actual Loads – RCE Loads)
+Base Unit NVPC - The Base Unit NVPC is the NVPC used to develop rate schedules for the
+applicable year divided by the associated calendar basis retail loads. Base NVPC are updated
+annually in accordance with Schedule 125.
+Adjusted Base Unit NVPC - The Adjusted Base Unit NVPC is the NVPC used to calculate the
+Annual Variance. The Adjusted Base Unit NVPC is the Base Unit NVPC (determined in
+accordance with Schedule 125) adjusted for load and cost changes resulting from non-residential
+customers choosing service under Schedule 515 through 596 after the November update for the (C)
+applicable year.
+Negative Annual Power Cost Deadband
+Negative Annual Power Cost Deadband is ($15.0 million).
+Positive Annual Power Cost Deadband
+The Positive Annual Power Cost Deadband is $30.0 million.
+Net Variable Power Costs (NVPC) - The Net Variable Power Costs (NVPC) represents the power
+costs for Energy generated and purchased. NVPC are the net cost of fuel and emission control
+chemicals, fuel and emission control chemical transportation, power contracts,
+transmission/wheeling, wholesale sales, hedges, options and other financial instruments incurred
+to serve retail load. For purposes of calculating the NVPC, the following adjustments will be made:
+• Exclude BPA payments in lieu of Subscription Power.
+• Exclude the monthly FASB 133 mark-to-market activity.
+• Exclude any cost or revenue unrelated to the period.
+• Exclude 80 percent of power costs prudently incurred during RCEs.
+• Include as a cost all losses that the Company incurs, or is reasonably expected to incur,
+as a result of any non-retail Customer failing to pay the Company for the sale of power
+during the relevant period.
+• Include fuel costs and revenues associated with steam sales from the Coyote Springs I
+Plant.
+• Include gas resale revenues.
+Advice No. 26-24
+Issued June 3, 2026 Effective for service
+Angelica Espinosa, Senior Vice President on and after July 8, 2026
+
+Portland General Electric Company Second Revision of Sheet No. 126-4
+P.U.C. Oregon No. E-19 Canceling First Revision of Sheet No. 126-4
+SCHEDULE 126 (Continued)
+DEFINITIONS (Continued)
+• Include Energy Charge revenues from Schedules 76R, 38, 83, 85, 89, 90, and 91 Energy
+pricing options other than Cost of Service and the Energy Charge revenues from the
+Market Based Pricing Option from Schedules 485, 489, 490, 491, 492, 495, 689, and 696 (C)
+as an offset to NVPC.
+• NVPC shall be adjusted as needed to comply with Order 07-015 that states that ancillary
+services, the revenues from sales as well as the costs from the services, should also be
+taken into account in the mechanism.
+• Actual NVPC will be increased to include the value of the energy associated with those
+Customers that received the Schedule 128 Balance of Year Transition Adjustment for the
+period during the year that the Customers received the Schedule 128 adjustment.
+• Include reciprocating engine lubrication oil expenses.
+• Include actual State and Federal Production Tax Credits.
+RCE Power Cost Mechanism – 80% of the RCE Power Cost that is exempt from the earnings test
+and deadbands.
+RCE Load - Total retail load served by PGE during an RCE, adjusted to exclude loads of
+Customers to whom this adjustment schedule does not apply.
+Reliability Contingency Event – An event qualifies as a Reliability Contingency Event (RCE) for
+cost recovery when at least 2 out of the 3 criteria are met:
+1. The Day-ahead Mid-Columbia index prices exceed $150/MWh.
+2. PGE is eligible to request or acquire resource adequacy (RA) assistance through a
+regional RA program in which it participates.
+3. A neighboring Balancing Authority has publicly declared an event that indicates potential
+supply or actual supply constraints.
+ADJUSTMENT AMOUNT
+The amount accruing to the Power Cost Variance Account, whether positive or negative will be
+multiplied by a revenue sensitive factor of 1.0350 to account for franchise fees, uncollectibles,
+and OPUC fees.
+The Power Cost Adjustment Rate shall be set at level such that the projected amortization for 12
+month period beginning with the implementation of the rate is no greater than six percent (6%) of
+annual Company retail revenues for the preceding calendar year.
+TIME AND MANNER OF FILING
+As a minimum, on July 1st of the following year (or the next business day if the 1st is a weekend
+or holiday), the Company will file with the Commission recommended adjustment rates for the
+next calendar year.
+Advice No. 26-24
+Issued June 3, 2026 Effective for service
+Angelica Espinosa, Senior Vice President on and after July 8, 2026
+
+Portland General Electric Company Third Revision of Sheet No. 126-5
+P.U.C. Oregon No. E-19 Canceling Second Revision of Sheet No. 126-5
+SCHEDULE 126 (Continued)
+TIME AND MANNER OF FILING (Continued)
+Included in this filing will be the following information:
+1. A transmittal letter that summarizes the proposed changes.
+2. Revised Power Cost Variance Rates.
+3. Work papers supporting the calculation of the revised PCV rates.
+If the Company finds that the PCV Rates may over or under collect revenues in a particular year,
+the Company may recommend a modification of the Adjustment Rates to the Commission. The
+Company may also recommend that the Commission consider Adjustment Rates based on a
+collection or refund period different than one year based on the balance in the PCV Account.
+POWER COST VARIANCE RATES
+The PCV Rates will be determined on an equal cents per kWh basis. The PCV Rates are:
+Schedule Adjustment Rate
+7 0.214 ¢ per kWh
+15/515 0.214 ¢ per kWh(2)
+32/532 0.214 ¢ per kWh(2)
+38/538 0.214 ¢ per kWh(2)
+47 0.214 ¢ per kWh
+49/549 0.214 ¢ per kWh(2)
+75/575
+Secondary 0.214 ¢ per kWh(1)
+Primary 0.214 ¢ per kWh(1)
+Subtransmission 0.214 ¢ per kWh(1)
+83/583 0.214 ¢ per kWh(2)
+85/585
+Secondary 0.214 ¢ per kWh(2)
+Primary 0.214 ¢ per kWh(2)
+89/589
+Secondary 0.214 ¢ per kWh(2)
+Primary 0.214 ¢ per kWh(2)
+Subtransmission 0.214 ¢ per kWh(2)
+90/590
+Primary 0.214 ¢ per kWh
+Subtransmission 0.214 ¢ per kWh
+91/591 0.214 ¢ per kWh(2)
+92/592 0.214 ¢ per kWh(2)
+95/595 0.214 ¢ per kWh(2)
+96/596 0.214 ¢ per kWh(2) (N)
+(1) Applicable only to the Baseline and Scheduled Maintenance Energy.
+(2) Not applicable to Customers where service was received for the entire calendar year that the Annual Power Cost
+Variance accrued.
+Advice No. 26-24
+Issued June 3, 2026 Effective for service
+Angelica Espinosa, Senior Vice President on and after July 8, 2026
+
+Portland General Electric Company Third Revision of Sheet No. 126-6
+P.U.C. Oregon No. E-19 Canceling Second Revision of Sheet No. 126-6
+SCHEDULE 126 (Concluded)
+POWER COST VARIANCE RATES (Continued)
+Schedule Adjustment Rate
+485
+Secondary 0.214 ¢ per kWh(2)
+Primary 0.214 ¢ per kWh(2)
+489
+Secondary 0.214 ¢ per kWh(2)
+Primary 0.214 ¢ per kWh(2)
+Subtransmission 0.214 ¢ per kWh(2)
+490
+Primary 0.214 ¢ per kWh
+Subtransmission 0.214 ¢ per kWh
+491 0.214 ¢ per kWh
+492 0.214 ¢ per kWh
+495 0.214 ¢ per kWh
+496 0.214 ¢ per kWh (N)
+689
+Secondary 0.214 ¢ per kWh(2)
+Primary 0.214 ¢ per kWh(2)
+Subtransmission 0.214 ¢ per kWh(2)
+696 0.214 ¢ per kWh (N)
+(1) Applicable only to the Baseline and Scheduled Maintenance Energy.
+(2) Not applicable to Customers where service was received for the entire calendar year that the Annual Power Cost
+Variance accrued.
+TERM
+Effective for service on and after January 17, 2007 and continuing until terminated by the
+Commission.
+This schedule may only be terminated upon approval or order of the Commission. If this schedule
+is terminated for any reason, the Company will determine the remaining Adjustment Amount on
+a prorated basis consistent with the principles of this schedule. In such case, any balance in the
+PCV Account will be amortized to rates over a period to be determined by the Commission.
+Advice No. 26-24
+Issued June 3, 2026 Effective for service
+Angelica Espinosa, Senior Vice President on and after July 8, 2026

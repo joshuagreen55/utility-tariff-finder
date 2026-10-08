@@ -1,0 +1,74 @@
+Portland General Electric Company Third Revision of Sheet No. 120-1
+P.U.C. Oregon No. E-19 Canceling Second Revision of Sheet No. 120-1
+SCHEDULE 120
+SEASIDE BATTERY STORAGE RESOURCE ALTERNATIVE RECOVERY
+PURPOSE
+This Schedule recovers the revenue requirement and provides customers with the Power Cost
+benefits associated with Seaside Battery Energy Storage System (BESS) resource.
+AVAILABLE
+In all territory served by the Company.
+APPLICABLE
+To all bills for Electricity Service except Schedules 76, 485, 489, 490, 491, 492, 495, 496, 515, (C)
+532, 538, 549, 575, 576, 583, 585, 589, 596, 689 and 696. (C)
+PART A – REVENUE REQUIREMENT ADJUSTMENTS
+Part A will include the fixed costs of the Seaside BESS resource associated and associated
+transmission (including return on and return of the capital costs), operation and maintenance
+costs, income taxes, property taxes, and other fees and costs that are applicable to the Seaside
+BESS resource.
+PART B – POWER COST BENEFIT
+Part B consists of the Net Variable Power Cost benefits from the Seaside BESS resource, until
+the benefits are included in the Annual Power Cost Update Schedule 125. Until the benefits are
+included in the Annual Power Cost Update Schedule 125, the net revenue requirements of the
+Seaside BESS resource will be included in the Schedule 120 rates. By no later than December 1
+of 2025, the Company will file an update to this schedule to remove the power cost benefit for the
+following year and include the benefit in the AUT.
+ADJUSTMENT RATE
+The Adjustment Rate, applicable for service on and after the effective date of this schedule are:
+Schedule Part A Part B Adjustment Rate
+7 0.230 (0.000) 0.230 ¢ per kWh
+15 0.163 (0.000) 0.163 ¢ per kWh
+32 0.202 (0.000) 0.202 ¢ per kWh
+38 0.197 (0.000) 0.197 ¢ per kWh
+47 0.241 (0.000) 0.241 ¢ per kWh
+49 0.236 (0.000) 0.236 ¢ per kWh
+Advice No. 26-24
+Issued June 3, 2026 Effective for service
+Angelica Espinosa, Senior Vice President on and after July 8, 2026
+
+Portland General Electric Company Second Revision of Sheet No. 120-2
+P.U.C. Oregon No. E-19 Canceling First Revision of Sheet No. 120-2
+SCHEDULE 120 (Concluded)
+ADJUSTMENT RATE (Continued)
+Schedule Part A Part B Adjustment Rate
+75
+Secondary 0.179 (0.000) 0.179 ¢ per kWh
+Primary 0.177 (0.000) 0.177 ¢ per kWh
+Subtransmission 0.176 (0.000) 0.176 ¢ per kWh
+83 0.196 (0.000) 0.196 ¢ per kWh
+85
+Secondary 0.194 (0.000) 0.194 ¢ per kWh
+Primary 0.183 (0.000) 0.183 ¢ per kWh
+89
+Secondary 0.179 (0.000) 0.179 ¢ per kWh
+Primary 0.177 (0.000) 0.177 ¢ per kWh
+Subtransmission 0.176 (0.000) 0.176 ¢ per kWh
+90
+Primary 30-250 MWa 0.175 (0.000) 0.175 ¢ per kWh
+Primary >250 MWa 0.171 (0.000) 0.171 ¢ per kWh
+Subtransmission 0.175 (0.000) 0.175 ¢ per kWh
+91 0.163 (0.000) 0.163 ¢ per kWh
+92 0.176 (0.000) 0.176 ¢ per kWh
+95 0.163 (0.000) 0.163 ¢ per kWh
+96 0.176 (0.000) 0.176 ¢ per kWh (N)
+SPECIAL CONDITIONS
+1. Costs recovered through this schedule will be allocated to each schedule using the
+applicable schedule’s forecasted energy on the basis of an equal percent of generation
+revenue applied on a cents per kWh basis to each applicable rate schedule.
+2. The costs for projects included under this schedule will be updated annually as provided
+above and will continue to be recovered under Schedule 120 until such time as the costs
+are included in base rates or the project is no longer in service.
+3. Once the Seaside resource is placed into base rates or is no longer in service, this Schedule
+will be withdrawn, and no other assets will be placed within this Schedule.
+Advice No. 26-24
+Issued June 3, 2026 Effective for service
+Angelica Espinosa, Senior Vice President on and after July 8, 2026

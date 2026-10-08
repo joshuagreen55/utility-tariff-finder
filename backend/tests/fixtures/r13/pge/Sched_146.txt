@@ -1,0 +1,101 @@
+Portland General Electric Company Third Revision of Sheet No. 146-1
+P.U.C. Oregon No. E-19 Canceling Second Revision of Sheet No. 146-1
+SCHEDULE 146
+COLSTRIP POWER PLANT
+OPERATING LIFE ADJUSTMENT
+PURPOSE
+This schedule establishes the mechanism to implement in rates the Company’s share of the full
+revenue requirement for the Colstrip Power Plant Units 3 and 4 and associated common facilities.
+This schedule is implemented as an “automatic adjustment clause” as defined in ORS 757.210.
+APPLICABLE
+To all bills for Electricity Service except Schedules 76R, 485, 489, 490, 491, 492, 495, 496, 576R, (C)
+689, and 696. (C)
+ADJUSTMENT RATES
+Schedule 146 Adjustment Rates will be set based on an equal percent of Energy Charge revenues
+applicable at the time of any filing that revises rates pursuant to this schedule.
+Adjustment Rate
+Schedule
+7 0.224 ¢ per kWh
+15/515 0.159 ¢ per kWh
+32/532 0.197 ¢ per kWh
+38/538 0.192 ¢ per kWh
+47 0.235 ¢ per kWh
+49/549 0.230 ¢ per kWh
+75/575
+Secondary 0.175 ¢ per kWh
+Primary 0.173 ¢ per kWh
+Subtransmission 0.171 ¢ per kWh
+83/583 0.195 ¢ per kWh
+85/585
+Secondary 0.190 ¢ per kWh
+Primary 0.176 ¢ per kWh
+89/589
+Secondary 0.175 ¢ per kWh
+Primary 0.173 ¢ per kWh
+Subtransmission 0.171 ¢ per kWh
+90/590 30-250 Mwa
+Primary 0.170 ¢ per kWh
+Subtransmission 0.170 ¢ per kWh
+90/590 90 >250 Mwa
+Primary 0.166 ¢ per kWh
+Subtransmission 0.166 ¢ per kWh
+Advice No. 26-24
+Issued June 3, 2026 Effective for service
+Angelica Espinosa, Senior Vice President on and after July 8, 2026
+
+Portland General Electric Company Third Revision of Sheet No. 146-2
+P.U.C. Oregon No. E-19 Canceling Second Revision of Sheet No. 146-2
+SCHEDULE 146 (Continued)
+ADJUSTMENT RATES (Continued)
+Schedule Adjustment Rate
+91/591 0.159 ¢ per kWh
+92/592 0.171 ¢ per kWh
+95/595 0.159 ¢ per kWh
+(N)
+96/596 0.171 ¢ per kWh
+PART A- DECOMMISSIONING AMOUNTS
+Part A consists of the revenue requirements related to decommissioning of the Colstrip Power
+Plant Units 3 and 4. The decommissioning revenue requirement computation will use the
+Commission-authorized tax rates, revenue sensitive cost rates, rate of return and return on equity
+rates.
+PART B- DEPRECIATION AMOUNTS
+Part B consists of the revenue requirements related to depreciation of the Colstrip Power Plant
+Units 3 and 4. The depreciation revenue requirement computation will use the Commission-
+authorized tax rates, revenue sensitive cost rates, rate of return and return on equity rates.
+PART C- REMAINING AMOUNTS
+Part C consists of the full revenue requirement associated with the Colstrip Power Plant Units 3
+and 4 and associated common facilities (including all identifiable capital- and expense-related
+costs and other revenues), excluding associated transmission facilities, costs allowable for
+recovery through PGE’s existing Schedule 125 (Annual Power Cost Update), and amounts
+identified in Parts A and B above. The revenue requirement computation will use the Commission-
+authorized tax rates, revenue sensitive cost rates, rate of return, and return on equity rates.
+DETERMINATION OF ADJUSTMENT AMOUNTS
+The Adjustment Rates will be updated annually to reflect the subsequent year’s change in the
+Colstrip Power Plant Units 3 and 4 revenue requirement (Parts A, B and C).
+BALANCING ACCOUNT
+The Company will maintain a balancing account to track the difference between the Schedule 146
+Part A only amounts and the actual Schedule 146 revenues for Part A. This difference will accrue
+interest at the Commission-authorized rate for deferred accounts. No other amounts included
+within Schedule 146 will be subject to balancing account treatment.
+Advice No. 26-24
+Issued June 3, 2026 Effective for service
+Angelica Espinosa, Senior Vice President on and after July 8, 2026
+
+Portland General Electric Company
+P.U.C. Oregon No. E-19 Original Sheet No. 146-3
+SCHEDULE 146 (Concluded)
+TIME AND MANNER OF FILING
+Commencing in 2022, the Company will submit to the Commission the following information by
+November 1 of each year:
+1. The proposed price changes to this Schedule to be effective on January 1st of the following
+year based on the updated revenue requirements described above.
+2. Work papers supporting the Schedule 146 prices, the updated depreciation and
+decommissioning revenue requirements, the projected applicable billing determinants, and
+the projected balancing account activity.
+With respect to a Schedule 146 rate change for the inclusion or update of costs outside of revised
+decommissioning or operating life adjustments and in compliance with the Commission’s findings
+in separate cost recovery proceeding(s), the Company will file updated Schedule 146 rates by no
+less than 30 days prior to the rate effective date.
+Advice No. 23-40
+Issued December 19, 2023 Effective for service
+Brett Sims, Vice President on and after January 1, 2024

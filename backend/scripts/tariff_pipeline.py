@@ -4052,11 +4052,10 @@ def phase3_extract_tariffs(
                 pages_skipped_no_signal, pages_sent_to_llm, llm_zero_results,
                 llm_errors, early_abort}. Mutated in place.
     """
-    if not ANTHROPIC_API_KEY:
-        raise RuntimeError("ANTHROPIC_API_KEY not set")
-
     # Prefer fresher individual schedule PDFs over older combined books
     # (R12: PGE Sched_007 Jul 2026 over all_tariffs_56_ Jan 2020).
+    # API key is required only when an LLM path is taken — deterministic
+    # Sched_007 / Sch 1xx extracts must work without Anthropic (R13 e2e).
     pages = _drop_stale_combined_pages_when_fresher_schedule_exists(list(pages))
     sorted_pages = sorted(pages, key=_phase3_page_rank_key)
 
@@ -4166,6 +4165,8 @@ def phase3_extract_tariffs(
                 continue
 
         stats["pages_sent_to_llm"] += 1
+        if not ANTHROPIC_API_KEY:
+            raise RuntimeError("ANTHROPIC_API_KEY not set")
 
         # PDF dispatch:
         #   - Rich-text PDFs (>10k chars extractable) -> fall through to
@@ -6956,6 +6957,91 @@ def apply_tod_schedule_riders_across_batch(tariffs: list[ExtractedTariff]) -> in
     return applied
 
 
+def _sch7_tou_or_ev_plan(t: ExtractedTariff) -> bool:
+    """True for PGE Schedule 7 TOD / EV (or similarly named) TOU plans."""
+    name = str(t.name or "")
+    rt = str(t.rate_type or "").lower()
+    if rt not in ("tou", "tou_tiered", "seasonal_tou", "demand_tou"):
+        return False
+    if re.search(
+        r"schedule\s*7.*(?:time[\s-]*of[\s-]*use|time[\s-]*of[\s-]*day|tod|tou)|"
+        r"(?:time[\s-]*of[\s-]*use|time[\s-]*of[\s-]*day|tod|tou).*schedule\s*7|"
+        r"plug[\s-]*in\s+electric\s+vehicle|ev\s+time\s+of\s+use|"
+        r"7[\s-]*tod",
+        name,
+        re.I,
+    ):
+        return True
+    return bool(
+        re.search(r"\bschedule\s*7\b", name, re.I)
+        and (rt.startswith("tou") or rt == "seasonal_tou")
+    )
+
+
+def _tariff_has_sch125_tod_pca(t: ExtractedTariff) -> bool:
+    """True when Sch 125 TOD period amounts are folded or present on ``t``."""
+    for c in t.components or []:
+        if not isinstance(c, dict):
+            continue
+        blob = _adjustment_label_blob(c, tariff_name=str(t.name or ""))
+        pl = str(c.get("period_label") or c.get("tier_label") or "")
+        if re.search(r"all-in\s*\+sch\s*125", pl, re.I):
+            return True
+        if _is_sch125_tod_period_rider(c, tariff_name=str(t.name or "")):
+            return True
+        if c.get("included_in_energy") and re.search(
+            r"schedule\s*125.*(?:tod|on[\s-]*peak)|tod\s+adjustment",
+            blob,
+            re.I,
+        ):
+            return True
+    return False
+
+
+def flag_missing_sch125_tod_pca(tariffs: list[ExtractedTariff]) -> int:
+    """Flag Sch 7 TOD/EV plans that never received Sch 125 period PCA (R13).
+
+    When the PCA silently drops, all-in TOU prices are base+1xx only. Mark
+    ``needs_review`` with a clear ``sch125_tod_pca_missing`` reason.
+    """
+    # Only flag when a Sch 125 TOD donor existed in the batch (otherwise the
+    # gap is "rider not fetched", already covered by riders_referenced).
+    has_donor = False
+    for t in tariffs:
+        for c in t.components or []:
+            if isinstance(c, dict) and _is_sch125_tod_period_rider(
+                c, tariff_name=str(t.name or "")
+            ):
+                has_donor = True
+                break
+        if has_donor:
+            break
+        if _tariff_has_sch125_tod_pca(t) and _is_rider_only_tariff(t):
+            has_donor = True
+            break
+    flagged = 0
+    for t in tariffs:
+        if _is_rider_only_tariff(t):
+            continue
+        if not _sch7_tou_or_ev_plan(t):
+            continue
+        if _tariff_has_sch125_tod_pca(t):
+            continue
+        # Flag when a donor was present OR the plan is clearly Sch 7 TOD
+        # (PCA is always supposed to apply — missing donor is also a gap).
+        t.needs_review = True
+        missing = list(getattr(t, "missing_fields", None) or [])
+        if "sch125_tod_pca_missing" not in missing:
+            missing.append("sch125_tod_pca_missing")
+        t.missing_fields = missing
+        flagged += 1
+        log.warning(
+            f"    Sch 125 TOD PCA missing on '{t.name}' — needs_review "
+            f"(donor_in_batch={has_donor})"
+        )
+    return flagged
+
+
 def _tariff_text_blob(t: ExtractedTariff) -> str:
     parts = [str(t.name or ""), str(t.description or ""), str(t.code or "")]
     for c in t.components or []:
@@ -7275,12 +7361,18 @@ def _filter_useful_rider_extracts(extra: list[ExtractedTariff]) -> list[Extracte
             continue
         if _is_rider_only_tariff(t) or _RIDER_DONOR_NAME_RE.search(name) or _is_adjustment_schedule_name(name):
             # Strip any leaked base-delivery rows from numbered base schedules.
+            # Keep Sch 125 7-TOD period rows — they are not universal flat
+            # stackers (allow_tod=False excludes them) but apply_tod needs
+            # them as donors (R13: PCA silently dropped on 2020-book TOU).
             comps = [
                 dict(c)
                 for c in (t.components or [])
                 if isinstance(c, dict)
                 and not _is_base_schedule_delivery_charge(c, tariff_name=name)
-                and _is_universal_stacking_rider(c, tariff_name=name, allow_tod=False)
+                and (
+                    _is_universal_stacking_rider(c, tariff_name=name, allow_tod=False)
+                    or _is_sch125_tod_period_rider(c, tariff_name=name)
+                )
             ]
             if not comps and _is_rider_only_tariff(t):
                 # Rider-only but labels didn't match stacking regex — keep
@@ -8815,6 +8907,121 @@ def _is_pge_tariff_index_page(page: RatePage, hint: str = "") -> bool:
     return False
 
 
+def _utility_looks_like_pge(utility_name: str = "", website_url: str = "") -> bool:
+    blob = f"{utility_name or ''} {website_url or ''}".lower()
+    return bool(
+        "portlandgeneral.com" in blob
+        or re.search(r"portland\s+general|\bpge\b", blob)
+    )
+
+
+def fetch_pge_schedule_url_map(
+    *,
+    index_raw: str | None = None,
+) -> dict[str, str]:
+    """Build Sched_NNN → PDF URL map from PGE tariff index page-data/HTML."""
+    mapping: dict[str, str] = {}
+    texts: list[str] = []
+    if index_raw:
+        texts.append(index_raw)
+    else:
+        for idx_url in _PGE_TARIFF_INDEX_URLS:
+            raw = _refetch_pge_index_raw(idx_url)
+            if raw:
+                texts.append(raw)
+    for raw in texts:
+        mapping.update(_pge_sch1xx_url_map_from_text(raw))
+    return mapping
+
+
+def fetch_pge_current_sch7_page(
+    *,
+    url_map: dict[str, str] | None = None,
+    fetch_pdf=_fetch_as_pdf_via_download,
+) -> RatePage | None:
+    """Download the current Sched_007.pdf from the schedule index URL map."""
+    umap = url_map if url_map is not None else fetch_pge_schedule_url_map()
+    url = umap.get("007") or umap.get("7")
+    if not url:
+        return None
+    page = fetch_pdf(url)
+    if page and page.content and len(page.content.strip()) > 200:
+        page.title = page.title or "Schedule 7 Residential Service"
+        return page
+    return None
+
+
+def prefer_current_individual_schedule_pages(
+    utility_name: str,
+    pages: list[RatePage],
+    *,
+    website_url: str = "",
+    url_map: dict[str, str] | None = None,
+    fetch_pdf=_fetch_as_pdf_via_download,
+) -> list[RatePage]:
+    """Prefer a current individual residential schedule over an older book.
+
+    R13: Phase 1 often lands on PGE ``all_tariffs_56_.pdf`` (2020). Phase 2
+    then only downloads that PDF, so the R12 fresher-doc preference never
+    sees Sched_007. Pull Sched_007 from the schedule index and put it first;
+    drop older combined books once the current sheet is present.
+    """
+    if not _utility_looks_like_pge(utility_name, website_url):
+        return list(pages or [])
+    pages = list(pages or [])
+    already = any(
+        _is_individual_pge_schedule_pdf(p.url or "", p.content or "")
+        and re.search(r"Sched_0*7\b|SCHEDULE\s+7\b", f"{p.url}\n{(p.content or '')[:1500]}", re.I)
+        for p in pages
+    )
+    if not already:
+        sch7 = fetch_pge_current_sch7_page(url_map=url_map, fetch_pdf=fetch_pdf)
+        if sch7:
+            log.info(
+                f"  Preferring current individual Sched_007 over combined book: "
+                f"{sch7.url[:80]}"
+            )
+            pages = [sch7] + pages
+        else:
+            log.info("  PGE schedule index: Sched_007 URL not found / fetch failed")
+    pages = _drop_stale_combined_pages_when_fresher_schedule_exists(pages)
+    return pages
+
+
+def resolve_pge_primary_rate_url(
+    utility_name: str,
+    existing_url: str = "",
+    *,
+    website_url: str = "",
+    url_map: dict[str, str] | None = None,
+) -> tuple[str, list[str]]:
+    """Return (primary, alts) preferring current Sched_007 over a combined book.
+
+    Used when Phase 1 / search returns an older ``all_tariffs_*.pdf``. The
+    individual schedule becomes primary; the combined book is demoted to an
+    alternate (and later dropped once Sched_007 is fetched).
+    """
+    if not _utility_looks_like_pge(utility_name, website_url):
+        return existing_url or "", []
+    umap = url_map if url_map is not None else fetch_pge_schedule_url_map()
+    sch7_url = umap.get("007") or umap.get("7") or ""
+    if not sch7_url:
+        return existing_url or "", []
+    if not existing_url:
+        return sch7_url, []
+    if _is_combined_tariff_book(existing_url, ""):
+        log.info(
+            f"  PGE: demoting combined tariff book to alternate; "
+            f"primary → Sched_007"
+        )
+        alts = [existing_url] if existing_url != sch7_url else []
+        return sch7_url, alts
+    if re.search(r"Sched_0*7\.pdf", existing_url, re.I):
+        return existing_url, []
+    # Existing is some other page — keep it, but offer Sched_007 first as alt.
+    return existing_url, [sch7_url]
+
+
 def parse_pge_sch125_adjustment_rates(text: str) -> list[dict]:
     """Parse Sch 125 ADJUSTMENT RATES table (flat Schedule 7 + 7-TOD periods).
 
@@ -9553,6 +9760,7 @@ def phase4_validate(
     # After riders are on the ENERGY plans, drop resolved FAM/DSM hints so
     # needs_review is not kept solely for already-folded riders (R8b).
     clear_resolved_rider_hints(tariffs)
+    flag_missing_sch125_tod_pca(tariffs)
     if n_salvaged or n_shared:
         log.info(
             f"    Batch rider salvage: {n_salvaged} relative rider-only, "
@@ -9783,6 +9991,15 @@ def phase4_validate(
                 f"    Reclassified '{t.name}' as tou_tiered "
                 f"({'baseline labels' if has_baseline_labels else 'tier bounds'}"
                 f" + TOU clocks on ENERGY rows)"
+            )
+        # R13: Sch 102 2,000 kWh split turns a flat Default into two ENERGY
+        # tiers — label it tiered (not flat).
+        if rt_l == "flat" and has_tier_bounds and len(energy_rows) >= 2:
+            t.rate_type = "tiered"
+            rt_l = "tiered"
+            log.info(
+                f"    Reclassified '{t.name}' as tiered "
+                f"(ENERGY rows carry tier_min/max after rider split)"
             )
 
         # Repair a 1-hour TOU gap only from a stated period (never guess).
@@ -12796,6 +13013,26 @@ def run_pipeline(
         source_ctx,
         locked=bool(rate_page_url_override or preferred_primary),
     )
+    # R13: PGE schedule index lists current Sched_007 — prefer it over an
+    # older combined all_tariffs_*.pdf that Phase 1 site-search returns.
+    if not rate_page_url_override and _utility_looks_like_pge(
+        utility_name, website_url or ""
+    ):
+        try:
+            pge_primary, pge_alts = resolve_pge_primary_rate_url(
+                utility_name,
+                rate_page_url or "",
+                website_url=website_url or "",
+            )
+            if pge_primary and pge_primary != rate_page_url:
+                if rate_page_url and rate_page_url not in pge_alts:
+                    pge_alts = [rate_page_url, *pge_alts]
+                rate_page_url = pge_primary
+                for u in pge_alts:
+                    if u and u not in alt_urls and u != rate_page_url:
+                        alt_urls.append(u)
+        except Exception as e:
+            log.warning(f"  PGE Sched_007 preference failed: {e}")
     result.phase1_rate_page_url = rate_page_url or result.phase1_rate_page_url
 
     if not rate_page_url:
@@ -12991,6 +13228,22 @@ def run_pipeline(
         if not pages:
             current_url = _search_after_dead_override(current_url) or _pick_next_alt()
             continue
+
+        # R13: if Phase 2 only got a combined book (or missed Sched_007),
+        # pull the current individual residential schedule from the index
+        # so deterministic Sch 7 / fresher-doc preference can run.
+        try:
+            pages = prefer_current_individual_schedule_pages(
+                utility_name,
+                pages,
+                website_url=website_url or "",
+            )
+            result.phase2_sub_pages = [
+                {"url": p.url, "title": p.title, "type": p.page_type, "has_content": bool(p.content)}
+                for p in pages
+            ]
+        except Exception as e:
+            log.warning(f"  Individual schedule preference failed: {e}")
 
         # Incremental check: skip LLM extraction if page content unchanged
         if (

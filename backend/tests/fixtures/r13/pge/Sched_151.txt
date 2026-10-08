@@ -1,0 +1,70 @@
+Portland General Electric Company Eighth Revision of Sheet No. 151-1
+P.U.C. Oregon No. E-19 Canceling Seventh Revision of Sheet No. 151-1
+SCHEDULE 151
+WILDFIRE MITIGATION COST RECOVERY
+PURPOSE
+This schedule recovers the costs associated with wildfire mitigation, implemented to reduce
+wildfire risks and enhance safety, reliability, and energy system resilience. This adjustment
+schedule is implemented as an automatic adjustment clause as provided under ORS 757.210
+and ORS 757.963(8).
+AVAILABLE
+In all territory served by Portland General Electric Company (“PGE”).
+APPLICABLE
+To all bills for Electricity Service.
+ADJUSTMENT RATES
+Schedule Adjustment Rate
+7 0.567 ¢ per kWh (R)
+15/515 0.477 ¢ per kWh
+32/532 0.565 ¢ per kWh
+38/538 0.617 ¢ per kWh
+47 0.896 ¢ per kWh
+49/549 0.750 ¢ per kWh
+75/575
+Secondary 0.090 ¢ per kWh
+Primary 0.065 ¢ per kWh
+Subtransmission 0.059 ¢ per kWh
+83/583 0.317 ¢ per kWh
+85/485/585
+Secondary 0.182 ¢ per kWh
+Primary 0.132 ¢ per kWh (R)
+Advice No. 26-22
+Issued April 20, 2026 Effective for service
+Angelica Espinosa, Senior Vice President on and after June 1, 2026
+
+Portland General Electric Company Ninth Revision of Sheet No. 151-2
+P.U.C. Oregon No. E-19 Canceling Eighth Revision of Sheet No. 151-2
+SCHEDULE 151 (Concluded)
+ADJUSTMENT RATES (Continued)
+89/489/589/689
+Secondary 0.090 ¢ per kWh
+Primary 0.065 ¢ per kWh
+Subtransmission 0.059 ¢ per kWh
+90/490/590
+Primary 0.075 ¢ per kWh
+Subtransmission 0.075 ¢ per kWh
+91/491/591 0.477 ¢ per kWh
+92/492/592 0.159 ¢ per kWh
+95/495/595 0.477 ¢ per kWh
+(N)
+96/496/596/696 0.070 ¢ per kWh
+ANNUAL REVENUE REQUIREMENTS
+The Annual Revenue Requirements will include all reasonable operating costs plus investment
+and associated capital-related costs to develop, implement and/or operate a wildfire mitigation
+plan under ORS 757.963.
+BALANCING ACCOUNT
+The Company will maintain a balancing account to track the difference between the actual
+incremental Schedule 151 revenue requirement and Schedule 151 revenues. The balancing
+account will accrue interest at the Commission-authorized rate.
+SPECIAL CONDITIONS
+1. Costs recovered through this schedule will be allocated to each schedule using the
+applicable schedule’s forecasted energy on the basis of an equal percent of non-generation
+revenue applied on a cents per kWh basis to each applicable rate schedule, with long-term
+opt out and new load direct access customers priced at the equivalent cost of service rate
+schedule. The fixed revenue for all lighting schedules is removed from the non-generation
+revenue and is not used as the basis for the allocation.
+2. The costs for projects included under this schedule will be updated annually and will
+continue to be recovered under Schedule 151 until such time as the costs are included in
+base rates.
+Advice No. 26-24
+Issued June 3, 2026 Effective for service
+Angelica Espinosa, Senior Vice President on and after July 8, 2026

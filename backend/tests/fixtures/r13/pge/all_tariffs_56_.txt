@@ -1,0 +1,23 @@
+Portland General Electric Company
+P.U.C. Oregon No. E-18
+all_tariffs compiled book
+Effective for service on and after January 1, 2020
+
+SCHEDULE 7
+RESIDENTIAL SERVICE
+RESIDENTIAL SERVICE PRICE PLAN (DEFAULT PLAN)
+Basic Charge Single-Family Home $11.00
+Transmission and Related Services Charge 0.243 ¢ per kWh
+Distribution Charge 4.652 ¢ per kWh
+Energy Charge 6.329 ¢ per kWh
+First 1,000 kWh
+Energy Charge 7.051 ¢ per kWh
+Over 1,000 kWh
+
+TIME-OF-DAY (TOD) PORTFOLIO OPTION
+On-Peak Charge 20.378 ¢ per kWh
+Mid-Peak Charge 15.049 ¢ per kWh
+Off-Peak Charge 4.128 ¢ per kWh
+On-Peak 3:00 p.m. to 8:00 p.m. Monday-Friday
+Mid-Peak 6:00 a.m. to 3:00 p.m. Monday-Friday
+Off-Peak 8:00 p.m. to 6:00 a.m. Monday-Friday
