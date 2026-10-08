@@ -239,7 +239,9 @@ SKIP_KEYWORDS = re.compile(
     r"wheeling|curtailment|generation|supplement.*\d{2,}|"
     r"lighting|outdoor.*light|area.*light|security.*light|"
     r"pumping|mining|smelting|data.center|"
-    r"high.voltage|primary.*service|subtransmission",
+    r"high.voltage|primary.*service|subtransmission|"
+    r"government\s+(?:department|diesel|building)|"
+    r"gov(?:ernment)?\.?\s*dept",
     re.IGNORECASE,
 )
 
@@ -2410,21 +2412,22 @@ def _page_has_rate_content(text: str, title: str = "", url: str = "") -> bool:
 # TODAY is injected into user messages only so the cached system prompt
 # stays byte-identical across days. Substituted into outer prompts via
 # .replace before any str.format that needs other placeholders.
-_STRUCTURED_RULES = """1. SOURCE ONLY. Every number, clock time, day type and date must come from the content you were given. Never copy a number from the examples (examples are format illustrations ONLY). If something is not shown, leave that field null (or leave the row out), set needs_review=true and name the gap in missing_fields. A blank field is better than a guessed one.
+_STRUCTURED_RULES = """1. SOURCE ONLY. Every number, clock time, day type and date must come from the content you were given. Never copy a number from the examples (examples are format illustrations ONLY). If something is not shown, leave that field null (or leave the row out) and name the gap in missing_fields. Set needs_review=true ONLY for Mysa-critical gaps: missing/uncertain ENERGY price, missing TOU clock / day_type / season dates, unresolved per-kWh riders, or a validation conflict. Do NOT set needs_review for a missing effective_date alone (leave effective_date ""). A blank field is better than a guessed one.
    Allowed derivations (these are NOT guessing — do these when the source supports them):
    a) adding printed numbers to build the full per-kWh price (rule 4);
    b) "all other hours" / "all remaining hours" = exactly the hours not covered by the stated windows;
    c) a month range means whole months: "June–September" → 6/1–9/30, "Dec–Apr" → 12/1–4/30;
-   d) converting a 12-hour clock to 24-hour: "7 a.m.–11 a.m." → 07:00–11:00; an end time of "9:59 p.m." → 22:00.
+   d) converting a 12-hour clock to 24-hour: "7 a.m.–11 a.m." → 07:00–11:00; an end time of "9:59 p.m." → 22:00;
+   e) relative seasonal riders (Rate #1.1S / #1.2DS): when the rider says energy = another schedule's rate ± a printed seasonal premium/credit, and that base schedule's ENERGY is printed in the SAME document (even in another section), add the printed base ± the printed seasonal amount to emit all-in ENERGY per season. Pulling a printed base from the same official document is an allowed calculation, not a guess.
    Nothing else. Never get hours from a label like "On-Peak" alone or dates from a word like "Summer" alone.
 
-2. RESIDENTIAL ONLY, decided by who the rate serves: homes, dwellings, domestic customers, farm-and-home, or residential single-phase service. A schedule named "General Service", "Farm & Home", "Single-Phase Service", or similar counts when its text says it applies to residences / dwellings / domestic use. Skip rates that serve only businesses, industry, lighting, irrigation or wholesale.
+2. RESIDENTIAL ONLY, decided by who the rate serves: homes, dwellings, domestic customers, farm-and-home, or residential single-phase service. A schedule named "General Service", "Farm & Home", "Single-Phase Service", or similar counts when its text says it applies to residences / dwellings / domestic use. Skip rates that serve only businesses, industry, lighting, irrigation, wholesale, or government departments / government buildings (e.g. "Government Diesel", "Government Departments") — those are non-residential even when the name contains "Domestic".
 
 3. WHICH PRICE. The user message states TODAY's date. Use the price in effect on that date. When a table has several dated columns, use the column with the latest effective date on or before TODAY. Skip proposed, pending, cancelled or withdrawn rates. If a schedule shows BOTH a temporary/interim price billed today AND a full TOU/seasonal structure that starts on a future date, extract BOTH: (i) today's billed price as one tariff with its current effective_date, and (ii) the coming TOU/seasonal structure as a separate tariff with that future effective_date (it must not be treated as current until that date). Schedules closed to new customers: still extract them and set closed_to_new=true.
 
 4. FULL PRICE (residential ENERGY). The ENERGY rate is the total per-kWh price every customer on this plan pays:
    IN: the base energy charge plus every mandatory per-kWh charge on the same bill — fuel/purchased-power/PCA, riders and adjustments (FAM, DSM/efficiency, storm, cost recovery, interim), per-kWh delivery/transmission/distribution/regulatory charges (including Ontario delivery and regulatory adders), and — when the utility page is delivery-only — the published standard-offer / default-supply / POLR / RPP commodity price so ENERGY is a full billable ¢/kWh.
-   OUT (never add these into ENERGY): optional programs a customer must sign up for (SmartRate, peak-time rebates, green power, EV programs); charges or credits that apply only to some kWh or some customers (community solar, net-metering/export credits); event or critical-peak adders; taxes, franchise fees, percent-of-bill items and multipliers (loss factors); fixed monthly charges (they stay FIXED).
+   OUT (never add these into ENERGY): optional programs a customer must sign up for (SmartRate, peak-time rebates / PTR, Green Power, Green Future, EV programs); charges or credits that apply only to some kWh or some customers (community solar, net-metering / export / surplus credits); event or critical-peak adders; taxes, franchise fees, percent-of-bill items and multipliers (loss factors); fixed monthly charges (they stay FIXED — and optional fixed add-ons like Green Power $5/month stay as separate optional FIXED rows, never the standard plan's only fixed charge).
    Match each rider to the row it applies to. If a rider differs by season, TOU period or tier, add the matching amount to each row.
    For every amount you add, ALSO emit it as its own ADJUSTMENT row with included_in_energy=true. Emit excluded or unsure items as ADJUSTMENT rows with included_in_energy=false. Never leave included_in_energy empty on a per-kWh ADJUSTMENT row. Put "all-in" in the ENERGY tier_label when riders were folded in.
    If the plan says riders apply but their amounts are not in the content, keep the base ENERGY, list the riders in riders_referenced_not_shown, and set needs_review=true.
@@ -2441,7 +2444,7 @@ _STRUCTURED_RULES = """1. SOURCE ONLY. Every number, clock time, day type and da
 
 9. One tariff per product: keep all seasons, periods, day types and tiers of a schedule in one tariff, named as printed. A plan priced differently by zone or area gets one tariff per zone, with the zone in the name. Residential demand (¢/kW or $/kW) stays DEMAND. Net-metering / export credits are ADJUSTMENT with included_in_energy=false, never ENERGY.
 
-10. RELATIVE SEASONAL RIDERS (e.g. Rate #1.1S): when energy equals another schedule's rate ± a seasonal premium/credit, emit all-in ENERGY per season with season_start/end month/day — never leave a season as ADJUSTMENT-only. Do NOT invent hours or season dates from labels alone (MYSA fields: period_start_time, period_end_time, day_type, season_start/end)."""
+10. RELATIVE SEASONAL RIDERS (e.g. Rate #1.1S / #1.2DS): when energy equals another schedule's rate ± a seasonal premium/credit, emit all-in ENERGY per season with season_start/end month/day — never leave a season as ADJUSTMENT-only. If the base schedule's ENERGY is printed elsewhere in the SAME document, use that printed base (allowed derivation e). Do NOT invent hours or season dates from labels alone (MYSA fields: period_start_time, period_end_time, day_type, season_start/end)."""
 
 # Static half of the main extraction prompt — sent once as the Anthropic
 # system message (prompt-cached). Dynamic per-call fields live in
@@ -2449,7 +2452,7 @@ _STRUCTURED_RULES = """1. SOURCE ONLY. Every number, clock time, day type and da
 EXTRACTION_SYSTEM_PROMPT = """Extract ONLY residential electricity tariffs from this page (who the rate serves — see shared rules).
 
 INCLUDE: schedules that serve homes / dwellings / domestic / farm-and-home / residential single-phase customers (even if named "General Service" or "Farm & Home" when the text says so)
-SKIP / IGNORE: rates that serve only businesses, industry, lighting, irrigation, fleet, street lighting, transmission, wholesale, interruptible, standby
+SKIP / IGNORE: rates that serve only businesses, industry, lighting, irrigation, fleet, street lighting, transmission, wholesale, interruptible, standby, government departments / government buildings (e.g. NL Rate 1.2G Government Diesel)
 
 ATTRIBUTION CHECK (applies to every page you extract from):
 - A target utility is provided below. Only return rates that the page explicitly attributes to the target utility or one of its named operating subsidiaries.
@@ -2748,12 +2751,30 @@ def _rate_type_family(rt: str) -> str:
 def _name_token_set(name: str) -> set[str]:
     stop = {
         "rate", "tariff", "schedule", "service", "the", "and", "for", "of",
-        "residential", "domestic", "electric", "energy", "plan", "option",
+        "no", "number", "num", "residential", "domestic", "electric",
+        "energy", "plan", "option",
     }
     return {
         w for w in re.split(r"[^a-z0-9]+", str(name or "").lower())
         if w and w not in stop and not w.isdigit()
     }
+
+
+# Max gap between a base-only sibling and its full-bill counterpart.
+# Values may still be in ¢/kWh (pre-Phase-4) or $/kWh (post-normalize).
+_FULL_BILL_MAX_ENERGY_DELTA_DOLLARS = 0.08  # $0.08/kWh ≈ 8¢
+_FULL_BILL_MAX_ENERGY_DELTA_CENTS = 8.0
+
+
+def _full_bill_energy_delta_cap(values: list[float] | set[float]) -> float:
+    """Pick ¢ vs $ cap from magnitude (¢ rates are typically > 1.0)."""
+    if not values:
+        return _FULL_BILL_MAX_ENERGY_DELTA_DOLLARS
+    return (
+        _FULL_BILL_MAX_ENERGY_DELTA_CENTS
+        if max(values) > 1.0
+        else _FULL_BILL_MAX_ENERGY_DELTA_DOLLARS
+    )
 
 
 def _full_bill_product_match(a: ExtractedTariff, b: ExtractedTariff) -> bool:
@@ -2767,12 +2788,9 @@ def _full_bill_product_match(a: ExtractedTariff, b: ExtractedTariff) -> bool:
     if ca and cb:
         if ca == cb:
             return True
-        # "1.2DS" vs "1.2D" are seasonal variants, not full-bill siblings.
-        if _seasonal_sibling_base_code(ca) == cb or _seasonal_sibling_base_code(cb) == ca:
-            return False
-        # Only treat as the same product when codes are equal after stripping
-        # trivial formatting — not when one is a proper prefix of the other
-        # (that path is for name tokens / Pedernales "Time-of-Use" dupes).
+        # Distinct codes (1.1 vs 1.2G, 1.1 vs 1.1L) are never the same product.
+        # Seasonal variants (1.2DS vs 1.2D) are also distinct for this merge.
+        return False
     na, nb = _normalize_tariff_name(a.name), _normalize_tariff_name(b.name)
     if na == nb:
         return True
@@ -2789,13 +2807,23 @@ def _base_energy_compatible_for_full_bill(thin: ExtractedTariff, full: Extracted
     eb = sorted(_energy_values(full))
     if not ea or not eb:
         return False
+    # Cap how far the *corresponding* prices can diverge (guards 15¢
+    # domestic vs 100¢ government). Use max-to-max / pairwise — not
+    # max(full)-min(thin), which false-rejects wide TOU spreads.
+    cap = _full_bill_energy_delta_cap([*ea, *eb])
+    if max(eb) - max(ea) > cap + 1e-9:
+        return False
     # Same number of ENERGY price points (TOU periods / tiers), each thin
     # value ≤ corresponding full value (full-bill = base + riders).
     if len(ea) == len(eb):
+        if not all(b - a <= cap + 1e-9 for a, b in zip(ea, eb)):
+            return False
         return all(a <= b + 1e-9 for a, b in zip(ea, eb)) and max(eb) > max(ea) + 1e-6
     # Or thin is a single base that appears among full's values / below max.
     if len(ea) == 1:
-        return ea[0] <= max(eb) + 1e-9 and max(eb) > ea[0] + 1e-6
+        return ea[0] <= max(eb) + 1e-9 and max(eb) > ea[0] + 1e-6 and (
+            max(eb) - ea[0] <= cap + 1e-9
+        )
     return False
 
 
@@ -2868,27 +2896,42 @@ def _collapse_full_bill_siblings(tariffs: list[ExtractedTariff]) -> list[Extract
 
 
 def drop_superseded_same_family_adjustments(components: list[dict]) -> list[dict]:
-    """Drop older duplicate values of the same ADJUSTMENT charge family.
+    """Drop older duplicate values of the same charge family.
 
     Pedernales sample bills sometimes keep stale and current TCOS as two
-    'tiers'. Prefer a non-superseded label; otherwise keep the single
-    remaining / highest value for that family (unseasoned energy-unit only).
+    'tiers' (ADJUSTMENT or ENERGY from vision). Prefer a non-superseded
+    label; otherwise keep the single remaining / highest value for that
+    family (unseasoned energy-unit only).
     """
     if not components:
         return components
 
-    # family -> list of (index, comp)
+    # family -> list of (index, comp) for ADJUSTMENT and charge-like ENERGY
     by_fam: dict[str, list[tuple[int, dict]]] = {}
     for i, c in enumerate(components):
         if not isinstance(c, dict):
             continue
-        if str(c.get("component_type") or "").lower() != "adjustment":
+        ctype = str(c.get("component_type") or "").lower()
+        if ctype not in ("adjustment", "energy"):
             continue
         if not _is_energy_unit(c.get("unit")):
             continue
         if _season_key(c.get("season")):
             continue
+        # ENERGY rows only enter when their label names a rider/charge family
+        # (TCOS, delivery, …) — never collapse genuine TOU/tier ENERGY.
         fam = _rider_family_key(c)
+        if ctype == "energy":
+            label = " ".join(
+                str(c.get(k) or "") for k in ("tier_label", "period_label")
+            )
+            if not label.strip() or fam.startswith("val:"):
+                continue
+            if fam not in {
+                "tcos", "delivery", "transmission", "distribution",
+                "fam", "dcrr", "scrr", "pca", "bac", "cost_recovery",
+            }:
+                continue
         by_fam.setdefault(fam, []).append((i, c))
 
     drop: set[int] = set()
@@ -2903,7 +2946,6 @@ def drop_superseded_same_family_adjustments(components: list[dict]) -> list[dict
                 values.add(0.0)
         if len(values) < 2:
             continue  # exact dupes left to dedupe_rate_components
-        # Drop explicitly superseded/old labels first.
         remaining = []
         for i, c in rows:
             blob = _adjustment_label_blob(c)
@@ -2913,8 +2955,7 @@ def drop_superseded_same_family_adjustments(components: list[dict]) -> list[dict
                 remaining.append((i, c))
         if len(remaining) <= 1:
             continue
-        # Still multiple current-looking values — keep the highest (newer
-        # cost-recovery charges typically rise; stale sample-bill rows lag).
+
         def _val(pair: tuple[int, dict]) -> float:
             try:
                 return float(pair[1].get("rate_value") or 0)
@@ -2928,6 +2969,121 @@ def drop_superseded_same_family_adjustments(components: list[dict]) -> list[dict
     if not drop:
         return components
     return [c for i, c in enumerate(components) if i not in drop]
+
+
+def drop_superseded_flat_energy_vintages(
+    components: list[dict],
+    *,
+    rate_type: str = "",
+) -> list[dict]:
+    """Drop stale all-in ENERGY vintages on flat sample-bill extracts.
+
+    Pedernales vision sometimes emits two unseasoned ENERGY values (old
+    TCOS-inclusive and new) with no tier/TOU structure. Keep the higher.
+    """
+    rt = str(rate_type or "").strip().lower()
+    if rt and rt not in ("flat",):
+        return components
+    energy_idxs: list[int] = []
+    for i, c in enumerate(components or []):
+        if not isinstance(c, dict):
+            continue
+        if str(c.get("component_type") or "").lower() != "energy":
+            continue
+        if not _is_energy_unit(c.get("unit")):
+            continue
+        if _season_key(c.get("season")):
+            return components
+        if c.get("period_start_time") or c.get("period_end_time") or c.get("period_label"):
+            return components
+        if c.get("tier_min_kwh") is not None or c.get("tier_max_kwh") is not None:
+            return components
+        energy_idxs.append(i)
+    if len(energy_idxs) < 2:
+        return components
+    vals: list[tuple[int, float]] = []
+    for i in energy_idxs:
+        try:
+            vals.append((i, float(components[i].get("rate_value") or 0)))
+        except (TypeError, ValueError):
+            return components
+    # Only collapse when values differ by a rider-sized gap (≤8¢ / $0.08),
+    # not genuine multi-tier flats that somehow lost bounds.
+    vals.sort(key=lambda x: x[1], reverse=True)
+    cap = _full_bill_energy_delta_cap([v for _i, v in vals])
+    if vals[0][1] - vals[-1][1] > cap + 1e-9:
+        return components
+    if vals[0][1] - vals[-1][1] < 1e-9:
+        return components
+    keep_i = vals[0][0]
+    drop = {i for i, _v in vals[1:]}
+    # Prefer dropping rows labeled prior/old when present.
+    for i in energy_idxs:
+        blob = _adjustment_label_blob(components[i])
+        if _SUPERSEDED_CHARGE_LABEL_RE.search(blob) and i != keep_i:
+            drop.add(i)
+    return [c for i, c in enumerate(components) if i not in drop]
+
+
+def _is_optional_program_tariff(t: ExtractedTariff) -> bool:
+    """True when the whole extract is an optional add-on, not a base plan."""
+    blob = f"{t.name or ''} {t.description or ''} {t.code or ''}"
+    if not _OPTIONAL_OR_SCOPED_RIDER_RE.search(blob):
+        return False
+    # Base residential plans that merely mention an optional rider in the
+    # description still have ENERGY as the standard price — keep them.
+    if _tariff_has_energy(t) and not re.search(
+        r"\b(?:green\s+future|green\s+power|net[\s-]*meter|option\s+[ivx]+|"
+        r"peak[\s-]*time\s+rebate|\bptr\b|smartrate)\b",
+        str(t.name or ""),
+        re.IGNORECASE,
+    ):
+        return False
+    return True
+
+
+def strip_optional_program_components(t: ExtractedTariff) -> int:
+    """Keep optional programmes out of the full billable ENERGY/FIXED price.
+
+    Per-kWh optional ADJUSTMENTs stay as audit rows with
+    ``included_in_energy=false``. Optional FIXED add-ons (Green Power
+    $5/mo) are dropped from the standard plan. ENERGY rows whose label is
+    an optional credit are demoted to ADJUSTMENT.
+    """
+    comps = list(t.components or [])
+    if not comps:
+        return 0
+    tariff_name = str(t.name or "")
+    kept: list[dict] = []
+    removed = 0
+    for c in comps:
+        if not isinstance(c, dict):
+            kept.append(c)
+            continue
+        ctype = str(c.get("component_type") or "").lower()
+        label = " ".join(str(c.get(k) or "") for k in ("tier_label", "period_label", "season"))
+        blob = f"{tariff_name} {label}"
+        if not _OPTIONAL_OR_SCOPED_RIDER_RE.search(blob):
+            kept.append(c)
+            continue
+        if ctype == "adjustment" and _is_energy_unit(c.get("unit")):
+            row = dict(c)
+            row["included_in_energy"] = False
+            kept.append(row)
+            continue
+        if ctype == "fixed":
+            removed += 1
+            continue
+        if ctype == "energy" and _OPTIONAL_OR_SCOPED_RIDER_RE.search(label):
+            row = dict(c)
+            row["component_type"] = "adjustment"
+            row["included_in_energy"] = False
+            kept.append(row)
+            removed += 1
+            continue
+        kept.append(c)
+    t.components = kept
+    return removed
 
 
 # User message only — full rules/examples come from the cached system prompt.
@@ -3236,7 +3392,7 @@ A "rate" is anything the document treats as a separately-priced residential prod
 
 ATTRIBUTION RULE: Only list rates the document explicitly attributes to the target utility. PROVINCE-WIDE REGULATED PRICES: regulator pages (e.g. OEB RPP) with jurisdiction-wide commodity prices for LDCs in the target's province/state count as attributable. If the document is a comparison/aggregator and lists rates for several utilities, exclude rates not labeled for the target. If you cannot tell (and the regulator exception does not apply), return empty plans.
 
-SKIP / IGNORE: rates that serve only businesses, industry, lighting, irrigation or wholesale. Do NOT list per-kWh riders/adjustments (FAM, DSM, fuel, power-cost, Schedule 1xx, etc.) as separate plans when base residential schedules are also in this document — those riders are folded into ENERGY later. If this document contains ONLY rider/adjustment schedules (no base plans), still list each named rider/adjustment schedule with customer_class "residential" so their ¢/kWh amounts can be extracted as ADJUSTMENT components.
+SKIP / IGNORE: rates that serve only businesses, industry, lighting, irrigation, wholesale, or government departments / government buildings (e.g. "Government Diesel"). Do NOT list per-kWh riders/adjustments (FAM, DSM, fuel, power-cost, Schedule 1xx, etc.) as separate plans when base residential schedules are also in this document — those riders are folded into ENERGY later. If this document contains ONLY rider/adjustment schedules (no base plans), still list each named rider/adjustment schedule with customer_class "residential" so their ¢/kWh amounts can be extracted as ADJUSTMENT components.
 
 Return a JSON object:
 {{
@@ -3383,12 +3539,33 @@ def _parse_tool_tariffs(raw: list[dict], source_url: str) -> list[ExtractedTarif
     )
 
 
+# Two-pass is expensive; skip it when the residential slice of a long
+# commercial rate book is thin (SRP compare / multi-schedule PDFs).
+_TWOPASS_MIN_RESIDENTIAL_CHARS = 4000
+
+
+def _residential_content_span(content: str) -> int:
+    """Approx. size of the residential-relevant slice used for extraction."""
+    if not content:
+        return 0
+    selected = _select_rate_content(content, max_chars=25000)
+    return len(selected or "")
+
+
 def _is_complex_page(content: str) -> bool:
-    """Detect pages likely to benefit from two-pass extraction."""
+    """Detect pages likely to benefit from two-pass extraction.
+
+    Long books with sparse residential sections fall back to single-pass
+    (the residential window is too short to amortize identify+N extracts).
+    """
     if len(content) < 8000:
         return False
     signals = len(_COMPLEXITY_SIGNALS.findall(content))
-    return signals >= 5
+    if signals < 5:
+        return False
+    if _residential_content_span(content) < _TWOPASS_MIN_RESIDENTIAL_CHARS:
+        return False
+    return True
 
 
 def _extract_two_pass(
@@ -3689,6 +3866,9 @@ def phase3_extract_tariffs(
     all_tariffs: dict[str, ExtractedTariff] = {}
     llm_calls = 0
     consecutive_zeros = 0
+    # Same rate-book under two URLs (SRP) must not pay for two-pass twice.
+    seen_content_hashes: set[str] = set()
+    hash_to_keys: dict[str, list[str]] = {}
 
     # Tracking for structured error messages
     if stats is None:
@@ -3698,6 +3878,7 @@ def phase3_extract_tariffs(
     stats.setdefault("pages_skipped_irrelevant", 0)
     stats.setdefault("pages_skipped_no_signal", 0)
     stats.setdefault("pages_sent_to_llm", 0)
+    stats.setdefault("pages_skipped_dup_hash", 0)
     stats.setdefault("llm_zero_results", 0)
     stats.setdefault("llm_errors", 0)
     stats.setdefault("early_abort", False)
@@ -3723,6 +3904,21 @@ def phase3_extract_tariffs(
             log.info(f"    Skipping {page.title or page.url[:60]} (no rate content signals)")
             stats["pages_skipped_no_signal"] += 1
             continue
+        # Skip documents already extracted in this run (identical content
+        # under a second URL — common for large rate-book mirrors).
+        ch = (page.content_hash or "").strip()
+        if ch and ch in seen_content_hashes:
+            stats["pages_skipped_dup_hash"] += 1
+            # Re-attach prior extracts to this URL when the keeper has none.
+            for key in hash_to_keys.get(ch, []):
+                existing = all_tariffs.get(key)
+                if existing and not existing.source_url:
+                    existing.source_url = page.url
+            log.info(
+                f"    Skipping {page.url[:70]} (duplicate content hash — "
+                f"already extracted this run)"
+            )
+            continue
         if llm_calls >= MAX_LLM_CALLS:
             log.info(f"    Stopping: reached {MAX_LLM_CALLS} LLM call limit")
             stats["llm_call_cap_hit"] = True
@@ -3737,6 +3933,8 @@ def phase3_extract_tariffs(
 
         log.info(f"  Phase 3: Extracting from {page.url[:80]}")
         stats["pages_sent_to_llm"] += 1
+        if ch:
+            seen_content_hashes.add(ch)
 
         # PDF dispatch:
         #   - Rich-text PDFs (>10k chars extractable) -> fall through to
@@ -3844,6 +4042,8 @@ def phase3_extract_tariffs(
             if existing and len(existing.components) >= len(t.components):
                 continue
             all_tariffs[key] = t
+            if ch:
+                hash_to_keys.setdefault(ch, []).append(key)
             accepted += 1
 
         log.info(f"    Extracted {accepted} tariffs from {page.url[:60]}")
@@ -5103,10 +5303,13 @@ _RIDER_DONOR_NAME_RE = re.compile(
 _OPTIONAL_OR_SCOPED_RIDER_RE = re.compile(
     r"\b(?:optional|opt[\s-]*in|enrollment|participat(?:ion|e|ing)?|"
     r"program|credit|rebate|smartrate|smart[\s-]*rate|"
-    r"peak[\s-]*time[\s-]*rebate|\bptr\b|"
+    r"peak[\s-]*time[\s-]*rebate|\bptr\b|peak[\s-]*time[\s-]*reward|"
     r"community[\s-]*solar|solar[\s-]*received|solar[\s-]*kwh|"
-    r"green[\s-]*power|green[\s-]*energy|renewable[\s-]*choice|"
-    r"voluntary|subscriber|subscription|net[\s-]*meter)\b",
+    r"green[\s-]*power|green[\s-]*energy|green[\s-]*future|"
+    r"avenir[\s-]*vert|renewable[\s-]*choice|"
+    r"voluntary|subscriber|subscription|"
+    r"net[\s-]*meter(?:ing)?|export[\s-]*credit|surplus[\s-]*credit|"
+    r"option\s+[ivx]+\b|self[\s-]*generation)\b",
     re.IGNORECASE,
 )
 
@@ -5929,6 +6132,13 @@ def _residential_needs_external_riders(t: ExtractedTariff) -> bool:
     return bool(_RIDER_DOC_HINT_RE.search(_tariff_text_blob(t)))
 
 
+_ADJUSTMENT_SECTION_RE = re.compile(
+    r"(?:adjustments?|riders?|subject\s+to)\s*[:\-]?\s*"
+    r"((?:schedule\s*1\d{2}[\s,;and]*)+)",
+    re.IGNORECASE,
+)
+
+
 def _rider_search_hints(tariffs: list[ExtractedTariff]) -> list[str]:
     """Build bounded Brave queries for missing adjustment/rider schedules."""
     hints: list[str] = []
@@ -5943,11 +6153,21 @@ def _rider_search_hints(tariffs: list[ExtractedTariff]) -> list[str]:
     for t in tariffs:
         for named in getattr(t, "riders_referenced_not_shown", None) or []:
             _add(str(named))
-        if not _residential_needs_external_riders(t):
-            continue
+            # Named "Schedule 128" etc. also enqueue the numbered form.
+            for m in re.finditer(r"schedule\s*(1\d{2})", str(named), re.IGNORECASE):
+                _add(f"Schedule {m.group(1)}")
         blob = _tariff_text_blob(t)
+        # Always harvest Sch 1xx from the adjustments section / plan text,
+        # even when some riders already folded (PGE often lists many 1xx).
         for m in re.finditer(r"schedule\s*(1\d{2})", blob, re.IGNORECASE):
             _add(f"Schedule {m.group(1)}")
+        for m in _ADJUSTMENT_SECTION_RE.finditer(blob):
+            for sm in re.finditer(r"1\d{2}", m.group(1)):
+                _add(f"Schedule {sm.group(0)}")
+        if not _residential_needs_external_riders(t) and not getattr(
+            t, "riders_referenced_not_shown", None
+        ):
+            continue
         if re.search(r"\bfam\b|fuel\s*adjust", blob, re.IGNORECASE):
             _add("Fuel Adjustment Mechanism FAM")
         if re.search(r"\bdsm\b|dcrr|efficiency", blob, re.IGNORECASE):
@@ -5958,6 +6178,8 @@ def _rider_search_hints(tariffs: list[ExtractedTariff]) -> list[str]:
             _add("Power Cost Adjustment")
         if re.search(r"cost\s*recovery", blob, re.IGNORECASE):
             _add("cost recovery adjustment")
+        if re.search(r"adjustments?\s+schedule|schedule\s*1\d{2}", blob, re.IGNORECASE):
+            _add("residential adjustment schedules Schedule 1")
         # Generic fallback when the extract only says riders aren't on-page.
         if not hints or _RIDER_DOC_HINT_RE.search(blob):
             _add("rate rider adjustment schedule")
@@ -6239,6 +6461,74 @@ def _filter_useful_rider_extracts(extra: list[ExtractedTariff]) -> list[Extracte
     return useful
 
 
+def _page_lacks_rider_amounts(content: str) -> bool:
+    """True when page text has almost no ¢/kWh figures (link hub, not tariff)."""
+    if not content or len(content.strip()) < 40:
+        return True
+    amounts = re.findall(
+        r"(?:¢|cents?)\s*/\s*kwh|\$\s*/\s*kwh|(?<![\d.])\d+\.\d{2,4}\s*(?:¢|cents?)",
+        content,
+        re.IGNORECASE,
+    )
+    return len(amounts) < 2
+
+
+def _rider_page_one_hop_links(
+    page: RatePage,
+    *,
+    allowed_domains: set[str],
+) -> list[str]:
+    """Same-domain PDF/tariff links from a rider HTML page (one hop)."""
+    html = page.content or ""
+    base = page.url or ""
+    if not html or not base:
+        return []
+    candidates: list[tuple[str, str]] = []
+    try:
+        soup = BeautifulSoup(html, "html.parser")
+        for a in soup.find_all("a", href=True):
+            href = (a.get("href") or "").strip()
+            if href and not href.startswith(("#", "mailto:", "javascript:")):
+                candidates.append((href, a.get_text(" ", strip=True)))
+    except Exception:
+        pass
+    # Plain-text / stripped-HTML fallback: bare URLs and markdown-ish links.
+    for m in re.finditer(
+        r"href=[\"']([^\"']+)[\"']|(https?://[^\s<>\"']+\.pdf)",
+        html,
+        re.IGNORECASE,
+    ):
+        href = (m.group(1) or m.group(2) or "").strip()
+        if href:
+            candidates.append((href, ""))
+
+    out: list[str] = []
+    seen: set[str] = set()
+    for href, anchor_text in candidates:
+        url = urljoin(base, href)
+        if _is_third_party_domain(url) or is_generic_host(url):
+            continue
+        if allowed_domains and not _url_in_allowed_domains(url, allowed_domains):
+            continue
+        label = f"{anchor_text} {href} {url}".lower()
+        path = urlparse(url).path.lower()
+        is_pdf = path.endswith(".pdf")
+        looks_rider = bool(
+            _RIDER_DOC_HINT_RE.search(label)
+            or re.search(r"fam|dsm|dcrr|scrr|pca|tariff|rider|adjust", label)
+        )
+        if not (is_pdf or looks_rider):
+            continue
+        key = url.split("?")[0].rstrip("/").lower()
+        if key in seen:
+            continue
+        seen.add(key)
+        out.append(url)
+        if len(out) >= 4:
+            break
+    return out
+
+
 def fetch_and_extract_referenced_riders(
     tariffs: list[ExtractedTariff],
     utility_name: str,
@@ -6253,9 +6543,9 @@ def fetch_and_extract_referenced_riders(
 
     Bounded (default 6 docs). Prefers the utility's own current tariff pages
     over regulator dockets; rejects documents whose year is clearly stale
-    (~2+ years old). Extracts each fetched page in rider mode (per-kWh
-    adjustments + classes), not plan-listing mode. Returns
-    (extra_tariffs, pages_fetched, unresolved_hints).
+    (~2+ years old). When a fetched page is mostly links (no ¢ amounts),
+    follows one hop to same-domain tariff PDFs within the cap. Extracts each
+    page in rider mode. Returns (extra_tariffs, pages_fetched, unresolved_hints).
     """
     if stats is None:
         stats = {}
@@ -6350,9 +6640,7 @@ def fetch_and_extract_referenced_riders(
         )
         return [], [], hints
 
-    fetched: list[tuple[RatePage, str]] = []
-    for url, hint in candidate_urls[:max_docs]:
-        page = None
+    def _fetch_one(url: str) -> RatePage | None:
         try:
             if url.lower().split("?")[0].endswith(".pdf"):
                 page = _fetch_as_pdf_via_download(url)
@@ -6360,16 +6648,48 @@ def fetch_and_extract_referenced_riders(
                 page = _fetch_and_parse(url)
                 if page is None and url.lower().endswith(".pdf"):
                     page = _fetch_as_pdf_via_download(url)
+            return page
         except Exception as e:
             log.info(f"    Rider-doc fetch failed {url[:70]}: {e}")
-            continue
+            return None
+
+    fetched: list[tuple[RatePage, str]] = []
+    for url, hint in candidate_urls[:max_docs]:
+        page = _fetch_one(url)
         if page and page.content and len(page.content.strip()) > 100:
-            # Second-chance stale check on page title after fetch.
             if _is_stale_rider_document(page.url, page.title or "", ""):
                 log.info(f"    Rider-doc skip stale after fetch: {page.url[:70]}")
                 continue
             fetched.append((page, hint))
             log.info(f"    Rider-doc fetched: {url[:70]} ({len(page.content)} chars)")
+
+    # One-hop: when a fetched HTML rider page mostly links to a tariff PDF
+    # (NSP FAM "click here"), follow same-domain links within the doc cap.
+    hop_candidates: list[tuple[str, str]] = []
+    for page, hint in list(fetched):
+        if (page.page_type or "").lower() == "pdf":
+            continue
+        if not _page_lacks_rider_amounts(page.content or ""):
+            continue
+        for hop_url in _rider_page_one_hop_links(
+            page, allowed_domains=utility_domains or allowed_domains,
+        ):
+            key = hop_url.split("?")[0].rstrip("/").lower()
+            if key in existing_urls or key in seen_url:
+                continue
+            if len(fetched) + len(hop_candidates) >= max_docs:
+                break
+            seen_url.add(key)
+            hop_candidates.append((hop_url, hint))
+        if len(fetched) + len(hop_candidates) >= max_docs:
+            break
+    for url, hint in hop_candidates:
+        page = _fetch_one(url)
+        if page and page.content and len(page.content.strip()) > 100:
+            if _is_stale_rider_document(page.url, page.title or "", ""):
+                continue
+            fetched.append((page, hint))
+            log.info(f"    Rider-doc one-hop fetched: {url[:70]} ({len(page.content)} chars)")
 
     stats["rider_docs_fetched"] = len(fetched)
     if not fetched:
@@ -6394,16 +6714,74 @@ def fetch_and_extract_referenced_riders(
     return useful, [p for p, _h in fetched], unresolved
 
 
+_INFORMATIONAL_MISSING_FIELDS = frozenset({
+    "effective_date", "effective date", "fixed", "fixed_charge",
+    "customer_charge", "minimum", "description", "code",
+})
+
+
+def _is_informational_missing_field(field: str) -> bool:
+    """True for gaps that are not Mysa-critical by themselves."""
+    f = re.sub(r"[^a-z0-9]+", "_", str(field or "").strip().lower()).strip("_")
+    if f in _INFORMATIONAL_MISSING_FIELDS:
+        return True
+    if "effective" in f and "date" in f:
+        return True
+    return False
+
+
+def _is_mysa_critical_review_reason(
+    *,
+    missing_fields: list[str] | None = None,
+    riders_missing: list[str] | None = None,
+    completeness_reasons: list[str] | None = None,
+    computable_reasons: list[str] | None = None,
+    energy_scope: str = "",
+) -> bool:
+    """needs_review only for Mysa-critical problems (not bare effective_date)."""
+    for m in missing_fields or []:
+        if not _is_informational_missing_field(m):
+            return True
+    if riders_missing:
+        return True
+    if completeness_reasons:
+        return True
+    critical_comp = {
+        "missing_energy_rates",
+        "tou_missing_clock_windows",
+        "tou_missing_day_type",
+        "tou_gap",
+        "tou_overlap",
+        "seasonal_missing_calendar_dates",
+        "energy_rate_not_numeric",
+    }
+    for r in computable_reasons or []:
+        base = str(r).split(":", 1)[0]
+        if base in critical_comp or str(r).startswith("tou_gap") or str(r).startswith("tou_overlap"):
+            return True
+    if energy_scope in ("delivery_only", "supply_only"):
+        return True
+    return False
+
+
 def flag_unresolved_external_riders(
     tariffs: list[ExtractedTariff],
     unresolved_hints: list[str],
 ) -> int:
-    """Mark residential plans that still lack referenced riders for review.
+    """Mark residential plans that still lack referenced per-kWh riders.
 
     Only runs when the bounded rider-doc fetch could not resolve the hints —
-    we do not guess rider amounts.
+    we do not guess rider amounts. Flags needs_review only when the hint
+    looks like a per-kWh price changer (FAM/DCRR/Sch 1xx), not generic noise.
     """
     if not unresolved_hints:
+        return 0
+    price_hints = [
+        h for h in unresolved_hints
+        if _RIDER_DOC_HINT_RE.search(h)
+        or re.search(r"schedule\s*1\d{2}|fam|dsm|dcrr|pca|fuel|storm", h, re.I)
+    ]
+    if not price_hints:
         return 0
     flagged = 0
     for t in tariffs:
@@ -6413,7 +6791,7 @@ def flag_unresolved_external_riders(
         flagged += 1
         log.info(
             f"    Unresolved external riders on '{t.name}' — needs_review "
-            f"(hints: {', '.join(unresolved_hints[:3])})"
+            f"(hints: {', '.join(price_hints[:3])})"
         )
     return flagged
 
@@ -6468,13 +6846,21 @@ def phase4_validate(
     absorbed_rider_only = 0
 
     # Pass 0: structured normalize + unit normalize on every tariff so
-    # batch rider salvage compares $/kWh values.
+    # batch rider salvage compares $/kWh values. Unit auto-correction alone
+    # is not Mysa-critical — do not set needs_review for it.
     for t in tariffs:
         t.components = normalize_structured_components(t.components)
         unit_notes = _normalize_component_units(t, p99_energy)
         if unit_notes:
-            t.needs_review = True
             log.info(f"    Unit normalization on '{t.name}': {'; '.join(unit_notes)}")
+        strip_optional_program_components(t)
+        # Soften model needs_review when the only gap is effective_date.
+        missing = list(getattr(t, "missing_fields", None) or [])
+        if getattr(t, "needs_review", False) and missing:
+            critical_missing = [m for m in missing if not _is_informational_missing_field(m)]
+            if not critical_missing and not getattr(t, "riders_referenced_not_shown", None):
+                t.needs_review = False
+                t.missing_fields = missing  # keep the note, drop the flag
 
     n_salvaged = salvage_relative_rider_only_tariffs(tariffs)
     n_shared = apply_shared_stacking_riders_across_batch(tariffs)
@@ -6484,14 +6870,27 @@ def phase4_validate(
             f"{n_shared} tariffs received shared stacking riders"
         )
 
-    # After sharing, prefer full-bill siblings over base-only duplicates.
+    # After sharing, prefer full-bill siblings over base-only duplicates
+    # (also covers EV TOU once Sch 1xx riders land on the base-only row).
     collapsed = _collapse_full_bill_siblings(tariffs)
     if len(collapsed) < len(tariffs):
         tariffs[:] = collapsed
 
     for t in tariffs:
         tariff_issues = []
+        # Recompute after optional strip / informational soft-clear.
         needs_review = bool(t.needs_review)
+
+        # Optional programme extracts (Green Future add-on, net-metering
+        # Option I, PTR-only) are not the standard residential plan.
+        if _is_optional_program_tariff(t):
+            absorbed_rider_only += 1
+            log.info(f"    Dropped optional programme extract '{t.name}'")
+            continue
+        if SKIP_KEYWORDS.search(str(t.name or "")):
+            tariff_issues.append(f"non-residential name ({t.name!r})")
+            issues.append({"tariff": t.name, "issues": tariff_issues})
+            continue
 
         # Rider-only extracts that donated stacking riders (and were not
         # salvaged into a seasonal schedule) are absorbed — not rejected —
@@ -6549,6 +6948,9 @@ def phase4_validate(
         # sample-bill TCOS old + new kept as two "tiers") before exact dedupe.
         before_super = len(t.components)
         t.components = drop_superseded_same_family_adjustments(t.components)
+        t.components = drop_superseded_flat_energy_vintages(
+            t.components, rate_type=str(t.rate_type or ""),
+        )
         if len(t.components) < before_super:
             log.info(
                 f"    Superseded-charge drop on '{t.name}': "
@@ -6610,6 +7012,16 @@ def phase4_validate(
         if rt_l.startswith("seasonal") and count_energy_seasons(t.components) < 2:
             needs_review = True
 
+        # Far-future effective dates (>12 months) are Mysa-critical to review;
+        # near-term future (interim + coming TOU) is intentional.
+        eff = _parse_effective_date(getattr(t, "effective_date", None))
+        if eff and (eff - date.today()).days > 365:
+            needs_review = True
+            log.info(
+                f"    Far-future effective_date {eff.isoformat()} on "
+                f"'{t.name}' — needs_review"
+            )
+
         # Structured TOU/seasonal completeness (clock windows + season calendar).
         # Prefer structured columns; do NOT invent times/dates from labels.
         # Incomplete shapes are flagged needs_review (existing soft pattern) —
@@ -6633,12 +7045,41 @@ def phase4_validate(
         except Exception as e:
             log.warning(f"    Completeness check failed on '{t.name}': {e}")
 
-        if rt_l in _TOU_OR_SEASONAL_TYPES:
+        # Tier bounds + TOU clocks on the same ENERGY rows → tou_tiered
+        # (PG&E E-TOU-C baseline tiers misread as overlapping periods).
+        if rt_l in ("tou", "seasonal_tou") and any(
+            isinstance(c, dict)
+            and str(c.get("component_type") or "").lower() == "energy"
+            and (c.get("tier_min_kwh") is not None or c.get("tier_max_kwh") is not None)
+            for c in (t.components or [])
+        ):
+            t.rate_type = "tou_tiered"
+            rt_l = "tou_tiered"
+            needs_review = True
+            log.info(
+                f"    Reclassified '{t.name}' as tou_tiered "
+                f"(tier bounds + TOU clocks on ENERGY rows)"
+            )
+
+        if rt_l in _TOU_OR_SEASONAL_TYPES or rt_l == "tou_tiered":
             from app.services.computable import evaluate_computable
 
             verdict = evaluate_computable(rt_l, t.components, name=t.name)
             t.computable_reasons = list(verdict.reasons)
-            if not verdict.computable:
+            clock_broken = [
+                r for r in verdict.reasons
+                if str(r).startswith(("tou_gap", "tou_overlap", "tou_zero_length"))
+            ]
+            if clock_broken:
+                # Broken 24h coverage must not be stored as a live plan.
+                tariff_issues.append(
+                    f"broken TOU clock coverage ({', '.join(clock_broken[:4])})"
+                )
+                log.info(
+                    f"    Rejecting '{t.name}' — broken TOU clocks: "
+                    f"{', '.join(clock_broken[:4])}"
+                )
+            elif not verdict.computable:
                 needs_review = True
                 log.info(
                     f"    Not computable '{t.name}': {', '.join(verdict.reasons[:6])}"
@@ -7181,9 +7622,10 @@ def _pick_live_row(rows: list):
 
 
 _EFFECTIVE_DATE_MIN = date(1990, 1, 1)
-# Rate books announce the next edition ahead of time; anything further out
-# is a misread (a docket number, a sunset date) that "newest wins" would pin.
-_EFFECTIVE_DATE_MAX_AHEAD_DAYS = 400
+# Rate books announce the next edition ahead of time. Allow up to ~3 years
+# so far-future rows can be stored and flagged for review (>12 months) rather
+# than silently dropped; anything beyond that is almost certainly a misread.
+_EFFECTIVE_DATE_MAX_AHEAD_DAYS = 1100
 
 
 def _parse_effective_date(raw, *, today: date | None = None) -> date | None:
@@ -7383,23 +7825,39 @@ def store_tariffs(
             )
             # Durable review flag (Phase 4 p95 band / unit auto-correction)
             # so suspicious rows are queryable, not just logged.
-            if getattr(et, "needs_review", False):
-                conf_factors = {**conf_factors, "needs_review": True}
             missing = list(getattr(et, "missing_fields", None) or [])
-            if missing:
-                conf_factors = {**conf_factors, "missing_fields": missing, "needs_review": True}
             riders_missing = list(getattr(et, "riders_referenced_not_shown", None) or [])
+            scope = str(getattr(et, "energy_scope", "") or "")
+            reasons = getattr(et, "completeness_reasons", None) or []
+            not_computable = list(getattr(et, "computable_reasons", None) or [])
+            # needs_review only for Mysa-critical problems — not bare
+            # effective_date / informational missing_fields.
+            review = bool(getattr(et, "needs_review", False)) and _is_mysa_critical_review_reason(
+                missing_fields=missing,
+                riders_missing=riders_missing,
+                completeness_reasons=list(reasons),
+                computable_reasons=not_computable,
+                energy_scope=scope,
+            )
+            if not review:
+                review = _is_mysa_critical_review_reason(
+                    missing_fields=missing,
+                    riders_missing=riders_missing,
+                    completeness_reasons=list(reasons),
+                    computable_reasons=not_computable,
+                    energy_scope=scope,
+                )
+            if review:
+                conf_factors = {**conf_factors, "needs_review": True}
+            if missing:
+                conf_factors = {**conf_factors, "missing_fields": missing}
             if riders_missing:
                 conf_factors = {
                     **conf_factors,
                     "riders_referenced_not_shown": riders_missing,
-                    "needs_review": True,
                 }
-            scope = str(getattr(et, "energy_scope", "") or "")
             if scope:
                 conf_factors = {**conf_factors, "energy_scope": scope}
-                if scope in ("delivery_only", "supply_only"):
-                    conf_factors = {**conf_factors, "needs_review": True}
             if getattr(et, "closed_to_new", False):
                 conf_factors = {**conf_factors, "closed_to_new": True}
             if getattr(et, "energy_includes_riders", None) is not None:
@@ -7408,21 +7866,23 @@ def store_tariffs(
                     "energy_includes_riders": bool(et.energy_includes_riders),
                 }
             # Future-dated extracts stay in the DB but are not served until
-            # their effective_date (see is_currently_effective / API filters).
+            # their effective_date. Near-term future (≤12 months) is normal
+            # (interim + coming TOU); farther out is flagged for review.
             if eff_date and eff_date > date.today():
-                conf_factors = {
-                    **conf_factors,
-                    "not_yet_effective": True,
-                    "needs_review": True,
-                }
-            reasons = getattr(et, "completeness_reasons", None) or []
+                days_ahead = (eff_date - date.today()).days
+                conf_factors = {**conf_factors, "not_yet_effective": True}
+                if days_ahead > 365:
+                    conf_factors = {
+                        **conf_factors,
+                        "needs_review": True,
+                        "effective_date_far_future": True,
+                    }
             if reasons:
                 conf_factors = {
                     **conf_factors,
                     "tou_seasonal_incomplete": True,
                     "tou_seasonal_incomplete_reasons": list(reasons),
                 }
-            not_computable = list(getattr(et, "computable_reasons", None) or [])
             if not_computable:
                 conf_factors = {**conf_factors, "extract_not_computable": not_computable}
 
