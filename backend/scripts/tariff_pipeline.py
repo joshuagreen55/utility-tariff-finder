@@ -3026,18 +3026,28 @@ def drop_superseded_flat_energy_vintages(
 
 
 def _is_optional_program_tariff(t: ExtractedTariff) -> bool:
-    """True when the whole extract is an optional add-on, not a base plan."""
-    blob = f"{t.name or ''} {t.description or ''} {t.code or ''}"
+    """True when the whole extract is an optional add-on, not a base plan.
+
+    ``Domestic … (Optional)`` / ``… Seasonal - Optional`` are enrollable
+    rate schedules with their own ENERGY — keep them. Drop only named
+    optional programmes (Green Future, net-metering Option I, PTR, …).
+    """
+    name = str(t.name or "")
+    blob = f"{name} {t.description or ''} {t.code or ''}"
     if not _OPTIONAL_OR_SCOPED_RIDER_RE.search(blob):
         return False
-    # Base residential plans that merely mention an optional rider in the
-    # description still have ENERGY as the standard price — keep them.
-    if _tariff_has_energy(t) and not re.search(
+    # Explicit optional-programme names always drop, even with ENERGY.
+    if re.search(
         r"\b(?:green\s+future|green\s+power|net[\s-]*meter|option\s+[ivx]+|"
-        r"peak[\s-]*time\s+rebate|\bptr\b|smartrate)\b",
-        str(t.name or ""),
+        r"peak[\s-]*time\s+rebate|\bptr\b|smartrate|avenir\s+vert|"
+        r"renewable\s+choice|community[\s-]*solar)\b",
+        name,
         re.IGNORECASE,
     ):
+        return True
+    # Bare "(Optional)" / "Optional" on a Domestic/Residential schedule is
+    # an enrollable rate class, not a credit folded into another plan.
+    if _tariff_has_energy(t):
         return False
     return True
 
@@ -3045,15 +3055,16 @@ def _is_optional_program_tariff(t: ExtractedTariff) -> bool:
 def strip_optional_program_components(t: ExtractedTariff) -> int:
     """Keep optional programmes out of the full billable ENERGY/FIXED price.
 
-    Per-kWh optional ADJUSTMENTs stay as audit rows with
-    ``included_in_energy=false``. Optional FIXED add-ons (Green Power
-    $5/mo) are dropped from the standard plan. ENERGY rows whose label is
-    an optional credit are demoted to ADJUSTMENT.
+    Match on **component labels only**. A rate schedule whose name ends in
+    ``(Optional)`` (NSP Domestic TOD 05/06, NL 1.1S) is a real base plan —
+    its Customer Charge and ENERGY must stay. Optional FIXED add-ons (Green
+    Power $5/mo) and ENERGY/ADJUSTMENT credits whose *row* label is optional
+    are stripped or demoted. Whole-tariff optional extracts (Green Future,
+    net-metering Option I) are dropped by ``_is_optional_program_tariff``.
     """
     comps = list(t.components or [])
     if not comps:
         return 0
-    tariff_name = str(t.name or "")
     kept: list[dict] = []
     removed = 0
     for c in comps:
@@ -3062,8 +3073,7 @@ def strip_optional_program_components(t: ExtractedTariff) -> int:
             continue
         ctype = str(c.get("component_type") or "").lower()
         label = " ".join(str(c.get(k) or "") for k in ("tier_label", "period_label", "season"))
-        blob = f"{tariff_name} {label}"
-        if not _OPTIONAL_OR_SCOPED_RIDER_RE.search(blob):
+        if not _OPTIONAL_OR_SCOPED_RIDER_RE.search(label):
             kept.append(c)
             continue
         if ctype == "adjustment" and _is_energy_unit(c.get("unit")):
@@ -3074,7 +3084,7 @@ def strip_optional_program_components(t: ExtractedTariff) -> int:
         if ctype == "fixed":
             removed += 1
             continue
-        if ctype == "energy" and _OPTIONAL_OR_SCOPED_RIDER_RE.search(label):
+        if ctype == "energy":
             row = dict(c)
             row["component_type"] = "adjustment"
             row["included_in_energy"] = False

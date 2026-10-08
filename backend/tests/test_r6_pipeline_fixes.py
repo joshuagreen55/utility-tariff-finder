@@ -174,6 +174,27 @@ class TestOptionalProgrammes(unittest.TestCase):
         _r, valid = tp.phase4_validate([opt], "Hydro-Quebec", "QC")
         self.assertEqual(valid, [])
 
+    def test_optional_rate_schedule_keeps_customer_charge(self):
+        """NSP Domestic TOD '(Optional)' is a base schedule — keep FIXED."""
+        et = tp.ExtractedTariff(
+            name="Domestic Service Time-Of-Day Tariff (Optional)",
+            code="05/06", customer_class="residential", rate_type="seasonal_tou",
+            components=[
+                {"component_type": "fixed", "unit": "$/month", "rate_value": 20.08,
+                 "tier_label": "Customer Charge"},
+                {"component_type": "energy", "unit": "¢/kWh", "rate_value": 25.188,
+                 "period_start_time": "07:00", "period_end_time": "12:00",
+                 "day_type": "weekday", "period_label": "On-Peak Morning"},
+            ],
+        )
+        self.assertFalse(tp._is_optional_program_tariff(et))
+        n = tp.strip_optional_program_components(et)
+        self.assertEqual(n, 0)
+        self.assertEqual(len(et.components), 2)
+        fixed = [c for c in et.components if c["component_type"] == "fixed"]
+        self.assertEqual(len(fixed), 1)
+        self.assertAlmostEqual(float(fixed[0]["rate_value"]), 20.08, places=2)
+
 
 class TestNeedsReviewCriticalOnly(unittest.TestCase):
     def test_effective_date_alone_not_critical(self):
