@@ -1,0 +1,213 @@
+{
+  "utility_id": 1742,
+  "utility_name": "Newfoundland and Labrador Hydro",
+  "state": "NL",
+  "phase3_tariffs": [
+    {
+      "name": "Rate No. 1.1 Domestic",
+      "code": "1.1",
+      "customer_class": "residential",
+      "rate_type": "flat",
+      "description": "Domestic service on the Island Interconnected System and L'Anse au Loup system; rate includes municipal tax and rate stabilization adjustments.",
+      "source_url": "https://nlhydro.com/wp-content/uploads/2026/07/Schedule-of-Rates-Rules-and-Regulations_Jul_2026.pdf",
+      "effective_date": "2026-07-01",
+      "components": [
+        {
+          "component_type": "fixed",
+          "unit": "$/month",
+          "rate_value": 17.36,
+          "tier_label": "Not exceeding 200 Amp service"
+        },
+        {
+          "component_type": "fixed",
+          "unit": "$/month",
+          "rate_value": 22.36,
+          "tier_label": "Exceeding 200 Amp service"
+        },
+        {
+          "component_type": "energy",
+          "unit": "\u00a2/kWh",
+          "rate_value": 15.587,
+          "tier_label": "All kWh (includes municipal tax and rate stabilization adjustments)"
+        }
+      ],
+      "confidence": 0.95,
+      "needs_review": false,
+      "completeness_reasons": [],
+      "computable_reasons": [],
+      "extraction_tier": "twopass",
+      "missing_fields": [],
+      "riders_referenced_not_shown": [],
+      "energy_scope": "bundled",
+      "closed_to_new": false,
+      "energy_includes_riders": true,
+      "empty_reason": "",
+      "linked_document_hint": ""
+    },
+    {
+      "name": "Rate No. 1.1S Domestic - Optional",
+      "code": "1.1S",
+      "customer_class": "residential",
+      "rate_type": "seasonal",
+      "description": "Optional seasonal adjustment to Rate 1.1 Domestic energy charges: winter premium and non-winter credit (billing months).",
+      "source_url": "https://nlhydro.com/wp-content/uploads/2026/07/Schedule-of-Rates-Rules-and-Regulations_Jul_2026.pdf",
+      "effective_date": "2026-07-01",
+      "components": [
+        {
+          "component_type": "adjustment",
+          "unit": "\u00a2/kWh",
+          "rate_value": 0.953,
+          "season": "Winter (billing months)",
+          "season_start_month": 12,
+          "season_start_day": 1,
+          "season_end_month": 4,
+          "season_end_day": 30,
+          "included_in_energy": false,
+          "rider_scope": "all_customers",
+          "period_label": "Winter Season Premium Adjustment"
+        },
+        {
+          "component_type": "adjustment",
+          "unit": "\u00a2/kWh",
+          "rate_value": -1.297,
+          "season": "Non-Winter (billing months)",
+          "season_start_month": 5,
+          "season_start_day": 1,
+          "season_end_month": 11,
+          "season_end_day": 30,
+          "included_in_energy": false,
+          "rider_scope": "all_customers",
+          "period_label": "Non-Winter Season Premium Adjustment"
+        }
+      ],
+      "confidence": 0.5,
+      "needs_review": true,
+      "completeness_reasons": [],
+      "computable_reasons": [],
+      "extraction_tier": "twopass",
+      "missing_fields": [
+        "Rate 1.1 Domestic base energy charge (not printed in content)",
+        "basic customer charge for Rate 1.1"
+      ],
+      "riders_referenced_not_shown": [
+        "Rate No. 1.1 Domestic energy charge"
+      ],
+      "energy_scope": "bundled",
+      "closed_to_new": false,
+      "energy_includes_riders": false,
+      "empty_reason": "",
+      "linked_document_hint": ""
+    },
+    {
+      "name": "Rate No. 1.2D Domestic Diesel",
+      "code": "1.2D",
+      "customer_class": "residential",
+      "rate_type": "seasonal_tiered",
+      "description": "Domestic diesel service for Island and Labrador diesel areas; block sizes vary by month; rates include municipal tax and rate stabilization adjustments.",
+      "source_url": "https://nlhydro.com/wp-content/uploads/2026/07/Schedule-of-Rates-Rules-and-Regulations_Jul_2026.pdf",
+      "effective_date": "2026-07-01",
+      "components": [
+        {
+          "component_type": "fixed",
+          "unit": "$/month",
+          "rate_value": 17.36,
+          "tier_label": "Basic Customer Charge"
+        },
+        {
+          "component_type": "fixed",
+          "unit": "$/month",
+          "rate_value": 22.36,
+          "tier_label": "Exceeding 200 Amp Service"
+        },
+        {
+          "component_type": "energy",
+          "unit": "\u00a2/kWh",
+          "rate_value": 15.587,
+          "tier_label": "First Block (Jan-Feb 1,000; Mar 900; Apr 900; May 800; Jun 800; Jul-Sep 700; Oct 800; Nov 900; Dec 1,000 kWh)",
+          "tier_basis": "month"
+        },
+        {
+          "component_type": "energy",
+          "unit": "\u00a2/kWh",
+          "rate_value": 17.213,
+          "tier_label": "Second Block (Jan-Feb 0; Mar 100; Apr 100; May 200; Jun 200; Jul-Sep 300; Oct 200; Nov 100; Dec 0 kWh) up to 1,000 kWh total",
+          "tier_basis": "month"
+        },
+        {
+          "component_type": "energy",
+          "unit": "\u00a2/kWh",
+          "rate_value": 23.341,
+          "tier_label": "All kWh over 1,000 kWh per month",
+          "tier_min_kwh": 1000,
+          "tier_basis": "month"
+        }
+      ],
+      "confidence": 0.85,
+      "needs_review": false,
+      "completeness_reasons": [],
+      "computable_reasons": [],
+      "extraction_tier": "twopass",
+      "missing_fields": [],
+      "riders_referenced_not_shown": [],
+      "energy_scope": "bundled",
+      "closed_to_new": false,
+      "energy_includes_riders": false,
+      "empty_reason": "",
+      "linked_document_hint": ""
+    },
+    {
+      "name": "Rate No. 1.2DS Domestic Diesel (Non-Government First Block) - Optional",
+      "code": "1.2DS",
+      "customer_class": "residential",
+      "rate_type": "seasonal",
+      "description": "Optional seasonal premium/credit adjustment to the Rate 1.2D Domestic Diesel first-block energy charge; the base 1.2D energy charge is not shown in the content.",
+      "source_url": "https://nlhydro.com/wp-content/uploads/2026/07/Schedule-of-Rates-Rules-and-Regulations_Jul_2026.pdf",
+      "effective_date": "2026-07-01",
+      "components": [
+        {
+          "component_type": "adjustment",
+          "unit": "\u00a2/kWh",
+          "rate_value": 0.953,
+          "included_in_energy": false,
+          "season": "Winter (billing months)",
+          "season_start_month": 12,
+          "season_start_day": 1,
+          "season_end_month": 4,
+          "season_end_day": 30,
+          "tier_label": "Winter Season Premium Adjustment, first block only, added to Rate 1.2D energy charge",
+          "rider_scope": "optional_program"
+        },
+        {
+          "component_type": "adjustment",
+          "unit": "\u00a2/kWh",
+          "rate_value": -1.297,
+          "included_in_energy": false,
+          "season": "Non-Winter (billing months)",
+          "season_start_month": 5,
+          "season_start_day": 1,
+          "season_end_month": 11,
+          "season_end_day": 30,
+          "tier_label": "Non-Winter Season Premium Adjustment, first block only, added to Rate 1.2D energy charge",
+          "rider_scope": "optional_program"
+        }
+      ],
+      "confidence": 0.6,
+      "needs_review": true,
+      "completeness_reasons": [],
+      "computable_reasons": [],
+      "extraction_tier": "twopass",
+      "missing_fields": [
+        "Rate 1.2D base energy charge (first block)"
+      ],
+      "riders_referenced_not_shown": [
+        "Rate No. 1.2D Domestic Diesel energy charge"
+      ],
+      "energy_scope": "bundled",
+      "closed_to_new": false,
+      "energy_includes_riders": false,
+      "empty_reason": "",
+      "linked_document_hint": ""
+    }
+  ],
+  "rider_extras": []
+}

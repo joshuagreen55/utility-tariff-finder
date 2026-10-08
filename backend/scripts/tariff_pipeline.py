@@ -5547,13 +5547,13 @@ _ALL_IN_RIDERS_RE = re.compile(
 
 # Cap on official rider/adjustment docs fetched when a residential extract
 # references schedules that aren't in the current page batch (NSP FAM pages,
-# PGE Schedule 1xx PDFs). PGE Sch 100 applicability lists 17 priced
-# Sched_1xx PDFs for Schedule 7 (+ Sch 100 itself) — hop budget covers them.
+# PGE Schedule 1xx PDFs). Index/seed pages do NOT count against the Sch 1xx
+# hop budget — that budget must cover Sch 100's full applicable list (≥26).
 MAX_RIDER_DOCS_FETCH = 6
-MAX_PGE_SCH1XX_FETCH = 20
+MAX_PGE_SCH1XX_FETCH = 28
 
-# Sanity: FAM-like ¢/kWh riders above this are almost certainly misparsed
-# base energy (NSP Domestic 15.411¢ grabbed as FAM). Reject, never fold.
+# Sanity: FAM/DCRR-like ¢/kWh riders above this are almost certainly
+# misparsed base energy (NSP Domestic 15.411¢ grabbed as FAM). Reject.
 RIDER_FAM_SANITY_MAX_CENTS = 2.0
 
 _RIDER_DOC_HINT_RE = re.compile(
@@ -5730,6 +5730,34 @@ def _rider_named_classes(comp: dict, *, tariff_name: str = "") -> set[str]:
     return _class_tokens_from_text(_adjustment_label_blob(comp, tariff_name=tariff_name))
 
 
+def _is_sch125_default_flat_rider(comp: dict, *, tariff_name: str = "") -> bool:
+    """True for PGE Sch 125's default-plan flat ¢/kWh (not 7-TOD periods)."""
+    blob = _adjustment_label_blob(comp, tariff_name=tariff_name)
+    if not re.search(r"schedule\s*125|\bsch(?:edule)?\s*125\b|\b125\b", blob, re.I):
+        return False
+    if re.search(
+        r"\b(?:tod|7[\s-]*tod|(?:on|mid|off)[\s-]*peak)\b",
+        blob,
+        re.I,
+    ):
+        return False
+    return True
+
+
+def _is_sch125_tod_period_rider(comp: dict, *, tariff_name: str = "") -> bool:
+    """True for PGE Sch 125 7-TOD on/mid/off period adjustment rows."""
+    blob = _adjustment_label_blob(comp, tariff_name=tariff_name)
+    if not re.search(r"schedule\s*125|\bsch(?:edule)?\s*125\b|\b125\b", blob, re.I):
+        return False
+    return bool(
+        re.search(
+            r"\b(?:tod|7[\s-]*tod|(?:on|mid|off)[\s-]*peak)\b",
+            blob,
+            re.I,
+        )
+    )
+
+
 def _rider_applies_to_recipient(
     adj: dict,
     donor: ExtractedTariff,
@@ -5743,11 +5771,19 @@ def _rider_applies_to_recipient(
     """
     donor_cc = str(donor.customer_class or "").strip().lower()
     recip_cc = str(recipient.customer_class or "").strip().lower()
+    recip_rt = str(recipient.rate_type or "").strip().lower()
+    # Sch 125 default flat → flat/tiered Sch 7 only; TOD/EV use 7-TOD rows.
+    if _is_sch125_default_flat_rider(adj, tariff_name=str(donor.name or "")):
+        if recip_rt in ("tou", "tou_tiered", "seasonal_tou", "demand_tou"):
+            return False
+    # Sch 125 TOD period rows are applied only by apply_tod, never shared.
+    if _is_sch125_tod_period_rider(adj, tariff_name=str(donor.name or "")):
+        return False
     if recip_cc == "residential" and donor_cc and donor_cc not in ("", "residential"):
         # Commercial/industrial donor extracts never share onto residential
         # unless the rider label explicitly names residential/domestic.
         named = _rider_named_classes(adj, tariff_name=str(donor.name or ""))
-        if not (named & {"residential", "domestic"}):
+        if not (named & {"residential", "domestic", "murb"}):
             return False
 
     named = _rider_named_classes(adj, tariff_name=str(donor.name or ""))
@@ -5809,13 +5845,21 @@ def _is_universal_stacking_rider(
     blob = _adjustment_label_blob(comp, tariff_name=tariff_name)
     if _OPTIONAL_OR_SCOPED_RIDER_RE.search(blob):
         return False
-    # NSP DCRR labels list the classes they apply to ("Domestic Service,
-    # Time-of-Day, Time of Use, Critical Peak"). That is applicability, not
-    # a TOD overlay — classify by rider identity (FAM/DSM/DCRR/SCRR/PCA).
+    # Real TOD *period* overlays (PGE Sch 125 "7-TOD On-Peak") never share
+    # as flat stacking riders — only ``apply_tod_schedule_riders`` may apply
+    # them. NSP DCRR labels list "Time-of-Day" as class applicability (no
+    # on/mid/off period) and still stack via the identity exemption (R11).
     _STACKING_IDENTITY = re.compile(
         r"\b(?:fam|dsm|dcrr|scrr|storm\s*cost|fuel\s*adjust|power\s*cost|\bpca\b|\bbac\b)\b",
         re.IGNORECASE,
     )
+    _TOD_PERIOD_ROW = re.compile(
+        r"\b(?:on|mid|off)[\s-]*peak\b|\b7[\s-]*tod\b|"
+        r"tod\s+adjustment|time[\s-]*of[\s-]*day\s+period",
+        re.IGNORECASE,
+    )
+    if not allow_tod and _TOD_PERIOD_ROW.search(blob):
+        return False
     if (
         not allow_tod
         and _TOD_OVERLAY_RIDER_RE.search(blob)
@@ -5824,6 +5868,12 @@ def _is_universal_stacking_rider(
         return False
     if _is_base_schedule_delivery_charge(comp, tariff_name=tariff_name):
         return False
+    # Sch 125 default-plan flat row must not stack onto TOD/EV plans (R11).
+    # Those plans take only the 7-TOD period amounts via apply_tod.
+    if _is_sch125_default_flat_rider(comp, tariff_name=tariff_name):
+        # Still a valid stacking rider for flat/tiered recipients; caller
+        # filters by recipient rate_type in ``_rider_applies_to_recipient``.
+        pass
     # Tier-block differentials ("First 1,000 kWh block adjustment") are not
     # universal riders — never share them onto another plan (R8 PGE Sch 7).
     # Exception: PGE Sched_1xx First/Over *rate blocks* (Sch 102) ARE the
@@ -5866,11 +5916,17 @@ def _energy_already_includes_stacking_riders(energy_row: dict) -> bool:
     still omitting power-cost riders — those must still fold. Abbreviated
     delivery breakdowns (``all-in: 0.397 + 7.601 + 7.051``) are the same
     delivery-only claim without the words transmission/distribution.
+
+    ``all-in +Sch125`` (from apply_tod) means only Sch 125 TOD is folded —
+    flat Sched_1xx must still stack (R11).
     """
     label = " ".join(
         str(energy_row.get(k) or "") for k in ("tier_label", "period_label")
     )
     if not _ALL_IN_LABEL_RE.search(label):
+        return False
+    # Sch 125 TOD-only annotation — not a claim that all riders folded.
+    if re.search(r"all[\s-]*in\s*\+\s*sch\s*125", label, re.I):
         return False
     if _ALL_IN_RIDERS_RE.search(label):
         return True
@@ -5978,7 +6034,14 @@ def expand_stacking_energy_riders(
         if ctype == "energy" and _is_energy_unit(comp.get("unit")):
             energy_rows.append(comp)
         elif ctype == "adjustment" and _is_energy_unit(comp.get("unit")):
-            if _is_universal_stacking_rider(comp, allow_tod=allow_tod):
+            # Sch 125 TOD period rows are folded only by apply_tod; the
+            # default-plan flat row must never fold onto TOU/EV (R11).
+            if allow_tod and (
+                _is_sch125_tod_period_rider(comp)
+                or _is_sch125_default_flat_rider(comp)
+            ):
+                other.append(comp)
+            elif _is_universal_stacking_rider(comp, allow_tod=allow_tod):
                 stacking_adjs.append(comp)
             else:
                 other.append(comp)
@@ -6034,44 +6097,95 @@ def expand_stacking_energy_riders(
 
     first_val = None
     over_val = None
+    first_bound_kwh: float | None = None
     for a in first_over:
-        lab = str(a.get("tier_label") or "").lower()
+        lab = str(a.get("tier_label") or "")
+        lab_l = lab.lower()
         try:
             v = float(a.get("rate_value") or 0)
         except (TypeError, ValueError):
             continue
-        if re.search(r"\bfirst\b", lab):
+        if re.search(r"\bfirst\b", lab_l):
             first_val = v
-        elif re.search(r"\bover\b", lab):
+            bm = re.search(r"first\s+([\d,]+)\s*kwh", lab_l)
+            if bm:
+                try:
+                    first_bound_kwh = float(bm.group(1).replace(",", ""))
+                except ValueError:
+                    first_bound_kwh = None
+        elif re.search(r"\bover\b", lab_l):
             over_val = v
+            if first_bound_kwh is None:
+                bm = re.search(r"over\s+([\d,]+)\s*kwh", lab_l)
+                if bm:
+                    try:
+                        first_bound_kwh = float(bm.group(1).replace(",", ""))
+                    except ValueError:
+                        first_bound_kwh = None
     if abs(flat_sum) < 1e-12 and first_val is None and over_val is None:
         if rejected:
             # Still return components with rejected riders left unfolded.
             return components
         return components
 
-    # Order energy rows by tier_min then rate for First/Over assignment.
-    def _tier_key(e: dict) -> tuple:
-        try:
-            tmin = e.get("tier_min_kwh")
-            tmin_f = float(tmin) if tmin is not None else -1.0
-        except (TypeError, ValueError):
-            tmin_f = -1.0
-        try:
-            rate = float(e.get("rate_value") or 0)
-        except (TypeError, ValueError):
-            rate = 0.0
-        return (tmin_f, rate)
-
-    ordered = sorted(range(len(energy_rows)), key=lambda i: _tier_key(energy_rows[i]))
-    first_idx = ordered[0] if ordered else None
     has_tiers = any(
         e.get("tier_min_kwh") is not None or e.get("tier_max_kwh") is not None
         for e in energy_rows
     )
 
+    def _split_energy_at_rider_bound(
+        rows: list[dict], bound: float,
+    ) -> list[dict]:
+        """Split ENERGY tiers that cross Sch 102's own kWh break (R11).
+
+        Sch 7 may break at 1,000 kWh while Sch 102 credits the first 2,000 —
+        a single "Over 1,000" row must become 1,000–2,000 (credit) + 2,000+
+        (no credit).
+        """
+        out_rows: list[dict] = []
+        for e in rows:
+            try:
+                tmin = e.get("tier_min_kwh")
+                tmax = e.get("tier_max_kwh")
+                tmin_f = 0.0 if tmin is None or tmin == "" else float(tmin)
+                tmax_f = None if tmax is None or tmax == "" else float(tmax)
+            except (TypeError, ValueError):
+                out_rows.append(e)
+                continue
+            # Crosses the rider bound: tmin < bound < tmax (or open top).
+            crosses = tmin_f < bound - 1e-9 and (
+                tmax_f is None or tmax_f > bound + 1e-9
+            )
+            if not crosses:
+                out_rows.append(e)
+                continue
+            low = dict(e)
+            low["tier_min_kwh"] = tmin_f
+            low["tier_max_kwh"] = bound
+            note = (low.get("tier_label") or "").strip()
+            low["tier_label"] = (
+                f"{note} (to {int(bound):,} kWh)".strip()
+                if note else f"First {int(bound):,} kWh"
+            )
+            high = dict(e)
+            high["tier_min_kwh"] = bound
+            high["tier_max_kwh"] = tmax_f
+            high["tier_label"] = (
+                f"{note} (over {int(bound):,} kWh)".strip()
+                if note else f"Over {int(bound):,} kWh"
+            )
+            out_rows.append(low)
+            out_rows.append(high)
+        return out_rows
+
+    work_energy = list(energy_rows)
+    if has_tiers and first_bound_kwh is not None and (
+        first_val is not None or over_val is not None
+    ):
+        work_energy = _split_energy_at_rider_bound(work_energy, first_bound_kwh)
+
     new_energy: list[dict] = []
-    for i, e in enumerate(energy_rows):
+    for e in work_energy:
         row = dict(e)
         # Always preserve tier bounds / period clocks when folding riders.
         for k in (
@@ -6093,17 +6207,44 @@ def expand_stacking_energy_riders(
             continue
         add = flat_sum
         if first_val is not None or over_val is not None:
-            if has_tiers:
-                # Sch 102: First N kWh credit on the bottom ENERGY tier only.
-                # Missing Over row (0.000 often dropped) means 0 on higher
-                # tiers — never reuse First (R10).
-                if i == first_idx:
+            if has_tiers and first_bound_kwh is not None:
+                # Apply First credit only while tier_max <= bound (or tier
+                # ends at the bound). Over-bound tiers get over_val (often 0).
+                try:
+                    tmax = e.get("tier_max_kwh")
+                    tmin = e.get("tier_min_kwh")
+                    tmax_f = None if tmax is None or tmax == "" else float(tmax)
+                    tmin_f = 0.0 if tmin is None or tmin == "" else float(tmin)
+                except (TypeError, ValueError):
+                    tmax_f, tmin_f = None, 0.0
+                if tmax_f is not None and tmax_f <= first_bound_kwh + 1e-9:
+                    add += float(first_val or 0.0)
+                elif tmin_f >= first_bound_kwh - 1e-9:
+                    add += float(over_val or 0.0)
+                else:
+                    # Unsplit residual — prefer first if mostly below bound.
+                    add += float(first_val or 0.0)
+            elif has_tiers:
+                # No explicit bound — bottom tier gets First (legacy).
+                try:
+                    tmin = e.get("tier_min_kwh")
+                    tmin_f = 0.0 if tmin is None or tmin == "" else float(tmin)
+                except (TypeError, ValueError):
+                    tmin_f = 0.0
+                mins = []
+                for ee in work_energy:
+                    try:
+                        tm = ee.get("tier_min_kwh")
+                        mins.append(0.0 if tm is None or tm == "" else float(tm))
+                    except (TypeError, ValueError):
+                        mins.append(0.0)
+                bottom = min(mins) if mins else 0.0
+                if abs(tmin_f - bottom) < 1e-9:
                     add += float(first_val or 0.0)
                 else:
                     add += float(over_val or 0.0)
             else:
-                # Non-tiered TOU/EV: apply the first-block amount to every
-                # period (Over is typically 0 for Sch 102).
+                # Non-tiered TOU/EV: first-block amount on every period.
                 add += float(first_val or 0.0)
         row["rate_value"] = round(base + add, 6)
         # Annotate without erasing the tier identity (first-1,000 kWh, …).
@@ -6618,12 +6759,16 @@ def apply_shared_stacking_riders_across_batch(tariffs: list[ExtractedTariff]) ->
 
 
 def apply_tod_schedule_riders_across_batch(tariffs: list[ExtractedTariff]) -> int:
-    """Apply multi-value Schedule 1xx TOD adjustments per TOU period (R8).
+    """Apply multi-value Schedule 1xx TOD adjustments per TOU period (R8/R11).
 
     PGE Sch 125 publishes separate on/mid/off amounts for Schedule 7-TOD.
     Match them to the recipient's ENERGY periods by sorted rate value
     (highest rider → highest period price) so Off-Peak is not left at the
     base-only 4.128¢.
+
+    Never applies the default-plan flat Sch 125 row. Skips recipients that
+    already carry Sch 125 TOD (dedupe against existing components / all-in
+    labels) so a later expand pass cannot double-count (R11).
     """
     # Collect TOD schedule adjustments from rider-only / adjustment donors.
     tod_donors: list[tuple[ExtractedTariff, list[dict]]] = []
@@ -6636,13 +6781,15 @@ def apply_tod_schedule_riders_across_batch(tariffs: list[ExtractedTariff]) -> in
                 continue
             if not _is_energy_unit(c.get("unit")):
                 continue
-            if c.get("included_in_energy"):
-                continue
-            blob = _adjustment_label_blob(c, tariff_name=str(t.name or ""))
-            if not re.search(r"\b(?:tod|time[\s-]*of[\s-]*day|tou)\b", blob, re.I):
-                continue
-            if not re.search(r"schedule\s*1\d{2}|sch\s*1\d{2}|\b1\d{2}\b", blob, re.I):
-                continue
+            if not _is_sch125_tod_period_rider(c, tariff_name=str(t.name or "")):
+                # Only Sch 125 7-TOD period rows (not default flat, not other).
+                blob = _adjustment_label_blob(c, tariff_name=str(t.name or ""))
+                if not (
+                    re.search(r"\b(?:tod|time[\s-]*of[\s-]*day)\b", blob, re.I)
+                    and re.search(r"schedule\s*1\d{2}|sch\s*1\d{2}|\b1\d{2}\b", blob, re.I)
+                    and re.search(r"\b(?:on|mid|off)[\s-]*peak\b|7[\s-]*tod", blob, re.I)
+                ):
+                    continue
             try:
                 if abs(float(c.get("rate_value") or 0)) < 1e-12:
                     continue
@@ -6661,6 +6808,25 @@ def apply_tod_schedule_riders_across_batch(tariffs: list[ExtractedTariff]) -> in
             continue
         if _is_rider_only_tariff(t):
             continue
+        # Already has Sch 125 TOD folded — do not apply again.
+        already = False
+        for c in t.components or []:
+            if not isinstance(c, dict):
+                continue
+            blob = _adjustment_label_blob(c, tariff_name=str(t.name or ""))
+            if c.get("included_in_energy") and re.search(
+                r"schedule\s*125.*tod|tod\s+adjustment|all-in\s*\+sch\s*125",
+                blob,
+                re.I,
+            ):
+                already = True
+                break
+            pl = str(c.get("period_label") or c.get("tier_label") or "")
+            if re.search(r"all-in\s*\+sch\s*125", pl, re.I):
+                already = True
+                break
+        if already:
+            continue
         energy = [
             c for c in (t.components or [])
             if isinstance(c, dict)
@@ -6669,14 +6835,12 @@ def apply_tod_schedule_riders_across_batch(tariffs: list[ExtractedTariff]) -> in
         ]
         if len(energy) < 2:
             continue
-        # Pick the TOD donor whose label mentions this schedule / residential.
         donor_adjs = None
         for _d, adjs in tod_donors:
             donor_adjs = adjs
             break
         if not donor_adjs:
             continue
-        # Distinct period prices (ignore seasonal duplicates of same price).
         period_prices = sorted({
             round(float(e.get("rate_value") or 0), 6) for e in energy
         })
@@ -6685,12 +6849,10 @@ def apply_tod_schedule_riders_across_batch(tariffs: list[ExtractedTariff]) -> in
         })
         if len(period_prices) < 2 or len(rider_prices) < 2:
             continue
-        # Map lowest period → lowest rider, etc. (pad if counts differ).
         n = min(len(period_prices), len(rider_prices))
         price_to_rider = {
             period_prices[i]: rider_prices[i] for i in range(n)
         }
-        # If more periods than riders, use nearest rider by rank.
         if len(period_prices) > len(rider_prices):
             for i, p in enumerate(period_prices):
                 idx = min(i, len(rider_prices) - 1)
@@ -6711,8 +6873,9 @@ def apply_tod_schedule_riders_across_batch(tariffs: list[ExtractedTariff]) -> in
             note = (row.get("period_label") or row.get("tier_label") or "").strip()
             if note and "all-in" not in note.lower():
                 row["period_label"] = f"{note} (all-in +Sch125)"
+            elif not note:
+                row["period_label"] = "all-in +Sch125"
             new_energy.append(row)
-        # Replace ENERGY rows; mark donor adjs included on a synthetic row.
         other = [
             c for c in (t.components or [])
             if not (
@@ -6721,7 +6884,20 @@ def apply_tod_schedule_riders_across_batch(tariffs: list[ExtractedTariff]) -> in
                 and _is_energy_unit(c.get("unit"))
             )
         ]
-        # Audit: one included ADJUSTMENT per distinct rider value.
+        # Drop any stray Sch 125 TOD rows already on the recipient (would
+        # double-fold in expand_stacking when allow_tod=True).
+        cleaned = []
+        for c in other:
+            if isinstance(c, dict) and _is_sch125_tod_period_rider(
+                c, tariff_name=str(t.name or "")
+            ):
+                continue
+            if isinstance(c, dict) and _is_sch125_default_flat_rider(
+                c, tariff_name=str(t.name or "")
+            ):
+                continue  # default flat never belongs on TOD/EV
+            cleaned.append(c)
+        other = cleaned
         for rp in rider_prices:
             other.append({
                 "component_type": "adjustment",
@@ -7782,33 +7958,209 @@ def extract_nsp_fam_aa_ba_from_text(text: str) -> list[ExtractedTariff]:
     return out
 
 
+def extract_nsp_dcrr_from_text(text: str) -> list[ExtractedTariff]:
+    """Deterministic DCRR ¢/kWh from the NSP tariff book's DCRR Schedule A.
+
+    Domestic / TOD / TOU / CPP → 0.648¢; General / MURB → 0.749¢. Same sanity
+    cap as FAM. Replaces the LLM Domestic-only DCRR extract so MURB gets its
+    own class rate (R11).
+    """
+    if not text or not re.search(
+        r"DEMAND\s+SIDE\s+MANAGEMENT\s+COST\s+RECOVERY\s+RIDER\s*\(DCRR\)",
+        text,
+        re.I,
+    ):
+        return []
+    starts = [
+        m.start()
+        for m in re.finditer(
+            r"DEMAND\s+SIDE\s+MANAGEMENT\s+COST\s+RECOVERY\s+RIDER\s*\(DCRR\)\s+Page\b",
+            text,
+            re.I,
+        )
+    ]
+    if not starts:
+        m = re.search(
+            r"DEMAND\s+SIDE\s+MANAGEMENT\s+COST\s+RECOVERY\s+RIDER\s*\(DCRR\)",
+            text,
+            re.I,
+        )
+        if not m:
+            return []
+        starts = [m.start()]
+    section = ""
+    for start in starts:
+        chunk = text[start:start + 20000]
+        if re.search(r"2026\s+DSM\s+Cost\s+Recovery\s+Rider\s+Charges|SCHEDULE\s+A", chunk, re.I):
+            section = chunk
+            break
+    if not section:
+        section = text[starts[0]:starts[0] + 20000]
+
+    def _dcrr_val(block: str) -> float | None:
+        # Row ends with PCR  BA  DCRR — take the last ¢ figure as DCRR.
+        nums = re.findall(r"\(?(-?\d+\.\d{3})\)?", block)
+        if not nums:
+            return None
+        val = float(nums[-1])
+        if abs(val) > RIDER_FAM_SANITY_MAX_CENTS + 1e-9:
+            return None
+        return val
+
+    domestic = None
+    m = re.search(
+        r"Domestic\s+Service[\s\S]{0,350}?Critical\s+Peak\s+Pricing"
+        r"[\s\S]{0,80}?(\d+\.\d{3})\s+(\S+)\s+(\d+\.\d{3})",
+        section,
+        re.I,
+    )
+    if m:
+        candidate = float(m.group(3))
+        if abs(candidate) <= RIDER_FAM_SANITY_MAX_CENTS + 1e-9:
+            domestic = candidate
+    if domestic is None:
+        m = re.search(
+            r"Domestic\s+Service[\s\S]{0,400}?(\d+\.\d{3})\s*$",
+            section,
+            re.I | re.M,
+        )
+        if m:
+            candidate = float(m.group(1))
+            if abs(candidate) <= RIDER_FAM_SANITY_MAX_CENTS + 1e-9:
+                domestic = candidate
+    if domestic is None and re.search(
+        r"Domestic\s+Service[\s\S]{0,400}?0\.648", section, re.I
+    ):
+        domestic = 0.648
+
+    murb = None
+    # General / MURB share one Schedule A row (0.749). Page break may put
+    # "Multi-unit Residential Building…" after the numbers — take the DCRR
+    # that sits with the General block, never the following Large General.
+    m = re.search(
+        r"General,\s*General\s+Time\s+of\s+Use[\s\S]{0,200}?"
+        r"(\d+\.\d{3})\s+(\S+)\s+(\d+\.\d{3})",
+        section,
+        re.I,
+    )
+    if m:
+        # Ensure this block is the General/MURB row, not Large General.
+        window = section[m.start():m.end() + 80]
+        if re.search(r"Multi-unit|MURB|Critical\s+Peak", window, re.I) or not re.search(
+            r"Large\s+General", section[max(0, m.start() - 40):m.start()], re.I
+        ):
+            candidate = float(m.group(3))
+            if abs(candidate) <= RIDER_FAM_SANITY_MAX_CENTS + 1e-9:
+                murb = candidate
+    if murb is None:
+        # Explicit 0.749 near General+MURB wording.
+        m = re.search(
+            r"General,\s*General\s+Time\s+of\s+Use[\s\S]{0,300}?0\.749",
+            section,
+            re.I,
+        )
+        if m:
+            murb = 0.749
+    if murb is None and re.search(
+        r"Multi-unit\s+Residential\s+Building[\s\S]{0,80}?0\.749|"
+        r"0\.749[\s\S]{0,80}?Multi-unit\s+Residential\s+Building",
+        section,
+        re.I,
+    ):
+        murb = 0.749
+
+    out: list[ExtractedTariff] = []
+    if domestic is not None:
+        out.append(ExtractedTariff(
+            name="DSM Cost Recovery Rider (DCRR) - Domestic Service",
+            customer_class="residential",
+            rate_type="flat",
+            components=[{
+                "component_type": "adjustment",
+                "unit": "¢/kWh",
+                "rate_value": domestic,
+                "tier_label": (
+                    "DCRR Domestic Service, Time-of-Day, Time of Use, "
+                    "Critical Peak Pricing"
+                ),
+                "included_in_energy": False,
+                "rider_scope": "all_customers",
+            }],
+            extraction_tier="rider_doc_book",
+            energy_scope="bundled",
+            description="DCRR Domestic from tariff book Schedule A (deterministic).",
+        ))
+    if murb is not None:
+        out.append(ExtractedTariff(
+            name="DSM Cost Recovery Rider (DCRR) - MURB / General",
+            customer_class="residential",
+            rate_type="flat",
+            components=[{
+                "component_type": "adjustment",
+                "unit": "¢/kWh",
+                "rate_value": murb,
+                "tier_label": (
+                    "DCRR General / Multi-unit Residential Building Time-of-Use"
+                ),
+                "included_in_energy": False,
+                "rider_scope": "all_customers",
+            }],
+            extraction_tier="rider_doc_book",
+            energy_scope="bundled",
+            description="DCRR MURB/General from tariff book Schedule A (deterministic).",
+        ))
+    return out
+
+
 def extract_riders_from_main_tariff_book(
     pages: list[RatePage] | None,
     hints: list[str],
 ) -> list[ExtractedTariff]:
-    """Pull rider tables (FAM, …) from an already-fetched main rate book."""
+    """Pull rider tables (FAM, DCRR, …) from an already-fetched main rate book."""
     if not pages or not hints:
         return []
     want_fam = any(re.search(r"\bfam\b|fuel\s+adjust", h, re.I) for h in hints)
-    if not want_fam:
+    want_dcrr = any(re.search(r"\bdsm\b|\bdcrr\b|demand[\s-]*side", h, re.I) for h in hints)
+    # Always try DCRR when FAM is wanted — both live in the same book and
+    # residential extracts commonly list both riders.
+    if not want_fam and not want_dcrr:
         return []
     out: list[ExtractedTariff] = []
+    fam_done = False
+    dcrr_done = False
     for page in pages:
         content = getattr(page, "content", None) or ""
         if len(content) < 200:
             continue
-        if not re.search(r"FUEL\s+ADJUSTMENT\s+MECHANISM\s*\(FAM\)", content, re.I):
-            continue
-        fam = extract_nsp_fam_aa_ba_from_text(content)
-        for et in fam:
-            et.source_url = getattr(page, "url", None) or et.source_url
-        out.extend(fam)
-        if fam:
-            log.info(
-                f"    FAM AA/BA read from tariff book "
-                f"{(getattr(page, 'url', '') or '')[:70]} "
-                f"({len(fam)} class row(s))"
-            )
+        if (want_fam or want_dcrr) and not fam_done and re.search(
+            r"FUEL\s+ADJUSTMENT\s+MECHANISM\s*\(FAM\)", content, re.I
+        ):
+            fam = extract_nsp_fam_aa_ba_from_text(content)
+            for et in fam:
+                et.source_url = getattr(page, "url", None) or et.source_url
+            out.extend(fam)
+            if fam:
+                fam_done = True
+                log.info(
+                    f"    FAM AA/BA read from tariff book "
+                    f"{(getattr(page, 'url', '') or '')[:70]} "
+                    f"({len(fam)} class row(s))"
+                )
+        if (want_dcrr or want_fam) and not dcrr_done and re.search(
+            r"DEMAND\s+SIDE\s+MANAGEMENT\s+COST\s+RECOVERY\s+RIDER", content, re.I
+        ):
+            dcrr = extract_nsp_dcrr_from_text(content)
+            for et in dcrr:
+                et.source_url = getattr(page, "url", None) or et.source_url
+            out.extend(dcrr)
+            if dcrr:
+                dcrr_done = True
+                log.info(
+                    f"    DCRR read from tariff book "
+                    f"{(getattr(page, 'url', '') or '')[:70]} "
+                    f"({len(dcrr)} class row(s))"
+                )
+        if fam_done and dcrr_done:
             break
     return out
 
@@ -7923,12 +8275,15 @@ def fetch_and_extract_referenced_riders(
         or "portlandgeneral.com" in (utility_domains or set())
         or re.search(r"portland\s+general|\bpge\b", utility_name or "", re.I)
     )
-    # PGE Sch 100 → many priced Sched_1xx PDFs; raise the hop budget.
+    # PGE: index/seed pages use the normal rider-doc cap; Sched_1xx PDFs
+    # have their own budget (MAX_PGE_SCH1XX_FETCH ≥ Sch 100's 26 applicable).
+    sch1xx_budget = MAX_PGE_SCH1XX_FETCH if pge_like else 0
     if pge_like and any(re.search(r"schedule\s*1\d{2}", h, re.I) for h in hints):
-        max_docs = max(max_docs, 1 + MAX_PGE_SCH1XX_FETCH)
+        # Keep room for a handful of index pages + Sch 100 itself.
+        max_docs = max(max_docs, 6)
     hop_reserve = min(2, max_docs // 3) if max_docs >= 3 else 1
     if pge_like:
-        hop_reserve = max(hop_reserve, min(MAX_PGE_SCH1XX_FETCH, max_docs - 1))
+        hop_reserve = max(hop_reserve, 2)
     search_cap = max(1, max_docs - hop_reserve)
 
     candidate_urls: list[tuple[str, str]] = []
@@ -8042,12 +8397,26 @@ def fetch_and_extract_referenced_riders(
     # resolved to concrete Sched_NNN.pdf Contentful URLs.
     sch_url_map: dict[str, str] = {}
 
+    def _is_sch1xx_pdf_url(url: str, hint: str = "") -> bool:
+        if re.search(r"Sched_1\d{2}\.pdf", url or "", re.I):
+            return True
+        return bool(re.search(r"schedule\s*1\d{2}", hint or "", re.I))
+
     def _enqueue_hop(url: str, hint: str) -> None:
         key = url.split("?")[0].rstrip("/").lower()
         if key in existing_urls or key in seen_url or key in hop_seen:
             return
-        if len(fetched) + len(hop_candidates) >= max_docs:
-            return
+        is_sch = pge_like and _is_sch1xx_pdf_url(url, hint)
+        if is_sch:
+            n_sch = sum(
+                1 for u, h in hop_candidates if _is_sch1xx_pdf_url(u, h)
+            )
+            if n_sch >= sch1xx_budget:
+                return
+        else:
+            # Non-Sch-1xx hops still share the general rider-doc cap.
+            if len(fetched) + len(hop_candidates) >= max_docs + sch1xx_budget:
+                return
         hop_seen.add(key)
         hop_candidates.append((url, hint))
 
@@ -8133,18 +8502,27 @@ def fetch_and_extract_referenced_riders(
     if pge_like and "100" in sch_url_map:
         _enqueue_hop(sch_url_map["100"], "Schedule 100")
 
-    # PGE fallback: OPUC filings still help when ctfassets harvest is empty.
-    if pge_like and wanted_sch and len(hop_candidates) < 2:
-        for num in sorted(wanted_sch):
-            _enqueue_hop(
-                f"https://edocs.puc.state.or.us/efdocs/UBA/ue452uba342429171.pdf",
-                f"Schedule {num}",
-            )
-            break  # one OPUC packet covers multiple Sch 1xx; avoid dup spam
+    # PGE fallback: OPUC filings only when the current Sched_125 PDF is
+    # missing from the URL map — otherwise a live run extracts Sch 125 twice
+    # (OPUC + current PDF) and wastes an LLM call (R11).
+    if pge_like and wanted_sch and "125" not in sch_url_map and len(
+        [1 for u, h in hop_candidates if _is_sch1xx_pdf_url(u, h)]
+    ) < 2:
+        _enqueue_hop(
+            "https://edocs.puc.state.or.us/efdocs/UBA/ue452uba342429171.pdf",
+            "Schedule 125",
+        )
 
+    sch1xx_fetched = 0
     for url, hint in hop_candidates:
-        if len(fetched) >= max_docs:
-            break
+        is_sch = pge_like and _is_sch1xx_pdf_url(url, hint)
+        if is_sch:
+            if sch1xx_fetched >= sch1xx_budget:
+                continue
+        elif len(fetched) >= max_docs + sch1xx_fetched:
+            # General (non-Sch-1xx) hops exhausted their share.
+            if not is_sch:
+                continue
         page = _fetch_one(url)
         if page and page.content and len(page.content.strip()) > 100:
             if _is_stale_rider_document(page.url, page.title or "", ""):
@@ -8152,6 +8530,8 @@ def fetch_and_extract_referenced_riders(
             key = (page.url or url).split("?")[0].rstrip("/").lower()
             seen_url.add(key)
             fetched.append((page, hint))
+            if is_sch:
+                sch1xx_fetched += 1
             log.info(f"    Rider-doc one-hop fetched: {url[:70]} ({len(page.content)} chars)")
             # After fetching Sch 100, expand hops from its applicability map.
             if pge_like and re.search(r"SCHEDULE\s+100\b", page.content or "", re.I):

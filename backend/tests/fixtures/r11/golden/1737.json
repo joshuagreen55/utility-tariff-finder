@@ -1,0 +1,356 @@
+{
+  "utility_id": 1737,
+  "utility_name": "Hydro-Qu\u00e9bec",
+  "state": "QC",
+  "phase3_tariffs": [
+    {
+      "name": "Rate D",
+      "code": "D",
+      "customer_class": "residential",
+      "rate_type": "tiered",
+      "description": "Domestic Rate D: system access charge per day plus two-tier energy price based on 40 kWh per day in the consumption period.",
+      "source_url": "https://www.hydroquebec.com/data/documents-donnees/pdf/electricity-rates.pdf?v=20261001",
+      "effective_date": "",
+      "components": [
+        {
+          "component_type": "fixed",
+          "unit": "\u00a2/day",
+          "rate_value": 46.154,
+          "period_label": "system access charge"
+        },
+        {
+          "component_type": "energy",
+          "unit": "\u00a2/kWh",
+          "rate_value": 7.065,
+          "tier_label": "up to 40 kWh x number of days in consumption period",
+          "tier_min_kwh": 0,
+          "tier_max_kwh": 40,
+          "tier_basis": "day"
+        },
+        {
+          "component_type": "energy",
+          "unit": "\u00a2/kWh",
+          "rate_value": 11.142,
+          "tier_label": "remaining consumption above 40 kWh per day",
+          "tier_min_kwh": 40,
+          "tier_max_kwh": null,
+          "tier_basis": "day"
+        }
+      ],
+      "confidence": 0.85,
+      "needs_review": true,
+      "completeness_reasons": [],
+      "computable_reasons": [],
+      "extraction_tier": "twopass",
+      "missing_fields": [
+        "effective date",
+        "credit for supply amount (Article 12.3)"
+      ],
+      "riders_referenced_not_shown": [
+        "Credit for supply (Article 12.3)"
+      ],
+      "energy_scope": "bundled",
+      "closed_to_new": false,
+      "energy_includes_riders": false,
+      "empty_reason": "",
+      "linked_document_hint": ""
+    },
+    {
+      "name": "Rate DP",
+      "code": "DP",
+      "customer_class": "residential",
+      "rate_type": "complex",
+      "description": "Domestic Rate DP for dwellings with maximum power demand of at least 50 kW; tiered energy plus seasonal demand charge.",
+      "source_url": "https://www.hydroquebec.com/data/documents-donnees/pdf/electricity-rates.pdf?v=20261001",
+      "effective_date": "",
+      "components": [
+        {
+          "component_type": "energy",
+          "unit": "\u00a2/kWh",
+          "rate_value": 6.878,
+          "tier_label": "first 1,200 kWh per monthly period",
+          "tier_min_kwh": 0,
+          "tier_max_kwh": 1200,
+          "tier_basis": "month"
+        },
+        {
+          "component_type": "energy",
+          "unit": "\u00a2/kWh",
+          "rate_value": 10.458,
+          "tier_label": "remaining consumption",
+          "tier_min_kwh": 1200,
+          "tier_max_kwh": null,
+          "tier_basis": "month"
+        },
+        {
+          "component_type": "demand",
+          "unit": "$/kW",
+          "rate_value": 5.369,
+          "period_label": "billing demand in excess of 50 kW, summer period",
+          "season": "summer",
+          "season_start_month": 4,
+          "season_start_day": 1,
+          "season_end_month": 11,
+          "season_end_day": 30
+        },
+        {
+          "component_type": "demand",
+          "unit": "$/kW",
+          "rate_value": 7.266,
+          "period_label": "billing demand in excess of 50 kW, winter period",
+          "season": "winter",
+          "season_start_month": 12,
+          "season_start_day": 1,
+          "season_end_month": 3,
+          "season_end_day": 31
+        },
+        {
+          "component_type": "minimum",
+          "unit": "$/month",
+          "rate_value": 13.833,
+          "period_label": "minimum monthly bill, single-phase"
+        },
+        {
+          "component_type": "minimum",
+          "unit": "$/month",
+          "rate_value": 20.75,
+          "period_label": "minimum monthly bill, three-phase"
+        }
+      ],
+      "confidence": 0.85,
+      "needs_review": true,
+      "completeness_reasons": [],
+      "computable_reasons": [],
+      "extraction_tier": "twopass",
+      "missing_fields": [
+        "effective date (rates generally effective April 1, 2026 but full date not stated in this section)",
+        "credit for supply at medium/high voltage (articles 12.2, 12.4) amounts"
+      ],
+      "riders_referenced_not_shown": [
+        "Credit for supply at medium or high voltage (Art. 12.2)",
+        "Adjustment for transformation losses (Art. 12.4)"
+      ],
+      "energy_scope": "bundled",
+      "closed_to_new": false,
+      "energy_includes_riders": false,
+      "empty_reason": "",
+      "linked_document_hint": ""
+    },
+    {
+      "name": "Rate DM",
+      "code": "DM",
+      "customer_class": "residential",
+      "rate_type": "complex",
+      "description": "Domestic Rate DM for bulk-metered apartment buildings/community residences (weekly contract); only for contracts eligible on May 31, 2009. Tiered energy per multiplier-day plus demand charge above base billing demand.",
+      "source_url": "https://www.hydroquebec.com/data/documents-donnees/pdf/electricity-rates.pdf?v=20261001",
+      "effective_date": "",
+      "components": [
+        {
+          "component_type": "fixed",
+          "unit": "\u00a2/day",
+          "rate_value": 46.154,
+          "tier_label": "system access charge per day times the multiplier"
+        },
+        {
+          "component_type": "energy",
+          "unit": "\u00a2/kWh",
+          "rate_value": 7.065,
+          "tier_label": "up to 40 kWh x days in period x multiplier",
+          "tier_min_kwh": 0,
+          "tier_max_kwh": 40,
+          "tier_basis": "day"
+        },
+        {
+          "component_type": "energy",
+          "unit": "\u00a2/kWh",
+          "rate_value": 11.142,
+          "tier_label": "remaining consumption (above 40 kWh x days x multiplier)",
+          "tier_min_kwh": 40,
+          "tier_max_kwh": null,
+          "tier_basis": "day"
+        },
+        {
+          "component_type": "demand",
+          "unit": "$/kW",
+          "rate_value": 7.266,
+          "tier_label": "per kW of billing demand in excess of base billing demand (monthly)"
+        }
+      ],
+      "confidence": 0.85,
+      "needs_review": true,
+      "completeness_reasons": [],
+      "computable_reasons": [],
+      "extraction_tier": "twopass",
+      "missing_fields": [
+        "effective date",
+        "multiplier is per-contract (number of dwellings)"
+      ],
+      "riders_referenced_not_shown": [
+        "Credit for supply (Article 12.3)"
+      ],
+      "energy_scope": "bundled",
+      "closed_to_new": true,
+      "energy_includes_riders": false,
+      "empty_reason": "",
+      "linked_document_hint": ""
+    },
+    {
+      "name": "Rate DT",
+      "code": "DT",
+      "customer_class": "residential",
+      "rate_type": "complex",
+      "description": "Hydro-Qu\u00e9bec dual-energy domestic rate: system access charge, energy priced by outdoor temperature threshold, plus demand charge above base billing demand.",
+      "source_url": "https://www.hydroquebec.com/data/documents-donnees/pdf/electricity-rates.pdf?v=20261001",
+      "effective_date": "",
+      "components": [
+        {
+          "component_type": "fixed",
+          "unit": "\u00a2/day",
+          "rate_value": 46.154,
+          "period_label": "System access charge per day (times multiplier)"
+        },
+        {
+          "component_type": "energy",
+          "unit": "\u00a2/kWh",
+          "rate_value": 5.131,
+          "period_label": "Temperature at or above -12\u00b0C or -15\u00b0C (depending on climate zone)",
+          "tier_label": "Energy when temperature >= threshold"
+        },
+        {
+          "component_type": "energy",
+          "unit": "\u00a2/kWh",
+          "rate_value": 30.001,
+          "period_label": "Temperature below -12\u00b0C or -15\u00b0C (depending on climate zone)",
+          "tier_label": "Energy when temperature < threshold"
+        },
+        {
+          "component_type": "demand",
+          "unit": "$/kW",
+          "rate_value": 7.266,
+          "period_label": "Monthly charge per kW of billing demand in excess of base billing demand"
+        }
+      ],
+      "confidence": 0.85,
+      "needs_review": true,
+      "completeness_reasons": [],
+      "computable_reasons": [],
+      "extraction_tier": "twopass",
+      "missing_fields": [
+        "effective_date",
+        "credit for supply amount (Article 12.3)"
+      ],
+      "riders_referenced_not_shown": [
+        "Credit for supply (Article 12.3)"
+      ],
+      "energy_scope": "bundled",
+      "closed_to_new": false,
+      "energy_includes_riders": false,
+      "empty_reason": "",
+      "linked_document_hint": ""
+    },
+    {
+      "name": "Rate Flex D",
+      "code": "Flex D",
+      "customer_class": "residential",
+      "rate_type": "complex",
+      "description": "Hydro-Qu\u00e9bec domestic dynamic rate with winter peak demand events; weekly contract structure, tiers based on 40 kWh per day in the consumption period.",
+      "source_url": "https://www.hydroquebec.com/data/documents-donnees/pdf/electricity-rates.pdf?v=20261001",
+      "effective_date": "",
+      "components": [
+        {
+          "component_type": "fixed",
+          "unit": "\u00a2/day",
+          "rate_value": 46.154,
+          "period_label": "System access charge"
+        },
+        {
+          "component_type": "energy",
+          "unit": "\u00a2/kWh",
+          "rate_value": 4.886,
+          "season": "Winter",
+          "season_start_month": 12,
+          "season_start_day": 1,
+          "season_end_month": 3,
+          "season_end_day": 31,
+          "tier_label": "Outside peak demand events, up to 40 kWh x days in period",
+          "tier_min_kwh": 0,
+          "tier_max_kwh": 40,
+          "tier_basis": "day"
+        },
+        {
+          "component_type": "energy",
+          "unit": "\u00a2/kWh",
+          "rate_value": 9.103,
+          "season": "Winter",
+          "season_start_month": 12,
+          "season_start_day": 1,
+          "season_end_month": 3,
+          "season_end_day": 31,
+          "tier_label": "Outside peak demand events, remaining energy",
+          "tier_min_kwh": 40,
+          "tier_max_kwh": null,
+          "tier_basis": "day"
+        },
+        {
+          "component_type": "energy",
+          "unit": "\u00a2/kWh",
+          "rate_value": 46.463,
+          "season": "Winter",
+          "season_start_month": 12,
+          "season_start_day": 1,
+          "season_end_month": 3,
+          "season_end_day": 31,
+          "period_label": "Peak demand events",
+          "tier_label": "Energy consumed during peak demand events"
+        },
+        {
+          "component_type": "energy",
+          "unit": "\u00a2/kWh",
+          "rate_value": 7.065,
+          "season": "Summer",
+          "season_start_month": 4,
+          "season_start_day": 1,
+          "season_end_month": 11,
+          "season_end_day": 30,
+          "tier_label": "Up to 40 kWh x days in period",
+          "tier_min_kwh": 0,
+          "tier_max_kwh": 40,
+          "tier_basis": "day"
+        },
+        {
+          "component_type": "energy",
+          "unit": "\u00a2/kWh",
+          "rate_value": 11.142,
+          "season": "Summer",
+          "season_start_month": 4,
+          "season_start_day": 1,
+          "season_end_month": 11,
+          "season_end_day": 30,
+          "tier_label": "Remaining consumption",
+          "tier_min_kwh": 40,
+          "tier_max_kwh": null,
+          "tier_basis": "day"
+        }
+      ],
+      "confidence": 0.8,
+      "needs_review": true,
+      "completeness_reasons": [],
+      "computable_reasons": [],
+      "extraction_tier": "twopass",
+      "missing_fields": [
+        "effective date",
+        "peak demand event clock times (events occur within peak hours, not stated for this rate)",
+        "monthly-contract structure"
+      ],
+      "riders_referenced_not_shown": [
+        "credit for supply (Article 12.3)"
+      ],
+      "energy_scope": "bundled",
+      "closed_to_new": false,
+      "energy_includes_riders": false,
+      "empty_reason": "",
+      "linked_document_hint": ""
+    }
+  ],
+  "rider_extras": []
+}

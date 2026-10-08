@@ -1,0 +1,45 @@
+{
+  "utility_id": 1722,
+  "utility_name": "Hydro One",
+  "state": "ON",
+  "phase3_tariffs": [],
+  "rider_extras": [],
+  "oeb": true,
+  "ldc": {
+    "distributor": "Hydro One Networks Inc.",
+    "rate_class": "UR RESIDENTIAL",
+    "service_charge": 42.62,
+    "distribution_kwh": -0.0007,
+    "transmission_network": 0.0114,
+    "transmission_connection": 0.0085,
+    "wholesale_market": 0.0047,
+    "rural_remote": 0.0006,
+    "sss_admin": 0.25,
+    "other_fixed": 0.42,
+    "loss_factor": 1.057,
+    "year": "2026",
+    "source_url": "https://www.oeb.ca/_html/calculator/data/BillData.xml"
+  },
+  "rpp": {
+    "tou": {
+      "effective_date": "2025-11-01",
+      "off_peak": 0.098,
+      "mid_peak": 0.157,
+      "on_peak": 0.203
+    },
+    "ulo": {
+      "effective_date": "2025-11-01",
+      "ultra_low_overnight": 0.028,
+      "weekend_off_peak": 0.098,
+      "mid_peak": 0.157,
+      "on_peak": 0.392
+    },
+    "tiered": {
+      "effective_date": "2025-11-01",
+      "lower_tier_price": 0.103,
+      "higher_tier_price": 0.125,
+      "summer_threshold_kwh": 600,
+      "winter_threshold_kwh": 1000
+    }
+  }
+}
