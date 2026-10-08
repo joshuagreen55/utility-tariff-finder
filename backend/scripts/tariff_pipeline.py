@@ -10650,6 +10650,17 @@ def _r18_resolve_pair(a, b, common, siblings):
     elif vb == "temporary" and va != "temporary":
         tmp, std = b, a
     if tmp is None:
+        da = _parse_effective_date(getattr(a, "effective_date", None))
+        db = _parse_effective_date(getattr(b, "effective_date", None))
+        if da and db and abs((da - db).days) >= 28:
+            # R19: newest official effective date wins; older kept as a note.
+            keep, drop = (a, b) if da > db else (b, a)
+            _r18_note(keep, "older_copy_prices", {
+                **merged_from(drop), "effective_date": str(drop.effective_date),
+                "energy": _r18_energy_snapshot(drop),
+            })
+            action.update(outcome="price conflict — kept newest effective date", kept=keep.name)
+            return keep, drop, action
         keep, drop = (a, b) if _r18_keep_score(a) >= _r18_keep_score(b) else (b, a)
         _r18_add_missing(keep, "duplicate_plan_price_conflict")
         _r18_note(keep, "duplicate_plan_other_prices", {
@@ -10749,6 +10760,300 @@ def find_plans_possibly_not_extracted(
     return out
 
 
+# ---------------------------------------------------------------------------
+# R19: newest official document + optional bill credits
+#   * document vintage from URL ("2025-Ratebook-with-2026-TCA") and from a
+#     PDF's cover text ("Prices effective with the November 2023 Billing
+#     Cycle");
+#   * known-URL fallback picks the newest dated official rate document
+#     (SRP: 2025/2026 ratebook, not the Nov 2023 ratebook.pdf);
+#   * plans built from a document clearly older than another official one
+#     known to the run are flagged (older_rate_document);
+#   * negative "fixed" monthly credits (autopay / paperless) move to notes
+#     instead of getting the whole plan rejected (Pedernales flat).
+# ---------------------------------------------------------------------------
+
+_R19_MONTHS = {
+    "jan": 1, "feb": 2, "mar": 3, "apr": 4, "may": 5, "jun": 6, "jul": 7,
+    "aug": 8, "sep": 9, "oct": 10, "nov": 11, "dec": 12,
+}
+_R19_NOT_CURRENT_URL_RE = re.compile(
+    r"propos|draft|filing|application|testimony|exhibit|docket|notice|"
+    r"redline|archive|historic|superseded|sample[-_ ]?bill",
+    re.I,
+)
+_R19_RATE_DOC_URL_RE = re.compile(
+    r"\.pdf(?:$|\?)|rate[-_ ]?book|tariff|price[-_ ]?plan|rate[-_ ]?schedule|"
+    r"schedule[-_ ]?of[-_ ]?rates",
+    re.I,
+)
+# Months a plan's document must trail a newer official one before flagging.
+_R19_OLDER_DOC_MONTHS = 18
+
+# Per-run context set by run_pipeline (pages + known URLs) so phase 4 can
+# compare document vintages. Reset at the start of every run.
+_RUN_DOC_CONTEXT: dict = {}
+
+
+def _r19_months(v: tuple[int, int] | None) -> int | None:
+    return None if v is None else v[0] * 12 + (v[1] - 1)
+
+
+def url_document_vintage(url: str, *, today: date | None = None) -> tuple[int, int] | None:
+    """(year, month) from a document URL / filename, else None.
+
+    Takes the newest plausible year in the path ("2025-Ratebook-with-2026-
+    TCA" → 2026). A month name or ``_-_11_`` next to that year sets the
+    month; otherwise January (conservative: never newer than stated).
+    Future years and non-current documents (proposed / filing / sample bill)
+    return None.
+    """
+    today = today or date.today()
+    path = urlparse(str(url or "")).path
+    path = re.sub(r"%20|[_\-+.]", " ", path).lower()
+    best: tuple[int, int] | None = None
+    for m in re.finditer(r"(?<!\d)(20\d{2})(?!\d)", path):
+        y = int(m.group(1))
+        if y < 2000 or y > today.year:
+            continue
+        month = 1
+        around = path[max(0, m.start() - 12): m.end() + 12]
+        mm = re.search(
+            r"\b(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*", around,
+        )
+        if mm:
+            month = _R19_MONTHS[mm.group(1)[:3]]
+        else:
+            num = re.search(rf"{y}\s+(0?[1-9]|1[0-2])\b", around)
+            if num:
+                month = int(num.group(1))
+        cand = (y, month)
+        if best is None or cand > best:
+            best = cand
+    if best is None:
+        # "April2015" / "Nov2012" glued forms
+        for m in re.finditer(
+            r"(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\s?(20\d{2})", path,
+        ):
+            y = int(m.group(2))
+            if 2000 <= y <= today.year:
+                cand = (y, _R19_MONTHS[m.group(1)[:3]])
+                if best is None or cand > best:
+                    best = cand
+    if best and best > (today.year, today.month):
+        return None
+    return best
+
+
+_R19_TEXT_DATE_RE = re.compile(
+    r"\beffective\b[^.]{0,40}?\b("
+    r"jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\.?\s+"
+    r"(?:(\d{1,2}),?\s+)?(20\d{2})",
+    re.I,
+)
+
+
+def text_document_vintage(text: str, *, head_chars: int = 4000,
+                          today: date | None = None) -> tuple[int, int] | None:
+    """(year, month) of the newest 'effective <Month> [day,] <Year>' on the
+    document's first page(s), else None. Future dates are ignored."""
+    today = today or date.today()
+    best = None
+    for m in _R19_TEXT_DATE_RE.finditer(str(text or "")[:head_chars]):
+        y = int(m.group(3))
+        cand = (y, _R19_MONTHS[m.group(1)[:3].lower()])
+        if cand > (today.year, today.month) or y < 2000:
+            continue
+        if best is None or cand > best:
+            best = cand
+    return best
+
+
+def _r19_is_rate_doc_url(url: str) -> bool:
+    u = str(url or "")
+    return bool(_R19_RATE_DOC_URL_RE.search(u)) and not _R19_NOT_CURRENT_URL_RE.search(u)
+
+
+def newest_dated_rate_document(urls, *, today: date | None = None,
+                               min_year: int | None = None) -> tuple[str, tuple[int, int]] | None:
+    """Newest URL-dated current rate document among ``urls`` (or None)."""
+    today = today or date.today()
+    best = None
+    for u in urls or []:
+        if not u or not _r19_is_rate_doc_url(u):
+            continue
+        v = url_document_vintage(u, today=today)
+        if v is None or (min_year is not None and v[0] < min_year):
+            continue
+        if best is None or v > best[1]:
+            best = (u, v)
+    return best
+
+
+def set_run_document_context(pages=None, known_urls=None, *, ctx=None) -> None:
+    """Record this run's document vintages for phase-4 comparison."""
+    from app.services.source_type import THIRD_PARTY, classify_source
+
+    page_v: dict[str, tuple[int, int]] = {}
+    for p in pages or []:
+        url = getattr(p, "url", "") or ""
+        if not url:
+            continue
+        if ctx is not None and classify_source(url, ctx).source_type == THIRD_PARTY:
+            continue
+        v = None
+        if str(getattr(p, "page_type", "")).lower() == "pdf" or url.lower().split("?")[0].endswith(".pdf"):
+            v = text_document_vintage(getattr(p, "content", "") or "")
+        page_v[url] = v or url_document_vintage(url)
+    known = []
+    for u in known_urls or []:
+        if not u:
+            continue
+        if ctx is not None and classify_source(u, ctx).source_type == THIRD_PARTY:
+            continue
+        known.append(u)
+    _RUN_DOC_CONTEXT.clear()
+    _RUN_DOC_CONTEXT.update({"page_vintages": page_v, "known_urls": known})
+
+
+_R19_BOOK_URL_RE = re.compile(
+    r"rate\s*book|tariff\s*book|price\s*plans?\b|schedule\s*of\s*rates|"
+    r"rates\s*(?:and|&)\s*regulations|rates\s*rules|tariff\s*and\s*business",
+    re.I,
+)
+
+
+def _r19_is_book_url(url: str) -> bool:
+    path = re.sub(r"%20|[_\-+.]", " ", urlparse(str(url or "")).path)
+    return bool(_R19_BOOK_URL_RE.search(path)) and not _R19_NOT_CURRENT_URL_RE.search(str(url or ""))
+
+
+def flag_older_source_documents(
+    tariffs: list[ExtractedTariff], doc_context: dict | None = None,
+    *, today: date | None = None,
+) -> int:
+    """needs_review when a plan's source document trails another official
+    rate document available to this run by >= 18 months
+    (``older_rate_document``).
+
+    A document's date: its PDF cover text ("effective with the November
+    2023 billing cycle"), else the newest effective_date of plans taken
+    from it, else a date in its URL. Compared against: the other documents
+    plans came from in this run, plus the newest dated rate BOOK among the
+    utility's known URLs (rider / news / proposed documents never count).
+    """
+    ctxd = doc_context if doc_context is not None else _RUN_DOC_CONTEXT
+    if not ctxd or not tariffs:
+        return 0
+    today = today or date.today()
+    page_v = dict(ctxd.get("page_vintages") or {})
+
+    by_src: dict[str, list[date]] = {}
+    for t in tariffs:
+        d = _parse_effective_date(getattr(t, "effective_date", None), today=today)
+        if d:
+            by_src.setdefault(t.source_url or "", []).append(d)
+
+    def _doc_v(src: str):
+        v = page_v.get(src)
+        if v is None and by_src.get(src):
+            d = max(by_src[src])
+            v = (d.year, d.month)
+        if v is None:
+            v = url_document_vintage(src, today=today)
+        return v
+
+    src_v = {}
+    for t in tariffs:
+        src = t.source_url or ""
+        if src and src not in src_v:
+            src_v[src] = _doc_v(src)
+    candidates = [(u, v) for u, v in src_v.items() if v]
+    books = [u for u in (ctxd.get("known_urls") or []) if _r19_is_book_url(u)]
+    nd = newest_dated_rate_document(books, today=today)
+    if nd:
+        candidates.append(nd)
+    if not candidates:
+        return 0
+    newest_url, newest_v = max(candidates, key=lambda x: x[1])
+
+    flagged = 0
+    for t in tariffs:
+        src = t.source_url or ""
+        if src == newest_url:
+            continue
+        # Document date first (a 2026 book may restate a 2019 plan date).
+        v = src_v.get(src)
+        if v is None:
+            d = _parse_effective_date(getattr(t, "effective_date", None), today=today)
+            v = (d.year, d.month) if d else None
+        if v is None:
+            continue
+        gap = _r19_months(newest_v) - _r19_months(v)
+        if gap < _R19_OLDER_DOC_MONTHS:
+            continue
+        _r18_add_missing(t, "older_rate_document")
+        _r18_note(t, "older_rate_document", {
+            "plan_document": src,
+            "plan_document_date": f"{v[0]}-{v[1]:02d}",
+            "newer_official_document": newest_url,
+            "newer_document_date": f"{newest_v[0]}-{newest_v[1]:02d}",
+        })
+        log.warning(
+            f"    '{t.name}' comes from a document dated {v[0]}-{v[1]:02d}; a "
+            f"newer official document ({newest_v[0]}-{newest_v[1]:02d}) is "
+            f"available: {newest_url[:90]} — needs_review"
+        )
+        flagged += 1
+    return flagged
+
+
+_R19_CREDIT_LABEL_RE = re.compile(
+    r"credit|discount|rebate|auto\s*-?pay|bank\s*draft|paperless|e-?bill|"
+    r"optional|waiver",
+    re.I,
+)
+
+
+def move_negative_fixed_credits_to_notes(t: ExtractedTariff) -> int:
+    """Negative fixed / minimum monthly amounts are bill credits, not
+    charges (Pedernales autopay −$1.50 / paperless −$1.00). Move them to
+    ``confidence_notes['bill_credits']`` so the plan is not rejected for a
+    negative fixed charge. Returns the number moved."""
+    keep, moved = [], []
+    for c in t.components or []:
+        if not isinstance(c, dict):
+            keep.append(c)
+            continue
+        ctype = str(c.get("component_type") or "").lower()
+        try:
+            rv = float(c.get("rate_value"))
+        except (TypeError, ValueError):
+            keep.append(c)
+            continue
+        if ctype in ("fixed", "minimum") and rv < 0:
+            label = str(c.get("tier_label") or c.get("period_label") or "")
+            moved.append({
+                "label": label or "credit",
+                "amount": rv,
+                "unit": c.get("unit") or "$/month",
+                "optional": bool(_R19_CREDIT_LABEL_RE.search(label)),
+            })
+            continue
+        keep.append(c)
+    if moved:
+        t.components = keep
+        notes = dict(getattr(t, "confidence_notes", None) or {})
+        notes["bill_credits"] = list(notes.get("bill_credits") or []) + moved
+        t.confidence_notes = notes
+        log.info(
+            f"    Bill credit(s) on '{t.name}' kept as notes, not charges: "
+            f"{[m['label'][:40] for m in moved]}"
+        )
+    return len(moved)
+
+
+
 def reconcile_same_utility_plans(
     valid: list[ExtractedTariff],
     utility_name: str = "",
@@ -10760,6 +11065,7 @@ def reconcile_same_utility_plans(
     kept, actions = dedupe_same_plan_variants(valid, utility_name)
     n_tmp = mark_temporary_only_plans(kept)
     n_guard = flag_optional_priced_below_base(kept)
+    n_old = flag_older_source_documents(kept)
     missing = find_plans_possibly_not_extracted(all_in or [], kept)
     if n_rep:
         info["variant_prices_repaired"] = n_rep
@@ -10769,6 +11075,8 @@ def reconcile_same_utility_plans(
         info["temporary_price_plans"] = n_tmp
     if n_guard:
         info["optional_below_base_flagged"] = n_guard
+    if n_old:
+        info["older_rate_document_flagged"] = n_old
     if missing:
         info["plans_possibly_not_extracted"] = missing
         log.warning(
@@ -10813,6 +11121,7 @@ def phase4_validate(
         if unit_notes:
             log.info(f"    Unit normalization on '{t.name}': {'; '.join(unit_notes)}")
         strip_optional_program_components(t)
+        move_negative_fixed_credits_to_notes(t)
         # Soften model needs_review when the only gap is effective_date /
         # or when the model set the flag with no Mysa-critical reason.
         missing = list(getattr(t, "missing_fields", None) or [])
@@ -12480,6 +12789,17 @@ def prefer_official_targets(
         # "No rate page found" — utilities with no website_url on record
         # (SRP, PG&E, Pedernales) never classify their own URLs as official.
         new_primary = usable[0]
+        # R19: prefer the newest dated official rate document on file (SRP
+        # 2025 ratebook with 2026 TCA over the undated Nov-2023 ratebook.pdf).
+        newest = newest_dated_rate_document(usable, min_year=date.today().year - 1)
+        if newest and newest[0] != new_primary:
+            cur_v = url_document_vintage(new_primary)
+            if cur_v is None or cur_v < newest[1]:
+                log.info(
+                    f"  Preferring newest dated rate document {newest[0][:80]} "
+                    f"({newest[1][0]}-{newest[1][1]:02d}) over {new_primary[:80]}"
+                )
+                new_primary = newest[0]
         pool.remove(new_primary)
         log.info(f"  No search hit — falling back to known rate URL {new_primary[:80]}")
         return new_primary, pool
@@ -14029,6 +14349,7 @@ def run_pipeline(
 ) -> PipelineResult:
     llm_cost.reset()  # start a fresh per-utility cost accumulation window
     _reset_opus_budget()  # reset the per-utility Opus escalation cap
+    _RUN_DOC_CONTEXT.clear()  # R19: per-run document vintages
     info = get_utility_info(utility_id)
     if not info or info.get("name", "").startswith("Utility #"):
         raise ValueError(f"Utility {utility_id} not found in database")
@@ -14478,6 +14799,13 @@ def run_pipeline(
         if rider_stats:
             _merge_stats(rider_stats)
 
+    # R19: document vintages for the older-document flag in phase 4.
+    try:
+        set_run_document_context(
+            pages, [*alt_urls, *_known_rate_urls(info)], ctx=source_ctx,
+        )
+    except Exception as e:
+        log.warning(f"  Document vintage context failed: {e}")
     # Phase 4 — validation now returns (report, valid_list)
     validation, valid_tariffs = phase4_validate(tariffs, utility_name, state)
     result.phase4_validation = validation
