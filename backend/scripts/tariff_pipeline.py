@@ -5535,6 +5535,11 @@ _ALL_IN_DELIVERY_RE = re.compile(
     r"transmission|distribution|delivery|t\s*&\s*d|energy\s*\+",
     re.IGNORECASE,
 )
+# Abbreviated delivery breakdown: "all-in: 0.397 + 7.601 + 7.051" (tx+dist+energy).
+_ALL_IN_ABBREV_DELIVERY_RE = re.compile(
+    r"all[\s-]*in\s*:?\s*\(?\s*\d+(?:\.\d+)?\s*\+",
+    re.IGNORECASE,
+)
 _ALL_IN_RIDERS_RE = re.compile(
     r"\briders?\b|fam|dsm|fuel|pca|storm|dcrr|scrr",
     re.IGNORECASE,
@@ -5542,10 +5547,14 @@ _ALL_IN_RIDERS_RE = re.compile(
 
 # Cap on official rider/adjustment docs fetched when a residential extract
 # references schedules that aren't in the current page batch (NSP FAM pages,
-# PGE Schedule 1xx PDFs). PGE Sch 100 applicability can list ~15 priced
-# Sched_1xx PDFs for Schedule 7 — allow a higher hop budget for that path only.
+# PGE Schedule 1xx PDFs). PGE Sch 100 applicability lists 17 priced
+# Sched_1xx PDFs for Schedule 7 (+ Sch 100 itself) — hop budget covers them.
 MAX_RIDER_DOCS_FETCH = 6
-MAX_PGE_SCH1XX_FETCH = 16
+MAX_PGE_SCH1XX_FETCH = 20
+
+# Sanity: FAM-like ¢/kWh riders above this are almost certainly misparsed
+# base energy (NSP Domestic 15.411¢ grabbed as FAM). Reject, never fold.
+RIDER_FAM_SANITY_MAX_CENTS = 2.0
 
 _RIDER_DOC_HINT_RE = re.compile(
     r"\b(?:fam|dsm|dcrr|scrr|storm\s*rider|fuel\s*adjust(?:ment)?|"
@@ -5683,6 +5692,9 @@ def _class_tokens_from_text(text: str) -> set[str]:
     tokens: set[str] = set()
     if re.search(r"\bdomestic\b", blob):
         tokens.add("domestic")
+    if re.search(r"\bmurb\b|multi[\s-]*unit\s+residential|residential\s+building", blob):
+        tokens.add("murb")
+        tokens.add("residential")
     if re.search(r"\bresidential\b", blob):
         tokens.add("residential")
     if re.search(r"\bsmall\s+general\b", blob):
@@ -5691,6 +5703,7 @@ def _class_tokens_from_text(text: str) -> set[str]:
         re.search(r"\bgeneral\b", blob)
         and "residential" not in blob
         and "domestic" not in blob
+        and "murb" not in blob
     ):
         tokens.add("general")
     if re.search(r"\bcommercial\b", blob):
@@ -5707,6 +5720,9 @@ def _recipient_class_tokens(t: ExtractedTariff) -> set[str]:
     tokens = _class_tokens_from_text(blob)
     if str(t.customer_class or "").lower() == "residential":
         tokens.update({"residential", "domestic"})
+    # MURB plans must not fall through to the Domestic FAM amount (R10).
+    if "murb" in tokens:
+        tokens.discard("domestic")
     return tokens
 
 
@@ -5738,7 +5754,14 @@ def _rider_applies_to_recipient(
     recip_tokens = _recipient_class_tokens(recipient)
     if named:
         commercial = named & {"small_general", "general", "commercial", "industrial"}
-        residential = named & {"residential", "domestic"}
+        residential = named & {"residential", "domestic", "murb"}
+        # MURB ↔ Domestic FAM amounts differ (0.207 vs 0.156) — never cross.
+        if "murb" in named and "murb" not in recip_tokens:
+            return False
+        if "murb" in recip_tokens and "murb" not in named and "domestic" in named:
+            return False
+        if "murb" in named and "murb" in recip_tokens:
+            return True
         if commercial and not residential and recip_cc == "residential":
             return False
         if residential and recip_cc == "residential":
@@ -5820,7 +5843,13 @@ def _is_universal_stacking_rider(
         rv = abs(float(comp.get("rate_value") or 0))
     except (TypeError, ValueError):
         return False
-    if abs(rv) < 1e-12:
+    # Sch 1xx First/Over block zeros (Sch 102 Over 0.000) must still share
+    # so higher tiers do not inherit the First credit (R10).
+    is_sch1xx_block = bool(
+        re.search(r"schedule\s*1\d{2}|sch(?:edule)?\s*1\d{2}", label, re.I)
+        and re.search(r"\b(?:first|over)\b", label, re.I)
+    )
+    if abs(rv) < 1e-12 and not is_sch1xx_block:
         return False
     if label.strip() and not _STACKING_RIDER_LABEL_RE.search(label):
         if rv > 0.12:
@@ -5834,19 +5863,80 @@ def _energy_already_includes_stacking_riders(energy_row: dict) -> bool:
     """Trust an all-in ENERGY label only when it claims riders were folded.
 
     PGE often labels energy+transmission+distribution as "all-in" while
-    still omitting power-cost riders — those must still fold.
+    still omitting power-cost riders — those must still fold. Abbreviated
+    delivery breakdowns (``all-in: 0.397 + 7.601 + 7.051``) are the same
+    delivery-only claim without the words transmission/distribution.
     """
     label = " ".join(
         str(energy_row.get(k) or "") for k in ("tier_label", "period_label")
     )
     if not _ALL_IN_LABEL_RE.search(label):
         return False
-    if _ALL_IN_DELIVERY_RE.search(label) and not _ALL_IN_RIDERS_RE.search(label):
-        return False
     if _ALL_IN_RIDERS_RE.search(label):
         return True
+    if _ALL_IN_DELIVERY_RE.search(label):
+        return False
+    if _ALL_IN_ABBREV_DELIVERY_RE.search(label):
+        return False
     # Bare "all-in" with no delivery caveat — treat as already folded.
     return True
+
+
+def _adjustment_rate_cents(comp: dict) -> float | None:
+    """Return an ADJUSTMENT's magnitude in ¢/kWh, or None if not energy-unit."""
+    if not isinstance(comp, dict) or not _is_energy_unit(comp.get("unit")):
+        return None
+    try:
+        v = float(comp.get("rate_value") or 0)
+    except (TypeError, ValueError):
+        return None
+    unit = str(comp.get("unit") or "").strip().lower().replace(" ", "")
+    if unit.startswith("$"):
+        return v * 100.0
+    return v
+
+
+def _rider_fails_sanity(
+    adj: dict,
+    *,
+    tariff_name: str = "",
+    base_energy_cents: float | None = None,
+) -> str | None:
+    """Reject misparsed / absurd per-kWh riders before they fold into ENERGY.
+
+    - FAM / fuel-adjustment above ``RIDER_FAM_SANITY_MAX_CENTS`` (≈2¢) is
+      almost certainly a base energy rate grabbed as FAM (R10).
+    - Any rider larger than the recipient's base ENERGY rate is absurd and
+      must not silently inflate the bill.
+    """
+    cents = _adjustment_rate_cents(adj)
+    if cents is None:
+        return None
+    mag = abs(cents)
+    blob = _adjustment_label_blob(adj, tariff_name=tariff_name).lower()
+    is_fam = bool(re.search(r"\bfam\b|fuel\s*adjust|aa/?ba", blob, re.I))
+    if is_fam and mag > RIDER_FAM_SANITY_MAX_CENTS + 1e-9:
+        return f"fam_exceeds_sanity_cap:{mag:.3f}c"
+    if base_energy_cents is not None and mag > abs(base_energy_cents) + 1e-9:
+        return f"rider_exceeds_base_energy:{mag:.3f}c>{abs(base_energy_cents):.3f}c"
+    return None
+
+
+def _base_energy_cents_for_sanity(t: ExtractedTariff) -> float | None:
+    """Largest |ENERGY| rate in ¢/kWh on ``t`` (for rider-vs-base sanity)."""
+    best = None
+    for c in t.components or []:
+        if not isinstance(c, dict):
+            continue
+        if str(c.get("component_type") or "").lower() != "energy":
+            continue
+        cents = _adjustment_rate_cents(c)  # same unit logic
+        if cents is None:
+            continue
+        mag = abs(cents)
+        if best is None or mag > best:
+            best = mag
+    return best
 
 
 def expand_stacking_energy_riders(
@@ -5910,6 +6000,33 @@ def expand_stacking_energy_riders(
         else:
             flat_adjs.append(a)
 
+    # Sanity: drop absurd FAM / oversized riders before they fold (R10).
+    # Compare against the largest ENERGY magnitude on this tariff.
+    base_cents = None
+    for e in energy_rows:
+        c = _adjustment_rate_cents(e)
+        if c is None:
+            continue
+        mag = abs(c)
+        if base_cents is None or mag > base_cents:
+            base_cents = mag
+    sane_flat: list[dict] = []
+    sane_first_over: list[dict] = []
+    for a in flat_adjs:
+        if _rider_fails_sanity(a, base_energy_cents=base_cents):
+            continue
+        sane_flat.append(a)
+    for a in first_over:
+        if _rider_fails_sanity(a, base_energy_cents=base_cents):
+            continue
+        sane_first_over.append(a)
+    # Keep rejected rows in `other` (unfolder) so audit trail remains; they
+    # are not marked included_in_energy.
+    rejected = [a for a in stacking_adjs if a not in sane_flat and a not in sane_first_over]
+    flat_adjs = sane_flat
+    first_over = sane_first_over
+    stacking_adjs = flat_adjs + first_over
+
     try:
         flat_sum = sum(float(a.get("rate_value") or 0) for a in flat_adjs)
     except (TypeError, ValueError):
@@ -5928,6 +6045,9 @@ def expand_stacking_energy_riders(
         elif re.search(r"\bover\b", lab):
             over_val = v
     if abs(flat_sum) < 1e-12 and first_val is None and over_val is None:
+        if rejected:
+            # Still return components with rejected riders left unfolded.
+            return components
         return components
 
     # Order energy rows by tier_min then rate for First/Over assignment.
@@ -5945,6 +6065,10 @@ def expand_stacking_energy_riders(
 
     ordered = sorted(range(len(energy_rows)), key=lambda i: _tier_key(energy_rows[i]))
     first_idx = ordered[0] if ordered else None
+    has_tiers = any(
+        e.get("tier_min_kwh") is not None or e.get("tier_max_kwh") is not None
+        for e in energy_rows
+    )
 
     new_energy: list[dict] = []
     for i, e in enumerate(energy_rows):
@@ -5969,10 +6093,18 @@ def expand_stacking_energy_riders(
             continue
         add = flat_sum
         if first_val is not None or over_val is not None:
-            if i == first_idx:
-                add += float(first_val or 0.0)
+            if has_tiers:
+                # Sch 102: First N kWh credit on the bottom ENERGY tier only.
+                # Missing Over row (0.000 often dropped) means 0 on higher
+                # tiers — never reuse First (R10).
+                if i == first_idx:
+                    add += float(first_val or 0.0)
+                else:
+                    add += float(over_val or 0.0)
             else:
-                add += float(over_val if over_val is not None else (first_val or 0.0))
+                # Non-tiered TOU/EV: apply the first-block amount to every
+                # period (Over is typically 0 for Sch 102).
+                add += float(first_val or 0.0)
         row["rate_value"] = round(base + add, 6)
         # Annotate without erasing the tier identity (first-1,000 kWh, …).
         note = (row.get("tier_label") or "").strip()
@@ -5984,6 +6116,8 @@ def expand_stacking_energy_riders(
 
     out: list[dict] = []
     out.extend(other)
+    # Sanity-rejected: keep unfolded for audit; never mark included_in_energy.
+    out.extend({**a, "sanity_rejected": True} for a in rejected)
     if keep_adjustments:
         out.extend({**a, "included_in_energy": True} for a in stacking_adjs)
     out.extend(new_energy)
@@ -6426,7 +6560,12 @@ def apply_shared_stacking_riders_across_batch(tariffs: list[ExtractedTariff]) ->
             ]
             if not energy_rows:
                 continue
-            if any(_energy_already_includes_stacking_riders(e) for e in energy_rows):
+            # Only skip when EVERY ENERGY row already claims riders folded.
+            # Delivery-only "all-in" (incl. abbreviated tx+dist+energy sums)
+            # must still receive Sch 1xx / FAM (R10 — TOU/EV were skipped).
+            if energy_rows and all(
+                _energy_already_includes_stacking_riders(e) for e in energy_rows
+            ):
                 continue
             existing_fps = {
                 _rider_fingerprint(a, tariff_name=str(t.name or ""))
@@ -6437,7 +6576,9 @@ def apply_shared_stacking_riders_across_batch(tariffs: list[ExtractedTariff]) ->
                 for a in _energy_unit_adjustments(t)
             }
             picked = _pick_one_rider_per_family(candidates, t)
+            base_cents = _base_energy_cents_for_sanity(t)
             to_add: list[dict] = []
+            rejected_sanity = False
             for adj in picked:
                 fam = _rider_family_key(adj)
                 if fam in existing_fams:
@@ -6445,9 +6586,25 @@ def apply_shared_stacking_riders_across_batch(tariffs: list[ExtractedTariff]) ->
                 fp = _rider_fingerprint(adj)
                 if fp in existing_fps:
                     continue
+                reason = _rider_fails_sanity(
+                    adj, tariff_name=str(t.name or ""), base_energy_cents=base_cents,
+                )
+                if reason:
+                    rejected_sanity = True
+                    log.warning(
+                        f"    Rider sanity reject on '{t.name}': {reason} "
+                        f"({_adjustment_label_blob(adj)[:60]})"
+                    )
+                    continue
                 to_add.append(adj)
                 existing_fams.add(fam)
                 existing_fps.add(fp)
+            if rejected_sanity:
+                t.needs_review = True
+                missing = list(getattr(t, "missing_fields", None) or [])
+                if "rider_sanity_reject" not in missing:
+                    missing.append("rider_sanity_reject")
+                t.missing_fields = missing
             if not to_add:
                 continue
             t.components = list(t.components) + to_add
@@ -7222,6 +7379,21 @@ def _pge_sch1xx_url_map_from_text(text: str) -> dict[str, str]:
     return mapping
 
 
+def _refetch_pge_index_raw(url: str) -> str:
+    """Re-fetch raw page-data/HTML for Sch 1xx URL harvest.
+
+    Uses this module's ``fetch_page`` (sync httpx). Must not import a
+    non-existent ``app.services.monitor.fetch_page`` — that ImportError was
+    previously swallowed and left the URL map truncated at Sch 128 (R10).
+    """
+    if not url:
+        return ""
+    body, _ctype, status = fetch_page(url)
+    if status == 200 and body:
+        return body if isinstance(body, str) else body.decode("utf-8", "replace")
+    return ""
+
+
 def _pge_sch1xx_wanted_from_hints(hints: list[str]) -> set[str]:
     nums: set[str] = set()
     for h in hints:
@@ -7232,18 +7404,70 @@ def _pge_sch1xx_wanted_from_hints(hints: list[str]) -> set[str]:
     return nums
 
 
-def parse_pge_sch100_applicable_schedules(
+def _parse_pge_sch100_pipe_table(
     text: str,
     *,
     base_schedule: str = "7",
 ) -> list[str]:
-    """Parse Sch 100 applicability grid: which Sched_1xx mark apply to Sch 7.
+    """Parse the pipe-delimited applicability copy of the Sch 100 grid.
 
-    Returns zero-padded schedule numbers (e.g. ``['102','105','125',…]``).
-    Sch 100 itself is the map, not a priced rider. Aligns each schedule
-    number's column position in the ``Schs.`` header with an ``x`` on the
-    matching base-schedule row (blank cells mean not applicable).
+    pdftotext of Sched_100 often collapses blank cells in the plain grid, so
+    column-align misreads which ``x`` marks apply. The same extract also
+    carries a pipe-separated copy (``Schs. | 102(1) | …`` / ``7 | x | …``)
+    that preserves empty cells — prefer that when present (R10).
     """
+    if not text or "|" not in text:
+        return []
+    lines = text.splitlines()
+    applicable: list[str] = []
+    seen: set[str] = set()
+    i = 0
+    while i < len(lines):
+        line = lines[i]
+        if not re.match(r"^[ \t]*Schs?\.\s*\|", line, re.I):
+            i += 1
+            continue
+        hdr_cells = [c.strip() for c in line.split("|")]
+        nums: list[str | None] = []
+        for cell in hdr_cells[1:]:  # skip "Schs."
+            m = re.search(r"\b(1\d{2})\b", cell)
+            nums.append(m.group(1) if m else None)
+        if not any(nums):
+            i += 1
+            continue
+        row_line = None
+        for j in range(i + 1, min(i + 40, len(lines))):
+            if re.match(r"^[ \t]*Schs?\.\s*\|", lines[j], re.I):
+                break
+            if re.match(
+                rf"^[ \t]*{re.escape(str(base_schedule))}\s*\|",
+                lines[j],
+            ):
+                row_line = lines[j]
+                break
+        if row_line is None:
+            i += 1
+            continue
+        row_cells = [c.strip() for c in row_line.split("|")]
+        # row_cells[0] is the schedule number ("7"); marks align with hdr nums.
+        marks = row_cells[1:]
+        for idx, num in enumerate(nums):
+            if not num or num in seen:
+                continue
+            mark = marks[idx] if idx < len(marks) else ""
+            if re.search(r"x", mark, re.I):
+                seen.add(num)
+                applicable.append(num)
+        i += 1
+    return applicable
+
+
+def _parse_pge_sch100_column_align(
+    text: str,
+    *,
+    base_schedule: str = "7",
+) -> list[str]:
+    """Fallback: align Schs. header column positions with an ``x`` on the row."""
     if not text:
         return []
     lines = text.splitlines()
@@ -7256,14 +7480,16 @@ def parse_pge_sch100_applicable_schedules(
         if not hdr:
             i += 1
             continue
-        # Collect schedule numbers with the column index of their first digit.
+        # Skip pipe tables (handled separately).
+        if "|" in line:
+            i += 1
+            continue
         cols: list[tuple[int, str]] = []
         for m in re.finditer(r"\b(1\d{2})\b", line):
             cols.append((m.start(1), m.group(1)))
         if not cols:
             i += 1
             continue
-        # Find the base-schedule data row shortly below this header.
         row_line = None
         for j in range(i + 1, min(i + 40, len(lines))):
             rm = re.match(
@@ -7273,14 +7499,12 @@ def parse_pge_sch100_applicable_schedules(
             if rm:
                 row_line = lines[j]
                 break
-            # Stop if another Schs. header appears first.
             if re.match(r"^[ \t]*Schs?\.\s+", lines[j], re.I):
                 break
         if row_line is None:
             i += 1
             continue
         for start, num in cols:
-            # Window around the header number column; accept an x nearby.
             lo = max(0, start - 2)
             hi = min(len(row_line), start + len(num) + 4)
             window = row_line[lo:hi]
@@ -7289,6 +7513,25 @@ def parse_pge_sch100_applicable_schedules(
                 applicable.append(num)
         i += 1
     return applicable
+
+
+def parse_pge_sch100_applicable_schedules(
+    text: str,
+    *,
+    base_schedule: str = "7",
+) -> list[str]:
+    """Parse Sch 100 applicability grid: which Sched_1xx mark apply to Sch 7.
+
+    Returns zero-padded schedule numbers (e.g. ``['102','105','125',…]``).
+    Sch 100 itself is the map, not a priced rider. Prefers the pipe-delimited
+    table copy when present (layout-preserving); falls back to column-align.
+    """
+    if not text:
+        return []
+    pipe = _parse_pge_sch100_pipe_table(text, base_schedule=base_schedule)
+    if pipe:
+        return pipe
+    return _parse_pge_sch100_column_align(text, base_schedule=base_schedule)
 
 
 def parse_pge_sch1xx_kwh_amounts_for_schedule(
@@ -7372,50 +7615,133 @@ def parse_pge_sch1xx_kwh_amounts_for_schedule(
     return out
 
 
+def _nsp_fam_2026_table_text(text: str) -> str:
+    """Slice the FAM Tariff section's 2026 AA/BA table only (not the whole book).
+
+    Searching the full tariff book grabs Domestic *base energy* 15.411¢ as
+    FAM (R10). Restrict to the FAM TARIFF schedule body, then the 2026
+    "Effective upon the date of the Board's Order" table that ends before
+    the 2027 block.
+    """
+    if not text:
+        return ""
+    # Prefer a real schedule page ("Page N of M"), not the TOC entry.
+    starts = [
+        m.start()
+        for m in re.finditer(
+            r"FUEL\s+ADJUSTMENT\s+MECHANISM\s*\(FAM\)\s*TARIFF\s+Page\b",
+            text,
+            re.I,
+        )
+    ]
+    if not starts:
+        m = re.search(
+            r"FUEL\s+ADJUSTMENT\s+MECHANISM\s*\(FAM\)\s*TARIFF\b",
+            text,
+            re.I,
+        )
+        if not m:
+            return ""
+        starts = [m.start()]
+    # Walk candidates until we find the "applicable charges by rate class" table.
+    section = ""
+    for start in starts:
+        chunk = text[start:start + 25000]
+        if re.search(r"applicable\s+charges\s+by\s+rate\s+class", chunk, re.I):
+            section = chunk
+            break
+    if not section:
+        section = text[starts[0]:starts[0] + 25000]
+    # 2026 table: from "applicable charges" through just before 2027 rates.
+    m = re.search(r"applicable\s+charges\s+by\s+rate\s+class", section, re.I)
+    if not m:
+        return section
+    table = section[m.start():]
+    end = re.search(
+        r"(?:^|\n)\s*2027\b|(?:^|\n)\s*Effective\s+January\s+1,\s*2027\b",
+        table,
+        re.I,
+    )
+    if end:
+        table = table[:end.start()]
+    return table
+
+
 def extract_nsp_fam_aa_ba_from_text(text: str) -> list[ExtractedTariff]:
     """Deterministic FAM AA/BA ¢/kWh from the main NSP tariff book's FAM section.
 
     The FAM marketing page has no PDF link; the rates live in the already-
-    downloaded tariff book (~p.65). Parse Domestic / Small General / MURB
-    combined AA/BA without an LLM call.
+    downloaded tariff book (~p.65). Parse **only** the FAM Tariff 2026
+    table: Domestic 0.156¢; MURB shares the General line 0.207¢. Values
+    above ``RIDER_FAM_SANITY_MAX_CENTS`` are rejected (never silently emitted).
     """
-    if not text or not re.search(r"FUEL\s+ADJUSTMENT\s+MECHANISM\s*\(FAM\)\s*TARIFF", text, re.I):
+    if not text or not re.search(
+        r"FUEL\s+ADJUSTMENT\s+MECHANISM\s*\(FAM\)\s*TARIFF", text, re.I
+    ):
         return []
-    # Prefer the 2026 "Effective upon the date of the Board's Order" table;
-    # fall back to any Domestic … 0.156 block.
+    table = _nsp_fam_2026_table_text(text)
+    if not table:
+        return []
+
+    def _combined_aa_ba(block: str) -> float | None:
+        nums = re.findall(r"\d+\.\d{3}", block)
+        if not nums:
+            return None
+        # Combined AA/BA is the last (often repeated) ¢ figure in the row.
+        val = float(nums[-1])
+        if val > RIDER_FAM_SANITY_MAX_CENTS + 1e-9:
+            return None
+        return val
+
     domestic = None
-    murb = None
-    # Domestic block: Domestic Service … <number> as FAM AA/BA combined.
-    for m in re.finditer(
-        r"Domestic\s+Service[\s\S]{0,220}?((?:\d+\.\d{3}))\s*(?:\n|$)",
-        text,
+    # Domestic Service … Critical Peak Pricing block.
+    m = re.search(
+        r"Domestic\s+Service[\s\S]{0,400}?(?:Critical\s+Peak\s+Pricing|Peak\s+Pricing)",
+        table,
         re.I,
-    ):
-        # Take the last number in the Domestic paragraph (combined AA/BA).
-        nums = re.findall(r"\d+\.\d{3}", m.group(0))
-        if nums:
-            domestic = float(nums[-1])
-            break
-    for m in re.finditer(
-        r"Residential\s+Building\s*\(MURB\)[\s\S]{0,160}?((?:\d+\.\d{3}))",
-        text,
-        re.I,
-    ):
-        nums = re.findall(r"\d+\.\d{3}", m.group(0))
-        if nums:
-            murb = float(nums[-1])
-            break
+    )
+    if m:
+        domestic = _combined_aa_ba(m.group(0))
     if domestic is None:
-        # Absolute fallback: first 0.156 near Domestic Service.
         m = re.search(
-            r"Domestic\s+Service[\s\S]{0,300}?0\.156",
-            text,
+            r"Domestic\s+Service[\s\S]{0,300}?(\d+\.\d{3})",
+            table,
             re.I,
         )
         if m:
+            candidate = float(m.group(1))
+            if candidate <= RIDER_FAM_SANITY_MAX_CENTS + 1e-9:
+                domestic = candidate
+    if domestic is None:
+        # Absolute fallback only inside the 2026 table slice.
+        if re.search(r"Domestic\s+Service[\s\S]{0,300}?0\.156", table, re.I):
             domestic = 0.156
     if domestic is None:
         return []
+
+    # General / Multi-Unit / MURB share one AA/BA line (0.207). Do NOT take
+    # the Large General row (0.158) that follows MURB after a page break.
+    general = None
+    m = re.search(
+        r"General,\s*General\s+Time\s+of\s+Use[\s\S]{0,350}?"
+        r"(?:Multi-Unit|MURB|Residential\s+Building)",
+        table,
+        re.I,
+    )
+    if m:
+        general = _combined_aa_ba(m.group(0))
+    if general is None:
+        m = re.search(
+            r"General,\s*General\s+Time\s+of\s+Use[\s\S]{0,200}?(\d+\.\d{3})",
+            table,
+            re.I,
+        )
+        if m:
+            candidate = float(m.group(1))
+            if candidate <= RIDER_FAM_SANITY_MAX_CENTS + 1e-9:
+                general = candidate
+    murb = general  # MURB takes the General line (R10)
+
     comps = [{
         "component_type": "adjustment",
         "unit": "¢/kWh",
@@ -7431,7 +7757,7 @@ def extract_nsp_fam_aa_ba_from_text(text: str) -> list[ExtractedTariff]:
         components=comps,
         extraction_tier="rider_doc_book",
         energy_scope="bundled",
-        description="FAM AA/BA from main tariff book FAM Tariff section (deterministic).",
+        description="FAM AA/BA from main tariff book FAM Tariff 2026 table (deterministic).",
     )
     out = [et]
     if murb is not None and abs(murb - domestic) > 1e-9:
@@ -7443,13 +7769,15 @@ def extract_nsp_fam_aa_ba_from_text(text: str) -> list[ExtractedTariff]:
                 "component_type": "adjustment",
                 "unit": "¢/kWh",
                 "rate_value": murb,
-                "tier_label": "FAM AA/BA MURB",
+                "tier_label": "FAM AA/BA Residential Building (MURB)",
                 "included_in_energy": False,
                 "rider_scope": "all_customers",
             }],
             extraction_tier="rider_doc_book",
             energy_scope="bundled",
-            description="FAM AA/BA MURB from main tariff book (deterministic).",
+            description=(
+                "FAM AA/BA MURB (= General line 0.207¢) from FAM Tariff 2026 table."
+            ),
         ))
     return out
 
@@ -7745,17 +8073,13 @@ def fetch_and_extract_referenced_riders(
             or "rates-and-regulatory/tariff" in page_url
         ):
             # Re-fetch raw body when content was stripped to plain text.
+            # Use this module's sync fetch_page — monitor.fetch_page does not
+            # exist (ImportError was previously swallowed → truncated URL map).
             raw = page_body
             if "page-data.json" in page_url or (
                 "Sched_" not in page_body and "ctfassets" not in page_body
             ):
-                try:
-                    from app.services.monitor import fetch_page as _fp
-                    body, _ctype, status = _fp(page_url)
-                    if status == 200 and body:
-                        raw = body if isinstance(body, str) else body.decode("utf-8", "replace")
-                except Exception:
-                    pass
+                raw = _refetch_pge_index_raw(page_url) or page_body
             sch_url_map.update(_pge_sch1xx_url_map_from_text(raw))
             # Prefer Sch 100 first (applicability map), then hint-wanted.
             prefer = ["100"] + sorted(n for n in wanted_sch if n != "100")
@@ -7916,9 +8240,24 @@ def _try_deterministic_pge_sch1xx_extract(
         if re.search(r"7-TOD|On-Peak Period", content):
             return None
         return []
-    # Drop pure-zero rows (no price impact).
-    amounts = [a for a in amounts if abs(float(a.get("rate_value") or 0)) > 1e-12]
+    # Drop pure-zero rows (no price impact), but keep First/Over block zeros
+    # so Sch 102's Over 0.000 still marks higher tiers as uncushioned (R10).
+    kept = []
+    for a in amounts:
+        lab = str(a.get("tier_label") or "").lower()
+        is_block = bool(re.search(r"\b(?:first|over)\b", lab))
+        try:
+            rv = float(a.get("rate_value") or 0)
+        except (TypeError, ValueError):
+            continue
+        if abs(rv) < 1e-12 and not is_block:
+            continue
+        kept.append(a)
+    amounts = kept
     if not amounts:
+        return []
+    # If the only rows are zero Over without a First, nothing to price.
+    if all(abs(float(a.get("rate_value") or 0)) < 1e-12 for a in amounts):
         return []
     for a in amounts:
         a["tier_label"] = f"Schedule {num} {a.get('tier_label') or ''}".strip()
@@ -8360,6 +8699,16 @@ def phase4_validate(
                 f"    Stacking rider expand on '{t.name}': "
                 f"{len(before_stack)} → {len(t.components)} comps"
             )
+        if any(
+            isinstance(c, dict) and c.get("sanity_rejected")
+            for c in (t.components or [])
+        ):
+            needs_review = True
+            t.needs_review = True
+            missing = list(getattr(t, "missing_fields", None) or [])
+            if "rider_sanity_reject" not in missing:
+                missing.append("rider_sanity_reject")
+            t.missing_fields = missing
         clear_resolved_rider_hints([t])
 
         # Drop stale duplicate values of the same ADJUSTMENT family (e.g.

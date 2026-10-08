@@ -182,10 +182,12 @@ class TestPgeSch100MapAndAmounts(unittest.TestCase):
         )
         cents = _energy_cents(sch7)
         self.assertGreaterEqual(len(cents), 2, cents)
-        # Live target ≈ 19.55 / 20.67¢ (Sch 125 + Sch 100-mapped 1xx,
-        # with Sch 102 First/Over mapped onto the two Sch 7 tiers).
-        self.assertTrue(any(19.4 < c < 19.7 for c in cents), cents)
-        self.assertTrue(any(20.1 < c < 20.9 for c in cents), cents)
+        # Sch 125 + Sch 100-mapped 1xx, with Sch 102 First credit on the
+        # bottom tier only (Over 0.000). First ≈19.5¢; Over is First plus
+        # the base tier gap (+1.112¢ from Sch 102).
+        lo, hi = min(cents), max(cents)
+        self.assertTrue(19.4 < lo < 19.7, cents)
+        self.assertAlmostEqual(hi - lo, (11.946 - 11.224) + 1.112, delta=0.05)
 
 
 class TestNeedsReviewScope(unittest.TestCase):
