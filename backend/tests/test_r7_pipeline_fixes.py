@@ -105,20 +105,58 @@ class TestBrokenTouClocksKept(unittest.TestCase):
         logging.disable(logging.NOTSET)
 
     def test_one_hour_gap_repaired(self):
-        comps = [
+        # R8: never stretch a different period family across a gap. Same-family
+        # neighbors may extend; Peak↔Off-Peak gaps stay open unless the
+        # document states the hour is partial-peak.
+        same_family = [
+            {"component_type": "energy", "unit": "¢/kWh", "rate_value": 10.0,
+             "period_start_time": "00:00", "period_end_time": "15:00",
+             "day_type": "weekday", "period_label": "Off-Peak"},
+            {"component_type": "energy", "unit": "¢/kWh", "rate_value": 11.0,
+             "period_start_time": "16:00", "period_end_time": "24:00",
+             "day_type": "weekday", "period_label": "Off-Peak Evening"},
+            # gap 15:00–16:00 between two off-peak windows
+        ]
+        out, notes = tp.repair_one_hour_tou_gaps(same_family)
+        self.assertTrue(any("tou_clock_gap_repaired" in n for n in notes))
+        first = next(c for c in out if c["period_label"] == "Off-Peak")
+        self.assertEqual(first["period_end_time"], "16:00")
+
+        # Cross-family Peak/Off-Peak 1h gap (non-wrapping): leave open.
+        cross = [
             {"component_type": "energy", "unit": "¢/kWh", "rate_value": 20.0,
              "period_start_time": "16:00", "period_end_time": "21:00",
              "day_type": "weekday", "period_label": "Peak"},
             {"component_type": "energy", "unit": "¢/kWh", "rate_value": 10.0,
-             "period_start_time": "21:00", "period_end_time": "15:00",
+             "period_start_time": "00:00", "period_end_time": "15:00",
              "day_type": "weekday", "period_label": "Off-Peak"},
-            # gap 15:00–16:00
         ]
-        out, notes = tp.repair_one_hour_tou_gaps(comps)
-        self.assertTrue(any("tou_clock_gap_repaired" in n for n in notes))
-        # Off-peak end extended to 16:00 (covering the 1h gap).
-        off = next(c for c in out if c["period_label"] == "Off-Peak")
-        self.assertEqual(off["period_end_time"], "16:00")
+        _out2, notes2 = tp.repair_one_hour_tou_gaps(cross)
+        self.assertFalse(any("tou_clock_gap_repaired" in n for n in notes2))
+        self.assertFalse(any("tou_clock_gap_filled" in n for n in notes2))
+
+        # Stated partial-peak for 3–4 pm fills from a printed partial row.
+        with_partial = [
+            {"component_type": "energy", "unit": "¢/kWh", "rate_value": 39.0,
+             "period_start_time": "14:00", "period_end_time": "15:00",
+             "day_type": "weekday", "period_label": "Partial-Peak"},
+            {"component_type": "energy", "unit": "¢/kWh", "rate_value": 20.0,
+             "period_start_time": "16:00", "period_end_time": "21:00",
+             "day_type": "weekday", "period_label": "Peak"},
+            {"component_type": "energy", "unit": "¢/kWh", "rate_value": 10.0,
+             "period_start_time": "21:00", "period_end_time": "14:00",
+             "day_type": "weekday", "period_label": "Off-Peak"},
+        ]
+        out3, notes3 = tp.repair_one_hour_tou_gaps(
+            with_partial, missing_fields=["3-4 p.m. partial peak"]
+        )
+        self.assertTrue(any("tou_clock_gap_filled_from_stated" in n for n in notes3))
+        filled = [
+            c for c in out3
+            if c.get("period_start_time") == "15:00" and c.get("period_end_time") == "16:00"
+        ]
+        self.assertEqual(len(filled), 1)
+        self.assertAlmostEqual(float(filled[0]["rate_value"]), 39.0, places=2)
 
     def test_gap_kept_with_needs_review_not_rejected(self):
         # Larger gap (not 1h) — keep plan, flag review.
@@ -340,6 +378,14 @@ class TestOntarioLossFactor(unittest.TestCase):
         expected = round(0.098 * 1.0295 + ldc.per_kwh_adder, 6)
         self.assertAlmostEqual(float(off["rate_value"]), expected, places=5)
         self.assertEqual(tou["ldc_delivery"]["loss_factor"], 1.0295)
+        # LF must not appear as a priced ADJUSTMENT (R8).
+        self.assertFalse(
+            any(
+                abs(float(c.get("rate_value") or 0) - 1.0295) < 1e-9
+                for c in tou["components"]
+                if c.get("component_type") == "adjustment"
+            )
+        )
 
 
 if __name__ == "__main__":

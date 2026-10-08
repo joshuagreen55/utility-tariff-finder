@@ -240,9 +240,18 @@ class TestBuildTariffEntriesWithLdc(unittest.TestCase):
         adjs = [c for c in tou["components"] if c["component_type"] == "adjustment"]
         self.assertGreaterEqual(len(adjs), 4)
         self.assertTrue(all(c.get("included_in_energy") is True for c in adjs))
+        # LF is metadata only — never a priced $/kWh ADJUSTMENT (R8).
+        self.assertFalse(
+            any(
+                abs(float(c.get("rate_value") or 0) - float(lf)) < 1e-9
+                and "loss" in str(c.get("tier_label") or "").lower()
+                for c in adjs
+            )
+        )
         fixed = [c for c in tou["components"] if c["component_type"] == "fixed"]
         self.assertTrue(any(abs(float(c["rate_value"]) - 51.56) < 1e-6 for c in fixed))
         self.assertIn("ldc_delivery", tou)
+        self.assertEqual(tou["ldc_delivery"].get("loss_factor"), lf)
 
     def test_toronto_and_hydro_one_energy_differ(self):
         tor = oeb.build_tariff_entries(

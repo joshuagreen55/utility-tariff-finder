@@ -804,10 +804,10 @@ def _apply_ldc_delivery_to_entry(entry: dict, ldc: LDCDeliveryCharges) -> dict:
     """Fold LDC per-kWh delivery+regulatory into ENERGY; store the breakdown.
 
     ENERGY = (RPP commodity × LF when BillData provides LF) + delivery_kwh +
-    regulatory_kwh — matching the OEB bill calculator (R7). Each BillData
-    line is kept as an ADJUSTMENT with ``included_in_energy=true``. FIXED
-    service / SSS / OFC rows are attached. An ADJUSTMENT audit row records
-    the loss-factor uplift on the commodity portion.
+    regulatory_kwh — matching the OEB bill calculator. Each BillData
+    delivery/regulatory line is an ADJUSTMENT with ``included_in_energy=true``.
+    FIXED service / SSS / OFC rows are attached. LF is metadata only (never
+    a priced ADJUSTMENT).
     """
     adder = ldc.per_kwh_adder
     lf = ldc.loss_factor if ldc.loss_factor and ldc.loss_factor > 0 else None
@@ -823,17 +823,10 @@ def _apply_ldc_delivery_to_entry(entry: dict, ldc: LDCDeliveryCharges) -> dict:
             except (TypeError, ValueError, KeyError):
                 pass
         comps.append(row)
-    # Audit: loss-factor uplift (commodity × (LF−1)) when LF is present.
-    if lf and abs(lf - 1.0) > 1e-9:
-        # Record a representative uplift from the first ENERGY commodity; the
-        # per-period uplift is already baked into each ENERGY row above.
-        comps.append({
-            "component_type": "adjustment",
-            "unit": "$/kWh",
-            "rate_value": round(lf, 6),
-            "tier_label": f"BillData loss factor LF={lf} (applied to RPP commodity)",
-            "included_in_energy": True,
-        })
+    # LF is a dimensionless multiplier on the RPP commodity only (OEB bill
+    # calculator). Never store it as a priced $/kWh ADJUSTMENT — that would
+    # add ~$1/kWh if a consumer summed in-energy adjustments. Record it only
+    # in ldc_delivery metadata (and the description note).
     comps.extend(_ldc_adjustment_rows(ldc))
     comps.extend(_ldc_fixed_rows(ldc))
     entry = dict(entry)

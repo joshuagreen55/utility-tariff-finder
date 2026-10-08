@@ -575,6 +575,9 @@ class TestReferencedRiderDocFetch(unittest.TestCase):
         self.assertNotIn("utilitycheck.co", bad)
 
     def test_pge_cdn_website_still_fetches_portlandgeneral_rider_docs(self):
+        # R8: PGE Sch 1xx live on assets.ctfassets.net (Contentful) as well as
+        # portlandgeneral.com. Either is an official fetch target; aggregators
+        # (utilitycheck) are still rejected.
         sched7 = tp.ExtractedTariff(
             name="Schedule 7", customer_class="residential", rate_type="flat",
             source_url="https://portlandgeneral.com/about/info/pricing",
@@ -585,6 +588,10 @@ class TestReferencedRiderDocFetch(unittest.TestCase):
             ],
         )
         rider_url = "https://portlandgeneral.com/rates/schedule-125-pca.pdf"
+        ctf_url = (
+            "https://assets.ctfassets.net/416ywc1laqmd/5NpoHo2zjqMSn6nj87KCtg/"
+            "d12af2b91776b76538acaecd88f23a7e/Sched_125.pdf"
+        )
         rider_page = tp.RatePage(
             url=rider_url,
             title="Schedule 125 Power Cost Adjustment",
@@ -608,14 +615,23 @@ class TestReferencedRiderDocFetch(unittest.TestCase):
         ]
         search_hits = [
             {"url": rider_url, "title": "Schedule 125", "description": "PCA rider"},
-            # CDN / aggregator noise must be dropped even if ranked first.
-            {"url": "https://assets.ctfassets.net/pge/sched125.pdf",
-             "title": "CDN copy", "description": "PCA"},
+            {"url": ctf_url, "title": "Sched_125", "description": "PCA"},
             {"url": "https://utilitycheck.co/pge-pca",
              "title": "Aggregator", "description": "PCA"},
         ]
+
+        def _fake_pdf(url: str):
+            page = tp.RatePage(
+                url=url,
+                title="Schedule 125 Power Cost Adjustment",
+                page_type="pdf",
+                content=rider_page.content,
+            )
+            return page
+
         with mock.patch.object(tp, "brave_search", return_value=search_hits), \
-             mock.patch.object(tp, "_fetch_as_pdf_via_download", return_value=rider_page) as fetch_pdf, \
+             mock.patch.object(tp, "_fetch_as_pdf_via_download", side_effect=_fake_pdf) as fetch_pdf, \
+             mock.patch.object(tp, "_fetch_and_parse", return_value=None), \
              mock.patch.object(tp, "_extract_rider_document", return_value=rider_extract):
             merged, pages = tp.enrich_tariffs_with_referenced_rider_docs(
                 [sched7], "Portland General Electric", "OR",
@@ -623,10 +639,16 @@ class TestReferencedRiderDocFetch(unittest.TestCase):
                 pages=[],
             )
         fetch_pdf.assert_called()
-        fetched_url = fetch_pdf.call_args[0][0]
-        self.assertIn("portlandgeneral.com", fetched_url)
-        self.assertNotIn("ctfassets", fetched_url)
-        self.assertEqual(len(pages), 1)
+        fetched_urls = [c[0][0] for c in fetch_pdf.call_args_list]
+        self.assertTrue(
+            any(
+                "portlandgeneral.com" in u or "ctfassets.net" in u and "Sched_125" in u
+                for u in fetched_urls
+            ),
+            f"expected PGE or ctfassets Sched_125, got {fetched_urls}",
+        )
+        self.assertFalse(any("utilitycheck" in u for u in fetched_urls))
+        self.assertGreaterEqual(len(pages), 1)
         report, valid = tp.phase4_validate(merged, "Portland General Electric", "OR")
         self.assertEqual(report["valid"], 1)
         energy = [c for c in valid[0].components if c["component_type"] == "energy"][0]

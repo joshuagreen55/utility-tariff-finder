@@ -273,6 +273,9 @@ class TestFarFutureEffectiveDate(unittest.TestCase):
         self.assertEqual(d, date(2028, 4, 1))
 
     def test_phase4_flags_far_future(self):
+        # R8.11: far-future alone is informational (not_yet_effective /
+        # effective_date_far_future in store), not a Mysa-critical
+        # needs_review reason — no reason ⇒ no flag.
         far = (date.today() + timedelta(days=400)).isoformat()
         et = tp.ExtractedTariff(
             name="Residential", customer_class="residential", rate_type="flat",
@@ -281,7 +284,7 @@ class TestFarFutureEffectiveDate(unittest.TestCase):
         )
         _r, valid = tp.phase4_validate([et], "NorthWestern Energy", "MT")
         self.assertEqual(len(valid), 1)
-        self.assertTrue(valid[0].needs_review)
+        self.assertFalse(valid[0].needs_review)
 
 
 class TestSupersededVisionEnergy(unittest.TestCase):
