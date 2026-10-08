@@ -11,7 +11,10 @@ Three rate plans exist:
   2. Tiered                    — lower tier + higher tier
   3. Ultra-Low Overnight (ULO) — overnight / weekend off-peak / mid-peak / on-peak
 
-Rates change once a year on November 1.
+Commodity prices change once a year on November 1. Per-LDC delivery and
+regulatory charges come from the OEB Bill Calculator's official structured
+feed (``BillData.xml``) — one XML covering every Ontario LDC — and are
+folded into ENERGY with ADJUSTMENT audit rows (FULL-BILL product rule).
 
 Usage:
     python -m scripts.scrape_oeb_rates
@@ -25,6 +28,7 @@ import json
 import logging
 import re
 import sys
+import xml.etree.ElementTree as ET
 from dataclasses import dataclass, field
 from datetime import date, datetime, timezone
 
@@ -40,10 +44,15 @@ log = logging.getLogger("oeb_scraper")
 
 OEB_RATES_URL = "https://www.oeb.ca/consumer-information-and-protection/electricity-rates/historical-electricity-rates"
 SOURCE_URL = OEB_RATES_URL
+# Official OEB Bill Calculator dataset — per-LDC residential delivery /
+# regulatory charges for every Ontario distributor in one XML file.
+# https://www.oeb.ca/consumer-information-and-protection/bill-calculator
+BILLDATA_URL = "https://www.oeb.ca/_html/calculator/data/BillData.xml"
 
-# The OEB RPP table only publishes commodity ENERGY. Delivery / FIXED rows on
-# an Ontario tariff come from elsewhere (repairs, manual corrections) and
-# are carried forward, never replaced, by the OEB path.
+# The OEB RPP HTML table owns commodity ENERGY. When BillData supplies
+# LDC FIXED / ADJUSTMENT rows those are also written by this path (see
+# ``provided_types`` in ``store_oeb_tariffs``); predecessors' non-owned
+# rows still carry forward.
 OEB_OWNED_COMPONENT_TYPES = frozenset({"energy"})
 
 
@@ -78,6 +87,58 @@ class OEBRateSet:
     tou: TOURates | None = None
     tiered: TieredRates | None = None
     ulo: ULORates | None = None
+
+
+@dataclass
+class LDCDeliveryCharges:
+    """Per-LDC residential delivery + regulatory from OEB BillData.xml.
+
+    Field meanings follow the OEB bill calculator schema:
+      SC   — monthly service charge ($/month)
+      DC/VC — distribution volumetric ($/kWh); VC used when DC is blank
+      Net  — transmission network ($/kWh)
+      Conn — transmission connection ($/kWh)
+      WMSR — wholesale market service ($/kWh, regulatory)
+      RRRP — rural/remote rate protection ($/kWh, regulatory)
+      SSS  — standard supply service admin ($/month)
+      OFC  — other fixed charge ($/month)
+      LF   — total loss factor (volume adjustment; not folded into ENERGY)
+    """
+    distributor: str
+    rate_class: str
+    service_charge: float | None = None
+    distribution_kwh: float | None = None
+    transmission_network: float | None = None
+    transmission_connection: float | None = None
+    wholesale_market: float | None = None
+    rural_remote: float | None = None
+    sss_admin: float | None = None
+    other_fixed: float | None = None
+    loss_factor: float | None = None
+    year: str | None = None
+    source_url: str = BILLDATA_URL
+
+    @property
+    def delivery_kwh(self) -> float:
+        return sum(
+            v for v in (
+                self.distribution_kwh,
+                self.transmission_network,
+                self.transmission_connection,
+            )
+            if v is not None
+        )
+
+    @property
+    def regulatory_kwh(self) -> float:
+        return sum(
+            v for v in (self.wholesale_market, self.rural_remote)
+            if v is not None
+        )
+
+    @property
+    def per_kwh_adder(self) -> float:
+        return self.delivery_kwh + self.regulatory_kwh
 
 
 # TOU schedules are fixed by the OEB — only the prices change each Nov 1.
@@ -135,6 +196,221 @@ def fetch_oeb_page() -> str:
     )
     resp.raise_for_status()
     return resp.text
+
+
+def fetch_billdata_xml() -> str:
+    """Fetch the OEB Bill Calculator BillData.xml (all LDC delivery rates)."""
+    log.info(f"Fetching OEB BillData.xml: {BILLDATA_URL}")
+    resp = httpx.get(
+        BILLDATA_URL,
+        headers={"User-Agent": "UtilityTariffFinder/1.0"},
+        timeout=30.0,
+        follow_redirects=True,
+    )
+    resp.raise_for_status()
+    return resp.text
+
+
+def _xml_float(text: str | None) -> float | None:
+    if text is None:
+        return None
+    raw = str(text).strip()
+    if not raw:
+        return None
+    try:
+        return float(raw)
+    except ValueError:
+        return None
+
+
+def _is_residential_billdata_class(class_name: str) -> bool:
+    c = (class_name or "").strip().upper()
+    if "RESIDENTIAL" not in c:
+        return False
+    # Skip non-standard / non-primary residential classes.
+    for skip in ("SEASONAL", "MULTI-UNIT", "COMPETITIVE", "GENERAL SERVICE"):
+        if skip in c:
+            return False
+    return True
+
+
+def _residential_class_rank(class_name: str) -> int:
+    """Lower is better. Prefer plain RESIDENTIAL, then UR, then R1."""
+    c = (class_name or "").strip().upper()
+    if c == "RESIDENTIAL":
+        return 0
+    if c == "UR RESIDENTIAL":
+        return 1
+    if c == "R1 RESIDENTIAL":
+        return 2
+    if c.endswith("RESIDENTIAL") and "R2" not in c:
+        return 3
+    return 9
+
+
+def parse_billdata_xml(xml_text: str) -> list[LDCDeliveryCharges]:
+    """Parse BillData.xml into per-(Dist, Class) residential charge rows."""
+    root = ET.fromstring(xml_text)
+    out: list[LDCDeliveryCharges] = []
+    for row in root.findall("BillDataRow"):
+        dist = (row.findtext("Dist") or "").strip()
+        cls = (row.findtext("Class") or "").strip()
+        if not dist or not _is_residential_billdata_class(cls):
+            continue
+        dc = _xml_float(row.findtext("DC"))
+        vc = _xml_float(row.findtext("VC"))
+        # Some LDCs put the volumetric distribution charge in VC when DC is blank.
+        distribution = dc if dc is not None else vc
+        out.append(LDCDeliveryCharges(
+            distributor=dist,
+            rate_class=cls,
+            service_charge=_xml_float(row.findtext("SC")),
+            distribution_kwh=distribution,
+            transmission_network=_xml_float(row.findtext("Net")),
+            transmission_connection=_xml_float(row.findtext("Conn")),
+            wholesale_market=_xml_float(row.findtext("WMSR")),
+            rural_remote=_xml_float(row.findtext("RRRP")),
+            sss_admin=_xml_float(row.findtext("SSS")),
+            other_fixed=_xml_float(row.findtext("OFC")),
+            loss_factor=_xml_float(row.findtext("LF")),
+            year=(row.findtext("YEAR") or "").strip() or None,
+        ))
+    log.info(f"Parsed {len(out)} residential BillData rows across "
+             f"{len({r.distributor for r in out})} distributors")
+    return out
+
+
+_BILLDATA_STOPWORDS = frozenset({
+    "inc", "ltd", "limited", "corporation", "corp", "co", "company",
+    "distribution", "electric", "electricity", "system", "systems",
+    "utilities", "utility", "power", "energy", "hydro", "the", "of",
+    "and", "rate", "zone", "former", "service", "area", "for",
+})
+
+# Directional / generic tokens alone never justify a match (Waterloo North
+# must not land on Synergy North just because both contain "north").
+_GENERIC_NAME_TOKENS = frozenset({
+    "north", "south", "east", "west", "central", "greater", "city", "town",
+    "new", "old", "main",
+})
+
+# Seed / DB names that diverge from BillData Dist labels (mergers, branding).
+_BILLDATA_NAME_ALIASES: dict[str, str] = {
+    "enersource hydro mississauga": "alectra enersource",
+    "guelph hydro electric systems": "alectra guelph",
+    "guelph hydro": "alectra guelph",
+    "kitchener-wilmot hydro": "enova kitchener-wilmot",
+    "kitchener wilmot hydro": "enova kitchener-wilmot",
+    "waterloo north hydro": "enova waterloo north",
+    "ottawa hydro (hydro ottawa)": "hydro ottawa",
+    "ottawa hydro": "hydro ottawa",
+}
+
+
+def _name_tokens(name: str) -> set[str]:
+    cleaned = re.sub(r"[^a-z0-9\s]", " ", (name or "").lower())
+    return {t for t in cleaned.split() if t and t not in _BILLDATA_STOPWORDS}
+
+
+def _alias_utility_name(utility_name: str) -> str:
+    key = re.sub(r"\s+", " ", (utility_name or "").strip().lower())
+    return _BILLDATA_NAME_ALIASES.get(key, utility_name)
+
+
+# When one DB utility maps to several BillData Dist rate zones, prefer these
+# suffixes (largest / primary historical zone first).
+_PREFERRED_ZONE_SUFFIXES = (
+    "PowerStream Rate Zone",
+    "Main Rate Zone",
+    "Newmarket-Tay Rate Zone",
+    "North Bay Rate Zone",
+    "Veridian Rate Zone",
+    "Kitchener-Wilmot Hydro Rate Zone",
+    "Waterloo North Rate Zone",
+    "Energy+ Rate Zone",
+    "Enersource Rate Zone",
+    "Brampton Rate Zone",
+)
+
+
+def match_ldc_delivery(
+    utility_name: str,
+    rows: list[LDCDeliveryCharges],
+) -> LDCDeliveryCharges | None:
+    """Pick the best BillData residential row for a DB utility name."""
+    if not utility_name or not rows:
+        return None
+    util_toks = _name_tokens(_alias_utility_name(utility_name))
+    if not util_toks:
+        return None
+
+    # Group residential rows by Dist.
+    by_dist: dict[str, list[LDCDeliveryCharges]] = {}
+    for r in rows:
+        by_dist.setdefault(r.distributor, []).append(r)
+
+    scored: list[tuple[float, str]] = []
+    for dist in by_dist:
+        # Tokenize the full Dist (including rate-zone suffix) so Enova's
+        # "Kitchener-Wilmot Hydro Rate Zone" matches the seeded LDC name.
+        dist_toks = _name_tokens(dist)
+        if not dist_toks:
+            continue
+        overlap = util_toks & dist_toks
+        if not overlap:
+            continue
+        distinctive = overlap - _GENERIC_NAME_TOKENS
+        if not distinctive and len(overlap) < 2:
+            continue
+        union = util_toks | dist_toks
+        score = len(overlap) / len(union)
+        # Reward covering the utility's distinctive tokens.
+        if util_toks - _GENERIC_NAME_TOKENS and (
+            (util_toks - _GENERIC_NAME_TOKENS) <= dist_toks
+        ):
+            score += 0.4
+        elif util_toks <= dist_toks or dist_toks <= util_toks:
+            score += 0.2
+        # Prefer Dist without a "Former …" / acquired-area suffix.
+        if "former" not in dist.lower():
+            score += 0.05
+        if "-" not in dist:
+            score += 0.1
+        scored.append((score, dist))
+
+    if not scored:
+        return None
+    scored.sort(key=lambda x: (-x[0], len(x[1])))
+    best_score, best_dist = scored[0]
+    if best_score < 0.35:
+        return None
+
+    # If several Dist share the same corporate base (Alectra rate zones),
+    # pick a preferred zone among near-ties.
+    base = best_dist.split("-", 1)[0].strip()
+    zone_cands = [
+        d for s, d in scored
+        if s >= best_score - 0.15 and d.split("-", 1)[0].strip() == base
+    ]
+    if len(zone_cands) > 1:
+        for suffix in _PREFERRED_ZONE_SUFFIXES:
+            for d in zone_cands:
+                if d.endswith(suffix) or suffix in d:
+                    best_dist = d
+                    break
+            else:
+                continue
+            break
+
+    class_rows = by_dist[best_dist]
+    class_rows.sort(key=lambda r: (_residential_class_rank(r.rate_class), r.rate_class))
+    chosen = class_rows[0]
+    log.info(
+        f"  BillData match '{utility_name}' → '{chosen.distributor}' "
+        f"[{chosen.rate_class}] delivery={chosen.delivery_kwh:.5f} "
+        f"regulatory={chosen.regulatory_kwh:.5f} $/kWh"
+    )
+    return chosen
 
 
 def _parse_cents(val: str) -> float | None:
@@ -479,13 +755,113 @@ def _ulo_price_for(rates: ULORates, period_key: str) -> float:
     }[period_key]
 
 
-def build_tariff_entries(rates: OEBRateSet, customer_class: str) -> list[dict]:
+def _ldc_adjustment_rows(ldc: LDCDeliveryCharges) -> list[dict]:
+    """Audit ADJUSTMENT rows for each printed BillData per-kWh line."""
+    specs = (
+        (ldc.distribution_kwh, "Distribution volumetric (DC)"),
+        (ldc.transmission_network, "Transmission network (Net)"),
+        (ldc.transmission_connection, "Transmission connection (Conn)"),
+        (ldc.wholesale_market, "Wholesale market service (WMSR)"),
+        (ldc.rural_remote, "Rural or remote rate protection (RRRP)"),
+    )
+    rows: list[dict] = []
+    for val, label in specs:
+        if val is None or abs(val) < 1e-12:
+            continue
+        rows.append({
+            "component_type": "adjustment",
+            "unit": "$/kWh",
+            "rate_value": val,
+            "tier_label": label,
+            "included_in_energy": True,
+        })
+    return rows
+
+
+def _ldc_fixed_rows(ldc: LDCDeliveryCharges) -> list[dict]:
+    """FIXED rows from BillData (service charge, SSS, other fixed)."""
+    specs = (
+        (ldc.service_charge, "Monthly service charge (SC)"),
+        (ldc.sss_admin, "Standard supply service admin (SSS)"),
+        (ldc.other_fixed, "Other fixed charge (OFC)"),
+    )
+    rows: list[dict] = []
+    for val, label in specs:
+        if val is None or abs(val) < 1e-12:
+            continue
+        rows.append({
+            "component_type": "fixed",
+            "unit": "$/month",
+            "rate_value": val,
+            "tier_label": label,
+        })
+    return rows
+
+
+def _apply_ldc_delivery_to_entry(entry: dict, ldc: LDCDeliveryCharges) -> dict:
+    """Fold LDC per-kWh delivery+regulatory into ENERGY; store the breakdown.
+
+    ENERGY becomes RPP commodity + delivery_kwh + regulatory_kwh. Each BillData
+    line is kept as an ADJUSTMENT with ``included_in_energy=true``. FIXED
+    service / SSS / OFC rows are attached. Loss factor is recorded in the
+    description only (it scales volume, not the printed ¢/kWh adder).
+    """
+    adder = ldc.per_kwh_adder
+    comps = []
+    for c in entry.get("components") or []:
+        row = dict(c)
+        if str(row.get("component_type") or "").lower() == "energy" and adder:
+            try:
+                row["rate_value"] = round(float(row["rate_value"]) + adder, 6)
+            except (TypeError, ValueError, KeyError):
+                pass
+        comps.append(row)
+    comps.extend(_ldc_adjustment_rows(ldc))
+    comps.extend(_ldc_fixed_rows(ldc))
+    entry = dict(entry)
+    entry["components"] = comps
+    entry["energy_scope"] = "delivery_plus_default_supply"
+    entry["source_url"] = ldc.source_url or entry.get("source_url") or SOURCE_URL
+    desc = entry.get("description") or ""
+    extra = (
+        f" Full billable ENERGY includes OEB RPP commodity plus this LDC's "
+        f"per-kWh delivery ({ldc.delivery_kwh:.5f} $/kWh) and regulatory "
+        f"({ldc.regulatory_kwh:.5f} $/kWh) charges from OEB BillData.xml "
+        f"({ldc.distributor}, {ldc.rate_class}"
+        f"{f', {ldc.year}' if ldc.year else ''})."
+    )
+    if ldc.loss_factor:
+        extra += (
+            f" BillData loss factor LF={ldc.loss_factor} is a volume "
+            f"adjustment and is not folded into ENERGY."
+        )
+    entry["description"] = (desc + extra).strip()
+    entry["ldc_delivery"] = {
+        "distributor": ldc.distributor,
+        "rate_class": ldc.rate_class,
+        "delivery_kwh": ldc.delivery_kwh,
+        "regulatory_kwh": ldc.regulatory_kwh,
+        "per_kwh_adder": adder,
+        "source_url": ldc.source_url,
+        "year": ldc.year,
+    }
+    return entry
+
+
+def build_tariff_entries(
+    rates: OEBRateSet,
+    customer_class: str,
+    ldc: LDCDeliveryCharges | None = None,
+) -> list[dict]:
     """Build tariff dicts from parsed OEB rates for a given customer class.
 
     Returns entries compatible with the store_tariffs format. TOU/ULO ENERGY
     rows include structured clock windows (+ season calendar for TOU, whose
     on/mid peak hours swap May↔Nov). Prices are never invented; hours come
     from the fixed OEB schedules defined above.
+
+    When ``ldc`` is provided (residential only), BillData per-kWh delivery +
+    regulatory charges are folded into ENERGY with ADJUSTMENT audit rows.
     """
     tariffs = []
     class_label = "Residential" if customer_class == "residential" else "Small Business"
@@ -661,6 +1037,11 @@ def build_tariff_entries(rates: OEBRateSet, customer_class: str) -> list[dict]:
     for t in tariffs:
         t.setdefault("customer_class", customer_class)
 
+    # Fold LDC delivery/regulatory onto residential plans only. Commercial
+    # BillData classes differ and are out of scope for this lean pass.
+    if ldc is not None and customer_class == "residential":
+        tariffs = [_apply_ldc_delivery_to_entry(t, ldc) for t in tariffs]
+
     return tariffs
 
 
@@ -672,7 +1053,11 @@ def _oeb_rate_components(entry: dict) -> list:
         _parse_season_int,
     )
 
-    comp_map = {"energy": ComponentType.ENERGY, "fixed": ComponentType.FIXED}
+    comp_map = {
+        "energy": ComponentType.ENERGY,
+        "fixed": ComponentType.FIXED,
+        "adjustment": ComponentType.ADJUSTMENT,
+    }
     out = []
     for comp in entry.get("components", []):
         ct = comp_map.get(comp.get("component_type"))
@@ -694,6 +1079,7 @@ def _oeb_rate_components(entry: dict) -> list:
             season_start_day=_parse_season_int(comp.get("season_start_day"), lo=1, hi=31),
             season_end_month=_parse_season_int(comp.get("season_end_month"), lo=1, hi=12),
             season_end_day=_parse_season_int(comp.get("season_end_day"), lo=1, hi=31),
+            included_in_energy=comp.get("included_in_energy"),
         ))
     return out
 
@@ -803,14 +1189,27 @@ def store_oeb_tariffs(utility_id: int, tariff_entries: list[dict], dry_run: bool
                 )
             existing = choose_vintage_keeper(live_rows) if live_rows else None
 
+            provided_types = {rc.component_type.value for rc in oeb_components}
+            # When BillData folded FIXED/ADJUSTMENT into the entry, those
+            # types are part of the OEB revision signature (so an SC change
+            # refreshes) and must not be double-carried from the predecessor.
+            compare_types = OEB_OWNED_COMPONENT_TYPES | (
+                provided_types & {"fixed", "adjustment"}
+            )
+
             if existing is not None:
-                owned = OEB_OWNED_COMPONENT_TYPES
-                same_energy = (
-                    component_signature(existing.rate_components, types=owned)
-                    == component_signature(oeb_components, types=owned)
+                same_owned = (
+                    component_signature(existing.rate_components, types=compare_types)
+                    == component_signature(oeb_components, types=compare_types)
                 )
-                if same_energy and existing.rate_type == rt and existing.effective_date == eff_date:
+                if same_owned and existing.rate_type == rt and existing.effective_date == eff_date:
                     existing.last_verified_at = now
+                    # Keep LDC provenance sticky on re-verify.
+                    if entry.get("ldc_delivery"):
+                        cf = dict(existing.confidence_factors or {})
+                        cf["ontario_ldc_delivery"] = True
+                        cf["ontario_ldc_delivery_meta"] = entry["ldc_delivery"]
+                        existing.confidence_factors = cf
                     stored += 1
                     continue
                 if is_manual_or_pinned(existing):
@@ -836,13 +1235,16 @@ def store_oeb_tariffs(utility_id: int, tariff_entries: list[dict], dry_run: bool
                     continue
 
             carried = (
-                _carry_forward_components(
-                    existing, {rc.component_type.value for rc in oeb_components}
-                )
+                _carry_forward_components(existing, provided_types)
                 if existing is not None
                 else []
             )
             factors: dict = {"origin": "oeb_feed"}
+            if entry.get("ldc_delivery"):
+                factors["ontario_ldc_delivery"] = True
+                factors["ontario_ldc_delivery_meta"] = entry["ldc_delivery"]
+            if entry.get("energy_scope"):
+                factors["energy_scope"] = entry["energy_scope"]
             if carried:
                 factors["carried_forward_components"] = sorted(
                     {rc.component_type.value for rc in carried}
@@ -899,7 +1301,7 @@ def main():
     parser.add_argument("--output", type=str, help="Write parsed rates JSON to file")
     args = parser.parse_args()
 
-    # Fetch and parse OEB page
+    # Fetch and parse OEB commodity page + BillData LDC delivery feed.
     html = fetch_oeb_page()
     rates = parse_oeb_rates(html)
 
@@ -916,16 +1318,21 @@ def main():
         found.append(f"ULO ({rates.ulo.effective_date})")
     log.info(f"Parsed OEB rates: {', '.join(found)}")
 
-    # Build tariff entries for both customer classes
-    residential_tariffs = build_tariff_entries(rates, "residential")
-    commercial_tariffs = build_tariff_entries(rates, "commercial")
-    all_tariff_templates = residential_tariffs + commercial_tariffs
+    billdata_rows: list[LDCDeliveryCharges] = []
+    try:
+        billdata_rows = parse_billdata_xml(fetch_billdata_xml())
+    except Exception as e:
+        log.warning(f"BillData.xml unavailable ({e}) — storing commodity-only RPP")
 
-    log.info(f"Built {len(all_tariff_templates)} tariff templates (res + commercial)")
+    # Commercial stays province-wide commodity (no LDC fold).
+    commercial_tariffs = build_tariff_entries(rates, "commercial")
 
     if args.output:
+        # Sample templates: commodity-only + one LDC-folded residential if matched.
+        sample_ldc = match_ldc_delivery("Toronto Hydro", billdata_rows) if billdata_rows else None
         output_data = {
             "source": SOURCE_URL,
+            "billdata_source": BILLDATA_URL,
             "scraped_at": datetime.now(timezone.utc).isoformat(),
             "tou": {
                 "effective_date": rates.tou.effective_date if rates.tou else None,
@@ -947,13 +1354,19 @@ def main():
                 "mid_peak_dollar_kwh": rates.ulo.mid_peak if rates.ulo else None,
                 "on_peak_dollar_kwh": rates.ulo.on_peak if rates.ulo else None,
             },
-            "tariff_templates": all_tariff_templates,
+            "tariff_templates_commodity": (
+                build_tariff_entries(rates, "residential") + commercial_tariffs
+            ),
+            "tariff_templates_sample_ldc": (
+                build_tariff_entries(rates, "residential", ldc=sample_ldc)
+                if sample_ldc else None
+            ),
         }
         with open(args.output, "w") as f:
             json.dump(output_data, f, indent=2)
         log.info(f"Rates written to {args.output}")
 
-    # Get Ontario utilities and apply rates
+    # Get Ontario utilities and apply rates (per-LDC residential fold).
     utilities = get_ontario_utilities()
     if not utilities:
         log.warning("No Ontario utilities found in database")
@@ -962,11 +1375,21 @@ def main():
     log.info(f"Applying OEB rates to {len(utilities)} Ontario utilities...")
 
     total_stored = 0
+    matched = 0
     for util in utilities:
-        count = store_oeb_tariffs(util["id"], all_tariff_templates, args.dry_run)
+        ldc = match_ldc_delivery(util["name"], billdata_rows) if billdata_rows else None
+        if ldc:
+            matched += 1
+        residential_tariffs = build_tariff_entries(rates, "residential", ldc=ldc)
+        all_tariffs = residential_tariffs + commercial_tariffs
+        count = store_oeb_tariffs(util["id"], all_tariffs, args.dry_run)
         total_stored += count
         action = "Would store" if args.dry_run else "Stored"
-        log.info(f"  {action} {count} tariffs for {util['name']} (id={util['id']})")
+        tag = f" +BillData[{ldc.distributor}]" if ldc else " (commodity-only)"
+        log.info(
+            f"  {action} {count} tariffs for {util['name']} "
+            f"(id={util['id']}){tag}"
+        )
 
     print("\n" + "=" * 60)
     print("OEB RATE SCRAPER SUMMARY")
@@ -978,6 +1401,7 @@ def main():
     if rates.ulo:
         print(f"  ULO  (eff. {rates.ulo.effective_date}): Night={rates.ulo.ultra_low_overnight:.5f} WOP={rates.ulo.weekend_off_peak:.5f} Mid={rates.ulo.mid_peak:.5f} On={rates.ulo.on_peak:.5f} $/kWh")
     print(f"\n  Utilities updated: {len(utilities)}")
+    print(f"  BillData LDC matches: {matched}/{len(utilities)}")
     print(f"  Total tariffs {'created/updated' if not args.dry_run else 'would create/update'}: {total_stored}")
     if args.dry_run:
         print("  (DRY RUN — no database changes made)")
