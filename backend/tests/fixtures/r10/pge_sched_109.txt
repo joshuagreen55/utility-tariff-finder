@@ -1,0 +1,113 @@
+Portland General Electric Company Second Revision of Sheet No. 109-1
+P.U.C. Oregon No. E-19 Canceling First Revision of Sheet No. 109-1
+SCHEDULE 109
+ENERGY TRUST OF OREGON FUNDING ADJUSTMENT
+PURPOSE
+To fund the acquisition of Energy Efficiency as administered by the Energy Trust of Oregon (ETO)
+for the benefit of the Company’s Customers pursuant to ORS 757.054.
+AVAILABLE
+In all territory served by the Company.
+APPLICABLE
+To all Residential and Nonresidential Customers located within the Company’s service territory.
+Nonresidential Customers who meet the eligibility qualifications under 2021 Legislative Session
+House Bill (HB) 3141 and whose load exceeded 1 aMW but less than 10 aMW during the prior
+calendar year are subject to an annual cap of $250,000 for combined Energy Trust of Oregon
+Funding Adjustment and Public Purpose Charges. Nonresidential Customers who meet the
+eligibility qualifications under HB 3141 and whose load exceeded 10 aMW are subject to an
+annual cap of $4,000,000 for combined Energy Trust of Oregon Funding Adjustment and Public
+Purpose Charges.
+Sites receiving service under Schedule 96 are charged such that these sites pay the maximum (N)
+allowable amount under HB 3141 per Commission Order 26-154, directing treatment of large
+loads under the POWER Act (HB 3546). (N)
+SELF-DIRECTING CUSTOMER (SDC)
+Pursuant to OAR 860-038-0480, to qualify to be an SDC, the Large Nonresidential Customer
+must have a load that exceeds 1 aMW at a Site as defined in Rule B and receive certification from
+the Oregon Department of Energy (ODOE) as an SDC. The Company will include the credits due,
+as reported by the ODOE, to the applicable portions of the SDC’s monthly Schedule 109 Charge.
+BALANCING ACCOUNT
+The Company will maintain a balancing account to accrue the incremental amounts between the
+amounts associated with the ETO budget and the revenues collected under this schedule. This
+balancing account will accrue interest at the Commission-authorized rate for deferred accounts.
+Advice No. 26-24
+Issued June 3, 2026 Effective for service
+Angelica Espinosa, Senior Vice President on and after July 8, 2026
+
+Portland General Electric Company Fourth Revision of Sheet No. 109-2
+P.U.C. Oregon No. E-19 Canceling Third Revision of Sheet No. 109-2
+SCHEDULE 109 (Continued)
+ENERGY TRUST OF OREGON FUNDING ADJUSTMENT
+The Adjustment Rates, applicable for service on and after the effective date of this schedule, will
+be:
+Standard Pricing
+Schedule Adjustment Rate
+(R)
+7 1.004 ¢ per kWh
+15/515 0.742 ¢ per kWh
+32/532 0.916 ¢ per kWh
+38/538 1.000 ¢ per kWh
+47 1.310 ¢ per kWh
+49/549 1.190 ¢ per kWh
+75/575
+Secondary 0.487 ¢ per kWh
+Primary 0.482 ¢ per kWh
+Subtransmission 0.416 ¢ per kWh
+83/583 0.700 ¢ per kWh
+85/485/585
+Secondary 0.622 ¢ per kWh
+Primary 0.752 ¢ per kWh
+89/489/589/689
+Secondary 0.487 ¢ per kWh
+Primary 0.482 ¢ per kWh
+Subtransmission 0.416 ¢ per kWh
+90/490/590
+Primary 30-250MWa 0.482 ¢ per kWh
+Primary >250MWa 0.000 ¢ per kWh
+Subtransmission 0.482 ¢ per kWh
+91/491/591 0.770 ¢ per kWh
+92/492/592 0.526 ¢ per kWh
+95/495/595 0.770 ¢ per kWh
+(R)
+96/496/596/696 0.764 ¢ per kWh
+(N)
+Advice No. 26-24
+Issued June 30, 2026 Effective for service
+Angelica Espinosa, Senior Vice President on and after July 8, 2026
+
+Portland General Electric Company Fourth Revision of Sheet No. 109-3
+P.U.C. Oregon No. E-19 Canceling Third Revision of Sheet No. 109-3
+SCHEDULE 109 (Concluded)
+ENERGY TRUST OF OREGON FUNDING ADJUSTMENT (Continued)
+Over One Average Megawatt Pricing
+Schedule Adjustment Rate
+75/575 >1aMW
+(R)
+Secondary 0.487 ¢ per kWh
+Primary 0.482 ¢ per kWh
+Subtransmission 0.416 ¢ per kWh
+83/583 >1aMW 0.422 ¢ per kWh
+85/485/585 >1aMW
+Secondary 0.298 ¢ per kWh
+Primary 0.274 ¢ per kWh
+89/489/589/689 >1aMW
+Secondary 0.487 ¢ per kWh
+Primary 0.482 ¢ per kWh
+Subtransmission 0.416 ¢ per kWh
+(C)
+90/490/590 >1aMW
+Primary 30-250MWa 0.482 ¢ per kWh
+Primary >250MWa 0.000 ¢ per kWh
+Subtransmission 0.482 ¢ per kWh
+(R)
+96/496/596/696 0.764 ¢ per kWh
+(N)
+SPECIAL CONDITION
+1. Any adjustments relating to eligible Nonresidential Customers subject to annual caps as
+described in HB 3141 will be paid from the Schedule 109 Energy Trust of Oregon Funding
+Adjustment balancing account. Nonresidential Customers meeting the requirements for the
+combined annual cap under HB 3141 will notify the Company by March 31 of the following
+year to receive an adjustment.
+TERM
+This Schedule will terminate on January 1, 2036.
+Advice No. 26-24
+Issued June 30, 2026 Effective for service
+Angelica Espinosa, Senior Vice President on and after July 8, 2026
