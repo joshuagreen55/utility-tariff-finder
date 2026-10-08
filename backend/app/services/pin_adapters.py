@@ -261,7 +261,7 @@ ARBITER_PROMPT = """You are the final gate before an automated system replaces a
 
 Accept only if ALL hold:
 1. The proposal is the same product (same rate schedule / customer class) as the current row.
-2. Every proposed rate value, unit, TOU clock window, day type and season date is stated in the document for the rates in effect on or after the proposed effective date (not a superseded or future column).
+2. Every proposed rate value, unit, TOU clock window, day type and season date is stated in the document for the rates in effect on or after the proposed effective date (not a superseded or future column). An ENERGY value may be the sum of printed amounts when each amount is listed as an ADJUSTMENT row with included_in_energy=true and appears in the document (full-bill / all-in ENERGY) — that is not a rejection reason.
 3. The proposal is complete: no energy/fixed period, tier or season in the document is missing.
 4. The change from the current row is explained by the document (a real rate change or a corrected extraction), not an extraction error.
 

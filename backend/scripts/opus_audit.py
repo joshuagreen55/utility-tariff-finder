@@ -187,11 +187,11 @@ Website: {website_url}
 Compare the database entries against the source page content. Evaluate:
 
 1. **Existence**: Does each database tariff actually appear on the source page?
-2. **Rate Accuracy**: Are the $/kWh, $/kW, $/month values in the database correct? Check EVERY rate component against the source page. Even small differences matter.
-3. **Classification**: Is the customer_class (residential/commercial) correct? Is the rate_type (flat/tiered/tou/etc.) correct?
+2. **Rate Accuracy**: Are the $/kWh, $/kW, $/month values in the database correct? Check EVERY rate component against the source page. Even small differences matter. An ENERGY value may be the sum of printed base + mandatory rider amounts when each addend appears as an ADJUSTMENT with included_in_energy=true and is printed on the page — do NOT flag that as wrong_rate. Use issue type `rider_missing_from_energy` when a mandatory per-kWh rider is printed but not folded into ENERGY.
+3. **Classification**: Is the customer_class (residential) correct? Is the rate_type (flat/tiered/tou/etc.) correct?
 4. **Completeness**: Are ALL tiers, TOU periods, and seasonal variations captured? Are any rate components missing? Check each structured TOU clock window (`clock`, `days`) and season calendar (`season dates`) against the page; a missing or wrong window or date is an issue even when the price is right.
 5. **Currency**: Does the effective_date match what's on the page? Are the rates current or stale?
-6. **Missing Tariffs**: Are there residential or small commercial tariffs on the source page that are NOT in the database?
+6. **Missing Tariffs**: Are there residential tariffs on the source page that are NOT in the database? (Ignore commercial-only schedules.)
 7. **Phantom Tariffs**: Are there tariffs in the database that DON'T appear anywhere on the source page?
 
 ## Grading
@@ -236,7 +236,7 @@ Return ONLY a valid JSON object (no markdown, no explanation outside the JSON):
   "notes": "Overall good coverage. One rate is stale from a Jan 2025 update."
 }}
 
-Issue types: wrong_rate, wrong_classification, wrong_rate_type, missing_component, extra_component, stale_date, phantom_tariff, other
+Issue types: wrong_rate, rider_missing_from_energy, wrong_classification, wrong_rate_type, missing_component, extra_component, stale_date, phantom_tariff, other
 Severity levels: high (wrong dollar amounts, missing tariffs), medium (wrong classification, missing non-core components), low (stale dates, minor description issues)
 """
 
