@@ -37,8 +37,8 @@ class TestMysaPromptContract(unittest.TestCase):
         "period_end_time",
         "day_type",
         "season_start/end",
-        "do NOT invent hours",
-        "MYSA FIELDS",
+        "Do NOT invent hours",
+        "MYSA fields",
     )
 
     def test_shared_rules_name_mysa_fields(self):
@@ -46,25 +46,27 @@ class TestMysaPromptContract(unittest.TestCase):
             self.assertIn(snippet, tp._STRUCTURED_RULES)
 
     def test_phase3_prompts_include_structured_rules(self):
+        # Two-pass extract user message defers to the cached system prompt.
         for prompt in (
             tp.EXTRACTION_PROMPT,
-            tp.TWOPASS_EXTRACT_PROMPT,
+            tp.EXTRACTION_SYSTEM_PROMPT,
             tp.PAGE_SCREENSHOT_EXTRACTION_PROMPT_BASE,
             tp.PDF_VISION_EXTRACTION_PROMPT_BASE,
+            tp._STRUCTURED_RULES,
         ):
             with self.subTest(prompt=prompt[:40]):
-                self.assertIn("MYSA FIELDS", prompt)
                 self.assertIn("period_start_time", prompt)
-                self.assertIn("season_start_month", prompt)
+                self.assertIn("MYSA fields", prompt)
                 self.assertNotIn("{structured_rules}", prompt)
                 self.assertNotIn("Convert cents to dollars", prompt)
+        self.assertIn("SOURCE ONLY", tp.TWOPASS_EXTRACT_PROMPT)
 
     def test_phase6_prompt_aligned(self):
         text = tp._phase6_prompt("Hydro One", "ON", attempted_urls=None)
-        self.assertIn("MYSA FIELDS", text)
+        self.assertIn("MYSA fields", text)
         self.assertIn("seasonal_tou", text)
         self.assertIn("period_start_time", text)
-        self.assertIn("Do not convert cents to dollars", text)
+        self.assertIn("do not convert cents", text.lower())
         self.assertNotIn('If you use "$/kWh" as the unit, convert cents', text)
 
     def test_browser_cli_prompt_aligned(self):
@@ -89,10 +91,10 @@ class TestMysaPromptContract(unittest.TestCase):
             create.return_value = mock.Mock(usage=None, content=[])
             bi.extract_tariffs_from_snapshots([snap], "Test Co")
         prompt = create.call_args.kwargs["messages"][0]["content"]
-        self.assertIn("MYSA FIELDS", prompt)
+        self.assertIn("MYSA fields", prompt)
         self.assertIn("period_start_time", prompt)
         self.assertIn("season_start_month", prompt)
-        self.assertIn("NO GUESSING", prompt)
+        self.assertIn("SOURCE ONLY", prompt)
         self.assertIn("ONLY residential", prompt)
         self.assertNotIn("small business/commercial", prompt)
         self.assertNotIn("Convert cents/kWh to $/kWh", prompt)
@@ -111,7 +113,7 @@ class TestMysaPromptContract(unittest.TestCase):
         self.assertIn("do not invent", props["period_start_time"]["description"].lower())
 
     def test_prompt_version_bumped_for_mysa_rules(self):
-        self.assertEqual(tp._LLM_PROMPT_VERSION, "v8")
+        self.assertEqual(tp._LLM_PROMPT_VERSION, "v9")
 
 
 class TestStructuredRoundTrip(unittest.TestCase):

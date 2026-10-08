@@ -307,8 +307,8 @@ class ExtractedTariff:
     components: list[dict] = field(default_factory=list)
     confidence: float = 0.0
     # Set by Phase 4 when a value passed validation but sits in a
-    # suspicious band (above p95, or unit auto-corrected). Persisted in
-    # confidence_factors so reviewers can query it.
+    # suspicious band (above p95, or unit auto-corrected), or by the model
+    # via store_tariffs.needs_review. Persisted in confidence_factors.
     needs_review: bool = False
     # Structured TOU/seasonal completeness gap reasons from Phase 4
     # (e.g. tou_missing_clock_windows). Persisted under confidence_factors.
@@ -319,6 +319,15 @@ class ExtractedTariff:
     # Which extraction tier produced it (haiku / sonnet / opus / twopass /
     # vision), for accepted-after-validation yield.
     extraction_tier: str = ""
+    # Model-reported gaps (Opus 5.5 prompt review schema). Persisted under
+    # confidence_factors; riders_referenced_not_shown also feeds rider fetch.
+    missing_fields: list[str] = field(default_factory=list)
+    riders_referenced_not_shown: list[str] = field(default_factory=list)
+    energy_scope: str = ""
+    closed_to_new: bool = False
+    energy_includes_riders: bool | None = None
+    empty_reason: str = ""
+    linked_document_hint: str = ""
 
 
 @dataclass
@@ -609,7 +618,7 @@ def _set_pdf_cache(content_hash: str, text: str) -> None:
 
 # LLM extraction result cache — avoids re-calling the LLM for the same content
 LLM_CACHE_DIR = os.path.join(os.environ.get("APP_LOG_DIR", "/app/logs"), "llm_extraction_cache")
-_LLM_PROMPT_VERSION = "v8"
+_LLM_PROMPT_VERSION = "v9"
 
 
 # Opt-in, for one transition run only: also read entries written under the
@@ -631,10 +640,13 @@ def _cache_model_id(tier: str) -> str:
 
 
 def _llm_cache_path(content_hash: str, tier: str, *, legacy: bool = False) -> str:
+    # Include YYYY-MM so "current column" answers don't replay forever after
+    # a future dated column becomes current (prompt review item 2 / §5.1).
+    month_key = date.today().strftime("%Y-%m")
     material = (
-        f"{content_hash}:{tier}:{_LLM_PROMPT_VERSION}"
+        f"{content_hash}:{tier}:{_LLM_PROMPT_VERSION}:{month_key}"
         if legacy
-        else f"{content_hash}:{tier}:{_cache_model_id(tier)}:{_LLM_PROMPT_VERSION}"
+        else f"{content_hash}:{tier}:{_cache_model_id(tier)}:{_LLM_PROMPT_VERSION}:{month_key}"
     )
     return os.path.join(LLM_CACHE_DIR, f"{hashlib.sha256(material.encode()).hexdigest()}.json")
 
@@ -2389,98 +2401,108 @@ def _page_has_rate_content(text: str, title: str = "", url: str = "") -> bool:
 # Phase 3: LLM extraction of tariff data
 # ---------------------------------------------------------------------------
 
-# Shared by every Phase 3 prompt (text, two-pass, vision). No braces: it is
-# substituted before str.format runs on the prompts.
-_STRUCTURED_RULES = """- NO GUESSING / NO EXAMPLE NUMBERS (hard rule): Never guess, infer, invent, or make up a rate value, fixed charge, period, clock time, day type, or season date. Never reuse, copy, or adapt a number from a worked example — examples illustrate output FORMAT only. If a price, period, time, or season date is not shown in the provided content, leave that field null (or omit the tariff) and lower confidence / flag for review. Missing data is preferred over invented data.
-- RESIDENTIAL ONLY: Extract residential / domestic schedules only. Ignore commercial, small-business, general-service, industrial, lighting, irrigation, wholesale, and other non-residential plans.
-- UNITS: copy each number and its unit exactly as printed ("¢/kWh" stays 9.56 "¢/kWh"; "$/kWh" stays 0.0956 "$/kWh"). Do not convert cents to dollars — the pipeline does it deterministically. When you add riders into an all-in rate, add them in the printed unit.
-- FULL-BILL ENERGY (product rule): Residential ENERGY must be the FULL per-kWh price the customer pays — base energy charge PLUS every applicable per-kWh rider/adjustment (fuel, FAM/AA/BA, DSM/DCRR/efficiency, storm/SCRR, power-cost/PCA, interim, cost-recovery, rate riders, etc.). Fixed monthly customer/basic charges stay as FIXED and are never folded into ENERGY. When riders live on a different page, section, or appendix of the same rate book, still include them. Emit ENERGY at the all-in total and keep optional ADJUSTMENT rows for audit with included_in_energy=true when their amounts are already in the ENERGY total. Never store base-only ENERGY when per-kWh riders apply.
-- MYSA FIELDS (Completeness): period_start_time, period_end_time, day_type, and season_start/end month/day are first-class columns — not optional labels. Fill them whenever the source states hours or season dates. period_label / season strings are display-only and never substitute for clocks or calendar dates. Leave structured fields null when the source does not state them; Phase 4 will flag needs_review / incompleteness rather than inventing values.
-- TOU CLOCKS: every ENERGY row of a TOU / tou_tiered / demand_tou / seasonal_tou tariff needs period_start_time + period_end_time taken from hours the source states. Emit one ENERGY row per continuous window (morning and evening on-peak are two rows). A rate stated for "all other hours" / "all remaining hours" covers exactly the hours not in the other stated windows — emit those complementary windows explicitly (e.g. on-peak 16:00–21:00 → off-peak 21:00–16:00). Label-only "On-Peak" with no hours anywhere in the source stays null — do NOT invent hours.
-- DAY TYPES: every TOU ENERGY row needs day_type. Use "all" when the source says the windows apply every day (or states no weekday/weekend distinction), "weekday" when it says Monday–Friday / weekdays. When the source prices weekends and/or holidays differently (e.g. "weekends and holidays: off-peak all day"), emit separate rows with day_type "weekend" and "holiday" for them — do not leave that rule only in the description.
-- COVERAGE: for each season and each day type, the ENERGY windows must cover all 24 hours exactly once. If the source genuinely leaves hours unpriced, keep what it states and lower confidence — do not fill gaps with guesses.
-- SEASONS: every ENERGY row of a seasonal / seasonal_tiered / seasonal_tou tariff needs season_start/end month/day. A month-only range is exact: "June through September" → 6/1–9/30; "Dec–Apr" → 12/1–4/30. Seasons must cover the whole year once. Only "Summer"/"Winter" with no months anywhere in the source stays null — do NOT invent dates. seasonal_tou needs both clocks/day_type AND season dates on every ENERGY row.
-- One tariff per product: keep all seasons, periods and day types of a schedule inside that one tariff, named with the schedule's official title as printed."""
+# Shared by every Phase 3 prompt (text, two-pass, vision). No braces —
+# TODAY is injected into user messages only so the cached system prompt
+# stays byte-identical across days. Substituted into outer prompts via
+# .replace before any str.format that needs other placeholders.
+_STRUCTURED_RULES = """1. SOURCE ONLY. Every number, clock time, day type and date must come from the content you were given. Never copy a number from the examples (examples are format illustrations ONLY). If something is not shown, leave that field null (or leave the row out), set needs_review=true and name the gap in missing_fields. A blank field is better than a guessed one.
+   Allowed derivations (these are NOT guessing — do these when the source supports them):
+   a) adding printed numbers to build the full per-kWh price (rule 4);
+   b) "all other hours" / "all remaining hours" = exactly the hours not covered by the stated windows;
+   c) a month range means whole months: "June–September" → 6/1–9/30, "Dec–Apr" → 12/1–4/30;
+   d) converting a 12-hour clock to 24-hour: "7 a.m.–11 a.m." → 07:00–11:00; an end time of "9:59 p.m." → 22:00.
+   Nothing else. Never get hours from a label like "On-Peak" alone or dates from a word like "Summer" alone.
+
+2. RESIDENTIAL ONLY, decided by who the rate serves: homes, dwellings, domestic customers, farm-and-home, or residential single-phase service. A schedule named "General Service", "Farm & Home", "Single-Phase Service", or similar counts when its text says it applies to residences / dwellings / domestic use. Skip rates that serve only businesses, industry, lighting, irrigation or wholesale.
+
+3. WHICH PRICE. The user message states TODAY's date. Use the price in effect on that date. When a table has several dated columns, use the column with the latest effective date on or before TODAY. Skip proposed, pending, cancelled or withdrawn rates. If a schedule shows BOTH a temporary/interim price billed today AND a full TOU/seasonal structure that starts on a future date, extract BOTH: (i) today's billed price as one tariff with its current effective_date, and (ii) the coming TOU/seasonal structure as a separate tariff with that future effective_date (it must not be treated as current until that date). Schedules closed to new customers: still extract them and set closed_to_new=true.
+
+4. FULL PRICE (residential ENERGY). The ENERGY rate is the total per-kWh price every customer on this plan pays:
+   IN: the base energy charge plus every mandatory per-kWh charge on the same bill — fuel/purchased-power/PCA, riders and adjustments (FAM, DSM/efficiency, storm, cost recovery, interim), per-kWh delivery/transmission/distribution/regulatory charges (including Ontario delivery and regulatory adders), and — when the utility page is delivery-only — the published standard-offer / default-supply / POLR / RPP commodity price so ENERGY is a full billable ¢/kWh.
+   OUT (never add these into ENERGY): optional programs a customer must sign up for (SmartRate, peak-time rebates, green power, EV programs); charges or credits that apply only to some kWh or some customers (community solar, net-metering/export credits); event or critical-peak adders; taxes, franchise fees, percent-of-bill items and multipliers (loss factors); fixed monthly charges (they stay FIXED).
+   Match each rider to the row it applies to. If a rider differs by season, TOU period or tier, add the matching amount to each row.
+   For every amount you add, ALSO emit it as its own ADJUSTMENT row with included_in_energy=true. Emit excluded or unsure items as ADJUSTMENT rows with included_in_energy=false. Never leave included_in_energy empty on a per-kWh ADJUSTMENT row. Put "all-in" in the ENERGY tier_label when riders were folded in.
+   If the plan says riders apply but their amounts are not in the content, keep the base ENERGY, list the riders in riders_referenced_not_shown, and set needs_review=true.
+   energy_scope: "bundled" when supply+delivery are one price; "delivery_plus_default_supply" when you combined delivery with a published default/standard-offer supply price (label the breakdown in tier_label / description); "delivery_only" or "supply_only" when the other half is not shown (also set needs_review=true).
+
+5. UNITS. Copy each number and unit exactly as printed ("9.56 ¢/kWh", "0.0956 $/kWh", "2.5 mills/kWh"); the pipeline converts units. When adding amounts in different units, convert them to the base ENERGY unit and print the conversion in tier_label (e.g. "all-in: 9.56 ¢ + 0.0021 $ = 9.77 ¢").
+   Read numbers carefully: "(0.250)" in parentheses means -0.250; a decimal comma is a decimal point ("6,509 ¢" = 6.509); a trailing footnote digit or symbol (9.56¹, 9.56*) is not part of the number.
+
+6. TOU CLOCKS AND DAY TYPES. Every ENERGY row of a TOU-family tariff needs period_start_time, period_end_time and day_type taken from the source. One row per continuous window. Weekends or holidays priced differently get their own rows, with their own windows if stated ("weekends 07:00–23:00 off-peak, 23:00–07:00 ultra-low") or 00:00–00:00 if one price applies all day. If you emit holiday rows in one season, emit them in every season that has TOU windows. For every season and day type, the windows cover 24 hours exactly once.
+
+7. SEASONS. Every ENERGY row of a seasonal-family tariff needs season_start/end month/day. Seasons cover the year exactly once. If one season is two separate date ranges, emit that season's rows once for each range. If the source says seasons follow billing months rather than calendar dates, still use the month range and note "billing months" in season.
+
+8. TIERS. tier_min_kwh/tier_max_kwh exactly as printed; the next tier starts where the previous one ends (0–500, 500–1000, 1000+ with an open top). Put what the limit is measured over (per month, per day, per billing period) in tier_basis when stated. Tiered plus TOU: each row carries both the tier bounds and the clock window (rate_type tou_tiered).
+
+9. One tariff per product: keep all seasons, periods, day types and tiers of a schedule in one tariff, named as printed. A plan priced differently by zone or area gets one tariff per zone, with the zone in the name. Residential demand (¢/kW or $/kW) stays DEMAND. Net-metering / export credits are ADJUSTMENT with included_in_energy=false, never ENERGY.
+
+10. RELATIVE SEASONAL RIDERS (e.g. Rate #1.1S): when energy equals another schedule's rate ± a seasonal premium/credit, emit all-in ENERGY per season with season_start/end month/day — never leave a season as ADJUSTMENT-only. Do NOT invent hours or season dates from labels alone (MYSA fields: period_start_time, period_end_time, day_type, season_start/end)."""
 
 # Static half of the main extraction prompt — sent once as the Anthropic
 # system message (prompt-cached). Dynamic per-call fields live in
 # EXTRACTION_USER_PROMPT only so rules are not duplicated in the user message.
-EXTRACTION_SYSTEM_PROMPT = """Extract ONLY residential electricity tariffs from this page.
+EXTRACTION_SYSTEM_PROMPT = """Extract ONLY residential electricity tariffs from this page (who the rate serves — see shared rules).
 
-INCLUDE: residential / domestic rates and default residential service rates
-SKIP / IGNORE: commercial, small business, general service, industrial, large power, irrigation, fleet, street lighting, transmission, wholesale, interruptible, standby, and any other non-residential plan
+INCLUDE: schedules that serve homes / dwellings / domestic / farm-and-home / residential single-phase customers (even if named "General Service" or "Farm & Home" when the text says so)
+SKIP / IGNORE: rates that serve only businesses, industry, lighting, irrigation, fleet, street lighting, transmission, wholesale, interruptible, standby
 
 ATTRIBUTION CHECK (applies to every page you extract from):
 - A target utility is provided below. Only return rates that the page explicitly attributes to the target utility or one of its named operating subsidiaries.
 - PROVINCE-WIDE REGULATED PRICES: If the page is published by a provincial or state energy regulator (e.g. Ontario Energy Board / OEB) and lists Regulated Price Plan (RPP) or other commodity prices that apply province-wide / jurisdiction-wide to local distribution companies in that jurisdiction, treat those rates as attributable to the target utility when the target operates in that same province or state. Extract them. Do NOT invent utility-specific delivery or distribution charges that are not printed on the page.
 - If the page is a comparison / aggregator page that lists rates for multiple utilities side-by-side, only include rows unambiguously labeled for the target utility. If you cannot tell, return an empty tariffs array.
 - If a section, table, or rate sheet is labeled with a different utility's name (a neighboring IOU, a sister utility in another state, a competitive REP/marketer), DO NOT include those rates.
-- If the page contains no rates clearly attributable to the target utility (and the regulator exception above does not apply), return an empty tariffs array — do NOT guess.
+- If the document covers several states or provinces, extract only rates for the target utility's state/province given in the user message.
+- If the page contains no rates clearly attributable to the target utility (and the regulator exception above does not apply), return an empty tariffs array — do NOT guess. Set empty_reason appropriately.
 
-For each tariff, provide:
-- name: Official schedule name (e.g. "Residential Service", "Schedule RS")
-- code: Schedule code if shown (e.g. "RS", "R")
-- customer_class: always "residential" (do not emit commercial)
-- rate_type: One of: flat, tiered, tou, demand, seasonal, tou_tiered, seasonal_tou, seasonal_tiered, demand_tou, complex
-- description: One-sentence description of who this applies to
-- effective_date: YYYY-MM-DD if shown, otherwise ""
-- confidence: 0.0-1.0 how confident you are the extracted rate values are correct
-- components: Array of rate components. For EACH tier/period/season, include:
-    - component_type: "energy" | "demand" | "fixed" | "minimum" | "adjustment"
-    - unit: The unit AS PRINTED next to the number: "¢/kWh", "$/kWh", "$/month", "¢/day", "$/kW" etc.
-    - rate_value: The number AS PRINTED in that unit (e.g. 9.56 with unit "¢/kWh", or 0.0956 with unit "$/kWh"). Do NOT convert cents to dollars — the pipeline converts units deterministically.
-    - tier_min_kwh / tier_max_kwh: For tiered rates (null otherwise)
-    - tier_label: e.g. "Step 1", "First 1000 kWh"
-    - period_label: For TOU, e.g. "On-Peak", "Off-Peak" (null otherwise) — display only
-    - period_start_time / period_end_time: For TOU ENERGY rows, "HH:MM" 24h clock (e.g. "07:00", "11:00"). REQUIRED when the source states hours. Use "00:00"/"00:00" for all-hours. Overnight wraps OK (e.g. "21:00"→"07:00"). Use "24:00" only as end-of-day synonym for "00:00". NEVER invent times — if hours are not on the page, leave null.
-    - day_type: "weekday" | "weekend" | "holiday" | "all" — which days the window applies to, as the source states it (null if unknown)
-    - season: "Summer" / "Winter" etc. (null if not seasonal) — display only
-    - season_start_month / season_start_day / season_end_month / season_end_day: Inclusive calendar integers (month 1–12, day 1–31). REQUIRED for seasonal ENERGY when the source states dates (e.g. Winter Nov 1–Mar 31 → 11,1,3,31). Nov→Mar wrap OK. NEVER invent dates — if only "Winter" with no months, leave null.
+For each tariff, provide fields matching the store_tariffs tool schema. Key points:
+- customer_class: always "residential"
+- rate_type: flat (one price) | tiered (price by kWh block) | seasonal (price by season) | seasonal_tiered (blocks that differ by season) | tou (price by time of day, same all year) | seasonal_tou (time of day AND season) | tou_tiered (time of day AND blocks) | demand / demand_tou (has a $/kW charge) | complex (anything else). Pick the most specific that fits.
+- effective_date: the date the extracted prices take effect ("effective for service on and after …"), YYYY-MM-DD. Not the issued, filed, approved or printed date. Leave "" if no full date is shown.
+- confidence: 0.9+ if every value is clearly readable; 0.5–0.8 if some cell was hard to read. If you would be guessing, leave the value out and list it in missing_fields instead.
+- needs_review, missing_fields, riders_referenced_not_shown, energy_scope, closed_to_new, energy_includes_riders as defined in the tool schema.
+- components: use printed units; never invent clocks or season dates.
 
 Rules:
 - Include ALL tiers, periods, and seasonal variations as separate component entries
 {structured_rules}
 - Use exact numbers from the page — do NOT estimate or round
-- ONLY include tariffs that have actual numeric rate values ($/kWh, cents/kWh, $/month, $/kW etc.)
+- ONLY include tariffs that have actual numeric rate values ($/kWh, cents/kWh, mills/kWh, $/month, $/kW etc.)
 - Skip table-of-contents entries, index listings, or schedule names that lack rate values
 - If the document has a table of contents AND detailed rate schedules, extract from the DETAILED sections
-- If no relevant residential tariffs with rate values on this page, call the tool with an empty tariffs array
-- Set confidence to 0.9+ if values are clearly readable, 0.5-0.8 if some ambiguity, below 0.5 if guessing
+- If no relevant residential tariffs with rate values on this page, call the tool with an empty tariffs array and set empty_reason
 - If a minimum monthly charge equals the basic/customer charge for the same amp tier, emit one fixed row — not both fixed and minimum duplicates
-- RELATIVE SEASONAL RIDERS: When energy charges equal another schedule's energy rate ± a seasonal premium/credit (or similar rider), emit one ENERGY component per season at the all-in rate (base ± adjustment, in the printed unit). Put month ranges in season and/or tier_label (e.g. "Winter (Dec–Apr)", "Non-Winter (May–Nov)") AND fill season_start/end month/day when months are stated. Do NOT leave a season represented only by an ADJUSTMENT row — UIs group ENERGY by season and skip ADJUSTMENT. Optional ADJUSTMENT rows may remain for audit, but every season with a premium/credit must also have a matching all-in ENERGY row.
-- CURRENT vs FUTURE COLUMNS: When a rate table has both a current column (e.g. "Effective upon the date of the Board’s Order", "currently in effect", a mid-year Order date) AND a future column (e.g. "Effective January 1, 2027"), extract ONLY the current/Board’s Order values as the live tariff. Do NOT store the future column as the current rate.
-- STACKING ENERGY RIDERS (FAM / DSM / Storm / fuel / efficiency / power-cost / PCA / cost-recovery / interim ¢/kWh that apply in addition to the energy charge): emit ENERGY at the FULL-BILL all-in rate (base energy + every applicable per-kWh rider, in the printed unit) and put "all-in" in its tier_label. UIs show ENERGY to customers and often hide ADJUSTMENT-only riders — understating the bill if ENERGY is base-only. Optional ADJUSTMENT rows may remain for audit with included_in_energy=true. If a page lists only riders, still emit them as ADJUSTMENT so the pipeline can combine them with the base schedule.
-- INTERIM vs APPROVED ENERGY CHARGE (TVP / time-varying pricing): When a schedule publishes both an "Interim Energy Charge" (while metering/TVP systems are unavailable) AND a full "Energy Charge" seasonal TOU table, extract the **Energy Charge** seasonal/TOU structure — Non-winter all-hours plus Winter on-peak/off-peak periods as separate ENERGY rows, rate_type seasonal_tou. Do NOT flatten the tariff to a single interim all-hours ENERGY row equal to the standard Domestic offer. Fold FAM/DSM into each ENERGY period. Prefer the earliest Energy Charge effective column that is not a later calendar-year escalate (e.g. Nov 1 2026 winter rates, not Jan 1 2027). When the tariff states weekend/holiday pricing, emit it as ENERGY rows (day_type weekend / holiday), not only in the description. Fill period_* times, day_type and season_* dates on each ENERGY row.
+- RELATIVE SEASONAL RIDERS (e.g. Rate #1.1S): When energy charges equal another schedule's energy rate ± a seasonal premium/credit, emit one ENERGY component per season at the all-in rate (base ± adjustment). Fill season_start/end month/day when months are stated. Do NOT leave a season as ADJUSTMENT-only.
+- RIDER-ONLY DOCUMENTS: If the content only lists riders/adjustments (no base plan), return one tariff per rider, named as printed, customer_class "residential", each per-kWh amount as an ADJUSTMENT row. If the rider lists separate amounts per rate class, use the residential amount only.
 
 EXAMPLES (format illustrations ONLY — never copy their numbers into your output; take every figure from the provided page content):
 
 Example 1 — Simple flat rate:
-Input: "Residential Service (RS): Customer charge $12.50/month. Energy charge 9.56 cents/kWh. Effective Jan 1, 2025."
-Output: one tariff named "Residential Service", code "RS", class "residential", type "flat", confidence 0.95, with a fixed component (12.50, "$/month") and an energy component (9.56, "¢/kWh").
+Input: "Residential Service (RS): Customer charge $15.00/month. Energy charge 10.000 cents/kWh. Effective 2026-03-01."
+Output: one tariff named "Residential Service", code "RS", class "residential", type "flat", confidence 0.95, effective_date 2026-03-01, fixed 15.00 "$/month", energy 10.000 "¢/kWh".
 
 Example 2 — Tiered rate:
-Input: "Schedule R: Basic charge $8.00/mo. First 500 kWh: $0.085/kWh. Over 500 kWh: $0.105/kWh."
-Output: one tariff type "tiered", confidence 0.9, with a fixed component (8.00 "$/month"), energy tier 1 (0-500 kWh at 0.085 "$/kWh"), energy tier 2 (tier_min_kwh 500, tier_max_kwh null, 0.105 "$/kWh").
+Input: "Schedule R: Basic charge $10.00/mo. First 500 kWh: $0.100/kWh. Over 500 kWh: $0.120/kWh."
+Output: one tariff type "tiered", fixed 10.00 "$/month", energy tier 1 (0–500 at 0.100 "$/kWh"), energy tier 2 (tier_min_kwh 500, open top, 0.120 "$/kWh").
 
-Example 3 — Seasonal TOU:
-Input: "Rate TOU-D (applies every day): Summer (Jun 1–Sep 30) On-Peak 2pm–8pm $0.35/kWh, Off-Peak all other hours $0.12/kWh. Winter (Oct 1–May 31) On-Peak 2pm–8pm $0.22/kWh, Off-Peak all other hours $0.10/kWh. Service charge $10/mo."
-Output: one tariff type "seasonal_tou", confidence 0.9, fixed (10 "$/month"), and 4 ENERGY rows, each with season label + season_start/end month/day (6/1–9/30 or 10/1–5/31) and day_type "all": On-Peak 14:00–20:00, and Off-Peak 20:00–14:00 (the stated "all other hours", as one overnight window). Each season's windows cover 24 h exactly once.
+Example 3 — Seasonal TOU with complement windows:
+Input: "Rate TOU-D (every day): Summer (Jun 1–Sep 30) On-Peak 2pm–8pm $0.300/kWh, Off-Peak all other hours $0.100/kWh. Winter (Oct 1–May 31) On-Peak 2pm–8pm $0.200/kWh, Off-Peak all other hours $0.080/kWh. Service $12/mo."
+Output: seasonal_tou; fixed 12 "$/month"; 4 ENERGY rows with season dates 6/1–9/30 or 10/1–5/31, day_type "all": On-Peak 14:00–20:00 and Off-Peak 20:00–14:00 each season.
 
-Example 4 — Relative seasonal rider (base rate ± seasonal premium/credit):
-Input: "Rate #1.1S Domestic Seasonal: Energy Charges from Rate #1.1 (15.587¢/kWh) apply, subject to Winter Season Premium Adjustment Dec–Apr billing months +0.953¢/kWh; Non-Winter Season Credit Adjustment May–Nov (1.297)¢/kWh."
-Output: one tariff type "seasonal", code "1.1S", with TWO all-in energy components: Winter (Dec–Apr) 16.540 "¢/kWh" (= 15.587 + 0.953) with season dates 12/1–4/30, and Non-Winter (May–Nov) 14.290 "¢/kWh" (= 15.587 − 1.297) with season dates 5/1–11/30. Do not emit adjustment-only seasons without matching ENERGY.
+Example 4 — Relative seasonal rider (synthetic):
+Input: "Rate Domestic Seasonal: Energy Charges from Rate Domestic (10.000¢/kWh) apply, subject to Winter Premium Dec–Apr +1.000¢/kWh; Non-Winter Credit May–Nov (0.500)¢/kWh."
+Output: seasonal; TWO all-in ENERGY rows: Winter 11.000 "¢/kWh" (12/1–4/30); Non-Winter 9.500 "¢/kWh" (5/1–11/30).
 
-Example 5 — Current vs future columns + stacking riders (NS Power style):
-Input: "Domestic Service: Customer $20.08 (Board’s Order) / $21.04 (Jan 1 2027). Energy 18.324 ¢/kWh (Board’s Order) / 19.067 (Jan 1 2027). FAM AA/BA 0.156 ¢/kWh and DSM DCRR 0.648 ¢/kWh apply in addition to the energy charge."
-Output: one flat residential tariff with fixed 20.08 "$/month" and ENERGY 19.128 "¢/kWh" (= 18.324 + 0.156 + 0.648), tier_label "All-in (base + FAM + DSM)". Do not use the 2027 column as current.
+Example 5 — Dated columns + riders (TODAY = 2026-10-07):
+Input: "Residential Service: Customer $15.00 (eff 2026-03-01) / $16.00 (eff 2027-01-01). Energy 10.000 ¢/kWh (eff 2026-03-01) / 10.500 (eff 2027-01-01). Fuel Rider 0.500 ¢/kWh and Efficiency Rider 0.250 ¢/kWh apply to all kWh. Optional Green Power: add 1.000 ¢/kWh."
+Output: flat; fixed 15.00 "$/month"; ENERGY 10.750 "¢/kWh" tier_label "all-in: base 10.000 + fuel 0.500 + efficiency 0.250"; ADJUSTMENT Fuel 0.500 included_in_energy=true; ADJUSTMENT Efficiency 0.250 included_in_energy=true; ADJUSTMENT Green Power 1.000 included_in_energy=false; effective_date 2026-03-01; energy_includes_riders=true. (2027 column not yet in effect; Green Power is optional.)
 
-Example 6 — Interim vs Energy Charge seasonal TOU (NS Power Rate Code 80):
-Input: "Domestic Service Time of Use (code 80): Customer $20.08. INTERIM ENERGY CHARGE while TVP unavailable equals Domestic standard offer. ENERGY CHARGE Non-winter Apr 1–Oct 31 all hours 18.324 ¢ (Board’s Order / currently in effect). Winter Nov 1–Mar 31: on-peak 7–11am / 5–9pm 36.517 ¢, off-peak 11am–5pm / 9pm–7am 18.324 ¢ (eff Nov 1 2026); future columns: Non-winter 12.860 (eff Apr 1 2027), Winter 38.281 / 19.067 (Jan 1 2027). FAM 0.156 + DSM 0.648 apply. Note 1: winter weekends and holidays are billed at the off-peak price all day."
-Output: one residential tariff type "seasonal_tou", code "80", fixed 20.08 "$/month", and all-in ENERGY rows in "¢/kWh": Non-winter (4/1–10/31) 00:00–00:00 day_type "all" 19.128; Winter (11/1–3/31) day_type "weekday": on-peak 07:00–11:00 and 17:00–21:00 at 37.321, off-peak 11:00–17:00 and 21:00–07:00 at 19.128; Winter (11/1–3/31) off-peak 00:00–00:00 at 19.128 once with day_type "weekend" and once with day_type "holiday" (Note 1). Do NOT emit a single flat interim ENERGY 19.128. Do NOT use the future Apr 1 2027 Non-winter or Jan 1 2027 winter columns — extract ONLY currently effective / Board’s Order values.
+Example 6 — Interim today + future TOU (TODAY = 2026-10-07):
+Input: "Domestic TOU (code 80): Customer $15.00. INTERIM ENERGY CHARGE while meters unavailable: 10.000 ¢/kWh all hours (in effect today). ENERGY CHARGE TOU starts 2026-11-01: Non-winter Apr 1–Oct 31 all hours 10.000 ¢; Winter Nov 1–Mar 31 weekdays on-peak 7–11am/5–9pm 20.000 ¢, off-peak other weekday hours 10.000 ¢; winter weekends and holidays all-day off-peak. Fuel rider 0.500 ¢ applies to all."
+Output: TWO tariffs. (1) flat code 80 interim: fixed 15.00; ENERGY 10.500 all-in; ADJUSTMENT fuel 0.500 included_in_energy=true; effective_date = today's in-effect date. (2) seasonal_tou code 80 with effective_date 2026-11-01: Non-winter all-hours 10.500; Winter weekday on-peak 07:00–11:00 and 17:00–21:00 at 20.500; Winter weekday off-peak complements at 10.500; Winter weekend and holiday 00:00–00:00 at 10.500 — each with fuel folded and ADJUSTMENT rows. Do not flatten the future TOU into a single interim row as the only extract.
 
 Example 7 — Weekday TOU with weekend/holiday all-day price:
-Input: "Plan TOU-R: Weekdays: On-peak 4pm–9pm 32.1¢/kWh; Off-peak all other hours 11.4¢/kWh. Weekends and holidays: 11.4¢/kWh all day. Year-round."
-Output: one tariff type "tou" with ENERGY rows: On-peak 16:00–21:00 weekday 32.1 "¢/kWh"; Off-peak 21:00–16:00 weekday 11.4; Off-peak 00:00–00:00 weekend 11.4; Off-peak 00:00–00:00 holiday 11.4. No season fields (the source states no seasons).
+Input: "Plan TOU-R: Weekdays: On-peak 4pm–9pm 30.0¢/kWh; Off-peak all other hours 10.0¢/kWh. Weekends and holidays: 10.0¢/kWh all day. Year-round."
+Output: tou; ENERGY On-peak 16:00–21:00 weekday 30.0; Off-peak 21:00–16:00 weekday 10.0; Off-peak 00:00–00:00 weekend 10.0; Off-peak 00:00–00:00 holiday 10.0.
 
 Use the store_tariffs tool to return your results.""".replace(
     "{structured_rules}", _STRUCTURED_RULES
@@ -2488,16 +2510,48 @@ Use the store_tariffs tool to return your results.""".replace(
 
 # Per-call user message only (no rules). Kept separate from
 # EXTRACTION_SYSTEM_PROMPT so Anthropic prompt caching is not defeated by
-# re-sending the static rules in every user message.
-EXTRACTION_USER_PROMPT = """TARGET UTILITY: {utility_name} ({state})
+# re-sending the static rules in every user message. {today} is filled at
+# call time so the cached system prompt stays byte-identical across days.
+EXTRACTION_USER_PROMPT = """TODAY: {today}
+TARGET UTILITY: {utility_name} ({state})
 Page URL: {url}
 Page title: {title}
 
 Content:
 {content}"""
 
+def _today_iso() -> str:
+    """Calendar date stamped into extraction user messages (not the system prompt)."""
+    return date.today().isoformat()
+
+
+def format_extraction_user(
+    *,
+    utility_name: str,
+    state: str,
+    url: str = "",
+    title: str = "",
+    content: str = "",
+    today: str | None = None,
+) -> str:
+    """Build the dynamic user message for main-path extraction tool calls."""
+    return EXTRACTION_USER_PROMPT.format(
+        today=today or _today_iso(),
+        utility_name=utility_name,
+        state=state,
+        url=url,
+        title=title,
+        content=content,
+    )
+
+
 # Full template kept for tests / dry-run inspection (system + user joined).
-EXTRACTION_PROMPT = EXTRACTION_SYSTEM_PROMPT + "\n\n" + EXTRACTION_USER_PROMPT
+# Uses a placeholder TODAY so .format still works in tests.
+EXTRACTION_PROMPT = (
+    EXTRACTION_SYSTEM_PROMPT
+    + "\n\n"
+    + EXTRACTION_USER_PROMPT.replace("{today}", "YYYY-MM-DD")
+)
 
 
 _GENERIC_NAME_TAIL_WORDS = {
@@ -2609,27 +2663,23 @@ def _merge_prefix_duplicates(tariffs: list[ExtractedTariff]) -> list[ExtractedTa
     return merged
 
 
-PAGE_SCREENSHOT_EXTRACTION_PROMPT_BASE = """Extract ONLY residential electricity tariffs visible in this web page screenshot.
+PAGE_SCREENSHOT_EXTRACTION_PROMPT_BASE = """TODAY: {today}
+TARGET UTILITY: {utility_name} ({state})
+Extract ONLY residential electricity tariffs visible in this web page screenshot (who the rate serves — homes/dwellings/domestic/farm-and-home/residential single-phase; keep "General Service" / "Farm & Home" when the text says they apply to residences).
 
 The page may display rate information as images, charts, infographics, or styled tables that don't appear in the raw HTML text.
+Ignore sample bills, savings claims, "as low as" or "starting at" figures and charts without labelled values. Extract only prices the page presents as the rate for a named plan.
 
-ATTRIBUTION CHECK: This extraction is for a specific target utility (named below). If the screenshot shows rates for multiple utilities, only return those clearly attributed to the target. PROVINCE-WIDE REGULATED PRICES: regulator pages (e.g. OEB RPP) that publish jurisdiction-wide commodity prices for LDCs in the target's province/state count as attributable — extract them; do not invent delivery charges not shown. If you cannot confidently attribute rates to the target utility (and the regulator exception does not apply), return an empty tariffs array.
-
-For each tariff provide: name, code, customer_class (always "residential"), rate_type, description, effective_date, confidence (0-1), and components array.
-Each component needs: component_type ("energy"/"demand"/"fixed"/"minimum"/"adjustment"), unit, rate_value, and optional tier_min_kwh, tier_max_kwh, tier_label, period_label, period_start_time, period_end_time, day_type, season, season_start_month, season_start_day, season_end_month, season_end_day.
+ATTRIBUTION CHECK: If the screenshot shows rates for multiple utilities, only return those clearly attributed to the target. PROVINCE-WIDE REGULATED PRICES: regulator pages (e.g. OEB RPP) that publish jurisdiction-wide commodity prices for LDCs in the target's province/state count as attributable — extract them; do not invent delivery charges not shown. If you cannot confidently attribute rates to the target utility (and the regulator exception does not apply), return an empty tariffs array and set empty_reason.
 
 Rules:
 - Read numbers exactly as shown — do NOT estimate
 {structured_rules}
 - Include ALL tiers, periods, seasonal variations visible
-- Ignore commercial / small-business / general-service / industrial / lighting / irrigation / wholesale tariffs
-- If you cannot see any clear residential electricity rates in the image, return an empty tariffs array
-- Set confidence 0.9+ if values clearly readable, 0.5-0.8 if some ambiguity
+- Skip rates that serve only businesses, industry, lighting, irrigation or wholesale
+- If you cannot see any clear residential electricity rates in the image, return an empty tariffs array and set empty_reason
+- confidence: 0.9+ if values clearly readable; 0.5-0.8 if some ambiguity; if you would be guessing, leave it out and list it in missing_fields
 - If a minimum monthly charge equals the basic/customer charge for the same amp tier, emit one fixed row — not both fixed and minimum duplicates
-- Relative seasonal riders (energy = another rate ± seasonal premium/credit): emit all-in ENERGY per season with month ranges in season/tier_label — never leave a season as ADJUSTMENT-only
-- Current vs future columns ("Board’s Order" vs later Jan 1 YYYY): extract ONLY the current column
-- Stacking energy riders (FAM / DSM / Storm / fuel / efficiency / power-cost): emit FULL-BILL all-in ENERGY (base + riders); keep ADJUSTMENT audit rows with included_in_energy=true
-- Interim vs approved Energy Charge (TVP): when both Interim Energy Charge and a full Energy Charge seasonal TOU table appear, extract the Energy Charge seasons/periods (seasonal_tou) — do NOT flatten to a single interim all-hours ENERGY row
 
 Use the store_tariffs tool to return results.""".replace("{structured_rules}", _STRUCTURED_RULES)
 
@@ -2696,12 +2746,13 @@ def _extract_page_screenshot_vision(
     b64 = base64.standard_b64encode(img_bytes).decode("ascii")
     log.info(f"    Page screenshot vision: sending image ({len(img_bytes)} bytes) to Claude")
 
-    target_line = (
-        f"\n\nTARGET UTILITY: {utility_name} ({state})"
-        if utility_name else ""
+    prompt_text = PAGE_SCREENSHOT_EXTRACTION_PROMPT_BASE.format(
+        today=_today_iso(),
+        utility_name=utility_name or "unknown",
+        state=state or "",
     )
     content_blocks = [
-        {"type": "text", "text": PAGE_SCREENSHOT_EXTRACTION_PROMPT_BASE + target_line},
+        {"type": "text", "text": prompt_text},
         {
             "type": "image",
             "source": {
@@ -2725,32 +2776,31 @@ def _extract_page_screenshot_vision(
         log.error(f"    Page screenshot vision API call failed: {e}")
         return [], 1
 
-    for block in resp.content:
-        if block.type == "tool_use" and block.name == "store_tariffs":
-            raw = block.input.get("tariffs", [])
-            return _parse_extraction_response(raw, url), 1
-
+    raw = _tool_input_tariffs(resp)
+    if raw or last_tool_meta().get("empty_reason"):
+        return _parse_extraction_response(
+            raw, url,
+            empty_reason=last_tool_meta().get("empty_reason", ""),
+            linked_document_hint=last_tool_meta().get("linked_document_hint", ""),
+        ), 1
     return [], 1
 
 
-PDF_VISION_EXTRACTION_PROMPT_BASE = """Extract ONLY residential electricity tariffs visible in these PDF page images.
+PDF_VISION_EXTRACTION_PROMPT_BASE = """TODAY: {today}
+TARGET UTILITY: {utility_name} ({state})
+These are page images of a PDF. Extract ONLY residential electricity tariffs visible in them (who the rate serves — homes/dwellings/domestic/farm-and-home/residential single-phase; keep "General Service" / "Farm & Home" when the text says they apply to residences).
 
-ATTRIBUTION CHECK: This extraction is for a specific target utility (named below). If the PDF contains rate sheets for multiple utilities, only return those clearly attributed to the target. PROVINCE-WIDE REGULATED PRICES: regulator documents (e.g. OEB RPP) that publish jurisdiction-wide commodity prices for LDCs in the target's province/state count as attributable — extract them; do not invent delivery charges not shown. If you cannot confidently attribute rates to the target utility (and the regulator exception does not apply), return an empty tariffs array.
+ATTRIBUTION CHECK: If the PDF contains rate sheets for multiple utilities, only return those clearly attributed to the target. PROVINCE-WIDE REGULATED PRICES: regulator documents (e.g. OEB RPP) that publish jurisdiction-wide commodity prices for LDCs in the target's province/state count as attributable — extract them; do not invent delivery charges not shown. If you cannot confidently attribute rates to the target utility (and the regulator exception does not apply), return an empty tariffs array and set empty_reason.
 
-For each tariff provide: name, code, customer_class (always "residential"), rate_type, description, effective_date, confidence (0-1), and components array.
-Each component needs: component_type ("energy"/"demand"/"fixed"/"minimum"/"adjustment"), unit, rate_value, and optional tier_min_kwh, tier_max_kwh, tier_label, period_label, period_start_time, period_end_time, day_type, season, season_start_month, season_start_day, season_end_month, season_end_day.
+Scanned pages: check that each price's decimal point is really printed (a rate of 956 ¢/kWh is almost certainly 9.56); read each price across from its own row label, especially where a table continues onto the next page; ignore superscript footnote marks. If a value is hard to read, leave it out and list it in missing_fields.
 
 Rules:
 - Read numbers exactly as shown — do NOT estimate
 {structured_rules}
 - Include ALL tiers, periods, seasonal variations
-- Ignore commercial / small-business / general-service / industrial / lighting / irrigation / wholesale tariffs
-- Set confidence 0.9+ if values clearly readable, 0.5-0.8 if some ambiguity
+- Skip rates that serve only businesses, industry, lighting, irrigation or wholesale
+- confidence: 0.9+ if values clearly readable; 0.5-0.8 if some ambiguity; if you would be guessing, leave it out and list it in missing_fields
 - If a minimum monthly charge equals the basic/customer charge for the same amp tier, emit one fixed row — not both fixed and minimum duplicates
-- Relative seasonal riders (energy = another rate ± seasonal premium/credit): emit all-in ENERGY per season with month ranges in season/tier_label — never leave a season as ADJUSTMENT-only
-- Current vs future columns ("Board’s Order" vs later Jan 1 YYYY): extract ONLY the current column
-- Stacking energy riders (FAM / DSM / Storm / fuel / efficiency / power-cost): emit FULL-BILL all-in ENERGY (base + riders); keep ADJUSTMENT audit rows with included_in_energy=true
-- Interim vs approved Energy Charge (TVP): when both Interim Energy Charge and a full Energy Charge seasonal TOU table appear, extract the Energy Charge seasons/periods (seasonal_tou) — do NOT flatten to a single interim all-hours ENERGY row
 
 Use the store_tariffs tool to return results.""".replace("{structured_rules}", _STRUCTURED_RULES)
 
@@ -2800,11 +2850,12 @@ def _extract_pdf_vision(
     import base64
     import io
 
-    target_line = (
-        f"\n\nTARGET UTILITY: {utility_name} ({state})"
-        if utility_name else ""
+    prompt_text = PDF_VISION_EXTRACTION_PROMPT_BASE.format(
+        today=_today_iso(),
+        utility_name=utility_name or "unknown",
+        state=state or "",
     )
-    content_blocks = [{"type": "text", "text": PDF_VISION_EXTRACTION_PROMPT_BASE + target_line}]
+    content_blocks = [{"type": "text", "text": prompt_text}]
     for i, img in enumerate(images):
         buf = io.BytesIO()
         img.save(buf, format="JPEG", quality=85)
@@ -2831,12 +2882,15 @@ def _extract_pdf_vision(
         log.error(f"    PDF vision API call failed: {e}")
         return [], 1
 
-    for block in resp.content:
-        if block.type == "tool_use" and block.name == "store_tariffs":
-            raw = block.input.get("tariffs", [])
-            if raw:
-                _set_llm_cache(pdf_hash, "vision", raw)
-            return _parse_extraction_response(raw, page_url), 1
+    raw = _tool_input_tariffs(resp)
+    if raw or last_tool_meta().get("empty_reason"):
+        if raw:
+            _set_llm_cache(pdf_hash, "vision", raw)
+        return _parse_extraction_response(
+            raw, page_url,
+            empty_reason=last_tool_meta().get("empty_reason", ""),
+            linked_document_hint=last_tool_meta().get("linked_document_hint", ""),
+        ), 1
 
     log.warning("    No tool_use block in PDF vision response")
     return [], 1
@@ -2872,54 +2926,57 @@ def _content_looks_like_rider_schedule(content: str) -> bool:
 
 TWOPASS_IDENTIFY_PROMPT = """List EVERY DISTINCT residential electricity rate/tariff/schedule named in this document for the TARGET UTILITY.
 
+TODAY: {today}
 TARGET UTILITY: {utility_name} ({state})
 
-Be exhaustive. Include EVERY named residential rate you see — base rates AND variants/options — for example:
+Residential is decided by who the rate serves (homes, dwellings, domestic, farm-and-home, residential single-phase) — not by the schedule name alone. Include "General Service" / "Farm & Home" / "Single-Phase" when the text says they apply to residences.
+
+Be exhaustive. Include EVERY named residential rate — base rates AND variants/options — for example:
 - Rate D, Rate DP, Rate DM, Rate DT, Rate Flex D
 - Schedule R, Schedule RS, Schedule R-TOU, Schedule R-EV
 - Plan A, Plan B, Standard Plan, TOU Plan, Critical Peak Plan
 - Residential Service, Domestic Service, Time-of-Use Service, Optional Plans
 A "rate" is anything the document treats as a separately-priced residential product, even if it's only a paragraph long. DO NOT collapse variants into the parent rate; list each one.
 
-For each tariff, provide ONLY:
-- name: The official name or schedule code
-- customer_class: always "residential"
-- location_hint: A short phrase (5-10 words) from the text near where the rate details appear
+ATTRIBUTION RULE: Only list rates the document explicitly attributes to the target utility. PROVINCE-WIDE REGULATED PRICES: regulator pages (e.g. OEB RPP) with jurisdiction-wide commodity prices for LDCs in the target's province/state count as attributable. If the document is a comparison/aggregator and lists rates for several utilities, exclude rates not labeled for the target. If you cannot tell (and the regulator exception does not apply), return empty plans.
 
-ATTRIBUTION RULE: Only list rates the document explicitly attributes to the target utility. PROVINCE-WIDE REGULATED PRICES: regulator pages (e.g. OEB RPP) with jurisdiction-wide commodity prices for LDCs in the target's province/state count as attributable. If the document is a comparison/aggregator and lists rates for several utilities, exclude rates not labeled for the target. If you cannot tell (and the regulator exception does not apply), return [].
+SKIP / IGNORE: rates that serve only businesses, industry, lighting, irrigation or wholesale. Do NOT list per-kWh riders/adjustments (FAM, DSM, fuel, power-cost, Schedule 1xx, etc.) as separate plans when base residential schedules are also in this document — those riders are folded into ENERGY later. If this document contains ONLY rider/adjustment schedules (no base plans), still list each named rider/adjustment schedule with customer_class "residential" so their ¢/kWh amounts can be extracted as ADJUSTMENT components.
 
-SKIP / IGNORE: commercial, small-business, general-service, industrial, lighting, irrigation, wholesale, and any other non-residential plan. Do NOT list per-kWh riders/adjustments (FAM, DSM, fuel, power-cost, Schedule 1xx, etc.) as separate plans when base residential schedules are also in this document — those riders are folded into ENERGY later. If this document contains ONLY rider/adjustment schedules (no base plans), still list each named rider/adjustment schedule with customer_class "residential" so their ¢/kWh amounts can be extracted as ADJUSTMENT components.
-
-Return a JSON array of objects with keys: name, customer_class, location_hint
-If no relevant residential tariffs, return [].
+Return a JSON object:
+{{
+  "plans": [ {{"name": "...", "customer_class": "residential",
+              "location_hint": "<3–8 words copied EXACTLY, same spelling and punctuation, from the heading or first line of THIS plan's price table — not from the table of contents>"}} ],
+  "shared_sections": [ {{"kind": "tou_hours" | "seasons" | "riders" | "general_terms",
+                        "location_hint": "<3–8 words copied EXACTLY from the start of that section>"}} ]
+}}
+"shared_sections" are parts of the document that apply to several residential plans: definitions of on-peak/off-peak hours, season dates, rider or adjustment tables, "applies to all residential schedules" notes. List each once. Use [] if there are none.
+If no relevant residential tariffs, return {{"plans": [], "shared_sections": []}}.
 Return ONLY valid JSON. No markdown, no explanation.
 
 Content:
 {content}"""
 
-TWOPASS_EXTRACT_PROMPT = """Extract the complete rate details for the residential tariff named "{tariff_name}" from the following content.
-
+TWOPASS_EXTRACT_PROMPT = """TODAY: {today}
 TARGET UTILITY: {utility_name} ({state})
-Only extract rates this document explicitly attributes to the target utility. If the named tariff appears under a different utility's section, or is commercial / non-residential, return an empty array.
+Extract the residential tariff named "{tariff_name}" from the content below. Follow the system rules (SOURCE ONLY, FULL PRICE, residential-by-who-served).
+The content has two parts: PLAN SECTION (this plan's prices) and SHARED SECTIONS (hours, seasons, riders and terms that may apply to several plans). Use a shared section only where it says it applies to this plan or to all residential plans.
+If this plan's text names riders or schedules whose amounts are not in the content, list them in riders_referenced_not_shown and set needs_review=true.
+Return one tariff (or none if the named plan is not here or not attributed to the target utility).
 
-Provide:
-- name, code, customer_class (always "residential"), rate_type, description, effective_date, confidence
-- components: ALL tiers, periods, seasons as separate entries with component_type, unit, rate_value, tier_min_kwh, tier_max_kwh, tier_label, period_label, period_start_time, period_end_time, day_type, season, season_start_month, season_start_day, season_end_month, season_end_day
+PLAN SECTION:
+{section}
 
-Rules:
-- Use exact numbers — do NOT estimate or round
-{structured_rules}
-- confidence: 0.9+ if clear, 0.5-0.8 if ambiguous, <0.5 if guessing
-- If a minimum monthly charge equals the basic/customer charge for the same amp tier, emit one fixed row — not both fixed and minimum duplicates
-- Relative seasonal riders (energy = another rate ± seasonal premium/credit): emit all-in ENERGY per season with month ranges in season/tier_label — never leave a season as ADJUSTMENT-only
-- Current vs future columns ("Board’s Order" vs a later Jan 1 YYYY): extract ONLY the current/Board’s Order values
-- Stacking energy riders (FAM / DSM / Storm / fuel / efficiency / power-cost ¢/kWh in addition to energy): emit FULL-BILL all-in ENERGY (base + riders); keep ADJUSTMENT audit rows with included_in_energy=true
-- Interim vs approved Energy Charge (TVP): prefer Energy Charge seasonal TOU periods over a flattened Interim all-hours ENERGY row
+SHARED SECTIONS:
+{shared}"""
 
-Use the store_tariffs tool to return your result (array with one tariff).
-
-Content:
-{content}""".replace("{structured_rules}", _STRUCTURED_RULES)
+# Cap each shared-section slice appended to a per-plan extract call.
+TWOPASS_SHARED_SECTION_CHARS = 4000
+# empty_reason values that mean "don't bother escalating to Opus".
+_EMPTY_REASON_SKIP_OPUS = frozenset({
+    "no_residential_rates",
+    "wrong_utility",
+    "prices_in_linked_document",
+})
 
 
 TWOPASS_WINDOW_BEFORE = 1500
@@ -2970,6 +3027,66 @@ def _twopass_section(content: str, name: str, hint: str) -> str:
     return content
 
 
+def _parse_twopass_identify(raw_text: str) -> tuple[list[dict], list[dict]]:
+    """Parse identify JSON into (plans, shared_sections).
+
+    Accepts the v9 object shape ``{plans, shared_sections}`` and the legacy
+    bare array of plan dicts (so cached / retry replies still work).
+    """
+    text = (raw_text or "").strip()
+    if text.startswith("```"):
+        text = re.sub(r"^```\w*\n?", "", text)
+        text = re.sub(r"\n?```$", "", text)
+    try:
+        raw = json.loads(text)
+    except json.JSONDecodeError:
+        log.warning(f"    Failed to parse identify JSON: {text[:200]}")
+        return [], []
+    if isinstance(raw, list):
+        return [x for x in raw if isinstance(x, dict)], []
+    if isinstance(raw, dict):
+        plans = raw.get("plans") or []
+        shared = raw.get("shared_sections") or []
+        return (
+            [x for x in plans if isinstance(x, dict)],
+            [x for x in shared if isinstance(x, dict)],
+        )
+    return [], []
+
+
+def _twopass_shared_blob(content: str, shared_sections: list[dict]) -> str:
+    """Concatenate shared-section slices for every per-plan extract call."""
+    if not shared_sections or not content:
+        return "(none)"
+    chunks: list[str] = []
+    for sec in shared_sections[:8]:
+        kind = str(sec.get("kind") or "shared")
+        hint = str(sec.get("location_hint") or "")
+        slice_ = _twopass_section(content, kind, hint)[:TWOPASS_SHARED_SECTION_CHARS]
+        if not slice_ or slice_ is content:
+            # Fall back to a hint-anchored window even if score is low.
+            lower = content.lower()
+            needle = hint.lower()[:30].strip()
+            if needle and needle in lower:
+                h = lower.find(needle)
+                slice_ = content[max(0, h - 500): h + TWOPASS_SHARED_SECTION_CHARS]
+            else:
+                continue
+        chunks.append(f"### {kind}\n{slice_}")
+    return "\n\n".join(chunks) if chunks else "(none)"
+
+
+def _parse_tool_tariffs(raw: list[dict], source_url: str) -> list[ExtractedTariff]:
+    """Parse tool output, carrying empty_reason / linked_document_hint from meta."""
+    meta = last_tool_meta()
+    return _parse_extraction_response(
+        raw,
+        source_url,
+        empty_reason=meta.get("empty_reason", ""),
+        linked_document_hint=meta.get("linked_document_hint", ""),
+    )
+
+
 def _is_complex_page(content: str) -> bool:
     """Detect pages likely to benefit from two-pass extraction."""
     if len(content) < 8000:
@@ -3005,6 +3122,7 @@ def _extract_two_pass(
 
     content_for_llm = _select_rate_content(page.content, max_chars=25000)
     llm_calls = 0
+    today = _today_iso()
 
     # Pass 1: Identify all tariff names. Pass the full pre-selected
     # content (which may already be a multi-window concatenation for
@@ -3014,12 +3132,14 @@ def _extract_two_pass(
         content=content_for_llm[:60000],
         utility_name=utility_name,
         state=state,
+        today=today,
     )
     # Long-document identify needs higher recall than Haiku reliably
     # delivers. Opus is one call per utility, so the cost delta is
     # bounded; the win is enumerating every named rate in consolidated
     # rate-book PDFs (HQ, Manitoba Hydro, BC Hydro, etc.).
     use_opus_for_identify = len(content_for_llm) >= 30_000
+    shared_sections: list[dict] = []
     try:
         # Own phase tag: identify spend is not an extraction-tier outcome and
         # must not be counted as "wasted" escalation spend.
@@ -3029,7 +3149,7 @@ def _extract_two_pass(
                 model=OPUS_MODEL if use_opus_for_identify else None,
             )
         llm_calls += 1
-        identified = _parse_text_response(raw_text)
+        identified, shared_sections = _parse_twopass_identify(raw_text)
     except Exception as e:
         log.error(f"    Two-pass identification failed: {e}")
         # Retry with Sonnet (default tier) if Opus failed (rate-limit, transient error)
@@ -3037,7 +3157,7 @@ def _extract_two_pass(
             try:
                 raw_text = _call_claude(identify_prompt)
                 llm_calls += 1
-                identified = _parse_text_response(raw_text)
+                identified, shared_sections = _parse_twopass_identify(raw_text)
             except Exception as e2:
                 log.error(f"    Identify retry with Sonnet also failed: {e2}")
                 return [], llm_calls
@@ -3055,7 +3175,7 @@ def _extract_two_pass(
                 "falling back to single-pass extraction"
             )
             try:
-                prompt = EXTRACTION_USER_PROMPT.format(
+                prompt = format_extraction_user(
                     url=page.url,
                     title=page.title or "",
                     content=content_for_llm[:60000],
@@ -3064,7 +3184,7 @@ def _extract_two_pass(
                 )
                 raw = _call_claude_tool(prompt)
                 llm_calls += 1
-                tariffs = _parse_extraction_response(raw, page.url)
+                tariffs = _parse_tool_tariffs(raw, page.url)
                 for t in tariffs:
                     t.source_url = page.url
                 if tariffs and page.content_hash:
@@ -3082,9 +3202,11 @@ def _extract_two_pass(
         t for t in identified
         if isinstance(t, dict) and t.get("customer_class") in EXTRACT_CLASSES
     ]
+    shared_blob = _twopass_shared_blob(content_for_llm, shared_sections)
     log.info(
         f"    Two-pass: identified {len(relevant)} relevant tariffs "
-        f"(model={'opus' if use_opus_for_identify else 'sonnet'})"
+        f"(+{len(shared_sections)} shared sections; "
+        f"model={'opus' if use_opus_for_identify else 'sonnet'})"
     )
 
     # Pass 2: Extract each tariff individually. Cap at 20 to bound LLM
@@ -3103,7 +3225,6 @@ def _extract_two_pass(
     all_tariffs: list[ExtractedTariff] = []
     for item in relevant[:TWOPASS_EXTRACT_CAP]:
         name = item.get("name", "Unknown")
-        cc = item.get("customer_class", "residential")
         hint = item.get("location_hint", "")
 
         # Find the section that actually carries this tariff's prices. The
@@ -3113,15 +3234,17 @@ def _extract_two_pass(
         section = _twopass_section(content_for_llm, name, hint)
 
         extract_prompt = TWOPASS_EXTRACT_PROMPT.format(
+            today=today,
             tariff_name=name,
-            content=section,
+            section=section,
+            shared=shared_blob,
             utility_name=utility_name,
             state=state,
         )
 
         try:
             raw_tariffs = _call_claude_tool(extract_prompt)
-            tariffs = _parse_extraction_response(raw_tariffs, page.url)
+            tariffs = _parse_tool_tariffs(raw_tariffs, page.url)
             llm_calls += 1
             if not tariffs and section is not content_for_llm:
                 # Window missed the prices — one retry on the full selected
@@ -3129,13 +3252,15 @@ def _extract_two_pass(
                 log.info(f"    Two-pass: 0 from section for '{name}' — retrying on full content")
                 raw_tariffs = _call_claude_tool(
                     TWOPASS_EXTRACT_PROMPT.format(
+                        today=today,
                         tariff_name=name,
-                        content=content_for_llm[:60000],
+                        section=content_for_llm[:60000],
+                        shared=shared_blob,
                         utility_name=utility_name,
                         state=state,
                     )
                 )
-                tariffs = _parse_extraction_response(raw_tariffs, page.url)
+                tariffs = _parse_tool_tariffs(raw_tariffs, page.url)
                 llm_calls += 1
             for t in tariffs:
                 t.source_url = page.url
@@ -3384,16 +3509,16 @@ def phase3_extract_tariffs(
             llm_calls += calls
         else:
             content_for_llm = _select_rate_content(page.content, max_chars=20000)
-            prompt = EXTRACTION_USER_PROMPT.format(
+            prompt = format_extraction_user(
                 url=page.url,
-                title=page.title,
+                title=page.title or "",
                 content=content_for_llm,
                 utility_name=utility_name,
                 state=state,
             )
             try:
                 raw_tariffs, model_used = _extract_with_model_routing(prompt, page)
-                tariffs = _parse_extraction_response(raw_tariffs, page.url)
+                tariffs = _parse_tool_tariffs(raw_tariffs, page.url)
                 for t in tariffs:
                     t.extraction_tier = model_used
                 log.info(f"    Model used: {model_used}")
@@ -3515,7 +3640,7 @@ TARIFF_EXTRACTION_TOOL = {
                     "type": "object",
                     "properties": {
                         "name": {"type": "string", "description": "Official schedule name"},
-                        "code": {"type": "string", "description": "Schedule code if shown (e.g. RS, GS-1)"},
+                        "code": {"type": "string", "description": "Schedule code if shown (e.g. RS, R)"},
                         "customer_class": {
                             "type": "string",
                             "enum": ["residential", "commercial"],
@@ -3530,10 +3655,45 @@ TARIFF_EXTRACTION_TOOL = {
                             ],
                         },
                         "description": {"type": "string", "description": "One-sentence description"},
-                        "effective_date": {"type": "string", "description": "YYYY-MM-DD or empty string"},
+                        "effective_date": {
+                            "type": "string",
+                            "description": "Effective-for-service date YYYY-MM-DD, or empty string",
+                        },
                         "confidence": {
                             "type": "number",
                             "description": "0.0-1.0 confidence that the extracted rate values are correct",
+                        },
+                        "needs_review": {
+                            "type": "boolean",
+                            "description": "true when any value, clock, day type, season date or rider was unclear or missing",
+                        },
+                        "missing_fields": {
+                            "type": "array",
+                            "items": {"type": "string"},
+                            "description": "What the source did not show, e.g. winter off-peak hours",
+                        },
+                        "riders_referenced_not_shown": {
+                            "type": "array",
+                            "items": {"type": "string"},
+                            "description": "Riders/schedules the plan says apply but whose amounts are not in the content",
+                        },
+                        "energy_scope": {
+                            "type": "string",
+                            "enum": [
+                                "bundled",
+                                "delivery_only",
+                                "supply_only",
+                                "delivery_plus_default_supply",
+                            ],
+                            "description": "bundled | delivery_only | supply_only | delivery_plus_default_supply",
+                        },
+                        "closed_to_new": {
+                            "type": "boolean",
+                            "description": "true when the schedule is closed to new customers but still active for existing ones",
+                        },
+                        "energy_includes_riders": {
+                            "type": "boolean",
+                            "description": "true when ENERGY is the full-bill all-in sum of base + mandatory riders",
                         },
                         "components": {
                             "type": "array",
@@ -3546,7 +3706,7 @@ TARIFF_EXTRACTION_TOOL = {
                                     },
                                     "unit": {
                                         "type": "string",
-                                        "description": "Unit as printed, e.g. ¢/kWh, $/kWh, $/month, ¢/day",
+                                        "description": "Unit as printed, e.g. ¢/kWh, $/kWh, mills/kWh, $/month, ¢/day",
                                     },
                                     "rate_value": {
                                         "type": "number",
@@ -3555,6 +3715,11 @@ TARIFF_EXTRACTION_TOOL = {
                                     "tier_min_kwh": {"type": ["number", "null"]},
                                     "tier_max_kwh": {"type": ["number", "null"]},
                                     "tier_label": {"type": ["string", "null"]},
+                                    "tier_basis": {
+                                        "type": ["string", "null"],
+                                        "enum": ["month", "day", "billing_period", None],
+                                        "description": "What tier_max_kwh is measured over, when stated",
+                                    },
                                     "period_label": {"type": ["string", "null"]},
                                     "period_start_time": {
                                         "type": ["string", "null"],
@@ -3578,7 +3743,18 @@ TARIFF_EXTRACTION_TOOL = {
                                     "season_end_day": {"type": ["integer", "null"]},
                                     "included_in_energy": {
                                         "type": ["boolean", "null"],
-                                        "description": "true on an ADJUSTMENT row whose amount is already added into an all-in ENERGY rate",
+                                        "description": "Required on per-kWh ADJUSTMENT: true if already in ENERGY all-in, false if excluded",
+                                    },
+                                    "rider_scope": {
+                                        "type": ["string", "null"],
+                                        "enum": [
+                                            "all_customers",
+                                            "optional_program",
+                                            "some_kwh_or_customers",
+                                            "tou_overlay",
+                                            "event",
+                                            None,
+                                        ],
                                     },
                                 },
                                 "required": ["component_type", "unit", "rate_value"],
@@ -3587,6 +3763,22 @@ TARIFF_EXTRACTION_TOOL = {
                     },
                     "required": ["name", "customer_class", "rate_type", "components", "confidence"],
                 },
+            },
+            "empty_reason": {
+                "type": ["string", "null"],
+                "enum": [
+                    "no_residential_rates",
+                    "wrong_utility",
+                    "prices_in_linked_document",
+                    "unreadable",
+                    "other",
+                    None,
+                ],
+                "description": "Set when tariffs is empty: why nothing was extracted",
+            },
+            "linked_document_hint": {
+                "type": ["string", "null"],
+                "description": "Link text/title of the document that holds the prices, when empty_reason is prices_in_linked_document",
             },
         },
         "required": ["tariffs"],
@@ -3664,7 +3856,36 @@ def _call_claude(prompt: str, model: str | None = None) -> str:
 _CACHED_SYSTEM_PROMPT = EXTRACTION_SYSTEM_PROMPT
 
 
-def _call_claude_tool(prompt: str, model: str | None = None) -> list[dict]:
+def _remember_tool_meta(meta: dict) -> None:
+    _thread_local.last_tool_meta = dict(meta or {})
+
+
+def last_tool_meta() -> dict:
+    """Metadata from the most recent ``_call_claude_tool`` (empty_reason, trunc)."""
+    return dict(getattr(_thread_local, "last_tool_meta", None) or {})
+
+
+def _tool_input_tariffs(resp) -> list[dict]:
+    """Pull tariffs (+ top-level empty_reason) from a store_tariffs tool call."""
+    for block in getattr(resp, "content", None) or []:
+        if getattr(block, "type", None) == "tool_use" and getattr(block, "name", None) == "store_tariffs":
+            payload = block.input or {}
+            _remember_tool_meta({
+                "empty_reason": payload.get("empty_reason") or "",
+                "linked_document_hint": payload.get("linked_document_hint") or "",
+                "truncated": getattr(resp, "stop_reason", None) == "max_tokens",
+            })
+            raw = payload.get("tariffs", [])
+            return raw if isinstance(raw, list) else []
+    return []
+
+
+def _call_claude_tool(
+    prompt: str,
+    model: str | None = None,
+    *,
+    max_tokens: int = 8192,
+) -> list[dict]:
     """Call Claude with tool use for structured tariff extraction.
 
     ``model`` defaults to ``SONNET_MODEL`` (tier-2). Pass ``HAIKU_MODEL`` for
@@ -3672,35 +3893,53 @@ def _call_claude_tool(prompt: str, model: str | None = None) -> list[dict]:
     prompt and tool schema are marked ephemeral so repeated calls within a
     session pay only 10% of normal input cost for the cached portion.
 
-    Returns the parsed tariff dicts directly from the tool call input,
-    guaranteed to match the schema. Falls back to text parsing on error.
+    If the reply is cut off at the token limit (``stop_reason == max_tokens``),
+    retries once on the same model with a larger limit. Returns the parsed
+    tariff dicts from the tool call input. Falls back to text parsing on error.
     """
     client = _get_anthropic_client()
-    resp = client.messages.create(
-        model=model or SONNET_MODEL,
-        max_tokens=8192,
-        system=[
+    _remember_tool_meta({})
+    kwargs = {
+        "model": model or SONNET_MODEL,
+        "max_tokens": max_tokens,
+        "system": [
             {
                 "type": "text",
                 "text": _CACHED_SYSTEM_PROMPT,
                 "cache_control": {"type": "ephemeral"},
             }
         ],
-        messages=[{"role": "user", "content": prompt}],
-        tools=[
+        "messages": [{"role": "user", "content": prompt}],
+        "tools": [
             {
                 **TARIFF_EXTRACTION_TOOL,
                 "cache_control": {"type": "ephemeral"},
             }
         ],
-        tool_choice={"type": "tool", "name": "store_tariffs"},
-    )
-    for block in resp.content:
-        if block.type == "tool_use" and block.name == "store_tariffs":
-            return block.input.get("tariffs", [])
+        "tool_choice": {"type": "tool", "name": "store_tariffs"},
+    }
+    resp = client.messages.create(**kwargs)
+    tariffs = _tool_input_tariffs(resp)
+    if getattr(resp, "stop_reason", None) == "max_tokens":
+        log.warning(
+            f"    Extraction truncated (max_tokens={kwargs['max_tokens']}) — "
+            "retrying once with a larger limit"
+        )
+        kwargs["max_tokens"] = max(max_tokens * 2, 32000)
+        resp = client.messages.create(**kwargs)
+        tariffs = _tool_input_tariffs(resp)
+        meta = last_tool_meta()
+        meta["truncated_retried"] = True
+        _remember_tool_meta(meta)
+    if tariffs:
+        return tariffs
+
+    if last_tool_meta().get("empty_reason"):
+        # Model explicitly reported no tariffs — don't text-parse.
+        return []
 
     log.warning("    No tool_use block in Claude response, falling back to text parse")
-    for block in resp.content:
+    for block in getattr(resp, "content", None) or []:
         if hasattr(block, "text"):
             return _parse_text_response(block.text)
     return []
@@ -3743,36 +3982,10 @@ def _call_opus_tool(prompt: str) -> list[dict]:
 
     Last-resort third tier when Haiku 5.5 and Sonnet 5.5 both return nothing.
     More expensive but better at complex rate structures, PDFs, and edge cases.
+    Reuses ``_call_claude_tool`` so truncation retry and empty_reason meta apply.
     """
-    client = _get_anthropic_client()
     try:
-        resp = client.messages.create(
-            model=OPUS_MODEL,
-            max_tokens=8192,
-            system=[
-                {
-                    "type": "text",
-                    "text": _CACHED_SYSTEM_PROMPT,
-                    "cache_control": {"type": "ephemeral"},
-                }
-            ],
-            messages=[{"role": "user", "content": prompt}],
-            tools=[
-                {
-                    **TARIFF_EXTRACTION_TOOL,
-                    "cache_control": {"type": "ephemeral"},
-                }
-            ],
-            tool_choice={"type": "tool", "name": "store_tariffs"},
-        )
-        for block in resp.content:
-            if block.type == "tool_use" and block.name == "store_tariffs":
-                return block.input.get("tariffs", [])
-        log.warning("    No tool_use block in Opus response, falling back to text parse")
-        for block in resp.content:
-            if hasattr(block, "text"):
-                return _parse_text_response(block.text)
-        return []
+        return _call_claude_tool(prompt, model=OPUS_MODEL)
     except Exception as e:
         log.warning(f"    Opus extraction failed: {e}")
         return []
@@ -3855,6 +4068,14 @@ def _extract_with_model_routing(prompt: str, page: "RatePage") -> tuple[list[dic
             _set_llm_cache(page.content_hash, "sonnet", result)
         return result, "sonnet"
 
+    empty_reason = last_tool_meta().get("empty_reason") or ""
+    if empty_reason in _EMPTY_REASON_SKIP_OPUS:
+        log.info(
+            f"    Sonnet returned 0 with empty_reason={empty_reason!r}; "
+            "skipping Opus escalation"
+        )
+        return [], last_tier
+
     # Only escalate to Opus if the page actually contains numeric rate data.
     # Pages with rate-themed titles but no numbers (e.g. marketing pages
     # that link to PDFs) can't yield tariffs from any LLM, so escalating
@@ -3880,6 +4101,7 @@ def _extract_with_model_routing(prompt: str, page: "RatePage") -> tuple[list[dic
     log.info(
         f"    {last_tier.capitalize()} returned no tariffs, escalating to Opus "
         f"({_opus_escalations_this_util}/{OPUS_MAX_PER_UTILITY})"
+        + (f" empty_reason={empty_reason!r}" if empty_reason else "")
     )
     result = _call_opus_tool(prompt)
     # Telemetry: track whether the expensive Opus escalation actually pays
@@ -3892,10 +4114,36 @@ def _extract_with_model_routing(prompt: str, page: "RatePage") -> tuple[list[dic
     return result, "opus"
 
 
-def _parse_extraction_response(items: list[dict], source_url: str) -> list[ExtractedTariff]:
+def _as_str_list(raw) -> list[str]:
+    if not raw:
+        return []
+    if isinstance(raw, str):
+        return [raw] if raw.strip() else []
+    if isinstance(raw, (list, tuple)):
+        return [str(x).strip() for x in raw if str(x).strip()]
+    return []
+
+
+def _parse_extraction_response(
+    items: list[dict],
+    source_url: str,
+    *,
+    empty_reason: str = "",
+    linked_document_hint: str = "",
+) -> list[ExtractedTariff]:
     """Convert raw dicts (from tool use or text parse) into ExtractedTariff objects."""
     tariffs = []
     for item in items:
+        if not isinstance(item, dict):
+            continue
+        needs = bool(item.get("needs_review"))
+        missing = _as_str_list(item.get("missing_fields"))
+        riders_missing = _as_str_list(item.get("riders_referenced_not_shown"))
+        if missing or riders_missing:
+            needs = True
+        energy_includes = item.get("energy_includes_riders")
+        if energy_includes is not None:
+            energy_includes = bool(energy_includes)
         tariffs.append(ExtractedTariff(
             name=item.get("name", "Unknown"),
             code=item.get("code", ""),
@@ -3905,7 +4153,17 @@ def _parse_extraction_response(items: list[dict], source_url: str) -> list[Extra
             source_url=source_url,
             effective_date=item.get("effective_date", ""),
             components=item.get("components", []),
-            confidence=float(item.get("confidence", 0.0)),
+            confidence=float(item.get("confidence", 0.0) or 0.0),
+            needs_review=needs,
+            missing_fields=missing,
+            riders_referenced_not_shown=riders_missing,
+            energy_scope=str(item.get("energy_scope") or ""),
+            closed_to_new=bool(item.get("closed_to_new")),
+            energy_includes_riders=energy_includes,
+            empty_reason=str(item.get("empty_reason") or empty_reason or ""),
+            linked_document_hint=str(
+                item.get("linked_document_hint") or linked_document_hint or ""
+            ),
         ))
     return tariffs
 
@@ -4125,6 +4383,7 @@ def _get_rate_bounds(state: str) -> tuple[float, float, float, float, float, flo
 
 
 _CENTS_UNIT_RE = re.compile(r"(?:¢|\bcents?\b|(?<![a-z])c/)", re.IGNORECASE)
+_MILLS_UNIT_RE = re.compile(r"\bmills?\b", re.IGNORECASE)
 
 # Canonical dollar units per component type after normalization, used only
 # when a cents unit names no denominator of its own.
@@ -4200,14 +4459,14 @@ def _is_critical_peak_price(
 
 
 def _normalize_component_units(t: ExtractedTariff, p99_energy: float) -> list[str]:
-    """Normalize cents-denominated components to dollars, in place.
+    """Normalize cents- and mills-denominated components to dollars, in place.
 
-    Two passes:
+    Passes:
       1. Deterministic: unit string says cents (¢/kWh, cents/kWh, c/kWh)
-         -> divide by 100 and rewrite the unit. LLMs (esp. Phase 6, which
-         explicitly allows cents/kWh) emit these; downstream math assumes
-         dollars, a silent 100x error.
-      2. Heuristic rescue: unit claims dollars but an energy value is so
+         -> divide by 100 and rewrite the unit.
+      2. Deterministic: unit string says mills (mills/kWh) -> divide by 1000
+         and rewrite to the matching dollar unit (1 mill = $0.001).
+      3. Heuristic rescue: unit claims dollars but an energy value is so
          large it would be hard-rejected (>3x p99) while value/100 lands
          in the plausible band — almost certainly cents mislabeled as
          dollars. Convert instead of discarding. Legit critical-peak rates
@@ -4225,7 +4484,13 @@ def _normalize_component_units(t: ExtractedTariff, p99_energy: float) -> list[st
         except (ValueError, TypeError):
             continue
 
-        if _CENTS_UNIT_RE.search(unit):
+        if _MILLS_UNIT_RE.search(unit):
+            new_rv = rv / 1000.0
+            new_unit = _dollar_unit_for_cents(ctype, unit)
+            comp["rate_value"] = new_rv
+            comp["unit"] = new_unit
+            notes.append(f"{ctype} {rv} {unit!r} -> {new_rv} {new_unit}")
+        elif _CENTS_UNIT_RE.search(unit):
             new_rv = rv / 100.0
             new_unit = _dollar_unit_for_cents(ctype, unit)
             comp["rate_value"] = new_rv
@@ -5045,6 +5310,8 @@ def _residential_needs_external_riders(t: ExtractedTariff) -> bool:
     """True when a residential ENERGY plan hints at riders not in the batch."""
     if str(t.customer_class or "").lower() != "residential":
         return False
+    if getattr(t, "riders_referenced_not_shown", None):
+        return True
     has_energy = any(
         isinstance(c, dict)
         and str(c.get("component_type") or "").lower() == "energy"
@@ -5072,6 +5339,8 @@ def _rider_search_hints(tariffs: list[ExtractedTariff]) -> list[str]:
             hints.append(h.strip())
 
     for t in tariffs:
+        for named in getattr(t, "riders_referenced_not_shown", None) or []:
+            _add(str(named))
         if not _residential_needs_external_riders(t):
             continue
         blob = _tariff_text_blob(t)
@@ -6311,6 +6580,36 @@ def store_tariffs(
             # so suspicious rows are queryable, not just logged.
             if getattr(et, "needs_review", False):
                 conf_factors = {**conf_factors, "needs_review": True}
+            missing = list(getattr(et, "missing_fields", None) or [])
+            if missing:
+                conf_factors = {**conf_factors, "missing_fields": missing, "needs_review": True}
+            riders_missing = list(getattr(et, "riders_referenced_not_shown", None) or [])
+            if riders_missing:
+                conf_factors = {
+                    **conf_factors,
+                    "riders_referenced_not_shown": riders_missing,
+                    "needs_review": True,
+                }
+            scope = str(getattr(et, "energy_scope", "") or "")
+            if scope:
+                conf_factors = {**conf_factors, "energy_scope": scope}
+                if scope in ("delivery_only", "supply_only"):
+                    conf_factors = {**conf_factors, "needs_review": True}
+            if getattr(et, "closed_to_new", False):
+                conf_factors = {**conf_factors, "closed_to_new": True}
+            if getattr(et, "energy_includes_riders", None) is not None:
+                conf_factors = {
+                    **conf_factors,
+                    "energy_includes_riders": bool(et.energy_includes_riders),
+                }
+            # Future-dated extracts stay in the DB but are not served until
+            # their effective_date (see is_currently_effective / API filters).
+            if eff_date and eff_date > date.today():
+                conf_factors = {
+                    **conf_factors,
+                    "not_yet_effective": True,
+                    "needs_review": True,
+                }
             reasons = getattr(et, "completeness_reasons", None) or []
             if reasons:
                 conf_factors = {
@@ -7414,20 +7713,35 @@ def same_vintage_product(
 
 
 def choose_vintage_keeper(candidates: list) -> object:
-    """Keep newest effective_date; tie-break protected (approved / repair /
-    manual) over scraped, then last_verified_at, then id."""
+    """Keep newest *currently effective* date; future-dated siblings lose.
+
+    Among candidates with effective_date <= today (or blank), prefer the
+    newest effective_date; tie-break protected (approved / repair / manual)
+    over scraped, then last_verified_at, then id. Future-dated coming-TOU
+    rows are never chosen over a currently billed interim / current column.
+    """
     from datetime import date as _date, datetime as _datetime
     from app.services.tariff_history import is_protected
 
+    today = _date.today()
+
     def _key(t):
-        eff = getattr(t, "effective_date", None) or _date.min
+        eff = getattr(t, "effective_date", None)
+        currently = 1
+        if eff is None:
+            eff_key = _date.min
+        elif eff > today:
+            currently = 0
+            eff_key = eff
+        else:
+            eff_key = eff
         ver = getattr(t, "last_verified_at", None)
         if ver is None:
             ver = _datetime.min.replace(tzinfo=timezone.utc)
         elif ver.tzinfo is None:
             ver = ver.replace(tzinfo=timezone.utc)
         tid = getattr(t, "id", None) or 0
-        return (eff, is_protected(t), ver, tid)
+        return (currently, eff_key, is_protected(t), ver, tid)
 
     return max(candidates, key=_key)
 
@@ -7668,11 +7982,12 @@ Page title: {page_title}
 Here are ALL the links on this page:
 {link_list}
 
-Which links are most likely to lead to residential electricity rate/tariff/pricing information?
-Think step-by-step: prefer "Residential", "Domestic", "Home", "Services", "Billing", "Customer Service", "Electric", or similar sections. Ignore links that are clearly commercial-only, industrial, lighting, or wholesale.
-
-Return a JSON array of the link URLs (max 5) most likely to contain or lead to residential rate information, ordered by likelihood.
-Return ONLY the JSON array, no explanation.
+Pick up to 5 links from the list above that most likely lead to the residential electricity price list or tariff document.
+Best: links named like "Rates", "Rate schedules", "Tariffs", "Pricing", "Residential rates", "Time-of-use", "Domestic", or links to PDFs with those words.
+Next: "Residential", "Home", "Billing", "My bill explained".
+Never: login, pay bill, outage, careers, news, contact, commercial-only, gas-only, industrial, lighting, wholesale pages.
+Copy each URL exactly as it appears in the list; never make one up.
+Return only a JSON array of URLs, best first.
 """
 
 
@@ -8044,8 +8359,8 @@ Authoritative sources ONLY:
 Do NOT use third-party comparison or aggregator sites (energybot.com, electricrate.com, choose-energy.com, power2switch.com, nyenergyratings.com, saveonenergy.com, chooseenergy.com, findenergy.com, etc.). Do NOT use wholesale/generation-company sources.{tried_clause}
 
 Scope limits:
-- Only RESIDENTIAL / domestic schedules. Ignore commercial, small-business, general-service, industrial, lighting, irrigation, wholesale, standby, cogen, interruptible, fleet EV charging, and street light.
-- Only CURRENT tariffs. Skip anything marked cancelled, superseded, historic, withdrawn, or obsolete.
+- Only schedules that serve homes / dwellings / domestic / farm-and-home / residential single-phase customers (keep "General Service" / "Farm & Home" when the text says they apply to residences). Skip rates that serve only businesses, industry, lighting, irrigation, wholesale, standby, cogen, interruptible, fleet EV, or street light.
+- Use the price in effect today. Skip cancelled, superseded, historic, withdrawn, or obsolete. If interim today + future TOU both appear, extract BOTH (today's billed price and the future-dated TOU).
 - Stop once you have a reasonable residential set — do not exhaustively catalog every rider or adjustment.
 
 Return your findings as a report ending with a fenced JSON block like this:
@@ -8089,10 +8404,8 @@ Rules for the JSON:
 """
         + structured_rules
         + """
-- Relative seasonal riders (energy = another rate ± seasonal premium/credit): emit all-in ENERGY per season (base ± adjustment) with month ranges in season/tier_label AND season_start/end month/day when months are stated. Do not leave a season as ADJUSTMENT-only.
-- Current vs future columns ("Board’s Order" / currently effective vs a later Jan 1 YYYY): extract ONLY the current column as live rates.
-- Stacking ¢/kWh riders (FAM, DSM/DCRR, Storm, fuel, efficiency, power-cost) that apply in addition to energy: emit FULL-BILL all-in ENERGY (base + riders); keep ADJUSTMENT audit rows with included_in_energy=true.
-- Interim vs approved Energy Charge (TVP / time-varying): when both Interim Energy Charge and Energy Charge seasonal TOU tables appear, extract Energy Charge seasons/periods — do not flatten to a single interim all-hours ENERGY.
+- Stacking ¢/kWh riders (FAM, DSM/DCRR, Storm, fuel, efficiency, power-cost) and per-kWh delivery/regulatory charges: emit FULL PRICE all-in ENERGY (base + riders); keep ADJUSTMENT audit rows with included_in_energy=true.
+- Delivery-only + published default/standard-offer supply: combine into ENERGY and set energy_scope delivery_plus_default_supply.
 - If you cannot find the utility's current residential electric tariffs at all from authoritative sources, return an empty array [].
 """
     )

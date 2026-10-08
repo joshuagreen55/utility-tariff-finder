@@ -112,6 +112,11 @@ class TestExpandRelativeSeasonalEnergy(unittest.TestCase):
         self.assertIn("RELATIVE SEASONAL RIDERS", tp.EXTRACTION_PROMPT)
         self.assertIn("all-in", tp.EXTRACTION_PROMPT.lower())
         self.assertIn("1.1S", tp.EXTRACTION_PROMPT)
+        # Shared rules (injected into vision); two-pass extract defers to system.
+        self.assertIn(
+            "never leave a season as ADJUSTMENT-only",
+            tp._STRUCTURED_RULES,
+        )
         self.assertIn(
             "never leave a season as ADJUSTMENT-only",
             tp.PAGE_SCREENSHOT_EXTRACTION_PROMPT_BASE,
@@ -119,10 +124,6 @@ class TestExpandRelativeSeasonalEnergy(unittest.TestCase):
         self.assertIn(
             "never leave a season as ADJUSTMENT-only",
             tp.PDF_VISION_EXTRACTION_PROMPT_BASE,
-        )
-        self.assertIn(
-            "never leave a season as ADJUSTMENT-only",
-            tp.TWOPASS_EXTRACT_PROMPT,
         )
 
 
