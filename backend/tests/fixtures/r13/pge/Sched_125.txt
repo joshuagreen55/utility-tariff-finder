@@ -1,0 +1,193 @@
+Portland General Electric Company Second Revision of Sheet No. 125-1
+P.U.C. Oregon No. E-19 Canceling First Revision of Sheet No. 125-1
+SCHEDULE 125
+ANNUAL POWER COST UPDATE
+PURPOSE
+The purpose of this adjustment schedule is to define procedures for annual rate revisions due to
+changes in the Company’s projected Net Variable Power Costs (the Annual Power Cost Update).
+This schedule is an automatic adjustment clause as defined in ORS 757.210(1), and is subject to
+review by the Commission at least once every two years.
+APPLICABLE
+To all Cost-of-Service bills for Electricity Service served under the following rate schedules 7, 15,
+32, 38, 47, 49, 75, 83, 85, 89, 90, 91, 92, 95, and 96. Customers served under the Daily Price (C)
+option contained in schedules 32, 38, 75, 81, 83, 85, 89, 90, 91 and 95 are exempt from Schedule
+125.
+NET VARIABLE POWER COSTS
+Net Variable Power Costs (NVPC) are the power costs for energy generated and purchased.
+NVPC are the net cost of fuel and emission control chemicals, fuel and emission control chemical
+transportation, power contracts, transmission/wheeling, wholesale sales, hedges, options and
+other financial instruments incurred to serve retail load.
+RATES
+This adjustment rate is subject to increases or decreases, which may be made without prior
+hearing, to reflect increases or decreases, or both, in NVPC.
+ANNUAL UPDATES
+The following updates will be made in each of the Annual Power Cost Update filings:
+• NVPC Modeling Changes
+• Forced Outage Rates based on a four-year rolling average.
+• Projected planned plant outages.
+• Wind energy forecast based on a five-year rolling average.
+• Costs associated with wind and solar integration. The battery portion of wind and solar
+projects that have a battery storage component may be included if the battery is charged
+solely by wind and solar generation.
+• Dispatch of energy storage systems.
+• Forward market prices for both gas and electricity.
+• Projected loads.
+• Contracts for the purchase or sale of power and fuel.
+• Emission control chemical costs.
+• Thermal plant variable operation and maintenance, including the cost of transmission
+losses, for dispatch purposes.
+Advice No. 26-24
+Issued June 3, 2026 Effective for service
+Angelica Espinosa, Senior Vice President on and after July 8, 2026
+
+Portland General Electric Company First Revision of Sheet No. 125-2
+P.U.C. Oregon No. E-19 Canceling Original Sheet No. 125-2
+SCHEDULE 125 (Continued)
+ANNUAL UPDATES (Continued)
+• Changes in hedges, options, and other financial instruments used to serve retail load.
+• Transportation contracts and other fixed transportation costs.
+• Reciprocating engine lubrication oil costs.
+• Projections of State and Federal Production Tax Credits.
+• No other changes or updates will be made in the annual filings under this schedule.
+(C)
+REVENUE SENSITIVE COSTS
+Changes in NVPC for purposes of rate determination under this schedule are adjusted for a (C)
+revenue sensitive cost factor of 1.0346. (C)
+FILING AND EFFECTIVE DATE
+Should the Company propose modeling changes outside of a general rate case to be effective on
+January 1st of the following calendar year, the Company will file estimates of the proposed
+modeling changes and all associated minimum filing requirements no later than February 15 of
+the calendar year prior to the rate effective date. Any estimates for modeling changes proposed
+in a general rate case year shall be filed at the earlier of either the filing of GRC opening testimony
+or by April 1st prior to the rate effective date.
+On or before April 1st of each calendar year, the Company will file estimates of the adjustments
+to its NVPC to be effective on January 1st of the following calendar year.
+On or before October 1st of each calendar year, the Company will file updated estimates with final
+planned maintenance outages, final load forecast, updated projections of gas and electric prices,
+power, and fuel contracts.
+On or before November 6th or the next available business day if the 6th is on a weekend of each
+calendar year, the Company will file estimates with the final planned maintenance outages from
+the October 1st filing, load forecasts from the October 1st filings, load reductions from the October
+update resulting from additional participation in the Company’s Long-Term Cost of Service Opt-
+out that occurs in September, new market power and fuel contracts entered into since the previous
+updates, and updated projections of gas and electric prices, power, and fuel contracts.
+Advice No. 24-39
+Issued December 23, 2024 Effective for service
+Angelica Espinosa, Senior Vice President on and after January 1, 2025
+
+Portland General Electric Company Fourth Revision of Sheet No. 125-3
+P.U.C. Oregon No. E-19 Canceling Third Revision of Sheet No. 125-3
+SCHEDULE 125 (Continued)
+FILING AND EFFECTIVE DATE (Continued)
+On November 15th, or the next available business day if the 15th is on a weekend the Company
+will file the final estimate of NVPC and will calculate and file the final change in NVPC to be
+effective on the next January 1st with: 1) projected market electric and fuel prices based on the
+average of the Company’s internally generated projections made during the period November 1st
+through November 7th, 2) the final planned maintenance outages and load forecast from the
+October 1st filing, 3) final update to Qualifying Facilities online dates, and 4) final price for the
+energy generation at the Priest Rapids and Wanapum hydro facilities, as provided in the power
+contract between PGE and Grant County.
+RATE ADJUSTMENT
+The rate adjustment will be based on the Annual NVPC adjusted for Revenue Sensitive Costs
+applied to forecast loads used to determine Net Variable Power Costs.
+ADJUSTMENT RATES
+Schedule ¢ per kWh
+7 5.619 (R)
+7-TOD On-Peak Period 12.868
+Mid-Peak Period 5.555
+Off-Peak Period 3.416
+15 3.893
+32 4.936
+32-TOU On-Peak Period 5.515
+Mid-Peak Period 4.946
+Off-Peak Period 1.845 (R)
+38 On-Peak Period 6.083 (I)
+Mid-Peak Period 4.843 (I)
+Off-Peak Period 4.223 (I)
+47 5.940 (R)
+49 5.822 (R)
+Advice No. 26-24
+Issued June 30, 2026 Effective for service
+Angelica Espinosa, Senior Vice President on and after July 8, 2026
+
+Portland General Electric Company Third Revision of Sheet No. 125-4
+P.U.C. Oregon No. E-19 Canceling Second Revision of Sheet No. 125-4
+SCHEDULE 125 (Continued)
+ADJUSTMENT RATES (Continued)
+Schedule ¢ per kWh
+75
+Secondary(1)
+On-Peak Period 5.672 (I)
+Mid-Peak Period 4.528 (I)
+Off-Peak Period 3.765 (R)
+Primary(1)
+On-Peak Period 5.337 (I)
+Mid-Peak Period 4.593
+Off-Peak Period 4.098
+Subtransmission(1)
+On-Peak Period 5.373
+Mid-Peak Period 4.629
+Off-Peak Period 4.134 (I)
+83
+On-Peak Period 6.024 (R)
+Mid-Peak Period 4.879
+Off-Peak Period 4.116
+85
+Secondary
+On-Peak Period 5.808
+Mid-Peak Period 4.664
+Off-Peak Period 3.901
+Primary
+On-Peak Period 5.672
+Mid-Peak Period 4.528
+Off-Peak Period 3.765 (R)
+89
+Secondary
+On-Peak Period 5.672 (I)
+Mid-Peak Period 4.528 (I)
+Off-Peak Period 3.765 (R)
+Primary
+On-Peak Period 5.337 (I)
+Mid-Peak Period 4.593
+Off-Peak Period 4.098
+Subtransmission
+On-Peak Period 5.373
+Mid-Peak Period 4.629
+Off-Peak Period 4.134 (I)
+(1) Applicable only to the Baseline and Scheduled Maintenance Energy.
+Advice No. 26-24
+Issued June 30, 2026 Effective for service
+Angelica Espinosa, Senior Vice President on and after July 8, 2026
+
+Portland General Electric Company Second Revision of Sheet No. 125-5
+P.U.C. Oregon No. E-19 Canceling First Revision of Sheet No. 125-5
+SCHEDULE 125 (Concluded)
+ADJUSTMENT RATES (Continued)
+Schedule ¢ per kWh
+90
+Primary 30-250 MWa (R)
+On-Peak Period 4.579
+Off-Peak Period 3.829
+Primary >250 MWa
+On-Peak Period 4.579
+Off-Peak Period 3.829
+Subtransmission 30-250 MWa
+On-Peak Period 4.579
+Off-Peak Period 3.829
+Subtransmission >250 MWa
+On-Peak Period 4.579
+Off-Peak Period 3.829 (R)
+91 4.082 (I)
+92 4.317 (R)
+95 4.082 (I)
+96 Primary (N)
+On-Peak Period 5.770
+Mid-Peak Period 5.026
+Off-Peak Period 4.531 (N)
+SPECIAL CONDITION
+1. Costs recovered through this schedule will be allocated to each schedule using the
+applicable schedule’s forecasted energy on the basis of an equal percent of generation
+revenue applied on a cents per kWh basis to each applicable rate schedule.
+Advice No. 26-24
+Issued June 3, 2026 Effective for service
+Angelica Espinosa, Senior Vice President on and after July 8, 2026

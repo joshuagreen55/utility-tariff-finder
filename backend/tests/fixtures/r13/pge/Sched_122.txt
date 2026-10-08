@@ -1,0 +1,166 @@
+Portland General Electric Company Fourth Revision of Sheet No. 122-1
+P.U.C. Oregon No. E-19 Canceling Third Revision of Sheet No. 122-1
+SCHEDULE 122
+RENEWABLE RESOURCES AUTOMATIC ADJUSTMENT CLAUSE
+PURPOSE
+This Schedule recovers the revenue requirements of qualifying Company-owned or contracted
+new renewable energy resource and energy storage projects associated with renewable energy
+resources (including associated transmission) not otherwise included in rates. Additional new
+renewable and energy storage projects associated with renewable energy resources may be
+incorporated into this schedule as they are placed in service. This adjustment schedule is
+implemented as an automatic adjustment clause as provided for under ORS 757.210 and Section
+13 of the Oregon Renewable Energy Act (OREA).
+AVAILABLE
+In all territory served by the Company.
+APPLICABLE
+To all bills for Electricity Service except Schedules 76, 485, 489, 490, 491, 492, 495, 496, 576, (C)
+689 and 696. This schedule is not applicable to direct access customers after December 31, 2010. (C)
+ADJUSTMENT RATE
+The Adjustment Rate, applicable for service on and after the effective date of this schedule are:
+Schedule Adjustment Rate
+7 0.214 ¢ per kWh
+15 0.152 ¢ per kWh
+32 0.188 ¢ per kWh
+38 0.184 ¢ per kWh
+47 0.224 ¢ per kWh
+49 0.220 ¢ per kWh
+75
+Secondary 0.166 ¢ per kWh
+Primary 0.165 ¢ per kWh
+Subtransmission 0.163 ¢ per kWh
+83 0.183 ¢ per kWh
+85
+Secondary 0.181 ¢ per kWh
+Primary 0.171 ¢ per kWh
+89 (M)
+Secondary 0.166 ¢ per kWh
+Primary 0.165 ¢ per kWh
+Subtransmission 0.163 ¢ per kWh (M)
+Advice No. 26-24
+Issued June 3, 2026 Effective for service
+Angelica Espinosa, Senior Vice President on and after July 8, 2026
+
+Portland General Electric Company Fourth Revision of Sheet No. 122-2
+P.U.C. Oregon No. E-19 Canceling Third Revision of Sheet No. 122-2
+SCHEDULE 122 (Continued)
+ADJUSTMENT RATE (Continued)
+Schedule Adjustment Rate
+90
+Primary 30-250 Mwa 0.163 ¢ per kWh
+Primary >250 Mwa 0.133 ¢ per kWh
+Subtransmission 0.163 ¢ per kWh
+91 0.162 ¢ per kWh
+92 0.163 ¢ per kWh
+95 0.162 ¢ per kWh
+(N)
+96 0.164 ¢ per kWh
+ANNUAL REVENUE REQUIREMENTS
+The Annual Revenue Requirements of a qualifying project will include the fixed costs of the
+renewable resource or energy storage project associated with renewable energy resources and
+associated transmission (including return on and return of the capital costs), operation and
+maintenance costs, income taxes, property taxes, and other fees and costs that are applicable to
+the renewable resource or energy storage project associated with renewable energy resources
+or associated transmission. Until the dispatch benefits are included in the Annual Power Cost
+Update Schedule 125, the net revenue requirements of each project (fixed costs less market value
+of the energy produced by the renewable resource or energy storage project associated with
+renewable energy resources plus any power costs such as fuel, integration and wheeling costs)
+will be deferred and included in the Schedule 122 rates. By no later than April 1 of each year
+following the resource’s on-line date, the Company will file an update to the revenue requirements
+of resources included in this schedule to recognize projected changes for the following calendar
+year. Should the final determination of a Schedule 122 filing for a new resource not allow for
+inclusion of its net variable power costs (NVPC) in the AUT, these will be included in the Schedule
+122 revenue requirement used to set initial prices. In this circumstance, the resource’s NVPC
+impacts will subsequently be removed from Schedule 122 prices and included in the AUT at the
+next available opportunity.
+DEFERRAL MECHANISM
+For each calendar year that the Company anticipates that a new renewable resource or energy
+storage project associated with renewable energy resources will commence operation, the
+Company may file a deferral request the earlier of the resource online date or April 1. The deferral
+amount will be for the fixed revenue requirements of the resource less net dispatch benefits. For
+purposes of determining dispatch benefits, the forward curves used to set rates for the year under
+the Annual Power Cost Update will be used. The deferral will be amortized over the next calendar
+year in Schedule 122 unless otherwise approved by the Oregon Public Utility Commission
+(OPUC). The balancing account will accrue interest at the Commission-authorized rate for
+deferred accounts, and the amortization of the deferred amount will not be subject to the
+provisions of ORS 757.259(5).
+Advice No. 26-24
+Issued June 3, 2026 Effective for service
+Angelica Espinosa, Senior Vice President on and after July 8, 2026
+
+Portland General Electric Company
+P.U.C. Oregon No. E-19 Original Sheet No. 122-3
+SCHEDULE 122 (Continued)
+TIME AND MANNER OF FILING
+When the Company proposes to include a new resource under this schedule and, by no later than
+April 1 of each calendar year that the Company is required to update the Annual Revenue
+Requirements for an existing resource, the Company will file the following:
+1. Revised rates under this schedule and a transmittal letter that summarizes the proposed
+revenue requirements and charges for both the new resource(s) and the updated revenue
+requirements and charges for applicable resources previously approved for recovery under
+this schedule. In addition, the filing will include revised income taxes and associated ratios
+to calculate “taxes authorized to be collected in rates” under ORS 757.268.
+2. Within the Company’s Annual Power Cost Update (Schedule 125) filing, the Company will
+include for the following year the expected generation of resources included in this schedule
+and the power costs of these resources.
+3. Work papers that support the calculation of revenue requirements for all applicable
+resources and demonstrate how the proposed prices are calculated.
+With respect to a Schedule 122 rate change for the initial inclusion of the allowable costs of a new
+resource, and in compliance with the Commission’s findings in the proceeding(s) regarding the
+initial cost recovery of the new resource, the Company will file updated Schedule 122 rates by no
+less than 30 days prior to the rate effective date.
+SPECIAL CONDITIONS
+1. Costs recovered through this schedule will be allocated to each schedule using the
+applicable schedule’s forecasted energy on the basis of an equal percent of generation
+revenue applied on a cents per kWh basis to each applicable rate schedule.
+2. Each renewable resource project (and associated transmission) included in this adjustment
+schedule must be separately identified and be a new resource defined as “renewable” in
+the OREA.
+3. The costs for projects included under this schedule will be updated annually as provided
+above, and will continue to be recovered under Schedule 122 until such time as the costs
+are included in base rates or the project is no longer in service.
+4. The in-service date for the new renewable resource project or energy storage project
+associated with renewable energy resources or each separately identifiable project segment
+will be verified by an attestation from the Company stating that the specific renewable
+resource project or energy storage project associated with renewable energy resources, or
+project segment, has met requirements for being commercially operational and is in service.
+Advice No. 23-40
+Issued December 19, 2023 Effective for service
+Brett Sims, Vice President on and after January 1, 2024
+
+Portland General Electric Company
+P.U.C. Oregon No. E-19 Original Sheet No. 122-4
+SCHEDULE 122 (Concluded)
+SPECIAL CONDITIONS (Continued)
+5. If the actual costs of an eligible new resource cannot be verified by the final round of
+testimony in the proceeding reviewing the filing for its initial cost recovery, the Company will
+include in its compliance filing for initial cost recovery an update to reflect then-current actual
+resource costs, or forecasted costs where appropriate. If the updated costs are lower than
+the projected costs in the record of the proceeding, the update will contain sufficient
+information to support a reduction in the proposed adjustment charges before the effective
+date. If updated costs are higher than the projected costs in the proceeding’s record or if
+actual costs cannot be verified prior to the compliance filing, the Company may file for
+deferred accounting under the OREA to allow an opportunity for recovery of the cost
+differences between the projected costs in the record and the prudently incurred actual
+costs. For purposes of Schedule 126 (Annual Power Cost Variance Mechanism), actual
+NVPC will be adjusted to remove the impact of any power produced by a new renewable
+resource or energy storage project associated with renewable energy resources qualifying
+for treatment under this schedule but not otherwise included in rates. The following
+adjustments will be made:
+a) Actual NVPC will be increased by the value of any renewable or energy storage
+resource energy. The value of such energy will be determined by employing the forward
+curves used to set rates for the year under the Annual Power Cost Update. Actual NVPC
+will be reduced by applicable fuel costs and supply integration costs for the resource.
+b) Actual NVPC will also be increased or decreased as appropriate for any other credits
+or charges specifically identifiable with the new renewable or energy storage resource.
+6. For Schedule 122 filings made on and after April 2009, the Commission may condition
+approval of a proposed change in Schedule 122 charges on PGE making a filing under
+ORS 757.210 within six months after the Commission order approving the proposed
+change. Through this filing, the Company will roll into the generation component of its rates
+all of the costs, or a portion thereof identified by the Commission, that are being collected
+through the then existing Schedule 122 charges. The Commission’s order for conditional
+approval must be based upon: (1) a finding that the costs, or a portion thereof, specified by
+the Commission have been collected through Schedule 122 for a reasonable period of years,
+as determined by the Commission; or (2) for good cause, as determined by the Commission.
+Advice No. 23-40
+Issued December 19, 2023 Effective for service
+Brett Sims, Vice President on and after January 1, 2024

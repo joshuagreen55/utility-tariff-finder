@@ -1,0 +1,68 @@
+Portland General Electric Company Second Revision of Sheet No. 138-1
+P.U.C. Oregon No. E-19 Canceling First Revision of Sheet No. 138-1
+SCHEDULE 138
+ENERGY STORAGE COST RECOVERY MECHANISM
+PURPOSE
+This Schedule recovers the expenses associated with HB 2193 energy storage pilots not
+otherwise included in rates. This adjustment schedule is implemented as an automatic adjustment
+clause as provided for under ORS 757.210.
+AVAILABLE
+In all territory served by the Company.
+APPLICABLE
+To all bills for Electricity Service except Schedules 76R, 485, 489, 490, 491, 492, 495, 496, 576R, (C)
+689, and 696. (C)
+ADJUSTMENT RATE
+The Adjustment Rate, applicable for service on and after the effective date of this schedule are:
+Schedule Adjustment Rate
+7 0.003 ¢ per kWh
+15/515 0.002 ¢ per kWh
+32/532 0.003 ¢ per kWh
+38/538 0.002 ¢ per kWh
+47 0.003 ¢ per kWh
+49/549 0.003 ¢ per kWh
+75/575
+Secondary 0.002 ¢ per kWh
+Primary 0.002 ¢ per kWh
+Subtransmission 0.002 ¢ per kWh
+83/583 0.003 ¢ per kWh
+85/585
+Secondary 0.002 ¢ per kWh
+Primary 0.002 ¢ per kWh
+Advice No. 26-24
+Issued June 3, 2026 Effective for service
+Angelica Espinosa, Senior Vice President on and after July 8, 2026
+
+Portland General Electric Company Second Revision of Sheet No. 138-2
+P.U.C. Oregon No. E-19 Canceling First Revision of Sheet No. 138-2
+SCHEDULE 138 (Concluded)
+ADJUSTMENT RATE (Continued)
+Schedule Adjustment Rate
+89/589
+Secondary 0.002 ¢ per kWh
+Primary 0.002 ¢ per kWh
+Subtransmission 0.002 ¢ per kWh
+90/590
+Primary 30-250 Mwa 0.002 ¢ per kWh
+Primary >250 Mwa 0.002 ¢ per kWh
+Subtransmission 0.002 ¢ per kWh
+91/591 0.002 ¢ per kWh
+92/592 0.002 ¢ per kWh
+95/595 0.002 ¢ per kWh
+96/596 0.002 ¢ per kWh (N)
+BALANCING ACCOUNT
+The Company will maintain a balancing account to accrue differences between the incremental
+costs associated with energy storage pilots and the revenues collected under this schedule. This
+balancing account will accrue interest at the Commission-authorized rate for deferred accounts.
+DEFERRAL MECHANISM
+Each year the Company may file a deferral request to defer the incremental costs associated with
+the implementation and administration of the energy storage pilots. The rate on this schedule
+recovers only the incremental costs for implementation and administration of energy storage
+pilots. The deferral will be amortized over one year in this schedule unless otherwise approved
+by the Oregon Public Utility Commission.
+SPECIAL CONDITION
+1. Costs recovered through this schedule will be allocated to each schedule using the
+applicable schedule’s forecasted energy on the basis of an equal percent of generation
+revenue applied on a cents per kWh basis to each applicable rate schedule.
+Advice No. 26-24
+Issued June 3, 2026 Effective for service
+Angelica Espinosa, Senior Vice President on and after July 8, 2026

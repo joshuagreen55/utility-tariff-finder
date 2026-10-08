@@ -1,0 +1,67 @@
+Portland General Electric Company Third Revision of Sheet No. 102-1
+P.U.C. Oregon No. E-19 Canceling Second Revision of Sheet No. 102-1
+SCHEDULE 102
+FEDERAL COLUMBIA RIVER BENEFITS SUPPLIED BY
+BONNEVILLE POWER ADMINISTRATION
+PURPOSE
+Each Customer’s bill rendered under schedules providing Residential Service, Farm Service and
+Nonresidential Farm Irrigation and Drainage Pumping Service will include the Federal Columbia
+River Benefits supplied by Bonneville Power Administration (BPA), applied to each kWh sold
+when the Customer qualifies for the adjustment according to the definitions and limitations set
+forth in this schedule. Where Customers are served by Electricity Service Suppliers (ESSs), the
+ESS will agree to pass through the credit to the Customer.
+AVAILABLE
+In all territory served by the Company.
+APPLICABLE
+To all bills for Direct Access Service, Emergency Default Service, Standard Service and
+Residential Service where the Customer meets the definition of Residential Service, Farm Service
+or Farm Irrigation and Drainage Pumping Service as specified in this schedule. Consistent with
+the requirements of the BPA, if, in the course of doing business, a utility discovers that one of its
+existing Customers is growing Cannabis using power provided by the utility, such customer is not
+eligible for the Federal Columbia River Benefits supplied by BPA under this Schedule.
+FEDERAL COLUMBIA RIVER BENEFITS SUPPLIED BY BPA
+The credit will be the value of power and other benefits inclusive provided in accordance with the
+terms of the Settlement Agreement between the Company and the BPA.
+The credit inclusive of interest is:
+Schedule 7
+First 2,000 kWh (1.112) ¢ per kWh (I)
+Over 2,000 kWh 0.000 ¢ per kWh
+All schedules (1.112) ¢ per kWh (I)
+RESIDENTIAL SERVICE
+Residential Service means Electricity Service provided for residential purposes including service
+to master-metered apartments, apartment utility rooms, common areas, and other residential
+uses.
+Advice No. 26-03
+Issued January 28, 2026 Effective for service
+Angelica Espinosa, Senior Vice President on and after April 1, 2026
+
+Portland General Electric Company
+P.U.C. Oregon No. E-19 Original Sheet No. 102-2
+SCHEDULE 102 (Concluded)
+FARM IRRIGATION AND DRAINAGE PUMPING SERIVE
+Farm Irrigation and Drainage Pumping Service means Electricity Service to a parcel of land used
+for the raising of crops, livestock, or pasturage and includes service to irrigation pumps.
+FARM SERVICE
+Farm Service means Electricity Service furnished to Premises employed for the purpose of
+obtaining a profit in money by raising, harvesting and selling crops; or by the feeding, breeding,
+management and sale of, or the produce of, livestock, poultry, fur-bearing animals, or honeybees;
+or for dairying and the sale of dairy products; or any other agricultural or horticultural use, animal
+husbandry, or any combination thereof. Farm Service includes the use of Energy to prepare and
+store the products raised on the Premises for human use and animal use and his/her disposal by
+marketing or otherwise. Farm Service does not include the use of Energy for commercial
+treatment, storage, or distribution of agricultural or horticultural products and does not include the
+use of land subject to the provisions of ORS Chapter 321 concerning commercial forestry.
+SPECIAL CONDITIONS
+1. The Credit will be applied to residential and farm usage; however, irrigation for farm use is
+limited to the first 400 horsepower per farm. The 400-horsepower limitation will be converted
+to maximum monthly kWh usage according to the following formula:
+400 hp x .746 x (24 hrs x days in Billing Period) = maximum kWh but not to
+exceed 222,000 kWh in
+any month
+2. The credit is no longer applicable upon determination that the service no longer constitutes
+residential or farm usage. The Customer or ESS will notify the Company of any change of
+the type of service on the Customer’s Premises. The credit and eligibility for the adjustment
+are subject to review and approval by BPA and the Commission.
+Advice No. 23-40
+Issued December 19, 2023 Effective for service
+Brett Sims, Vice President on and after January 1, 2024

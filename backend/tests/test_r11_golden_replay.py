@@ -196,6 +196,7 @@ class TestR11GoldenEndToEnd(unittest.TestCase):
         self.assertEqual(_energy_cents(tou), [11.452, 19.22, 45.653])
         default = next(t for t in plans if "Default Plan" in t.name)
         self.assertEqual(_energy_cents(default), [19.43, 20.542])
+        self.assertEqual(default.rate_type, "tiered")  # Sch 102 2k split (R13)
         # No fabricated separate EV plan — whole-premise TOD covers EV-only.
         self.assertFalse(any("Electric Vehicle" in t.name for t in plans))
 

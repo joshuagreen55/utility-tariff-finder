@@ -1,0 +1,72 @@
+Portland General Electric Company
+P.U.C. Oregon No. E-19 Original Sheet No. 137-1
+SCHEDULE 137
+CUSTOMER-OWNED SOLAR PAYMENT OPTION
+COST RECOVERY MECHANISM
+PURPOSE
+This Schedule recovers the costs associated with the Solar Payment Option pilot not otherwise
+included in rates. This adjustment schedule is implemented as an automatic adjustment clause
+as provided for under ORS 757.210, and defined in Renewable Portfolio Standards.
+AVAILABLE
+In all territory served by the Company.
+APPLICABLE
+To all bills for Electricity Service except Schedules 76R and 576R.
+ADJUSTMENT RATES
+The Adjustment Rates, applicable for service on and after the effective date of this schedule will
+be:
+Schedule Adjustment Rate
+7 0.024 ¢ per kWh
+15/515 0.018 ¢ per kWh
+32/532 0.021 ¢ per kWh
+38/538 0.023 ¢ per kWh
+47 0.033 ¢ per kWh
+49/549 0.029 ¢ per kWh
+75/575
+Secondary 0.011 ¢ per kWh(1)
+Primary 0.011 ¢ per kWh(1)
+Subtransmission 0.010 ¢ per kWh(1)
+83/583 0.017 ¢ per kWh
+85/485/585
+Secondary 0.014 ¢ per kWh
+Primary 0.012 ¢ per kWh
+(1) Applicable only to the Baseline and Scheduled Maintenance Energy.
+Advice No. 23-40
+Issued December 19, 2023 Effective for service
+Brett Sims, Vice President on and after January 1, 2024
+
+Portland General Electric Company First Revision of Sheet No. 137-2
+P.U.C. Oregon No. E-19 Canceling Original Sheet No. 137-2
+SCHEDULE 137 (Concluded)
+ADJUSTMENT RATES (Continued)
+Schedule Adjustment Rate
+89/489/589
+Secondary 0.011 ¢ per kWh
+Primary 0.011 ¢ per kWh
+Subtransmission 0.010 ¢ per kWh
+90/490/590
+Primary 0.010 ¢ per kWh
+Subtransmission 0.010 ¢ per kWh
+91/491/591 0.018 ¢ per kWh
+92/492/592 0.012 ¢ per kWh
+95/495/595 0.018 ¢ per kWh
+96/496/596/696 0.011 ¢ per kWh (N)
+689
+Secondary 0.011 ¢ per kWh
+Primary 0.011 ¢ per kWh
+Subtransmission 0.010 ¢ per kWh
+BALANCING ACCOUNT
+The Company will maintain a balancing account to accrue differences between the incremental
+costs associated with the Solar Payment Option pilot and the revenues collected under this
+schedule. This balancing account will accrue interest at the Commission-authorized rate for
+deferred accounts.
+DEFERRAL MECHANISM
+Each year the Company may file a deferral request. The deferral will be amortized over one year
+in this schedule unless otherwise directed by the Oregon Public Utility Commission.
+SPECIAL CONDITION
+1. Costs recovered through this schedule will be allocated to each schedule using the
+applicable schedule’s forecasted energy on the basis of an equal percent of revenue applied
+on a cents per kWh basis to each applicable rate schedule, with long-term opt out and new
+load direct access customers priced at the equivalent cost of service rate schedule.
+Advice No. 26-24
+Issued June 3, 2026 Effective for service
+Angelica Espinosa, Senior Vice President on and after July 8, 2026
