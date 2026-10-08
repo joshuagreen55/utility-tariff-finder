@@ -10091,6 +10091,694 @@ def enrich_tariffs_with_referenced_rider_docs(
     return merged, list(pages or []) + list(fetched)
 
 
+# ---------------------------------------------------------------------------
+# R18: one-utility plan reconcile (runs after every plan is all-in)
+#   * optional add-on variants (… with Renewable Energy Rider) repaired from
+#     their base plan when the extract under-folded a shared adder;
+#   * guard: an optional variant priced below its base with no credit;
+#   * same plan extracted twice (tariff book + marketing page, or a
+#     temporary-price book + standard book) collapsed to ONE live copy;
+#   * rider extracts naming a customer group with no extracted plan are
+#     reported (NSP MURB) instead of vanishing silently.
+# ---------------------------------------------------------------------------
+
+_R18_PRICE_TOL = 0.0002  # $/kWh — 0.02¢ rounding slack
+
+# Tail words that make "<base name> <tail>" a separate optional product.
+_R18_VARIANT_TAIL_RE = re.compile(
+    r"\b(?:with|rider|renewable|green|optional|option|solar|wind|"
+    r"environmental|eco)\b",
+    re.I,
+)
+# Tail words that make two prefix-related names DIFFERENT plans for the
+# duplicate collapse (interim vs final, EV vs base, export, pilot, …).
+_R18_DISTINCT_TAIL_RE = re.compile(
+    r"\b(?:with|rider|renewable|green|optional|option|solar|wind|interim|"
+    r"proposed|future|pilot|ev|vehicle|export|net|critical|cpp|demand|"
+    r"time of use|time of day|tou|tod|super|lifeline|low income|senior|"
+    r"employee|seasonal|heat|heating|water|controlled|interruptible)\b",
+    re.I,
+)
+_R18_GENERIC_TOKENS = frozenset({
+    "rate", "rates", "plan", "plans", "price", "pricing", "service",
+    "residential", "standard", "tariff", "schedule", "domestic",
+    "electric", "electricity", "for", "the", "and", "of", "no", "a",
+})
+_R18_MONTHS = (
+    r"(?:jan|feb|mar|apr|may|jun|jul|aug|sep|sept|oct|nov|dec)[a-z]*\.?"
+)
+_R18_WINDOW_RE = re.compile(
+    rf"\b({_R18_MONTHS})\s*(\d{{4}})?\s*(?:-|–|—|to|through|thru)\s*"
+    rf"({_R18_MONTHS})\s*,?\s*(\d{{4}})",
+    re.I,
+)
+_R18_MONTH_NUM = {
+    m: i for i, m in enumerate(
+        ("jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep",
+         "oct", "nov", "dec"), start=1,
+    )
+}
+
+
+def _r18_norm(name: str) -> str:
+    """Lowercase, punctuation → space, collapse whitespace."""
+    n = re.sub(r"[^a-z0-9]+", " ", str(name or "").lower())
+    return " ".join(n.split())
+
+
+def _r18_utility_tokens(utility_name: str) -> set[str]:
+    words = [w for w in _r18_norm(utility_name).split() if w]
+    toks = {w for w in words if len(w) >= 3}
+    initials = "".join(w[0] for w in words if w not in ("of", "the", "and"))
+    if len(initials) >= 2:
+        toks.add(initials)
+    return toks
+
+
+def _r18_strip_utility(norm: str, util_toks: set[str]) -> str:
+    return " ".join(w for w in norm.split() if w not in util_toks)
+
+
+def _r18_contains(longer: str, shorter: str) -> tuple[bool, str, str]:
+    """Token-boundary containment; returns (hit, text before, text after)."""
+    if not shorter or not longer:
+        return False, "", ""
+    hay = f" {longer} "
+    needle = f" {shorter} "
+    idx = hay.find(needle)
+    if idx < 0:
+        return False, "", ""
+    before = " ".join(hay[:idx].split())
+    after = " ".join(hay[idx + len(needle):].split())
+    return True, before, after
+
+
+def _r18_is_strong_alias(alias: str) -> bool:
+    toks = alias.split()
+    if len(toks) < 2:
+        return False
+    return any(t not in _R18_GENERIC_TOKENS for t in toks)
+
+
+def _r18_aliases(t: ExtractedTariff, util_toks: set[str]) -> tuple[str, list[str]]:
+    """(full normalized name w/o utility words, explicit parenthetical aliases)."""
+    raw = str(t.name or "")
+    full = _r18_strip_utility(_r18_norm(raw), util_toks)
+    parens = [
+        _r18_strip_utility(_r18_norm(p), util_toks)
+        for p in re.findall(r"\(([^()]{3,})\)", raw)
+    ]
+    return full, [p for p in parens if p]
+
+
+def _r18_same_plan_name(
+    a: ExtractedTariff, b: ExtractedTariff, util_toks: set[str],
+) -> bool:
+    fa, pa = _r18_aliases(a, util_toks)
+    fb, pb = _r18_aliases(b, util_toks)
+    if not fa or not fb:
+        return False
+    if fa == fb:
+        return True
+    # Explicit marketed alias in parentheses ("E-23 … (SRP Basic Price Plan)")
+    for alias, other_full, other_par in (
+        *((p, fb, pb) for p in pa), *((p, fa, pa) for p in pb),
+    ):
+        if not _r18_is_strong_alias(alias):
+            continue
+        if alias == other_full or alias in other_par:
+            return True
+        hit, _, _ = _r18_contains(other_full, alias)
+        if hit:
+            return True
+    # Plain containment: shorter full name inside the longer one, with a
+    # tail that carries no product discriminator.
+    shorter, longer = (fa, fb) if len(fa) <= len(fb) else (fb, fa)
+    if not _r18_is_strong_alias(shorter):
+        return False
+    hit, before, after = _r18_contains(longer, shorter)
+    if not hit:
+        return False
+    if _R18_DISTINCT_TAIL_RE.search(f"{before} {after}"):
+        return False
+    # A trailing number / letter-number ("Rate D" vs "Rate D 2") is a
+    # different schedule; a LEADING code ("E-24 M-Power …") is not.
+    return not re.search(r"\b[a-z]?\d+[a-z]?\b", after)
+
+
+def _r18_energy_rows(t: ExtractedTariff) -> list[dict]:
+    out = []
+    for c in t.components or []:
+        if not isinstance(c, dict):
+            continue
+        if str(c.get("component_type") or "").lower() != "energy":
+            continue
+        unit = str(c.get("unit") or "$/kWh").strip().lower()
+        if unit not in ("$/kwh", "kwh", ""):
+            continue
+        try:
+            float(c.get("rate_value"))
+        except (TypeError, ValueError):
+            continue
+        out.append(c)
+    return out
+
+
+def _r18_day(c: dict) -> str:
+    d = str(c.get("day_type") or "").strip().lower()
+    return d if d not in ("", "none", "all days", "everyday", "every day") else "all"
+
+
+def _r18_fine_key(c: dict) -> tuple:
+    return (
+        c.get("season_start_month"), c.get("season_end_month"), _r18_day(c),
+        c.get("period_start_time"), c.get("period_end_time"),
+        c.get("tier_min_kwh"), c.get("tier_max_kwh"),
+    )
+
+
+def _r18_coarse_key(c: dict) -> tuple:
+    return (
+        c.get("season_start_month"), c.get("season_end_month"),
+        c.get("period_start_time"), c.get("period_end_time"),
+        c.get("tier_min_kwh"), c.get("tier_max_kwh"),
+    )
+
+
+def _r18_fine_map(t: ExtractedTariff) -> dict | None:
+    """fine key → $/kWh; None when one key carries two different prices."""
+    out: dict = {}
+    for c in _r18_energy_rows(t):
+        k = _r18_fine_key(c)
+        v = float(c.get("rate_value"))
+        if k in out and abs(out[k] - v) > _R18_PRICE_TOL:
+            return None
+        out[k] = v
+    return out
+
+
+def _r18_coarse_map(t: ExtractedTariff) -> dict:
+    out: dict = {}
+    for c in _r18_energy_rows(t):
+        out.setdefault(_r18_coarse_key(c), set()).add(round(float(c.get("rate_value")), 5))
+    return out
+
+
+def _r18_included_adders(t: ExtractedTariff) -> list[float]:
+    vals = []
+    for c in t.components or []:
+        if not isinstance(c, dict):
+            continue
+        if str(c.get("component_type") or "").lower() != "adjustment":
+            continue
+        if not c.get("included_in_energy"):
+            continue
+        unit = str(c.get("unit") or "").strip().lower()
+        if unit not in ("$/kwh", "kwh"):
+            continue
+        try:
+            vals.append(round(float(c.get("rate_value")), 6))
+        except (TypeError, ValueError):
+            continue
+    return sorted(vals)
+
+
+def _r18_has_kwh_credit(t: ExtractedTariff) -> bool:
+    for c in t.components or []:
+        if not isinstance(c, dict):
+            continue
+        ctype = str(c.get("component_type") or "").lower()
+        unit = str(c.get("unit") or "").strip().lower()
+        if ctype not in ("adjustment", "credit") or unit not in ("$/kwh", "kwh"):
+            continue
+        try:
+            if float(c.get("rate_value")) < 0:
+                return True
+        except (TypeError, ValueError):
+            continue
+        if re.search(r"credit|discount|rebate", str(c.get("tier_label") or c.get("period_label") or ""), re.I):
+            return True
+    return False
+
+
+def _r18_add_missing(t: ExtractedTariff, reason: str) -> None:
+    missing = list(getattr(t, "missing_fields", None) or [])
+    if reason not in missing:
+        missing.append(reason)
+    t.missing_fields = missing
+    t.needs_review = True
+
+
+def _r18_note(t: ExtractedTariff, key: str, value) -> None:
+    notes = dict(getattr(t, "confidence_notes", None) or {})
+    notes[key] = value
+    t.confidence_notes = notes
+
+
+def _r18_variant_pairs(tariffs: list[ExtractedTariff]) -> list[tuple[ExtractedTariff, ExtractedTariff]]:
+    """(base, variant) where variant name = base name + optional-product tail."""
+    pairs = []
+    norms = [(_r18_norm(t.name), t) for t in tariffs]
+    for nb, base in norms:
+        if not nb:
+            continue
+        for nv, var in norms:
+            if var is base or len(nv) <= len(nb):
+                continue
+            if base.customer_class != var.customer_class:
+                continue
+            if not nv.startswith(nb + " "):
+                continue
+            tail = nv[len(nb):]
+            if _R18_VARIANT_TAIL_RE.search(tail):
+                pairs.append((base, var))
+    return pairs
+
+
+def reconcile_optional_variant_prices(tariffs: list[ExtractedTariff]) -> int:
+    """Repair an optional rider variant priced below base + its own adders.
+
+    Pedernales R17: the "… with Renewable Energy Rider" TOU extract listed
+    the right adders (delivery, TCOS, REC) but folded TCOS as 0.000688
+    instead of 0.020688 into off-/mid-peak, leaving those periods 2.0¢ under
+    the base plan. When the variant carries every base adder plus extra
+    positive adders, has the exact same period grid, and at least one
+    period already equals base + extras (proving the shared base), every
+    period priced BELOW base + extras is reset to that value. Periods priced
+    above it are left alone (flagged by the guard instead). Returns the
+    number of variants repaired.
+    """
+    repaired = 0
+    for base, var in _r18_variant_pairs(tariffs):
+        if (base.source_url or "") != (var.source_url or "") or not base.source_url:
+            continue
+        bmap, vmap = _r18_fine_map(base), _r18_fine_map(var)
+        if not bmap or not vmap or set(bmap) != set(vmap):
+            continue
+        b_add, v_add = _r18_included_adders(base), _r18_included_adders(var)
+        extra = list(v_add)
+        ok = True
+        for a in b_add:
+            if a in extra:
+                extra.remove(a)
+            else:
+                ok = False
+                break
+        if not ok or not extra or any(x <= 0 or x > 0.05 for x in extra):
+            continue
+        add = round(sum(extra), 6)
+        expected = {k: round(bmap[k] + add, 6) for k in bmap}
+        anchors = [k for k in vmap if abs(vmap[k] - expected[k]) <= _R18_PRICE_TOL]
+        low = [k for k in vmap if vmap[k] < expected[k] - 0.0005]
+        if not anchors or not low:
+            continue
+        old = {}
+        for c in _r18_energy_rows(var):
+            k = _r18_fine_key(c)
+            if k in low:
+                old_v = float(c.get("rate_value"))
+                old[str(round(old_v, 6))] = expected[k]
+                c["rate_value"] = expected[k]
+        _r18_note(var, "variant_price_repaired", {
+            "base_plan": base.name,
+            "extra_adders_per_kwh": add,
+            "periods_fixed": len(low),
+            "old_to_new": old,
+        })
+        log.warning(
+            f"    Variant reconcile on '{var.name}': {len(low)} period(s) "
+            f"below base '{base.name}' + {add:.6f} $/kWh adders — reset "
+            f"({old})"
+        )
+        repaired += 1
+    return repaired
+
+
+def flag_optional_priced_below_base(tariffs: list[ExtractedTariff]) -> int:
+    """needs_review when an optional variant is cheaper than its base plan
+    in any matching period and carries no per-kWh credit explaining it."""
+    flagged = 0
+    for base, var in _r18_variant_pairs(tariffs):
+        bmap, vmap = _r18_fine_map(base), _r18_fine_map(var)
+        if not bmap or not vmap:
+            continue
+        common = set(bmap) & set(vmap)
+        below = [k for k in common if vmap[k] < bmap[k] - _R18_PRICE_TOL]
+        if not below or _r18_has_kwh_credit(var):
+            continue
+        _r18_add_missing(var, "optional_plan_below_base_unexplained")
+        _r18_note(var, "optional_plan_below_base", {
+            "base_plan": base.name, "periods_below": len(below),
+        })
+        log.warning(
+            f"    Optional '{var.name}' priced below base '{base.name}' in "
+            f"{len(below)} period(s) with no credit — needs_review"
+        )
+        flagged += 1
+    return flagged
+
+
+def _r18_price_vintage(t: ExtractedTariff) -> str | None:
+    """'temporary', 'standard', or None (unknown)."""
+    name = str(t.name or "").lower()
+    url = str(t.source_url or "").lower()
+    desc = str(t.description or "").lower()
+    if re.search(r"temporar", url) or re.search(r"\btemporar", name):
+        return "temporary"
+    if re.search(
+        r"\b(?:exclud\w*|without|not\s+includ\w*|before|after|apply\s+from)"
+        r"\b[^.;]{0,40}\btemporar", desc,
+    ):
+        return "standard"
+    if re.search(
+        r"\b(?:includ\w*|reflect\w*|with)\b[^.;]{0,60}\btemporar", desc
+    ) or re.search(
+        r"\btemporar\w*\s+(?:price|rate|fuel|decrease|reduction|discount|"
+        r"credit|increase|surcharge)s?\b[^.;]{0,30}\b(?:in\s+effect|applied|"
+        r"included)", desc,
+    ):
+        return "temporary"
+    return None
+
+
+def _r18_temporary_window(t: ExtractedTariff, siblings: list[ExtractedTariff]) -> dict | None:
+    """Temporary price window stated near 'temporary' in this plan's text or
+    a plan from the same document. None when the dates are not clear."""
+    texts = [t] + [
+        s for s in siblings
+        if s is not t and s.source_url and s.source_url == t.source_url
+    ]
+    for s in texts:
+        blob = " ".join(
+            [str(s.description or "")]
+            + [
+                str(c.get("period_label") or c.get("tier_label") or "")
+                for c in (s.components or []) if isinstance(c, dict)
+            ]
+        )
+        for m in re.finditer(r"temporar", blob, re.I):
+            seg = blob[max(0, m.start() - 80): m.end() + 120]
+            w = _R18_WINDOW_RE.search(seg)
+            if not w:
+                continue
+            m_end = _R18_MONTH_NUM.get(w.group(3)[:3].lower())
+            year = w.group(4)
+            if not m_end or not year:
+                continue
+            return {
+                "window": w.group(0).strip(),
+                "until": f"{year}-{m_end:02d}",
+            }
+    return None
+
+
+def _r18_keep_score(t: ExtractedTariff) -> tuple:
+    url = str(t.source_url or "").lower()
+    official = 1 if (
+        url.endswith(".pdf") or ".pdf?" in url
+        or re.search(r"tariff|ratebook|rate-book|schedule|rider", url)
+    ) else 0
+    n_days = len({_r18_day(c) for c in _r18_energy_rows(t)})
+    return (
+        official,
+        0 if t.needs_review else 1,
+        n_days,
+        len(_r18_energy_rows(t)),
+        len(t.components or []),
+        1 if t.code else 0,
+    )
+
+
+def _r18_same_structure(a: ExtractedTariff, b: ExtractedTariff) -> tuple[bool, list]:
+    ca, cb = _r18_coarse_map(a), _r18_coarse_map(b)
+    if not ca or not cb:
+        return False, []
+    sa = {(k[0], k[1]) for k in ca}
+    sb = {(k[0], k[1]) for k in cb}
+    if sa != sb:
+        return False, []
+    common = set(ca) & set(cb)
+    small = min(len(ca), len(cb))
+    if not common or len(common) / small < 0.75:
+        return False, []
+    return True, sorted(common, key=str)
+
+
+def _r18_prices_equal(a: ExtractedTariff, b: ExtractedTariff, common: list) -> bool:
+    ca, cb = _r18_coarse_map(a), _r18_coarse_map(b)
+    for k in common:
+        va, vb = sorted(ca[k]), sorted(cb[k])
+        if len(va) != len(vb) or any(abs(x - y) > _R18_PRICE_TOL for x, y in zip(va, vb)):
+            return False
+    return True
+
+
+def _r18_energy_snapshot(t: ExtractedTariff, limit: int = 48) -> list[dict]:
+    out = []
+    for c in _r18_energy_rows(t)[:limit]:
+        out.append({
+            "season": c.get("season"),
+            "months": [c.get("season_start_month"), c.get("season_end_month")],
+            "day_type": c.get("day_type"),
+            "hours": [c.get("period_start_time"), c.get("period_end_time")],
+            "label": c.get("period_label") or c.get("tier_label"),
+            "rate_value": c.get("rate_value"),
+        })
+    return out
+
+
+def _r18_restamp_with_standard(tmp: ExtractedTariff, std: ExtractedTariff) -> bool:
+    """Rewrite tmp's energy rows with std prices (per season value map).
+
+    Used when the temporary copy has the richer clock/day grid (SRP E-28
+    weekday/weekend rows) and the standard copy has the right prices. Each
+    season's temp value must map to exactly one standard value through the
+    shared clock windows, and every temp row must be covered.
+    """
+    std_c = _r18_coarse_map(std)
+    vmap: dict = {}
+    for c in _r18_energy_rows(tmp):
+        k = _r18_coarse_key(c)
+        if k not in std_c or len(std_c[k]) != 1:
+            continue
+        season = (k[0], k[1])
+        tv = round(float(c.get("rate_value")), 5)
+        sv = next(iter(std_c[k]))
+        prev = vmap.get((season, tv))
+        if prev is not None and abs(prev - sv) > _R18_PRICE_TOL:
+            return False
+        vmap[(season, tv)] = sv
+    rows = _r18_energy_rows(tmp)
+    for c in rows:
+        k = _r18_coarse_key(c)
+        if ((k[0], k[1]), round(float(c.get("rate_value")), 5)) not in vmap:
+            return False
+    for c in rows:
+        k = _r18_coarse_key(c)
+        c["rate_value"] = vmap[((k[0], k[1]), round(float(c.get("rate_value")), 5))]
+    return True
+
+
+def dedupe_same_plan_variants(
+    tariffs: list[ExtractedTariff], utility_name: str = "",
+) -> tuple[list[ExtractedTariff], list[dict]]:
+    """Keep ONE live copy of a plan extracted more than once in a run.
+
+    Same plan = same customer class, matching name (shared marketed alias or
+    containment without a product discriminator), same season calendar and
+    mostly the same clock windows. Identical prices → keep the richer
+    official copy. Conflicting prices → prefer the standard price over a
+    temporary/expiring one; the temporary prices are stored as a note with
+    their window when the dates are clear, otherwise the kept plan is
+    flagged. Conflicts with no temporary/standard signal keep one copy and
+    flag it. Returns (kept, actions).
+    """
+    util_toks = _r18_utility_tokens(utility_name)
+    alive = list(tariffs)
+    actions: list[dict] = []
+    changed = True
+    while changed:
+        changed = False
+        for i in range(len(alive)):
+            for j in range(i + 1, len(alive)):
+                a, b = alive[i], alive[j]
+                if a.customer_class != b.customer_class:
+                    continue
+                if not _r18_same_plan_name(a, b, util_toks):
+                    continue
+                same, common = _r18_same_structure(a, b)
+                if not same:
+                    continue
+                ea = _parse_effective_date(getattr(a, "effective_date", None))
+                eb = _parse_effective_date(getattr(b, "effective_date", None))
+                if ea and eb and abs((ea - eb).days) > 31 and (
+                    ea > date.today() or eb > date.today()
+                ):
+                    # Succession (current vs future-dated) — both are valid.
+                    continue
+                keep, drop, action = _r18_resolve_pair(a, b, common, alive)
+                actions.append(action)
+                log.info(
+                    f"    Same-plan dedupe: kept '{keep.name}' "
+                    f"({keep.source_url}), dropped '{drop.name}' "
+                    f"({drop.source_url}) — {action['outcome']}"
+                )
+                alive = [t for t in alive if t is not drop]
+                changed = True
+                break
+            if changed:
+                break
+    return alive, actions
+
+
+def _r18_resolve_pair(a, b, common, siblings):
+    action = {"plans": [a.name, b.name]}
+    merged_from = lambda t: {"name": t.name, "source_url": t.source_url}
+    if _r18_prices_equal(a, b, common):
+        keep, drop = (a, b) if _r18_keep_score(a) >= _r18_keep_score(b) else (b, a)
+        if not keep.code and drop.code:
+            keep.code = drop.code
+        prev = list((keep.confidence_notes or {}).get("duplicate_copies_merged") or [])
+        _r18_note(keep, "duplicate_copies_merged", prev + [merged_from(drop)])
+        action.update(outcome="identical prices — kept richer copy", kept=keep.name)
+        return keep, drop, action
+
+    va, vb = _r18_price_vintage(a), _r18_price_vintage(b)
+    tmp = std = None
+    if va == "temporary" and vb != "temporary":
+        tmp, std = a, b
+    elif vb == "temporary" and va != "temporary":
+        tmp, std = b, a
+    if tmp is None:
+        keep, drop = (a, b) if _r18_keep_score(a) >= _r18_keep_score(b) else (b, a)
+        _r18_add_missing(keep, "duplicate_plan_price_conflict")
+        _r18_note(keep, "duplicate_plan_other_prices", {
+            **merged_from(drop), "energy": _r18_energy_snapshot(drop),
+        })
+        action.update(outcome="price conflict, vintage unknown — kept one, flagged", kept=keep.name)
+        return keep, drop, action
+
+    window = _r18_temporary_window(tmp, siblings)
+    tmp_snapshot = {
+        **merged_from(tmp), "energy": _r18_energy_snapshot(tmp),
+        **(window or {}),
+    }
+    # Prefer the richer clock/day grid when it can carry standard prices.
+    keep = std
+    restamped = False
+    if _r18_keep_score(tmp) > _r18_keep_score(std):
+        before = [dict(c) for c in tmp.components or []]
+        if _r18_restamp_with_standard(tmp, std):
+            keep, restamped = tmp, True
+            _r18_note(keep, "standard_prices_source_url", std.source_url)
+            keep.description = (
+                (str(keep.description or "").strip() + " ").lstrip()
+                + "Energy prices are the standard (non-temporary) prices from "
+                f"{std.source_url}; temporary prices are kept in notes."
+            )
+        else:
+            tmp.components = before
+    drop = std if keep is tmp else tmp
+    _r18_note(keep, "temporary_prices", tmp_snapshot)
+    if window:
+        _r18_note(keep, "temporary_price_until", window["until"])
+        outcome = f"price conflict — kept standard price; temporary stored (until {window['until']})"
+    else:
+        _r18_add_missing(keep, "temporary_price_dates_unclear")
+        outcome = "price conflict — kept standard price; temporary dates unclear, flagged"
+    if restamped:
+        outcome += "; clock grid from the richer temporary copy"
+    action.update(outcome=outcome, kept=keep.name)
+    return keep, drop, action
+
+
+def mark_temporary_only_plans(tariffs: list[ExtractedTariff]) -> int:
+    """A surviving plan whose ONLY copy carries temporary prices: note the
+    expiry when the dates are clear, otherwise flag it."""
+    n = 0
+    for t in tariffs:
+        if _r18_price_vintage(t) != "temporary":
+            continue
+        if (t.confidence_notes or {}).get("standard_prices_source_url"):
+            continue  # already restamped to standard prices
+        window = _r18_temporary_window(t, tariffs)
+        if window:
+            _r18_note(t, "temporary_price_until", window["until"])
+            _r18_note(t, "temporary_price_window", window["window"])
+        else:
+            _r18_add_missing(t, "temporary_price_dates_unclear")
+        n += 1
+    return n
+
+
+def find_plans_possibly_not_extracted(
+    all_in: list[ExtractedTariff], kept: list[ExtractedTariff],
+) -> list[str]:
+    """Customer groups named by rider extracts with no extracted plan.
+
+    NSP R17: "FAM … - MURB" and "DCRR … - MURB / General" were absorbed but
+    no MURB plan was extracted, so the MURB TOU plan vanished silently.
+    """
+    kept_names = " ".join(_r18_norm(t.name) for t in kept)
+    generic = {"domestic", "domestic service", "residential", "general",
+               "residential service", "all", "standard"}
+    out: list[str] = []
+    kept_ids = {id(t) for t in kept}
+    for t in all_in:
+        if id(t) in kept_ids or not _is_rider_only_tariff(t):
+            continue
+        name = str(t.name or "")
+        if " - " not in name:
+            continue
+        suffix = name.rsplit(" - ", 1)[1]
+        # "Domestic Service Tariff - DSM Rider" names a rider, not a group.
+        if re.search(
+            r"\b(?:rider|adjustment|charge|mechanism|credit|surcharge|"
+            r"program|programme|recovery|fee)s?\b", suffix, re.I,
+        ):
+            continue
+        for part in re.split(r"[/,&]", suffix):
+            p = _r18_norm(part)
+            if not p or p in generic:
+                continue
+            if f" {p} " in f" {kept_names} ":
+                continue
+            label = p.upper() if len(p) <= 5 else p
+            if label not in out:
+                out.append(label)
+    return out
+
+
+def reconcile_same_utility_plans(
+    valid: list[ExtractedTariff],
+    utility_name: str = "",
+    all_in: list[ExtractedTariff] | None = None,
+) -> tuple[list[ExtractedTariff], dict]:
+    """R18 post-validation pass over one utility's accepted plans."""
+    info: dict = {}
+    n_rep = reconcile_optional_variant_prices(valid)
+    kept, actions = dedupe_same_plan_variants(valid, utility_name)
+    n_tmp = mark_temporary_only_plans(kept)
+    n_guard = flag_optional_priced_below_base(kept)
+    missing = find_plans_possibly_not_extracted(all_in or [], kept)
+    if n_rep:
+        info["variant_prices_repaired"] = n_rep
+    if actions:
+        info["same_plan_dedupe"] = actions
+    if n_tmp:
+        info["temporary_price_plans"] = n_tmp
+    if n_guard:
+        info["optional_below_base_flagged"] = n_guard
+    if missing:
+        info["plans_possibly_not_extracted"] = missing
+        log.warning(
+            f"    Source names customer group(s) with no extracted plan: "
+            f"{missing} — plan(s) may be missing from this run"
+        )
+    return kept, info
+
+
+
 def phase4_validate(
     tariffs: list[ExtractedTariff], utility_name: str, state: str = ""
 ) -> tuple[dict, list[ExtractedTariff]]:
@@ -10520,6 +11208,15 @@ def phase4_validate(
             if needs_review:
                 flagged_tariffs.append(t.name)
 
+    # R18: one copy per plan, optional-variant reconcile + below-base guard,
+    # temporary-price handling, and missing-plan hints (all-in values now).
+    n_before_r18 = len(valid_tariffs)
+    valid_tariffs, r18_info = reconcile_same_utility_plans(
+        valid_tariffs, utility_name, all_in=tariffs,
+    )
+    duplicates_dropped = n_before_r18 - len(valid_tariffs)
+    flagged_tariffs = [t.name for t in valid_tariffs if t.needs_review]
+
     llm_cost.record_tier_acceptance(
         [getattr(t, "extraction_tier", "") for t in tariffs],
         [getattr(t, "extraction_tier", "") for t in valid_tariffs],
@@ -10527,17 +11224,23 @@ def phase4_validate(
 
     # Absorbed rider-only extracts are neither valid nor invalid — they
     # donated adjustments to ENERGY tariffs and should not inflate "invalid".
-    invalid_count = len(tariffs) - len(valid_tariffs) - absorbed_rider_only
+    invalid_count = (
+        len(tariffs) - len(valid_tariffs) - absorbed_rider_only
+        - duplicates_dropped
+    )
     report = {
         "total_extracted": len(tariffs),
         "valid": len(valid_tariffs),
         "invalid": max(0, invalid_count),
         "absorbed_rider_only": absorbed_rider_only,
+        "duplicates_dropped": duplicates_dropped,
         "issues": issues,
         "flagged_needs_review": flagged_tariffs,
         "has_residential": any(t.customer_class == "residential" for t in valid_tariffs),
         "has_commercial": any(t.customer_class == "commercial" for t in valid_tariffs),
     }
+    if r18_info:
+        report.update(r18_info)
 
     log.info(f"  Phase 4: {report['valid']} valid, {report['invalid']} invalid tariffs")
     if absorbed_rider_only:
