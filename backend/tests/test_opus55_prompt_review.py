@@ -54,13 +54,15 @@ class TestResidentialByWhoServed(unittest.TestCase):
         for prompt in (
             tp._STRUCTURED_RULES,
             tp.EXTRACTION_SYSTEM_PROMPT,
+            tp.HAIKU_EXTRACTION_SYSTEM_PROMPT,
             tp.TWOPASS_IDENTIFY_PROMPT,
-            tp.PAGE_SCREENSHOT_EXTRACTION_PROMPT_BASE,
-            tp.PDF_VISION_EXTRACTION_PROMPT_BASE,
         ):
             self.assertIn("Farm & Home", prompt)
             self.assertIn("General Service", prompt)
             self.assertRegex(prompt.lower(), r"who the rate serves|applies to residences")
+        # Vision user messages defer who-served detail to the cached system prompt.
+        self.assertIn("residential-by-who-served", tp.PAGE_SCREENSHOT_EXTRACTION_PROMPT_BASE)
+        self.assertIn("residential-by-who-served", tp.PDF_VISION_EXTRACTION_PROMPT_BASE)
 
 
 class TestSchemaFlagsAndParse(unittest.TestCase):
@@ -285,6 +287,128 @@ class TestClosedAndDeliveryScopeInStoreFactors(unittest.TestCase):
         self.assertTrue(valid[0].needs_review)
         self.assertEqual(valid[0].energy_scope, "delivery_only")
         self.assertTrue(valid[0].closed_to_new)
+
+
+class TestHaikuQualityEscalate(unittest.TestCase):
+    def test_tou_missing_clocks_escalates(self):
+        bad = [{
+            "name": "TOU", "customer_class": "residential", "rate_type": "tou",
+            "confidence": 0.9,
+            "components": [
+                {"component_type": "energy", "unit": "¢/kWh", "rate_value": 10.0,
+                 "period_label": "On-Peak"},
+            ],
+        }]
+        self.assertTrue(tp._haiku_result_needs_escalate(bad))
+
+    def test_flat_ok_does_not_escalate(self):
+        ok = [{
+            "name": "Flat", "customer_class": "residential", "rate_type": "flat",
+            "confidence": 0.9,
+            "components": [
+                {"component_type": "energy", "unit": "¢/kWh", "rate_value": 10.0},
+            ],
+        }]
+        self.assertFalse(tp._haiku_result_needs_escalate(ok))
+
+    def test_haiku_bad_output_escalates_to_sonnet(self):
+        page = tp.RatePage(url="https://ex.com", content="Energy 10 cents/kWh peak", content_hash="")
+        bad_haiku = [{
+            "name": "TOU", "customer_class": "residential", "rate_type": "tou",
+            "confidence": 0.9,
+            "components": [
+                {"component_type": "energy", "unit": "¢/kWh", "rate_value": 10.0},
+            ],
+        }]
+        good_sonnet = [{
+            "name": "TOU", "customer_class": "residential", "rate_type": "tou",
+            "confidence": 0.95,
+            "components": [
+                {"component_type": "energy", "unit": "¢/kWh", "rate_value": 10.0,
+                 "period_start_time": "16:00", "period_end_time": "21:00", "day_type": "weekday"},
+                {"component_type": "energy", "unit": "¢/kWh", "rate_value": 5.0,
+                 "period_start_time": "21:00", "period_end_time": "16:00", "day_type": "weekday"},
+            ],
+        }]
+
+        def fake_call(prompt, model=None, **kw):
+            if model == tp.HAIKU_MODEL:
+                return bad_haiku
+            return good_sonnet
+
+        with mock.patch.object(tp, "_select_model", return_value="haiku"), \
+                mock.patch.object(tp, "_call_claude_tool", side_effect=fake_call), \
+                mock.patch.object(tp, "_call_opus_tool") as opus:
+            result, tier = tp._extract_with_model_routing("prompt", page)
+        self.assertEqual(tier, "sonnet")
+        self.assertEqual(result, good_sonnet)
+        opus.assert_not_called()
+
+
+class TestScreenshotTiling(unittest.TestCase):
+    def test_tall_image_splits_into_tiles(self):
+        from PIL import Image
+        import io
+        img = Image.new("RGB", (800, 4200), color=(255, 255, 255))
+        buf = io.BytesIO()
+        img.save(buf, format="JPEG")
+        tiles = tp._tile_screenshot_jpeg(buf.getvalue(), tile_height=1400)
+        self.assertGreaterEqual(len(tiles), 3)
+
+
+class TestPhase5LinkRanking(unittest.TestCase):
+    def test_rate_links_rank_before_nav_noise(self):
+        links = [
+            (f"https://u.example/page{i}", f"Menu item {i}") for i in range(60)
+        ]
+        links.append(("https://u.example/rates/residential.pdf", "Residential Rates PDF"))
+        ranked = tp._rank_links_for_nav(links, limit=50)
+        self.assertEqual(ranked[0][1], "Residential Rates PDF")
+        self.assertIn("rates/residential.pdf", ranked[0][0])
+
+    def test_www_alias_same_site(self):
+        self.assertEqual(tp._host_key("www.example.com"), tp._host_key("example.com"))
+
+
+class TestEffortPerCall(unittest.TestCase):
+    def test_call_level_effort_beats_env(self):
+        from app.services import anthropic_compat as ac
+        import os
+        os.environ["ANTHROPIC_EFFORT"] = "high"
+        try:
+            out = ac.adapt_request({
+                "model": "claude-sonnet-5-5",
+                "max_tokens": 1024,
+                "messages": [],
+                "output_config": {"effort": "low"},
+            })
+            self.assertEqual(out.get("output_config", {}).get("effort"), "low")
+        finally:
+            os.environ.pop("ANTHROPIC_EFFORT", None)
+
+    def test_haiku_system_is_slimmer_than_full(self):
+        self.assertLess(
+            len(tp.HAIKU_EXTRACTION_SYSTEM_PROMPT),
+            len(tp.EXTRACTION_SYSTEM_PROMPT),
+        )
+        self.assertIn("SOURCE ONLY", tp.HAIKU_EXTRACTION_SYSTEM_PROMPT)
+        # Slim prompt keeps three short examples, not seven long ones.
+        self.assertNotIn("Example 6", tp.HAIKU_EXTRACTION_SYSTEM_PROMPT)
+        self.assertIn("Example 6", tp.EXTRACTION_SYSTEM_PROMPT)
+
+
+class TestPinAndAuditFullPriceWording(unittest.TestCase):
+    def test_arbiter_allows_all_in_energy_sums(self):
+        from app.services import pin_adapters as pa
+        self.assertIn("included_in_energy=true", pa.ARBITER_PROMPT)
+        self.assertIn("sum of printed amounts", pa.ARBITER_PROMPT)
+
+    def test_opus_audit_full_price_and_residential_only(self):
+        from scripts import opus_audit
+        self.assertIn("rider_missing_from_energy", opus_audit.AUDIT_PROMPT)
+        self.assertIn("sum of printed", opus_audit.AUDIT_PROMPT)
+        self.assertIn("Ignore commercial-only", opus_audit.AUDIT_PROMPT)
+        self.assertNotIn("residential or small commercial", opus_audit.AUDIT_PROMPT)
 
 
 if __name__ == "__main__":

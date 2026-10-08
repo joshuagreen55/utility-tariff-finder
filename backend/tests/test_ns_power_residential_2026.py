@@ -505,13 +505,12 @@ class TestInterimVsEnergyChargePrompts(unittest.TestCase):
         self.assertNotIn("Jan 1 2027", tp.EXTRACTION_SYSTEM_PROMPT)
 
     def test_vision_and_twopass_use_shared_which_price_rule(self):
-        for prompt in (
-            tp.PAGE_SCREENSHOT_EXTRACTION_PROMPT_BASE,
-            tp.PDF_VISION_EXTRACTION_PROMPT_BASE,
-            tp._STRUCTURED_RULES,
-        ):
+        # Vision user messages defer WHICH PRICE to the cached system prompt.
+        for prompt in (tp._STRUCTURED_RULES, tp.EXTRACTION_SYSTEM_PROMPT, tp.HAIKU_EXTRACTION_SYSTEM_PROMPT):
             self.assertIn("WHICH PRICE", prompt)
             self.assertNotIn("Jan 1 2027", prompt)
+        self.assertIn("system rules", tp.PAGE_SCREENSHOT_EXTRACTION_PROMPT_BASE)
+        self.assertIn("system rules", tp.PDF_VISION_EXTRACTION_PROMPT_BASE)
 
     def test_tou_season_strings_fit_varchar(self):
         self.assertLessEqual(len(repair.NS_TOU_NONWINTER_SEASON), tp._RC_SEASON_MAX)

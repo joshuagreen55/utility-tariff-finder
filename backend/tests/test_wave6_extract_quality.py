@@ -846,19 +846,20 @@ class TestStructuredNormalization(unittest.TestCase):
 
 class TestPrompts(unittest.TestCase):
     def test_structured_rules_in_every_extraction_prompt(self):
-        # Two-pass extract user message relies on the cached system prompt;
-        # vision + main system embed the shared rules directly.
+        # Vision/two-pass user messages rely on the cached system prompt;
+        # shared rules live in EXTRACTION_SYSTEM / _STRUCTURED_RULES.
         for prompt in (
             tp.EXTRACTION_PROMPT,
             tp.EXTRACTION_SYSTEM_PROMPT,
-            tp.PAGE_SCREENSHOT_EXTRACTION_PROMPT_BASE,
-            tp.PDF_VISION_EXTRACTION_PROMPT_BASE,
             tp._STRUCTURED_RULES,
+            tp.HAIKU_EXTRACTION_SYSTEM_PROMPT,
         ):
             self.assertIn("DAY TYPES", prompt)
             self.assertNotIn("{structured_rules}", prompt)
             self.assertNotIn("Convert cents to dollars", prompt)
         self.assertIn("SOURCE ONLY", tp.TWOPASS_EXTRACT_PROMPT)
+        self.assertIn("system rules", tp.PAGE_SCREENSHOT_EXTRACTION_PROMPT_BASE)
+        self.assertIn("system rules", tp.PDF_VISION_EXTRACTION_PROMPT_BASE)
 
     def test_prompts_still_format(self):
         tp.EXTRACTION_PROMPT.format(url="u", title="t", content="c", utility_name="n", state="s")
@@ -878,7 +879,7 @@ class TestPrompts(unittest.TestCase):
         self.assertNotIn("Mention weekend/holiday off-peak in description", tp.EXTRACTION_PROMPT)
 
     def test_prompt_version_bumped(self):
-        self.assertEqual(tp._LLM_PROMPT_VERSION, "v9")
+        self.assertEqual(tp._LLM_PROMPT_VERSION, "v10")
 
     def test_full_bill_energy_rule_in_prompts(self):
         self.assertIn("FULL PRICE", tp._STRUCTURED_RULES)
@@ -888,6 +889,7 @@ class TestPrompts(unittest.TestCase):
     def test_residential_only_in_pipeline_prompts(self):
         for prompt in (
             tp.EXTRACTION_SYSTEM_PROMPT,
+            tp.HAIKU_EXTRACTION_SYSTEM_PROMPT,
             tp.TWOPASS_IDENTIFY_PROMPT,
             tp.TWOPASS_EXTRACT_PROMPT,
             tp.PAGE_SCREENSHOT_EXTRACTION_PROMPT_BASE,
@@ -912,9 +914,10 @@ class TestPrompts(unittest.TestCase):
         self.assertIn("Nothing else", tp._STRUCTURED_RULES)
         self.assertIn("format illustrations ONLY", tp.EXTRACTION_SYSTEM_PROMPT)
         for prompt in (
+            tp._STRUCTURED_RULES,
+            tp.HAIKU_EXTRACTION_SYSTEM_PROMPT,
             tp.PAGE_SCREENSHOT_EXTRACTION_PROMPT_BASE,
             tp.PDF_VISION_EXTRACTION_PROMPT_BASE,
-            tp._STRUCTURED_RULES,
         ):
             self.assertIn("SOURCE ONLY", prompt)
 
@@ -964,8 +967,10 @@ class TestPrompts(unittest.TestCase):
     def test_regulator_attribution_exception_in_prompts(self):
         self.assertIn("PROVINCE-WIDE REGULATED PRICES", tp.EXTRACTION_PROMPT)
         self.assertIn("Ontario Energy Board", tp.EXTRACTION_PROMPT)
-        self.assertIn("PROVINCE-WIDE REGULATED PRICES", tp.PAGE_SCREENSHOT_EXTRACTION_PROMPT_BASE)
-        self.assertIn("PROVINCE-WIDE REGULATED PRICES", tp.PDF_VISION_EXTRACTION_PROMPT_BASE)
+        # Vision user messages defer attribution detail to the cached system prompt.
+        self.assertIn("regulator commodity", tp.PAGE_SCREENSHOT_EXTRACTION_PROMPT_BASE.lower())
+        self.assertIn("regulator commodity", tp.PDF_VISION_EXTRACTION_PROMPT_BASE.lower())
+        self.assertIn("PROVINCE-WIDE REGULATED PRICES", tp.EXTRACTION_SYSTEM_PROMPT)
         # Wrong-utility guard still present.
         self.assertIn("different utility's name", tp.EXTRACTION_PROMPT)
         self.assertIn("neighboring IOU", tp.EXTRACTION_PROMPT)
@@ -1012,7 +1017,7 @@ class TestAnthropicOnlyStack(unittest.TestCase):
         )
         calls = []
 
-        def fake_tool(prompt, model=None):
+        def fake_tool(prompt, model=None, **_kw):
             calls.append(model)
             return []
 

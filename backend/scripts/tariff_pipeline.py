@@ -618,7 +618,7 @@ def _set_pdf_cache(content_hash: str, text: str) -> None:
 
 # LLM extraction result cache — avoids re-calling the LLM for the same content
 LLM_CACHE_DIR = os.path.join(os.environ.get("APP_LOG_DIR", "/app/logs"), "llm_extraction_cache")
-_LLM_PROMPT_VERSION = "v9"
+_LLM_PROMPT_VERSION = "v10"
 
 
 # Opt-in, for one transition run only: also read entries written under the
@@ -2553,6 +2553,25 @@ EXTRACTION_PROMPT = (
     + EXTRACTION_USER_PROMPT.replace("{today}", "YYYY-MM-DD")
 )
 
+# Slim system prompt for Haiku (tier-1): shared rules + three short format
+# examples. Complex pages already skip Haiku, so it never needs the long
+# interim / relative-seasonal / NSP-style examples.
+HAIKU_EXTRACTION_SYSTEM_PROMPT = """Extract ONLY residential electricity tariffs (who the rate serves — homes/dwellings/domestic/farm-and-home; keep "General Service" / "Farm & Home" when the text says they apply to residences).
+
+ATTRIBUTION: only rates for the TARGET UTILITY in the user message (or province-wide regulator commodity prices for its jurisdiction). Otherwise empty tariffs + empty_reason.
+
+Use the store_tariffs tool. Fields: customer_class always "residential"; rate_type as defined in the tool; effective_date = effective-for-service date; confidence 0.9+ if clear, else 0.5–0.8 or leave gaps in missing_fields.
+
+Rules:
+{structured_rules}
+
+Examples (format ONLY — never copy these numbers):
+1) Flat: Customer $15/mo + Energy 10.000 ¢/kWh → fixed 15 $/month; energy 10.000 ¢/kWh.
+2) Tiered: First 500 kWh $0.100, over 500 $0.120 → two ENERGY rows with tier bounds.
+3) Weekday TOU: On-peak 4–9pm 30¢, off-peak other hours 10¢; weekends/holidays 10¢ all day → weekday 16:00–21:00 + 21:00–16:00; weekend and holiday 00:00–00:00.
+
+Use the store_tariffs tool.""".replace("{structured_rules}", _STRUCTURED_RULES)
+
 
 _GENERIC_NAME_TAIL_WORDS = {
     "tariff", "service", "services", "rate", "rates", "schedule", "plan",
@@ -2663,30 +2682,49 @@ def _merge_prefix_duplicates(tariffs: list[ExtractedTariff]) -> list[ExtractedTa
     return merged
 
 
+# User message only — full rules/examples come from the cached system prompt.
 PAGE_SCREENSHOT_EXTRACTION_PROMPT_BASE = """TODAY: {today}
 TARGET UTILITY: {utility_name} ({state})
-Extract ONLY residential electricity tariffs visible in this web page screenshot (who the rate serves — homes/dwellings/domestic/farm-and-home/residential single-phase; keep "General Service" / "Farm & Home" when the text says they apply to residences).
+These are screenshot tile(s) of a web page. Extract residential tariffs following the system rules (SOURCE ONLY, FULL PRICE, residential-by-who-served).
 
-The page may display rate information as images, charts, infographics, or styled tables that don't appear in the raw HTML text.
-Ignore sample bills, savings claims, "as low as" or "starting at" figures and charts without labelled values. Extract only prices the page presents as the rate for a named plan.
+The page may display rates as images, charts, infographics, or styled tables.
+Ignore sample bills, savings claims, "as low as" / "starting at" figures and charts without labelled values.
+ATTRIBUTION: only the target utility (or province-wide regulator commodity prices for its jurisdiction). Set empty_reason if nothing attributable is visible.
+If you cannot see clear residential electricity rates, return an empty tariffs array and set empty_reason.
 
-ATTRIBUTION CHECK: If the screenshot shows rates for multiple utilities, only return those clearly attributed to the target. PROVINCE-WIDE REGULATED PRICES: regulator pages (e.g. OEB RPP) that publish jurisdiction-wide commodity prices for LDCs in the target's province/state count as attributable — extract them; do not invent delivery charges not shown. If you cannot confidently attribute rates to the target utility (and the regulator exception does not apply), return an empty tariffs array and set empty_reason.
-
-Rules:
-- Read numbers exactly as shown — do NOT estimate
-{structured_rules}
-- Include ALL tiers, periods, seasonal variations visible
-- Skip rates that serve only businesses, industry, lighting, irrigation or wholesale
-- If you cannot see any clear residential electricity rates in the image, return an empty tariffs array and set empty_reason
-- confidence: 0.9+ if values clearly readable; 0.5-0.8 if some ambiguity; if you would be guessing, leave it out and list it in missing_fields
-- If a minimum monthly charge equals the basic/customer charge for the same amp tier, emit one fixed row — not both fixed and minimum duplicates
-
-Use the store_tariffs tool to return results.""".replace("{structured_rules}", _STRUCTURED_RULES)
+Use the store_tariffs tool."""
 
 
 # Max viewport height for the full-page screenshot. Most rate pages fit in
 # one or two screens; clamping avoids Vision token blowups on very long pages.
 MAX_SCREENSHOT_HEIGHT_PX = 6000
+# Claude vision shrinks the long edge (~1568 px). Tall full-page JPEGs become
+# unreadably narrow; send ~1400 px tiles instead.
+SCREENSHOT_TILE_HEIGHT_PX = 1400
+
+
+def _tile_screenshot_jpeg(img_bytes: bytes, tile_height: int = SCREENSHOT_TILE_HEIGHT_PX) -> list[bytes]:
+    """Split a tall JPEG into top-to-bottom tiles for vision readability."""
+    try:
+        from PIL import Image
+        import io
+    except ImportError:
+        return [img_bytes]
+    try:
+        img = Image.open(io.BytesIO(img_bytes))
+    except Exception:
+        return [img_bytes]
+    w, h = img.size
+    if h <= tile_height + 200:
+        return [img_bytes]
+    tiles: list[bytes] = []
+    for top in range(0, h, tile_height):
+        box = (0, top, w, min(h, top + tile_height))
+        tile = img.crop(box)
+        buf = io.BytesIO()
+        tile.convert("RGB").save(buf, format="JPEG", quality=80)
+        tiles.append(buf.getvalue())
+    return tiles or [img_bytes]
 
 
 def _fetch_full_page_screenshot(url: str, wait_ms: int = 3000) -> bytes | None:
@@ -2743,34 +2781,44 @@ def _extract_page_screenshot_vision(
 
     import base64
 
-    b64 = base64.standard_b64encode(img_bytes).decode("ascii")
-    log.info(f"    Page screenshot vision: sending image ({len(img_bytes)} bytes) to Claude")
+    tiles = _tile_screenshot_jpeg(img_bytes)
+    log.info(
+        f"    Page screenshot vision: sending {len(tiles)} tile(s) "
+        f"({len(img_bytes)} bytes source) to Claude"
+    )
 
     prompt_text = PAGE_SCREENSHOT_EXTRACTION_PROMPT_BASE.format(
         today=_today_iso(),
         utility_name=utility_name or "unknown",
         state=state or "",
     )
-    content_blocks = [
-        {"type": "text", "text": prompt_text},
-        {
+    content_blocks: list[dict] = [{"type": "text", "text": prompt_text}]
+    for tile in tiles[:8]:
+        content_blocks.append({
             "type": "image",
             "source": {
                 "type": "base64",
                 "media_type": "image/jpeg",
-                "data": b64,
+                "data": base64.standard_b64encode(tile).decode("ascii"),
             },
-        },
-    ]
+        })
 
     client = _get_anthropic_client()
     try:
         resp = client.messages.create(
             model=SONNET_MODEL,
-            max_tokens=4096,
+            max_tokens=8192,
+            system=[
+                {
+                    "type": "text",
+                    "text": _CACHED_SYSTEM_PROMPT,
+                    "cache_control": {"type": "ephemeral"},
+                }
+            ],
             messages=[{"role": "user", "content": content_blocks}],
             tools=[TARIFF_EXTRACTION_TOOL],
             tool_choice={"type": "tool", "name": "store_tariffs"},
+            output_config={"effort": "medium"},
         )
     except Exception as e:
         log.error(f"    Page screenshot vision API call failed: {e}")
@@ -2786,23 +2834,15 @@ def _extract_page_screenshot_vision(
     return [], 1
 
 
+# User message only — full rules/examples come from the cached system prompt.
 PDF_VISION_EXTRACTION_PROMPT_BASE = """TODAY: {today}
 TARGET UTILITY: {utility_name} ({state})
-These are page images of a PDF. Extract ONLY residential electricity tariffs visible in them (who the rate serves — homes/dwellings/domestic/farm-and-home/residential single-phase; keep "General Service" / "Farm & Home" when the text says they apply to residences).
+These are page images of a PDF. Extract residential tariffs following the system rules (SOURCE ONLY, FULL PRICE, residential-by-who-served).
 
-ATTRIBUTION CHECK: If the PDF contains rate sheets for multiple utilities, only return those clearly attributed to the target. PROVINCE-WIDE REGULATED PRICES: regulator documents (e.g. OEB RPP) that publish jurisdiction-wide commodity prices for LDCs in the target's province/state count as attributable — extract them; do not invent delivery charges not shown. If you cannot confidently attribute rates to the target utility (and the regulator exception does not apply), return an empty tariffs array and set empty_reason.
+ATTRIBUTION: only the target utility (or province-wide regulator commodity prices for its jurisdiction). Set empty_reason if nothing attributable is visible.
+Scanned pages: check each price's decimal point is really printed (956 ¢/kWh is almost certainly 9.56); read each price across from its own row label across page breaks; ignore superscript footnotes. If a value is hard to read, leave it out and list it in missing_fields.
 
-Scanned pages: check that each price's decimal point is really printed (a rate of 956 ¢/kWh is almost certainly 9.56); read each price across from its own row label, especially where a table continues onto the next page; ignore superscript footnote marks. If a value is hard to read, leave it out and list it in missing_fields.
-
-Rules:
-- Read numbers exactly as shown — do NOT estimate
-{structured_rules}
-- Include ALL tiers, periods, seasonal variations
-- Skip rates that serve only businesses, industry, lighting, irrigation or wholesale
-- confidence: 0.9+ if values clearly readable; 0.5-0.8 if some ambiguity; if you would be guessing, leave it out and list it in missing_fields
-- If a minimum monthly charge equals the basic/customer charge for the same amp tier, emit one fixed row — not both fixed and minimum duplicates
-
-Use the store_tariffs tool to return results.""".replace("{structured_rules}", _STRUCTURED_RULES)
+Use the store_tariffs tool."""
 
 # Vision page budget. Bumped from 15 because consolidated rate-book PDFs
 # (HQ's electricity-rates.pdf is 160 pages) bury tariff detail past page
@@ -2874,9 +2914,17 @@ def _extract_pdf_vision(
         resp = client.messages.create(
             model=SONNET_MODEL,
             max_tokens=8192,
+            system=[
+                {
+                    "type": "text",
+                    "text": _CACHED_SYSTEM_PROMPT,
+                    "cache_control": {"type": "ephemeral"},
+                }
+            ],
             messages=[{"role": "user", "content": content_blocks}],
             tools=[TARIFF_EXTRACTION_TOOL],
             tool_choice={"type": "tool", "name": "store_tariffs"},
+            output_config={"effort": "medium"},
         )
     except Exception as e:
         log.error(f"    PDF vision API call failed: {e}")
@@ -3885,6 +3933,8 @@ def _call_claude_tool(
     model: str | None = None,
     *,
     max_tokens: int = 8192,
+    system: str | None = None,
+    effort: str | None = None,
 ) -> list[dict]:
     """Call Claude with tool use for structured tariff extraction.
 
@@ -3893,19 +3943,38 @@ def _call_claude_tool(
     prompt and tool schema are marked ephemeral so repeated calls within a
     session pay only 10% of normal input cost for the cached portion.
 
+    ``system`` defaults to the full cached extraction prompt; Haiku passes the
+    slim ``HAIKU_EXTRACTION_SYSTEM_PROMPT``. ``effort`` sets per-call
+    ``output_config.effort`` (overrides ``ANTHROPIC_EFFORT``).
+
     If the reply is cut off at the token limit (``stop_reason == max_tokens``),
     retries once on the same model with a larger limit. Returns the parsed
     tariff dicts from the tool call input. Falls back to text parsing on error.
     """
     client = _get_anthropic_client()
     _remember_tool_meta({})
+    use_model = model or SONNET_MODEL
+    system_text = system
+    if system_text is None:
+        system_text = (
+            HAIKU_EXTRACTION_SYSTEM_PROMPT
+            if use_model == HAIKU_MODEL
+            else _CACHED_SYSTEM_PROMPT
+        )
+    if effort is None:
+        if use_model == HAIKU_MODEL:
+            effort = "low"
+        elif use_model == OPUS_MODEL:
+            effort = "high"
+        else:
+            effort = "medium"
     kwargs = {
-        "model": model or SONNET_MODEL,
+        "model": use_model,
         "max_tokens": max_tokens,
         "system": [
             {
                 "type": "text",
-                "text": _CACHED_SYSTEM_PROMPT,
+                "text": system_text,
                 "cache_control": {"type": "ephemeral"},
             }
         ],
@@ -3917,6 +3986,7 @@ def _call_claude_tool(
             }
         ],
         "tool_choice": {"type": "tool", "name": "store_tariffs"},
+        "output_config": {"effort": effort},
     }
     resp = client.messages.create(**kwargs)
     tariffs = _tool_input_tariffs(resp)
@@ -4022,6 +4092,45 @@ def _page_has_numeric_rates(content: str) -> bool:
     return False
 
 
+_TOU_FAMILY_TYPES = frozenset({
+    "tou", "tou_tiered", "demand_tou", "seasonal_tou",
+})
+_SEASONAL_FAMILY_TYPES = frozenset({
+    "seasonal", "seasonal_tiered", "seasonal_tou",
+})
+
+
+def _haiku_result_needs_escalate(tariffs: list[dict]) -> bool:
+    """True when a non-empty Haiku answer should be re-run on Sonnet.
+
+    Cheap checks only: TOU/seasonal rows missing required structured fields,
+    or riders named but not shown. Avoids caching a broken first pass forever.
+    """
+    for t in tariffs:
+        if not isinstance(t, dict):
+            continue
+        if t.get("riders_referenced_not_shown"):
+            return True
+        missing = t.get("missing_fields") or []
+        if missing and t.get("needs_review"):
+            return True
+        rt = str(t.get("rate_type") or "").lower()
+        comps = [c for c in (t.get("components") or []) if isinstance(c, dict)]
+        energy = [c for c in comps if c.get("component_type") == "energy"]
+        if not energy:
+            continue
+        if rt in _TOU_FAMILY_TYPES:
+            if any(
+                not c.get("period_start_time") or not c.get("period_end_time")
+                for c in energy
+            ):
+                return True
+        if rt in _SEASONAL_FAMILY_TYPES:
+            if any(not c.get("season_start_month") for c in energy):
+                return True
+    return False
+
+
 def _extract_with_model_routing(prompt: str, page: "RatePage") -> tuple[list[dict], str]:
     """Extract tariffs using a 3-tier Anthropic model strategy.
 
@@ -4032,7 +4141,8 @@ def _extract_with_model_routing(prompt: str, page: "RatePage") -> tuple[list[dic
                               per-utility Opus budget isn't exhausted)
 
     Returns (tariff_dicts, model_used). Uses LLM extraction cache to avoid
-    redundant API calls.
+    redundant API calls. Non-empty Haiku answers that fail cheap quality
+    checks escalate to Sonnet (review item 7).
     """
     model = _select_model(page)
 
@@ -4052,16 +4162,22 @@ def _extract_with_model_routing(prompt: str, page: "RatePage") -> tuple[list[dic
 
     last_tier = "haiku"
     if model == "haiku":
-        result = _call_claude_tool(prompt, model=HAIKU_MODEL)
+        result = _call_claude_tool(prompt, model=HAIKU_MODEL, effort="low")
         llm_cost.record_extraction_outcome("haiku", bool(result))
-        if result:
+        if result and not _haiku_result_needs_escalate(result):
             if page.content_hash:
                 _set_llm_cache(page.content_hash, "haiku", result)
             return result, "haiku"
-        log.info("    Haiku returned no tariffs, escalating to Sonnet")
+        if result:
+            log.info(
+                "    Haiku returned tariffs but failed quality checks — "
+                "escalating to Sonnet"
+            )
+        else:
+            log.info("    Haiku returned no tariffs, escalating to Sonnet")
 
     last_tier = "sonnet"
-    result = _call_claude_tool(prompt, model=SONNET_MODEL)
+    result = _call_claude_tool(prompt, model=SONNET_MODEL, effort="medium")
     llm_cost.record_extraction_outcome("sonnet", bool(result))
     if result:
         if page.content_hash:
@@ -7991,17 +8107,50 @@ Return only a JSON array of URLs, best first.
 """
 
 
+def _host_key(netloc: str) -> str:
+    """Normalize host for same-site checks (strip www.)."""
+    h = (netloc or "").lower()
+    return h[4:] if h.startswith("www.") else h
+
+
+_RATE_LINK_SCORE_RE = re.compile(
+    r"\brates?\b|\btariffs?\b|\bpricing\b|price\s*list|rate\s*schedules?|"
+    r"time[\s-]*of[\s-]*use|\btou\b|\bdomestic\b|\bresidential\b|"
+    r"electric(?:ity)?\s+rates?|\bschedule\b|\.pdf\b",
+    re.IGNORECASE,
+)
+
+
+def _rank_links_for_nav(
+    links: list[tuple[str, str]], *, limit: int = 50,
+) -> list[tuple[str, str]]:
+    """Prefer rate/tariff/PDF links before cutting to ``limit``.
+
+    Footer "Rates & Tariffs" often sits past the first 50 DOM links; scoring
+    by rate keywords keeps those in the LLM's candidate list.
+    """
+    scored: list[tuple[int, int, str, str]] = []
+    for i, (url, text) in enumerate(links):
+        blob = f"{url} {text}"
+        score = len(_RATE_LINK_SCORE_RE.findall(blob))
+        if url.lower().endswith(".pdf"):
+            score += 2
+        scored.append((-score, i, url, text))
+    scored.sort()
+    return [(u, t) for _, _, u, t in scored[:limit]]
+
+
 def _extract_all_links(html: str, base_url: str) -> list[tuple[str, str]]:
     """Extract ALL links from an HTML page (not just rate-relevant ones)."""
     soup = BeautifulSoup(html, "html.parser")
     links = []
     seen = set()
-    base_domain = urlparse(base_url).netloc
+    base_domain = _host_key(urlparse(base_url).netloc)
     for a in soup.find_all("a", href=True):
         full_url = urljoin(base_url, a["href"]).split("#")[0].split("?")[0]
         if full_url in seen:
             continue
-        link_domain = urlparse(full_url).netloc
+        link_domain = _host_key(urlparse(full_url).netloc)
         if link_domain and link_domain != base_domain:
             continue
         link_text = a.get_text(strip=True)[:80]
@@ -8171,7 +8320,9 @@ def _phase5_smart_retry(
         stats["phase5_no_links"] = True
         return [], [], stats
 
-    link_list = "\n".join(f"- {text}: {url}" for url, text in all_links[:50])
+    ranked_links = _rank_links_for_nav(all_links, limit=50)
+    allowed_urls = {u for u, _ in ranked_links}
+    link_list = "\n".join(f"- {text}: {url}" for url, text in ranked_links)
 
     # Step 2: Ask LLM which links to follow
     prompt = NAVIGATE_PROMPT.format(
@@ -8188,6 +8339,7 @@ def _phase5_smart_retry(
             model=SONNET_MODEL,
             max_tokens=1024,
             messages=[{"role": "user", "content": prompt}],
+            output_config={"effort": "low"},
         )
         from app.services.anthropic_compat import response_text
 
@@ -8202,6 +8354,11 @@ def _phase5_smart_retry(
         log.warning(f"  Phase 5: Navigation AI failed: {e}")
         return [], [], stats
 
+    # Drop invented URLs that were not in the ranked candidate list.
+    nav_urls = [
+        u for u in nav_urls
+        if isinstance(u, str) and u in allowed_urls
+    ]
     log.info(f"  Phase 5: AI chose {len(nav_urls)} links to follow")
     stats["phase5_ai_picked"] = len(nav_urls)
 
@@ -8210,7 +8367,7 @@ def _phase5_smart_retry(
     for url in nav_urls[:5]:
         if not isinstance(url, str) or not url.startswith("http"):
             continue
-        nav_domain = urlparse(url).netloc.replace("www.", "").lower()
+        nav_domain = _host_key(urlparse(url).netloc)
         if any(
             nav_domain == d or nav_domain.endswith(f".{d}")
             for d in THIRD_PARTY_DOMAINS

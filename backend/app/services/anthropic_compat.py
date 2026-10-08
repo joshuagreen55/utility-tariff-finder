@@ -122,7 +122,13 @@ def adapt_request(body: dict, *, sdk: bool = False) -> dict:
         extra["thinking"] = {"type": "disabled"}
     elif mode == "adaptive" and thinking_default_on(model):
         extra["thinking"] = {"type": "adaptive"}
-    effort = (os.environ.get("ANTHROPIC_EFFORT") or "").strip().lower()
+    # Per-call effort (request body) wins over the global ANTHROPIC_EFFORT env.
+    call_effort = None
+    for src in (out.get("output_config"), extra.get("output_config")):
+        if isinstance(src, dict) and src.get("effort"):
+            call_effort = str(src["effort"]).strip().lower()
+            break
+    effort = call_effort or (os.environ.get("ANTHROPIC_EFFORT") or "").strip().lower()
     if effort and thinking_default_on(model) and extra.get("thinking", {}).get("type") != "disabled":
         extra["output_config"] = {**extra.get("output_config", {}), "effort": effort}
 

@@ -46,12 +46,11 @@ class TestMysaPromptContract(unittest.TestCase):
             self.assertIn(snippet, tp._STRUCTURED_RULES)
 
     def test_phase3_prompts_include_structured_rules(self):
-        # Two-pass extract user message defers to the cached system prompt.
+        # Vision/two-pass user messages defer to the cached system prompt.
         for prompt in (
             tp.EXTRACTION_PROMPT,
             tp.EXTRACTION_SYSTEM_PROMPT,
-            tp.PAGE_SCREENSHOT_EXTRACTION_PROMPT_BASE,
-            tp.PDF_VISION_EXTRACTION_PROMPT_BASE,
+            tp.HAIKU_EXTRACTION_SYSTEM_PROMPT,
             tp._STRUCTURED_RULES,
         ):
             with self.subTest(prompt=prompt[:40]):
@@ -60,6 +59,7 @@ class TestMysaPromptContract(unittest.TestCase):
                 self.assertNotIn("{structured_rules}", prompt)
                 self.assertNotIn("Convert cents to dollars", prompt)
         self.assertIn("SOURCE ONLY", tp.TWOPASS_EXTRACT_PROMPT)
+        self.assertIn("system rules", tp.PAGE_SCREENSHOT_EXTRACTION_PROMPT_BASE)
 
     def test_phase6_prompt_aligned(self):
         text = tp._phase6_prompt("Hydro One", "ON", attempted_urls=None)
@@ -113,7 +113,7 @@ class TestMysaPromptContract(unittest.TestCase):
         self.assertIn("do not invent", props["period_start_time"]["description"].lower())
 
     def test_prompt_version_bumped_for_mysa_rules(self):
-        self.assertEqual(tp._LLM_PROMPT_VERSION, "v9")
+        self.assertEqual(tp._LLM_PROMPT_VERSION, "v10")
 
 
 class TestStructuredRoundTrip(unittest.TestCase):
