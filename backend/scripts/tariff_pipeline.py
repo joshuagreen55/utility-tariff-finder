@@ -1196,6 +1196,11 @@ _REGULATOR_FILING_PATTERNS = (
     r"/dockets?/",
     r"/proceedings?/",
     r"docket[-_]?no[-_\.]?\d",
+    # State PUC e-doc portals / rate-case accession numbers (PGE UE 394).
+    r"://edocs\.puc\.",
+    r"://[a-z0-9.-]*puc\.state\.",
+    r"/efdocs/",
+    r"\bue[\s_-]?\d{2,4}\b",
 )
 _REGULATOR_FILING_RE = re.compile(
     "|".join(_REGULATOR_FILING_PATTERNS), re.IGNORECASE
@@ -2608,12 +2613,45 @@ def _distinct_variant(tail: str, a: ExtractedTariff, b: ExtractedTariff) -> bool
     return not (ea <= eb or eb <= ea)
 
 
+def _tariff_has_energy(t: ExtractedTariff) -> bool:
+    return bool(_energy_values(t))
+
+
+def _tariff_keep_score(t: ExtractedTariff) -> tuple:
+    """Richer keeper for prefix/full-bill duplicate collapse.
+
+    Never prefer a rider-only extract over one with ENERGY (BC Hydro R5).
+    Among ENERGY plans, prefer higher all-in energy (full-bill sibling) and
+    more folded/stacking riders over a bare component count.
+    """
+    energy_vals = _energy_values(t)
+    has_energy = 1 if energy_vals else 0
+    max_energy = max(energy_vals) if energy_vals else 0.0
+    folded = sum(
+        1
+        for c in (t.components or [])
+        if isinstance(c, dict)
+        and str(c.get("component_type") or "").lower() == "adjustment"
+        and c.get("included_in_energy")
+    )
+    stacking = 0
+    for c in (t.components or []):
+        if not isinstance(c, dict):
+            continue
+        # Inline check — _is_universal_stacking_rider is defined later.
+        if str(c.get("component_type") or "").lower() != "adjustment":
+            continue
+        stacking += 1
+    return (has_energy, max_energy, folded, stacking, len(t.components or []))
+
+
 def _merge_prefix_duplicates(tariffs: list[ExtractedTariff]) -> list[ExtractedTariff]:
     """Merge tariffs where one name is a prefix of another (same customer class).
 
     E.g. "Domestic Service" (1 adjustment) and "Domestic Service Tariff"
     (3 full components) are the same plan at different detail levels —
-    keep the one with the most components.
+    keep the richer one. A tariff with no ENERGY never absorbs one that has
+    ENERGY (BC Hydro "flat rate with TOD" rider-only vs Residential Flat Rate).
     """
     if len(tariffs) <= 1:
         return tariffs
@@ -2634,8 +2672,7 @@ def _merge_prefix_duplicates(tariffs: list[ExtractedTariff]) -> list[ExtractedTa
                 if j <= i or j in absorbed:
                     continue
                 if norm_i == norm_j:
-                    # Exact normalized match — keep the one with more components
-                    if len(t_i.components) >= len(t_j.components):
+                    if _tariff_keep_score(t_i) >= _tariff_keep_score(t_j):
                         absorbed.add(j)
                     else:
                         absorbed.add(i)
@@ -2661,8 +2698,23 @@ def _merge_prefix_duplicates(tariffs: list[ExtractedTariff]) -> list[ExtractedTa
                     # "Rate G" vs "Rate G Short-Term Contract": a separate
                     # product with its own prices, not a detail-level dupe.
                     continue
-                # One is a prefix of the other — keep the richer one
-                if len(t_i.components) >= len(t_j.components):
+                # Hard rule: never let a no-ENERGY tariff absorb one with ENERGY.
+                ei, ej = _tariff_has_energy(t_i), _tariff_has_energy(t_j)
+                if ei and not ej:
+                    absorbed.add(j)
+                    log.info(
+                        f"    Merged duplicate: '{t_j.name}' (no ENERGY) "
+                        f"absorbed by '{t_i.name}' (has ENERGY)"
+                    )
+                    continue
+                if ej and not ei:
+                    absorbed.add(i)
+                    log.info(
+                        f"    Merged duplicate: '{t_i.name}' (no ENERGY) "
+                        f"absorbed by '{t_j.name}' (has ENERGY)"
+                    )
+                    break
+                if _tariff_keep_score(t_i) >= _tariff_keep_score(t_j):
                     absorbed.add(j)
                     log.info(f"    Merged duplicate: '{t_j.name}' ({len(t_j.components)} comp) "
                              f"absorbed by '{t_i.name}' ({len(t_i.components)} comp)")
@@ -2680,6 +2732,202 @@ def _merge_prefix_duplicates(tariffs: list[ExtractedTariff]) -> list[ExtractedTa
         log.info(f"    Fuzzy dedup: {len(tariffs)} -> {len(merged)} tariffs "
                  f"({len(tariffs) - len(merged)} duplicates merged)")
     return merged
+
+
+def _rate_type_family(rt: str) -> str:
+    r = str(rt or "").strip().lower()
+    if r in ("tou", "tou_tiered", "seasonal_tou", "demand_tou"):
+        return "tou"
+    if r in ("seasonal", "seasonal_tiered"):
+        return "seasonal"
+    if r in ("tiered",):
+        return "tiered"
+    return r or "flat"
+
+
+def _name_token_set(name: str) -> set[str]:
+    stop = {
+        "rate", "tariff", "schedule", "service", "the", "and", "for", "of",
+        "residential", "domestic", "electric", "energy", "plan", "option",
+    }
+    return {
+        w for w in re.split(r"[^a-z0-9]+", str(name or "").lower())
+        if w and w not in stop and not w.isdigit()
+    }
+
+
+def _full_bill_product_match(a: ExtractedTariff, b: ExtractedTariff) -> bool:
+    """True when two extracts look like the same product at different detail."""
+    if str(a.customer_class or "").lower() != str(b.customer_class or "").lower():
+        return False
+    if _rate_type_family(a.rate_type) != _rate_type_family(b.rate_type):
+        return False
+    ca = str(a.code or "").strip().lower()
+    cb = str(b.code or "").strip().lower()
+    if ca and cb:
+        if ca == cb:
+            return True
+        # "1.2DS" vs "1.2D" are seasonal variants, not full-bill siblings.
+        if _seasonal_sibling_base_code(ca) == cb or _seasonal_sibling_base_code(cb) == ca:
+            return False
+        # Only treat as the same product when codes are equal after stripping
+        # trivial formatting — not when one is a proper prefix of the other
+        # (that path is for name tokens / Pedernales "Time-of-Use" dupes).
+    na, nb = _normalize_tariff_name(a.name), _normalize_tariff_name(b.name)
+    if na == nb:
+        return True
+    ta, tb = _name_token_set(a.name), _name_token_set(b.name)
+    if not ta or not tb:
+        return False
+    overlap = len(ta & tb) / max(1, min(len(ta), len(tb)))
+    return overlap >= 0.5
+
+
+def _base_energy_compatible_for_full_bill(thin: ExtractedTariff, full: ExtractedTariff) -> bool:
+    """Thin plan's ENERGY values look like the full plan before riders."""
+    ea = sorted(_energy_values(thin))
+    eb = sorted(_energy_values(full))
+    if not ea or not eb:
+        return False
+    # Same number of ENERGY price points (TOU periods / tiers), each thin
+    # value ≤ corresponding full value (full-bill = base + riders).
+    if len(ea) == len(eb):
+        return all(a <= b + 1e-9 for a, b in zip(ea, eb)) and max(eb) > max(ea) + 1e-6
+    # Or thin is a single base that appears among full's values / below max.
+    if len(ea) == 1:
+        return ea[0] <= max(eb) + 1e-9 and max(eb) > ea[0] + 1e-6
+    return False
+
+
+def _collapse_full_bill_siblings(tariffs: list[ExtractedTariff]) -> list[ExtractedTariff]:
+    """Prefer the full-bill sibling when duplicates differ only by missing riders.
+
+    Pedernales web-page TOU (base-only 4.35¢) beside tariff 500.2.5 (8.67¢
+    all-in) collapses to the fuller extract. Never absorbs across ENERGY
+    presence (handled by prefix merge); here both sides have ENERGY.
+    """
+    if len(tariffs) <= 1:
+        return tariffs
+    groups: dict[str, list[ExtractedTariff]] = {}
+    for t in tariffs:
+        groups.setdefault(str(t.customer_class or ""), []).append(t)
+
+    merged: list[ExtractedTariff] = []
+    for _cc, group in groups.items():
+        absorbed: set[int] = set()
+        for i, t_i in enumerate(group):
+            if i in absorbed or not _tariff_has_energy(t_i):
+                continue
+            for j, t_j in enumerate(group):
+                if j <= i or j in absorbed or not _tariff_has_energy(t_j):
+                    continue
+                if not _full_bill_product_match(t_i, t_j):
+                    continue
+                # Require one side to look base-only relative to the other.
+                i_fits_j = _base_energy_compatible_for_full_bill(t_i, t_j)
+                j_fits_i = _base_energy_compatible_for_full_bill(t_j, t_i)
+                if not i_fits_j and not j_fits_i:
+                    # Also collapse when ENERGY sets match but one has more
+                    # stacking/folded riders (same printed base, fuller bill).
+                    if _energy_values(t_i) != _energy_values(t_j):
+                        continue
+                if _tariff_keep_score(t_i) >= _tariff_keep_score(t_j):
+                    if i_fits_j and not j_fits_i:
+                        # t_i is thinner — keep t_j
+                        absorbed.add(i)
+                        log.info(
+                            f"    Full-bill sibling: '{t_i.name}' absorbed by "
+                            f"richer '{t_j.name}'"
+                        )
+                        break
+                    absorbed.add(j)
+                    log.info(
+                        f"    Full-bill sibling: '{t_j.name}' absorbed by "
+                        f"richer '{t_i.name}'"
+                    )
+                else:
+                    if j_fits_i and not i_fits_j:
+                        absorbed.add(j)
+                        continue
+                    absorbed.add(i)
+                    log.info(
+                        f"    Full-bill sibling: '{t_i.name}' absorbed by "
+                        f"richer '{t_j.name}'"
+                    )
+                    break
+        for k, t in enumerate(group):
+            if k not in absorbed:
+                merged.append(t)
+
+    if len(merged) < len(tariffs):
+        log.info(
+            f"    Full-bill dedup: {len(tariffs)} -> {len(merged)} tariffs "
+            f"({len(tariffs) - len(merged)} base-only siblings dropped)"
+        )
+    return merged
+
+
+def drop_superseded_same_family_adjustments(components: list[dict]) -> list[dict]:
+    """Drop older duplicate values of the same ADJUSTMENT charge family.
+
+    Pedernales sample bills sometimes keep stale and current TCOS as two
+    'tiers'. Prefer a non-superseded label; otherwise keep the single
+    remaining / highest value for that family (unseasoned energy-unit only).
+    """
+    if not components:
+        return components
+
+    # family -> list of (index, comp)
+    by_fam: dict[str, list[tuple[int, dict]]] = {}
+    for i, c in enumerate(components):
+        if not isinstance(c, dict):
+            continue
+        if str(c.get("component_type") or "").lower() != "adjustment":
+            continue
+        if not _is_energy_unit(c.get("unit")):
+            continue
+        if _season_key(c.get("season")):
+            continue
+        fam = _rider_family_key(c)
+        by_fam.setdefault(fam, []).append((i, c))
+
+    drop: set[int] = set()
+    for fam, rows in by_fam.items():
+        if len(rows) < 2:
+            continue
+        values = set()
+        for _i, c in rows:
+            try:
+                values.add(round(float(c.get("rate_value") or 0), 6))
+            except (TypeError, ValueError):
+                values.add(0.0)
+        if len(values) < 2:
+            continue  # exact dupes left to dedupe_rate_components
+        # Drop explicitly superseded/old labels first.
+        remaining = []
+        for i, c in rows:
+            blob = _adjustment_label_blob(c)
+            if _SUPERSEDED_CHARGE_LABEL_RE.search(blob):
+                drop.add(i)
+            else:
+                remaining.append((i, c))
+        if len(remaining) <= 1:
+            continue
+        # Still multiple current-looking values — keep the highest (newer
+        # cost-recovery charges typically rise; stale sample-bill rows lag).
+        def _val(pair: tuple[int, dict]) -> float:
+            try:
+                return float(pair[1].get("rate_value") or 0)
+            except (TypeError, ValueError):
+                return 0.0
+
+        remaining.sort(key=_val, reverse=True)
+        for i, _c in remaining[1:]:
+            drop.add(i)
+
+    if not drop:
+        return components
+    return [c for i, c in enumerate(components) if i not in drop]
 
 
 # User message only — full rules/examples come from the cached system prompt.
@@ -3670,8 +3918,11 @@ def phase3_extract_tariffs(
 
     # Fuzzy name merge: if one tariff name is a prefix of another
     # (e.g. "Domestic Service" vs "Domestic Service Tariff"),
-    # keep only the one with the most components.
+    # keep the richer one (never let no-ENERGY absorb ENERGY).
     result = _merge_prefix_duplicates(result)
+    # Prefer full-bill siblings over base-only duplicates of the same plan
+    # (Pedernales web TOU 4.35¢ beside 500.2.5 at 8.67¢).
+    result = _collapse_full_bill_siblings(result)
 
     return result
 
@@ -4894,6 +5145,53 @@ _RIDER_DOC_HINT_RE = re.compile(
     re.IGNORECASE,
 )
 
+# Base delivery/T&D of another numbered rate schedule (PGE Sch 32) must never
+# become a stacking rider on residential plans. True adjustment schedules
+# (PGE 1xx) and named riders (FAM/DCRR) are exempt via donor-name checks.
+_BASE_DELIVERY_CHARGE_RE = re.compile(
+    r"\b(?:transmission|distribution|delivery|wheeling|daily[\s-]*price|"
+    r"t\s*&\s*d)\b",
+    re.IGNORECASE,
+)
+_SCHEDULE_NUMBER_RE = re.compile(
+    r"\bschedule\s*(?:no\.?\s*)?(\d{1,3})[a-z]?\b",
+    re.IGNORECASE,
+)
+# Rider-doc staleness: reject filings whose year is clearly older than this.
+RIDER_DOC_MAX_AGE_YEARS = 2
+_RIDER_DOC_YEAR_RE = re.compile(r"(?<![A-Za-z0-9])((?:19|20)\d{2})(?![A-Za-z0-9])")
+
+# Class / schedule tokens used when sharing class-specific rider amounts
+# (NSP Domestic vs Small General vs General DCRR).
+_RESIDENTIAL_CLASS_TOKEN_RE = re.compile(
+    r"\b(?:residential|domestic|homeowner|homes?|dwellings?|"
+    r"farm[\s-]*and[\s-]*home|single[\s-]*family)\b",
+    re.IGNORECASE,
+)
+_COMMERCIAL_CLASS_TOKEN_RE = re.compile(
+    r"\b(?:commercial|industrial|business|small\s+general|medium\s+general|"
+    r"large\s+general|general\s+service)\b",
+    re.IGNORECASE,
+)
+_RIDER_FAMILY_PATTERNS: tuple[tuple[str, re.Pattern[str]], ...] = (
+    ("fam", re.compile(r"\bfam\b|fuel\s*adjust|fuel\s*cost", re.I)),
+    ("dcrr", re.compile(r"\bdcrr\b|demand[\s-]*side|\bdsm\b|efficiency", re.I)),
+    ("scrr", re.compile(r"\bscrr\b|storm", re.I)),
+    ("pca", re.compile(r"\bpca\b|power\s*cost|purchased\s*power", re.I)),
+    ("bac", re.compile(r"\bbac\b|balance\s*adjust|actual\s*adjust|aa/?ba", re.I)),
+    ("tcos", re.compile(r"\btcos\b", re.I)),
+    ("delivery", re.compile(r"\bdelivery\b", re.I)),
+    ("transmission", re.compile(r"\btransmission\b", re.I)),
+    ("distribution", re.compile(r"\bdistribution\b", re.I)),
+    ("wheeling", re.compile(r"\bwheeling\b|daily[\s-]*price", re.I)),
+    ("cost_recovery", re.compile(r"cost\s*recovery|rate\s*rider|energy\s*rider", re.I)),
+)
+_SUPERSEDED_CHARGE_LABEL_RE = re.compile(
+    r"\b(?:old|prior|previous|former|superseded|outdated|expired|replaced|"
+    r"legacy|historic(?:al)?)\b",
+    re.IGNORECASE,
+)
+
 
 def _adjustment_label_blob(comp: dict, *, tariff_name: str = "") -> str:
     return " ".join(
@@ -4906,6 +5204,147 @@ def _adjustment_label_blob(comp: dict, *, tariff_name: str = "") -> str:
     )
 
 
+def _schedule_number(name: str) -> int | None:
+    m = _SCHEDULE_NUMBER_RE.search(str(name or ""))
+    if not m:
+        return None
+    try:
+        return int(m.group(1))
+    except ValueError:
+        return None
+
+
+def _is_adjustment_schedule_name(name: str) -> bool:
+    """True for rider/adjustment schedules (FAM, DCRR, PGE Schedule 1xx)."""
+    n = str(name or "")
+    if _RIDER_DONOR_NAME_RE.search(n):
+        return True
+    num = _schedule_number(n)
+    if num is not None and 100 <= num <= 199:
+        return True
+    return False
+
+
+def _looks_like_base_rate_schedule(name: str) -> bool:
+    """True for base rate schedules (PGE Sch 7 / 32) — not adjustment docs."""
+    n = str(name or "")
+    if _is_adjustment_schedule_name(n):
+        return False
+    num = _schedule_number(n)
+    return num is not None
+
+
+def _is_base_schedule_delivery_charge(comp: dict, *, tariff_name: str = "") -> bool:
+    """Base T&D/delivery of another rate schedule must not become a rider."""
+    if not _looks_like_base_rate_schedule(tariff_name):
+        return False
+    blob = _adjustment_label_blob(comp, tariff_name=tariff_name)
+    return bool(_BASE_DELIVERY_CHARGE_RE.search(blob))
+
+
+def _rider_family_key(comp: dict, *, tariff_name: str = "") -> str:
+    """Normalize FAM / DCRR / TCOS / … so one value per family is shared.
+
+    Prefer the component's own labels so a combined "FAM and DSM Rider"
+    donor page still yields two families. Fall back to ``tariff_name`` only
+    when the row itself is unlabeled.
+    """
+    label_blob = " ".join(
+        str(comp.get(k) or "") for k in ("tier_label", "period_label", "season")
+    ).lower()
+    blob = label_blob.strip() or str(tariff_name or "").lower()
+    for fam, pat in _RIDER_FAMILY_PATTERNS:
+        if pat.search(blob):
+            return fam
+    label = re.sub(r"[^a-z0-9]+", " ", blob).strip()
+    if label:
+        return " ".join(label.split()[:4])
+    try:
+        return f"val:{round(float(comp.get('rate_value') or 0), 6)}"
+    except (TypeError, ValueError):
+        return "val:unknown"
+
+
+def _class_tokens_from_text(text: str) -> set[str]:
+    """Named customer-class tokens in a rider/donor/recipient label."""
+    blob = str(text or "").lower()
+    tokens: set[str] = set()
+    if re.search(r"\bdomestic\b", blob):
+        tokens.add("domestic")
+    if re.search(r"\bresidential\b", blob):
+        tokens.add("residential")
+    if re.search(r"\bsmall\s+general\b", blob):
+        tokens.add("small_general")
+    elif re.search(r"\bgeneral\s+service\b", blob) or (
+        re.search(r"\bgeneral\b", blob)
+        and "residential" not in blob
+        and "domestic" not in blob
+    ):
+        tokens.add("general")
+    if re.search(r"\bcommercial\b", blob):
+        tokens.add("commercial")
+    if re.search(r"\bindustrial\b", blob):
+        tokens.add("industrial")
+    if _RESIDENTIAL_CLASS_TOKEN_RE.search(blob) and "residential" not in tokens:
+        tokens.add("residential")
+    return tokens
+
+
+def _recipient_class_tokens(t: ExtractedTariff) -> set[str]:
+    blob = f"{t.customer_class or ''} {t.name or ''} {t.code or ''} {t.description or ''}"
+    tokens = _class_tokens_from_text(blob)
+    if str(t.customer_class or "").lower() == "residential":
+        tokens.update({"residential", "domestic"})
+    return tokens
+
+
+def _rider_named_classes(comp: dict, *, tariff_name: str = "") -> set[str]:
+    return _class_tokens_from_text(_adjustment_label_blob(comp, tariff_name=tariff_name))
+
+
+def _rider_applies_to_recipient(
+    adj: dict,
+    donor: ExtractedTariff,
+    recipient: ExtractedTariff,
+) -> bool:
+    """True when a donor ADJUSTMENT may be shared onto ``recipient``.
+
+    Residential plans only receive residential (or class-matched) riders.
+    Class-specific amounts (NSP Domestic/Small General/General DCRR) must
+    name the recipient's class — never stack every class onto every plan.
+    """
+    donor_cc = str(donor.customer_class or "").strip().lower()
+    recip_cc = str(recipient.customer_class or "").strip().lower()
+    if recip_cc == "residential" and donor_cc and donor_cc not in ("", "residential"):
+        # Commercial/industrial donor extracts never share onto residential
+        # unless the rider label explicitly names residential/domestic.
+        named = _rider_named_classes(adj, tariff_name=str(donor.name or ""))
+        if not (named & {"residential", "domestic"}):
+            return False
+
+    named = _rider_named_classes(adj, tariff_name=str(donor.name or ""))
+    recip_tokens = _recipient_class_tokens(recipient)
+    if named:
+        commercial = named & {"small_general", "general", "commercial", "industrial"}
+        residential = named & {"residential", "domestic"}
+        if commercial and not residential and recip_cc == "residential":
+            return False
+        if residential and recip_cc == "residential":
+            return True
+        return bool(named & recip_tokens)
+
+    # No class in the rider label — donor must itself be residential (or
+    # match the recipient) and must not look commercial-only by name.
+    donor_name = str(donor.name or "")
+    if _COMMERCIAL_CLASS_TOKEN_RE.search(donor_name) and not _RESIDENTIAL_CLASS_TOKEN_RE.search(
+        donor_name
+    ):
+        return False
+    if donor_cc in ("", "residential") and recip_cc == "residential":
+        return True
+    return bool(donor_cc) and donor_cc == recip_cc
+
+
 def _is_universal_stacking_rider(
     comp: dict,
     *,
@@ -4915,7 +5354,8 @@ def _is_universal_stacking_rider(
     """True when a per-kWh ADJUSTMENT applies to every customer on the plan.
 
     Excludes optional-enrollment credits (SmartRate), source-specific charges
-    (community solar), and time-of-day overlays unless ``allow_tod``.
+    (community solar), time-of-day overlays unless ``allow_tod``, and base
+    transmission/distribution charges copied from another rate schedule.
     """
     if not isinstance(comp, dict):
         return False
@@ -4931,6 +5371,8 @@ def _is_universal_stacking_rider(
     if _OPTIONAL_OR_SCOPED_RIDER_RE.search(blob):
         return False
     if not allow_tod and _TOD_OVERLAY_RIDER_RE.search(blob):
+        return False
+    if _is_base_schedule_delivery_charge(comp, tariff_name=tariff_name):
         return False
     label = " ".join(
         str(comp.get(k) or "") for k in ("tier_label", "period_label", "season")
@@ -5333,41 +5775,75 @@ def salvage_relative_rider_only_tariffs(tariffs: list[ExtractedTariff]) -> int:
     return salvaged
 
 
-def apply_shared_stacking_riders_across_batch(tariffs: list[ExtractedTariff]) -> int:
-    """Copy universal per-kWh riders from donor extracts onto ENERGY tariffs.
-
-    Only riders that every customer on the plan pays are shared. Optional
-    credits, community-solar / source-specific charges, and TOD overlays are
-    excluded. Dedupes on (value, unit, season) so sibling plans don't receive
-    the same rider twice under different labels.
-    """
-    shared: list[dict] = []
-    seen: set[tuple] = set()
+def _donor_rider_candidates(tariffs: list[ExtractedTariff]) -> list[tuple[ExtractedTariff, dict]]:
+    """(donor, adjustment) pairs eligible for cross-batch stacking share."""
+    out: list[tuple[ExtractedTariff, dict]] = []
     for t in tariffs:
         is_donor = _is_rider_only_tariff(t) or bool(
             _RIDER_DONOR_NAME_RE.search(str(t.name or ""))
-        )
+        ) or _is_adjustment_schedule_name(str(t.name or ""))
         if not is_donor:
             continue
-        # Donor-level optional/scoped name (e.g. "Community Solar Rider")
-        # blocks the whole extract from being shared.
         donor_name = str(t.name or "")
         if _OPTIONAL_OR_SCOPED_RIDER_RE.search(donor_name):
             continue
         if _TOD_OVERLAY_RIDER_RE.search(donor_name):
+            continue
+        # Base rate schedules (Sch 32) are never donors — even after a
+        # "(riders)" strip that left only ADJUSTMENT rows.
+        if _looks_like_base_rate_schedule(donor_name):
             continue
         for adj in _energy_unit_adjustments(t, seasonal=False):
             if not _is_universal_stacking_rider(
                 adj, tariff_name=donor_name, allow_tod=False
             ):
                 continue
-            fp = _rider_fingerprint(adj)
-            if fp in seen:
-                continue
-            seen.add(fp)
-            shared.append(dict(adj))
+            out.append((t, dict(adj)))
+    return out
 
-    if not shared:
+
+def _pick_one_rider_per_family(
+    candidates: list[tuple[ExtractedTariff, dict]],
+    recipient: ExtractedTariff,
+) -> list[dict]:
+    """Keep at most one ADJUSTMENT per rider family for ``recipient``."""
+    recip_tokens = _recipient_class_tokens(recipient)
+    best: dict[str, tuple[int, ExtractedTariff, dict]] = {}
+    for donor, adj in candidates:
+        if not _rider_applies_to_recipient(adj, donor, recipient):
+            continue
+        fam = _rider_family_key(adj, tariff_name=str(donor.name or ""))
+        named = _rider_named_classes(adj, tariff_name=str(donor.name or ""))
+        # Prefer class-matched label, then residential donor, then any.
+        score = 0
+        if named & recip_tokens:
+            score += 30
+        if named & {"residential", "domestic"} and str(
+            recipient.customer_class or ""
+        ).lower() == "residential":
+            score += 20
+        if str(donor.customer_class or "").lower() == "residential":
+            score += 10
+        if _is_adjustment_schedule_name(str(donor.name or "")):
+            score += 5
+        prev = best.get(fam)
+        if prev is None or score > prev[0]:
+            best[fam] = (score, donor, adj)
+    return [dict(adj) for _score, _donor, adj in best.values()]
+
+
+def apply_shared_stacking_riders_across_batch(tariffs: list[ExtractedTariff]) -> int:
+    """Copy universal per-kWh riders from donor extracts onto ENERGY tariffs.
+
+    Only riders that apply to the recipient's class are shared (residential
+    donors, or riders whose label names the recipient's class/schedule).
+    Never stack several values of the same rider family onto one plan —
+    pick the class-matched amount (NSP Domestic DCRR, not Small General).
+    Optional / community-solar / TOD overlays and base T&D of another
+    schedule are excluded.
+    """
+    candidates = _donor_rider_candidates(tariffs)
+    if not candidates:
         return 0
 
     applied = 0
@@ -5383,14 +5859,24 @@ def apply_shared_stacking_riders_across_batch(tariffs: list[ExtractedTariff]) ->
         ]
         if not energy_rows:
             continue
-        # Skip only when ENERGY already claims riders were folded (not
-        # delivery-only "all-in").
         if any(_energy_already_includes_stacking_riders(e) for e in energy_rows):
             continue
-        existing = {_rider_fingerprint(a) for a in _energy_unit_adjustments(t)}
-        # Also dedupe against ENERGY-adjacent adjustments already present
-        # under different labels but the same value.
-        to_add = [dict(a) for a in shared if _rider_fingerprint(a) not in existing]
+        existing_fps = {_rider_fingerprint(a) for a in _energy_unit_adjustments(t)}
+        existing_fams = {
+            _rider_family_key(a, tariff_name=str(t.name or ""))
+            for a in _energy_unit_adjustments(t)
+        }
+        picked = _pick_one_rider_per_family(candidates, t)
+        to_add: list[dict] = []
+        for adj in picked:
+            fam = _rider_family_key(adj)
+            if fam in existing_fams:
+                continue
+            if _rider_fingerprint(adj) in existing_fps:
+                continue
+            to_add.append(adj)
+            existing_fams.add(fam)
+            existing_fps.add(_rider_fingerprint(adj))
         if not to_add:
             continue
         t.components = list(t.components) + to_add
@@ -5548,152 +6034,192 @@ def _official_domains_for_rider_fetch(
     return allowed
 
 
-def fetch_and_extract_referenced_riders(
-    tariffs: list[ExtractedTariff],
+def _utility_domains_for_rider_fetch(
+    website_url: str = "",
+    tariffs: list[ExtractedTariff] | None = None,
+    existing_pages: list[RatePage] | None = None,
+) -> set[str]:
+    """Utility-owned domains only (excludes regulator docket hosts)."""
+    domains = _official_domains_for_rider_fetch(website_url, tariffs, existing_pages)
+    return {
+        d for d in domains
+        if not _is_regulator_filing_url(f"https://{d}/")
+    }
+
+
+def _rider_doc_years(url: str, title: str = "", description: str = "") -> list[int]:
+    """Calendar years mentioned in a rider-doc URL/title/snippet."""
+    try:
+        text = f"{unquote(url)} {title} {description}"
+    except Exception:
+        text = f"{url} {title} {description}"
+    years: list[int] = []
+    today_y = date.today().year
+    for m in _RIDER_DOC_YEAR_RE.finditer(text):
+        try:
+            y = int(m.group(1))
+        except ValueError:
+            continue
+        if 1990 <= y <= today_y + 2:
+            years.append(y)
+    return years
+
+
+def _is_stale_rider_document(
+    url: str,
+    title: str = "",
+    description: str = "",
+    *,
+    today: date | None = None,
+    max_age_years: int = RIDER_DOC_MAX_AGE_YEARS,
+) -> bool:
+    """True when the doc's year is clearly older than ~max_age_years.
+
+    Current tariff books (``tariff-book-YYYY`` near today) are never stale.
+    Documents with no year hint are kept (ranked lower instead).
+    """
+    today = today or date.today()
+    book = _tariff_book_year(url)
+    if book is not None and book >= today.year - 1:
+        return False
+    years = _rider_doc_years(url, title, description)
+    if not years:
+        return False
+    latest = max(years)
+    return latest < today.year - max_age_years
+
+
+def _rider_search_result_rank_key(
+    result: dict,
+    *,
+    allowed_domains: set[str],
+    utility_domains: set[str],
+) -> tuple:
+    """Lower is better: utility domain > fresh > rider-ish > regulator docket."""
+    url = (result.get("url") or "").strip()
+    title = str(result.get("title") or "")
+    desc = str(result.get("description") or "")
+    blob = f"{title} {url} {desc}"
+    on_utility = 0 if _url_in_allowed_domains(url, utility_domains) else 1
+    on_allowed = 0 if _url_in_allowed_domains(url, allowed_domains) else 1
+    regulator = 1 if _is_regulator_filing_url(url, title) else 0
+    stale = 1 if _is_stale_rider_document(url, title, desc) else 0
+    riderish = 0 if _RIDER_DOC_HINT_RE.search(blob) else 1
+    years = _rider_doc_years(url, title, desc)
+    # Prefer newer years when present (negate so lower sorts first).
+    year_score = -(max(years) if years else 0)
+    return (on_utility, stale, regulator, on_allowed, riderish, year_score)
+
+
+RIDER_MODE_EXTRACT_PROMPT = """TODAY: {today}
+TARGET UTILITY: {utility_name} ({state})
+RIDER HINT: {hint}
+
+This page was fetched specifically for the rider/adjustment named above — NOT for base rate plans.
+
+Extract ONLY per-kWh ADJUSTMENT (rider) amounts that residential customers pay in addition to base ENERGY. For each distinct amount:
+- Put the rider name in the tariff name and/or tier_label (FAM, DCRR, DSM, PCA, Schedule 1xx, …).
+- Record rate_value and unit exactly as printed.
+- Record which customer class or schedule the amount applies to (Domestic, Residential, Small General, General, …). When the page lists several class-specific amounts, emit one tariff per class (customer_class residential only when the class is residential/domestic; still include the class name in the tariff name / tier_label so sharing can match). Prefer customer_class "residential" for Domestic/Residential rows.
+- component_type must be "adjustment" (never "energy" for these rider pages).
+
+Do NOT extract base ENERGY, FIXED, or demand charges of rate schedules (Domestic Service, Schedule 7, Schedule 32, …). Do NOT invent amounts. If this page has no per-kWh rider/adjustment amounts for the hint, return an empty tariffs array and set empty_reason.
+
+Use the store_tariffs tool.
+
+Content:
+{content}"""
+
+
+def _extract_rider_document(
+    page: RatePage,
     utility_name: str,
     state: str,
-    website_url: str = "",
-    existing_pages: list[RatePage] | None = None,
-    *,
-    max_docs: int = MAX_RIDER_DOCS_FETCH,
-    stats: dict | None = None,
-) -> tuple[list[ExtractedTariff], list[RatePage], list[str]]:
-    """Fetch official rider docs referenced by residential extracts but missing.
-
-    Bounded (default 6 docs). Official utility domains preferred (saved
-    website when not a CDN/file host, plus domains from verified tariff
-    source URLs); third-party aggregators hard-blocked. Returns
-    (extra_tariffs, pages_fetched, unresolved_hints). Callers merge extras
-    into the Phase 4 batch and flag ``needs_review`` when hints remain
-    unresolved.
-    """
-    if stats is None:
-        stats = {}
-    hints = _rider_search_hints(tariffs)
-    if not hints:
-        return [], [], []
-
-    allowed_domains = _official_domains_for_rider_fetch(
-        website_url, tariffs, existing_pages,
+    hint: str = "",
+) -> list[ExtractedTariff]:
+    """Rider-mode extract: per-kWh adjustments + classes, not plan listing."""
+    content = _select_rate_content(page.content or "", max_chars=20000)
+    if not content or len(content.strip()) < 80:
+        return []
+    prompt = RIDER_MODE_EXTRACT_PROMPT.format(
+        today=_today_iso(),
+        utility_name=utility_name,
+        state=state or "",
+        hint=hint or "rate rider / adjustment",
+        content=content,
     )
-    # Prefer a non-CDN website domain for site: queries; else first official.
-    site_query_domain = ""
-    if website_url and not is_generic_host(website_url) and not _is_third_party_domain(website_url):
-        site_query_domain = registrable_domain(normalize_host(website_url) or "")
-    if not site_query_domain and allowed_domains:
-        site_query_domain = next(iter(sorted(allowed_domains)))
-
-    existing_urls = {
-        (p.url or "").split("?")[0].rstrip("/").lower()
-        for p in (existing_pages or [])
-        if getattr(p, "url", None)
-    }
-    # Also skip URLs already used as tariff source_url.
-    for t in tariffs:
-        if t.source_url:
-            existing_urls.add(t.source_url.split("?")[0].rstrip("/").lower())
-
-    candidate_urls: list[str] = []
-    seen_url: set[str] = set()
-    for hint in hints:
-        queries = []
-        if site_query_domain:
-            queries.append(f'site:{site_query_domain} {hint}')
-        queries.append(f'"{utility_name}" {hint} {state}'.strip())
-        for q in queries:
-            try:
-                results = brave_search(q, count=5)
-            except Exception as e:
-                log.info(f"    Rider-doc search failed for {q[:60]}: {e}")
-                continue
-            # Prefer official-domain hits first.
-            ranked = sorted(
-                results,
-                key=lambda r: (
-                    0 if _url_in_allowed_domains(r.get("url") or "", allowed_domains) else 1,
-                    0 if _RIDER_DOC_HINT_RE.search(
-                        f"{r.get('title', '')} {r.get('url', '')} {r.get('description', '')}"
-                    ) else 1,
-                ),
-            )
-            for r in ranked:
-                url = (r.get("url") or "").strip()
-                if not url or _is_third_party_domain(url) or is_generic_host(url):
-                    continue
-                if allowed_domains:
-                    if not _url_in_allowed_domains(url, allowed_domains):
-                        continue
-                # When no official domain is known yet, still accept
-                # non-aggregator / non-CDN hosts (same as pre-#42 behaviour
-                # for utilities with a blank website_url).
-                key = url.split("?")[0].rstrip("/").lower()
-                if key in existing_urls or key in seen_url:
-                    continue
-                seen_url.add(key)
-                candidate_urls.append(url)
-                if len(candidate_urls) >= max_docs:
-                    break
-            if len(candidate_urls) >= max_docs:
-                break
-        if len(candidate_urls) >= max_docs:
-            break
-
-    stats["rider_docs_candidates"] = len(candidate_urls)
-    if not candidate_urls:
-        log.info(
-            f"    Rider-doc fetch: {len(hints)} hint(s) unresolved "
-            f"(no official URLs found)"
-        )
-        return [], [], hints
-
-    fetched_pages: list[RatePage] = []
-    for url in candidate_urls[:max_docs]:
-        page = None
-        try:
-            if url.lower().split("?")[0].endswith(".pdf"):
-                page = _fetch_as_pdf_via_download(url)
-            else:
-                page = _fetch_and_parse(url)
-                if page is None and url.lower().endswith(".pdf"):
-                    page = _fetch_as_pdf_via_download(url)
-        except Exception as e:
-            log.info(f"    Rider-doc fetch failed {url[:70]}: {e}")
-            continue
-        if page and page.content and len(page.content.strip()) > 100:
-            fetched_pages.append(page)
-            log.info(f"    Rider-doc fetched: {url[:70]} ({len(page.content)} chars)")
-
-    stats["rider_docs_fetched"] = len(fetched_pages)
-    if not fetched_pages:
-        return [], [], hints
-
-    extract_stats: dict = {}
     try:
-        extra = phase3_extract_tariffs(
-            fetched_pages, utility_name, stats=extract_stats, state=state,
-        )
+        raw = _call_claude_tool(prompt, model=SONNET_MODEL, effort="medium")
     except Exception as e:
-        log.warning(f"    Rider-doc extraction failed: {e}")
-        return [], fetched_pages, hints
+        log.info(f"    Rider-mode extract failed for {page.url[:70]}: {e}")
+        return []
+    tariffs = _parse_tool_tariffs(raw, page.url)
+    out: list[ExtractedTariff] = []
+    for t in tariffs:
+        t.source_url = page.url
+        t.extraction_tier = "rider_doc"
+        # Force adjustment-only shape when the model still emitted ENERGY.
+        comps: list[dict] = []
+        for c in t.components or []:
+            if not isinstance(c, dict):
+                continue
+            ctype = str(c.get("component_type") or "").lower()
+            row = dict(c)
+            if ctype == "energy" and _is_energy_unit(row.get("unit")):
+                row["component_type"] = "adjustment"
+                if not row.get("tier_label"):
+                    row["tier_label"] = hint or t.name or "rider"
+            comps.append(row)
+        t.components = comps
+        if not t.components:
+            continue
+        out.append(t)
+    return out
 
-    # Keep rider-only / rider-named extracts and any ADJUSTMENT rows; drop
-    # unrelated full schedules that would duplicate Phase 3 work.
+
+def _filter_useful_rider_extracts(extra: list[ExtractedTariff]) -> list[ExtractedTariff]:
+    """Keep true rider/adjustment donors; drop other schedules' base T&D."""
     useful: list[ExtractedTariff] = []
     for t in extra:
-        if _is_rider_only_tariff(t) or _RIDER_DONOR_NAME_RE.search(str(t.name or "")):
-            useful.append(t)
+        name = str(t.name or "")
+        # Never keep another schedule's base delivery as a donor.
+        if _looks_like_base_rate_schedule(name) and not _is_adjustment_schedule_name(name):
+            log.info(f"    Rider-doc drop base schedule '{name}' (not an adjustment)")
             continue
-        # A full schedule that carries universal stacking ADJUSTMENTs is
-        # still useful as a donor.
+        if _is_rider_only_tariff(t) or _RIDER_DONOR_NAME_RE.search(name) or _is_adjustment_schedule_name(name):
+            # Strip any leaked base-delivery rows from numbered base schedules.
+            comps = [
+                dict(c)
+                for c in (t.components or [])
+                if isinstance(c, dict)
+                and not _is_base_schedule_delivery_charge(c, tariff_name=name)
+                and _is_universal_stacking_rider(c, tariff_name=name, allow_tod=False)
+            ]
+            if not comps and _is_rider_only_tariff(t):
+                # Rider-only but labels didn't match stacking regex — keep
+                # energy-unit adjustments that aren't base T&D.
+                comps = [
+                    dict(c)
+                    for c in (t.components or [])
+                    if isinstance(c, dict)
+                    and str(c.get("component_type") or "").lower() == "adjustment"
+                    and _is_energy_unit(c.get("unit"))
+                    and not _is_base_schedule_delivery_charge(c, tariff_name=name)
+                    and not _OPTIONAL_OR_SCOPED_RIDER_RE.search(
+                        _adjustment_label_blob(c, tariff_name=name)
+                    )
+                ]
+            if comps:
+                t.components = comps
+                useful.append(t)
+            continue
         if _has_universal_stacking_riders(t):
-            # Strip down to adjustment-only donor so we don't insert a
-            # duplicate residential plan.
             adjs = [
                 dict(c)
                 for c in (t.components or [])
                 if isinstance(c, dict)
                 and _is_universal_stacking_rider(
-                    c, tariff_name=str(t.name or ""), allow_tod=False
+                    c, tariff_name=name, allow_tod=False
                 )
             ]
             if adjs:
@@ -5710,14 +6236,162 @@ def fetch_and_extract_referenced_riders(
                         extraction_tier=t.extraction_tier,
                     )
                 )
+    return useful
 
+
+def fetch_and_extract_referenced_riders(
+    tariffs: list[ExtractedTariff],
+    utility_name: str,
+    state: str,
+    website_url: str = "",
+    existing_pages: list[RatePage] | None = None,
+    *,
+    max_docs: int = MAX_RIDER_DOCS_FETCH,
+    stats: dict | None = None,
+) -> tuple[list[ExtractedTariff], list[RatePage], list[str]]:
+    """Fetch official rider docs referenced by residential extracts but missing.
+
+    Bounded (default 6 docs). Prefers the utility's own current tariff pages
+    over regulator dockets; rejects documents whose year is clearly stale
+    (~2+ years old). Extracts each fetched page in rider mode (per-kWh
+    adjustments + classes), not plan-listing mode. Returns
+    (extra_tariffs, pages_fetched, unresolved_hints).
+    """
+    if stats is None:
+        stats = {}
+    hints = _rider_search_hints(tariffs)
+    if not hints:
+        return [], [], []
+
+    allowed_domains = _official_domains_for_rider_fetch(
+        website_url, tariffs, existing_pages,
+    )
+    utility_domains = _utility_domains_for_rider_fetch(
+        website_url, tariffs, existing_pages,
+    )
+    # Prefer a non-CDN website domain for site: queries; else first utility.
+    site_query_domain = ""
+    if website_url and not is_generic_host(website_url) and not _is_third_party_domain(website_url):
+        site_query_domain = registrable_domain(normalize_host(website_url) or "")
+    if not site_query_domain and utility_domains:
+        site_query_domain = next(iter(sorted(utility_domains)))
+    if not site_query_domain and allowed_domains:
+        site_query_domain = next(iter(sorted(allowed_domains)))
+
+    existing_urls = {
+        (p.url or "").split("?")[0].rstrip("/").lower()
+        for p in (existing_pages or [])
+        if getattr(p, "url", None)
+    }
+    for t in tariffs:
+        if t.source_url:
+            existing_urls.add(t.source_url.split("?")[0].rstrip("/").lower())
+
+    # (url, hint) pairs — preserve which hint drove the fetch for rider mode.
+    candidate_urls: list[tuple[str, str]] = []
+    seen_url: set[str] = set()
+    for hint in hints:
+        queries = []
+        if site_query_domain:
+            queries.append(f'site:{site_query_domain} {hint}')
+        queries.append(f'"{utility_name}" {hint} {state}'.strip())
+        for q in queries:
+            try:
+                results = brave_search(q, count=5)
+            except Exception as e:
+                log.info(f"    Rider-doc search failed for {q[:60]}: {e}")
+                continue
+            ranked = sorted(
+                results,
+                key=lambda r: _rider_search_result_rank_key(
+                    r,
+                    allowed_domains=allowed_domains,
+                    utility_domains=utility_domains,
+                ),
+            )
+            for r in ranked:
+                url = (r.get("url") or "").strip()
+                title = str(r.get("title") or "")
+                desc = str(r.get("description") or "")
+                if not url or _is_third_party_domain(url) or is_generic_host(url):
+                    continue
+                if _is_stale_rider_document(url, title, desc):
+                    log.info(f"    Rider-doc skip stale: {url[:70]}")
+                    continue
+                # Prefer utility domain; reject regulator dockets when a
+                # utility domain is known (PGE UE 394 vs portlandgeneral.com).
+                if utility_domains:
+                    if not _url_in_allowed_domains(url, utility_domains):
+                        if _is_regulator_filing_url(url, title):
+                            log.info(f"    Rider-doc skip regulator docket: {url[:70]}")
+                            continue
+                        if allowed_domains and not _url_in_allowed_domains(url, allowed_domains):
+                            continue
+                elif allowed_domains:
+                    if not _url_in_allowed_domains(url, allowed_domains):
+                        continue
+                key = url.split("?")[0].rstrip("/").lower()
+                if key in existing_urls or key in seen_url:
+                    continue
+                seen_url.add(key)
+                candidate_urls.append((url, hint))
+                if len(candidate_urls) >= max_docs:
+                    break
+            if len(candidate_urls) >= max_docs:
+                break
+        if len(candidate_urls) >= max_docs:
+            break
+
+    stats["rider_docs_candidates"] = len(candidate_urls)
+    if not candidate_urls:
+        log.info(
+            f"    Rider-doc fetch: {len(hints)} hint(s) unresolved "
+            f"(no official URLs found)"
+        )
+        return [], [], hints
+
+    fetched: list[tuple[RatePage, str]] = []
+    for url, hint in candidate_urls[:max_docs]:
+        page = None
+        try:
+            if url.lower().split("?")[0].endswith(".pdf"):
+                page = _fetch_as_pdf_via_download(url)
+            else:
+                page = _fetch_and_parse(url)
+                if page is None and url.lower().endswith(".pdf"):
+                    page = _fetch_as_pdf_via_download(url)
+        except Exception as e:
+            log.info(f"    Rider-doc fetch failed {url[:70]}: {e}")
+            continue
+        if page and page.content and len(page.content.strip()) > 100:
+            # Second-chance stale check on page title after fetch.
+            if _is_stale_rider_document(page.url, page.title or "", ""):
+                log.info(f"    Rider-doc skip stale after fetch: {page.url[:70]}")
+                continue
+            fetched.append((page, hint))
+            log.info(f"    Rider-doc fetched: {url[:70]} ({len(page.content)} chars)")
+
+    stats["rider_docs_fetched"] = len(fetched)
+    if not fetched:
+        return [], [], hints
+
+    extra: list[ExtractedTariff] = []
+    for page, hint in fetched:
+        try:
+            extra.extend(
+                _extract_rider_document(page, utility_name, state, hint=hint)
+            )
+        except Exception as e:
+            log.warning(f"    Rider-doc extraction failed for {page.url[:70]}: {e}")
+
+    useful = _filter_useful_rider_extracts(extra)
     unresolved = hints if not useful else []
     stats["rider_docs_extracted"] = len(useful)
     log.info(
-        f"    Rider-doc fetch: {len(fetched_pages)} page(s), "
+        f"    Rider-doc fetch: {len(fetched)} page(s), "
         f"{len(useful)} rider extract(s)"
     )
-    return useful, fetched_pages, unresolved
+    return useful, [p for p, _h in fetched], unresolved
 
 
 def flag_unresolved_external_riders(
@@ -5810,6 +6484,11 @@ def phase4_validate(
             f"{n_shared} tariffs received shared stacking riders"
         )
 
+    # After sharing, prefer full-bill siblings over base-only duplicates.
+    collapsed = _collapse_full_bill_siblings(tariffs)
+    if len(collapsed) < len(tariffs):
+        tariffs[:] = collapsed
+
     for t in tariffs:
         tariff_issues = []
         needs_review = bool(t.needs_review)
@@ -5864,6 +6543,16 @@ def phase4_validate(
             log.info(
                 f"    Stacking rider expand on '{t.name}': "
                 f"{len(before_stack)} → {len(t.components)} comps"
+            )
+
+        # Drop stale duplicate values of the same ADJUSTMENT family (e.g.
+        # sample-bill TCOS old + new kept as two "tiers") before exact dedupe.
+        before_super = len(t.components)
+        t.components = drop_superseded_same_family_adjustments(t.components)
+        if len(t.components) < before_super:
+            log.info(
+                f"    Superseded-charge drop on '{t.name}': "
+                f"{before_super} → {len(t.components)}"
             )
 
         # Collapse fixed/minimum twins and exact same-type duplicates before
