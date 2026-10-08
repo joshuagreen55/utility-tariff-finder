@@ -6290,11 +6290,26 @@ def expand_stacking_energy_riders(
                 add += float(first_val or 0.0)
         row["rate_value"] = round(base + add, 6)
         # Annotate without erasing the tier identity (first-1,000 kWh, …).
+        # Delivery-only "all-in: … = 11.289" must not keep the stale total
+        # after riders fold (R14).
         note = (row.get("tier_label") or "").strip()
         if note and "all-in" not in note.lower():
             row["tier_label"] = f"{note} (all-in +riders)"
         elif not note:
             row["tier_label"] = "All-in (base + riders)"
+        elif re.search(
+            r"(?:transmission|distribution).*energy|\ball-in\b.*=\s*\d",
+            note,
+            re.I,
+        ):
+            # Drop stale "= 11.289" even when split appended "(to 2,000 kWh)".
+            cleaned = re.sub(r"\s*=\s*\d+(?:\.\d+)?", "", note).strip()
+            cleaned = re.sub(r"\s{2,}", " ", cleaned)
+            if "riders" not in cleaned.lower():
+                cleaned = f"{cleaned} +riders"
+            row["tier_label"] = cleaned
+        elif "+riders" not in note.lower() and "+sch" not in note.lower():
+            row["tier_label"] = f"{note} +riders"
         new_energy.append(row)
 
     out: list[dict] = []
@@ -7038,6 +7053,118 @@ def flag_missing_sch125_tod_pca(tariffs: list[ExtractedTariff]) -> int:
         log.warning(
             f"    Sch 125 TOD PCA missing on '{t.name}' — needs_review "
             f"(donor_in_batch={has_donor})"
+        )
+    return flagged
+
+
+def _tariff_has_sch1xx_stacking_riders(t: ExtractedTariff) -> bool:
+    """True when priced Sch 1xx / stacking riders are present or folded on ``t``."""
+    if _has_universal_stacking_riders(t):
+        return True
+    if _tariff_has_sch125_tod_pca(t):
+        return True
+    for c in t.components or []:
+        if not isinstance(c, dict):
+            continue
+        blob = _adjustment_label_blob(c, tariff_name=str(t.name or ""))
+        pl = str(c.get("period_label") or c.get("tier_label") or "")
+        if re.search(r"(?:schedule|sch)\s*1\d{2}", blob + " " + pl, re.I):
+            return True
+        if c.get("included_in_energy") and re.search(
+            r"(?:schedule|sch)\s*1\d{2}|all-in\s*\+riders|\+riders",
+            blob + " " + pl,
+            re.I,
+        ):
+            return True
+        if re.search(r"all-in\s*\+riders|\+riders", pl, re.I):
+            return True
+    return False
+
+
+def _plan_declares_external_adjustments(t: ExtractedTariff) -> bool:
+    """True when the extract says adjustments/riders apply but aren't in-page."""
+    if getattr(t, "riders_referenced_not_shown", None):
+        return True
+    blob = " ".join(
+        [
+            _tariff_text_blob(t),
+            str(getattr(t, "description", "") or ""),
+        ]
+    )
+    return bool(
+        re.search(
+            r"see\s+schedule\s+\d+\s+for\s+applicable\s+adjustments|"
+            r"subject\s+to\s+(?:the\s+)?(?:following\s+)?(?:schedule|adjustments?)|"
+            r"applicable\s+adjustments|"
+            r"riders?\s+(?:apply|not\s+shown|referenced)",
+            blob,
+            re.I,
+        )
+    )
+
+
+def _is_pge_sch7_residential_plan(t: ExtractedTariff) -> bool:
+    """True for PGE Schedule 7 Default / TOD residential ENERGY plans."""
+    if str(t.customer_class or "").lower() != "residential":
+        return False
+    if _is_rider_only_tariff(t):
+        return False
+    name = str(t.name or "")
+    return bool(
+        re.search(
+            r"schedule\s*7\b.*(?:residential|default|time[\s-]*of[\s-]*|"
+            r"tod|tou|portfolio)|"
+            r"(?:residential|default|time[\s-]*of[\s-]*|tod|tou).*schedule\s*7\b|"
+            r"\b7[\s-]*tod\b",
+            name,
+            re.I,
+        )
+    )
+
+
+def flag_plans_missing_referenced_riders(tariffs: list[ExtractedTariff]) -> int:
+    """Flag ENERGY plans that declare adjustments but received none (R14).
+
+    PGE Sch 7 Default under-prices silently without Sch 1xx — mirror the
+    Sch 125 TOD PCA safety net. More generally, any residential ENERGY plan
+    whose source says adjustments apply but ends up with zero riders is
+    flagged ``referenced_riders_missing``.
+    """
+    flagged = 0
+    for t in tariffs:
+        if _is_rider_only_tariff(t):
+            continue
+        if str(t.customer_class or "").lower() != "residential":
+            continue
+        has_energy = any(
+            isinstance(c, dict)
+            and str(c.get("component_type") or "").lower() == "energy"
+            and _is_energy_unit(c.get("unit"))
+            for c in (t.components or [])
+        )
+        if not has_energy:
+            continue
+        expects = _plan_declares_external_adjustments(t) or _is_pge_sch7_residential_plan(
+            t
+        )
+        if not expects:
+            continue
+        if _tariff_has_sch1xx_stacking_riders(t):
+            continue
+        t.needs_review = True
+        missing = list(getattr(t, "missing_fields", None) or [])
+        reason = (
+            "sch1xx_riders_missing"
+            if _is_pge_sch7_residential_plan(t)
+            else "referenced_riders_missing"
+        )
+        if reason not in missing:
+            missing.append(reason)
+        t.missing_fields = missing
+        flagged += 1
+        log.warning(
+            f"    Referenced riders missing on '{t.name}' — needs_review "
+            f"({reason})"
         )
     return flagged
 
@@ -7843,6 +7970,63 @@ def parse_pge_sch100_applicable_schedules(
     return _parse_pge_sch100_column_align(text, base_schedule=base_schedule)
 
 
+def _is_pge_sch100_applicability_page(
+    text: str = "",
+    url: str = "",
+) -> bool:
+    """True only for the Sch 100 applicability map — not Sched_007 footnotes.
+
+    Sched_007 says "See Schedule 100 for applicable adjustments"; that must
+    not be treated as the map itself (R14 logged ``0 Sched_1xx`` three times).
+    """
+    if re.search(r"Sched_0*100\b", url or "", re.I):
+        return True
+    head = (text or "")[:2500]
+    if not re.search(r"SCHEDULE\s+100\b", head, re.I):
+        return False
+    # Require the map title — not a bare "applicable adjustments" footnote.
+    return bool(
+        re.search(r"SUMMARY\s+OF\s+APPLICABLE\s+ADJUSTMENTS", text or "", re.I)
+    )
+
+
+def _enqueue_from_sch100_map(
+    page_body: str,
+    *,
+    sch_url_map: dict[str, str],
+    enqueue,
+    base_schedule: str = "7",
+    log_once: set[str] | None = None,
+) -> list[str]:
+    """Parse Sch 100 applicability and enqueue priced Sched_1xx URLs.
+
+    Returns the applicable schedule numbers. Logs once per distinct body hash
+    when ``log_once`` is provided (avoids the R14 triple ``0 Sched_1xx`` spam).
+    """
+    nums = parse_pge_sch100_applicable_schedules(
+        page_body, base_schedule=base_schedule,
+    )
+    for num in nums:
+        url = sch_url_map.get(num)
+        if url:
+            enqueue(url, f"Schedule {num}")
+    if log_once is not None:
+        # Stable key so identical re-parses of the same map log once.
+        key = f"{len(page_body)}:{len(nums)}:{','.join(nums[:5])}"
+        if key not in log_once:
+            log_once.add(key)
+            log.info(
+                f"    Sch 100 map → {len(nums)} Sched_1xx applicable to "
+                f"Schedule {base_schedule}"
+            )
+    else:
+        log.info(
+            f"    Sch 100 map → {len(nums)} Sched_1xx applicable to "
+            f"Schedule {base_schedule}"
+        )
+    return nums
+
+
 def parse_pge_sch1xx_kwh_amounts_for_schedule(
     text: str,
     *,
@@ -8334,9 +8518,23 @@ def clear_resolved_rider_hints(tariffs: list[ExtractedTariff]) -> None:
                 "storm" in applied_l or "scrr" in applied_l or energy_all_in
             ):
                 resolved = True
-            if re.search(r"schedule\s*(1\d{2})", h):
+            # Sch 100 is the applicability *map*, not a priced rider. A bare
+            # delivery "all-in" label must NOT clear it (R14) — only a priced
+            # Sch 1xx fold (or explicit +riders annotation) does.
+            if re.search(r"schedule\s*100\b", h):
+                if re.search(
+                    r"(?:schedule|sch)\s*1(?!00)\d{2}|all-in\s*\+riders|\+riders",
+                    applied_l,
+                ):
+                    resolved = True
+            elif re.search(r"schedule\s*(1\d{2})", h):
                 num = re.search(r"schedule\s*(1\d{2})", h).group(1)
-                if num in applied_l or f"sch {num}" in applied_l or energy_all_in:
+                if num in applied_l or f"sch {num}" in applied_l:
+                    resolved = True
+                elif energy_all_in and re.search(
+                    r"all-in\s*\+riders|\+riders|included",
+                    applied_l,
+                ):
                     resolved = True
             # Sibling base energy after NL 1.1S / 1.2DS salvage (R12).
             if re.search(
@@ -8363,6 +8561,9 @@ def clear_resolved_rider_hints(tariffs: list[ExtractedTariff]) -> None:
             if re.search(r"\b(?:fam|dsm|storm)\b", fl) and not remaining:
                 if re.search(r"rider\s*amounts?|amounts?", fl):
                     continue
+            # Deterministic Sch 7 pending hint — clear once Sch 1xx folded (R14).
+            if fl == "referenced_riders_pending" and not remaining:
+                continue
             # Salvaged sibling base ENERGY is now on the tariff (R12).
             if re.search(
                 r"base\s+energy|not\s+printed\s+in\s+content|"
@@ -8379,6 +8580,13 @@ def clear_resolved_rider_hints(tariffs: list[ExtractedTariff]) -> None:
                     continue
             mf.append(field)
         t.missing_fields = mf
+        # Soft-clear needs_review when the only gap was pending riders now folded.
+        if (
+            getattr(t, "needs_review", False)
+            and not remaining
+            and not mf
+        ):
+            t.needs_review = False
 
 
 def fetch_and_extract_referenced_riders(
@@ -8558,6 +8766,7 @@ def fetch_and_extract_referenced_riders(
     # URL map built from page-data so Sch 100's applicability list can be
     # resolved to concrete Sched_NNN.pdf Contentful URLs.
     sch_url_map: dict[str, str] = {}
+    sch100_map_logged: set[str] = set()
 
     def _is_sch1xx_pdf_url(url: str, hint: str = "") -> bool:
         if re.search(r"Sched_1\d{2}\.pdf", url or "", re.I):
@@ -8621,26 +8830,26 @@ def fetch_and_extract_referenced_riders(
                 hop_hint = f"Schedule {m.group(1)}" if m else "Schedule 1xx"
                 _enqueue_hop(sch_url, hop_hint)
         # Sch 100 applicability → enqueue every priced Sch 1xx for Sch 7.
-        if pge_like and re.search(r"SCHEDULE\s+100\b", page_body, re.I) and re.search(
-            r"APPLICABLE\s+ADJUSTMENTS", page_body, re.I
-        ):
-            for num in parse_pge_sch100_applicable_schedules(page_body, base_schedule="7"):
-                url = sch_url_map.get(num)
-                if not url:
-                    # Try to discover from any harvested text so far.
-                    continue
-                _enqueue_hop(url, f"Schedule {num}")
-            log.info(
-                f"    Sch 100 map → {len(parse_pge_sch100_applicable_schedules(page_body))} "
-                f"Sched_1xx applicable to Schedule 7"
+        # Only the real Sch 100 map (not Sched_007's "See Schedule 100…"
+        # footnote) — R14 logged 0 applicable three times on false matches.
+        if pge_like and _is_pge_sch100_applicability_page(page_body, page_url):
+            _enqueue_from_sch100_map(
+                page_body,
+                sch_url_map=sch_url_map,
+                enqueue=_enqueue_hop,
+                base_schedule="7",
+                log_once=sch100_map_logged,
             )
         if (getattr(page, "page_type", "") or "").lower() == "pdf":
             # PDF content may still be Sch 100 text from pdftotext-style extract.
-            if pge_like and re.search(r"SCHEDULE\s+100\b", page_body, re.I):
-                for num in parse_pge_sch100_applicable_schedules(page_body, base_schedule="7"):
-                    url = sch_url_map.get(num)
-                    if url:
-                        _enqueue_hop(url, f"Schedule {num}")
+            if pge_like and _is_pge_sch100_applicability_page(page_body, page_url):
+                _enqueue_from_sch100_map(
+                    page_body,
+                    sch_url_map=sch_url_map,
+                    enqueue=_enqueue_hop,
+                    base_schedule="7",
+                    log_once=sch100_map_logged,
+                )
             continue
         # Always harvest numbered Schedule 1xx links from index-like HTML.
         for sch_url in _harvest_sch1xx_links_from_html(
@@ -8696,13 +8905,16 @@ def fetch_and_extract_referenced_riders(
                 sch1xx_fetched += 1
             log.info(f"    Rider-doc one-hop fetched: {url[:70]} ({len(page.content)} chars)")
             # After fetching Sch 100, expand hops from its applicability map.
-            if pge_like and re.search(r"SCHEDULE\s+100\b", page.content or "", re.I):
-                for num in parse_pge_sch100_applicable_schedules(
-                    page.content or "", base_schedule="7",
-                ):
-                    u = sch_url_map.get(num)
-                    if u:
-                        _enqueue_hop(u, f"Schedule {num}")
+            if pge_like and _is_pge_sch100_applicability_page(
+                page.content or "", page.url or url
+            ):
+                _enqueue_from_sch100_map(
+                    page.content or "",
+                    sch_url_map=sch_url_map,
+                    enqueue=_enqueue_hop,
+                    base_schedule="7",
+                    log_once=sch100_map_logged,
+                )
 
     stats["rider_docs_fetched"] = len(fetched)
     if not fetched and not book_extras:
@@ -9105,6 +9317,30 @@ def _parse_pge_sch7_charge_total(section: str) -> float | None:
     return None
 
 
+def _parse_pge_sch7_rider_references(text: str) -> list[str]:
+    """Parse Sched_007 footnotes like 'See Schedule 100 for applicable adjustments'.
+
+    Returns e.g. ``["Schedule 100"]``. Falls back to Schedule 100 when the
+    sheet is clearly Sch 7 residential (the current tariff always points
+    there) so the rider-fetch step cannot be skipped (R14).
+    """
+    out: list[str] = []
+    seen: set[str] = set()
+    for m in re.finditer(
+        r"see\s+schedule\s+(\d+)\s+for\s+applicable\s+adjustments",
+        text or "",
+        re.I,
+    ):
+        hint = f"Schedule {m.group(1)}"
+        key = hint.lower()
+        if key not in seen:
+            seen.add(key)
+            out.append(hint)
+    if not out and re.search(r"SCHEDULE\s+7\b", text or "", re.I):
+        out = ["Schedule 100"]
+    return out
+
+
 def extract_pge_sch7_from_text(
     text: str,
     *,
@@ -9115,6 +9351,10 @@ def extract_pge_sch7_from_text(
     Current E-19 / Advice 26-24 sheet: flat Default 11.289¢; TOD on/mid/off
     30.263 / 11.143 / 5.514 with on-peak 5–9 pm weekdays. Whole-premise and
     EV-only share the same TOD price — do not fabricate a separate EV plan.
+
+    Both plans carry ``riders_referenced_not_shown`` from the sheet's
+    "See Schedule 100 for applicable adjustments" footnote so the rider
+    fetch step runs (R14).
     """
     if not text or not re.search(r"SCHEDULE\s+7\b", text, re.I):
         return []
@@ -9130,6 +9370,12 @@ def extract_pge_sch7_from_text(
 
     eff = _document_effective_date(text[:6000], source_url)
     eff_s = eff.isoformat() if eff else ""
+    rider_hints = _parse_pge_sch7_rider_references(text)
+    sch7_desc_suffix = (
+        f" {rider_hints[0]} for applicable adjustments."
+        if rider_hints
+        else ""
+    )
 
     # Fixed charge (single-family basic).
     fixed = None
@@ -9191,7 +9437,15 @@ def extract_pge_sch7_from_text(
             components=comps,
             extraction_tier="deterministic",
             energy_scope="bundled",
-            description="Deterministic parse of PGE Schedule 7 Default Plan.",
+            description=(
+                "Deterministic parse of PGE Schedule 7 Default Plan."
+                + sch7_desc_suffix
+            ),
+            riders_referenced_not_shown=list(rider_hints),
+            needs_review=bool(rider_hints),
+            missing_fields=(
+                ["referenced_riders_pending"] if rider_hints else []
+            ),
         ))
 
     # --- TOD portfolio (whole premise or EV — same price; one plan only) ---
@@ -9306,6 +9560,12 @@ def extract_pge_sch7_from_text(
                 description=(
                     "Deterministic parse of PGE Schedule 7 TOD. "
                     "EV-only charging uses the same prices — no separate plan."
+                    + sch7_desc_suffix
+                ),
+                riders_referenced_not_shown=list(rider_hints),
+                needs_review=bool(rider_hints),
+                missing_fields=(
+                    ["referenced_riders_pending"] if rider_hints else []
                 ),
             ))
     return out
@@ -9761,6 +10021,7 @@ def phase4_validate(
     # needs_review is not kept solely for already-folded riders (R8b).
     clear_resolved_rider_hints(tariffs)
     flag_missing_sch125_tod_pca(tariffs)
+    flag_plans_missing_referenced_riders(tariffs)
     if n_salvaged or n_shared:
         log.info(
             f"    Batch rider salvage: {n_salvaged} relative rider-only, "
