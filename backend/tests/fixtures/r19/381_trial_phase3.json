@@ -1,0 +1,984 @@
+[
+ {
+  "name": "Residential Service (typical 1,000-kWh bill, October 2026)",
+  "code": "",
+  "customer_class": "residential",
+  "rate_type": "flat",
+  "description": "FPL residential bill explanation: $10.52 monthly base charge, $30 minimum base bill, and the charges that make up a typical 1,000-kWh residential bill in October 2026.",
+  "source_url": "https://www.fpl.com/content/dam/fplgp/us/en/rates/pdf/residential-explanation.pdf",
+  "effective_date": "",
+  "components": [
+   {
+    "component_type": "fixed",
+    "unit": "$/month",
+    "rate_value": 10.52,
+    "period_label": "Base Charge"
+   },
+   {
+    "component_type": "minimum",
+    "unit": "$/month",
+    "rate_value": 30,
+    "period_label": "Minimum base bill (base charge + base energy charge)"
+   },
+   {
+    "component_type": "energy",
+    "unit": "$/1,000 kWh",
+    "rate_value": 122.58,
+    "tier_label": "all-in, typical 1,000-kWh bill: base energy 78.65 + fuel 28.93 + SPPCRC 9.95 + ECRC 3.45 + ECCR 1.48 + CCRC 0.52 + transition credit -0.40",
+    "tier_min_kwh": 0,
+    "tier_max_kwh": 1000,
+    "tier_basis": "month"
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "$/1,000 kWh",
+    "rate_value": 78.65,
+    "period_label": "Base Energy Charge (typical 1,000-kWh bill amount)",
+    "included_in_energy": true,
+    "rider_scope": "all_customers"
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "$/1,000 kWh",
+    "rate_value": 28.93,
+    "period_label": "Fuel Charge (typical 1,000-kWh bill amount)",
+    "included_in_energy": true,
+    "rider_scope": "all_customers"
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "$/1,000 kWh",
+    "rate_value": 9.95,
+    "period_label": "SPPCRC (typical 1,000-kWh bill amount)",
+    "included_in_energy": true,
+    "rider_scope": "all_customers"
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "$/1,000 kWh",
+    "rate_value": 3.45,
+    "period_label": "ECRC (typical 1,000-kWh bill amount)",
+    "included_in_energy": true,
+    "rider_scope": "all_customers"
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "$/1,000 kWh",
+    "rate_value": 1.48,
+    "period_label": "ECCR (typical 1,000-kWh bill amount)",
+    "included_in_energy": true,
+    "rider_scope": "all_customers"
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "$/1,000 kWh",
+    "rate_value": 0.52,
+    "period_label": "CCRC (typical 1,000-kWh bill amount)",
+    "included_in_energy": true,
+    "rider_scope": "all_customers"
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "$/1,000 kWh",
+    "rate_value": -0.4,
+    "period_label": "Transition Credit (typical 1,000-kWh bill amount)",
+    "included_in_energy": true,
+    "rider_scope": "all_customers"
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "$/1,000 kWh",
+    "rate_value": 3.54,
+    "period_label": "Gross receipts tax and regulatory assessment fee (2.6% of revenues; tax, excluded)",
+    "included_in_energy": false,
+    "rider_scope": "all_customers"
+   }
+  ],
+  "confidence": 0.5,
+  "needs_review": true,
+  "completeness_reasons": [],
+  "computable_reasons": [],
+  "extraction_tier": "opus",
+  "missing_fields": [
+   "explicit per-kWh unit rates (only dollar amounts for a typical 1,000-kWh bill are shown)",
+   "energy rates for usage above 1,000 kWh",
+   "schedule code",
+   "full effective date"
+  ],
+  "riders_referenced_not_shown": [
+   "Franchise charge",
+   "Utility/municipal tax"
+  ],
+  "energy_scope": "bundled",
+  "closed_to_new": false,
+  "energy_includes_riders": true,
+  "empty_reason": "",
+  "linked_document_hint": "",
+  "confidence_notes": {}
+ },
+ {
+  "name": "Residential Service (RS-1)",
+  "code": "RS-1",
+  "customer_class": "residential",
+  "rate_type": "tiered",
+  "description": "FPL residential service with 1,000 kWh tier threshold; clauses folded into all-in energy.",
+  "source_url": "https://www.fpl.com/content/dam/fplgp/us/en/rates/pdf/residential-rates-oct2026.pdf",
+  "effective_date": "2026-10-01",
+  "components": [
+   {
+    "component_type": "fixed",
+    "unit": "$/month",
+    "rate_value": 10.52
+   },
+   {
+    "component_type": "energy",
+    "unit": "\u00a2/kWh",
+    "rate_value": 12.258,
+    "tier_min_kwh": 0,
+    "tier_max_kwh": 1000,
+    "tier_basis": "month",
+    "tier_label": "all-in \u22641,000 kWh: base 7.865 + conservation 0.148 + capacity 0.052 + environmental 0.345 + storm 0.995 + fuel 2.893 + transition credit -0.040"
+   },
+   {
+    "component_type": "energy",
+    "unit": "\u00a2/kWh",
+    "rate_value": 14.258,
+    "tier_min_kwh": 1000,
+    "tier_max_kwh": null,
+    "tier_basis": "month",
+    "tier_label": "all-in >1,000 kWh: base 8.865 + conservation 0.148 + capacity 0.052 + environmental 0.345 + storm 0.995 + fuel 3.893 + transition credit -0.040"
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "\u00a2/kWh",
+    "rate_value": 0.148,
+    "period_label": "Conservation",
+    "included_in_energy": true,
+    "rider_scope": "all_customers"
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "\u00a2/kWh",
+    "rate_value": 0.052,
+    "period_label": "Capacity",
+    "included_in_energy": true,
+    "rider_scope": "all_customers"
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "\u00a2/kWh",
+    "rate_value": 0.345,
+    "period_label": "Environmental",
+    "included_in_energy": true,
+    "rider_scope": "all_customers"
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "\u00a2/kWh",
+    "rate_value": 0.995,
+    "period_label": "Storm Protection",
+    "included_in_energy": true,
+    "rider_scope": "all_customers"
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "\u00a2/kWh",
+    "rate_value": 2.893,
+    "period_label": "Fuel \u22641,000 kWh",
+    "included_in_energy": true,
+    "rider_scope": "all_customers"
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "\u00a2/kWh",
+    "rate_value": 3.893,
+    "period_label": "Fuel >1,000 kWh",
+    "included_in_energy": true,
+    "rider_scope": "all_customers"
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "\u00a2/kWh",
+    "rate_value": -0.04,
+    "period_label": "Transition Credit",
+    "included_in_energy": true,
+    "rider_scope": "all_customers"
+   }
+  ],
+  "confidence": 0.9,
+  "needs_review": true,
+  "completeness_reasons": [],
+  "computable_reasons": [],
+  "extraction_tier": "vision",
+  "missing_fields": [
+   "RTR-1 and EV rate on/off-peak hours not shown"
+  ],
+  "riders_referenced_not_shown": [],
+  "energy_scope": "bundled",
+  "closed_to_new": false,
+  "energy_includes_riders": true,
+  "empty_reason": "",
+  "linked_document_hint": "",
+  "confidence_notes": {}
+ },
+ {
+  "name": "Residential TOU Rider (RTR-1)",
+  "code": "RTR-1",
+  "customer_class": "residential",
+  "rate_type": "tou_tiered",
+  "description": "FPL residential time-of-use rider; on-peak/off-peak adders applied to RS-1 tiered base energy, plus clauses, all-in.",
+  "source_url": "https://www.fpl.com/content/dam/fplgp/us/en/rates/pdf/new-customer-overview.pdf",
+  "effective_date": "",
+  "components": [
+   {
+    "component_type": "fixed",
+    "unit": "$/month",
+    "rate_value": 10.52
+   },
+   {
+    "component_type": "energy",
+    "unit": "\u00a2/kWh",
+    "rate_value": 26.894,
+    "period_label": "On-Peak",
+    "tier_label": "all-in \u22641,000 kWh: base 7.865 + on-peak 14.410 + conservation 0.148 + capacity 0.052 + environmental 0.345 + storm 0.995 + fuel 2.893 + on-peak fuel 0.226 + transition -0.040",
+    "tier_min_kwh": 0,
+    "tier_max_kwh": 1000,
+    "tier_basis": "month"
+   },
+   {
+    "component_type": "energy",
+    "unit": "\u00a2/kWh",
+    "rate_value": 28.894,
+    "period_label": "On-Peak",
+    "tier_label": "all-in >1,000 kWh: base 8.865 + on-peak 14.410 + conservation 0.148 + capacity 0.052 + environmental 0.345 + storm 0.995 + fuel 3.893 + on-peak fuel 0.226 + transition -0.040",
+    "tier_min_kwh": 1000,
+    "tier_basis": "month"
+   },
+   {
+    "component_type": "energy",
+    "unit": "\u00a2/kWh",
+    "rate_value": 6.003,
+    "period_label": "Off-Peak",
+    "tier_label": "all-in \u22641,000 kWh: base 7.865 - 6.157 + 0.148 + 0.052 + 0.345 + 0.995 + fuel 2.893 - off-peak fuel 0.098 - 0.040",
+    "tier_min_kwh": 0,
+    "tier_max_kwh": 1000,
+    "tier_basis": "month"
+   },
+   {
+    "component_type": "energy",
+    "unit": "\u00a2/kWh",
+    "rate_value": 8.003,
+    "period_label": "Off-Peak",
+    "tier_label": "all-in >1,000 kWh: base 8.865 - 6.157 + 0.148 + 0.052 + 0.345 + 0.995 + fuel 3.893 - off-peak fuel 0.098 - 0.040",
+    "tier_min_kwh": 1000,
+    "tier_basis": "month"
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "\u00a2/kWh",
+    "rate_value": 0.148,
+    "period_label": "Conservation Charge",
+    "included_in_energy": true,
+    "rider_scope": "all_customers"
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "\u00a2/kWh",
+    "rate_value": 0.052,
+    "period_label": "Capacity Charge",
+    "included_in_energy": true,
+    "rider_scope": "all_customers"
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "\u00a2/kWh",
+    "rate_value": 0.345,
+    "period_label": "Environmental Charge",
+    "included_in_energy": true,
+    "rider_scope": "all_customers"
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "\u00a2/kWh",
+    "rate_value": 0.995,
+    "period_label": "Storm Protection Charge",
+    "included_in_energy": true,
+    "rider_scope": "all_customers"
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "\u00a2/kWh",
+    "rate_value": -0.04,
+    "period_label": "Transition Credit",
+    "included_in_energy": true,
+    "rider_scope": "all_customers"
+   }
+  ],
+  "confidence": 0.6,
+  "needs_review": true,
+  "completeness_reasons": [],
+  "computable_reasons": [],
+  "extraction_tier": "twopass",
+  "missing_fields": [
+   "on-peak and off-peak hours",
+   "day types",
+   "season dates",
+   "effective_date"
+  ],
+  "riders_referenced_not_shown": [],
+  "energy_scope": "bundled",
+  "closed_to_new": false,
+  "energy_includes_riders": true,
+  "empty_reason": "",
+  "linked_document_hint": "",
+  "confidence_notes": {}
+ },
+ {
+  "name": "RS-1 EV Full Installation",
+  "code": "",
+  "customer_class": "residential",
+  "rate_type": "complex",
+  "description": "FPL residential EV program rate with monthly program charge, monthly off-peak charge and an energy charge; column mapping from a flattened insert table is uncertain.",
+  "source_url": "https://www.fpl.com/content/dam/fplgp/us/en/rates/pdf/new-customer-overview.pdf",
+  "effective_date": "",
+  "components": [
+   {
+    "component_type": "fixed",
+    "unit": "$/month",
+    "rate_value": 25.57,
+    "period_label": "Monthly Program Charge"
+   },
+   {
+    "component_type": "fixed",
+    "unit": "$/month",
+    "rate_value": 19.81,
+    "period_label": "Monthly Off-Peak Energy Charge"
+   },
+   {
+    "component_type": "energy",
+    "unit": "\u00a2/kWh",
+    "rate_value": 27.067,
+    "period_label": "On-Peak Energy Charge",
+    "day_type": "all",
+    "tier_label": "as printed; no clock hours shown"
+   }
+  ],
+  "confidence": 0.4,
+  "needs_review": true,
+  "completeness_reasons": [],
+  "computable_reasons": [],
+  "extraction_tier": "twopass",
+  "missing_fields": [
+   "on-peak hours",
+   "off-peak energy per kWh price",
+   "day types"
+  ],
+  "riders_referenced_not_shown": [],
+  "energy_scope": "bundled",
+  "closed_to_new": false,
+  "energy_includes_riders": false,
+  "empty_reason": "",
+  "linked_document_hint": "",
+  "confidence_notes": {}
+ },
+ {
+  "name": "RS-1 EV Equipment only Installation",
+  "code": "",
+  "customer_class": "residential",
+  "rate_type": "complex",
+  "description": "FPL residential EV installation (equipment only) charges: monthly program charge, monthly off-peak energy charge and on-peak energy charge.",
+  "source_url": "https://www.fpl.com/content/dam/fplgp/us/en/rates/pdf/new-customer-overview.pdf",
+  "effective_date": "",
+  "components": [
+   {
+    "component_type": "fixed",
+    "unit": "$/month",
+    "rate_value": 18.41,
+    "period_label": "Monthly Program Charge"
+   },
+   {
+    "component_type": "fixed",
+    "unit": "$/month",
+    "rate_value": 19.81,
+    "period_label": "Monthly Off-Peak Energy Charge"
+   },
+   {
+    "component_type": "energy",
+    "unit": "\u00a2/kWh",
+    "rate_value": 27.067,
+    "period_label": "On-Peak Energy Charge"
+   }
+  ],
+  "confidence": 0.6,
+  "needs_review": true,
+  "completeness_reasons": [],
+  "computable_reasons": [],
+  "extraction_tier": "twopass",
+  "missing_fields": [
+   "on-peak hours and day types",
+   "effective_date",
+   "per-kWh riders applicability to this EV row"
+  ],
+  "riders_referenced_not_shown": [],
+  "energy_scope": "bundled",
+  "closed_to_new": false,
+  "energy_includes_riders": false,
+  "empty_reason": "",
+  "linked_document_hint": "",
+  "confidence_notes": {}
+ },
+ {
+  "name": "RS-2 EV Full Installation",
+  "code": "",
+  "customer_class": "residential",
+  "rate_type": "tou",
+  "description": "FPL residential EV time-of-use service, full installation, with monthly program charge and on-/off-peak energy.",
+  "source_url": "https://www.fpl.com/content/dam/fplgp/us/en/rates/pdf/new-customer-overview.pdf",
+  "effective_date": "",
+  "components": [
+   {
+    "component_type": "fixed",
+    "unit": "$/month",
+    "rate_value": 36.0,
+    "period_label": "Monthly Program Charge"
+   },
+   {
+    "component_type": "energy",
+    "unit": "\u00a2/kWh",
+    "rate_value": 27.511,
+    "period_label": "On-Peak",
+    "day_type": null,
+    "tier_label": "all-in: 22.583 + conservation 0.148 + capacity 0.052 + environmental 0.345 + storm 0.995 + on-peak fuel 3.428 + transition credit -0.040"
+   },
+   {
+    "component_type": "energy",
+    "unit": "\u00a2/kWh",
+    "rate_value": 6.62,
+    "period_label": "Off-Peak",
+    "day_type": null,
+    "tier_label": "all-in: 2.016 + conservation 0.148 + capacity 0.052 + environmental 0.345 + storm 0.995 + off-peak fuel 3.104 + transition credit -0.040"
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "\u00a2/kWh",
+    "rate_value": 0.148,
+    "period_label": "Conservation Charge",
+    "included_in_energy": true,
+    "rider_scope": "all_customers"
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "\u00a2/kWh",
+    "rate_value": 0.052,
+    "period_label": "Capacity Charge",
+    "included_in_energy": true,
+    "rider_scope": "all_customers"
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "\u00a2/kWh",
+    "rate_value": 0.345,
+    "period_label": "Environmental Charge",
+    "included_in_energy": true,
+    "rider_scope": "all_customers"
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "\u00a2/kWh",
+    "rate_value": 0.995,
+    "period_label": "Storm Protection Charge",
+    "included_in_energy": true,
+    "rider_scope": "all_customers"
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "\u00a2/kWh",
+    "rate_value": 3.428,
+    "period_label": "On-Peak Fuel Charge",
+    "included_in_energy": true,
+    "rider_scope": "all_customers"
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "\u00a2/kWh",
+    "rate_value": 3.104,
+    "period_label": "Off-Peak Fuel Charge",
+    "included_in_energy": true,
+    "rider_scope": "all_customers"
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "\u00a2/kWh",
+    "rate_value": -0.04,
+    "period_label": "Transition Credit",
+    "included_in_energy": true,
+    "rider_scope": "all_customers"
+   }
+  ],
+  "confidence": 0.7,
+  "needs_review": true,
+  "completeness_reasons": [],
+  "computable_reasons": [],
+  "extraction_tier": "twopass",
+  "missing_fields": [
+   "on-peak/off-peak hours",
+   "day types"
+  ],
+  "riders_referenced_not_shown": [],
+  "energy_scope": "bundled",
+  "closed_to_new": false,
+  "energy_includes_riders": true,
+  "empty_reason": "",
+  "linked_document_hint": "",
+  "confidence_notes": {}
+ },
+ {
+  "name": "RS-2 EV Equipment only Installation",
+  "code": "RS-2",
+  "customer_class": "residential",
+  "rate_type": "tou",
+  "description": "FPL residential EV Equipment-only installation TOU pricing with monthly program charge, on-peak and off-peak energy.",
+  "source_url": "https://www.fpl.com/content/dam/fplgp/us/en/rates/pdf/new-customer-overview.pdf",
+  "effective_date": "",
+  "components": [
+   {
+    "component_type": "fixed",
+    "unit": "$/month",
+    "rate_value": 27.0,
+    "period_label": "Monthly Program Charge"
+   },
+   {
+    "component_type": "energy",
+    "unit": "\u00a2/kWh",
+    "rate_value": 27.511,
+    "period_label": "On-Peak",
+    "tier_label": "all-in: 22.583 + conservation 0.148 + capacity 0.052 + environmental 0.345 + storm 0.995 + on-peak fuel 3.428 + transition credit -0.040 = 27.511",
+    "day_type": null,
+    "period_start_time": null,
+    "period_end_time": null
+   },
+   {
+    "component_type": "energy",
+    "unit": "\u00a2/kWh",
+    "rate_value": 6.62,
+    "period_label": "Off-Peak",
+    "tier_label": "all-in: 2.016 + conservation 0.148 + capacity 0.052 + environmental 0.345 + storm 0.995 + off-peak fuel 3.104 + transition credit -0.040 = 6.620",
+    "day_type": null,
+    "period_start_time": null,
+    "period_end_time": null
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "\u00a2/kWh",
+    "rate_value": 0.148,
+    "period_label": "Conservation Charge",
+    "included_in_energy": true,
+    "rider_scope": "all_customers"
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "\u00a2/kWh",
+    "rate_value": 0.052,
+    "period_label": "Capacity Charge",
+    "included_in_energy": true,
+    "rider_scope": "all_customers"
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "\u00a2/kWh",
+    "rate_value": 0.345,
+    "period_label": "Environmental Charge",
+    "included_in_energy": true,
+    "rider_scope": "all_customers"
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "\u00a2/kWh",
+    "rate_value": 0.995,
+    "period_label": "Storm Protection Charge",
+    "included_in_energy": true,
+    "rider_scope": "all_customers"
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "\u00a2/kWh",
+    "rate_value": 3.428,
+    "period_label": "On-Peak Fuel Charge",
+    "included_in_energy": true,
+    "rider_scope": "all_customers"
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "\u00a2/kWh",
+    "rate_value": 3.104,
+    "period_label": "Off-Peak Fuel Charge",
+    "included_in_energy": true,
+    "rider_scope": "all_customers"
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "\u00a2/kWh",
+    "rate_value": -0.04,
+    "period_label": "Transition Credit",
+    "included_in_energy": true,
+    "rider_scope": "all_customers"
+   }
+  ],
+  "confidence": 0.7,
+  "needs_review": true,
+  "completeness_reasons": [],
+  "computable_reasons": [],
+  "extraction_tier": "twopass",
+  "missing_fields": [
+   "on-peak/off-peak hours",
+   "day types",
+   "base non-fuel on-peak/off-peak definitions"
+  ],
+  "riders_referenced_not_shown": [],
+  "energy_scope": "bundled",
+  "closed_to_new": false,
+  "energy_includes_riders": true,
+  "empty_reason": "",
+  "linked_document_hint": "",
+  "confidence_notes": {}
+ },
+ {
+  "name": "Servicio residencial (RS-1)",
+  "code": "RS-1",
+  "customer_class": "residential",
+  "rate_type": "tiered",
+  "description": "FPL residential service, 2026 rates: base energy tiers at/below and above 1,000 kWh plus clauses.",
+  "source_url": "https://www.fpl.com/content/dam/fplgp/us/en/rates/pdf/new-customer-overview-spanish.pdf",
+  "effective_date": "",
+  "components": [
+   {
+    "component_type": "fixed",
+    "unit": "$/month",
+    "rate_value": 10.52
+   },
+   {
+    "component_type": "energy",
+    "unit": "\u00a2/kWh",
+    "rate_value": 12.258,
+    "tier_min_kwh": 0,
+    "tier_max_kwh": 1000,
+    "tier_basis": "month",
+    "tier_label": "all-in \u22641,000 kWh: base 7.865 + conservation 0.148 + capacity 0.052 + environmental 0.345 + storm 0.995 + fuel 2.893 + transition credit -0.040"
+   },
+   {
+    "component_type": "energy",
+    "unit": "\u00a2/kWh",
+    "rate_value": 14.258,
+    "tier_min_kwh": 1000,
+    "tier_max_kwh": null,
+    "tier_basis": "month",
+    "tier_label": "all-in >1,000 kWh: base 8.865 + conservation 0.148 + capacity 0.052 + environmental 0.345 + storm 0.995 + fuel 3.893 + transition credit -0.040"
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "\u00a2/kWh",
+    "rate_value": 0.148,
+    "period_label": "Conservation",
+    "included_in_energy": true,
+    "rider_scope": "all_customers"
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "\u00a2/kWh",
+    "rate_value": 0.052,
+    "period_label": "Capacity",
+    "included_in_energy": true,
+    "rider_scope": "all_customers"
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "\u00a2/kWh",
+    "rate_value": 0.345,
+    "period_label": "Environmental",
+    "included_in_energy": true,
+    "rider_scope": "all_customers"
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "\u00a2/kWh",
+    "rate_value": 0.995,
+    "period_label": "Storm protection",
+    "included_in_energy": true,
+    "rider_scope": "all_customers"
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "\u00a2/kWh",
+    "rate_value": 2.893,
+    "period_label": "Fuel \u22641,000 kWh",
+    "included_in_energy": true,
+    "rider_scope": "all_customers"
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "\u00a2/kWh",
+    "rate_value": 3.893,
+    "period_label": "Fuel >1,000 kWh",
+    "included_in_energy": true,
+    "rider_scope": "all_customers"
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "\u00a2/kWh",
+    "rate_value": -0.04,
+    "period_label": "Transition credit",
+    "included_in_energy": true,
+    "rider_scope": "all_customers"
+   }
+  ],
+  "confidence": 0.8,
+  "needs_review": false,
+  "completeness_reasons": [],
+  "computable_reasons": [],
+  "extraction_tier": "sonnet",
+  "missing_fields": [],
+  "riders_referenced_not_shown": [],
+  "energy_scope": "bundled",
+  "closed_to_new": false,
+  "energy_includes_riders": true,
+  "empty_reason": "",
+  "linked_document_hint": "",
+  "confidence_notes": {}
+ },
+ {
+  "name": "Cl\u00e1usula TOU residencial (RTR-1)",
+  "code": "RTR-1",
+  "customer_class": "residential",
+  "rate_type": "complex",
+  "description": "FPL residential TOU rider: RS-1 tiered rates with on-peak/off-peak adders; peak hours not shown.",
+  "source_url": "https://www.fpl.com/content/dam/fplgp/us/en/rates/pdf/new-customer-overview-spanish.pdf",
+  "effective_date": "",
+  "components": [
+   {
+    "component_type": "fixed",
+    "unit": "$/month",
+    "rate_value": 10.52
+   },
+   {
+    "component_type": "energy",
+    "unit": "\u00a2/kWh",
+    "rate_value": 7.865,
+    "tier_min_kwh": 0,
+    "tier_max_kwh": 1000,
+    "tier_basis": "month",
+    "tier_label": "base energy \u22641,000 kWh"
+   },
+   {
+    "component_type": "energy",
+    "unit": "\u00a2/kWh",
+    "rate_value": 8.865,
+    "tier_min_kwh": 1000,
+    "tier_max_kwh": null,
+    "tier_basis": "month",
+    "tier_label": "base energy >1,000 kWh"
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "\u00a2/kWh",
+    "rate_value": 14.41,
+    "period_label": "On-peak base energy charge",
+    "included_in_energy": false,
+    "rider_scope": "tou_overlay"
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "\u00a2/kWh",
+    "rate_value": -6.157,
+    "period_label": "Off-peak base energy charge",
+    "included_in_energy": false,
+    "rider_scope": "tou_overlay"
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "\u00a2/kWh",
+    "rate_value": 0.226,
+    "period_label": "On-peak fuel",
+    "included_in_energy": false,
+    "rider_scope": "tou_overlay"
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "\u00a2/kWh",
+    "rate_value": -0.098,
+    "period_label": "Off-peak fuel",
+    "included_in_energy": false,
+    "rider_scope": "tou_overlay"
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "\u00a2/kWh",
+    "rate_value": 0.148,
+    "period_label": "Conservation",
+    "included_in_energy": false,
+    "rider_scope": "all_customers"
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "\u00a2/kWh",
+    "rate_value": 0.052,
+    "period_label": "Capacity",
+    "included_in_energy": false,
+    "rider_scope": "all_customers"
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "\u00a2/kWh",
+    "rate_value": 0.345,
+    "period_label": "Environmental",
+    "included_in_energy": false,
+    "rider_scope": "all_customers"
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "\u00a2/kWh",
+    "rate_value": 0.995,
+    "period_label": "Storm protection",
+    "included_in_energy": false,
+    "rider_scope": "all_customers"
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "\u00a2/kWh",
+    "rate_value": 2.893,
+    "period_label": "Fuel \u22641,000 kWh",
+    "included_in_energy": false,
+    "rider_scope": "all_customers"
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "\u00a2/kWh",
+    "rate_value": 3.893,
+    "period_label": "Fuel >1,000 kWh",
+    "included_in_energy": false,
+    "rider_scope": "all_customers"
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "\u00a2/kWh",
+    "rate_value": -0.04,
+    "period_label": "Transition credit",
+    "included_in_energy": false,
+    "rider_scope": "all_customers"
+   }
+  ],
+  "confidence": 0.5,
+  "needs_review": true,
+  "completeness_reasons": [],
+  "computable_reasons": [],
+  "extraction_tier": "sonnet",
+  "missing_fields": [
+   "on-peak/off-peak clock times",
+   "day types",
+   "seasons"
+  ],
+  "riders_referenced_not_shown": [],
+  "energy_scope": "bundled",
+  "closed_to_new": false,
+  "energy_includes_riders": false,
+  "empty_reason": "",
+  "linked_document_hint": "",
+  "confidence_notes": {}
+ },
+ {
+  "name": "FPL EVolution Home \u2013 Equipment-only installation",
+  "code": "",
+  "customer_class": "residential",
+  "rate_type": "seasonal_tou",
+  "description": "10-year EV home charging program, equipment-only installation: $27/month program charge plus separately billed approximate off-peak and on-peak per-kWh EV charging rates.",
+  "source_url": "https://www.fpl.com/electric-vehicles/for-drivers/evolution-home.html",
+  "effective_date": "",
+  "components": [
+   {
+    "component_type": "fixed",
+    "unit": "$/month",
+    "rate_value": 27,
+    "period_label": "Monthly program charge"
+   },
+   {
+    "component_type": "energy",
+    "unit": "\u00a2/kWh",
+    "rate_value": 7,
+    "period_label": "Off-peak EV charging (approx.)",
+    "tier_label": "Approx. 7\u00a2/kWh; weeknights, weekends, holidays; hours not stated"
+   },
+   {
+    "component_type": "energy",
+    "unit": "\u00a2/kWh",
+    "rate_value": 28,
+    "period_label": "On-peak EV charging (approx.)",
+    "tier_label": "Approx. 28\u00a2/kWh; hours not stated"
+   }
+  ],
+  "confidence": 0.5,
+  "needs_review": true,
+  "completeness_reasons": [],
+  "computable_reasons": [],
+  "extraction_tier": "twopass",
+  "missing_fields": [
+   "on-peak/off-peak clock hours for summer and winter",
+   "weekday/weekend on-peak window",
+   "effective date"
+  ],
+  "riders_referenced_not_shown": [],
+  "energy_scope": "bundled",
+  "closed_to_new": false,
+  "energy_includes_riders": false,
+  "empty_reason": "",
+  "linked_document_hint": "",
+  "confidence_notes": {}
+ },
+ {
+  "name": "FPL EVolution Home \u2013 Full installation",
+  "code": "",
+  "customer_class": "residential",
+  "rate_type": "seasonal_tou",
+  "description": "10-year EV home charging program with $36/month program charge plus separately billed approximate off-peak and on-peak EV charging energy rates.",
+  "source_url": "https://www.fpl.com/electric-vehicles/for-drivers/evolution-home.html",
+  "effective_date": "",
+  "components": [
+   {
+    "component_type": "fixed",
+    "unit": "$/month",
+    "rate_value": 36,
+    "period_label": "Monthly program charge"
+   },
+   {
+    "component_type": "energy",
+    "unit": "\u00a2/kWh",
+    "rate_value": 7,
+    "period_label": "Off-peak EV charging (approx.)",
+    "tier_label": "approx.; on-peak/off-peak clock hours not shown"
+   },
+   {
+    "component_type": "energy",
+    "unit": "\u00a2/kWh",
+    "rate_value": 28,
+    "period_label": "On-peak EV charging (approx.)",
+    "tier_label": "approx.; on-peak/off-peak clock hours not shown"
+   }
+  ],
+  "confidence": 0.5,
+  "needs_review": true,
+  "completeness_reasons": [],
+  "computable_reasons": [],
+  "extraction_tier": "twopass",
+  "missing_fields": [
+   "on-peak and off-peak clock hours",
+   "season assignment of rates",
+   "day types",
+   "exact energy rates (only approximate)"
+  ],
+  "riders_referenced_not_shown": [],
+  "energy_scope": "bundled",
+  "closed_to_new": false,
+  "energy_includes_riders": false,
+  "empty_reason": "",
+  "linked_document_hint": "",
+  "confidence_notes": {}
+ }
+]
