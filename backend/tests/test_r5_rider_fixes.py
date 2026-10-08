@@ -319,8 +319,12 @@ class TestFullBillSiblingAndSupersededCharge(unittest.TestCase):
         logging.disable(logging.NOTSET)
 
     def test_prefer_full_bill_tou_over_base_only_duplicate(self):
+        # R7: same product only when codes match or normalized names are
+        # identical — different names (Pedernales flat vs Community Solar)
+        # must not collapse. True siblings share the schedule name/code.
         base_only = tp.ExtractedTariff(
-            name="Time-of-Use Rate", customer_class="residential",
+            name="Time-of-Use Rate", code="500.2.5",
+            customer_class="residential",
             rate_type="tou", confidence=0.9,
             components=[
                 {"component_type": "energy", "unit": "¢/kWh", "rate_value": 4.3481,
@@ -332,7 +336,7 @@ class TestFullBillSiblingAndSupersededCharge(unittest.TestCase):
             ],
         )
         full = tp.ExtractedTariff(
-            name="Time-of-Use Rate 500.2.5", code="500.2.5",
+            name="Time-of-Use Rate", code="500.2.5",
             customer_class="residential", rate_type="tou", confidence=0.9,
             components=[
                 {"component_type": "energy", "unit": "¢/kWh", "rate_value": 8.6715,
@@ -350,6 +354,22 @@ class TestFullBillSiblingAndSupersededCharge(unittest.TestCase):
         out = tp._collapse_full_bill_siblings([base_only, full])
         self.assertEqual(len(out), 1)
         self.assertIn("500.2.5", out[0].name + (out[0].code or ""))
+        # Differing names/codes stay separate (R7).
+        other = tp.ExtractedTariff(
+            name="TOU Portfolio", customer_class="residential", rate_type="tou",
+            confidence=0.9,
+            components=[
+                {"component_type": "energy", "unit": "¢/kWh", "rate_value": 4.3481,
+                 "period_label": "Off-Peak"},
+                {"component_type": "energy", "unit": "¢/kWh", "rate_value": 9.32,
+                 "period_label": "Mid-Peak"},
+                {"component_type": "energy", "unit": "¢/kWh", "rate_value": 16.18,
+                 "period_label": "On-Peak"},
+            ],
+        )
+        mixed = tp._collapse_full_bill_siblings([base_only, full, other])
+        self.assertEqual(len(mixed), 2)
+        self.assertIn("TOU Portfolio", {t.name for t in mixed})
 
     def test_drop_stale_and_current_tcos_as_two_tiers(self):
         comps = [
