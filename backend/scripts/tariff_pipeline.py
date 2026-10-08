@@ -1421,6 +1421,32 @@ def _discover_utility_domain(utility_name: str, state: str) -> str | None:
     return None
 
 
+_R20_NON_RESIDENTIAL_DOC_RE = re.compile(
+    r"purpa|cogenerat|qualifying[-_ ]?facilit|avoided[-_ ]?cost|buy[-_ ]?back|\bpep[-_ ]", re.I,
+)
+
+
+def order_links_newest_first(links, *, today: date | None = None):
+    """Stable re-order of (url, text) crawl links: current-dated first,
+    old-dated and cogeneration/PURPA sheets last; others keep their order."""
+    today = today or date.today()
+
+    def _key(ut):
+        u = ut[0]
+        if _R20_NON_RESIDENTIAL_DOC_RE.search(urlparse(u).path):
+            return (2, 0)
+        v = url_document_vintage(u, today=today)
+        if v is None:
+            return (1, 0)
+        if v[0] >= today.year - 1:
+            return (0, -(v[0] * 12 + v[1]))
+        if v[0] <= today.year - 2:
+            return (2, -(v[0] * 12 + v[1]))
+        return (1, 0)
+
+    return sorted(links, key=_key)
+
+
 @llm_cost.with_phase("phase1")
 def phase1_find_rate_page(utility_name: str, state: str, website_url: str | None) -> tuple[str, int, list[str]]:
     """Search for the utility's rate page. Returns (best_url, num_results, alt_urls)."""
@@ -2062,6 +2088,13 @@ def phase2_discover_tariff_pages(rate_page_url: str) -> list[RatePage]:
             f"  Phase 2: Demoted {before_count} cancelled/superseded links "
             f"to end of queue"
         )
+
+    # R20: newest-document rule for the crawl queue. Links dated this year or
+    # last (URL date, e.g. "effective-20261001") go first; links dated two or
+    # more years back and cogeneration / PURPA buy-back sheets go last, so the
+    # level-1 cap keeps the current tariff book (PSE&G listed 15 PURPA sheets
+    # ahead of its current tariff).
+    level1_links = order_links_newest_first(level1_links)
 
     MAX_LEVEL1 = 15
     # Rate-book hubs: a rate-themed page linking to many PDFs is a tariff
