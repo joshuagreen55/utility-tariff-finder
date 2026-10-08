@@ -511,7 +511,7 @@ class TestReferencedRiderDocFetch(unittest.TestCase):
         with mock.patch.object(tp, "brave_search", return_value=[
             {"url": rider_page.url, "title": rider_page.title, "description": "FAM DSM"},
         ]), mock.patch.object(tp, "_fetch_as_pdf_via_download", return_value=rider_page), \
-             mock.patch.object(tp, "phase3_extract_tariffs", return_value=rider_extract):
+             mock.patch.object(tp, "_extract_rider_document", return_value=rider_extract):
             merged, pages = tp.enrich_tariffs_with_referenced_rider_docs(
                 [domestic], "Nova Scotia Power", "NS",
                 website_url="https://www.nspower.ca",
@@ -616,7 +616,7 @@ class TestReferencedRiderDocFetch(unittest.TestCase):
         ]
         with mock.patch.object(tp, "brave_search", return_value=search_hits), \
              mock.patch.object(tp, "_fetch_as_pdf_via_download", return_value=rider_page) as fetch_pdf, \
-             mock.patch.object(tp, "phase3_extract_tariffs", return_value=rider_extract):
+             mock.patch.object(tp, "_extract_rider_document", return_value=rider_extract):
             merged, pages = tp.enrich_tariffs_with_referenced_rider_docs(
                 [sched7], "Portland General Electric", "OR",
                 website_url="https://assets.ctfassets.net/abc/pge",
