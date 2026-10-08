@@ -8460,7 +8460,9 @@ def _try_centralized_regulator(
         try:
             from scripts.scrape_oeb_rates import (
                 fetch_oeb_page, parse_oeb_rates,
-                build_tariff_entries, store_oeb_tariffs,
+                fetch_billdata_xml, parse_billdata_xml, match_ldc_delivery,
+                build_tariff_entries, store_oeb_tariffs, get_ontario_utilities,
+                BILLDATA_URL,
             )
             html = fetch_oeb_page()
             rates = parse_oeb_rates(html)
@@ -8468,25 +8470,54 @@ def _try_centralized_regulator(
                 log.warning("  OEB scraper returned no rates — falling back to standard pipeline")
                 return None
 
-            res_tariffs = build_tariff_entries(rates, "residential")
+            # Resolve the utility name for BillData matching.
+            util_name = ""
+            try:
+                for u in get_ontario_utilities():
+                    if u["id"] == utility_id:
+                        util_name = u["name"]
+                        break
+            except Exception:
+                util_name = ""
+
+            ldc = None
+            try:
+                ldc = match_ldc_delivery(util_name, parse_billdata_xml(fetch_billdata_xml()))
+            except Exception as be:
+                log.warning(f"  BillData.xml unavailable ({be}) — commodity-only RPP")
+
+            res_tariffs = build_tariff_entries(rates, "residential", ldc=ldc)
             com_tariffs = build_tariff_entries(rates, "commercial")
             all_tariffs = res_tariffs + com_tariffs
 
             if not dry_run:
                 count = store_oeb_tariffs(utility_id, all_tariffs, dry_run)
-                log.info(f"  Stored {count} OEB tariffs for utility {utility_id}")
+                log.info(
+                    f"  Stored {count} OEB tariffs for utility {utility_id}"
+                    + (f" (+BillData {ldc.distributor})" if ldc else "")
+                )
             else:
                 count = len(all_tariffs)
-                log.info(f"  DRY RUN: Would store {count} OEB tariffs for utility {utility_id}")
+                log.info(
+                    f"  DRY RUN: Would store {count} OEB tariffs for utility {utility_id}"
+                    + (f" (+BillData {ldc.distributor})" if ldc else "")
+                )
 
             result = PipelineResult(
                 utility_id=utility_id,
-                utility_name="",
+                utility_name=util_name,
                 country=country,
                 state=state,
-                phase1_rate_page_url=f"https://www.oeb.ca (centralized regulator)",
+                phase1_rate_page_url=(
+                    f"{BILLDATA_URL} (OEB BillData + RPP)"
+                    if ldc else "https://www.oeb.ca (centralized regulator)"
+                ),
             )
-            result.phase4_validation = {"valid": count, "source": "OEB centralized"}
+            result.phase4_validation = {
+                "valid": count,
+                "source": "OEB+BillData" if ldc else "OEB centralized",
+                "ldc_delivery": bool(ldc),
+            }
             return result
         except Exception as e:
             log.warning(f"  OEB centralized scraper failed: {e} — falling back to standard pipeline")

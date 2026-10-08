@@ -360,9 +360,11 @@ def tariff_contract(tariff: Any, *, holiday_calendar: str | None = None) -> dict
     cf = _get(tariff, "confidence_factors") or {}
     warnings = list(res.warnings)
     code = str(_get(tariff, "code") or "").upper()
-    if code.startswith("OEB-RPP") or cf.get("origin") == "oeb_feed":
-        # OEB RPP rows are commodity only; delivery, regulatory, rebate and
-        # HST are not on the OEB table unless carried as FIXED rows.
+    if (code.startswith("OEB-RPP") or cf.get("origin") == "oeb_feed") and not cf.get(
+        "ontario_ldc_delivery"
+    ):
+        # Commodity-only OEB RPP (no BillData LDC fold yet). Skip the warning
+        # once ontario_ldc_delivery marks delivery+regulatory as folded in.
         warnings.append("commodity_only_bill_incomplete")
     return {
         "computable": res.computable,

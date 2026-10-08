@@ -31,7 +31,8 @@ Regulators on ``REGULATOR_PUBLISHERS`` set the rate itself, so their page
 *is* the official publication:
 
 - Ontario — Ontario Energy Board (``oeb.ca``) sets RPP commodity prices
-  (TOU / tiered / ULO) for every LDC; ``scrape_oeb_rates.py`` stores them.
+  (TOU / tiered / ULO) for every LDC; ``scrape_oeb_rates.py`` stores them
+  and folds per-LDC delivery/regulatory from ``BillData.xml``.
 - Alberta — Alberta Utilities Commission (``auc.ab.ca``) sets the Rate of
   Last Resort.
 
