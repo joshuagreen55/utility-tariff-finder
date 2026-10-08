@@ -330,6 +330,9 @@ class ExtractedTariff:
     energy_includes_riders: bool | None = None
     empty_reason: str = ""
     linked_document_hint: str = ""
+    # Non-review notes merged into confidence_factors at store time
+    # (e.g. sch102_credit_first_2000_kwh_only). Never alone sets needs_review.
+    confidence_notes: dict = field(default_factory=dict)
 
 
 @dataclass
@@ -7057,33 +7060,101 @@ def flag_missing_sch125_tod_pca(tariffs: list[ExtractedTariff]) -> int:
     return flagged
 
 
+# Per-kWh energy-price changers (FAM / DCRR / PCA / Sch 1xx / storm…).
+# Used to decide whether a declared rider should trigger
+# ``referenced_riders_missing`` and whether a folded row counts as "has riders".
+_PER_KWH_ENERGY_PRICE_RIDER_RE = re.compile(
+    r"\b(?:fam|dsm|dcrr|scrr|"
+    r"storm(?:\s+cost)?(?:\s+recovery)?(?:\s+rider)?|"
+    r"fuel\s*adjust(?:ment)?(?:\s+mechanism)?|"
+    r"power\s*cost(?:\s+adjust(?:ment)?)?|\bpca\b|\bbac\b|"
+    r"schedule\s*1\d{2}|sch(?:edule)?\s*1\d{2})\b",
+    re.IGNORECASE,
+)
+
+# Credits / discounts / net-metering / optional programmes — do NOT raise
+# ``referenced_riders_missing`` outside PGE (HQ supply credits, SRP discounts).
+_NON_ENERGY_PRICE_RIDER_HINT_RE = re.compile(
+    r"\b(?:credit|discount|rebate|net[\s-]*meter(?:ing)?|"
+    r"customer[\s-]*owned|transformer|"
+    r"optional\s+program|green\s+(?:power|energy|future)|"
+    r"attribute\s+certificate|export\s+credit|"
+    r"medical\s+life\s+support|economy\s+discount|"
+    r"carbon\s+reduction|"
+    r"adjustment\s+for\s+transformation|"
+    r"credit\s+for\s+supply)\b",
+    re.IGNORECASE,
+)
+
+
+def _component_rider_label_blob(c: dict) -> str:
+    """Labels on a component only — never the plan name (avoids 'Optional')."""
+    return " ".join(
+        str(c.get(k) or "")
+        for k in ("tier_label", "period_label", "season")
+    )
+
+
 def _tariff_has_sch1xx_stacking_riders(t: ExtractedTariff) -> bool:
-    """True when priced Sch 1xx / stacking riders are present or folded on ``t``."""
-    if _has_universal_stacking_riders(t):
-        return True
+    """True when priced Sch 1xx / stacking riders are present or folded on ``t``.
+
+    Counts any ADJUSTMENT already folded into the price
+    (``included_in_energy=True``) or named FAM/DCRR/PCA/Sch 1xx — regardless
+    of plan type. Do not pass the plan name into the stacking check: NSP
+    ``…Time-Of-Day Tariff (Optional)`` would match ``optional`` and hide
+    real FAM/DCRR rows (R14b).
+    """
     if _tariff_has_sch125_tod_pca(t):
         return True
     for c in t.components or []:
         if not isinstance(c, dict):
             continue
-        blob = _adjustment_label_blob(c, tariff_name=str(t.name or ""))
+        ctype = str(c.get("component_type") or "").lower()
         pl = str(c.get("period_label") or c.get("tier_label") or "")
-        if re.search(r"(?:schedule|sch)\s*1\d{2}", blob + " " + pl, re.I):
+        if ctype == "energy" and re.search(r"all-in\s*\+riders|\+riders", pl, re.I):
             return True
-        if c.get("included_in_energy") and re.search(
-            r"(?:schedule|sch)\s*1\d{2}|all-in\s*\+riders|\+riders",
-            blob + " " + pl,
-            re.I,
+        if ctype != "adjustment":
+            continue
+        if not _is_energy_unit(c.get("unit")):
+            continue
+        # Already folded into the all-in price — counts for any plan type.
+        if c.get("included_in_energy"):
+            return True
+        blob = _component_rider_label_blob(c)
+        if _PER_KWH_ENERGY_PRICE_RIDER_RE.search(blob):
+            return True
+        # Universal stacking without plan-name poison (allow TOD / included).
+        if _is_universal_stacking_rider(
+            c, tariff_name="", allow_tod=True, allow_already_included=True,
         ):
-            return True
-        if re.search(r"all-in\s*\+riders|\+riders", pl, re.I):
             return True
     return False
 
 
+def _is_per_kwh_energy_price_rider_hint(hint: str) -> bool:
+    """True for Sch 1xx / FAM / DCRR / PCA / storm — not credits or discounts."""
+    h = str(hint or "").strip()
+    if not h:
+        return False
+    if _NON_ENERGY_PRICE_RIDER_HINT_RE.search(h) and not _PER_KWH_ENERGY_PRICE_RIDER_RE.search(
+        h
+    ):
+        return False
+    return bool(_PER_KWH_ENERGY_PRICE_RIDER_RE.search(h))
+
+
+def _declared_per_kwh_price_riders(t: ExtractedTariff) -> list[str]:
+    """``riders_referenced_not_shown`` entries that change per-kWh energy price."""
+    return [
+        str(h)
+        for h in (getattr(t, "riders_referenced_not_shown", None) or [])
+        if _is_per_kwh_energy_price_rider_hint(str(h))
+    ]
+
+
 def _plan_declares_external_adjustments(t: ExtractedTariff) -> bool:
-    """True when the extract says adjustments/riders apply but aren't in-page."""
-    if getattr(t, "riders_referenced_not_shown", None):
+    """True when the extract says per-kWh energy-price adjustments apply."""
+    if _declared_per_kwh_price_riders(t):
         return True
     blob = " ".join(
         [
@@ -7091,12 +7162,13 @@ def _plan_declares_external_adjustments(t: ExtractedTariff) -> bool:
             str(getattr(t, "description", "") or ""),
         ]
     )
+    # Explicit price-rider language only — not bare "subject to adjustments"
+    # (HQ/SRP credits/discounts must not trip this).
+    if _PER_KWH_ENERGY_PRICE_RIDER_RE.search(blob):
+        return True
     return bool(
         re.search(
-            r"see\s+schedule\s+\d+\s+for\s+applicable\s+adjustments|"
-            r"subject\s+to\s+(?:the\s+)?(?:following\s+)?(?:schedule|adjustments?)|"
-            r"applicable\s+adjustments|"
-            r"riders?\s+(?:apply|not\s+shown|referenced)",
+            r"see\s+schedule\s+1\d{2}\s+for\s+applicable\s+adjustments",
             blob,
             re.I,
         )
@@ -7123,12 +7195,11 @@ def _is_pge_sch7_residential_plan(t: ExtractedTariff) -> bool:
 
 
 def flag_plans_missing_referenced_riders(tariffs: list[ExtractedTariff]) -> int:
-    """Flag ENERGY plans that declare adjustments but received none (R14).
+    """Flag ENERGY plans that declare per-kWh riders but received none (R14/R14b).
 
-    PGE Sch 7 Default under-prices silently without Sch 1xx — mirror the
-    Sch 125 TOD PCA safety net. More generally, any residential ENERGY plan
-    whose source says adjustments apply but ends up with zero riders is
-    flagged ``referenced_riders_missing``.
+    PGE Sch 7 always expects Sch 1xx. Outside PGE, only Sch 1xx / FAM / DCRR /
+    PCA / storm (etc.) count — credits, discounts, net metering and optional
+    programmes do not raise ``referenced_riders_missing``.
     """
     flagged = 0
     for t in tariffs:
@@ -7144,9 +7215,8 @@ def flag_plans_missing_referenced_riders(tariffs: list[ExtractedTariff]) -> int:
         )
         if not has_energy:
             continue
-        expects = _plan_declares_external_adjustments(t) or _is_pge_sch7_residential_plan(
-            t
-        )
+        is_pge = _is_pge_sch7_residential_plan(t)
+        expects = is_pge or _plan_declares_external_adjustments(t)
         if not expects:
             continue
         if _tariff_has_sch1xx_stacking_riders(t):
@@ -7154,9 +7224,7 @@ def flag_plans_missing_referenced_riders(tariffs: list[ExtractedTariff]) -> int:
         t.needs_review = True
         missing = list(getattr(t, "missing_fields", None) or [])
         reason = (
-            "sch1xx_riders_missing"
-            if _is_pge_sch7_residential_plan(t)
-            else "referenced_riders_missing"
+            "sch1xx_riders_missing" if is_pge else "referenced_riders_missing"
         )
         if reason not in missing:
             missing.append(reason)
@@ -7167,6 +7235,64 @@ def flag_plans_missing_referenced_riders(tariffs: list[ExtractedTariff]) -> int:
             f"({reason})"
         )
     return flagged
+
+
+def annotate_sch102_first_block_on_tou(tariffs: list[ExtractedTariff]) -> int:
+    """Document Sch 102 first-2,000 kWh credit when folded into TOD periods.
+
+    The First/Over break cannot be expressed per TOD period; we keep the
+    First credit in every period price (correct for most homes) and record
+    ``confidence_notes['sch102_credit_first_2000_kwh_only']``. Never sets
+    ``needs_review`` (R14b).
+    """
+    annotated = 0
+    for t in tariffs:
+        if _is_rider_only_tariff(t):
+            continue
+        rt = str(t.rate_type or "").lower()
+        if rt not in ("tou", "tou_tiered", "seasonal_tou", "demand_tou"):
+            continue
+        first_cents: float | None = None
+        bound = 2000
+        for c in t.components or []:
+            if not isinstance(c, dict):
+                continue
+            if str(c.get("component_type") or "").lower() != "adjustment":
+                continue
+            blob = _component_rider_label_blob(c)
+            if not re.search(r"(?:schedule|sch)\s*102\b", blob, re.I):
+                continue
+            if not re.search(r"\bfirst\b", blob, re.I):
+                continue
+            cents = _adjustment_rate_cents(c)
+            if cents is None:
+                continue
+            first_cents = cents
+            bm = re.search(r"first\s+([\d,]+)\s*kwh", blob, re.I)
+            if bm:
+                try:
+                    bound = int(bm.group(1).replace(",", ""))
+                except ValueError:
+                    pass
+            break
+        if first_cents is None:
+            continue
+        # Credit is negative; excess kWh are |credit| higher.
+        excess = abs(float(first_cents))
+        notes = dict(getattr(t, "confidence_notes", None) or {})
+        key = f"sch102_credit_first_{bound}_kwh_only"
+        notes[key] = f"excess kWh are {excess:g}¢ higher"
+        # Stable alias matching the user-facing wording.
+        notes["sch102_credit_first_2000_kwh_only"] = (
+            f"excess kWh are {excess:g}¢ higher"
+        )
+        t.confidence_notes = notes
+        annotated += 1
+        log.info(
+            f"    Sch 102 first-{bound:,} kWh credit on TOD '{t.name}' — "
+            f"noted in confidence_factors (not needs_review)"
+        )
+    return annotated
 
 
 def _tariff_text_blob(t: ExtractedTariff) -> str:
@@ -10022,6 +10148,9 @@ def phase4_validate(
     clear_resolved_rider_hints(tariffs)
     flag_missing_sch125_tod_pca(tariffs)
     flag_plans_missing_referenced_riders(tariffs)
+    # Sch 102 First adj is already on TOD recipients after apply_shared —
+    # record the first-2,000 kWh limitation (no needs_review).
+    annotate_sch102_first_block_on_tou(tariffs)
     if n_salvaged or n_shared:
         log.info(
             f"    Batch rider salvage: {n_salvaged} relative rider-only, "
@@ -11102,6 +11231,10 @@ def store_tariffs(
                     **conf_factors,
                     "energy_includes_riders": bool(et.energy_includes_riders),
                 }
+            # Non-review documentation (Sch 102 first-2,000 on TOD, …).
+            notes = getattr(et, "confidence_notes", None) or {}
+            if notes:
+                conf_factors = {**conf_factors, **dict(notes)}
             # Future-dated extracts stay in the DB but are not served until
             # their effective_date. Near-term future (≤12 months) is normal
             # (interim + coming TOU); farther out is recorded as informational
