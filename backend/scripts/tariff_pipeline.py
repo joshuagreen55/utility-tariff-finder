@@ -2778,7 +2778,12 @@ def _full_bill_energy_delta_cap(values: list[float] | set[float]) -> float:
 
 
 def _full_bill_product_match(a: ExtractedTariff, b: ExtractedTariff) -> bool:
-    """True when two extracts look like the same product at different detail."""
+    """True when two extracts are the same product at different detail.
+
+    R7: never merge different names/codes (Pedernales flat → Community Solar,
+    PGE EV → TOU Portfolio). Same code, or identical normalized name only —
+    no fuzzy token overlap.
+    """
     if str(a.customer_class or "").lower() != str(b.customer_class or "").lower():
         return False
     if _rate_type_family(a.rate_type) != _rate_type_family(b.rate_type):
@@ -2786,19 +2791,10 @@ def _full_bill_product_match(a: ExtractedTariff, b: ExtractedTariff) -> bool:
     ca = str(a.code or "").strip().lower()
     cb = str(b.code or "").strip().lower()
     if ca and cb:
-        if ca == cb:
-            return True
-        # Distinct codes (1.1 vs 1.2G, 1.1 vs 1.1L) are never the same product.
-        # Seasonal variants (1.2DS vs 1.2D) are also distinct for this merge.
-        return False
+        return ca == cb
+    # One or both lack a code — require identical normalized names.
     na, nb = _normalize_tariff_name(a.name), _normalize_tariff_name(b.name)
-    if na == nb:
-        return True
-    ta, tb = _name_token_set(a.name), _name_token_set(b.name)
-    if not ta or not tb:
-        return False
-    overlap = len(ta & tb) / max(1, min(len(ta), len(tb)))
-    return overlap >= 0.5
+    return bool(na) and na == nb
 
 
 def _base_energy_compatible_for_full_bill(thin: ExtractedTariff, full: ExtractedTariff) -> bool:
@@ -3025,42 +3021,56 @@ def drop_superseded_flat_energy_vintages(
     return [c for i, c in enumerate(components) if i not in drop]
 
 
+# Optional *add-on programmes* (drop the whole extract / strip the charge).
+# Bare "Optional" on a rate schedule name (NL 1.2DS, NSP TOD) is NOT enough.
+_OPTIONAL_PROGRAMME_NAME_RE = re.compile(
+    r"\b(?:green\s+future|green\s+power|green\s+energy|net[\s-]*meter|"
+    r"option\s+[ivx]+\b|peak[\s-]*time\s+rebate|\bptr\b|smartrate|"
+    r"smart[\s-]*rate|avenir\s+vert|renewable\s+choice|"
+    r"community[\s-]*solar|tou\s+portfolio|portfolio\s+manager)\b",
+    re.IGNORECASE,
+)
+
+# Charge-level optional add-ons (NSP $5 Green Power inside Domestic).
+_OPTIONAL_PROGRAMME_CHARGE_RE = re.compile(
+    r"\b(?:green\s+future|green\s+power|green\s+energy|community[\s-]*solar|"
+    r"peak[\s-]*time\s+rebate|\bptr\b|smartrate|smart[\s-]*rate|"
+    r"net[\s-]*meter|avenir\s+vert|renewable\s+choice|"
+    r"optional\s+(?:green|credit|rebate|program|rider|add[\s-]*on))\b",
+    re.IGNORECASE,
+)
+
+
 def _is_optional_program_tariff(t: ExtractedTariff) -> bool:
     """True when the whole extract is an optional add-on, not a base plan.
 
-    ``Domestic … (Optional)`` / ``… Seasonal - Optional`` are enrollable
-    rate schedules with their own ENERGY — keep them. Drop only named
-    optional programmes (Green Future, net-metering Option I, PTR, …).
+    Keep standalone optional *rate schedules* (NL 1.2DS '- Optional', NSP
+    Domestic TOD '(Optional)') — they have their own ENERGY / clocks.
+    Drop only named add-on programmes (Green Power, Community Solar, PTR,
+    net-metering Option I, TOU Portfolio, …).
     """
     name = str(t.name or "")
+    # Explicit programme / portfolio names always drop, even with ENERGY.
+    if _OPTIONAL_PROGRAMME_NAME_RE.search(name):
+        return True
     blob = f"{name} {t.description or ''} {t.code or ''}"
     if not _OPTIONAL_OR_SCOPED_RIDER_RE.search(blob):
         return False
-    # Explicit optional-programme names always drop, even with ENERGY.
-    if re.search(
-        r"\b(?:green\s+future|green\s+power|net[\s-]*meter|option\s+[ivx]+|"
-        r"peak[\s-]*time\s+rebate|\bptr\b|smartrate|avenir\s+vert|"
-        r"renewable\s+choice|community[\s-]*solar)\b",
-        name,
-        re.IGNORECASE,
-    ):
-        return True
-    # Bare "(Optional)" / "Optional" on a Domestic/Residential schedule is
-    # an enrollable rate class, not a credit folded into another plan.
+    # Bare "(Optional)" / "- Optional" on a schedule with ENERGY → keep.
     if _tariff_has_energy(t):
         return False
+    # No ENERGY and only generic "optional" wording → treat as add-on.
     return True
 
 
 def strip_optional_program_components(t: ExtractedTariff) -> int:
     """Keep optional programmes out of the full billable ENERGY/FIXED price.
 
-    Match on **component labels only**. A rate schedule whose name ends in
-    ``(Optional)`` (NSP Domestic TOD 05/06, NL 1.1S) is a real base plan —
-    its Customer Charge and ENERGY must stay. Optional FIXED add-ons (Green
-    Power $5/mo) and ENERGY/ADJUSTMENT credits whose *row* label is optional
-    are stripped or demoted. Whole-tariff optional extracts (Green Future,
-    net-metering Option I) are dropped by ``_is_optional_program_tariff``.
+    Match on **component labels** (and programme-charge names like Green
+    Power even without the word 'optional'). A rate schedule whose name
+    ends in ``(Optional)`` is a real base plan — its Customer Charge and
+    ENERGY stay. Whole-tariff optional extracts are dropped by
+    ``_is_optional_program_tariff``.
     """
     comps = list(t.components or [])
     if not comps:
@@ -3073,7 +3083,11 @@ def strip_optional_program_components(t: ExtractedTariff) -> int:
             continue
         ctype = str(c.get("component_type") or "").lower()
         label = " ".join(str(c.get(k) or "") for k in ("tier_label", "period_label", "season"))
-        if not _OPTIONAL_OR_SCOPED_RIDER_RE.search(label):
+        is_optional_charge = bool(
+            _OPTIONAL_PROGRAMME_CHARGE_RE.search(label)
+            or _OPTIONAL_OR_SCOPED_RIDER_RE.search(label)
+        )
+        if not is_optional_charge:
             kept.append(c)
             continue
         if ctype == "adjustment" and _is_energy_unit(c.get("unit")):
@@ -3084,7 +3098,10 @@ def strip_optional_program_components(t: ExtractedTariff) -> int:
         if ctype == "fixed":
             removed += 1
             continue
-        if ctype == "energy":
+        if ctype == "energy" and (
+            _OPTIONAL_PROGRAMME_CHARGE_RE.search(label)
+            or _OPTIONAL_OR_SCOPED_RIDER_RE.search(label)
+        ):
             row = dict(c)
             row["component_type"] = "adjustment"
             row["included_in_energy"] = False
@@ -3094,6 +3111,19 @@ def strip_optional_program_components(t: ExtractedTariff) -> int:
         kept.append(c)
     t.components = kept
     return removed
+
+
+def drop_optional_program_tariffs(
+    tariffs: list[ExtractedTariff],
+) -> list[ExtractedTariff]:
+    """Remove optional add-on extracts before full-bill sibling merge (R7)."""
+    kept: list[ExtractedTariff] = []
+    for t in tariffs:
+        if _is_optional_program_tariff(t):
+            log.info(f"    Dropped optional programme extract '{t.name}' (pre-merge)")
+            continue
+        kept.append(t)
+    return kept
 
 
 # User message only — full rules/examples come from the cached system prompt.
@@ -4130,6 +4160,9 @@ def phase3_extract_tariffs(
     # (e.g. "Domestic Service" vs "Domestic Service Tariff"),
     # keep the richer one (never let no-ENERGY absorb ENERGY).
     result = _merge_prefix_duplicates(result)
+    # R7: drop optional add-on programmes BEFORE full-bill sibling merge
+    # so Community Solar / TOU Portfolio cannot absorb real plans.
+    result = drop_optional_program_tariffs(result)
     # Prefer full-bill siblings over base-only duplicates of the same plan
     # (Pedernales web TOU 4.35¢ beside 500.2.5 at 8.67¢).
     result = _collapse_full_bill_siblings(result)
@@ -5636,7 +5669,8 @@ def expand_stacking_energy_riders(
     Lookup only render ENERGY, so base-only ENERGY understates the bill.
 
     When ≥1 unseasoned energy-unit ADJUSTMENT is present alongside ENERGY
-    rows, add the sum of those adjustments to every ENERGY ``rate_value``.
+    rows, add the sum of those adjustments to **every** ENERGY
+    ``rate_value`` (preserving tier bounds / TOU clocks — R7 PGE Sch 7).
     Seasonal ADJUSTMENTs are left for ``expand_relative_seasonal_energy``.
     Optional / source-specific / TOD-overlay rows are never folded into
     flat or tiered ENERGY. Retained ADJUSTMENT rows are flagged
@@ -5681,6 +5715,16 @@ def expand_stacking_energy_riders(
     new_energy: list[dict] = []
     for e in energy_rows:
         row = dict(e)
+        # Always preserve tier bounds / period clocks when folding riders.
+        for k in (
+            "tier_min_kwh", "tier_max_kwh", "tier_label",
+            "period_start_time", "period_end_time", "period_label",
+            "day_type", "season",
+            "season_start_month", "season_start_day",
+            "season_end_month", "season_end_day",
+        ):
+            if k in e:
+                row[k] = e.get(k)
         if _energy_already_includes_stacking_riders(e):
             new_energy.append(row)
             continue
@@ -5690,13 +5734,12 @@ def expand_stacking_energy_riders(
             new_energy.append(row)
             continue
         row["rate_value"] = round(base + rider_sum, 6)
+        # Annotate without erasing the tier identity (first-1,000 kWh, …).
         note = (row.get("tier_label") or "").strip()
-        if "all-in" not in note.lower() or _ALL_IN_DELIVERY_RE.search(note):
-            row["tier_label"] = (
-                f"{note} (all-in +riders)".strip()
-                if note
-                else "All-in (base + riders)"
-            )
+        if note and "all-in" not in note.lower():
+            row["tier_label"] = f"{note} (all-in +riders)"
+        elif not note:
+            row["tier_label"] = "All-in (base + riders)"
         new_energy.append(row)
 
     out: list[dict] = []
@@ -5989,22 +6032,39 @@ def salvage_relative_rider_only_tariffs(tariffs: list[ExtractedTariff]) -> int:
 
 
 def _donor_rider_candidates(tariffs: list[ExtractedTariff]) -> list[tuple[ExtractedTariff, dict]]:
-    """(donor, adjustment) pairs eligible for cross-batch stacking share."""
+    """(donor, adjustment) pairs eligible for cross-batch stacking share.
+
+    R7: residential ENERGY plans that already carry FAM/DSM/etc. also donate
+    those stacking ADJUSTMENTs so every residential plan gets them (NSP DSM
+    must not stay only on a critical-peak sibling).
+    """
     out: list[tuple[ExtractedTariff, dict]] = []
     for t in tariffs:
-        is_donor = _is_rider_only_tariff(t) or bool(
-            _RIDER_DONOR_NAME_RE.search(str(t.name or ""))
-        ) or _is_adjustment_schedule_name(str(t.name or ""))
-        if not is_donor:
+        if _is_optional_program_tariff(t):
             continue
         donor_name = str(t.name or "")
-        if _OPTIONAL_OR_SCOPED_RIDER_RE.search(donor_name):
+        if _OPTIONAL_PROGRAMME_NAME_RE.search(donor_name):
             continue
         if _TOD_OVERLAY_RIDER_RE.search(donor_name):
             continue
-        # Base rate schedules (Sch 32) are never donors — even after a
-        # "(riders)" strip that left only ADJUSTMENT rows.
-        if _looks_like_base_rate_schedule(donor_name):
+        classic = (
+            _is_rider_only_tariff(t)
+            or bool(_RIDER_DONOR_NAME_RE.search(donor_name))
+            or _is_adjustment_schedule_name(donor_name)
+        )
+        has_stacking = any(
+            isinstance(c, dict)
+            and _is_universal_stacking_rider(c, tariff_name=donor_name, allow_tod=False)
+            for c in (t.components or [])
+        )
+        residential_share = (
+            str(t.customer_class or "").lower() == "residential" and has_stacking
+        )
+        if not classic and not residential_share:
+            continue
+        # Classic path: skip other schedules' base T&D (Sch 32) unless this
+        # residential plan is sharing its own stacking riders.
+        if classic and not residential_share and _looks_like_base_rate_schedule(donor_name):
             continue
         for adj in _energy_unit_adjustments(t, seasonal=False):
             if not _is_universal_stacking_rider(
@@ -6483,6 +6543,39 @@ def _page_lacks_rider_amounts(content: str) -> bool:
     return len(amounts) < 2
 
 
+def _page_is_rider_link_hub(page: RatePage) -> bool:
+    """True when an HTML rider page is mostly links to the real tariff PDF.
+
+    NSP FAM pages often show marketing copy with a stray decimal, so the
+    strict amount check alone misses them — also treat pages that point at
+    same-ish-domain FAM/DSM/tariff PDFs as hubs (R7).
+    """
+    content = page.content or ""
+    if _page_lacks_rider_amounts(content):
+        return True
+    if (page.page_type or "").lower() == "pdf":
+        return False
+    pdf_hits = re.findall(
+        r"href=[\"']([^\"']+\.pdf[^\"']*)[\"']|(https?://[^\s<>\"']+\.pdf)",
+        content,
+        re.IGNORECASE,
+    )
+    labels = " ".join(
+        (a or b or "") for a, b in pdf_hits
+    ).lower() + " " + (page.title or "").lower() + " " + (page.url or "").lower()
+    if not pdf_hits:
+        return False
+    if re.search(r"\bfam\b|fuel\s*adjust|dsm|dcrr|scrr|tariff\s*book|rate\s*tariff", labels):
+        return True
+    # Many PDF links + few ¢/kWh figures → hub.
+    amounts = re.findall(
+        r"(?:¢|cents?)\s*/\s*kwh|(?<![\d.])\d+\.\d{2,4}\s*(?:¢|cents?)",
+        content,
+        re.IGNORECASE,
+    )
+    return len(pdf_hits) >= 2 and len(amounts) < 4
+
+
 def _rider_page_one_hop_links(
     page: RatePage,
     *,
@@ -6525,18 +6618,80 @@ def _rider_page_one_hop_links(
         is_pdf = path.endswith(".pdf")
         looks_rider = bool(
             _RIDER_DOC_HINT_RE.search(label)
-            or re.search(r"fam|dsm|dcrr|scrr|pca|tariff|rider|adjust", label)
+            or re.search(
+                r"fam|fuel\s*adjust|dsm|dcrr|scrr|pca|tariff|rider|adjust|"
+                r"mechanism|board.?s?\s*order|rate\s*book",
+                label,
+            )
         )
-        if not (is_pdf or looks_rider):
+        # Prefer PDFs; allow HTML tariff pages that clearly name the rider.
+        if not is_pdf and not looks_rider:
+            continue
+        if not is_pdf and not re.search(r"fam|dsm|dcrr|scrr|pca|tariff", label):
             continue
         key = url.split("?")[0].rstrip("/").lower()
         if key in seen:
             continue
         seen.add(key)
         out.append(url)
-        if len(out) >= 4:
+        if len(out) >= 6:
             break
     return out
+
+
+def _harvest_sch1xx_links_from_html(
+    html: str,
+    *,
+    base_url: str,
+    allowed_domains: set[str],
+) -> list[str]:
+    """Pull Schedule 1xx PDF/HTML links from a utility tariff index page."""
+    if not html or not base_url:
+        return []
+    out: list[str] = []
+    seen: set[str] = set()
+    try:
+        soup = BeautifulSoup(html, "html.parser")
+        anchors = [
+            (a.get("href") or "", a.get_text(" ", strip=True))
+            for a in soup.find_all("a", href=True)
+        ]
+    except Exception:
+        anchors = []
+        for m in re.finditer(
+            r"href=[\"']([^\"']+)[\"'][^>]*>([^<]{0,120})",
+            html,
+            re.IGNORECASE,
+        ):
+            anchors.append((m.group(1), m.group(2)))
+    for href, text in anchors:
+        href = (href or "").strip()
+        if not href or href.startswith(("#", "mailto:", "javascript:")):
+            continue
+        label = f"{text} {href}".lower()
+        if not re.search(r"schedule\s*1\d{2}|\b1\d{2}\b.*(?:adjust|rider|pca|bac)", label):
+            if not re.search(r"/schedule[-_]?1\d{2}\b", href.lower()):
+                continue
+        url = urljoin(base_url, href)
+        if _is_third_party_domain(url) or is_generic_host(url):
+            continue
+        if allowed_domains and not _url_in_allowed_domains(url, allowed_domains):
+            continue
+        key = url.split("?")[0].rstrip("/").lower()
+        if key in seen:
+            continue
+        seen.add(key)
+        out.append(url)
+        if len(out) >= 12:
+            break
+    return out
+
+
+# Known PGE (OR) tariff-index landing pages — harvested for Sch 1xx links.
+_PGE_TARIFF_INDEX_URLS = (
+    "https://www.portlandgeneral.com/rates/electric-service-schedules",
+    "https://portlandgeneral.com/about/info/pricing",
+)
 
 
 def fetch_and_extract_referenced_riders(
@@ -6588,12 +6743,35 @@ def fetch_and_extract_referenced_riders(
             existing_urls.add(t.source_url.split("?")[0].rstrip("/").lower())
 
     # (url, hint) pairs — preserve which hint drove the fetch for rider mode.
+    # Reserve slots for one-hop PDF follows (NSP FAM link hubs) so search
+    # results (OPUC filings) cannot fill the entire cap first.
+    hop_reserve = min(2, max_docs // 3) if max_docs >= 3 else 1
+    search_cap = max(1, max_docs - hop_reserve)
+
     candidate_urls: list[tuple[str, str]] = []
     seen_url: set[str] = set()
+
+    # PGE: seed the tariff-index pages so Sch 1xx links are harvested even
+    # when Brave only returns OPUC filings for Schedule 125.
+    pge_like = (
+        "portlandgeneral.com" in (site_query_domain or "")
+        or "portlandgeneral.com" in (utility_domains or set())
+        or re.search(r"portland\s+general|\bpge\b", utility_name or "", re.I)
+    )
+    if pge_like and any(re.search(r"schedule\s*1\d{2}", h, re.I) for h in hints):
+        for idx_url in _PGE_TARIFF_INDEX_URLS:
+            key = idx_url.split("?")[0].rstrip("/").lower()
+            if key not in existing_urls and key not in seen_url:
+                seen_url.add(key)
+                candidate_urls.append((idx_url, "Schedule 1xx tariff index"))
+
     for hint in hints:
         queries = []
         if site_query_domain:
             queries.append(f'site:{site_query_domain} {hint}')
+            # Explicit PDF-oriented query for FAM / Sch 1xx on the utility site.
+            if re.search(r"\bfam\b|schedule\s*1\d{2}|dsm|dcrr", hint, re.I):
+                queries.append(f'site:{site_query_domain} {hint} filetype:pdf')
         queries.append(f'"{utility_name}" {hint} {state}'.strip())
         for q in queries:
             try:
@@ -6635,11 +6813,11 @@ def fetch_and_extract_referenced_riders(
                     continue
                 seen_url.add(key)
                 candidate_urls.append((url, hint))
-                if len(candidate_urls) >= max_docs:
+                if len(candidate_urls) >= search_cap:
                     break
-            if len(candidate_urls) >= max_docs:
+            if len(candidate_urls) >= search_cap:
                 break
-        if len(candidate_urls) >= max_docs:
+        if len(candidate_urls) >= search_cap:
             break
 
     stats["rider_docs_candidates"] = len(candidate_urls)
@@ -6673,31 +6851,56 @@ def fetch_and_extract_referenced_riders(
             fetched.append((page, hint))
             log.info(f"    Rider-doc fetched: {url[:70]} ({len(page.content)} chars)")
 
-    # One-hop: when a fetched HTML rider page mostly links to a tariff PDF
-    # (NSP FAM "click here"), follow same-domain links within the doc cap.
+    # One-hop + Sch 1xx harvest: follow PDF/tariff links from link-hub pages
+    # (NSP FAM) and from tariff-index HTML (PGE Sch 1xx), within the doc cap.
+    hop_domains = utility_domains or allowed_domains
     hop_candidates: list[tuple[str, str]] = []
-    for page, hint in list(fetched):
-        if (page.page_type or "").lower() == "pdf":
-            continue
-        if not _page_lacks_rider_amounts(page.content or ""):
-            continue
-        for hop_url in _rider_page_one_hop_links(
-            page, allowed_domains=utility_domains or allowed_domains,
-        ):
-            key = hop_url.split("?")[0].rstrip("/").lower()
-            if key in existing_urls or key in seen_url:
-                continue
-            if len(fetched) + len(hop_candidates) >= max_docs:
-                break
-            seen_url.add(key)
-            hop_candidates.append((hop_url, hint))
+    hop_seen: set[str] = set()
+
+    def _enqueue_hop(url: str, hint: str) -> None:
+        key = url.split("?")[0].rstrip("/").lower()
+        if key in existing_urls or key in seen_url or key in hop_seen:
+            return
         if len(fetched) + len(hop_candidates) >= max_docs:
-            break
+            return
+        hop_seen.add(key)
+        hop_candidates.append((url, hint))
+
+    pages_for_hop: list[tuple[RatePage, str]] = list(fetched)
+    for p in existing_pages or []:
+        if getattr(p, "content", None) and getattr(p, "url", None):
+            pages_for_hop.append((p, "existing"))
+
+    for page, hint in pages_for_hop:
+        if (getattr(page, "page_type", "") or "").lower() == "pdf":
+            continue
+        # Always harvest numbered Schedule 1xx links from index-like HTML.
+        for sch_url in _harvest_sch1xx_links_from_html(
+            page.content or "",
+            base_url=page.url or "",
+            allowed_domains=hop_domains,
+        ):
+            hop_hint = "Schedule 1xx"
+            m = re.search(r"schedule[-_\s]?1(\d{2})", sch_url, re.I)
+            if m:
+                hop_hint = f"Schedule 1{m.group(1)}"
+            _enqueue_hop(sch_url, hop_hint)
+        # FAM / rider link hubs: follow same-domain tariff PDFs.
+        if _page_is_rider_link_hub(page):
+            for hop_url in _rider_page_one_hop_links(
+                page, allowed_domains=hop_domains,
+            ):
+                _enqueue_hop(hop_url, hint)
+
     for url, hint in hop_candidates:
+        if len(fetched) >= max_docs:
+            break
         page = _fetch_one(url)
         if page and page.content and len(page.content.strip()) > 100:
             if _is_stale_rider_document(page.url, page.title or "", ""):
                 continue
+            key = (page.url or url).split("?")[0].rstrip("/").lower()
+            seen_url.add(key)
             fetched.append((page, hint))
             log.info(f"    Rider-doc one-hop fetched: {url[:70]} ({len(page.content)} chars)")
 
@@ -6748,30 +6951,157 @@ def _is_mysa_critical_review_reason(
     computable_reasons: list[str] | None = None,
     energy_scope: str = "",
 ) -> bool:
-    """needs_review only for Mysa-critical problems (not bare effective_date)."""
+    """needs_review only for Mysa-critical problems (R7).
+
+    Critical: missing energy price, missing/broken TOU clock, missing season
+    dates for seasonal plans, unresolved per-kWh rider, delivery/supply-only
+    scope. NOT critical alone: effective_date, holiday wording, baseline kWh,
+    fixed charges.
+    """
+    informational_extra = {
+        "holiday", "holiday_calendar", "holiday_rows_require_calendar",
+        "baseline", "baseline_kwh", "fixed", "fixed_charge", "customer_charge",
+        "minimum", "description", "code",
+    }
     for m in missing_fields or []:
-        if not _is_informational_missing_field(m):
-            return True
+        if _is_informational_missing_field(m):
+            continue
+        key = re.sub(r"[^a-z0-9]+", "_", str(m).strip().lower()).strip("_")
+        if key in informational_extra or "holiday" in key or "baseline" in key:
+            continue
+        return True
     if riders_missing:
         return True
-    if completeness_reasons:
-        return True
-    critical_comp = {
-        "missing_energy_rates",
-        "tou_missing_clock_windows",
-        "tou_missing_day_type",
+    critical_comp_prefixes = (
+        "missing_energy",
+        "tou_missing_clock",
+        "tou_missing_day",
         "tou_gap",
         "tou_overlap",
-        "seasonal_missing_calendar_dates",
+        "tou_clock",
+        "seasonal_missing_calendar",
         "energy_rate_not_numeric",
-    }
-    for r in computable_reasons or []:
-        base = str(r).split(":", 1)[0]
-        if base in critical_comp or str(r).startswith("tou_gap") or str(r).startswith("tou_overlap"):
+    )
+    for r in list(completeness_reasons or []) + list(computable_reasons or []):
+        s = str(r).lower()
+        if "holiday" in s and "calendar" in s:
+            continue  # holiday wording alone is not Mysa-critical
+        if any(s.startswith(p) or f":{p}" in f":{s}" for p in critical_comp_prefixes):
+            return True
+        base = s.split(":", 1)[0]
+        if base in {
+            "missing_energy_rates",
+            "tou_missing_clock_windows",
+            "tou_missing_day_type",
+            "tou_gap",
+            "tou_overlap",
+            "seasonal_missing_calendar_dates",
+            "energy_rate_not_numeric",
+        }:
             return True
     if energy_scope in ("delivery_only", "supply_only"):
         return True
     return False
+
+
+def _hhmm_to_minutes(value) -> int | None:
+    """Parse HH:MM / time / '7:00 a.m.' into minutes-from-midnight."""
+    if value is None or value == "":
+        return None
+    if hasattr(value, "hour"):
+        return int(value.hour) * 60 + int(value.minute)
+    s = str(value).strip()
+    m = re.match(r"^(\d{1,2}):(\d{2})", s)
+    if m:
+        return int(m.group(1)) * 60 + int(m.group(2))
+    return None
+
+
+def _minutes_to_hhmm(mins: int) -> str:
+    mins = mins % (24 * 60)
+    return f"{mins // 60:02d}:{mins % 60:02d}"
+
+
+def repair_one_hour_tou_gaps(components: list[dict]) -> tuple[list[dict], list[str]]:
+    """Extend a neighboring window to cover a single 60-minute TOU gap (R7).
+
+    Only repairs exact 1-hour gaps adjacent to a printed window; never invents
+    prices. Returns (components, repair notes).
+    """
+    if not components:
+        return components, []
+    # Group ENERGY rows with clocks by (day_type, season key).
+    groups: dict[tuple, list[int]] = {}
+    for i, c in enumerate(components):
+        if not isinstance(c, dict):
+            continue
+        if str(c.get("component_type") or "").lower() != "energy":
+            continue
+        start = _hhmm_to_minutes(c.get("period_start_time"))
+        end = _hhmm_to_minutes(c.get("period_end_time"))
+        if start is None or end is None:
+            continue
+        if start == end == 0:
+            continue  # all-day sentinel
+        day = str(c.get("day_type") or "all").lower()
+        season = (
+            c.get("season_start_month"), c.get("season_start_day"),
+            c.get("season_end_month"), c.get("season_end_day"),
+            str(c.get("season") or "").lower(),
+        )
+        groups.setdefault((day, season), []).append(i)
+
+    notes: list[str] = []
+    out = [dict(c) if isinstance(c, dict) else c for c in components]
+    for (day, _season), idxs in groups.items():
+        # Build intervals as [start, end) in minutes; wrap overnight.
+        intervals: list[tuple[int, int, int]] = []  # start, end, idx
+        for i in idxs:
+            s = _hhmm_to_minutes(out[i].get("period_start_time"))
+            e = _hhmm_to_minutes(out[i].get("period_end_time"))
+            if s is None or e is None:
+                continue
+            if e == 0 and s != 0:
+                e = 24 * 60
+            if e <= s:
+                e += 24 * 60  # overnight
+            intervals.append((s, e, i))
+        if len(intervals) < 1:
+            continue
+        intervals.sort()
+        # Flatten overnight ends into a linear 0..2880 scan for gap find.
+        covered = []
+        for s, e, i in intervals:
+            covered.append((s, e, i))
+        covered.sort()
+        # Find gaps between consecutive intervals within one day cycle.
+        for a, b in zip(covered, covered[1:]):
+            gap = b[0] - a[1]
+            if gap == 60:
+                # Extend the earlier window's end into the gap.
+                new_end = a[1] + 60
+                if new_end >= 24 * 60:
+                    new_end_s = _minutes_to_hhmm(new_end)
+                else:
+                    new_end_s = _minutes_to_hhmm(new_end)
+                out[a[2]]["period_end_time"] = new_end_s
+                notes.append(
+                    f"tou_clock_gap_repaired:{day}:{_minutes_to_hhmm(a[1])}"
+                    f"-{_minutes_to_hhmm(b[0])}"
+                )
+        # Also check wrap from last end → first start + 24h.
+        if len(covered) >= 2:
+            first_s = covered[0][0]
+            last_e = covered[-1][1]
+            # Normalize last_e into 0..1440 relative to first day.
+            wrap_gap = (first_s + 24 * 60) - last_e
+            if wrap_gap == 60:
+                new_end = last_e + 60
+                out[covered[-1][2]]["period_end_time"] = _minutes_to_hhmm(new_end)
+                notes.append(
+                    f"tou_clock_gap_repaired:{day}:wrap"
+                )
+    return out, notes
 
 
 def flag_unresolved_external_riders(
@@ -6880,8 +7210,14 @@ def phase4_validate(
             f"{n_shared} tariffs received shared stacking riders"
         )
 
-    # After sharing, prefer full-bill siblings over base-only duplicates
-    # (also covers EV TOU once Sch 1xx riders land on the base-only row).
+    # R7: drop optional add-on programmes BEFORE full-bill sibling merge
+    # so Community Solar / TOU Portfolio cannot absorb real residential plans.
+    before_opt = len(tariffs)
+    tariffs[:] = drop_optional_program_tariffs(tariffs)
+    absorbed_rider_only += before_opt - len(tariffs)
+
+    # After sharing + optional drop, prefer full-bill siblings over base-only
+    # duplicates (also covers EV TOU once Sch 1xx riders land on the base row).
     collapsed = _collapse_full_bill_siblings(tariffs)
     if len(collapsed) < len(tariffs):
         tariffs[:] = collapsed
@@ -6890,9 +7226,15 @@ def phase4_validate(
         tariff_issues = []
         # Recompute after optional strip / informational soft-clear.
         needs_review = bool(t.needs_review)
+        # Soft-clear model needs_review unless Mysa-critical reasons remain.
+        if needs_review and not _is_mysa_critical_review_reason(
+            missing_fields=list(getattr(t, "missing_fields", None) or []),
+            riders_missing=list(getattr(t, "riders_referenced_not_shown", None) or []),
+            energy_scope=str(getattr(t, "energy_scope", "") or ""),
+        ):
+            needs_review = False
 
-        # Optional programme extracts (Green Future add-on, net-metering
-        # Option I, PTR-only) are not the standard residential plan.
+        # Optional programmes already removed pre-merge; keep a safety net.
         if _is_optional_program_tariff(t):
             absorbed_rider_only += 1
             log.info(f"    Dropped optional programme extract '{t.name}'")
@@ -7015,15 +7357,9 @@ def phase4_validate(
         if not has_core_component:
             tariff_issues.append("no energy/fixed/demand component (rate rider only)")
 
-        # Soft check: seasonal* tariffs should expose ≥2 ENERGY seasons after
-        # relative-rider expansion. Flag for review rather than hard-reject —
-        # some legitimate seasonal products may still be incomplete mid-extract.
         rt_l = str(t.rate_type or "").lower()
-        if rt_l.startswith("seasonal") and count_energy_seasons(t.components) < 2:
-            needs_review = True
 
-        # Far-future effective dates (>12 months) are Mysa-critical to review;
-        # near-term future (interim + coming TOU) is intentional.
+        # Far-future effective dates (>12 months) — keep review flag (R6).
         eff = _parse_effective_date(getattr(t, "effective_date", None))
         if eff and (eff - date.today()).days > 365:
             needs_review = True
@@ -7034,29 +7370,33 @@ def phase4_validate(
 
         # Structured TOU/seasonal completeness (clock windows + season calendar).
         # Prefer structured columns; do NOT invent times/dates from labels.
-        # Incomplete shapes are flagged needs_review (existing soft pattern) —
-        # we still store rates so Flux has prices, but mark the gap.
+        # Incomplete shapes are flagged needs_review only when Mysa-critical
+        # (missing clocks / season dates) — not holiday wording alone.
         try:
             from app.services.tou_seasonal_completeness import (
                 evaluate_tariff_completeness,
             )
 
             completeness = evaluate_tariff_completeness(rt_l, t.components)
+            t.completeness_reasons = list(completeness.reasons)
             if not completeness.complete and (
                 rt_l in ("tou", "tou_tiered", "demand_tou", "seasonal_tou",
                          "seasonal", "seasonal_tiered")
             ):
-                needs_review = True
-                t.completeness_reasons = list(completeness.reasons)
-                log.info(
-                    f"    Incomplete TOU/seasonal shape on '{t.name}': "
-                    f"{', '.join(completeness.reasons)}"
-                )
+                if _is_mysa_critical_review_reason(
+                    completeness_reasons=list(completeness.reasons),
+                ):
+                    needs_review = True
+                    log.info(
+                        f"    Incomplete TOU/seasonal shape on '{t.name}': "
+                        f"{', '.join(completeness.reasons)}"
+                    )
         except Exception as e:
             log.warning(f"    Completeness check failed on '{t.name}': {e}")
 
         # Tier bounds + TOU clocks on the same ENERGY rows → tou_tiered
         # (PG&E E-TOU-C baseline tiers misread as overlapping periods).
+        # Reclassify only — baseline kWh alone is not Mysa-critical (R7).
         if rt_l in ("tou", "seasonal_tou") and any(
             isinstance(c, dict)
             and str(c.get("component_type") or "").lower() == "energy"
@@ -7065,11 +7405,19 @@ def phase4_validate(
         ):
             t.rate_type = "tou_tiered"
             rt_l = "tou_tiered"
-            needs_review = True
             log.info(
                 f"    Reclassified '{t.name}' as tou_tiered "
                 f"(tier bounds + TOU clocks on ENERGY rows)"
             )
+
+        # R7: repair a single 1-hour TOU gap when adjacent to a printed window.
+        if rt_l in ("tou", "seasonal_tou", "demand_tou", "tou_tiered"):
+            repaired, repair_notes = repair_one_hour_tou_gaps(t.components)
+            if repair_notes:
+                t.components = repaired
+                log.info(
+                    f"    TOU clock repair on '{t.name}': {', '.join(repair_notes)}"
+                )
 
         if rt_l in _TOU_OR_SEASONAL_TYPES or rt_l == "tou_tiered":
             from app.services.computable import evaluate_computable
@@ -7081,19 +7429,25 @@ def phase4_validate(
                 if str(r).startswith(("tou_gap", "tou_overlap", "tou_zero_length"))
             ]
             if clock_broken:
-                # Broken 24h coverage must not be stored as a live plan.
-                tariff_issues.append(
-                    f"broken TOU clock coverage ({', '.join(clock_broken[:4])})"
-                )
+                # R7: KEEP the plan with prices; flag needs_review — never
+                # drop a residential plan solely for imperfect clocks.
+                needs_review = True
+                t.computable_reasons = list(verdict.reasons) + [
+                    f"tou_clock_{'gap' if any(str(r).startswith('tou_gap') for r in clock_broken) else 'overlap'}"
+                ]
                 log.info(
-                    f"    Rejecting '{t.name}' — broken TOU clocks: "
-                    f"{', '.join(clock_broken[:4])}"
+                    f"    Keeping '{t.name}' with needs_review — broken TOU "
+                    f"clocks: {', '.join(clock_broken[:4])}"
                 )
             elif not verdict.computable:
-                needs_review = True
-                log.info(
-                    f"    Not computable '{t.name}': {', '.join(verdict.reasons[:6])}"
-                )
+                if _is_mysa_critical_review_reason(
+                    computable_reasons=list(verdict.reasons),
+                ):
+                    needs_review = True
+                    log.info(
+                        f"    Not computable '{t.name}': "
+                        f"{', '.join(verdict.reasons[:6])}"
+                    )
 
         for comp in t.components:
             if comp.get("component_type") not in VALID_COMPONENT_TYPES:

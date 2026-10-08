@@ -231,9 +231,12 @@ class TestBuildTariffEntriesWithLdc(unittest.TestCase):
         tou = next(e for e in entries if e["code"] == "OEB-RPP-TOU")
         self.assertEqual(tou["energy_scope"], "delivery_plus_default_supply")
         adder = ldc.per_kwh_adder
+        lf = ldc.loss_factor or 1.0
         off = [c for c in tou["components"]
                if c["component_type"] == "energy" and c["period_label"] == "Off-Peak"][0]
-        self.assertAlmostEqual(float(off["rate_value"]), 0.098 + adder, places=5)
+        self.assertAlmostEqual(
+            float(off["rate_value"]), round(0.098 * lf + adder, 6), places=5,
+        )
         adjs = [c for c in tou["components"] if c["component_type"] == "adjustment"]
         self.assertGreaterEqual(len(adjs), 4)
         self.assertTrue(all(c.get("included_in_energy") is True for c in adjs))
