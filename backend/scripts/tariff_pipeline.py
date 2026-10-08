@@ -9165,9 +9165,11 @@ def _try_deterministic_pge_sch1xx_extract(
                 energy_scope="bundled",
                 description="Deterministic parse of PGE Schedule 125 for Schedule 7.",
             )]
-        # Recognized Sch 125 but no numeric rows yet — still skip LLM when
-        # the sheet clearly has no ¢/kWh (should be rare).
-        return []
+        # Recognized as Sch 125 but no ADJUSTMENT RATES table parsed —
+        # fall through to LLM (None). Do NOT return []: that would skip
+        # Sonnet on short/synthetic rider pages that still have a ¢/kWh
+        # amount outside the standard table (wave6 CDN fetch regression).
+        return None
 
     amounts = parse_pge_sch1xx_kwh_amounts_for_schedule(content, schedule="7")
     if not amounts:
