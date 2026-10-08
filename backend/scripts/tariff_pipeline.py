@@ -4055,10 +4055,10 @@ def phase3_extract_tariffs(
     if not ANTHROPIC_API_KEY:
         raise RuntimeError("ANTHROPIC_API_KEY not set")
 
-    def _depth(p: RatePage) -> int:
-        return -urlparse(p.url).path.count("/")
-
-    sorted_pages = sorted(pages, key=_depth)
+    # Prefer fresher individual schedule PDFs over older combined books
+    # (R12: PGE Sched_007 Jul 2026 over all_tariffs_56_ Jan 2020).
+    pages = _drop_stale_combined_pages_when_fresher_schedule_exists(list(pages))
+    sorted_pages = sorted(pages, key=_phase3_page_rank_key)
 
     # Upper bound on LLM calls per utility per run. 20 lets a consolidated
     # rate-book PDF identify + extract ~10 distinct rates while leaving
@@ -4135,9 +4135,37 @@ def phase3_extract_tariffs(
             break
 
         log.info(f"  Phase 3: Extracting from {page.url[:80]}")
-        stats["pages_sent_to_llm"] += 1
         if ch:
             seen_content_hashes.add(ch)
+
+        # R12: deterministic PGE Sched_007 (Default + TOD) — skip LLM.
+        det_sch7 = _try_deterministic_pge_sch7_extract(page)
+        if det_sch7:
+            accepted = 0
+            for t in det_sch7:
+                if t.customer_class not in EXTRACT_CLASSES:
+                    continue
+                key = f"{t.name}|{t.customer_class}"
+                t.source_url = page.url
+                existing = all_tariffs.get(key)
+                if existing and not _prefer_extract_over_existing(existing, t):
+                    continue
+                all_tariffs[key] = t
+                if ch:
+                    hash_to_keys.setdefault(ch, []).append(key)
+                accepted += 1
+            if accepted:
+                log.info(
+                    f"    Deterministic Sched_007: {accepted} tariff(s) "
+                    f"from {page.url[:60]}"
+                )
+                consecutive_zeros = 0
+                stats["pages_deterministic"] = (
+                    stats.get("pages_deterministic", 0) + 1
+                )
+                continue
+
+        stats["pages_sent_to_llm"] += 1
 
         # PDF dispatch:
         #   - Rich-text PDFs (>10k chars extractable) -> fall through to
@@ -4180,7 +4208,7 @@ def phase3_extract_tariffs(
                 key = f"{t.name}|{t.customer_class}"
                 t.source_url = page.url
                 existing = all_tariffs.get(key)
-                if existing and len(existing.components) >= len(t.components):
+                if existing and not _prefer_extract_over_existing(existing, t):
                     continue
                 all_tariffs[key] = t
                 accepted += 1
@@ -4242,7 +4270,7 @@ def phase3_extract_tariffs(
             key = f"{t.name}|{t.customer_class}"
             t.source_url = page.url
             existing = all_tariffs.get(key)
-            if existing and len(existing.components) >= len(t.components):
+            if existing and not _prefer_extract_over_existing(existing, t):
                 continue
             all_tariffs[key] = t
             if ch:
@@ -5934,8 +5962,9 @@ def _energy_already_includes_stacking_riders(energy_row: dict) -> bool:
         return False
     if _ALL_IN_ABBREV_DELIVERY_RE.search(label):
         return False
-    # Bare "all-in" with no delivery caveat — treat as already folded.
-    return True
+    # Bare "all-in" with no delivery/riders claim is ambiguous (PGE often
+    # means energy+T&D only). Do not skip Sch 1xx / FAM stacking (R12).
+    return False
 
 
 def _adjustment_rate_cents(comp: dict) -> float | None:
@@ -6179,10 +6208,21 @@ def expand_stacking_energy_riders(
         return out_rows
 
     work_energy = list(energy_rows)
-    if has_tiers and first_bound_kwh is not None and (
+    # Split at Sch 102's kWh break when First/Over riders are present —
+    # including a flat (unbound) Default that must become First/Over tiers
+    # (R12: current Sch 7 is flat 11.289¢; Sch 102 still credits first 2,000).
+    if first_bound_kwh is not None and (
         first_val is not None or over_val is not None
     ):
-        work_energy = _split_energy_at_rider_bound(work_energy, first_bound_kwh)
+        if has_tiers:
+            work_energy = _split_energy_at_rider_bound(work_energy, first_bound_kwh)
+        elif len(work_energy) == 1 and not allow_tod:
+            # Single unbound ENERGY (flat Default) → First/Over at bound.
+            seed = dict(work_energy[0])
+            seed["tier_min_kwh"] = 0.0
+            seed["tier_max_kwh"] = None
+            work_energy = _split_energy_at_rider_bound([seed], first_bound_kwh)
+            has_tiers = True
 
     new_energy: list[dict] = []
     for e in work_energy:
@@ -6244,7 +6284,8 @@ def expand_stacking_energy_riders(
                 else:
                     add += float(over_val or 0.0)
             else:
-                # Non-tiered TOU/EV: first-block amount on every period.
+                # Non-tiered TOU/EV: first-block amount on every period
+                # (Sch 102 credit applies to the whole premise TOU usage).
                 add += float(first_val or 0.0)
         row["rate_value"] = round(base + add, 6)
         # Annotate without erasing the tier identity (first-1,000 kWh, …).
@@ -8205,6 +8246,21 @@ def clear_resolved_rider_hints(tariffs: list[ExtractedTariff]) -> None:
                 num = re.search(r"schedule\s*(1\d{2})", h).group(1)
                 if num in applied_l or f"sch {num}" in applied_l or energy_all_in:
                     resolved = True
+            # Sibling base energy after NL 1.1S / 1.2DS salvage (R12).
+            if re.search(
+                r"rate\s*no\.?\s*1\.[12]d?\b.*(?:energy|base)|"
+                r"base\s+energy\s+charge|"
+                r"1\.1\s+domestic\s+energy|"
+                r"1\.2d?\s+domestic",
+                h,
+                re.I,
+            ):
+                if any(
+                    isinstance(c, dict)
+                    and str(c.get("component_type") or "").lower() == "energy"
+                    for c in (t.components or [])
+                ):
+                    resolved = True
             if not resolved:
                 remaining.append(hint)
         t.riders_referenced_not_shown = remaining
@@ -8214,6 +8270,20 @@ def clear_resolved_rider_hints(tariffs: list[ExtractedTariff]) -> None:
             fl = str(field).lower()
             if re.search(r"\b(?:fam|dsm|storm)\b", fl) and not remaining:
                 if re.search(r"rider\s*amounts?|amounts?", fl):
+                    continue
+            # Salvaged sibling base ENERGY is now on the tariff (R12).
+            if re.search(
+                r"base\s+energy|not\s+printed\s+in\s+content|"
+                r"rate\s*1\.[12]d?\b.*(?:base|energy)|"
+                r"basic\s+customer\s+charge\s+for\s+rate\s*1\.1",
+                fl,
+                re.I,
+            ):
+                if any(
+                    isinstance(c, dict)
+                    and str(c.get("component_type") or "").lower() == "energy"
+                    for c in (t.components or [])
+                ):
                     continue
             mf.append(field)
         t.missing_fields = mf
@@ -8549,19 +8619,26 @@ def fetch_and_extract_referenced_riders(
     extra: list[ExtractedTariff] = list(book_extras)
     for page, hint in fetched:
         try:
-            # Prefer deterministic PGE Sched_1xx table parse (no LLM $).
-            # None → not a PGE schedule page; [] → Sch 100 map-only;
-            # non-empty → priced rows. Empty non-100 falls through to LLM.
-            det = _try_deterministic_pge_sch1xx_extract(page, hint=hint)
-            if det:
-                extra.extend(det)
+            # Index / page-data hubs have no prices — never send to LLM (R12).
+            if _is_pge_tariff_index_page(page, hint=hint):
+                log.info(
+                    f"    Skipping rider LLM for index page {page.url[:70]}"
+                )
                 continue
-            if det is not None and re.search(
-                r"SCHEDULE\s+100\b|APPLICABLE\s+ADJUSTMENTS",
-                page.content or "",
-                re.I,
-            ):
-                continue  # Sch 100 map — no prices, skip LLM
+            # Prefer deterministic PGE Sched_1xx table parse (no LLM $).
+            # None → not a PGE schedule page (fall through);
+            # list (empty or not) → recognized: never LLM (R12 — zero / % /
+            # per-bill / Sch 100 / Sch 125 TOD all covered).
+            det = _try_deterministic_pge_sch1xx_extract(page, hint=hint)
+            if det is not None:
+                if det:
+                    extra.extend(det)
+                else:
+                    log.info(
+                        f"    Deterministic Sch 1xx: no ¢/kWh rows for "
+                        f"{page.url[:70]} — skipping LLM"
+                    )
+                continue
             if re.search(r"FUEL\s+ADJUSTMENT\s+MECHANISM\s*\(FAM\)\s*TARIFF", page.content or "", re.I):
                 fam = extract_nsp_fam_aa_ba_from_text(page.content or "")
                 for et in fam:
@@ -8590,6 +8667,462 @@ def fetch_and_extract_referenced_riders(
     return useful, [p for p, _h in fetched], unresolved
 
 
+_DOC_EFFECTIVE_RE = re.compile(
+    r"Effective\s+for\s+service\b.{0,120}?(?:on\s+and\s+after|after)\s+"
+    r"([A-Za-z]+\s+\d{1,2},\s+\d{4})",
+    re.I | re.S,
+)
+_COMBINED_TARIFF_BOOK_RE = re.compile(
+    r"all[_-]?tariffs|compiled\s+tariff|complete\s+tariff\s+book|"
+    r"p\.?u\.?c\.?\s+oregon\s+no\.?\s*e-1[0-8]\b",
+    re.I,
+)
+
+
+def _document_effective_date(text: str = "", url: str = "") -> date | None:
+    """Best-effort document 'effective for service' date from text or URL."""
+    blob = f"{text or ''}\n{url or ''}"
+    dates: list[date] = []
+    for m in _DOC_EFFECTIVE_RE.finditer(blob):
+        d = _parse_effective_date_str(m.group(1))
+        if d:
+            dates.append(d)
+    # Advice / schedule PDFs sometimes put YYYYMMDD in the URL path.
+    for m in re.finditer(r"(20\d{2})[-_/]?(\d{2})[-_/]?(\d{2})", url or ""):
+        try:
+            dates.append(date(int(m.group(1)), int(m.group(2)), int(m.group(3))))
+        except ValueError:
+            continue
+    return max(dates) if dates else None
+
+
+def _is_combined_tariff_book(url: str = "", content: str = "") -> bool:
+    """True for compiled multi-schedule books (e.g. PGE all_tariffs_56_.pdf)."""
+    blob = f"{url or ''}\n{(content or '')[:4000]}"
+    if _COMBINED_TARIFF_BOOK_RE.search(blob):
+        return True
+    if re.search(r"all_tariffs", url or "", re.I):
+        return True
+    return False
+
+
+def _is_individual_pge_schedule_pdf(url: str = "", content: str = "") -> bool:
+    """True for a single PGE Sched_NNN.pdf (not the compiled book)."""
+    if re.search(r"Sched_0*\d{1,3}\.pdf", url or "", re.I):
+        return True
+    if re.search(r"SCHEDULE\s+7\b", content or "", re.I) and re.search(
+        r"RESIDENTIAL\s+SERVICE", content or "", re.I
+    ):
+        # Individual Sch 7 sheets are short; consolidated books are huge.
+        if content and len(content) < 80_000 and not _is_combined_tariff_book(url, content):
+            return True
+    return False
+
+
+def _phase3_page_rank_key(page: RatePage) -> tuple:
+    """Lower is better: fresher individual schedule PDFs beat old combined books.
+
+    R12: PGE's current Sched_007 (Jul 2026) must outrank all_tariffs_56_.pdf
+    (Jan 2020 E-18 book) when both are in the candidate set.
+    """
+    url = page.url or ""
+    content = page.content or ""
+    eff = _document_effective_date(content[:8000], url)
+    # Negate date ordinal so newer sorts first; missing → 0 (after dated docs).
+    date_score = -(eff.toordinal()) if eff else 0
+    combined = 1 if _is_combined_tariff_book(url, content) else 0
+    individual = 0 if _is_individual_pge_schedule_pdf(url, content) else 1
+    depth = -urlparse(url).path.count("/")
+    return (combined, individual, date_score, depth)
+
+
+def _prefer_extract_over_existing(
+    existing: ExtractedTariff,
+    new: ExtractedTariff,
+) -> bool:
+    """True when ``new`` should replace ``existing`` for the same dedupe key.
+
+    Prefer a newer document effective_date even when the older extract has
+    more components (R12: current flat Sch 7 beats the 2020 tiered book).
+    """
+    new_eff = _parse_effective_date(getattr(new, "effective_date", None))
+    old_eff = _parse_effective_date(getattr(existing, "effective_date", None))
+    if new_eff and old_eff and new_eff > old_eff:
+        return True
+    if new_eff and not old_eff:
+        return True
+    if old_eff and new_eff and new_eff < old_eff:
+        return False
+    # Same / undated: keep richer extract.
+    return len(new.components or []) > len(existing.components or [])
+
+
+def _drop_stale_combined_pages_when_fresher_schedule_exists(
+    pages: list[RatePage],
+) -> list[RatePage]:
+    """Drop older combined tariff books when a fresher Sched_007 is present.
+
+    Never use a document with an older effective date when a newer one for
+    the same schedule is available (R12).
+    """
+    sch7_dates: list[date] = []
+    for p in pages:
+        if not _is_individual_pge_schedule_pdf(p.url or "", p.content or ""):
+            continue
+        if not re.search(r"Sched_0*7\b|SCHEDULE\s+7\b", f"{p.url}\n{(p.content or '')[:2000]}", re.I):
+            continue
+        d = _document_effective_date((p.content or "")[:8000], p.url or "")
+        if d:
+            sch7_dates.append(d)
+    if not sch7_dates:
+        return pages
+    newest = max(sch7_dates)
+    kept: list[RatePage] = []
+    for p in pages:
+        if not _is_combined_tariff_book(p.url or "", p.content or ""):
+            kept.append(p)
+            continue
+        book_eff = _document_effective_date((p.content or "")[:8000], p.url or "")
+        if book_eff and book_eff >= newest:
+            kept.append(p)
+            continue
+        # Undated or older combined book — skip when a fresher Sch 7 exists.
+        log.info(
+            f"    Skipping stale combined tariff book {p.url[:70]} "
+            f"(eff={book_eff}; fresher Sched_007 eff={newest})"
+        )
+    return kept
+
+
+def _is_pge_tariff_index_page(page: RatePage, hint: str = "") -> bool:
+    """True for PGE schedule-index / page-data hubs (no prices — skip LLM)."""
+    url = (page.url or "").lower()
+    h = (hint or "").lower()
+    if "page-data.json" in url:
+        return True
+    if "tariff index" in h or "schedule 1xx tariff index" in h:
+        return True
+    if any(idx.lower().rstrip("/") == url.rstrip("/") for idx in _PGE_TARIFF_INDEX_URLS):
+        return True
+    if re.search(r"/tariff/?$", url) and "sched_" not in url:
+        return True
+    # page-data / archive HTML that only lists PDF links.
+    content = page.content or ""
+    if "page-data" in url or "price-summaries-archive" in url:
+        return True
+    if content.lstrip().startswith("{") and "ctfassets.net" in content and "Sched_" in content:
+        return True
+    return False
+
+
+def parse_pge_sch125_adjustment_rates(text: str) -> list[dict]:
+    """Parse Sch 125 ADJUSTMENT RATES table (flat Schedule 7 + 7-TOD periods).
+
+    Current sheet (Advice 26-24): Schedule 7 5.619; 7-TOD on/mid/off
+    12.868 / 5.555 / 3.416. Returns adjustment component dicts in ¢/kWh.
+    """
+    if not text or not re.search(r"SCHEDULE\s+125\b", text, re.I):
+        return []
+    # Restrict to the ADJUSTMENT RATES block when present.
+    m = re.search(r"ADJUSTMENT\s+RATES\b", text, re.I)
+    block = text[m.start(): m.start() + 2500] if m else text
+    out: list[dict] = []
+
+    def _add(val: float, label: str, period: str = "") -> None:
+        row = {
+            "component_type": "adjustment",
+            "unit": "¢/kWh",
+            "rate_value": val,
+            "tier_label": label,
+            "included_in_energy": False,
+            "rider_scope": "all_customers",
+        }
+        if period:
+            row["period_label"] = period
+        out.append(row)
+
+    # Flat Schedule 7 row: "7 5.619" (not 7-TOD).
+    flat = re.search(
+        r"(?im)^\s*7(?!\s*-?\s*TOD)\s+(\d+\.\d+)\b",
+        block,
+    )
+    if flat:
+        _add(
+            float(flat.group(1)),
+            "Schedule 7 (Residential) Schedule 125 adjustment",
+        )
+
+    # 7-TOD multi-period block.
+    tod = re.search(
+        r"7\s*-?\s*TOD\s+On[\s-]*Peak\s+Period\s+(\d+\.\d+)\s*"
+        r"Mid[\s-]*Peak\s+Period\s+(\d+\.\d+)\s*"
+        r"Off[\s-]*Peak\s+Period\s+(\d+\.\d+)",
+        block,
+        re.I | re.S,
+    )
+    if tod:
+        _add(float(tod.group(1)), "Schedule 7-TOD Schedule 125 adjustment",
+             "7-TOD On-Peak Period")
+        _add(float(tod.group(2)), "Schedule 7-TOD Schedule 125 adjustment",
+             "7-TOD Mid-Peak Period")
+        _add(float(tod.group(3)), "Schedule 7-TOD Schedule 125 adjustment",
+             "7-TOD Off-Peak Period")
+    return out
+
+
+def _parse_pge_sch7_charge_total(section: str) -> float | None:
+    """Sum Transmission + Distribution + Energy ¢/kWh lines, or a single Charge."""
+    # Prefer an explicit "X Charge Y.YYY ¢ per kWh" total line (TOD periods).
+    m = re.search(
+        r"(?:On|Mid|Off)[\s-]*Peak\s+Charge\s+(\d+\.\d+)\s*¢\s*per\s*kWh",
+        section,
+        re.I,
+    )
+    if m:
+        return float(m.group(1))
+    parts = []
+    for label in (
+        r"Transmission\s+and\s+Related\s+Services\s+Charge",
+        r"Distribution\s+Charge",
+        r"Energy\s+Charge",
+    ):
+        m = re.search(
+            rf"{label}\s+(\d+\.\d+)\s*¢\s*per\s*kWh",
+            section,
+            re.I,
+        )
+        if m:
+            parts.append(float(m.group(1)))
+    if len(parts) >= 3:
+        return round(sum(parts), 3)
+    return None
+
+
+def extract_pge_sch7_from_text(
+    text: str,
+    *,
+    source_url: str = "",
+) -> list[ExtractedTariff]:
+    """Deterministic PGE Schedule 7 Default + TOD (no separate EV plan).
+
+    Current E-19 / Advice 26-24 sheet: flat Default 11.289¢; TOD on/mid/off
+    30.263 / 11.143 / 5.514 with on-peak 5–9 pm weekdays. Whole-premise and
+    EV-only share the same TOD price — do not fabricate a separate EV plan.
+    """
+    if not text or not re.search(r"SCHEDULE\s+7\b", text, re.I):
+        return []
+    if not re.search(r"RESIDENTIAL\s+SERVICE", text, re.I):
+        return []
+    # Skip adjustment schedules that only mention Schedule 7 as applicable.
+    if re.search(r"SCHEDULE\s+1\d{2}\b", text[:800], re.I) and not re.search(
+        r"ENERGY\s+PRICE\s+PLANS|RESIDENTIAL\s+SERVICE\s+PRICE\s+PLAN",
+        text,
+        re.I,
+    ):
+        return []
+
+    eff = _document_effective_date(text[:6000], source_url)
+    eff_s = eff.isoformat() if eff else ""
+
+    # Fixed charge (single-family basic).
+    fixed = None
+    m = re.search(
+        r"Single[\s-]*Family\s+Home\s+\$?\s*(\d+(?:\.\d+)?)",
+        text,
+        re.I,
+    )
+    if m:
+        fixed = float(m.group(1))
+
+    out: list[ExtractedTariff] = []
+
+    # --- Default (flat) plan ---
+    # Stop at the TOD portfolio heading — NOT at "SCHEDULE 7 (Continued)",
+    # which appears on every subsequent sheet header.
+    default_m = re.search(
+        r"RESIDENTIAL\s+SERVICE\s+PRICE\s+PLAN\s*\(DEFAULT\s+PLAN\)(.*?)"
+        r"TIME[\s-]*OF[\s-]*DAY\s*\(TOD\)\s+PORTFOLIO\s+OPTION",
+        text,
+        re.I | re.S,
+    )
+    default_section = default_m.group(1) if default_m else text[:3500]
+    # Flat sheet lists T&D + Energy separately (no single "Peak Charge").
+    parts = []
+    for lab in (
+        r"Transmission\s+and\s+Related\s+Services\s+Charge",
+        r"Distribution\s+Charge",
+        r"Energy\s+Charge",
+    ):
+        mm = re.search(rf"{lab}\s+(\d+\.\d+)\s*¢\s*per\s*kWh", default_section, re.I)
+        if mm:
+            parts.append(float(mm.group(1)))
+    default_cents = round(sum(parts), 3) if len(parts) >= 3 else None
+    if default_cents is not None:
+        comps: list[dict] = []
+        if fixed is not None:
+            comps.append({
+                "component_type": "fixed",
+                "unit": "$/month",
+                "rate_value": fixed,
+                "tier_label": "Basic Charge Single-Family",
+            })
+        comps.append({
+            "component_type": "energy",
+            "unit": "¢/kWh",
+            "rate_value": default_cents,
+            "tier_label": (
+                f"all-in: transmission + distribution + energy = {default_cents}"
+            ),
+        })
+        out.append(ExtractedTariff(
+            name="Schedule 7 Residential Service Price Plan (Default Plan)",
+            customer_class="residential",
+            rate_type="flat",
+            code="7",
+            effective_date=eff_s,
+            source_url=source_url,
+            components=comps,
+            extraction_tier="deterministic",
+            energy_scope="bundled",
+            description="Deterministic parse of PGE Schedule 7 Default Plan.",
+        ))
+
+    # --- TOD portfolio (whole premise or EV — same price; one plan only) ---
+    tod_m = re.search(
+        r"TIME[\s-]*OF[\s-]*DAY\s*\(TOD\)\s+PORTFOLIO\s+OPTION(.*?)(?:SPECIAL\s+CONDITIONS|Advice\s+No\.|$)",
+        text,
+        re.I | re.S,
+    )
+    if tod_m:
+        tod_section = tod_m.group(1)
+        on_c = re.search(
+            r"On[\s-]*Peak\s+Charge\s+(\d+\.\d+)\s*¢\s*per\s*kWh",
+            tod_section,
+            re.I,
+        )
+        mid_c = re.search(
+            r"Mid[\s-]*Peak\s+Charge\s+(\d+\.\d+)\s*¢\s*per\s*kWh",
+            tod_section,
+            re.I,
+        )
+        off_c = re.search(
+            r"Off[\s-]*Peak\s+Charge\s+(\d+\.\d+)\s*¢\s*per\s*kWh",
+            tod_section,
+            re.I,
+        )
+        if on_c and mid_c and off_c:
+            on_v, mid_v, off_v = (
+                float(on_c.group(1)),
+                float(mid_c.group(1)),
+                float(off_c.group(1)),
+            )
+            # Hours from the On- and Off-Peak Hours section (current: 5–9 pm).
+            # Fall back to 17:00–21:00 / 07:00–17:00 / 21:00–07:00 weekdays.
+            on_start, on_end = "17:00", "21:00"
+            mid_start, mid_end = "07:00", "17:00"
+            off_start, off_end = "21:00", "07:00"
+            hm = re.search(
+                r"On[\s-]*Peak\s+(\d{1,2}):(\d{2})\s*([ap])\.?m\.?\s+to\s+"
+                r"(\d{1,2}):(\d{2})\s*([ap])\.?m\.?",
+                tod_section,
+                re.I,
+            )
+
+            def _to_24(h: int, minute: int, ampm: str) -> str:
+                h = h % 12
+                if ampm.lower().startswith("p"):
+                    h += 12
+                return f"{h:02d}:{minute:02d}"
+
+            if hm:
+                on_start = _to_24(int(hm.group(1)), int(hm.group(2)), hm.group(3))
+                on_end = _to_24(int(hm.group(4)), int(hm.group(5)), hm.group(6))
+            hm = re.search(
+                r"Mid[\s-]*Peak\s+(\d{1,2}):(\d{2})\s*([ap])\.?m\.?\s+to\s+"
+                r"(\d{1,2}):(\d{2})\s*([ap])\.?m\.?",
+                tod_section,
+                re.I,
+            )
+            if hm:
+                mid_start = _to_24(int(hm.group(1)), int(hm.group(2)), hm.group(3))
+                mid_end = _to_24(int(hm.group(4)), int(hm.group(5)), hm.group(6))
+            hm = re.search(
+                r"Off[\s-]*Peak\s+(\d{1,2}):(\d{2})\s*([ap])\.?m\.?\s+to\s+"
+                r"(\d{1,2}):(\d{2})\s*([ap])\.?m\.?",
+                tod_section,
+                re.I,
+            )
+            if hm:
+                off_start = _to_24(int(hm.group(1)), int(hm.group(2)), hm.group(3))
+                off_end = _to_24(int(hm.group(4)), int(hm.group(5)), hm.group(6))
+
+            comps = []
+            if fixed is not None:
+                comps.append({
+                    "component_type": "fixed",
+                    "unit": "$/month",
+                    "rate_value": fixed,
+                    "tier_label": "Basic Charge Single-Family",
+                })
+
+            def _energy(val: float, label: str, start: str, end: str, day: str) -> dict:
+                return {
+                    "component_type": "energy",
+                    "unit": "¢/kWh",
+                    "rate_value": val,
+                    "period_label": (
+                        f"{label} (all-in: transmission + distribution + energy)"
+                    ),
+                    "period_start_time": start,
+                    "period_end_time": end,
+                    "day_type": day,
+                }
+
+            comps.extend([
+                _energy(on_v, "On-Peak", on_start, on_end, "weekday"),
+                _energy(mid_v, "Mid-Peak", mid_start, mid_end, "weekday"),
+                _energy(off_v, "Off-Peak", off_start, off_end, "weekday"),
+                # Weekends + holidays are all Off-Peak (sheet wording).
+                _energy(off_v, "Off-Peak", "00:00", "00:00", "weekend"),
+                _energy(off_v, "Off-Peak", "00:00", "00:00", "holiday"),
+            ])
+            out.append(ExtractedTariff(
+                name="Schedule 7 Time-of-Use Portfolio Option (Whole Premises)",
+                customer_class="residential",
+                rate_type="tou",
+                code="7-TOD",
+                effective_date=eff_s,
+                source_url=source_url,
+                components=comps,
+                extraction_tier="deterministic",
+                energy_scope="bundled",
+                description=(
+                    "Deterministic parse of PGE Schedule 7 TOD. "
+                    "EV-only charging uses the same prices — no separate plan."
+                ),
+            ))
+    return out
+
+
+def _try_deterministic_pge_sch7_extract(page: RatePage) -> list[ExtractedTariff] | None:
+    """Parse current PGE Sched_007 without an LLM when the sheet is clear."""
+    content = page.content or ""
+    url = page.url or ""
+    if not (
+        re.search(r"Sched_0*7\b", url, re.I)
+        or (
+            re.search(r"SCHEDULE\s+7\b", content[:1500], re.I)
+            and re.search(r"RESIDENTIAL\s+SERVICE\s+PRICE\s+PLAN", content, re.I)
+        )
+    ):
+        return None
+    if _is_combined_tariff_book(url, content) and len(content) > 80_000:
+        # Huge compiled books are not the current individual schedule.
+        return None
+    plans = extract_pge_sch7_from_text(content, source_url=url)
+    return plans if plans else None
+
+
 def _try_deterministic_pge_sch1xx_extract(
     page: RatePage,
     *,
@@ -8598,8 +9131,10 @@ def _try_deterministic_pge_sch1xx_extract(
     """Parse PGE Sched_1xx ¢/kWh tables without an LLM when the text is clear.
 
     Returns None when the page is not a recognizable PGE adjustment schedule
-    (caller falls through to LLM rider mode). Sch 100 (applicability only)
-    yields an empty list (not None) so we skip the LLM.
+    (caller falls through to LLM rider mode). Recognized pages always return
+    a list (possibly empty) so zero / percentage / per-bill schedules skip
+    the LLM (R12). Sch 100 (applicability only) yields []. Sch 125 returns
+    flat + 7-TOD period rows when present.
     """
     content = page.content or ""
     if not re.search(r"SCHEDULE\s+1\d{2}\b", content, re.I) and not re.search(
@@ -8614,11 +9149,29 @@ def _try_deterministic_pge_sch1xx_extract(
     num = m.group(1)
     if num == "100" or re.search(r"SUMMARY\s+OF\s+APPLICABLE\s+ADJUSTMENTS", content, re.I):
         return []  # map only — no prices
+
+    # Sch 125: flat Schedule 7 + 7-TOD multi-period (R12 deterministic).
+    if num == "125":
+        amounts = parse_pge_sch125_adjustment_rates(content)
+        if amounts:
+            return [ExtractedTariff(
+                name="Schedule 125 Net Variable Power Cost Adjustment - Schedule 7 Residential",
+                customer_class="residential",
+                rate_type="flat",
+                code="125",
+                source_url=page.url,
+                components=amounts,
+                extraction_tier="rider_doc",
+                energy_scope="bundled",
+                description="Deterministic parse of PGE Schedule 125 for Schedule 7.",
+            )]
+        # Recognized Sch 125 but no numeric rows yet — still skip LLM when
+        # the sheet clearly has no ¢/kWh (should be rare).
+        return []
+
     amounts = parse_pge_sch1xx_kwh_amounts_for_schedule(content, schedule="7")
     if not amounts:
-        # TOD multi-period (Sch 125 7-TOD) — leave for LLM / existing path.
-        if re.search(r"7-TOD|On-Peak Period", content):
-            return None
+        # Zero / % / per-bill schedules (103, 106, 108, …) — skip LLM (R12).
         return []
     # Drop pure-zero rows (no price impact), but keep First/Over block zeros
     # so Sch 102's Over 0.000 still marks higher tiers as uncushioned (R10).
@@ -8664,10 +9217,22 @@ _INFORMATIONAL_MISSING_FIELDS = frozenset({
 
 def _is_informational_missing_field(field: str) -> bool:
     """True for gaps that are not Mysa-critical by themselves."""
-    f = re.sub(r"[^a-z0-9]+", "_", str(field or "").strip().lower()).strip("_")
+    raw = str(field or "").strip().lower()
+    f = re.sub(r"[^a-z0-9]+", "_", raw).strip("_")
     if f in _INFORMATIONAL_MISSING_FIELDS:
         return True
     if "effective" in f and "date" in f:
+        return True
+    # Name/code gaps alone are not Mysa-critical (Pedernales flat, R12).
+    if re.search(r"official\s+schedule\s+name|schedule\s+name\s+and\s+code|code\s+not\s+shown", raw):
+        return True
+    # A flat plan noting that TOU prices live on another page is not critical
+    # for that flat plan itself (Pedernales, R12).
+    if re.search(
+        r"time[\s-]*of[\s-]*use.*(?:not\s+shown|varies|refer\s+to)|"
+        r"tou\s+(?:base\s+)?(?:power\s+)?rate.*(?:not\s+shown|varies)",
+        raw,
+    ):
         return True
     # Fixed / customer / base services charge gaps are not Mysa-critical
     # (Mysa prices kWh; missing FIXED alone must not flag needs_review).

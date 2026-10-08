@@ -146,19 +146,13 @@
   },
   "927": {
     "Schedule 7 Residential Service Price Plan (Default Plan)": [
-      19.534,
-      20.256,
-      21.368
+      19.43,
+      20.542
     ],
     "Schedule 7 Time-of-Use Portfolio Option (Whole Premises)": [
-      10.169,
-      23.293,
-      36.155
-    ],
-    "Schedule 7 Plug-In Electric Vehicle Time of Use Option (Separately Metered)": [
-      10.169,
-      23.293,
-      36.155
+      11.452,
+      19.22,
+      45.653
     ]
   },
   "1723": {
@@ -168,31 +162,31 @@
       23.912
     ],
     "Tiered Pricing \u2014 Residential": [
-      13.617,
-      15.882
+      15.367,
+      17.632
     ],
     "Ultra-Low Overnight (ULO) \u2014 Residential": [
-      5.895,
+      7.028,
       13.102,
       19.176,
-      43.369
+      43.266
     ]
   },
   "1722": {
     "Time-of-Use (TOU) \u2014 Residential": [
-      12.952,
-      19.189,
-      24.051
+      12.976,
+      19.212,
+      24.075
     ],
     "Tiered Pricing \u2014 Residential": [
-      13.481,
-      15.806
+      15.302,
+      17.627
     ],
     "Ultra-Low Overnight (ULO) \u2014 Residential": [
-      5.553,
-      12.952,
-      19.189,
-      44.028
+      6.74,
+      12.976,
+      19.212,
+      43.946
     ]
   }
 }
