@@ -1,9 +1,14 @@
-"""R13: PGE discovery must fetch current Sched_007 — not only all_tariffs_56_.
+"""R13/R14: PGE discovery must fetch current Sched_007 — not only all_tariffs_56_.
 
 The R12 golden handed Sched_007 into phase4 directly, so CI passed while the
 live Phase 1→2 path still extracted the 2020 combined book. This test drives
-the real discovery + fetch + post-process path on saved HTML/PDF inputs:
-search hit → combined book, schedule index page-data → Sched_007 + Sch 1xx.
+the real discovery + fetch + rider-enrich + post-process path on saved
+HTML/PDF inputs: search hit → combined book, schedule index page-data →
+Sched_007 + Sch 1xx via ``enrich_tariffs_with_referenced_rider_docs``.
+
+R14: deterministic Sch 7 carries ``riders_referenced_not_shown=["Schedule 100"]``
+from the sheet footnote; Sch 1xx must arrive through the enrich/fetch step,
+not by hand-injection past it.
 
 No live network, no paid LLM.
 
@@ -11,7 +16,6 @@ No live network, no paid LLM.
 """
 from __future__ import annotations
 
-import json
 import logging
 import re
 import unittest
@@ -97,6 +101,30 @@ class TestR13PgeDiscoveryE2E(unittest.TestCase):
             return self.page_data
         return ""
 
+    def _fake_fetch_and_parse(self, url: str):
+        """Serve tariff-index HTML/JSON as RatePage for rider enrich."""
+        if "page-data" in (url or ""):
+            return tp.RatePage(
+                url=url,
+                title="PGE tariff page-data",
+                page_type="html",
+                content=self.page_data,
+            )
+        if url in tp._PGE_TARIFF_INDEX_URLS or "tariff" in (url or ""):
+            # Minimal hub page; page-data / refetch supplies the Sched_* map.
+            return tp.RatePage(
+                url=url,
+                title="PGE tariff index",
+                page_type="html",
+                content=(
+                    "Portland General Electric tariff schedules. "
+                    "See Schedule 100 for applicable adjustments. "
+                    + self.page_data[:2000]
+                ),
+            )
+        page = self._fake_fetch_pdf(url)
+        return page
+
     def test_resolve_primary_demotes_combined_book(self):
         primary, alts = tp.resolve_pge_primary_rate_url(
             "Portland General Electric Co",
@@ -120,9 +148,23 @@ class TestR13PgeDiscoveryE2E(unittest.TestCase):
         self.assertTrue(any("Sched_007" in u for u in urls), urls)
         self.assertFalse(any("all_tariffs" in u for u in urls), urls)
 
+    def test_deterministic_sch7_carries_schedule_100_hint(self):
+        """R14: Sched_007 footnote → riders_referenced_not_shown."""
+        text = _fixture_text("Sched_007.txt")
+        plans = tp.extract_pge_sch7_from_text(
+            text, source_url=self.url_map["007"],
+        )
+        self.assertEqual(len(plans), 2)
+        for p in plans:
+            self.assertIn("Schedule 100", p.riders_referenced_not_shown)
+        # Parse the printed sentence (not a blind hardcode).
+        self.assertEqual(
+            tp._parse_pge_sch7_rider_references(text),
+            ["Schedule 100"],
+        )
+
     def test_end_to_end_discovery_fetch_postprocess(self):
-        """Full path: search→book, index→Sched_007, Sch1xx, phase4 cents."""
-        # Phase 1 search would return the combined book.
+        """Full path: Sched_007 → enrich(Schedule 100) → Sch1xx → phase4."""
         search_primary = ALL_TARIFFS_URL
         primary, alts = tp.resolve_pge_primary_rate_url(
             "Portland General Electric Co",
@@ -132,7 +174,6 @@ class TestR13PgeDiscoveryE2E(unittest.TestCase):
         )
         self.assertIn("Sched_007", primary)
 
-        # Phase 2 on the (demoted) book alone — then preference injects Sch 7.
         book_pages = [self._fake_fetch_pdf(ALL_TARIFFS_URL)]
         pages = tp.prefer_current_individual_schedule_pages(
             "Portland General Electric Co",
@@ -143,63 +184,74 @@ class TestR13PgeDiscoveryE2E(unittest.TestCase):
         )
         self.assertTrue(any("Sched_007" in (p.url or "") for p in pages))
 
-        # Phase 3 — deterministic only; count LLM escapes.
-        real_extract = tp._extract_with_model_routing
-        real_twopass = tp._extract_two_pass
-        real_claude = getattr(tp, "_call_claude_tool", None)
-
         def _boom(*a, **k):
             self.llm_calls += 1
             raise RuntimeError("LLM must not be called for PGE after R13")
 
         with mock.patch.object(tp, "_extract_with_model_routing", side_effect=_boom), \
-             mock.patch.object(tp, "_extract_two_pass", side_effect=_boom):
-            if real_claude is not None:
-                with mock.patch.object(tp, "_call_claude_tool", side_effect=_boom):
-                    tariffs = tp.phase3_extract_tariffs(
-                        pages, "Portland General Electric Co", state="OR",
-                    )
-            else:
-                tariffs = tp.phase3_extract_tariffs(
-                    pages, "Portland General Electric Co", state="OR",
-                )
+             mock.patch.object(tp, "_extract_two_pass", side_effect=_boom), \
+             mock.patch.object(tp, "_call_claude_tool", side_effect=_boom):
+            tariffs = tp.phase3_extract_tariffs(
+                pages, "Portland General Electric Co", state="OR",
+            )
 
         self.assertEqual(self.llm_calls, 0, "PGE Sched_007 path must be $0 LLM")
         names = [t.name for t in tariffs]
         self.assertTrue(any("Default Plan" in n for n in names), names)
         self.assertTrue(any("Time-of-Use Portfolio" in n for n in names), names)
         self.assertFalse(any("Electric Vehicle" in n for n in names), names)
+        # R14: rider pointer must be present so enrich actually runs.
+        for t in tariffs:
+            if "Schedule 7" in (t.name or ""):
+                self.assertIn("Schedule 100", t.riders_referenced_not_shown or [])
 
-        # Rider enrich from saved Sch 1xx / 125 (deterministic).
-        extras: list[tp.ExtractedTariff] = []
-        for num in (
-            "100", "102", "105", "109", "115", "120", "121", "122", "125",
-            "126", "135", "136", "137", "138", "146", "150", "151", "152", "153",
-        ):
-            path = R13 / f"Sched_{num}.txt"
-            if not path.is_file():
-                continue
-            page = tp.RatePage(
-                url=self.url_map.get(num, f"https://example.com/Sched_{num}.pdf"),
-                title=f"Schedule {num}",
-                page_type="pdf",
-                content=path.read_text(),
-            )
-            det = tp._try_deterministic_pge_sch1xx_extract(page, hint=f"Schedule {num}")
-            if det:
-                extras.extend(det)
-
-        # Simulate _filter_useful_rider_extracts (must keep Sch 125 TOD rows).
-        useful = tp._filter_useful_rider_extracts(extras)
-        sch125 = next(t for t in useful if "125" in (t.name or ""))
-        self.assertGreaterEqual(
-            sum(1 for c in sch125.components if tp._is_sch125_tod_period_rider(c, tariff_name=sch125.name)),
-            3,
-            "Sch 125 TOD period rows must survive rider-doc filtering",
+        # Rider enrich via fake fetcher — NO hand-injected Sch 1xx past fetch.
+        sch100_url = self.url_map.get("100") or (
+            "https://assets.ctfassets.net/416ywc1laqmd/x/Sched_100.pdf"
         )
+        brave_hits = [
+            {
+                "url": sch100_url,
+                "title": "Schedule 100 Summary of Applicable Adjustments",
+                "description": "PGE Schedule 100",
+            },
+            {
+                "url": tp._PGE_TARIFF_INDEX_URLS[0],
+                "title": "PGE tariff index",
+                "description": "schedules",
+            },
+        ]
+
+        with mock.patch.object(tp, "brave_search", return_value=brave_hits), \
+             mock.patch.object(
+                 tp, "_fetch_as_pdf_via_download", side_effect=self._fake_fetch_pdf
+             ), \
+             mock.patch.object(
+                 tp, "_fetch_and_parse", side_effect=self._fake_fetch_and_parse
+             ), \
+             mock.patch.object(
+                 tp, "_refetch_pge_index_raw", side_effect=self._fake_refetch_index
+             ), \
+             mock.patch.object(tp, "_extract_rider_document", side_effect=_boom):
+            merged, enrich_pages = tp.enrich_tariffs_with_referenced_rider_docs(
+                tariffs,
+                "Portland General Electric Co",
+                "OR",
+                website_url="https://portlandgeneral.com",
+                pages=pages,
+            )
+
+        # Enrich must have fetched Sch 100 / 1xx / 125 (not just Sched_007).
+        enrich_urls = " ".join(p.url or "" for p in enrich_pages)
+        self.assertTrue(
+            any("Sched_1" in (p.url or "") for p in enrich_pages),
+            f"enrich must fetch Sched_1xx via rider step, got {[p.url for p in enrich_pages]}",
+        )
+        self.assertIn("Sched_125", enrich_urls)
+        self.assertEqual(self.llm_calls, 0, "rider path must stay deterministic")
 
         report, valid = tp.phase4_validate(
-            tariffs + useful,
+            merged,
             "Portland General Electric Co",
             "OR",
         )
@@ -212,6 +264,14 @@ class TestR13PgeDiscoveryE2E(unittest.TestCase):
         self.assertFalse(default.needs_review)
         self.assertFalse(tou.needs_review)
         self.assertNotIn("sch125_tod_pca_missing", tou.missing_fields or [])
+        self.assertNotIn("sch1xx_riders_missing", default.missing_fields or [])
+        # Stale "= 11.289" must not survive rider fold (R14).
+        for c in default.components or []:
+            if str(c.get("component_type") or "").lower() != "energy":
+                continue
+            label = str(c.get("tier_label") or "")
+            self.assertNotIn("= 11.289", label, label)
+            self.assertNotIn("=11.289", label.replace(" ", ""))
 
 
 class TestR13Sch125TodAttach(unittest.TestCase):
@@ -305,6 +365,40 @@ class TestR13Sch125TodAttach(unittest.TestCase):
         plan2 = next(t for t in valid2 if "Time-of-Use" in t.name)
         self.assertIn("sch125_tod_pca_missing", plan2.missing_fields or [])
         self.assertTrue(plan2.needs_review)
+
+    def test_default_without_riders_is_flagged(self):
+        """R14: Default with no Sch 1xx must never pass silently."""
+        bare = tp.ExtractedTariff(
+            name="Schedule 7 Residential Service Price Plan (Default Plan)",
+            customer_class="residential",
+            rate_type="flat",
+            description="See Schedule 100 for applicable adjustments.",
+            riders_referenced_not_shown=["Schedule 100"],
+            components=[{
+                "component_type": "energy",
+                "unit": "¢/kWh",
+                "rate_value": 11.289,
+                "tier_label": "all-in: transmission + distribution + energy = 11.289",
+            }],
+        )
+        _rep, valid = tp.phase4_validate(
+            [bare], "Portland General Electric Co", "OR",
+        )
+        plan = next(t for t in valid if "Default" in t.name)
+        self.assertTrue(plan.needs_review)
+        self.assertIn("sch1xx_riders_missing", plan.missing_fields or [])
+
+    def test_sch100_map_ignores_sch7_footnote(self):
+        """R14: Sched_007 footnote must not look like the Sch 100 map."""
+        sch7 = _fixture_text("Sched_007.txt")
+        self.assertFalse(tp._is_pge_sch100_applicability_page(sch7, "https://x/Sched_007.pdf"))
+        sch100 = _fixture_text("Sched_100.txt")
+        self.assertTrue(
+            tp._is_pge_sch100_applicability_page(sch100, "https://x/Sched_100.pdf")
+        )
+        nums = tp.parse_pge_sch100_applicable_schedules(sch100, base_schedule="7")
+        self.assertGreaterEqual(len(nums), 20)
+        self.assertIn("125", nums)
 
 
 if __name__ == "__main__":
