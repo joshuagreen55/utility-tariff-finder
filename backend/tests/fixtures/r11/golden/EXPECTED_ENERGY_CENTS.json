@@ -1,0 +1,198 @@
+{
+  "1714": {
+    "Residential tiered rate": [
+      11.87,
+      14.08
+    ],
+    "Residential flat rate": [
+      12.7
+    ]
+  },
+  "1737": {
+    "Rate D": [
+      7.065,
+      11.142
+    ],
+    "Rate DP": [
+      6.878,
+      10.458
+    ],
+    "Rate DM": [
+      7.065,
+      11.142
+    ],
+    "Rate DT": [
+      5.131,
+      30.001
+    ],
+    "Rate Flex D": [
+      4.886,
+      7.065,
+      9.103,
+      11.142,
+      46.463
+    ]
+  },
+  "1739": {
+    "Domestic Service Tariff": [
+      19.128
+    ],
+    "Domestic Service Time-Of-Day Tariff (Optional)": [
+      12.436,
+      20.263,
+      25.188
+    ],
+    "Domestic Service Critical Peak Pricing Tariff (Interim Energy Charge)": [
+      19.128
+    ],
+    "Domestic Service Critical Peak Pricing Tariff": [
+      16.215,
+      182.871
+    ],
+    "Domestic Service Time of Use Tariff (Interim Energy Charge)": [
+      17.735,
+      19.128
+    ],
+    "Domestic Service Time of Use Tariff": [
+      13.664,
+      19.128,
+      37.321
+    ],
+    "Multi-Unit Residential Buildings (MURB) Time of Use Tariff": [
+      12.782,
+      13.521,
+      14.999,
+      15.738,
+      30.521
+    ]
+  },
+  "1742": {
+    "Rate No. 1.1 Domestic": [
+      15.587
+    ],
+    "Rate No. 1.1S Domestic - Optional": [
+      14.29,
+      16.54
+    ],
+    "Rate No. 1.2D Domestic Diesel": [
+      15.587,
+      17.213,
+      23.341
+    ],
+    "Rate No. 1.2DS Domestic Diesel (Non-Government First Block) - Optional": [
+      14.29,
+      16.54
+    ]
+  },
+  "870": {
+    "Tiered Rate Plan (E-1)": [
+      33.0,
+      41.0
+    ],
+    "Time-of-Use (E-TOU-C)": [
+      29.0,
+      32.0,
+      37.0,
+      40.0,
+      44.0,
+      52.0
+    ],
+    "Time-of-Use (E-TOU-D)": [
+      34.0,
+      35.0,
+      39.0,
+      48.0
+    ],
+    "Electric Home Rate Plan (E-ELEC)": [
+      28.0,
+      30.0,
+      32.0,
+      33.0,
+      39.0,
+      55.0
+    ],
+    "Home Charging EV2-A": [
+      23.0,
+      39.0,
+      41.0,
+      43.0,
+      54.0
+    ],
+    "Electric Vehicle Rate Plan EV-B": [
+      24.0,
+      26.0,
+      31.0,
+      38.0,
+      44.0,
+      62.0
+    ]
+  },
+  "890": {
+    "Residential, Farm and Ranch Service, Time of Use (TOU) Base Power Charge": [
+      8.671,
+      12.968,
+      13.64,
+      20.508
+    ],
+    "Residential, Farm and Ranch Service, Time of Use (TOU) Base Power Charge, with Renewable Energy Rider": [
+      8.714,
+      13.011,
+      13.683,
+      20.551
+    ],
+    "Residential Service - Flat Base Power Rate": [
+      10.913
+    ]
+  },
+  "927": {
+    "Schedule 7 Residential Service Price Plan (Default Plan)": [
+      19.534,
+      20.256,
+      21.368
+    ],
+    "Schedule 7 Time-of-Use Portfolio Option (Whole Premises)": [
+      10.169,
+      23.293,
+      36.155
+    ],
+    "Schedule 7 Plug-In Electric Vehicle Time of Use Option (Separately Metered)": [
+      10.169,
+      23.293,
+      36.155
+    ]
+  },
+  "1723": {
+    "Time-of-Use (TOU) \u2014 Residential": [
+      13.102,
+      19.176,
+      23.912
+    ],
+    "Tiered Pricing \u2014 Residential": [
+      13.617,
+      15.882
+    ],
+    "Ultra-Low Overnight (ULO) \u2014 Residential": [
+      5.895,
+      13.102,
+      19.176,
+      43.369
+    ]
+  },
+  "1722": {
+    "Time-of-Use (TOU) \u2014 Residential": [
+      12.952,
+      19.189,
+      24.051
+    ],
+    "Tiered Pricing \u2014 Residential": [
+      13.481,
+      15.806
+    ],
+    "Ultra-Low Overnight (ULO) \u2014 Residential": [
+      5.553,
+      12.952,
+      19.189,
+      44.028
+    ]
+  }
+}

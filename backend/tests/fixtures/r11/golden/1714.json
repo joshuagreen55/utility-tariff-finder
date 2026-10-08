@@ -1,0 +1,167 @@
+{
+  "utility_id": 1714,
+  "utility_name": "BC Hydro",
+  "state": "BC",
+  "phase3_tariffs": [
+    {
+      "name": "Residential tiered rate",
+      "code": "1101",
+      "customer_class": "residential",
+      "rate_type": "tiered",
+      "description": "BC Hydro residential two-tier rate; Tier 1 threshold is 22.1918 kWh per day in the billing period.",
+      "source_url": "https://app.bchydro.com/accounts-billing/rates-energy-use/electricity-rates/residential-rates/tiered.html",
+      "effective_date": "",
+      "components": [
+        {
+          "component_type": "energy",
+          "unit": "\u00a2/kWh",
+          "rate_value": 11.87,
+          "tier_label": "Tier 1 (up to 22.1918 kWh/day x days in billing period)",
+          "tier_min_kwh": 0,
+          "tier_max_kwh": null,
+          "tier_basis": "billing_period"
+        },
+        {
+          "component_type": "energy",
+          "unit": "\u00a2/kWh",
+          "rate_value": 14.08,
+          "tier_label": "Tier 2 (over Tier 1 threshold)",
+          "tier_min_kwh": null,
+          "tier_max_kwh": null,
+          "tier_basis": "billing_period"
+        },
+        {
+          "component_type": "fixed",
+          "unit": "\u00a2/day",
+          "rate_value": 23.44,
+          "tier_label": "Basic Charge (also the minimum charge)"
+        }
+      ],
+      "confidence": 0.9,
+      "needs_review": true,
+      "completeness_reasons": [],
+      "computable_reasons": [],
+      "extraction_tier": "sonnet",
+      "missing_fields": [
+        "effective_date"
+      ],
+      "riders_referenced_not_shown": [],
+      "energy_scope": "bundled",
+      "closed_to_new": false,
+      "energy_includes_riders": false,
+      "empty_reason": "",
+      "linked_document_hint": ""
+    },
+    {
+      "name": "Residential flat rate",
+      "code": "1151",
+      "customer_class": "residential",
+      "rate_type": "flat",
+      "description": "BC Hydro residential flat rate with a fixed price per kWh and a daily basic charge.",
+      "source_url": "https://app.bchydro.com/accounts-billing/rates-energy-use/electricity-rates/residential-rates/flat.html",
+      "effective_date": "",
+      "components": [
+        {
+          "component_type": "energy",
+          "unit": "cents per kWh",
+          "rate_value": 12.7,
+          "day_type": "all"
+        },
+        {
+          "component_type": "fixed",
+          "unit": "cents per day",
+          "rate_value": 25.0
+        }
+      ],
+      "confidence": 0.93,
+      "needs_review": true,
+      "completeness_reasons": [],
+      "computable_reasons": [],
+      "extraction_tier": "sonnet",
+      "missing_fields": [
+        "effective_date"
+      ],
+      "riders_referenced_not_shown": [],
+      "energy_scope": "bundled",
+      "closed_to_new": false,
+      "energy_includes_riders": false,
+      "empty_reason": "",
+      "linked_document_hint": ""
+    },
+    {
+      "name": "Residential Time-of-day pricing (overlay on tiered or flat rate)",
+      "code": "2101",
+      "customer_class": "residential",
+      "rate_type": "tou",
+      "description": "Time-of-day overlay: +5 \u00a2/kWh on-peak 4-9 p.m., -5 \u00a2/kWh overnight 11 p.m.-7 a.m., applied to the base tiered (1101) or flat (1151) rate; base rates not shown.",
+      "source_url": "https://app.bchydro.com/accounts-billing/rates-energy-use/electricity-rates/residential-rates/time-of-day.html",
+      "effective_date": "",
+      "components": [
+        {
+          "component_type": "adjustment",
+          "unit": "\u00a2/kWh",
+          "rate_value": 5,
+          "period_label": "On-peak surcharge",
+          "period_start_time": "16:00",
+          "period_end_time": "21:00",
+          "day_type": "all",
+          "included_in_energy": false,
+          "rider_scope": "tou_overlay"
+        },
+        {
+          "component_type": "adjustment",
+          "unit": "\u00a2/kWh",
+          "rate_value": -5,
+          "period_label": "Overnight discount",
+          "period_start_time": "23:00",
+          "period_end_time": "07:00",
+          "day_type": "all",
+          "included_in_energy": false,
+          "rider_scope": "tou_overlay"
+        },
+        {
+          "component_type": "adjustment",
+          "unit": "\u00a2/kWh",
+          "rate_value": 0,
+          "period_label": "Off-peak (7 a.m.-4 p.m. and 9-11 p.m.)",
+          "period_start_time": "07:00",
+          "period_end_time": "16:00",
+          "day_type": "all",
+          "included_in_energy": false,
+          "rider_scope": "tou_overlay"
+        },
+        {
+          "component_type": "adjustment",
+          "unit": "\u00a2/kWh",
+          "rate_value": 0,
+          "period_label": "Off-peak (9-11 p.m.)",
+          "period_start_time": "21:00",
+          "period_end_time": "23:00",
+          "day_type": "all",
+          "included_in_energy": false,
+          "rider_scope": "tou_overlay"
+        }
+      ],
+      "confidence": 0.6,
+      "needs_review": true,
+      "completeness_reasons": [],
+      "computable_reasons": [],
+      "extraction_tier": "sonnet",
+      "missing_fields": [
+        "base tiered and flat energy rates",
+        "basic charge",
+        "effective date"
+      ],
+      "riders_referenced_not_shown": [
+        "Rate Schedule 1101",
+        "Rate Schedule 1151"
+      ],
+      "energy_scope": "delivery_only",
+      "closed_to_new": false,
+      "energy_includes_riders": false,
+      "empty_reason": "",
+      "linked_document_hint": ""
+    }
+  ],
+  "rider_extras": []
+}

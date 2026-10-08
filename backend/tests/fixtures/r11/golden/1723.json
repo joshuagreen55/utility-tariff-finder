@@ -1,0 +1,45 @@
+{
+  "utility_id": 1723,
+  "utility_name": "Toronto Hydro",
+  "state": "ON",
+  "phase3_tariffs": [],
+  "rider_extras": [],
+  "oeb": true,
+  "ldc": {
+    "distributor": "Toronto Hydro-Electric System Limited",
+    "rate_class": "RESIDENTIAL",
+    "service_charge": 51.56,
+    "distribution_kwh": 0.0016,
+    "transmission_network": 0.01346,
+    "transmission_connection": 0.00895,
+    "wholesale_market": 0.0047,
+    "rural_remote": 0.0006,
+    "sss_admin": 0.25,
+    "other_fixed": 0.38,
+    "loss_factor": 1.0295,
+    "year": "2026",
+    "source_url": "https://www.oeb.ca/_html/calculator/data/BillData.xml"
+  },
+  "rpp": {
+    "tou": {
+      "effective_date": "2025-11-01",
+      "off_peak": 0.098,
+      "mid_peak": 0.157,
+      "on_peak": 0.203
+    },
+    "ulo": {
+      "effective_date": "2025-11-01",
+      "ultra_low_overnight": 0.028,
+      "weekend_off_peak": 0.098,
+      "mid_peak": 0.157,
+      "on_peak": 0.392
+    },
+    "tiered": {
+      "effective_date": "2025-11-01",
+      "lower_tier_price": 0.103,
+      "higher_tier_price": 0.125,
+      "summer_threshold_kwh": 600,
+      "winter_threshold_kwh": 1000
+    }
+  }
+}
