@@ -252,3 +252,22 @@ class Phase1SupplySheet(Quiet):
             best, _n, alts = tp.phase1_find_rate_page("Public Service Elec & Gas Co", "NJ", "https://nj.pseg.com")
         self.assertEqual(best, "https://nj.pseg.com/aboutpseg/regulatorypage/electrictariffs")
         self.assertIn(PSEG_PTC, alts)
+
+
+class ProtectedTie(Quiet):
+    def test_protected_row_absorbs_scraped_same_date_copy_only(self):
+        rep = Row(30, "Rate #1.1 Domestic Service", "1.1", "flat", date(2026, 5, 1), "u/rates", approved=True)
+        scraped = Row(31, "Domestic Service (Flat)", None, "flat", date(2026, 5, 1), "u/rates")
+        other = Row(32, "Geothermal Domestic Service", None, "flat", date(2026, 5, 1), "u/rates")
+        retired = []
+
+        def _sup(session, loser, successor=None, reason="vintage", **kw):
+            retired.append((loser.id, getattr(successor, "id", None)))
+
+        session = SimpleNamespace(execute=lambda *_a, **_k: SimpleNamespace(
+            scalars=lambda: SimpleNamespace(all=lambda: [rep, scraped, other])))
+        with mock.patch("app.services.tariff_history.supersede_tariff", _sup), \
+                mock.patch("app.services.tariff_history.record_event", lambda *a, **k: None), \
+                mock.patch("app.services.tariff_history.is_protected", lambda t: bool(t.approved)):
+            tp.supersede_older_vintages(session, 1)
+        self.assertEqual(retired, [(31, 30)])

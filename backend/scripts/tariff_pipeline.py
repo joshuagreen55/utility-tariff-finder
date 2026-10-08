@@ -13809,7 +13809,18 @@ def supersede_older_vintages(
         # plan as each other, it is ambiguous and stays live.
         plan = []
         for loser in rows:
-            newer = [k for k in rows if k is not loser and _r20_same(loser, k) and is_newer_edition(k, loser)]
+            def _beats(k, _l=loser):
+                if is_newer_edition(k, _l):
+                    return True
+                # A protected (approved / repair / manual) row absorbs a
+                # scraped copy of the same plan with the same date: the
+                # human-checked row wins the tie; the protected row itself
+                # is never retired here.
+                return (
+                    getattr(k, "effective_date", None) == getattr(_l, "effective_date", None)
+                    and is_protected(k) and not is_protected(_l)
+                )
+            newer = [k for k in rows if k is not loser and _r20_same(loser, k) and _beats(k)]
             if not newer:
                 continue
             if any(not _r20_same(a, b) for i, a in enumerate(newer) for b in newer[i + 1:]):
