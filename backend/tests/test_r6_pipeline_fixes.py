@@ -232,7 +232,8 @@ class TestBrokenTouClocksRejected(unittest.TestCase):
     def tearDown(self):
         logging.disable(logging.NOTSET)
 
-    def test_gap_rejected(self):
+    def test_one_hour_gap_repaired_or_kept(self):
+        # R7: 1h gap is repaired (or kept with needs_review) — never rejected.
         et = tp.ExtractedTariff(
             name="EV2-A", customer_class="residential", rate_type="tou",
             components=[
@@ -245,9 +246,8 @@ class TestBrokenTouClocksRejected(unittest.TestCase):
                 # gap 15:00–16:00
             ],
         )
-        report, valid = tp.phase4_validate([et], "PG&E", "CA")
-        self.assertEqual(valid, [])
-        self.assertTrue(any("broken TOU" in str(i) for i in report["issues"]))
+        _report, valid = tp.phase4_validate([et], "PG&E", "CA")
+        self.assertEqual(len(valid), 1)
 
     def test_tou_tiered_reclassified(self):
         et = tp.ExtractedTariff(
