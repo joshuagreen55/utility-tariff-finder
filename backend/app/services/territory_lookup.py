@@ -52,6 +52,8 @@ def _live_tariff_count(customer_class: CustomerClass):
             Tariff.customer_class == customer_class,
             Tariff.superseded_by_tariff_id.is_(None),
             Tariff.supersede_reason.is_(None),
+            (Tariff.effective_date.is_(None))
+            | (Tariff.effective_date <= func.current_date()),
         )
         .correlate(Utility)
         .scalar_subquery()

@@ -613,8 +613,8 @@ For each tariff found, provide:
 
 IMPORTANT:
 {_STRUCTURED_RULES}
-- Only include residential / domestic rates
-- Ignore commercial, small-business, general-service, industrial, large power, and lighting rates
+- Residential by who the rate serves (homes/dwellings/domestic/farm-and-home); keep "General Service" / "Farm & Home" when the text says they apply to residences
+- Skip rates that serve only businesses, industry, lighting, irrigation or wholesale
 - Include all residential rate plans: TOU, Tiered, Ultra-Low Overnight, Flat, etc.
 
 Return JSON array of tariff objects. Return ONLY the JSON, no other text.

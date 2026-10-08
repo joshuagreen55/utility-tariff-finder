@@ -101,6 +101,12 @@ async def browse_tariffs(
         # which have a supersede_reason but no surviving tariff to point at).
         .where(Tariff.superseded_by_tariff_id.is_(None))
         .where(Tariff.supersede_reason.is_(None))
+        # Coming TOU / future-dated extracts stay in the DB but are not
+        # served until their effective_date.
+        .where(
+            (Tariff.effective_date.is_(None))
+            | (Tariff.effective_date <= func.current_date())
+        )
     )
 
     if country:
@@ -163,6 +169,10 @@ async def list_tariffs_for_utility(
         # which have a supersede_reason but no surviving tariff to point at).
         .where(Tariff.superseded_by_tariff_id.is_(None))
         .where(Tariff.supersede_reason.is_(None))
+        .where(
+            (Tariff.effective_date.is_(None))
+            | (Tariff.effective_date <= func.current_date())
+        )
     )
 
     if customer_class:

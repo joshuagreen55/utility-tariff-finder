@@ -17,7 +17,7 @@ from __future__ import annotations
 
 import logging
 import re
-from datetime import datetime, time, timezone
+from datetime import date, datetime, time, timezone
 from typing import Any, Iterable, Mapping
 
 log = logging.getLogger(__name__)
@@ -38,6 +38,13 @@ HEURISTIC_FACTOR_KEYS = frozenset({
     "needs_review",
     "tou_seasonal_incomplete",
     "tou_seasonal_incomplete_reasons",
+    "missing_fields",
+    "riders_referenced_not_shown",
+    "energy_scope",
+    "closed_to_new",
+    "energy_includes_riders",
+    "not_yet_effective",
+    "extract_not_computable",
 })
 
 
@@ -53,7 +60,32 @@ def _get(obj: Any, key: str, default: Any = None) -> Any:
 
 
 def is_live(t: Any) -> bool:
+    """Soft-supersede invariant: not retired / absorbed.
+
+    Future-dated rows (effective_date > today) stay ``is_live`` so store and
+    reconcile can find them, but they are excluded from serving via
+    ``is_currently_effective``.
+    """
     return _get(t, "superseded_by_tariff_id") is None and _get(t, "supersede_reason") is None
+
+
+def is_currently_effective(t: Any, *, today: date | None = None) -> bool:
+    """True when a live tariff's rates are in effect on ``today``.
+
+    Tariffs with a future ``effective_date`` (coming TOU structures stored
+    alongside today's interim price) are live in the audit sense but must
+    not be served until that date.
+    """
+    if not is_live(t):
+        return False
+    eff = _get(t, "effective_date")
+    if eff is None:
+        return True
+    if isinstance(eff, datetime):
+        eff = eff.date()
+    if not isinstance(eff, date):
+        return True
+    return eff <= (today or date.today())
 
 
 def is_curated(t: Any) -> bool:

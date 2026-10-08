@@ -496,19 +496,22 @@ class TestPreferredNsSource(unittest.TestCase):
 
 
 class TestInterimVsEnergyChargePrompts(unittest.TestCase):
-    def test_main_extraction_prompt_prefers_energy_charge(self):
-        self.assertIn("INTERIM vs APPROVED ENERGY CHARGE", tp.EXTRACTION_PROMPT)
+    def test_main_extraction_prompt_stores_interim_and_future_tou(self):
+        # Product: today's billed interim AND the coming TOU as future-dated.
         self.assertIn("Example 6", tp.EXTRACTION_PROMPT)
+        self.assertIn("temporary/interim", tp._STRUCTURED_RULES.lower())
+        self.assertIn("TWO tariffs", tp.EXTRACTION_PROMPT)
         self.assertIn("seasonal_tou", tp.EXTRACTION_PROMPT)
-        self.assertIn("Do NOT emit a single flat interim ENERGY", tp.EXTRACTION_PROMPT)
+        self.assertNotIn("Jan 1 2027", tp.EXTRACTION_SYSTEM_PROMPT)
 
-    def test_vision_and_twopass_prompts(self):
+    def test_vision_and_twopass_use_shared_which_price_rule(self):
         for prompt in (
             tp.PAGE_SCREENSHOT_EXTRACTION_PROMPT_BASE,
             tp.PDF_VISION_EXTRACTION_PROMPT_BASE,
-            tp.TWOPASS_EXTRACT_PROMPT,
+            tp._STRUCTURED_RULES,
         ):
-            self.assertIn("Interim vs approved Energy Charge", prompt)
+            self.assertIn("WHICH PRICE", prompt)
+            self.assertNotIn("Jan 1 2027", prompt)
 
     def test_tou_season_strings_fit_varchar(self):
         self.assertLessEqual(len(repair.NS_TOU_NONWINTER_SEASON), tp._RC_SEASON_MAX)

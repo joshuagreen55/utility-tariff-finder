@@ -846,30 +846,44 @@ class TestStructuredNormalization(unittest.TestCase):
 
 class TestPrompts(unittest.TestCase):
     def test_structured_rules_in_every_extraction_prompt(self):
-        for prompt in (tp.EXTRACTION_PROMPT, tp.TWOPASS_EXTRACT_PROMPT,
-                       tp.PAGE_SCREENSHOT_EXTRACTION_PROMPT_BASE, tp.PDF_VISION_EXTRACTION_PROMPT_BASE):
+        # Two-pass extract user message relies on the cached system prompt;
+        # vision + main system embed the shared rules directly.
+        for prompt in (
+            tp.EXTRACTION_PROMPT,
+            tp.EXTRACTION_SYSTEM_PROMPT,
+            tp.PAGE_SCREENSHOT_EXTRACTION_PROMPT_BASE,
+            tp.PDF_VISION_EXTRACTION_PROMPT_BASE,
+            tp._STRUCTURED_RULES,
+        ):
             self.assertIn("DAY TYPES", prompt)
             self.assertNotIn("{structured_rules}", prompt)
             self.assertNotIn("Convert cents to dollars", prompt)
+        self.assertIn("SOURCE ONLY", tp.TWOPASS_EXTRACT_PROMPT)
 
     def test_prompts_still_format(self):
         tp.EXTRACTION_PROMPT.format(url="u", title="t", content="c", utility_name="n", state="s")
-        tp.EXTRACTION_USER_PROMPT.format(url="u", title="t", content="c", utility_name="n", state="s")
-        tp.TWOPASS_EXTRACT_PROMPT.format(tariff_name="a", utility_name="n", state="s", content="c")
+        tp.EXTRACTION_USER_PROMPT.format(
+            url="u", title="t", content="c", utility_name="n", state="s", today="2026-10-07",
+        )
+        tp.TWOPASS_EXTRACT_PROMPT.format(
+            today="2026-10-07", tariff_name="a", utility_name="n", state="s",
+            section="c", shared="(none)",
+        )
+        tp.format_extraction_user(utility_name="n", state="s", url="u", title="t", content="c")
 
     def test_ns_code_80_example_emits_weekend_and_holiday_rows(self):
         example = tp.EXTRACTION_PROMPT.split("Example 6")[1].split("Example 7")[0]
-        self.assertIn('day_type "weekend"', example)
-        self.assertIn('day_type "holiday"', example)
+        self.assertIn("weekend", example.lower())
+        self.assertIn("holiday", example.lower())
         self.assertNotIn("Mention weekend/holiday off-peak in description", tp.EXTRACTION_PROMPT)
 
     def test_prompt_version_bumped(self):
-        self.assertEqual(tp._LLM_PROMPT_VERSION, "v8")
+        self.assertEqual(tp._LLM_PROMPT_VERSION, "v9")
 
     def test_full_bill_energy_rule_in_prompts(self):
-        self.assertIn("FULL-BILL ENERGY", tp._STRUCTURED_RULES)
-        self.assertIn("FULL-BILL", tp.EXTRACTION_PROMPT)
+        self.assertIn("FULL PRICE", tp._STRUCTURED_RULES)
         self.assertIn("included_in_energy", tp.EXTRACTION_PROMPT)
+        self.assertIn("Ontario delivery", tp._STRUCTURED_RULES)
 
     def test_residential_only_in_pipeline_prompts(self):
         for prompt in (
@@ -888,30 +902,36 @@ class TestPrompts(unittest.TestCase):
                 self.assertNotIn('customer_class ("residential"/"commercial")', prompt)
         self.assertEqual(tp.EXTRACT_CLASSES, {"residential"})
         self.assertIn("commercial", tp.VALID_CLASSES)  # schema/history still know it
+        # Who-served, not schedule-name: Farm & Home / General Service kept.
+        self.assertIn("Farm & Home", tp._STRUCTURED_RULES)
+        self.assertIn("who the rate serves", tp._STRUCTURED_RULES.lower())
 
     def test_no_guessing_rule_in_shared_and_vision(self):
-        self.assertIn("NO GUESSING", tp._STRUCTURED_RULES)
-        self.assertIn("never reuse", tp._STRUCTURED_RULES.lower())
+        self.assertIn("SOURCE ONLY", tp._STRUCTURED_RULES)
+        self.assertIn("Allowed derivations", tp._STRUCTURED_RULES)
+        self.assertIn("Nothing else", tp._STRUCTURED_RULES)
         self.assertIn("format illustrations ONLY", tp.EXTRACTION_SYSTEM_PROMPT)
         for prompt in (
             tp.PAGE_SCREENSHOT_EXTRACTION_PROMPT_BASE,
             tp.PDF_VISION_EXTRACTION_PROMPT_BASE,
-            tp.TWOPASS_EXTRACT_PROMPT,
+            tp._STRUCTURED_RULES,
         ):
-            self.assertIn("NO GUESSING", prompt)
+            self.assertIn("SOURCE ONLY", prompt)
 
     def test_main_extraction_user_message_has_no_rules(self):
-        """Rules live in system only — user message is TARGET UTILITY + content."""
-        user = tp.EXTRACTION_USER_PROMPT.format(
+        """Rules live in system only — user message is TODAY + TARGET + content."""
+        user = tp.format_extraction_user(
             url="https://example.com", title="Rates", content="body",
-            utility_name="Example", state="OR",
+            utility_name="Example", state="OR", today="2026-10-07",
         )
+        self.assertIn("TODAY: 2026-10-07", user)
         self.assertIn("TARGET UTILITY", user)
-        self.assertNotIn("NO GUESSING", user)
-        self.assertNotIn("FULL-BILL ENERGY", user)
+        self.assertNotIn("SOURCE ONLY", user)
+        self.assertNotIn("FULL PRICE", user)
         self.assertNotIn("Example 1", user)
         self.assertEqual(tp._CACHED_SYSTEM_PROMPT, tp.EXTRACTION_SYSTEM_PROMPT)
         self.assertNotIn("TARGET UTILITY", tp._CACHED_SYSTEM_PROMPT)
+        self.assertNotIn("TODAY:", tp._CACHED_SYSTEM_PROMPT)
         # User message must stay tiny vs the cached system rules.
         self.assertLess(len(user), 500)
         self.assertGreater(len(tp._CACHED_SYSTEM_PROMPT), 10_000)
@@ -924,21 +944,22 @@ class TestPrompts(unittest.TestCase):
             tp.TWOPASS_IDENTIFY_PROMPT,
         )
 
-    def test_example_6_uses_currently_effective_nonwinter(self):
+    def test_example_6_interim_today_plus_future_tou(self):
         example = tp.EXTRACTION_PROMPT.split("Example 6")[1].split("Example 7")[0]
-        self.assertIn("currently in effect", example.lower())
-        # Future Apr 2027 Non-winter may appear as a column to reject, but
-        # the extracted Non-winter all-in must be the current 19.128, not 13.664.
-        self.assertIn("19.128", example)
-        self.assertNotIn("13.664", example)
-        self.assertIn("Do NOT use the future Apr 1 2027", example)
-        # Output Non-winter uses Board's Order / current, not the 2027 column.
-        self.assertIn('Non-winter (4/1–10/31) 00:00–00:00 day_type "all" 19.128', example)
+        self.assertIn("INTERIM", example)
+        self.assertIn("TWO tariffs", example)
+        self.assertIn("2026-11-01", example)
+        # Synthetic round numbers only — never real NSP cents.
+        self.assertNotIn("19.128", example)
+        self.assertNotIn("18.324", example)
+        self.assertIn("10.000", example)
 
     def test_phase6_and_browser_share_mysa_rules(self):
         phase6 = tp._phase6_prompt("U", "CA", None)
-        self.assertIn("MYSA FIELDS", phase6)
+        self.assertIn("MYSA fields", phase6)
         self.assertIn("seasonal_tou", phase6)
+        self.assertIn("SOURCE ONLY", phase6)
+        self.assertNotIn("Jan 1 2027", phase6)
 
     def test_regulator_attribution_exception_in_prompts(self):
         self.assertIn("PROVINCE-WIDE REGULATED PRICES", tp.EXTRACTION_PROMPT)
