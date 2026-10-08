@@ -1480,6 +1480,23 @@ def phase1_find_rate_page(utility_name: str, state: str, website_url: str | None
         url = r["url"]
         log.info(f"    Candidate: score={score:.0f} {url[:80]}")
 
+    # R20: a supply / price-to-compare sheet (PSE&G BGS PTC) has no delivery
+    # charges. Prefer the utility's own tariff / rates page when one is a
+    # candidate; the sheet stays as an alternate.
+    if is_supply_sheet_url(scored[0][1]["url"]):
+        top_dom = urlparse(scored[0][1]["url"]).netloc.replace("www.", "")
+        for i, (sc, r) in enumerate(scored[1:], start=1):
+            u = r["url"]
+            if (sc > 0 and urlparse(u).netloc.replace("www.", "") == top_dom
+                    and not is_supply_sheet_url(u)
+                    and re.search(r"tariff|rate", u, re.I)
+                    and not re.search(r"news|press|blog", u, re.I)):
+                log.info(f"  Phase 1: Top hit is a supply price sheet — preferring {u[:80]}")
+                top = scored.pop(0)
+                pick = scored.pop(i - 1)
+                scored = [(max(pick[0], top[0]), pick[1]), top, *scored]
+                break
+
     best_score, best = scored[0]
     best_url = best["url"]
 
@@ -10830,6 +10847,16 @@ def url_document_vintage(url: str, *, today: date | None = None) -> tuple[int, i
         cand = (y, month)
         if best is None or cand > best:
             best = cand
+    # R20: compact dates — "effective-20261001" (YYYYMMDD) and
+    # "effective-09012023" (MMDDYYYY).
+    for m in re.finditer(r"(?<!\d)(20\d{2})(0[1-9]|1[0-2])([0-3]\d)(?!\d)", path):
+        y, mo = int(m.group(1)), int(m.group(2))
+        if 2000 <= y <= today.year and (best is None or (y, mo) > best):
+            best = (y, mo)
+    for m in re.finditer(r"(?<!\d)(0[1-9]|1[0-2])([0-3]\d)(20\d{2})(?!\d)", path):
+        y, mo = int(m.group(3)), int(m.group(1))
+        if 2000 <= y <= today.year and (best is None or (y, mo) > best):
+            best = (y, mo)
     if best is None:
         # "April2015" / "Nov2012" glued forms
         for m in re.finditer(
@@ -11054,6 +11081,235 @@ def move_negative_fixed_credits_to_notes(t: ExtractedTariff) -> int:
 
 
 
+# ---------------------------------------------------------------------------
+# R20: supply / default-service price sheets (PSE&G BGS "price to compare").
+#   * A supply-only plan (energy supply prices, no delivery charges) is never
+#     stored on its own. When the same run has the matching delivery plan,
+#     the two are combined into one plan labelled "delivery + default
+#     supply"; otherwise the supply-only plan is dropped (reported).
+#   * A supply sheet must be current: one dated more than 12 months ago, or
+#     6+ months older than another official document in the run, is flagged
+#     (supply_sheet_not_current).
+# ---------------------------------------------------------------------------
+_R20_SUPPLY_RE = re.compile(
+    r"\bptc\b|price[-_ ]?to[-_ ]?compare|\bbgs\b|basic\s+generation|"
+    r"default\s+(?:electric\s+)?(?:service|supply)|standard\s+offer|"
+    r"\bsupply\s+(?:rate|price|charge)s?\b|electric\s+supply|"
+    r"\bgeneration\s+(?:rate|charge|service)s?\b|\bsos\b|provider\s+of\s+last\s+resort",
+    re.I,
+)
+_R20_DELIVERY_LABEL_RE = re.compile(
+    r"distribution|delivery|customer\s+charge|service\s+charge|basic\s+(?:service\s+)?charge|"
+    r"meter(?:ing)?\s+charge|monthly\s+charge|system\s+benefit|societal\s+benefit|"
+    r"\bsbc\b|\bdsic\b|\bwires\b",
+    re.I,
+)
+_R20_MISSING_DELIVERY_RE = re.compile(r"deliver|distribution", re.I)
+_R20_MISSING_SUPPLY_RE = re.compile(r"supply|generation|\bbgs\b|commodity|energy\s+charge", re.I)
+_R20_SUPPLY_STALE_MONTHS = 12
+_R20_SUPPLY_TRAIL_MONTHS = 6
+
+
+def is_supply_sheet_url(url: str) -> bool:
+    """File name looks like a supply / price-to-compare sheet (not a full
+    tariff book that merely mentions BGS)."""
+    name = urlparse(str(url or "")).path.rstrip("/").rsplit("/", 1)[-1]
+    name = re.sub(r"%20|[_\-+.]", " ", name)
+    if re.search(r"tariff|rate\s*book|rates?\s+and\s+(?:rules|regulations)", name, re.I):
+        return False
+    return bool(_R20_SUPPLY_RE.search(name))
+
+
+def _r20_labels(t: ExtractedTariff) -> str:
+    out = []
+    for c in t.components or []:
+        if isinstance(c, dict):
+            out.append(str(c.get("tier_label") or ""))
+            out.append(str(c.get("period_label") or ""))
+    return " ".join(out)
+
+
+def _r20_has_delivery(t: ExtractedTariff) -> bool:
+    for c in t.components or []:
+        if not isinstance(c, dict):
+            continue
+        ctype = str(c.get("component_type") or "").lower()
+        try:
+            rv = float(c.get("rate_value") or 0)
+        except (TypeError, ValueError):
+            rv = 0.0
+        label = f"{c.get('tier_label') or ''} {c.get('period_label') or ''}"
+        if ctype in ("fixed", "minimum") and rv > 0:
+            return True
+        if _R20_DELIVERY_LABEL_RE.search(label):
+            return True
+    return False
+
+
+def _r20_has_energy(t: ExtractedTariff) -> bool:
+    return any(
+        isinstance(c, dict) and str(c.get("component_type") or "").lower() == "energy"
+        for c in t.components or []
+    )
+
+
+def is_supply_only_plan(t: ExtractedTariff) -> bool:
+    """Energy supply prices with no delivery charges at all."""
+    if not _r20_has_energy(t) or _r20_has_delivery(t):
+        return False
+    missing = " ".join(str(m) for m in (getattr(t, "missing_fields", None) or []))
+    signal = " ".join([t.name or "", t.description or "", _r20_labels(t)])
+    return bool(
+        _R20_SUPPLY_RE.search(signal)
+        or is_supply_sheet_url(t.source_url)
+        or _R20_MISSING_DELIVERY_RE.search(missing)
+    )
+
+
+def is_delivery_only_plan(t: ExtractedTariff) -> bool:
+    """Delivery charges present but the energy supply price is missing."""
+    if not _r20_has_delivery(t):
+        return False
+    missing = " ".join(str(m) for m in (getattr(t, "missing_fields", None) or []))
+    energy = [c for c in t.components or [] if isinstance(c, dict)
+              and str(c.get("component_type") or "").lower() == "energy"]
+    if energy and all(
+        _R20_DELIVERY_LABEL_RE.search(f"{c.get('tier_label') or ''} {c.get('period_label') or ''}")
+        for c in energy
+    ):
+        return True
+    if not energy:
+        return True
+    return bool(_R20_MISSING_SUPPLY_RE.search(missing)) and not _R20_SUPPLY_RE.search(_r20_labels(t))
+
+
+def _r20_schedule_key(t: ExtractedTariff) -> set[str]:
+    codes = extract_ratebook_codes(t.name, t.code)
+    lead = re.match(r"\s*([A-Za-z]{1,4}(?:-?\d+(?:\.\d+)?)?)\s*(?:[-–—:(]|$)", t.name or "")
+    if lead:
+        codes.add(lead.group(1).lower())
+    return {c for c in codes if c and c not in ("rate", "the")}
+
+
+def _r20_pair(supply: ExtractedTariff, deliveries: list[ExtractedTariff]):
+    sk = _r20_schedule_key(supply)
+    if sk:
+        hits = [d for d in deliveries if _r20_schedule_key(d) & sk]
+        if len(hits) == 1:
+            return hits[0]
+        if hits:
+            return None
+    q = vintage_qualifiers(supply.name, supply.code) - {"bgs", "rscp", "supply", "default", "generation"}
+    hits = [d for d in deliveries if q and q <= vintage_qualifiers(d.name, d.code)]
+    return hits[0] if len(hits) == 1 else None
+
+
+def combine_supply_with_delivery(valid: list[ExtractedTariff]) -> tuple[list[ExtractedTariff], dict]:
+    """Merge supply-only plans into their delivery plan; drop unmatched ones."""
+    supply = [t for t in valid if is_supply_only_plan(t)]
+    if not supply:
+        return valid, {}
+    deliveries = [t for t in valid if t not in supply and is_delivery_only_plan(t)]
+    used: set[int] = set()
+    combined, dropped = [], []
+    out = [t for t in valid if t not in supply]
+    for s_t in supply:
+        d = _r20_pair(s_t, [x for x in deliveries if id(x) not in used])
+        if d is None:
+            dropped.append(s_t.name)
+            log.warning(
+                f"    Supply-only plan '{s_t.name}' has no matching delivery plan in "
+                f"this run — not stored (never supply-only)"
+            )
+            continue
+        used.add(id(d))
+        comps = []
+        for c in d.components or []:
+            if not isinstance(c, dict):
+                continue
+            c = dict(c)
+            if str(c.get("component_type") or "").lower() == "energy":
+                # Delivery per-kWh charges add on top of the supply price.
+                c["component_type"] = "adjustment"
+                c["tier_label"] = f"Delivery: {c.get('tier_label') or c.get('period_label') or 'distribution'}"
+            comps.append(c)
+        for c in s_t.components or []:
+            if not isinstance(c, dict):
+                continue
+            c = dict(c)
+            lab = c.get("tier_label") or c.get("period_label") or ""
+            if str(c.get("component_type") or "").lower() != "energy":
+                c["tier_label"] = f"Supply: {lab}".strip()
+            comps.append(c)
+        d.components = comps
+        d.rate_type = s_t.rate_type or d.rate_type
+        d.name = f"{d.name} (delivery + default supply)"
+        if s_t.effective_date and (not d.effective_date or s_t.effective_date > d.effective_date):
+            d.effective_date = s_t.effective_date
+        d.missing_fields = [
+            m for m in (list(d.missing_fields or []) + list(s_t.missing_fields or []))
+            if not _R20_MISSING_DELIVERY_RE.search(str(m)) and not _R20_MISSING_SUPPLY_RE.search(str(m))
+        ]
+        d.needs_review = bool(d.needs_review or s_t.needs_review)
+        _r18_note(d, "combined_supply", {
+            "supply_plan": s_t.name,
+            "supply_source": s_t.source_url,
+            "delivery_source": d.source_url,
+            "label": "delivery + default supply",
+        })
+        combined.append(d.name)
+        log.info(f"    Combined delivery + default supply → '{d.name}'")
+    info = {}
+    if combined:
+        info["supply_combined"] = combined
+    if dropped:
+        info["supply_only_dropped"] = dropped
+    return out, info
+
+
+def flag_supply_sheet_currency(tariffs: list[ExtractedTariff], doc_context: dict | None = None,
+                               *, today: date | None = None) -> int:
+    """Flag plans priced from a supply sheet that is not current."""
+    ctxd = doc_context if doc_context is not None else _RUN_DOC_CONTEXT
+    today = today or date.today()
+    page_v = dict((ctxd or {}).get("page_vintages") or {})
+    newest = None
+    for u, v in page_v.items():
+        if v and (newest is None or v > newest[1]):
+            newest = (u, v)
+    nd = newest_dated_rate_document((ctxd or {}).get("known_urls") or [], today=today)
+    if nd and (newest is None or nd[1] > newest[1]):
+        newest = nd
+    flagged = 0
+    for t in tariffs:
+        srcs = [t.source_url or ""]
+        cs = (getattr(t, "confidence_notes", None) or {}).get("combined_supply")
+        if isinstance(cs, dict) and cs.get("supply_source"):
+            srcs.append(cs["supply_source"])
+        for src in srcs:
+            if not src or not (is_supply_sheet_url(src) or (src == t.source_url and _R20_SUPPLY_RE.search(t.name or ""))):
+                continue
+            v = page_v.get(src) or url_document_vintage(src, today=today)
+            if v is None:
+                d = _parse_effective_date(getattr(t, "effective_date", None), today=today)
+                v = (d.year, d.month) if d else None
+            if v is None:
+                continue
+            age = _r19_months((today.year, today.month)) - _r19_months(v)
+            trail = (_r19_months(newest[1]) - _r19_months(v)) if newest and newest[0] != src else 0
+            if age > _R20_SUPPLY_STALE_MONTHS or trail >= _R20_SUPPLY_TRAIL_MONTHS:
+                _r18_add_missing(t, "supply_sheet_not_current")
+                _r18_note(t, "supply_sheet_not_current", {
+                    "supply_document": src,
+                    "supply_document_date": f"{v[0]}-{v[1]:02d}",
+                    "newer_official_document": newest[0] if newest and trail > 0 else None,
+                })
+                log.warning(f"    '{t.name}' uses a supply price sheet dated {v[0]}-{v[1]:02d} — not current, needs_review")
+                flagged += 1
+                break
+    return flagged
+
+
 def reconcile_same_utility_plans(
     valid: list[ExtractedTariff],
     utility_name: str = "",
@@ -11061,11 +11317,16 @@ def reconcile_same_utility_plans(
 ) -> tuple[list[ExtractedTariff], dict]:
     """R18 post-validation pass over one utility's accepted plans."""
     info: dict = {}
+    valid, sup_info = combine_supply_with_delivery(valid)
+    info.update(sup_info)
     n_rep = reconcile_optional_variant_prices(valid)
     kept, actions = dedupe_same_plan_variants(valid, utility_name)
     n_tmp = mark_temporary_only_plans(kept)
     n_guard = flag_optional_priced_below_base(kept)
     n_old = flag_older_source_documents(kept)
+    n_sup = flag_supply_sheet_currency(kept)
+    if n_sup:
+        info["supply_sheet_not_current"] = n_sup
     missing = find_plans_possibly_not_extracted(all_in or [], kept)
     if n_rep:
         info["variant_prices_repaired"] = n_rep
@@ -13341,6 +13602,47 @@ def _vintage_strong_discriminators(name: str) -> set[str]:
     return set(stem.split()) & (_TARIFF_DISCRIMINATORS - _VINTAGE_OPTIONAL_SHAPE)
 
 
+# R20: words that only describe an edition / boilerplate, never a different
+# plan. Everything else left in a name after codes and stopwords is a
+# qualifier ("geothermal", "full", "equipment", "3", "pm", "heating" ...).
+_R20_EDITION_WORDS: frozenset[str] = frozenset({
+    "standard", "price", "pricing", "rates",
+    "tariff", "electric", "electricity", "customer", "customers", "general",
+    "effective", "eff", "edition", "revised", "revision", "updated", "current",
+    "new", "issued", "sheet", "no", "number", "flat",
+    "jan", "january", "feb", "february", "mar", "march", "apr", "april", "may",
+    "jun", "june", "jul", "july", "aug", "august", "sep", "sept", "september",
+    "oct", "october", "nov", "november", "dec", "december",
+}) - {"no"}  # "no" stays a qualifier ("No Demand")
+
+
+def _r20_code_pieces(codes: set[str]) -> set[str]:
+    out: set[str] = set()
+    for c in codes:
+        c = str(c).lower()
+        out.add(c)
+        out |= set(re.findall(r"[a-z]+|\d+(?:\.\d+)?", c))
+        out.add(re.sub(r"[^a-z0-9]", "", c))
+    return out
+
+
+def vintage_qualifiers(name: str, code: str | None = None) -> set[str]:
+    """Plan-identity words in a name: everything except rate codes,
+    stopwords, edition / boilerplate words and years."""
+    codes = extract_ratebook_codes(name, code)
+    pieces = _r20_code_pieces(codes)
+    raw = _strip_tariff_blurb(name or "").lower()
+    toks = re.findall(r"[a-z]+|\d+(?:\.\d+)?", raw)
+    out = set()
+    for t in toks:
+        if t in pieces or t in _TARIFF_NAME_STOPWORDS or t in _R20_EDITION_WORDS:
+            continue
+        if re.fullmatch(r"(19|20)\d{2}", t):
+            continue
+        out.add(t)
+    return out
+
+
 def same_vintage_product(
     name_a: str,
     name_b: str,
@@ -13350,55 +13652,32 @@ def same_vintage_product(
     rate_type_a=None,
     rate_type_b=None,
 ) -> bool:
-    """True if two live tariffs are vintages of the same product.
+    """True if two live tariffs are editions of the same plan.
 
-    Prefer shared rate-book codes (#1.1). Fall back to conservative stem
-    match that ignores optional shape words like Flat. Does NOT widen
-    ``tariffs_likely_same`` — TOU vs Flat remain different products when
-    rate types or strong discriminators conflict (even one-sided TOU).
+    R20: strict. Rate types must be compatible, strong discriminators must
+    agree, two different rate codes (D1.11 vs D1.7) never match, and the
+    names' qualifier words must be identical once codes, stopwords and
+    edition words (year, month, "revised", "flat" ...) are removed — so
+    "Geothermal Time of Day" ≠ "Time of Day", "RS-1 EV Full Installation" ≠
+    "RS-1 EV Equipment only Installation". A shared code binds only when the
+    qualifiers also agree. NL "Rate #1.1 Domestic Service" still matches
+    "Domestic Service (Flat)".
     """
     if not _rate_types_compatible_for_vintage(rate_type_a, rate_type_b):
         return False
-
+    if _vintage_strong_discriminators(name_a) != _vintage_strong_discriminators(name_b):
+        return False
     codes_a = extract_ratebook_codes(name_a, code_a)
     codes_b = extract_ratebook_codes(name_b, code_b)
-    disc_a = _vintage_strong_discriminators(name_a)
-    disc_b = _vintage_strong_discriminators(name_b)
-
-    # Strong discriminators must agree on BOTH sides (including one-sided
-    # TOU / heating / optional). Optional "flat" is already stripped.
-    if disc_a != disc_b:
+    if codes_a and codes_b and not (codes_a & codes_b):
         return False
-
-    if codes_a and codes_b and (codes_a & codes_b):
+    qa = vintage_qualifiers(name_a, code_a)
+    qb = vintage_qualifiers(name_b, code_b)
+    if qa != qb:
+        return False
+    if codes_a & codes_b:
         return True
-
-    stem_a = _vintage_name_stem(name_a)
-    stem_b = _vintage_name_stem(name_b)
-    if not stem_a or not stem_b:
-        return False
-    if stem_a == stem_b:
-        return True
-
-    ta, tb = set(stem_a.split()), set(stem_b.split())
-    if not ta or not tb:
-        return False
-    overlap = len(ta & tb) / min(len(ta), len(tb))
-    if overlap < 0.8:
-        return False
-
-    shorter, longer = (ta, tb) if len(ta) <= len(tb) else (tb, ta)
-    if not shorter <= longer:
-        return False
-
-    # One-sided rate code + shorter-stem subset binds (NF #1.1 vs Flat name).
-    # Without any code, require exact stem token-set equality (handled above)
-    # or full overlap of equal-size sets.
-    if codes_a or codes_b:
-        return True
-    return overlap >= 1.0 and len(ta) == len(tb)
-
-
+    return bool(qa)
 
 
 def choose_vintage_keeper(candidates: list) -> object:
@@ -13435,41 +13714,58 @@ def choose_vintage_keeper(candidates: list) -> object:
     return max(candidates, key=_key)
 
 
+def _r20_same(a, b) -> bool:
+    return same_vintage_product(
+        getattr(a, "name", ""), getattr(b, "name", ""),
+        code_a=getattr(a, "code", None), code_b=getattr(b, "code", None),
+        rate_type_a=getattr(a, "rate_type", None), rate_type_b=getattr(b, "rate_type", None),
+    )
+
+
 def group_live_tariffs_by_vintage(tariffs: list) -> list[list]:
-    """Union-find cluster of live tariffs that are vintages of one product."""
-    n = len(tariffs)
-    if n < 2:
-        return []
-    parent = list(range(n))
+    """Groups of live tariffs that are editions of one plan.
 
-    def find(i: int) -> int:
-        while parent[i] != i:
-            parent[i] = parent[parent[i]]
-            i = parent[i]
-        return i
+    R20: complete linkage — a row joins a group only if it matches EVERY
+    member, so A~B and B~C never collapse A, B and C together.
+    """
+    groups: list[list] = []
+    for t in tariffs:
+        for g in groups:
+            if all(_r20_same(t, m) for m in g):
+                g.append(t)
+                break
+        else:
+            groups.append([t])
+    return [g for g in groups if len(g) > 1]
 
-    def union(i: int, j: int) -> None:
-        ri, rj = find(i), find(j)
-        if ri != rj:
-            parent[rj] = ri
 
-    for i in range(n):
-        for j in range(i + 1, n):
-            a, b = tariffs[i], tariffs[j]
-            if same_vintage_product(
-                getattr(a, "name", ""),
-                getattr(b, "name", ""),
-                code_a=getattr(a, "code", None),
-                code_b=getattr(b, "code", None),
-                rate_type_a=getattr(a, "rate_type", None),
-                rate_type_b=getattr(b, "rate_type", None),
-            ):
-                union(i, j)
+def _r20_same_document(a, b) -> bool:
+    ua, ub = (getattr(a, "source_url", None) or ""), (getattr(b, "source_url", None) or "")
+    ha = getattr(a, "source_document_hash", None)
+    hb = getattr(b, "source_document_hash", None)
+    if ha and hb:
+        return ha == hb
+    return bool(ua) and ua == ub
 
-    buckets: dict[int, list] = {}
-    for i in range(n):
-        buckets.setdefault(find(i), []).append(tariffs[i])
-    return [g for g in buckets.values() if len(g) > 1]
+
+def is_newer_edition(newer, older, *, today=None) -> bool:
+    """True only when ``newer`` is a later, currently effective edition.
+
+    Same effective date → never (same edition: dedupe's job, not vintage).
+    A future-dated row never retires a current one. An undated older row is
+    replaced by a dated row only when they come from different documents.
+    """
+    from datetime import date as _date
+    today = today or _date.today()
+    ne = getattr(newer, "effective_date", None)
+    oe = getattr(older, "effective_date", None)
+    if ne is None:
+        return False
+    if ne > today:
+        return False
+    if oe is None:
+        return not _r20_same_document(newer, older)
+    return ne > oe
 
 
 def supersede_older_vintages(
@@ -13507,41 +13803,50 @@ def supersede_older_vintages(
 
     absorbed = 0
     for _cc, rows in by_class.items():
-        for group in group_live_tariffs_by_vintage(rows):
-            keeper = choose_vintage_keeper(group)
-            for loser in group:
-                if loser.id == keeper.id:
-                    continue
-                if is_protected(loser) and not is_protected(keeper):
-                    record_event(
-                        session,
-                        decision="hold",
-                        reason="vintage_protected",
-                        utility_id=utility_id,
-                        before_tariff_id=loser.id,
-                        after_tariff_id=keeper.id,
-                        actor_type=actor_type,
-                        actor_id=actor_id,
-                    )
-                    log.info(
-                        f"  Vintage HOLD: protected '{loser.name}' kept live "
-                        f"alongside newer scraped '{keeper.name}'"
-                    )
-                    continue
-                supersede_tariff(
-                    session, loser,
-                    successor=keeper,
-                    reason=reason,
+        # R20: each row is compared directly with every other row (no
+        # chaining). It is retired only onto a strictly newer edition of the
+        # same plan; if it matches several newer rows that are not the same
+        # plan as each other, it is ambiguous and stays live.
+        plan = []
+        for loser in rows:
+            newer = [k for k in rows if k is not loser and _r20_same(loser, k) and is_newer_edition(k, loser)]
+            if not newer:
+                continue
+            if any(not _r20_same(a, b) for i, a in enumerate(newer) for b in newer[i + 1:]):
+                log.info(f"  Vintage: '{loser.name}' matches several different newer plans — kept live")
+                continue
+            plan.append((loser, choose_vintage_keeper(newer)))
+        for loser, keeper in plan:
+            if is_protected(loser) and not is_protected(keeper):
+                record_event(
+                    session,
+                    decision="hold",
+                    reason="vintage_protected",
+                    utility_id=utility_id,
+                    before_tariff_id=loser.id,
+                    after_tariff_id=keeper.id,
                     actor_type=actor_type,
                     actor_id=actor_id,
                 )
-                absorbed += 1
                 log.info(
-                    f"  Vintage supersede: '{loser.name}' "
-                    f"(eff={loser.effective_date}) → keeper "
-                    f"'{keeper.name}' (eff={keeper.effective_date}) "
-                    f"reason={reason}"
+                    f"  Vintage HOLD: protected '{loser.name}' kept live "
+                    f"alongside newer scraped '{keeper.name}'"
                 )
+                continue
+            supersede_tariff(
+                session, loser,
+                successor=keeper,
+                reason=reason,
+                actor_type=actor_type,
+                actor_id=actor_id,
+            )
+            absorbed += 1
+            log.info(
+                f"  Vintage supersede: '{loser.name}' "
+                f"(eff={loser.effective_date}) → keeper "
+                f"'{keeper.name}' (eff={keeper.effective_date}) "
+                f"reason={reason}"
+            )
     return absorbed
 
 
