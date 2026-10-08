@@ -349,7 +349,7 @@ class TestNeedsReviewCriticalOnly(unittest.TestCase):
 
 
 class TestOntarioLossFactor(unittest.TestCase):
-    """R7.7: apply BillData LF to the commodity portion."""
+    """R7.7 / R8b.4: BillData LF on commodity + transmission/regulatory."""
 
     def test_lf_applied_to_commodity_only(self):
         rates = oeb.OEBRateSet(

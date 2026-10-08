@@ -1,0 +1,861 @@
+===== SCHEDULE 102 =====
+                                  SCHEDULE 102
+PURPOSE
+APPLICABLE
+                                       First 2,000 kWh             (1.112)           ¢ per kWh          (I)
+                                       Over 2,000 kWh              0.000             ¢ per kWh
+                All schedules                                      (1.112)           ¢ per kWh          (I)
+Residential Service means Electricity Service provided for residential purposes including service
+                                  SCHEDULE 102 (Concluded)
+Farm Service means Electricity Service furnished to Premises employed for the purpose of
+2.   The credit is no longer applicable upon determination that the service no longer constitutes
+
+===== SCHEDULE 103 =====
+                             SCHEDULE 103
+PURPOSE
+APPLICABLE
+applicable recovery period.
+     0.000% of the total billed amount to the Customer excluding the Public Purpose Charge           (R)
+
+===== SCHEDULE 105 =====
+                                         SCHEDULE 105
+PURPOSE
+The purpose of this schedule is to reflect the effects of regulatory adjustments such as net gains
+APPLICABLE
+To all bills for Electricity Service calculated under all schedules and contracts, except those
+PART B – LARGE NON-RESIDENTIAL LOAD TRUE-UP
+The Adjustment Rates, applicable for service on and after the effective date of this schedule, will
+   7                              0.123         0.000          0.123     ¢ per kWh
+   15/515                         0.006         0.000          0.006     ¢ per kWh
+   32/532                         0.009         0.000          0.009     ¢ per kWh
+   38/538                         0.003         0.008          0.011     ¢ per kWh
+   47                             0.009         0.000          0.009     ¢ per kWh
+   49/549                         0.008         0.008          0.016     ¢ per kWh
+        Secondary                 0.012         0.008          0.020     ¢ per kWh(1)
+        Primary                   0.012         0.008          0.020     ¢ per kWh(1)
+        Subtransmission           0.012         0.008          0.020     ¢ per kWh(1)
+   83/583                         0.011         0.008          0.019     ¢ per kWh
+        Secondary                 0.010         0.008          0.018     ¢ per kWh
+        Primary                   0.010         0.008          0.018     ¢ per kWh
+(1) Applicable only to the Baseline and Scheduled Maintenance Energy.
+                              SCHEDULE 105 (Continued)                                  (T)
+        Secondary         0.012      0.008        0.020     ¢ per kWh
+        Primary           0.012      0.008        0.020     ¢ per kWh
+        Subtransmission   0.012      0.008        0.020     ¢ per kWh
+        Primary           0.010      0.008        0.018     ¢ per kWh
+        Subtransmission   0.010      0.008        0.018     ¢ per kWh
+        Primary           0.010      0.008        0.018     ¢ per kWh
+        Subtransmission   0.010      0.008        0.018     ¢ per kWh
+  91/591                  0.005      0.008        0.013     ¢ per kWh
+  92/592                  0.007      0.008        0.015     ¢ per kWh
+  95/595                  0.005      0.008        0.013     ¢ per kWh
+  96/596                  0.010      0.008        0.018     ¢ per kWh                   (N)
+        Secondary         0.000      0.000        0.000     ¢ per kWh
+        Primary           0.000      0.000        0.000     ¢ per kWh
+        Secondary         0.003      0.000        0.003     ¢ per kWh
+        Primary           0.003      0.000        0.003     ¢ per kWh
+        Subtransmission   0.003      0.000        0.003     ¢ per kWh
+        Primary           0.001      0.000        0.001     ¢ per kWh
+        Subtransmission   0.001      0.000        0.001     ¢ per kWh
+  491                     (0.005)    0.000        (0.005)   ¢ per kWh
+  492                     (0.004)    0.000        (0.004)   ¢ per kWh
+  495                     (0.005)    0.000        (0.005)   ¢ per kWh
+        Primary           0.003      0.000        0.003     ¢ per kWh
+        Subtransmission   0.003      0.000        0.003     ¢ per kWh                   (N)
+                             SCHEDULE 105 (Concluded)
+        Secondary         0.003      0.000    0.003     ¢ per kWh
+        Primary           0.003      0.000    0.003     ¢ per kWh
+        Subtransmission   0.003      0.000    0.003     ¢ per kWh
+        Primary           0.003      0.000    0.003     ¢ per kWh
+        Subtransmission   0.003      0.000    0.003     ¢ per kWh                  (N)
+
+===== SCHEDULE 106 =====
+                               SCHEDULE 106
+PURPOSE
+APPLICABLE
+Multnomah County for each tax year or other applicable recovery period.
+     0.000% of the total billed amount to the Customer excluding the Public Purpose Charge          (R)
+
+===== SCHEDULE 108 =====
+                                       SCHEDULE 108
+                                  PUBLIC PURPOSE CHARGE
+PURPOSE
+APPLICABLE
+PUBLIC PURPOSE CHARGE
+The Public Purpose Charge will be 1.5% of total revenue billed to the Customer “for electricity
+Company will include the credits due, as reported by the ODOE, to the applicable portions of the
+SDCs monthly Public Purpose Charge.
+     Company’s service territory will collect a Public Purpose Charge from its Direct Access
+     Customers. The ESS will remit monthly to the Company the Public Purpose Charges it
+     collects from Customers and provide calculations of the Public Purpose Charge for each
+     information, so the Company can correctly allocate the applicable portions of the Direct
+     Access SDC’s monthly Public Purpose Charge and ensure Disbursement of Funds
+                                SCHEDULE 108 (Concluded)
+2.   Disbursement of Funds – The Company will distribute monthly, Public Purpose funds
+
+===== SCHEDULE 109 =====
+                                 SCHEDULE 109
+PURPOSE
+APPLICABLE
+Funding Adjustment and Public Purpose Charges. Nonresidential Customers who meet the
+Purpose Charges.
+as reported by the ODOE, to the applicable portions of the SDC’s monthly Schedule 109 Charge.
+                                 SCHEDULE 109 (Continued)
+The Adjustment Rates, applicable for service on and after the effective date of this schedule, will
+  7                                        1.004 ¢ per kWh                                            (R)
+  15/515                                   0.742 ¢ per kWh
+  32/532                                   0.916 ¢ per kWh
+  38/538                                   1.000 ¢ per kWh
+  47                                       1.310 ¢ per kWh
+  49/549                                   1.190 ¢ per kWh
+       Secondary                            0.487    ¢ per kWh
+       Primary                              0.482    ¢ per kWh
+       Subtransmission                      0.416    ¢ per kWh
+  83/583                                    0.700    ¢ per kWh
+       Secondary                            0.622 ¢ per kWh
+       Primary                              0.752 ¢ per kWh
+       Secondary                            0.487 ¢ per kWh
+       Primary                              0.482 ¢ per kWh
+       Subtransmission                      0.416 ¢ per kWh
+       Primary 30-250MWa                    0.482    ¢ per kWh
+       Primary >250MWa                      0.000    ¢ per kWh
+       Subtransmission                      0.482    ¢ per kWh
+  91/491/591                                0.770    ¢ per kWh
+  92/492/592                                0.526    ¢ per kWh
+  95/495/595                                0.770    ¢ per kWh                                        (R)
+  96/496/596/696                            0.764    ¢ per kWh                                        (N)
+                                SCHEDULE 109 (Concluded)
+       Secondary                                     0.487   ¢ per kWh
+       Primary                                       0.482   ¢ per kWh
+       Subtransmission                               0.416   ¢ per kWh
+  83/583 >1aMW                                       0.422   ¢ per kWh
+       Secondary                                     0.298 ¢ per kWh
+       Primary                                       0.274 ¢ per kWh
+       Secondary                                     0.487 ¢ per kWh
+       Primary                                       0.482 ¢ per kWh
+       Subtransmission                               0.416 ¢ per kWh
+       Primary 30-250MWa                             0.482   ¢ per kWh
+       Primary >250MWa                               0.000   ¢ per kWh
+       Subtransmission                               0.482   ¢ per kWh
+  96/496/596/696                                     0.764   ¢ per kWh                             (N)
+   described in HB 3141 will be paid from the Schedule 109 Energy Trust of Oregon Funding
+
+===== SCHEDULE 115 =====
+                                        SCHEDULE 115
+PURPOSE
+The purpose of this rate schedule is to implement the low-income bill payment assistance
+APPLICABLE
+The applicable Adjustment Rates are listed below. As specified in ORS 757.698(1)(c) and
+            7                             $1.24 per month                                           (I)
+            All other Schedules,          0.138¢ per kWh
+
+===== SCHEDULE 118 =====
+                                         SCHEDULE 118
+PURPOSE
+The purpose of this schedule is to recover the costs associated with PGE’s Income-Qualified Bill
+offering to eligible Residential and Non-Residential Customers designed to increase bill             (C)
+APPLICABLE
+The applicable Adjustment Rates are listed below. The rate for non-Residential schedules is
+                                   7                          $2.74 per bill                         (R)
+                    Non-Residential Schedules               0.361¢ per kWh                           (I)
+
+===== SCHEDULE 120 =====
+                               SCHEDULE 120
+PURPOSE
+APPLICABLE
+costs, income taxes, property taxes, and other fees and costs that are applicable to the Seaside
+Seaside BESS resource will be included in the Schedule 120 rates. By no later than December 1
+The Adjustment Rate, applicable for service on and after the effective date of this schedule are:
+   7                          0.230       (0.000)       0.230      ¢ per kWh
+   15                         0.163       (0.000)       0.163      ¢ per kWh
+   32                         0.202       (0.000)       0.202      ¢ per kWh
+   38                         0.197       (0.000)       0.197      ¢ per kWh
+   47                         0.241       (0.000)       0.241      ¢ per kWh
+   49                         0.236       (0.000)       0.236      ¢ per kWh
+                                      SCHEDULE 120 (Concluded)
+           Secondary              0.179       (0.000)       0.179      ¢ per kWh
+           Primary                0.177       (0.000)       0.177      ¢ per kWh
+           Subtransmission        0.176       (0.000)       0.176      ¢ per kWh
+     83                           0.196       (0.000)       0.196      ¢ per kWh
+           Secondary              0.194       (0.000)       0.194      ¢ per kWh
+           Primary                0.183       (0.000)       0.183      ¢ per kWh
+           Secondary              0.179       (0.000)       0.179      ¢ per kWh
+           Primary                0.177       (0.000)       0.177      ¢ per kWh
+           Subtransmission        0.176       (0.000)       0.176      ¢ per kWh
+     Primary 30-250 MWa           0.175       (0.000)       0.175      ¢ per kWh
+     Primary >250 MWa             0.171       (0.000)       0.171      ¢ per kWh
+     Subtransmission              0.175       (0.000)       0.175      ¢ per kWh
+     91                           0.163       (0.000)       0.163      ¢ per kWh
+     92                           0.176       (0.000)       0.176      ¢ per kWh
+     95                           0.163       (0.000)       0.163      ¢ per kWh
+     96                           0.176       (0.000)       0.176      ¢ per kWh                      (N)
+          applicable schedule’s forecasted energy on the basis of an equal percent of generation
+          revenue applied on a cents per kWh basis to each applicable rate schedule.
+          above and will continue to be recovered under Schedule 120 until such time as the costs
+
+===== SCHEDULE 121 =====
+                                SCHEDULE 121
+PURPOSE
+APPLICABLE
+The Adjustment Rate, applicable for service on and after the effective date of this schedule are:
+   7                                0.401          ¢ per kWh
+   15/515                           0.369          ¢ per kWh
+   32/532                           0.360          ¢ per kWh                               (R)
+   38/538                           0.465          ¢ per kWh                               (I)
+   47                               0.607          ¢ per kWh
+   49/549                           0.582          ¢ per kWh
+        Secondary                   0.100          ¢ per kWh
+        Primary                     0.099          ¢ per kWh
+        Subtransmission             0.151          ¢ per kWh                               (I)
+   83/583                           0.249          ¢ per kWh                               (R)
+        Secondary                   0.161          ¢ per kWh                               (I)
+        Primary                     0.146          ¢ per kWh
+        Secondary                   0.100          ¢ per kWh
+        Primary                     0.099          ¢ per kWh
+        Subtransmission             0.151          ¢ per kWh                               (I)
+                             SCHEDULE 121 (Continued)
+        Primary 30-250 MWa          0.082      ¢ per kWh
+        Primary >250 MWa            0.081      ¢ per kWh
+        Subtransmission             0.082      ¢ per kWh                            (I)
+  91/591                            0.370      ¢ per kWh
+  92/592                            0.145      ¢ per kWh
+  95/595                            0.370      ¢ per kWh
+        Primary                     0.126      ¢ per kWh
+        Subtransmission             0.126      ¢ per kWh                            (N)
+        Secondary                   0.064      ¢ per kWh                            (I)
+        Primary                     0.027      ¢ per kWh                            (R)
+        Secondary                   0.053      ¢ per kWh
+        Primary                     0.027      ¢ per kWh
+        Subtransmission             0.018      ¢ per kWh
+        Primary                     0.030      ¢ per kWh
+        Subtransmission             0.030      ¢ per kWh
+  491                               0.327      ¢ per kWh                            (R)
+  492                               0.098      ¢ per kWh                            (I)
+  495                               0.327      ¢ per kWh
+        Primary                     0.058      ¢ per kWh
+        Subtransmission             0.058      ¢ per kWh
+        Secondary                   0.054      ¢ per kWh                            (I)
+        Primary                     0.053      ¢ per kWh
+        Subtransmission             0.053      ¢ per kWh                            (I)
+                                  SCHEDULE 121 (Concluded)
+           Primary                      0.053         ¢ per kWh
+           Subtransmission              0.053         ¢ per kWh
+       applicable schedule’s forecasted energy on the basis of an equal percent of production,
+       transmission, distribution and consumer revenue applied on a cents per kWh basis to each
+       applicable rate schedule.
+       above and will continue to be recovered under Schedule 121 until such time as the costs
+
+===== SCHEDULE 122 =====
+                              SCHEDULE 122
+PURPOSE
+APPLICABLE
+689 and 696. This schedule is not applicable to direct access customers after December 31, 2010.    (C)
+The Adjustment Rate, applicable for service on and after the effective date of this schedule are:
+ 7                               0.214     ¢ per kWh
+ 15                              0.152     ¢ per kWh
+ 32                              0.188     ¢ per kWh
+ 38                              0.184     ¢ per kWh
+ 47                              0.224     ¢ per kWh
+ 49                              0.220     ¢ per kWh
+      Secondary                  0.166       ¢ per kWh
+      Primary                    0.165       ¢ per kWh
+      Subtransmission            0.163       ¢ per kWh
+ 83                              0.183       ¢ per kWh
+      Secondary                  0.181       ¢ per kWh
+      Primary                    0.171       ¢ per kWh
+      Secondary                  0.166       ¢ per kWh
+      Primary                    0.165       ¢ per kWh
+      Subtransmission            0.163       ¢ per kWh                                              (M)
+                                  SCHEDULE 122 (Continued)
+      Primary 30-250 Mwa          0.163       ¢ per kWh
+      Primary >250 Mwa            0.133       ¢ per kWh
+      Subtransmission             0.163       ¢ per kWh
+ 91                               0.162       ¢ per kWh
+ 92                               0.163       ¢ per kWh
+ 95                               0.162       ¢ per kWh
+ 96                               0.164       ¢ per kWh                                                (N)
+maintenance costs, income taxes, property taxes, and other fees and costs that are applicable to
+will be deferred and included in the Schedule 122 rates. By no later than April 1 of each year
+year. Should the final determination of a Schedule 122 filing for a new resource not allow for
+impacts will subsequently be removed from Schedule 122 prices and included in the AUT at the
+purposes of determining dispatch benefits, the forward curves used to set rates for the year under
+year in Schedule 122 unless otherwise approved by the Oregon Public Utility Commission
+                                  SCHEDULE 122 (Continued)
+     requirements and charges for applicable resources previously approved for recovery under
+3.   Work papers that support the calculation of revenue requirements for all applicable
+With respect to a Schedule 122 rate change for the initial inclusion of the allowable costs of a new
+initial cost recovery of the new resource, the Company will file updated Schedule 122 rates by no
+     applicable schedule’s forecasted energy on the basis of an equal percent of generation
+     revenue applied on a cents per kWh basis to each applicable rate schedule.
+     above, and will continue to be recovered under Schedule 122 until such time as the costs
+                                  SCHEDULE 122 (Concluded)
+     costs. For purposes of Schedule 126 (Annual Power Cost Variance Mechanism), actual
+        will be reduced by applicable fuel costs and supply integration costsfor the resource.
+6.   For Schedule 122 filings made on and after April 2009, the Commission may condition
+     approval of a proposed change in Schedule 122 charges on PGE making a filing under
+     through the then existing Schedule 122 charges. The Commission’s order for conditional
+     the Commission have been collected through Schedule 122 for a reasonableperiod of years,
+
+===== SCHEDULE 123 =====
+                                       SCHEDULE 123
+PURPOSE
+caused by variations in applicable Customer Energy usage.
+APPLICABLE
+For the purposes of this tariff, the following definition will apply:
+per Customer to the numbers of active Customers for each applicable SNA rate schedule,
+                                    SCHEDULE 123 (Continued)
+The SNA is applicable to the following rate schedules:
+          Schedule        Rate (¢ per kWh)                                           Fixed Charge
+    7                             0.000                         $0.00                      $0.00                (R)
+ Applicable beginning in 2019. The Fixed Charge Energy Rate for Schedule 83 includes fixed generation charges
+The Nonresidential Lost Revenue Recovery Adjustment is applicable to all customers except
+                                 SCHEDULE 123 (Continued)
+For the purposes of this Schedule, the Lost Revenue Recovery Adjustment is the product of: (1)
+average of applicable retail base rates (the Lost Revenue Rate). Applicable base rates for
+applicable schedules. System usage or distribution charges will be adjusted to include only the
+recovery is not included in the Lost Revenue Rate. The applicable Lost Revenue Rate is 5.548
+cents per kWh.
+The Company will maintain a separate balancing account for the SNA applicable rate schedules
+and for the Nonresidential LRRA applicable rate schedules. Each balancing account will record
+The Adjustment Rates, applicable for service on and after the effective date of this schedule will
+  7                                         0.000 ¢ per kWh                                        (I)
+  15/515                                    0.000 ¢ per kWh                                        (R)
+  32/532                                    0.000 ¢ per kWh
+  38/538                                    0.000 ¢ per kWh
+  47                                        0.000 ¢ per kWh
+  49/549                                    0.000 ¢ per kWh
+       Secondary                            0.000 ¢ per kWh
+       Primary                              0.000 ¢ per kWh
+       Subtransmission                      0.000 ¢ per kWh
+  83/583                                    0.000 ¢ per kWh
+                              SCHEDULE 123 (Continued)
+      Secondary                           0.000 ¢ per kWh                                 (R)
+      Primary                             0.000 ¢ per kWh
+      Secondary                           0.000 ¢ per kWh
+      Primary                             0.000 ¢ per kWh
+      Subtransmission                     0.000 ¢ per kWh
+      Primary                             0.000   ¢ per kWh
+      Subtransmission                     0.000   ¢ per kWh
+ 91/591                                   0.000   ¢ per kWh
+ 92/592                                   0.000   ¢ per kWh
+ 95/595                                   0.000   ¢ per kWh
+      Secondary                           0.000 ¢ per kWh
+      Primary                             0.000 ¢ per kWh
+      Secondary                           0.000 ¢ per kWh
+      Primary                             0.000 ¢ per kWh
+      Subtransmission                     0.000 ¢ per kWh
+      Primary                             0.000   ¢ per kWh
+      Subtransmission                     0.000   ¢ per kWh
+ 491                                      0.000   ¢ per kWh
+
+===== SCHEDULE 125 =====
+                                     SCHEDULE 125
+PURPOSE
+The purpose of this adjustment schedule is to define procedures for annual rate revisions due to
+APPLICABLE
+       losses, for dispatch purposes.
+                                   SCHEDULE 125 (Continued)
+Changes in NVPC for purposes of rate determination under this schedule are adjusted for a                 (C)
+                                  SCHEDULE 125 (Continued)
+Schedule                                     ¢ per kWh
+ 7                                            5.619                                                     (R)
+ 7-TOD         On-Peak Period                12.868
+                                    SCHEDULE 125 (Continued)
+Schedule                                         ¢ per kWh
+      Applicable only to the Baseline and Scheduled Maintenance Energy.
+                               SCHEDULE 125 (Concluded)
+Schedule                                    ¢ per kWh
+     applicable schedule’s forecasted energy on the basis of an equal percent of generation
+     revenue applied on a cents per kWh basis to each applicable rate schedule.
+
+===== SCHEDULE 126 =====
+                                  SCHEDULE 126
+PURPOSE
+APPLICABLE
+                                SCHEDULE 126 (Continued)
+                                 SCHEDULE 126 (Continued)
+applicable year divided by the associated calendar basis retail loads. Base NVPC are updated
+accordance with Schedule 125) adjusted for load and cost changes resulting from non-residential
+applicable year.
+to serve retail load. For purposes of calculating the NVPC, the following adjustments will be made:
+                                  SCHEDULE 126 (Continued)
+                                       SCHEDULE 126 (Continued)
+The PCV Rates will be determined on an equal cents per kWh basis. The PCV Rates are:
+   7                                                0.214 ¢ per kWh
+   15/515                                           0.214 ¢ per kWh(2)
+   32/532                                           0.214 ¢ per kWh(2)
+   38/538                                           0.214 ¢ per kWh(2)
+   47                                               0.214 ¢ per kWh
+   49/549                                           0.214 ¢ per kWh(2)
+       Secondary                                    0.214     ¢ per kWh(1)
+       Primary                                      0.214     ¢ per kWh(1)
+       Subtransmission                              0.214     ¢ per kWh(1)
+   83/583                                           0.214     ¢ per kWh(2)
+       Secondary                                    0.214 ¢ per kWh(2)
+       Primary                                      0.214 ¢ per kWh(2)
+       Secondary                                    0.214 ¢ per kWh(2)
+       Primary                                      0.214 ¢ per kWh(2)
+       Subtransmission                              0.214 ¢ per kWh(2)
+       Primary                                      0.214     ¢ per kWh
+       Subtransmission                              0.214     ¢ per kWh
+   91/591                                           0.214     ¢ per kWh(2)
+   92/592                                           0.214     ¢ per kWh(2)
+   95/595                                           0.214     ¢ per kWh(2)
+   96/596                                           0.214     ¢ per kWh(2)                                           (N)
+(1) Applicable only to the Baseline and Scheduled Maintenance Energy.
+(2) Not applicable to Customers where service was received for the entire calendar year that the Annual Power Cost
+                                      SCHEDULE 126 (Concluded)
+         Secondary                                  0.214 ¢ per kWh(2)
+         Primary                                    0.214 ¢ per kWh(2)
+         Secondary                                  0.214 ¢ per kWh(2)
+         Primary                                    0.214 ¢ per kWh(2)
+         Subtransmission                            0.214 ¢ per kWh(2)
+         Primary                                    0.214     ¢ per kWh
+         Subtransmission                            0.214     ¢ per kWh
+   491                                              0.214     ¢ per kWh
+   492                                              0.214     ¢ per kWh
+   495                                              0.214     ¢ per kWh
+   496                                              0.214     ¢ per kWh                                              (N)
+         Secondary                                  0.214     ¢ per kWh(2)
+         Primary                                    0.214     ¢ per kWh(2)
+         Subtransmission                            0.214     ¢ per kWh(2)
+
+===== SCHEDULE 129 =====
+                                                 SCHEDULE 129
+APPLICABLE
+Applicable to Large Nonresidential Customers that have selected service under Schedules 485,
+ For Enrollment Periods A - S: 0.000 ¢ per kWh                                                                                                                         (C)
+The Schedule 129 Transition Cost Adjustment will be updated to reflect OPUC-approved changes
+                ¢ per kWh
+                                        ¢ per kWh
+                                                             ¢ per kWh
+                                                                                    ¢ per kWh
+                                                                                                         ¢ per kWh
+                                                                                                                              ¢ per kWh
+                                                                                                                                                   ¢ per kWh
+                                                         SCHEDULE 129 (Continued)
+               ¢ per kWh
+                                    ¢ per kWh
+                                                             ¢ per kWh
+                                                                                  ¢ per kWh
+                                                                                                       ¢ per kWh
+                                                                                                                            ¢ per kWh
+                                                                                                                                                 ¢ per kWh
+                                                              SCHEDULE 129 (Continued)
+            ¢ per kWh
+                                 ¢ per kWh
+                                                      ¢ per kWh
+                                                                           ¢ per kWh
+                                                                                                ¢ per kWh
+                                                                                                                     ¢ per kWh
+                                                                                                                                          ¢ per kWh
+                                                                                                                                                              ¢ per kWh
+                                                                     SCHEDULE 129 (Continued)
+            ¢ per kWh
+                                    ¢ per kWh
+                                                              ¢ per kWh
+                                                                                         ¢ per kWh
+                                                                                                                       ¢ per kWh
+                                                                                                                                                      ¢ per kWh
+                                                                                                                                                                                   ¢ per kWh
+                                                                                                                                                                                                               ¢ per kWh
+                                                               SCHEDULE 129 (Continued)
+          ¢ per kWh
+                                ¢ per kWh
+                                                     ¢ per kWh
+                                                                          ¢ per kWh
+                                                                                                 ¢ per kWh
+                                                                                                                        ¢ per kWh
+                                                                                                                                               ¢ per kWh
+                                                                                                                                                                          ¢ per kWh
+                                                                                                                                                                                                  ¢ per kWh
+                                                                                                                                                     ¢ per kWh
+                                                               SCHEDULE 129 (Continued)
+
+===== SCHEDULE 135 =====
+                                   SCHEDULE 135
+PURPOSE
+APPLICABLE
+The Adjustment Rate, applicable for service on and after the effective date of this schedule are:
+  7                                        0.086     ¢ per kWh
+  15/515                                   0.061     ¢ per kWh
+  32/532                                   0.076     ¢ per kWh
+  38/538                                   0.074     ¢ per kWh
+  47                                       0.091     ¢ per kWh
+  49/549                                   0.089     ¢ per kWh
+       Secondary                           0.068       ¢ per kWh(1)
+       Primary                             0.067       ¢ per kWh(1)
+       Subtransmission                     0.066       ¢ per kWh(1)
+  83/583                                   0.072       ¢ per kWh
+       Secondary                           0.075       ¢ per kWh
+       Primary                             0.068       ¢ per kWh
+(1) Applicable only to the Baseline and Scheduled Maintenance Energy.
+                                SCHEDULE 135 (Concluded)
+          Secondary                 0.068      ¢ per kWh
+          Primary                   0.067      ¢ per kWh
+          Subtransmission           0.066      ¢ per kWh
+          Primary 30-250 MWa        0.065      ¢ per kWh
+          Primary >250 MWa          0.061      ¢ per kWh
+          Subtransmission           0.065      ¢ per kWh
+     91/591                         0.061      ¢ per kWh
+     92/592                         0.066      ¢ per kWh
+     95/595                         0.061      ¢ per kWh
+     96/596                         0.066      ¢ per kWh                                       (N)
+       applicable schedule’s forecasted energy on the basis of an equal percent of generation
+       revenue applied on a cents per kWh basis to each applicable rate schedule.
+
+===== SCHEDULE 136 =====
+                                   SCHEDULE 136
+PURPOSE
+The purpose of this Schedule is to recover costs incurred during and for the development (or
+APPLICABLE
+The Adjustment Rate, applicable for service on and after the effective date of this schedule are:
+ 7                        0.040   ¢ per kWh                                                      (I)
+ 15/515                   0.031   ¢ per kWh
+ 32/532                   0.038   ¢ per kWh
+ 38/538                   0.039   ¢ per kWh
+ 47                       0.053   ¢ per kWh
+ 49/549                   0.047   ¢ per kWh
+     Secondary            0.019      ¢ per kWh
+     Primary              0.019      ¢ per kWh
+     Subtransmission      0.019      ¢ per kWh                                                   (I)
+                                 SCHEDULE 136 (Continued)
+ 83/583                        0.028   ¢ per kWh
+     Secondary                 0.024     ¢ per kWh
+     Primary                   0.022     ¢ per kWh
+     Secondary                 0.019     ¢ per kWh
+     Primary                   0.019     ¢ per kWh
+     Subtransmission           0.019     ¢ per kWh
+     Primary 30-250 Mwa        0.016     ¢ per kWh
+     Primary >250 Mwa          0.016     ¢ per kWh
+     Subtransmission           0.016     ¢ per kWh
+ 91/491/591                    0.031     ¢ per kWh
+ 92/492/592                    0.021     ¢ per kWh
+ 95/495/595                    0.031     ¢ per kWh
+ 96/496/596/696                0.018     ¢ per kWh                                                (N)
+                                SCHEDULE 136 (Concluded)
+     applicable schedule’s forecasted energy on the basis of an equal percent of revenue applied
+     on a cents per kWh basis to each applicable rate schedule, with long-term opt out and new
+
+===== SCHEDULE 137 =====
+                                     SCHEDULE 137
+PURPOSE
+APPLICABLE
+The Adjustment Rates, applicable for service on and after the effective date of this schedule will
+ 7                             0.024    ¢ per kWh
+ 15/515                        0.018    ¢ per kWh
+ 32/532                        0.021    ¢ per kWh
+ 38/538                        0.023    ¢ per kWh
+ 47                            0.033    ¢ per kWh
+ 49/549                        0.029    ¢ per kWh
+     Secondary                 0.011      ¢ per kWh(1)
+     Primary                   0.011      ¢ per kWh(1)
+     Subtransmission           0.010      ¢ per kWh(1)
+ 83/583                        0.017      ¢ per kWh
+     Secondary                 0.014      ¢ per kWh
+     Primary                   0.012      ¢ per kWh
+(1) Applicable only to the Baseline and Scheduled Maintenance Energy.
+                                SCHEDULE 137 (Concluded)
+     Secondary             0.011    ¢ per kWh
+     Primary               0.011    ¢ per kWh
+     Subtransmission       0.010    ¢ per kWh
+     Primary               0.010    ¢ per kWh
+     Subtransmission       0.010    ¢ per kWh
+ 91/491/591                0.018    ¢ per kWh
+ 92/492/592                0.012    ¢ per kWh
+ 95/495/595                0.018    ¢ per kWh
+ 96/496/596/696            0.011    ¢ per kWh                                                      (N)
+     Secondary             0.011    ¢ per kWh
+     Primary               0.011    ¢ per kWh
+     Subtransmission       0.010    ¢ per kWh
+     applicable schedule’s forecasted energy on the basis of an equal percent of revenue applied
+     on a cents per kWh basis to each applicable rate schedule, with long-term opt out and new
+
+===== SCHEDULE 142 =====
+                                SCHEDULE 142
+PURPOSE
+APPLICABLE
+The Adjustment Rate is the applicable percentage as listed below of the total bill amount to
+each Customer located within the applicable local government’s boundaries excluding the
+Public Purpose Charge (Schedule 108), Energy Efficiency Funding Adjustment (Schedule 109),
+        boundaries of the applicable local government.
+
+===== SCHEDULE 143 =====
+                                          SCHEDULE 143
+PURPOSE
+The purpose of this schedule is to implement in rates the amortization of the excess funds
+APPLICABLE
+To all bills for Electricity Service calculated under all schedules and contracts, except those
+The Adjustment Rates, applicable for service on and after the effective date of this schedule, will be:
+  7                             0.000         0.000               0.000 ¢ per kWh
+  15/515                        0.000         0.000               0.000 ¢ per kWh
+  32/532                        0.000         0.000               0.000 ¢ per kWh
+  38/538                        0.000         0.000               0.000 ¢ per kWh
+  47                            0.000         0.000               0.000 ¢ per kWh
+  49/549                        0.000         0.000               0.000 ¢ per kWh
+      Secondary                  0.000         0.000              0.000 ¢ per kWh(1)
+      Primary                    0.000         0.000              0.000 ¢ per kWh(1)
+      Subtransmission            0.000         0.000              0.000 ¢ per kWh(1)
+(1) Applicable only to the Baseline and Scheduled Maintenance Energy.
+                                 SCHEDULE 143 (Concluded)
+  83/583                    0.000       0.000           0.000 ¢ per kWh
+      Secondary              0.000      0.000            0.000 ¢ per kWh
+      Primary                0.000      0.000            0.000 ¢ per kWh
+      Secondary              0.000      0.000            0.000 ¢ per kWh
+      Primary                0.000      0.000            0.000 ¢ per kWh
+      Subtransmission        0.000      0.000            0.000 ¢ per kWh
+      Primary                0.000      0.000            0.000   ¢ per kWh
+      Subtransmission        0.000      0.000            0.000   ¢ per kWh
+  91/591                     0.000      0.000            0.000   ¢ per kWh
+  92/592                     0.000      0.000            0.000   ¢ per kWh
+  95/595                     0.000      0.000            0.000   ¢ per kWh
+      Secondary              0.000      0.000            0.000 ¢ per kWh
+      Primary                0.000      0.000            0.000 ¢ per kWh
+      Secondary              0.000      0.000            0.000 ¢ per kWh
+      Primary                0.000      0.000            0.000 ¢ per kWh
+      Subtransmission        0.000      0.000            0.000 ¢ per kWh
+      Primary                0.000      0.000            0.000   ¢ per kWh
+      Subtransmission        0.000      0.000            0.000   ¢ per kWh
+  491                        0.000      0.000            0.000   ¢ per kWh
+  492                        0.000      0.000            0.000   ¢ per kWh
+  495                        0.000      0.000            0.000   ¢ per kWh
+Schedule 143 revenues. This difference will accrue interest at the Commission-authorized rate for
+
+===== SCHEDULE 145 =====
+                                    SCHEDULE 145
+PURPOSE
+APPLICABLE
+Schedule 145 Adjustment Rates will be set based an equal percent of Energy Charge revenues
+applicable at the time of any filing that revises rates pursuant to this schedule.
+   7                                        0.000 ¢ per kWh
+   15/515                                   0.000 ¢ per kWh
+   32/532                                   0.000 ¢ per kWh
+   38/538                                   0.000 ¢ per kWh
+   47                                       0.000 ¢ per kWh
+   49/549                                   0.000 ¢ per kWh
+       Secondary                            0.000   ¢ per kWh
+       Primary                              0.000   ¢ per kWh
+       Subtransmission                      0.000   ¢ per kWh
+   83/583                                   0.000   ¢ per kWh
+       Secondary                            0.000 ¢ per kWh
+       Primary                              0.000 ¢ per kWh
+       Secondary                            0.000 ¢ per kWh
+       Primary                              0.000 ¢ per kWh
+       Subtransmission                      0.000 ¢ per kWh                                         (R)
+                                  SCHEDULE 145 (Concluded)
+         Primary                               0.000 ¢ per kWh                                       (R)
+         Subtransmission                       0.000 ¢ per kWh
+         Primary                               0.000   ¢ per kWh
+         Subtransmission                       0.000   ¢ per kWh
+     91/591                                    0.000   ¢ per kWh
+     92/592                                    0.000   ¢ per kWh
+     95/595                                    0.000   ¢ per kWh                                     (R)
+The Company will maintain a balancing account to track the difference between the Schedule 145
+Decommissioning Revenue Requirements and the actual Schedule 145 revenues. This difference
+2.     Work papers supporting the Schedule 145 prices, the updated decommissioning revenue
+       requirements, the projected applicable billing determinants, and the projected balancing
+
+===== SCHEDULE 146 =====
+                                     SCHEDULE 146
+PURPOSE
+APPLICABLE
+Schedule 146 Adjustment Rates will be set based on an equal percent of Energy Charge revenues
+applicable at the time of any filing that revises rates pursuant to this schedule.
+   7                                   0.224 ¢ per kWh
+   15/515                              0.159 ¢ per kWh
+   32/532                              0.197 ¢ per kWh
+   38/538                              0.192 ¢ per kWh
+   47                                  0.235 ¢ per kWh
+   49/549                              0.230 ¢ per kWh
+       Secondary                       0.175   ¢ per kWh
+       Primary                         0.173   ¢ per kWh
+       Subtransmission                 0.171   ¢ per kWh
+   83/583                              0.195   ¢ per kWh
+       Secondary                       0.190 ¢ per kWh
+       Primary                         0.176 ¢ per kWh
+       Secondary                       0.175 ¢ per kWh
+       Primary                         0.173 ¢ per kWh
+       Subtransmission                 0.171 ¢ per kWh
+       Primary                         0.170 ¢ per kWh
+       Subtransmission                 0.170 ¢ per kWh
+       Primary                         0.166 ¢ per kWh
+       Subtransmission                 0.166 ¢ per kWh
+                                 SCHEDULE 146 (Continued)
+   91/591                              0.159 ¢ per kWh
+   92/592                              0.171 ¢ per kWh
+   95/595                              0.159 ¢ per kWh
+   96/596                              0.171 ¢ per kWh                                               (N)
+The Company will maintain a balancing account to track the difference between the Schedule 146
+Part A only amounts and the actual Schedule 146 revenues for Part A. This difference will accrue
+within Schedule 146 will be subject to balancing account treatment.
+                                 SCHEDULE 146 (Concluded)
+2.   Work papers supporting the Schedule 146 prices, the updated depreciation and
+     decommissioning revenue requirements, the projected applicable billing determinants, and
+With respect to a Schedule 146 rate change for the inclusion or update of costs outside of revised
+in separate cost recovery proceeding(s), the Company will file updated Schedule 146 rates by no
+
+===== SCHEDULE 149 =====
+                              SCHEDULE 149
+PURPOSE
+APPLICABLE
+To all Schedules.
+                                  SCHEDULE 149 (Continued)
+future termination-related costs if applicable. Further, the remediation sites eligible for inclusion
+Portland Harbor or Downtown Reach; (4) the Schedule 149 tariff revenue; and (5) interest.
+                                SCHEDULE 149 (Continued)
+                                   SCHEDULE 149 (Continued)
+     7                                       0.000 ¢ per kWh
+     15/515                                  0.000 ¢ per kWh
+     32/532                                  0.000 ¢ per kWh
+     38/538                                  0.000 ¢ per kWh
+     47                                      0.000 ¢ per kWh
+     49/549                                  0.000 ¢ per kWh
+         Secondary                           0.000 ¢ per kWh
+         Primary                             0.000 ¢ per kWh
+         Subtransmission                     0.000 ¢ per kWh
+         Secondary                           0.000   ¢ per kWh
+         Primary                             0.000   ¢ per kWh
+         Subtransmission                     0.000   ¢ per kWh
+     83/583                                  0.000   ¢ per kWh
+         Secondary                           0.000 ¢ per kWh
+         Primary                             0.000 ¢ per kWh
+         Secondary                           0.000 ¢ per kWh
+         Primary                             0.000 ¢ per kWh
+         Subtransmission                     0.000 ¢ per kWh
+         Primary                             0.000   ¢ per kWh
+         Subtransmission                     0.000   ¢ per kWh
+     91/491/591                              0.000   ¢ per kWh
+     92/492/592                              0.000   ¢ per kWh
+     95/495/595                              0.000   ¢ per kWh
+                                 SCHEDULE 149 (Continued)
+6.   Functionalized costs recoverable through Schedule 149 will be allocated to each rate
+     Long-Term Direct Access customers will be priced at Cost-of-Service for purposes of
+                                SCHEDULE 149 (Concluded)
+      costs if applicable.
+
+===== SCHEDULE 150 =====
+                              SCHEDULE 150
+PURPOSE
+APPLICABLE
+The Adjustment Rate, applicable for service on and after the effective date of this schedule are:
+  7                                   0.030 ¢ per kWh                                                (R)
+  15/515                              0.023 ¢ per kWh
+  32/532                              0.027 ¢ per kWh
+  38/538                              0.033 ¢ per kWh
+  47                                  0.026 ¢ per kWh
+  49/549                              0.021 ¢ per kWh
+         Secondary                    0.024    ¢ per kWh
+         Primary                      0.021    ¢ per kWh
+         Subtransmission              0.022    ¢ per kWh
+  83/583                              0.032    ¢ per kWh
+         Secondary                    0.026    ¢ per kWh
+         Primary                      0.024    ¢ per kWh
+         Secondary                    0.024    ¢ per kWh
+         Primary                      0.021    ¢ per kWh
+         Subtransmission              0.022    ¢ per kWh                                             (R)
+                                   SCHEDULE 150 (Continued)
+           Primary 30-250 Mwa           0.018    ¢ per kWh
+           Primary >250 Mwa             0.017    ¢ per kWh
+            Subtransmission             0.018    ¢ per kWh
+     91/491/591                         0.021    ¢ per kWh
+     92/492/592                         0.021    ¢ per kWh
+     95/495/595                         0.021    ¢ per kWh
+     96/496/596/696                     0.020    ¢ per kWh                                               (N)
+       each schedule using applicable schedule’s forecasted energy on the basis of an equal
+       percent of distribution revenue applied on a cents per kWh basis to each applicable rate
+                                  SCHEDULE 150 (Concluded)
+     for each schedule using applicable schedule’s forecasted energy on the basis of an equal
+     percent of revenue applied on a cents per kWh basis to each applicable rate schedule, with
+
+===== SCHEDULE 151 =====
+                                        SCHEDULE 151
+PURPOSE
+APPLICABLE
+ 7                                        0.567 ¢ per kWh                                       (R)
+ 15/515                                   0.477 ¢ per kWh
+ 32/532                                   0.565 ¢ per kWh
+ 38/538                                   0.617 ¢ per kWh
+ 47                                       0.896 ¢ per kWh
+ 49/549                                   0.750 ¢ per kWh
+      Secondary                           0.090 ¢ per kWh
+      Primary                             0.065 ¢ per kWh
+      Subtransmission                     0.059 ¢ per kWh
+ 83/583                                   0.317 ¢ per kWh
+      Secondary                           0.182 ¢ per kWh
+      Primary                             0.132 ¢ per kWh                                       (R)
+                                  SCHEDULE 151 (Concluded)
+        Secondary                            0.090 ¢ per kWh
+        Primary                              0.065 ¢ per kWh
+        Subtransmission                      0.059 ¢ per kWh
+        Primary                              0.075 ¢ per kWh
+        Subtransmission                      0.075 ¢ per kWh
+     91/491/591                              0.477 ¢ per kWh
+     92/492/592                              0.159 ¢ per kWh
+     95/495/595                              0.477 ¢ per kWh
+     96/496/596/696                          0.070 ¢ per kWh
+incremental Schedule 151 revenue requirement and Schedule 151 revenues. The balancing
+       applicable schedule’s forecasted energy on the basis of an equal percent of non-generation
+       revenue applied on a cents per kWh basis to each applicable rate schedule, with long-term
+       continue to be recovered under Schedule 151 until such time as the costs are included in
+
+===== SCHEDULE 152 =====
+                                     SCHEDULE 152
+PURPOSE
+The purpose of this schedule is to recover costs incurred relating to the 2020 and 2021 wildfire
+APPLICABLE
+The Adjustment Rates, applicable for service on and after the effective date of this schedule are:
+   7                              0.335 ¢ per kWh                                                    (I)
+   15/515                         0.283 ¢ per kWh
+   32/532                         0.334 ¢ per kWh
+   38/538                         0.364 ¢ per kWh
+   47                             0.526 ¢ per kWh
+   49/549                         0.444 ¢ per kWh
+       Secondary                  0.058   ¢ per kWh
+       Primary                    0.038   ¢ per kWh
+       Subtransmission            0.037   ¢ per kWh
+   83/583                         0.185   ¢ per kWh
+       Secondary                  0.105 ¢ per kWh
+       Primary                    0.079 ¢ per kWh                                                    (I)
+                               SCHEDULE 152 (Concluded)
+       Secondary                0.058 ¢ per kWh
+       Primary                  0.038 ¢ per kWh
+       Subtransmission          0.037 ¢ per kWh
+       Primary                  0.042   ¢ per kWh
+       Subtransmission          0.042   ¢ per kWh
+   91/491/591                   0.283   ¢ per kWh
+   92/492/592                   0.093   ¢ per kWh
+   95/495/595                   0.283   ¢ per kWh
+   96/496/596/696               0.040   ¢ per kWh                                               (N)
+and the actual Schedule 152 revenues.
+
+===== SCHEDULE 153 =====
+                                  SCHEDULE 153
+PURPOSE
+APPLICABLE
+The Adjustment Rates, applicable for service on and after the effective date of this schedule will
+   7                              0.001      ¢ per kWh
+   15/515                         0.001      ¢ per kWh
+   32/532                         0.001      ¢ per kWh
+   38/538                         0.001      ¢ per kWh
+   47                             0.002      ¢ per kWh
+   49/549                         0.002      ¢ per kWh
+        Secondary                 0.001      ¢ per kWh(1)
+        Primary                   0.001      ¢ per kWh(1)
+        Subtransmission           0.001      ¢ per kWh(1)
+   83/583                         0.001      ¢ per kWh
+        Secondary                 0.001      ¢ per kWh
+        Primary                   0.001      ¢ per kWh
+(1) Applicable only to the Baseline and Scheduled Maintenance Energy.
+                                SCHEDULE 153 (Concluded)
+         Secondary          0.001    ¢ per kWh
+         Primary            0.001    ¢ per kWh
+       Subtransmission      0.001    ¢ per kWh
+       Primary              0.001    ¢ per kWh
+       Subtransmission      0.001    ¢ per kWh
+   91/491/591               0.001    ¢ per kWh
+   92/492/592               0.001    ¢ per kWh
+   95/495/595               0.001    ¢ per kWh
+   96/496/596/696           0.001    ¢ per kWh
+         Secondary          0.001    ¢ per kWh
+         Primary            0.001    ¢ per kWh
+    Subtransmission         0.001    ¢ per kWh

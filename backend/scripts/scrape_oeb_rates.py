@@ -102,8 +102,10 @@ class LDCDeliveryCharges:
       RRRP — rural/remote rate protection ($/kWh, regulatory)
       SSS  — standard supply service admin ($/month)
       OFC  — other fixed charge ($/month)
-      LF   — total loss factor (applied to the RPP commodity portion only,
-             matching the OEB bill calculator)
+      LF   — total loss factor. OEB bill calculator applies LF to the RPP
+             commodity and to transmission (Net+Conn) + regulatory
+             (WMSR+RRRP) per-kWh lines; distribution volumetric (DC) is
+             added without LF.
     """
     distributor: str
     rate_class: str
@@ -138,9 +140,31 @@ class LDCDeliveryCharges:
         )
 
     @property
+    def transmission_kwh(self) -> float:
+        return sum(
+            v for v in (self.transmission_network, self.transmission_connection)
+            if v is not None
+        )
+
+    @property
+    def loss_sensitive_kwh(self) -> float:
+        """Transmission + regulatory — scaled by LF in the OEB calculator."""
+        return self.transmission_kwh + self.regulatory_kwh
+
+    @property
     def per_kwh_adder(self) -> float:
-        """Delivery + regulatory only (commodity loss factor applied separately)."""
-        return self.delivery_kwh + self.regulatory_kwh
+        """Delivery + regulatory with LF on transmission/regulatory only.
+
+        When LF is set: DC + (Net+Conn+WMSR+RRRP)×LF.
+        When LF is absent: DC + Net + Conn + WMSR + RRRP.
+        Commodity × LF is applied separately in ``_apply_ldc_delivery_to_entry``.
+        """
+        dist = float(self.distribution_kwh or 0.0)
+        loss_sens = self.loss_sensitive_kwh
+        lf = self.loss_factor if self.loss_factor and self.loss_factor > 0 else None
+        if lf:
+            return dist + loss_sens * lf
+        return dist + loss_sens
 
 
 # TOU schedules are fixed by the OEB — only the prices change each Nov 1.
@@ -803,11 +827,12 @@ def _ldc_fixed_rows(ldc: LDCDeliveryCharges) -> list[dict]:
 def _apply_ldc_delivery_to_entry(entry: dict, ldc: LDCDeliveryCharges) -> dict:
     """Fold LDC per-kWh delivery+regulatory into ENERGY; store the breakdown.
 
-    ENERGY = (RPP commodity × LF when BillData provides LF) + delivery_kwh +
-    regulatory_kwh — matching the OEB bill calculator. Each BillData
-    delivery/regulatory line is an ADJUSTMENT with ``included_in_energy=true``.
-    FIXED service / SSS / OFC rows are attached. LF is metadata only (never
-    a priced ADJUSTMENT).
+    ENERGY = (RPP commodity × LF) + DC + (Net+Conn+WMSR+RRRP)×LF when BillData
+    provides LF — matching the OEB bill calculator (~0.08¢ extra on Toronto
+    from loss-scaling transmission/regulatory). Each BillData delivery /
+    regulatory line is an ADJUSTMENT with ``included_in_energy=true`` at the
+    printed (pre-LF) amount for audit. FIXED service / SSS / OFC rows are
+    attached. LF is metadata only (never a priced ADJUSTMENT).
     """
     adder = ldc.per_kwh_adder
     lf = ldc.loss_factor if ldc.loss_factor and ldc.loss_factor > 0 else None
@@ -817,16 +842,12 @@ def _apply_ldc_delivery_to_entry(entry: dict, ldc: LDCDeliveryCharges) -> dict:
         if str(row.get("component_type") or "").lower() == "energy":
             try:
                 commodity = float(row["rate_value"])
-                # Apply LF to the commodity portion only, then add delivery+reg.
                 loss_adjusted = round(commodity * lf, 6) if lf else commodity
                 row["rate_value"] = round(loss_adjusted + adder, 6)
             except (TypeError, ValueError, KeyError):
                 pass
         comps.append(row)
-    # LF is a dimensionless multiplier on the RPP commodity only (OEB bill
-    # calculator). Never store it as a priced $/kWh ADJUSTMENT — that would
-    # add ~$1/kWh if a consumer summed in-energy adjustments. Record it only
-    # in ldc_delivery metadata (and the description note).
+    # LF is a dimensionless multiplier — never a priced $/kWh ADJUSTMENT.
     comps.extend(_ldc_adjustment_rows(ldc))
     comps.extend(_ldc_fixed_rows(ldc))
     entry = dict(entry)
@@ -834,12 +855,16 @@ def _apply_ldc_delivery_to_entry(entry: dict, ldc: LDCDeliveryCharges) -> dict:
     entry["energy_scope"] = "delivery_plus_default_supply"
     entry["source_url"] = ldc.source_url or entry.get("source_url") or SOURCE_URL
     desc = entry.get("description") or ""
+    lf_note = (
+        f" × LF {lf} on commodity + transmission/regulatory"
+        if lf
+        else ""
+    )
     extra = (
-        f" Full billable ENERGY includes OEB RPP commodity"
-        f"{f' × LF {lf}' if lf else ''} plus this LDC's "
-        f"per-kWh delivery ({ldc.delivery_kwh:.5f} $/kWh) and regulatory "
-        f"({ldc.regulatory_kwh:.5f} $/kWh) charges from OEB BillData.xml "
-        f"({ldc.distributor}, {ldc.rate_class}"
+        f" Full billable ENERGY includes OEB RPP commodity{lf_note} plus "
+        f"this LDC's per-kWh delivery ({ldc.delivery_kwh:.5f} $/kWh) and "
+        f"regulatory ({ldc.regulatory_kwh:.5f} $/kWh) charges from OEB "
+        f"BillData.xml ({ldc.distributor}, {ldc.rate_class}"
         f"{f', {ldc.year}' if ldc.year else ''})."
     )
     entry["description"] = (desc + extra).strip()
@@ -848,6 +873,8 @@ def _apply_ldc_delivery_to_entry(entry: dict, ldc: LDCDeliveryCharges) -> dict:
         "rate_class": ldc.rate_class,
         "delivery_kwh": ldc.delivery_kwh,
         "regulatory_kwh": ldc.regulatory_kwh,
+        "transmission_kwh": ldc.transmission_kwh,
+        "loss_sensitive_kwh": ldc.loss_sensitive_kwh,
         "per_kwh_adder": adder,
         "loss_factor": lf,
         "source_url": ldc.source_url,

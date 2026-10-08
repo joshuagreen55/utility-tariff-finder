@@ -1,0 +1,187 @@
+FUEL ADJUSTMENT MECHANISM (FAM) TARIFF                                                      Page 1 of 4
+
+
+APPLICABILITY
+
+This schedule is a mandatory rider to all electric rate schedules, except the following tariffs: Generation
+Replacement and Load Following, Extra High Voltage Time-of-Use Real Time Pricing, High Voltage
+Time-of-Use Real Time Pricing, and Distribution Voltage Time-of-Use Real Time Pricing. FAM
+adjustments will apply to the Standard Energy Charge of the Extra Large Industrial 2P-RTP tariff. FAM
+adjustments will apply to Additional Energy supplied under the Mersey System Agreement when
+Additional Energy is priced at a tariff to which FAM adjustments apply.
+
+FUEL ADJUSTMENT
+
+The applicable charges for electric service to the Company’s retail and municipal customers shall be
+increased or decreased to the nearest 0.001 cents per kWh to recover or credit the difference in actual
+fuel cost from the costs in base rates in accordance with the following rate class-specific formula:
+
+                Fuel Adjustment Rider = AA + BA
+
+Where:
+
+    “AA” is a rate class-specific Actual Adjustment which is the difference between fuel-related costs
+    recovered from a rate class through the application of the base rates during the previous calendar
+    year and the actual Fuel Costs incurred and allocated to the rate class for the same time period.
+    The actual fuel costs will include the same cost items as base fuel costs.
+
+    “BA” is a rate class-specific Balance Adjustment which accounts for any over- or under-
+    collections which have occurred as a result of prior adjustments.
+
+SPECIAL CONDITIONS
+
+(1) Base Cost of Fuel
+
+    The Base Cost of Fuel can be re-set in a General Rate Application or, absent a General Rate
+    Application, every second year as part of the FAM adjustment process. Changes in the Base Cost
+    of Fuel will be reflected in customers’ rates going forward and will be applied to each customer
+    class in a manner consistent with the then-current Board-approved Cost of Service Methodology.
+
+(2) Incentive
+
+    For a total fuel cost variance of up to $50 million dollars (Actual Fuel Costs - [(Actual Sales) x
+    (Base Fuel Cost $/MWh)]), 90% of any savings or increase in cost will be credited or charged to
+    customers. The portion of any variance that is in excess of $50 million dollars will be fully applied
+
+
+
+Effective:
+
+
+                                                       .
+FUEL ADJUSTMENT MECHANISM (FAM) TARIFF                                                   Page 2 of 4
+
+
+    in the calculation of the “AA.” Credits or charges will be applied to the energy component of rates
+    on a cents per kWh basis.
+
+(3) Load Migrations between FAM/Non-FAM Classes
+
+    (a) To non-FAM classes
+        When a customer transitions its load, whether in whole or in part, from a FAM class to a non-
+        FAM class, NS Power shall determine the outstanding fuel cost imbalance of the customer at
+        the time of transition. This determined imbalance will be adjusted as necessary in future FAM
+        proceedings concerned with apportionment of fuel costs incurred in the period in question.
+        The adjustments will be subject to Nova Scotia Energy Board (NSEB) approval. The
+        outstanding imbalance and subsequent adjustments will be paid (or reimbursed) in full on
+        reasonable terms acceptable to the customer and NS Power, or if the parties are unable to
+        agree, as determined by the NSEB.
+
+    (b) From non-FAM classes
+        When a customer transitions its load, whether in whole or in part, to a FAM class from a non-
+        FAM class, the customer will pay (or be reimbursed) outstanding FAM balances outside of
+        the Fuel Adjustment Rider, on reasonable terms acceptable to the customer and NS Power,
+        until such time that it is appropriate to return the customer to the Fuel Adjustment Rider. The
+        customer’s outstanding FAM balance will be subject to NSEB approval.
+
+The applicable charges by rate class are as follows.
+
+2026
+                                               Effective upon the date of the Board’s Order
+                                            Actual           Balance        Balance         FAM
+ Rate Class                              Adjustment        Adjustment     Adjustment       AA/BA
+                                           (AA) in          (BA 1) in      (BA-2) in      Combined
+                                          cents per         cents per      cents per       in cents
+                                             kWh              kWh            kWh          per kWh
+ Domestic Service, Domestic Service
+ Time-of-Day, Domestic Service Time
+                                                             0.156                           0.156
+ of Use, Domestic Service Critical
+ Peak Pricing
+ Small General, Small General Time
+ of Use, Small General Critical Peak                         0.156                           0.156
+ Pricing
+ General, General Time of Use,                               0.207                           0.207
+ General Critical Peak, Multi-Unit
+
+
+
+Effective:
+
+
+                                                       .
+FUEL ADJUSTMENT MECHANISM (FAM) TARIFF                                            Page 3 of 4
+
+
+
+                                            Effective upon the date of the Board’s Order
+                                         Actual        Balance         Balance       FAM
+ Rate Class                           Adjustment     Adjustment      Adjustment     AA/BA
+                                        (AA) in       (BA 1) in       (BA-2) in    Combined
+                                       cents per      cents per       cents per     in cents
+                                          kWh           kWh             kWh        per kWh
+ Residential Building (MURB) Time
+ of Use
+ Large General                                           0.158                       0.158
+ Small Industrial                                        0.144                       0.144
+ Medium Industrial                                       0.206                       0.206
+ Large Industrial Firm                                   0.247                       0.247
+ Large Industrial Interruptible                          0.224                       0.224
+ Municipal                                               0.105                       0.105
+ Outdoor Recreational Lighting                           0.156                       0.156
+ Unmetered                                               0.156                       0.156
+
+2027
+                                                     Effective January 1, 2027
+                                                       Balance         Balance       FAM
+                                        Actual
+ Rate Class                                          Adjustment      Adjustment     AA/BA
+                                      Adjustment
+                                                      (BA 1) in       (BA-2) in    Combined
+                                     (AA) in cents
+                                                      cents per       cents per     in cents
+                                       per kWh
+                                                        kWh             kWh        per kWh
+ Domestic Service, Domestic
+ Service Time-of-Day, Domestic
+                                                        0.156                        0.156
+ Service Time of Use, Domestic
+ Service Critical Peak Pricing
+ Small General, Small General
+ Time of Use, Small General                             0.156                        0.156
+ Critical Peak Pricing
+ General, General Time of Use,
+ General Critical Peak, Multi-Unit
+                                                        0.207                        0.207
+ Residential Building (MURB)
+ Time of Use
+ Large General                                          0.158                        0.158
+ Small Industrial                                       0.144                        0.144
+ Medium Industrial                                      0.206                        0.206
+
+
+Effective:
+
+
+                                                .
+FUEL ADJUSTMENT MECHANISM (FAM) TARIFF                                         Page 4 of 4
+
+
+
+                                                  Effective January 1, 2027
+                                                    Balance         Balance       FAM
+                                     Actual
+ Rate Class                                       Adjustment      Adjustment     AA/BA
+                                   Adjustment
+                                                   (BA 1) in       (BA-2) in    Combined
+                                  (AA) in cents
+                                                   cents per       cents per     in cents
+                                    per kWh
+                                                     kWh             kWh        per kWh
+ Large Industrial Firm                               0.247                        0.247
+ Large Industrial Interruptible                      0.224                        0.224
+ Municipal                                           0.105                        0.105
+ Outdoor Recreational Lighting                       0.156                        0.156
+ Unmetered                                           0.156                        0.156
+
+
+
+
+Effective:
+
+
+                                             .
+                                                                            SCHEDULE A
+
+
+SOLAR GARDEN RAT
