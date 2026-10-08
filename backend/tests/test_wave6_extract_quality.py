@@ -1204,16 +1204,20 @@ class TestComputableGuardrails(unittest.TestCase):
             _energy("00:00", "00:00", "weekend")]
     GAPPY = [_energy("07:00", "19:00", "weekday", 0.2), _energy("19:00", "07:00", "weekday")]
 
-    def test_phase4_records_computable_reasons(self):
+    def test_phase4_rejects_broken_tou_clocks(self):
+        # R6: gap/overlap clocks must not be stored as a live plan (flag via
+        # reject, not needs_review-and-keep).
         et = tp.ExtractedTariff(name="TOU", customer_class="residential", rate_type="tou",
                                 confidence=0.9, components=[dict(c) for c in self.GAPPY])
         logging.disable(logging.CRITICAL)
         try:
-            _r, valid = tp.phase4_validate([et], "U", "ON")
+            report, valid = tp.phase4_validate([et], "U", "ON")
         finally:
             logging.disable(logging.NOTSET)
-        self.assertTrue(valid[0].needs_review)
-        self.assertIn("tou_gap:weekend", valid[0].computable_reasons)
+        self.assertEqual(valid, [])
+        self.assertTrue(
+            any("broken TOU" in str(i) or "tou_gap" in str(i) for i in report["issues"])
+        )
 
     def test_phase4_leaves_computable_tou_unflagged(self):
         et = tp.ExtractedTariff(name="TOU", customer_class="residential", rate_type="tou",
