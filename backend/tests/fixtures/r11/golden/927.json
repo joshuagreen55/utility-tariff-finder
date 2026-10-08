@@ -2,656 +2,118 @@
   "utility_id": 927,
   "utility_name": "Portland General Electric Co",
   "state": "OR",
+  "sch1xx_from_r10": true,
   "phase3_tariffs": [
     {
       "name": "Schedule 7 Residential Service Price Plan (Default Plan)",
       "code": "7",
       "customer_class": "residential",
-      "rate_type": "tiered",
-      "description": "Default residential plan: basic charge plus transmission, distribution and tiered energy charges per kWh.",
-      "source_url": "https://assets.ctfassets.net/416ywc1laqmd/2je1W1MvdK5QDMqTHP61tm/55061789ca52d46ab38ed16e348a7993/all_tariffs_56_.pdf",
-      "effective_date": "2020-01-01",
+      "rate_type": "flat",
+      "description": "Deterministic parse of PGE Schedule 7 Default Plan.",
+      "source_url": "https://assets.ctfassets.net/416ywc1laqmd/Sched_007.pdf",
+      "effective_date": "2026-07-08",
       "components": [
         {
           "component_type": "fixed",
           "unit": "$/month",
-          "rate_value": 11.0,
-          "period_label": "Basic Charge"
+          "rate_value": 13.0,
+          "tier_label": "Basic Charge Single-Family"
         },
         {
           "component_type": "energy",
           "unit": "\u00a2/kWh",
-          "rate_value": 11.224,
-          "tier_label": "all-in: First 1,000 kWh: transmission 0.243 + distribution 4.652 + energy 6.329 = 11.224",
-          "tier_min_kwh": 0,
-          "tier_max_kwh": 1000,
-          "tier_basis": "month"
-        },
-        {
-          "component_type": "energy",
-          "unit": "\u00a2/kWh",
-          "rate_value": 11.946,
-          "tier_label": "all-in: Over 1,000 kWh: transmission 0.243 + distribution 4.652 + energy 7.051 = 11.946",
-          "tier_min_kwh": 1000,
-          "tier_max_kwh": null,
-          "tier_basis": "month"
-        },
-        {
-          "component_type": "adjustment",
-          "unit": "\u00a2/kWh",
-          "rate_value": 0.243,
-          "period_label": "Transmission and Related Services Charge",
-          "included_in_energy": true,
-          "rider_scope": "all_customers"
-        },
-        {
-          "component_type": "adjustment",
-          "unit": "\u00a2/kWh",
-          "rate_value": 4.652,
-          "period_label": "Distribution Charge",
-          "included_in_energy": true,
-          "rider_scope": "all_customers"
-        },
-        {
-          "component_type": "adjustment",
-          "unit": "\u00a2/kWh",
-          "rate_value": -100.0,
-          "period_label": "PTR Credit (optional, event only)",
-          "included_in_energy": false,
-          "rider_scope": "optional_program"
+          "rate_value": 11.289,
+          "tier_label": "all-in: transmission + distribution + energy = 11.289"
         }
       ],
-      "confidence": 0.85,
-      "needs_review": true,
-      "completeness_reasons": [],
-      "computable_reasons": [],
-      "extraction_tier": "twopass",
-      "missing_fields": [
-        "Schedule 100 adjustment amounts"
-      ],
-      "riders_referenced_not_shown": [
-        "Schedule 100 adjustments"
-      ],
-      "energy_scope": "bundled",
-      "closed_to_new": false,
-      "energy_includes_riders": false,
-      "empty_reason": "",
-      "linked_document_hint": ""
+      "needs_review": false,
+      "extraction_tier": "deterministic",
+      "missing_fields": [],
+      "riders_referenced_not_shown": [],
+      "energy_scope": "bundled"
     },
     {
       "name": "Schedule 7 Time-of-Use Portfolio Option (Whole Premises)",
-      "code": "7",
+      "code": "7-TOD",
       "customer_class": "residential",
-      "rate_type": "seasonal_tou",
-      "description": "Residential TOU Portfolio option (enrollment required): transmission, distribution and energy combined per TOU period, summer/winter hours.",
-      "source_url": "https://assets.ctfassets.net/416ywc1laqmd/2je1W1MvdK5QDMqTHP61tm/55061789ca52d46ab38ed16e348a7993/all_tariffs_56_.pdf",
-      "effective_date": "2020-06-03",
+      "rate_type": "tou",
+      "description": "Deterministic parse of PGE Schedule 7 TOD. EV-only charging uses the same prices \u2014 no separate plan.",
+      "source_url": "https://assets.ctfassets.net/416ywc1laqmd/Sched_007.pdf",
+      "effective_date": "2026-07-08",
       "components": [
         {
           "component_type": "fixed",
           "unit": "$/month",
-          "rate_value": 11.0
+          "rate_value": 13.0,
+          "tier_label": "Basic Charge Single-Family"
         },
         {
           "component_type": "energy",
           "unit": "\u00a2/kWh",
-          "rate_value": 20.378,
-          "period_label": "On-Peak (all-in: transmission 0.397 + distribution 7.601 + energy 12.380)",
-          "day_type": "weekday",
-          "period_start_time": "15:00",
-          "period_end_time": "20:00",
-          "season": "Summer",
-          "season_start_month": 5,
-          "season_start_day": 1,
-          "season_end_month": 10,
-          "season_end_day": 31
-        },
-        {
-          "component_type": "energy",
-          "unit": "\u00a2/kWh",
-          "rate_value": 15.049,
-          "period_label": "Mid-Peak (all-in: 0.397 + 7.601 + 7.051)",
-          "day_type": "weekday",
-          "period_start_time": "06:00",
-          "period_end_time": "15:00",
-          "season": "Summer",
-          "season_start_month": 5,
-          "season_start_day": 1,
-          "season_end_month": 10,
-          "season_end_day": 31
-        },
-        {
-          "component_type": "energy",
-          "unit": "\u00a2/kWh",
-          "rate_value": 15.049,
-          "period_label": "Mid-Peak (all-in: 0.397 + 7.601 + 7.051)",
-          "day_type": "weekday",
-          "period_start_time": "20:00",
-          "period_end_time": "22:00",
-          "season": "Summer",
-          "season_start_month": 5,
-          "season_start_day": 1,
-          "season_end_month": 10,
-          "season_end_day": 31
-        },
-        {
-          "component_type": "energy",
-          "unit": "\u00a2/kWh",
-          "rate_value": 4.128,
-          "period_label": "Off-Peak (all-in: 0 + 0 + 4.128)",
-          "day_type": "weekday",
-          "period_start_time": "22:00",
-          "period_end_time": "06:00",
-          "season": "Summer",
-          "season_start_month": 5,
-          "season_start_day": 1,
-          "season_end_month": 10,
-          "season_end_day": 31
-        },
-        {
-          "component_type": "energy",
-          "unit": "\u00a2/kWh",
-          "rate_value": 15.049,
-          "period_label": "Mid-Peak (all-in: 0.397 + 7.601 + 7.051)",
-          "day_type": "saturday",
-          "period_start_time": "06:00",
-          "period_end_time": "22:00",
-          "season": "Summer",
-          "season_start_month": 5,
-          "season_start_day": 1,
-          "season_end_month": 10,
-          "season_end_day": 31
-        },
-        {
-          "component_type": "energy",
-          "unit": "\u00a2/kWh",
-          "rate_value": 4.128,
-          "period_label": "Off-Peak",
-          "day_type": "saturday",
-          "period_start_time": "22:00",
-          "period_end_time": "06:00",
-          "season": "Summer",
-          "season_start_month": 5,
-          "season_start_day": 1,
-          "season_end_month": 10,
-          "season_end_day": 31
-        },
-        {
-          "component_type": "energy",
-          "unit": "\u00a2/kWh",
-          "rate_value": 4.128,
-          "period_label": "Off-Peak",
-          "day_type": "sunday",
-          "period_start_time": "00:00",
-          "period_end_time": "00:00",
-          "season": "Summer",
-          "season_start_month": 5,
-          "season_start_day": 1,
-          "season_end_month": 10,
-          "season_end_day": 31
-        },
-        {
-          "component_type": "energy",
-          "unit": "\u00a2/kWh",
-          "rate_value": 4.128,
-          "period_label": "Off-Peak",
-          "day_type": "holiday",
-          "period_start_time": "00:00",
-          "period_end_time": "00:00",
-          "season": "Summer",
-          "season_start_month": 5,
-          "season_start_day": 1,
-          "season_end_month": 10,
-          "season_end_day": 31
-        },
-        {
-          "component_type": "energy",
-          "unit": "\u00a2/kWh",
-          "rate_value": 20.378,
-          "period_label": "On-Peak (all-in: 0.397 + 7.601 + 12.380)",
-          "day_type": "weekday",
-          "period_start_time": "06:00",
-          "period_end_time": "10:00",
-          "season": "Winter",
-          "season_start_month": 11,
-          "season_start_day": 1,
-          "season_end_month": 4,
-          "season_end_day": 30
-        },
-        {
-          "component_type": "energy",
-          "unit": "\u00a2/kWh",
-          "rate_value": 20.378,
-          "period_label": "On-Peak (all-in: 0.397 + 7.601 + 12.380)",
-          "day_type": "weekday",
+          "rate_value": 30.263,
+          "period_label": "On-Peak (all-in: transmission + distribution + energy)",
           "period_start_time": "17:00",
-          "period_end_time": "20:00",
-          "season": "Winter",
-          "season_start_month": 11,
-          "season_start_day": 1,
-          "season_end_month": 4,
-          "season_end_day": 30
+          "period_end_time": "21:00",
+          "day_type": "weekday"
         },
         {
           "component_type": "energy",
           "unit": "\u00a2/kWh",
-          "rate_value": 15.049,
-          "period_label": "Mid-Peak (all-in: 0.397 + 7.601 + 7.051)",
-          "day_type": "weekday",
-          "period_start_time": "10:00",
+          "rate_value": 11.143,
+          "period_label": "Mid-Peak (all-in: transmission + distribution + energy)",
+          "period_start_time": "07:00",
           "period_end_time": "17:00",
-          "season": "Winter",
-          "season_start_month": 11,
-          "season_start_day": 1,
-          "season_end_month": 4,
-          "season_end_day": 30
+          "day_type": "weekday"
         },
         {
           "component_type": "energy",
           "unit": "\u00a2/kWh",
-          "rate_value": 15.049,
-          "period_label": "Mid-Peak (all-in: 0.397 + 7.601 + 7.051)",
-          "day_type": "weekday",
-          "period_start_time": "20:00",
-          "period_end_time": "22:00",
-          "season": "Winter",
-          "season_start_month": 11,
-          "season_start_day": 1,
-          "season_end_month": 4,
-          "season_end_day": 30
+          "rate_value": 5.514,
+          "period_label": "Off-Peak (all-in: transmission + distribution + energy)",
+          "period_start_time": "21:00",
+          "period_end_time": "07:00",
+          "day_type": "weekday"
         },
         {
           "component_type": "energy",
           "unit": "\u00a2/kWh",
-          "rate_value": 4.128,
-          "period_label": "Off-Peak",
-          "day_type": "weekday",
-          "period_start_time": "22:00",
-          "period_end_time": "06:00",
-          "season": "Winter",
-          "season_start_month": 11,
-          "season_start_day": 1,
-          "season_end_month": 4,
-          "season_end_day": 30
-        },
-        {
-          "component_type": "energy",
-          "unit": "\u00a2/kWh",
-          "rate_value": 15.049,
-          "period_label": "Mid-Peak (all-in: 0.397 + 7.601 + 7.051)",
-          "day_type": "saturday",
-          "period_start_time": "06:00",
-          "period_end_time": "22:00",
-          "season": "Winter",
-          "season_start_month": 11,
-          "season_start_day": 1,
-          "season_end_month": 4,
-          "season_end_day": 30
-        },
-        {
-          "component_type": "energy",
-          "unit": "\u00a2/kWh",
-          "rate_value": 4.128,
-          "period_label": "Off-Peak",
-          "day_type": "saturday",
-          "period_start_time": "22:00",
-          "period_end_time": "06:00",
-          "season": "Winter",
-          "season_start_month": 11,
-          "season_start_day": 1,
-          "season_end_month": 4,
-          "season_end_day": 30
-        },
-        {
-          "component_type": "energy",
-          "unit": "\u00a2/kWh",
-          "rate_value": 4.128,
-          "period_label": "Off-Peak",
-          "day_type": "sunday",
+          "rate_value": 5.514,
+          "period_label": "Off-Peak (all-in: transmission + distribution + energy)",
           "period_start_time": "00:00",
           "period_end_time": "00:00",
-          "season": "Winter",
-          "season_start_month": 11,
-          "season_start_day": 1,
-          "season_end_month": 4,
-          "season_end_day": 30
+          "day_type": "weekend"
         },
         {
           "component_type": "energy",
           "unit": "\u00a2/kWh",
-          "rate_value": 4.128,
-          "period_label": "Off-Peak",
-          "day_type": "holiday",
+          "rate_value": 5.514,
+          "period_label": "Off-Peak (all-in: transmission + distribution + energy)",
           "period_start_time": "00:00",
           "period_end_time": "00:00",
-          "season": "Winter",
-          "season_start_month": 11,
-          "season_start_day": 1,
-          "season_end_month": 4,
-          "season_end_day": 30
-        },
-        {
-          "component_type": "adjustment",
-          "unit": "\u00a2/kWh",
-          "rate_value": 0.397,
-          "period_label": "Transmission and Related Services - On-Peak and Mid-Peak",
-          "included_in_energy": true,
-          "rider_scope": "all_customers"
-        },
-        {
-          "component_type": "adjustment",
-          "unit": "\u00a2/kWh",
-          "rate_value": 0.0,
-          "period_label": "Transmission and Related Services - Off-Peak",
-          "included_in_energy": true,
-          "rider_scope": "all_customers"
-        },
-        {
-          "component_type": "adjustment",
-          "unit": "\u00a2/kWh",
-          "rate_value": 7.601,
-          "period_label": "Distribution - On-Peak and Mid-Peak",
-          "included_in_energy": true,
-          "rider_scope": "all_customers"
-        },
-        {
-          "component_type": "adjustment",
-          "unit": "\u00a2/kWh",
-          "rate_value": 0.0,
-          "period_label": "Distribution - Off-Peak",
-          "included_in_energy": true,
-          "rider_scope": "all_customers"
-        },
-        {
-          "component_type": "adjustment",
-          "unit": "\u00a2/kWh",
-          "rate_value": -0.722,
-          "period_label": "First 1,000 kWh block adjustment",
-          "tier_min_kwh": 0,
-          "tier_max_kwh": 1000,
-          "included_in_energy": false,
-          "rider_scope": "some_kwh_or_customers"
+          "day_type": "holiday"
         }
       ],
-      "confidence": 0.8,
-      "needs_review": true,
-      "completeness_reasons": [],
-      "computable_reasons": [],
-      "extraction_tier": "twopass",
-      "missing_fields": [
-        "Schedule 100 adjustment amounts"
-      ],
-      "riders_referenced_not_shown": [
-        "Schedule 100 adjustments"
-      ],
-      "energy_scope": "bundled",
-      "closed_to_new": false,
-      "energy_includes_riders": false,
-      "empty_reason": "",
-      "linked_document_hint": ""
-    },
-    {
-      "name": "Schedule 7 Plug-In Electric Vehicle Time of Use Option (Separately Metered)",
-      "code": "7",
-      "customer_class": "residential",
-      "rate_type": "seasonal_tou",
-      "description": "Separately metered residential EV charging under the Schedule 7 TOU option; transmission, distribution and energy combined per TOU period; first-1,000-kWh block adjustment does not apply.",
-      "source_url": "https://assets.ctfassets.net/416ywc1laqmd/2je1W1MvdK5QDMqTHP61tm/55061789ca52d46ab38ed16e348a7993/all_tariffs_56_.pdf",
-      "effective_date": "2020-01-01",
-      "components": [
-        {
-          "component_type": "fixed",
-          "unit": "$/month",
-          "rate_value": 11.0
-        },
-        {
-          "component_type": "energy",
-          "unit": "\u00a2/kWh",
-          "rate_value": 20.378,
-          "tier_label": "On-Peak all-in: energy 12.380 + transmission 0.397 + distribution 7.601",
-          "season": "Summer",
-          "season_start_month": 5,
-          "season_start_day": 1,
-          "season_end_month": 10,
-          "season_end_day": 31,
-          "day_type": "weekday",
-          "period_label": "On-Peak",
-          "period_start_time": "15:00",
-          "period_end_time": "20:00"
-        },
-        {
-          "component_type": "energy",
-          "unit": "\u00a2/kWh",
-          "rate_value": 15.049,
-          "tier_label": "Mid-Peak all-in: energy 7.051 + transmission 0.397 + distribution 7.601",
-          "season": "Summer",
-          "season_start_month": 5,
-          "season_start_day": 1,
-          "season_end_month": 10,
-          "season_end_day": 31,
-          "day_type": "weekday",
-          "period_label": "Mid-Peak",
-          "period_start_time": "06:00",
-          "period_end_time": "15:00"
-        },
-        {
-          "component_type": "energy",
-          "unit": "\u00a2/kWh",
-          "rate_value": 15.049,
-          "tier_label": "Mid-Peak all-in",
-          "season": "Summer",
-          "season_start_month": 5,
-          "season_start_day": 1,
-          "season_end_month": 10,
-          "season_end_day": 31,
-          "day_type": "weekday",
-          "period_label": "Mid-Peak",
-          "period_start_time": "20:00",
-          "period_end_time": "22:00"
-        },
-        {
-          "component_type": "energy",
-          "unit": "\u00a2/kWh",
-          "rate_value": 4.128,
-          "tier_label": "Off-Peak all-in",
-          "season": "Summer",
-          "season_start_month": 5,
-          "season_start_day": 1,
-          "season_end_month": 10,
-          "season_end_day": 31,
-          "day_type": "weekday",
-          "period_label": "Off-Peak",
-          "period_start_time": "22:00",
-          "period_end_time": "06:00"
-        },
-        {
-          "component_type": "energy",
-          "unit": "\u00a2/kWh",
-          "rate_value": 15.049,
-          "tier_label": "Mid-Peak all-in",
-          "season": "Summer",
-          "season_start_month": 5,
-          "season_start_day": 1,
-          "season_end_month": 10,
-          "season_end_day": 31,
-          "day_type": "weekend",
-          "period_label": "Saturday Mid-Peak",
-          "period_start_time": "06:00",
-          "period_end_time": "22:00"
-        },
-        {
-          "component_type": "energy",
-          "unit": "\u00a2/kWh",
-          "rate_value": 4.128,
-          "tier_label": "Off-Peak all-in",
-          "season": "Summer",
-          "season_start_month": 5,
-          "season_start_day": 1,
-          "season_end_month": 10,
-          "season_end_day": 31,
-          "day_type": "weekend",
-          "period_label": "Off-Peak",
-          "period_start_time": "22:00",
-          "period_end_time": "06:00"
-        },
-        {
-          "component_type": "energy",
-          "unit": "\u00a2/kWh",
-          "rate_value": 20.378,
-          "tier_label": "On-Peak all-in: energy 12.380 + transmission 0.397 + distribution 7.601",
-          "season": "Winter",
-          "season_start_month": 11,
-          "season_start_day": 1,
-          "season_end_month": 4,
-          "season_end_day": 30,
-          "day_type": "weekday",
-          "period_label": "On-Peak",
-          "period_start_time": "06:00",
-          "period_end_time": "10:00"
-        },
-        {
-          "component_type": "energy",
-          "unit": "\u00a2/kWh",
-          "rate_value": 20.378,
-          "tier_label": "On-Peak all-in",
-          "season": "Winter",
-          "season_start_month": 11,
-          "season_start_day": 1,
-          "season_end_month": 4,
-          "season_end_day": 30,
-          "day_type": "weekday",
-          "period_label": "On-Peak",
-          "period_start_time": "17:00",
-          "period_end_time": "20:00"
-        },
-        {
-          "component_type": "energy",
-          "unit": "\u00a2/kWh",
-          "rate_value": 15.049,
-          "tier_label": "Mid-Peak all-in",
-          "season": "Winter",
-          "season_start_month": 11,
-          "season_start_day": 1,
-          "season_end_month": 4,
-          "season_end_day": 30,
-          "day_type": "weekday",
-          "period_label": "Mid-Peak",
-          "period_start_time": "10:00",
-          "period_end_time": "17:00"
-        },
-        {
-          "component_type": "energy",
-          "unit": "\u00a2/kWh",
-          "rate_value": 15.049,
-          "tier_label": "Mid-Peak all-in",
-          "season": "Winter",
-          "season_start_month": 11,
-          "season_start_day": 1,
-          "season_end_month": 4,
-          "season_end_day": 30,
-          "day_type": "weekday",
-          "period_label": "Mid-Peak",
-          "period_start_time": "20:00",
-          "period_end_time": "22:00"
-        },
-        {
-          "component_type": "energy",
-          "unit": "\u00a2/kWh",
-          "rate_value": 4.128,
-          "tier_label": "Off-Peak all-in",
-          "season": "Winter",
-          "season_start_month": 11,
-          "season_start_day": 1,
-          "season_end_month": 4,
-          "season_end_day": 30,
-          "day_type": "weekday",
-          "period_label": "Off-Peak",
-          "period_start_time": "22:00",
-          "period_end_time": "06:00"
-        },
-        {
-          "component_type": "energy",
-          "unit": "\u00a2/kWh",
-          "rate_value": 15.049,
-          "tier_label": "Mid-Peak all-in",
-          "season": "Winter",
-          "season_start_month": 11,
-          "season_start_day": 1,
-          "season_end_month": 4,
-          "season_end_day": 30,
-          "day_type": "weekend",
-          "period_label": "Saturday Mid-Peak",
-          "period_start_time": "06:00",
-          "period_end_time": "22:00"
-        },
-        {
-          "component_type": "energy",
-          "unit": "\u00a2/kWh",
-          "rate_value": 4.128,
-          "tier_label": "Off-Peak all-in",
-          "season": "Winter",
-          "season_start_month": 11,
-          "season_start_day": 1,
-          "season_end_month": 4,
-          "season_end_day": 30,
-          "day_type": "weekend",
-          "period_label": "Off-Peak",
-          "period_start_time": "22:00",
-          "period_end_time": "06:00"
-        },
-        {
-          "component_type": "adjustment",
-          "unit": "\u00a2/kWh",
-          "rate_value": 0.397,
-          "included_in_energy": true,
-          "rider_scope": "all_customers",
-          "period_label": "Transmission and Related Services (On/Mid-Peak)"
-        },
-        {
-          "component_type": "adjustment",
-          "unit": "\u00a2/kWh",
-          "rate_value": 7.601,
-          "included_in_energy": true,
-          "rider_scope": "all_customers",
-          "period_label": "Distribution (On/Mid-Peak)"
-        }
-      ],
-      "confidence": 0.8,
-      "needs_review": true,
-      "completeness_reasons": [],
-      "computable_reasons": [],
-      "extraction_tier": "twopass",
-      "missing_fields": [
-        "Schedule 100 adjustment amounts"
-      ],
-      "riders_referenced_not_shown": [
-        "Schedule 100 adjustments"
-      ],
-      "energy_scope": "bundled",
-      "closed_to_new": false,
-      "energy_includes_riders": false,
-      "empty_reason": "",
-      "linked_document_hint": ""
+      "needs_review": false,
+      "extraction_tier": "deterministic",
+      "missing_fields": [],
+      "riders_referenced_not_shown": [],
+      "energy_scope": "bundled"
     }
   ],
   "rider_extras": [
     {
-      "customer_class": "residential",
-      "source_url": "https://edocs.puc.state.or.us/efdocs/UBA/ue452uba342429171.pdf",
       "name": "Schedule 125 Net Variable Power Cost Adjustment - Schedule 7 Residential",
-      "rate_type": "complex",
-      "riders_referenced_not_shown": [
-        "Schedule 100"
-      ],
-      "confidence": 0.85,
-      "effective_date": "2026-01-01",
-      "extraction_tier": "rider_doc",
       "code": "125",
+      "customer_class": "residential",
+      "rate_type": "flat",
+      "description": "Deterministic parse of PGE Schedule 125 for Schedule 7.",
+      "source_url": "https://assets.ctfassets.net/416ywc1laqmd/Sched_125.pdf",
+      "effective_date": "",
       "components": [
         {
           "component_type": "adjustment",
           "unit": "\u00a2/kWh",
-          "rate_value": 5.788,
+          "rate_value": 5.619,
           "tier_label": "Schedule 7 (Residential) Schedule 125 adjustment",
           "included_in_energy": false,
           "rider_scope": "all_customers"
@@ -659,41 +121,36 @@
         {
           "component_type": "adjustment",
           "unit": "\u00a2/kWh",
-          "rate_value": 13.255,
-          "period_label": "7-TOD On-Peak Period",
+          "rate_value": 12.868,
           "tier_label": "Schedule 7-TOD Schedule 125 adjustment",
           "included_in_energy": false,
-          "rider_scope": "tou_overlay"
+          "rider_scope": "all_customers",
+          "period_label": "7-TOD On-Peak Period"
         },
         {
           "component_type": "adjustment",
           "unit": "\u00a2/kWh",
-          "rate_value": 5.722,
-          "period_label": "7-TOD Mid-Peak Period",
+          "rate_value": 5.555,
           "tier_label": "Schedule 7-TOD Schedule 125 adjustment",
           "included_in_energy": false,
-          "rider_scope": "tou_overlay"
+          "rider_scope": "all_customers",
+          "period_label": "7-TOD Mid-Peak Period"
         },
         {
           "component_type": "adjustment",
           "unit": "\u00a2/kWh",
-          "rate_value": 3.519,
-          "period_label": "7-TOD Off-Peak Period",
+          "rate_value": 3.416,
           "tier_label": "Schedule 7-TOD Schedule 125 adjustment",
           "included_in_energy": false,
-          "rider_scope": "tou_overlay"
+          "rider_scope": "all_customers",
+          "period_label": "7-TOD Off-Peak Period"
         }
       ],
-      "energy_scope": "bundled",
-      "closed_to_new": false,
-      "missing_fields": [
-        "Schedule 100 adjustment amounts",
-        "TOD period clock times",
-        "base energy rates"
-      ],
-      "description": "Schedule 125 NVPC adjustment rates in \u00a2/kWh applicable to residential Schedule 7 and Schedule 7-TOD.",
-      "needs_review": true
+      "needs_review": false,
+      "extraction_tier": "rider_doc",
+      "missing_fields": [],
+      "riders_referenced_not_shown": [],
+      "energy_scope": "bundled"
     }
-  ],
-  "sch1xx_from_r10": true
+  ]
 }

@@ -1,0 +1,306 @@
+Portland General Electric Company Third Revision of Sheet No. 7-1
+P.U.C. Oregon No. E-19 Canceling Second Revision of Sheet No. 7-1
+SCHEDULE 7
+RESIDENTIAL SERVICE
+PURPOSE
+This schedule provides Standard and Optional Service choices for residential customers. Optional
+Services include Time-of-Day (TOD), Peak Time Rebate, and Green FutureSM renewable portfolio
+options.
+AVAILABLE
+In all territory served by the Company.
+APPLICABLE
+To Residential Customers.
+ENERGY PRICE PLANS (DEFAULT PLAN OR TOD)
+RESIDENTIAL SERVICE PRICE PLAN (DEFAULT PLAN)
+This default plan is provided to Residential Customers who have not chosen the TOD portfolio
+option price plan.
+Monthly Rate
+The default plan is priced as the total of the following charges per Service Point (SP)*:
+Basic Charge
+Single-Family Home $13.00
+Multi-Family Home $10.00
+Transmission and Related Services Charge 0.805 ¢ per kWh (R)
+Distribution Charge 6.941 ¢ per kWh (R)
+Energy Charge 3.543 ¢ per kWh (I)
+* See Schedule 100 for applicable adjustments.
+Advice No. 26-24
+Issued June 3, 2026 Effective for service
+Angelica Espinosa, Senior Vice President on and after July 8, 2026
+
+Portland General Electric Company Third Revision of Sheet No. 7-2
+P.U.C. Oregon No. E-19 Canceling Second Revision of Sheet No. 7-2
+SCHEDULE 7 (Continued)
+TIME-OF-DAY (TOD) PORTFOLIO OPTION
+This optional price plan provides TOD pricing for transmission and related services, distribution
+and energy and can apply to a whole premise or to plug-in electric vehicle charging only*.
+Enrollment is necessary.
+Monthly Rate
+Basic Charge
+Single-Family Home $13.00
+Multi-Family Home $10.00
+On-Peak Charge 30.263 ¢ per kWh (R)
+Transmission and Related Services 2.310 ¢ per kWh (R)
+Distribution 19.840 ¢ per kWh (R)
+Energy 8.113 ¢ per kWh (I)
+Mid-Peak Charge 11.143 ¢ per kWh (R)
+Transmission and Related Services 0.790 ¢ per kWh (R)
+Distribution 6.850 ¢ per kWh (R)
+Energy 3.503 ¢ per kWh (I)
+Off-Peak Charge 5.514 ¢ per kWh (R)
+Transmission and Related Services 0.350 ¢ per kWh (R)
+Distribution 3.010 ¢ per kWh (R)
+Energy 2.154 ¢ per kWh (I)
+* See Schedule 100 for applicable adjustments.
+On- and Off-Peak Hours
+On-Peak 5:00 p.m. to 9:00 p.m. Monday-Friday
+Mid-Peak 7:00 a.m. to 5:00 p.m. Monday-Friday;
+Off-Peak 9:00 p.m. to 7:00 a.m. Monday-Friday;
+All day. Saturday, Sunday and holidays
+Note: For Customers with Non-Network Meters, the time periods set forth above will begin and end one hour later for
+the period between the second Sunday in March and the first Sunday in April, and for the period between the
+last Sunday in October and the first Sunday in November. Customers with Network Meters will observe the
+regular daylight-saving schedule.
+Holidays are as follows: New Year’s Day on January 1; Memorial Day, the last Monday in May; Independence
+Day on July 4; Labor Day, the first Monday in September; Thanksgiving Day, the fourth Thursday in November;
+and Christmas Day on December 25. If a holiday falls on a Saturday, the preceding Friday will be designated
+the holiday. If a holiday falls on a Sunday, the following Monday will be designated the holiday.
+Advice No. 26-24
+Issued June 3, 2026 Effective for service
+Angelica Espinosa, Senior Vice President on and after July 8, 2026
+ | 30.263 | 
+ | 2.310 | 
+ | 19.840 | 
+ | 11.143 | 
+ | 0.790 | 
+ | 6.850 | 
+
+Portland General Electric Company First Revision of Sheet No. 7-3
+P.U.C. Oregon No. E-19 Canceling Original Sheet No. 7-3
+SCHEDULE 7 (Continued)
+TIME-OF-DAY (TOD) PORTFOLIO OPTION (Continued) (T)
+(D)
+Plug-In Electric Vehicle (EV) Charging Option (M)
+A Residential Customer wishing to charge Electric Vehicles (EVs) may do so either as part of
+Whole Premises Service (default plan or the TOD portfolio option) or as a separately metered (C)
+service billed under the TOD portfolio option. In such cases, the applicable basic, transmission (C)
+and related services, distribution and energy charges will apply to the separately metered service
+as will all other adjustments applied to this schedule. Renewable Portfolio Options are also
+available under this EV charging option.
+If the Customer chooses separately metered service for EV charging, the service shall be for the
+exclusive purpose of all EV charging. The Customer, at its expense, will install all necessary and
+required equipment to accommodate the second metered service at the Premises. Such service
+must be metered with a Network Meter as defined in Rule B for the purpose of load research, and
+to collect and analyze data to characterize EV use in diverse geographic dynamics and evaluate
+the effectiveness of the charging station infrastructure.
+Special Conditions Pertaining to the Portfolio Option (including Whole Premise and EV (C)
+Charging)
+1. Service may be terminated at the next regularly scheduled meter reading provided the
+Company has received two weeks’ notice prior to the meter read date. Absent the two-week
+notice, the termination will occur with the next subsequent meter reading date.
+2. Participation requires a one-year commitment by the Customer. Generally, if a Customer
+requests removal from the TOD option, the Customer will be required to wait 12 months (C)
+before re-enrolling. However, a Customer may request to reinstate service within 90 days
+of termination, in which case the Portfolio Enrollment Charge will be waived.
+3. The Customer must take service at 120/240 volts or greater.
+4. The Customer must provide the Company access to the meter monthly.
+5. After a Customer’s initial 12 months of service on the TOD option, the Company will (C)
+calculate what the Customer would have paid under the default plan and compare billings.
+If the Customer’s Energy Charge billings (including all applicable supplemental
+adjustments) under the TOD option exceeded the default plan Energy Charge (including (C)
+all applicable supplemental adjustments) by more than 10%, the Company will issue the
+Customer a refund for the amount more than 10% either as a bill credit or refund check.
+No refund will be issued for Customers not meeting the 12-month requirement.
+6. The Company may recover lost revenue from the TOD optional price plan through (C)
+Schedule 105. (M)
+Advice No. 24-39
+Issued December 23, 2024 Effective for service
+Angelica Espinosa, Senior Vice President on and after January 1, 2025
+
+Portland General Electric Company Second Revision of Sheet No. 7-4
+P.U.C. Oregon No. E-19 Canceling First Revision of Sheet No. 7-4
+SCHEDULE 7 (Continued)
+Special Conditions Pertaining to the Portfolio Option (including Whole Premise and EV Charging)
+(Continued)
+7. Billing will begin for any Customer no later than the next regularly scheduled meter reading
+date following the initialization meter reading made on a regularly scheduled meter reading
+date, assuming no meter exchange is required to enable the TOD option.
+8. The Company may choose to offer promotional incentives, including but not limited to
+rebates or coupons.
+ADDITIONAL PORTFOLIO OPTIONS FOR ENERGY PRICE PLANS
+PEAK TIME REBATE EVENT PARTICIPATION
+Customers choosing the Peak Time Rebate (PTR) program are eligible to receive a rebate for
+reducing Energy use during Company-called events, relative to each Customer’s baseline Energy
+use, as determined by the Company.
+(D)
+Monthly Rate
+Customers enrolled in PTR will pay their energy price plan monthly rate – which includes Basic
+Charge, transmission and related services, and distribution charges. Energy Charges may also
+include the following PTR credit:
+PTR Credit 100.00 ¢ per kWh
+To receive the PTR Credit, the Customer must reduce Energy use during a PTR Event. Such
+event will be a two- to five-consecutive-hour window typically between the hours of 7:00 AM to (C)
+11:00 AM or 3:00 PM to 9:00 PM. The Company will take best efforts to avoid calling Events on
+holidays, but reserves the right to call Events on holidays as system or programmatic conditions
+warrant*. (C)
+The PTR program has two event seasons: summer (typically the successive calendar months of (C)
+June through September) and winter (typically successive calendar months of November through
+February). Events may be called outside of event seasons if system or programmatic conditions
+warrant. (C)
+* Holidays are as follows: New Year’s Day (January 1), Memorial Day (last Monday in May), Independence Day (July (T)
+4); Labor Day (first Monday in September), Thanksgiving Day (fourth Thursday in November), and Christmas Day (T)
+(December 25). If a holiday falls on a Sunday, the following Monday will be designated the holiday.
+(C)
+Advice No. 25-10
+Issued April 16, 2025 Effective for service
+Angelica Espinosa, Senior Vice President on and after May 28, 2025
+
+Portland General Electric Company Second Revision of Sheet No. 7-5
+P.U.C. Oregon No. E-19 Canceling First Revision of Sheet No. 7-5
+SCHEDULE 7 (Continued)
+PEAK TIME REBATE EVENT PARTICIPATION (Continued)
+The Company initiates PTR events with an event notification to participating Customers prior to (C)
+the PTR event. Participating Customers must choose at least one method for receipt of
+notification: email, text, or another available option to enroll. The Customer must ensure Company (C)
+is able to notify the Customer from at least one of these methods throughout the duration of the
+Customer’s enrollment. (C)
+Special Conditions Related to Peak Time Rebate Options
+1. To be eligible for a PTR credit, the Customer must agree to receive PTR notifications.
+2. The Customer may unsubscribe from the PTR event notification at any time. If the Customer
+unsubscribes, they will receive credit only for those events for which they are enrolled and
+receive notifications.
+3. The PTR incentive may be provided in an on-bill credit on the Customer’s next monthly
+billing statement, ACH, or by check at the next billing statement after the event season ends. (C)
+(D)
+4. The Company will defer and seek recovery of all PTR costs not otherwise included in rates. (T)
+GREEN FUTURE RENEWABLE PORTFOLIO OPTIONS
+Customers can add any of the following Green Future Renewable Portfolio options to any service
+described in this schedule: renewable fixed option, renewable usage option, and renewable
+habitat option adder (Habitat Support).
+The Customer will be charged for the Green Future Renewable Portfolio option in addition to all
+other charges under this schedule for the term of enrollment in the Green Future Renewable
+Portfolio option.
+Energy or Renewable Energy Certificates (RECs), as defined in Rule B of this tariff, will be
+acquired by the Company such that by March 31 of the succeeding year, the Company will have
+received sufficient RECs or renewable energy to meet the purchases by Customers. For the
+renewable fixed and renewable usage options, the Company is not required to own renewables
+or to acquire Energy from renewable resources simultaneously with Customer usage.
+For purposes of these options, renewable resources include wind, solar, biomass, low impact
+hydro (as certified by the Low Impact Hydro Institute) and geothermal energy sources used to
+produce electric power.
+Advice No. 25-10
+Issued April 16, 2025 Effective for service
+Angelica Espinosa, Senior Vice President on and after May 28, 2025
+
+Portland General Electric Company First Revision of Sheet No. 7-6
+P.U.C. Oregon No. E-19 Cancelling Original Sheet No. 7-6
+SCHEDULE 7 (Continued)
+RENEWABLE FIXED OPTION (M)
+The Company will use funds received under this option to cover program costs and purchase 200
+kWh of RECs and/or renewable energy per block enrolled in the renewable fixed option. All RECs
+purchased under this option will come from new renewable resources.
+The Company will also place any funds not spent after covering program and REC costs received
+from Customers enrolled in this option in a renewable resources development and demonstration
+fund (“Renewable Development Fund” or “RDF”). See Special Conditions for additional details on
+the RDF.
+Monthly Rate
+Renewable Fixed Option $1.88 per month per block
+RENEWABLE USAGE OPTION
+Amounts received from Customers under the renewable usage option will be used to cover
+program costs and acquire RECs and/or Energy, all of which will come from new renewable
+resources.
+The Company will place any funds received from Customers enrolled in this option that are not
+spent after covering program and REC costs in a renewable resources development and
+demonstration fund (“Renewable Development Fund” or “RDF”). See Special Conditions for
+additional details on the RDF.
+Effective January 1, 2025, the Renewable Usage option will match 73% of a customer’s electricity
+usage with RECs. Upon each future Renewable Portfolio Standard (RPS) benchmark year, the
+program will reduce the percentage matched through Renewable Usage to the difference
+between the RPS and what it would take to be 100% renewable.
+Monthly Rate
+Renewable Usage Option 0.940 ¢ per kWh in addition to Energy Charge (M)
+Advice No. 24-39
+Issued December 23, 2024 Effective for service
+Angelica Espinosa, Senior Vice President on and after January 1, 2025
+
+Portland General Electric Company Second Revision of Sheet No. 7-7
+P.U.C. Oregon No. E-19 Canceling First Revision of Sheet No. 7-7
+SCHEDULE 7 (Continued)
+RENEWABLE HABITAT OPTION ADDER (HABITAT SUPPORT)
+(M)
+The Company will distribute $2.50 per month as received from each Customer enrolled in habitat
+support to a nonprofit agency chosen by the Company who will use the funds for habitat
+restoration.
+Available
+Only Customers who are enrolled in a Green Future Renewable Portfolio option, described in this
+schedule, may choose habitat support.
+Monthly Rate
+Habitat Support $2.50 per month
+Special Conditions Related to Green Future Renewable Portfolio Options
+1. Service will become effective with the next regularly scheduled meter reading date provided
+the Customer has selected the option at least five days prior to their next scheduled meter
+read date. Absent the five-day notice, the change will become effective on the subsequent
+meter read date. Service may be terminated at or before the next regularly scheduled meter
+reading provided the Company has received two weeks’ notice prior to the meter read date.
+Absent the two-week notice, the termination may occur with the subsequent meter reading
+date.
+2. The Company, in its discretion, may accept participation from accounts that have a time
+payment agreement in effect, or have received two or more final disconnect notices.
+However, the Company will not accept participation from customers that have been
+involuntarily disconnected in the last 12 months due to non-payment.
+3. The Company will use reasonable efforts to ensure energy assistance dollars from the
+Oregon Low Income Home Energy Assistance Program (LIHEAP) and Oregon Energy
+Assistance Program (OEAP) assistance programs are not used to cover Green Future
+program participation during the time which participants receive these energy assistance
+funds. As such, PGE will unenroll Customers from the Green Future program if they receive
+energy assistance funds from LIHEAP and OEAP. If these energy assistance dollars are no
+longer applied to the bill, the Customer may re-enroll in the program subject to the above
+requirements.
+4. The Company will use reasonable efforts to acquire renewable energy but does not
+guarantee the availability of renewable energy sources to serve Green Future Renewable
+Portfolio Options. The Company makes no representations as to the impact on the
+development of renewable resources or habitat restoration projects of Customer’s
+participation.
+(M)
+Advice No. 24-39
+Issued December 23, 2024 Effective for service
+Angelica Espinosa, Senior Vice President on and after January 1, 2025
+
+Portland General Electric Company Second Revision of Sheet No. 7-8
+P.U.C. Oregon No. E-19 Canceling First Revision of Sheet No. 7-8
+SCHEDULE 7 (Continued) (T)
+Special Conditions Related to Green Future Renewable Portfolio Options (Continued) (M)
+5. Amounts in the RDF will be disbursed by the Company to non-residential renewable
+resource demonstration projects or projects that commit to supply Energy according to a
+contractually established timetable. The Company will report to the Commission annually
+by March 15th, pursuant to Order No. 16-156, on collections and disbursements for the
+preceding calendar year. The annual report will include a list of projects that received or
+were allocated RDF funding.
+6. Amounts placed in the RDF prior to July 6, 2016 will accrue interest at the Commission-
+authorized cost of capital until disbursed. Amounts placed in the fund on and after July 6,
+2016 will accrue interest at the Commission-authorized rate for deferred accounts in
+amortization until disbursed. Amounts within the fund will be disbursed on a first-in-first-out
+basis. Once funds have been committed to projects, following the required OPUC review,
+they will be deemed disbursed. Funds deemed disbursed and still held by the Company, will
+accrue interest at the Commission-authorized rate for deferred accounts in amortization.
+ADJUSTMENTS
+Service under this schedule is subject to adjustments approved by the Commission. Adjustments
+include those summarized in Schedule 100. (M)
+Advice No. 24-39
+Issued December 23, 2024 Effective for service
+Angelica Espinosa, Senior Vice President on and after January 1, 2025
+
+Portland General Electric Company Second Revision of Sheet No. 7-9
+P.U.C. Oregon No. E-19 Canceling First Revision of Sheet No. 7-9
+SCHEDULE 7 (Continued)
+[Sheet intentional left blank]
+Advice No. 24-39
+Issued December 23, 2024 Effective for service
+Angelica Espinosa, Senior Vice President on and after January 1, 2025
+
+Portland General Electric Company First Revision of Sheet No. 7-10
+P.U.C. Oregon No. E-19 Canceling Original Sheet No. 7-10
+SCHEDULE 7 (Concluded)
+[Sheet intentional left blank]
+Advice No. 24-39
+Issued December 23, 2024 Effective for service
+Angelica Espinosa, Senior Vice President on and after January 1, 2025

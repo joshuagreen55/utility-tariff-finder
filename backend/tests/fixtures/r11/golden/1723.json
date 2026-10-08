@@ -5,6 +5,7 @@
   "phase3_tariffs": [],
   "rider_extras": [],
   "oeb": true,
+  "billdata_fixture": "oeb/BillData.xml",
   "ldc": {
     "distributor": "Toronto Hydro-Electric System Limited",
     "rate_class": "RESIDENTIAL",
@@ -18,7 +19,7 @@
     "other_fixed": 0.38,
     "loss_factor": 1.0295,
     "year": "2026",
-    "source_url": "https://www.oeb.ca/_html/calculator/data/BillData.xml"
+    "source_url": "tests/fixtures/oeb/BillData.xml"
   },
   "rpp": {
     "tou": {
@@ -29,15 +30,15 @@
     },
     "ulo": {
       "effective_date": "2025-11-01",
-      "ultra_low_overnight": 0.028,
+      "ultra_low_overnight": 0.039,
       "weekend_off_peak": 0.098,
       "mid_peak": 0.157,
-      "on_peak": 0.392
+      "on_peak": 0.391
     },
     "tiered": {
       "effective_date": "2025-11-01",
-      "lower_tier_price": 0.103,
-      "higher_tier_price": 0.125,
+      "lower_tier_price": 0.12,
+      "higher_tier_price": 0.142,
       "summer_threshold_kwh": 600,
       "winter_threshold_kwh": 1000
     }
