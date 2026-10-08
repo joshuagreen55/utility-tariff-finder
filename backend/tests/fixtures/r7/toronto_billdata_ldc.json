@@ -1,0 +1,19 @@
+{
+ "utility_name": "Toronto Hydro",
+ "state": "ON",
+ "ldc": {
+  "distributor": "Toronto Hydro-Electric System Limited",
+  "rate_class": "RESIDENTIAL",
+  "service_charge": 51.56,
+  "distribution_kwh": 0.0016,
+  "transmission_network": 0.01346,
+  "transmission_connection": 0.00895,
+  "wholesale_market": 0.0047,
+  "rural_remote": 0.0006,
+  "sss_admin": 0.25,
+  "other_fixed": 0.38,
+  "loss_factor": 1.0295,
+  "year": "2026",
+  "source_url": "https://www.oeb.ca/_html/calculator/data/BillData.xml"
+ }
+}

@@ -1,0 +1,32 @@
+{
+ "result": {
+  "data": {
+   "contentfulPage": {
+    "body": {
+     "references": [
+      {
+       "file": {
+        "url": "//assets.ctfassets.net/416ywc1laqmd/abc/Sched_100.pdf"
+       }
+      },
+      {
+       "file": {
+        "url": "//assets.ctfassets.net/416ywc1laqmd/def/Sched_105.pdf"
+       }
+      },
+      {
+       "file": {
+        "url": "//assets.ctfassets.net/416ywc1laqmd/ghi/Sched_125.pdf"
+       }
+      },
+      {
+       "file": {
+        "url": "//assets.ctfassets.net/416ywc1laqmd/jkl/Sched_007.pdf"
+       }
+      }
+     ]
+    }
+   }
+  }
+ }
+}

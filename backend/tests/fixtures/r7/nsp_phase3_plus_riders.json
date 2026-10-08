@@ -1,0 +1,739 @@
+{
+ "utility_name": "Nova Scotia Power",
+ "state": "NS",
+ "uid": 1739,
+ "phase3_tariffs": [
+  {
+   "customer_class": "residential",
+   "source_url": "https://www.nspower.ca/docs/default-source/regulatory/tariff-book-2026.pdf",
+   "name": "Domestic Service Tariff",
+   "rate_type": "flat",
+   "energy_includes_riders": false,
+   "riders_referenced_not_shown": [
+    "Fuel Adjustment Mechanism (FAM)",
+    "DSM Cost Recovery Rider",
+    "Storm Cost Recovery Rider"
+   ],
+   "confidence": 0.8,
+   "extraction_tier": "twopass",
+   "code": "02, 03, 04",
+   "components": [
+    {
+     "component_type": "fixed",
+     "unit": "$/month",
+     "rate_value": 20.08
+    },
+    {
+     "component_type": "energy",
+     "unit": "\u00a2/kWh",
+     "rate_value": 18.324,
+     "tier_label": "base energy charge (riders not shown)"
+    },
+    {
+     "component_type": "adjustment",
+     "unit": "$/month",
+     "rate_value": 5,
+     "rider_scope": "optional_program",
+     "period_label": "Optional Green Power block (125 kWh)",
+     "included_in_energy": false
+    }
+   ],
+   "energy_scope": "bundled",
+   "closed_to_new": false,
+   "missing_fields": [
+    "FAM, DSM and Storm rider amounts",
+    "effective date of Board's Order"
+   ],
+   "description": "Residential domestic service flat energy rate with customer charge; Jan 1, 2027 rates (21.04 $/month, 19.067 \u00a2/kWh) not yet in effect.",
+   "needs_review": true
+  },
+  {
+   "customer_class": "residential",
+   "source_url": "https://www.nspower.ca/docs/default-source/regulatory/tariff-book-2026.pdf",
+   "name": "Domestic Service Time-Of-Day Tariff (Optional)",
+   "rate_type": "seasonal_tou",
+   "energy_includes_riders": false,
+   "riders_referenced_not_shown": [
+    "Fuel Adjustment Mechanism (FAM) Tariff",
+    "DSM Cost Recovery Rider",
+    "Storm Cost Recovery Rider"
+   ],
+   "confidence": 0.8,
+   "extraction_tier": "twopass",
+   "code": "05, 06",
+   "components": [
+    {
+     "component_type": "fixed",
+     "unit": "$/month",
+     "rate_value": 20.08
+    },
+    {
+     "component_type": "minimum",
+     "unit": "$/month",
+     "rate_value": 20.08
+    },
+    {
+     "component_type": "energy",
+     "unit": "\u00a2/kWh",
+     "rate_value": 24.384,
+     "season": "Winter",
+     "season_start_month": 12,
+     "season_start_day": 1,
+     "season_end_month": 2,
+     "season_end_day": 28,
+     "day_type": "weekday",
+     "period_label": "Morning",
+     "period_start_time": "07:00",
+     "period_end_time": "12:00"
+    },
+    {
+     "component_type": "energy",
+     "unit": "\u00a2/kWh",
+     "rate_value": 19.459,
+     "season": "Winter",
+     "season_start_month": 12,
+     "season_start_day": 1,
+     "season_end_month": 2,
+     "season_end_day": 28,
+     "day_type": "weekday",
+     "period_label": "Midday",
+     "period_start_time": "12:00",
+     "period_end_time": "16:00"
+    },
+    {
+     "component_type": "energy",
+     "unit": "\u00a2/kWh",
+     "rate_value": 24.384,
+     "season": "Winter",
+     "season_start_month": 12,
+     "season_start_day": 1,
+     "season_end_month": 2,
+     "season_end_day": 28,
+     "day_type": "weekday",
+     "period_label": "Evening",
+     "period_start_time": "16:00",
+     "period_end_time": "23:00"
+    },
+    {
+     "component_type": "energy",
+     "unit": "\u00a2/kWh",
+     "rate_value": 11.632,
+     "season": "Winter",
+     "season_start_month": 12,
+     "season_start_day": 1,
+     "season_end_month": 2,
+     "season_end_day": 28,
+     "day_type": "weekday",
+     "period_label": "Overnight",
+     "period_start_time": "23:00",
+     "period_end_time": "07:00"
+    },
+    {
+     "component_type": "energy",
+     "unit": "\u00a2/kWh",
+     "rate_value": 11.632,
+     "season": "Winter",
+     "season_start_month": 12,
+     "season_start_day": 1,
+     "season_end_month": 2,
+     "season_end_day": 28,
+     "day_type": "weekend",
+     "period_label": "Off-peak all day",
+     "period_start_time": "00:00",
+     "period_end_time": "24:00"
+    },
+    {
+     "component_type": "energy",
+     "unit": "\u00a2/kWh",
+     "rate_value": 11.632,
+     "season": "Winter",
+     "season_start_month": 12,
+     "season_start_day": 1,
+     "season_end_month": 2,
+     "season_end_day": 28,
+     "day_type": "holiday",
+     "period_label": "Off-peak all day",
+     "period_start_time": "00:00",
+     "period_end_time": "24:00"
+    },
+    {
+     "component_type": "energy",
+     "unit": "\u00a2/kWh",
+     "rate_value": 19.459,
+     "season": "Non-winter",
+     "season_start_month": 3,
+     "season_start_day": 1,
+     "season_end_month": 11,
+     "season_end_day": 30,
+     "day_type": "weekday",
+     "period_label": "Day",
+     "period_start_time": "07:00",
+     "period_end_time": "23:00"
+    },
+    {
+     "component_type": "energy",
+     "unit": "\u00a2/kWh",
+     "rate_value": 11.632,
+     "season": "Non-winter",
+     "season_start_month": 3,
+     "season_start_day": 1,
+     "season_end_month": 11,
+     "season_end_day": 30,
+     "day_type": "weekday",
+     "period_label": "Overnight",
+     "period_start_time": "23:00",
+     "period_end_time": "07:00"
+    },
+    {
+     "component_type": "energy",
+     "unit": "\u00a2/kWh",
+     "rate_value": 11.632,
+     "season": "Non-winter",
+     "season_start_month": 3,
+     "season_start_day": 1,
+     "season_end_month": 11,
+     "season_end_day": 30,
+     "day_type": "weekend",
+     "period_label": "Off-peak all day",
+     "period_start_time": "00:00",
+     "period_end_time": "24:00"
+    },
+    {
+     "component_type": "energy",
+     "unit": "\u00a2/kWh",
+     "rate_value": 11.632,
+     "season": "Non-winter",
+     "season_start_month": 3,
+     "season_start_day": 1,
+     "season_end_month": 11,
+     "season_end_day": 30,
+     "day_type": "holiday",
+     "period_label": "Off-peak all day",
+     "period_start_time": "00:00",
+     "period_end_time": "24:00"
+    }
+   ],
+   "energy_scope": "bundled",
+   "closed_to_new": false,
+   "missing_fields": [
+    "FAM, DSM and Storm rider amounts",
+    "effective date"
+   ],
+   "description": "Optional residential TOU tariff for customers with electric thermal storage / in-floor radiant heating; Board's Order rates (Jan 1, 2027 rates not yet in effect).",
+   "needs_review": true
+  },
+  {
+   "customer_class": "residential",
+   "source_url": "https://www.nspower.ca/docs/default-source/regulatory/tariff-book-2026.pdf",
+   "name": "Domestic Service Critical Peak Pricing Tariff (Interim Energy Charge)",
+   "rate_type": "flat",
+   "energy_includes_riders": false,
+   "riders_referenced_not_shown": [
+    "FAM Actual Adjustment and Balance Adjustment",
+    "DSM Cost Recovery Rider",
+    "Storm Cost Recovery Rider"
+   ],
+   "confidence": 0.8,
+   "effective_date": "2025-12-01",
+   "extraction_tier": "twopass",
+   "code": "70",
+   "components": [
+    {
+     "component_type": "fixed",
+     "unit": "$/month",
+     "rate_value": 20.08
+    },
+    {
+     "component_type": "energy",
+     "unit": "\u00a2/kWh",
+     "rate_value": 18.324,
+     "tier_label": "Interim Energy Charge, all hours (base, riders not included)"
+    },
+    {
+     "component_type": "minimum",
+     "unit": "$/month",
+     "rate_value": 20.08
+    },
+    {
+     "component_type": "adjustment",
+     "unit": "$/month",
+     "rate_value": 5,
+     "included_in_energy": false,
+     "rider_scope": "optional_program",
+     "period_label": "Optional Green Power block (125 kWh)"
+    }
+   ],
+   "energy_scope": "bundled",
+   "closed_to_new": false,
+   "description": "Optional domestic CPP tariff; interim flat energy charge equal to standard offer rate in all hours while system functionality unavailable; no critical peak events.",
+   "needs_review": true
+  },
+  {
+   "customer_class": "residential",
+   "source_url": "https://www.nspower.ca/docs/default-source/regulatory/tariff-book-2026.pdf",
+   "name": "Domestic Service Critical Peak Pricing Tariff",
+   "rate_type": "seasonal_tou",
+   "energy_includes_riders": false,
+   "riders_referenced_not_shown": [
+    "FAM Actual Adjustment and Balance Adjustment",
+    "DSM Cost Recovery Rider",
+    "Storm Cost Recovery Rider"
+   ],
+   "confidence": 0.8,
+   "effective_date": "2026-11-01",
+   "extraction_tier": "twopass",
+   "code": "70",
+   "components": [
+    {
+     "component_type": "fixed",
+     "unit": "$/month",
+     "rate_value": 20.08
+    },
+    {
+     "component_type": "energy",
+     "unit": "\u00a2/kWh",
+     "rate_value": 182.067,
+     "period_label": "Critical Peak Event",
+     "day_type": "all",
+     "period_start_time": "06:00",
+     "period_end_time": "23:00",
+     "season": "Winter",
+     "season_start_month": 11,
+     "season_start_day": 1,
+     "season_end_month": 3,
+     "season_end_day": 31,
+     "tier_label": "4-hour event called between 6AM-11PM"
+    },
+    {
+     "component_type": "energy",
+     "unit": "\u00a2/kWh",
+     "rate_value": 15.411,
+     "period_label": "Non-critical Peak Hours",
+     "day_type": "all",
+     "period_start_time": "00:00",
+     "period_end_time": "24:00",
+     "season": "Winter",
+     "season_start_month": 11,
+     "season_start_day": 1,
+     "season_end_month": 3,
+     "season_end_day": 31
+    },
+    {
+     "component_type": "energy",
+     "unit": "\u00a2/kWh",
+     "rate_value": 15.411,
+     "period_label": "Non-critical Peak Hours",
+     "day_type": "all",
+     "period_start_time": "00:00",
+     "period_end_time": "24:00",
+     "season": "Non-Winter",
+     "season_start_month": 4,
+     "season_start_day": 1,
+     "season_end_month": 10,
+     "season_end_day": 31
+    },
+    {
+     "component_type": "minimum",
+     "unit": "$/month",
+     "rate_value": 20.08
+    },
+    {
+     "component_type": "adjustment",
+     "unit": "$/month",
+     "rate_value": 5,
+     "included_in_energy": false,
+     "rider_scope": "optional_program",
+     "period_label": "Optional Green Power block (125 kWh)"
+    }
+   ],
+   "energy_scope": "bundled",
+   "closed_to_new": false,
+   "missing_fields": [
+    "FAM, DSM and storm rider amounts",
+    "critical event exact start time (any 4-hour window between 06:00 and 23:00)"
+   ],
+   "description": "Optional domestic CPP tariff; critical peak event rate during called 4-hour events in winter (Nov 1\u2013Mar 31), non-critical rate otherwise; starts Nov 1, 2026.",
+   "needs_review": true
+  },
+  {
+   "customer_class": "residential",
+   "source_url": "https://www.nspower.ca/docs/default-source/regulatory/tariff-book-2026.pdf",
+   "name": "Domestic Service Time of Use Tariff (Interim Energy Charge)",
+   "rate_type": "seasonal",
+   "energy_includes_riders": false,
+   "riders_referenced_not_shown": [
+    "FAM Actual Adjustment/Balance Adjustment",
+    "DSM Cost Recovery Rider",
+    "Storm Cost Recovery Rider"
+   ],
+   "confidence": 0.8,
+   "effective_date": "2025-11-01",
+   "extraction_tier": "twopass",
+   "code": "80",
+   "components": [
+    {
+     "component_type": "fixed",
+     "unit": "$/month",
+     "rate_value": 20.08
+    },
+    {
+     "component_type": "energy",
+     "unit": "cents/kWh",
+     "rate_value": 18.324,
+     "season": "Non-winter",
+     "season_start_month": 4,
+     "season_start_day": 1,
+     "season_end_month": 10,
+     "season_end_day": 31,
+     "day_type": "all",
+     "period_label": "Interim all hours",
+     "period_start_time": "00:00",
+     "period_end_time": "24:00"
+    },
+    {
+     "component_type": "energy",
+     "unit": "cents/kWh",
+     "rate_value": 16.931,
+     "season": "Winter",
+     "season_start_month": 11,
+     "season_start_day": 1,
+     "season_end_month": 3,
+     "season_end_day": 31,
+     "day_type": "all",
+     "period_label": "Interim all hours",
+     "period_start_time": "00:00",
+     "period_end_time": "24:00"
+    }
+   ],
+   "energy_scope": "bundled",
+   "closed_to_new": false,
+   "description": "Interim flat all-hours energy charge currently billed under optional Domestic TOU tariff while TVP system functionality is unavailable.",
+   "needs_review": true
+  },
+  {
+   "customer_class": "residential",
+   "source_url": "https://www.nspower.ca/docs/default-source/regulatory/tariff-book-2026.pdf",
+   "name": "Domestic Service Time of Use Tariff",
+   "rate_type": "seasonal_tou",
+   "energy_includes_riders": false,
+   "riders_referenced_not_shown": [
+    "FAM Actual Adjustment/Balance Adjustment",
+    "DSM Cost Recovery Rider",
+    "Storm Cost Recovery Rider"
+   ],
+   "confidence": 0.75,
+   "effective_date": "2026-11-01",
+   "extraction_tier": "twopass",
+   "code": "80",
+   "components": [
+    {
+     "component_type": "fixed",
+     "unit": "$/month",
+     "rate_value": 20.08
+    },
+    {
+     "component_type": "energy",
+     "unit": "cents/kWh",
+     "rate_value": 36.517,
+     "season": "Winter",
+     "season_start_month": 11,
+     "season_start_day": 1,
+     "season_end_month": 3,
+     "season_end_day": 31,
+     "day_type": "weekday",
+     "period_label": "On-peak (morning)",
+     "period_start_time": "07:00",
+     "period_end_time": "11:00"
+    },
+    {
+     "component_type": "energy",
+     "unit": "cents/kWh",
+     "rate_value": 18.324,
+     "season": "Winter",
+     "season_start_month": 11,
+     "season_start_day": 1,
+     "season_end_month": 3,
+     "season_end_day": 31,
+     "day_type": "weekday",
+     "period_label": "Off-peak",
+     "period_start_time": "11:00",
+     "period_end_time": "17:00"
+    },
+    {
+     "component_type": "energy",
+     "unit": "cents/kWh",
+     "rate_value": 36.517,
+     "season": "Winter",
+     "season_start_month": 11,
+     "season_start_day": 1,
+     "season_end_month": 3,
+     "season_end_day": 31,
+     "day_type": "weekday",
+     "period_label": "On-peak (evening)",
+     "period_start_time": "17:00",
+     "period_end_time": "21:00"
+    },
+    {
+     "component_type": "energy",
+     "unit": "cents/kWh",
+     "rate_value": 18.324,
+     "season": "Winter",
+     "season_start_month": 11,
+     "season_start_day": 1,
+     "season_end_month": 3,
+     "season_end_day": 31,
+     "day_type": "weekday",
+     "period_label": "Off-peak",
+     "period_start_time": "21:00",
+     "period_end_time": "07:00"
+    },
+    {
+     "component_type": "energy",
+     "unit": "cents/kWh",
+     "rate_value": 18.324,
+     "season": "Winter",
+     "season_start_month": 11,
+     "season_start_day": 1,
+     "season_end_month": 3,
+     "season_end_day": 31,
+     "day_type": "weekend",
+     "period_label": "Off-peak",
+     "period_start_time": "00:00",
+     "period_end_time": "24:00"
+    },
+    {
+     "component_type": "energy",
+     "unit": "cents/kWh",
+     "rate_value": 18.324,
+     "season": "Winter",
+     "season_start_month": 11,
+     "season_start_day": 1,
+     "season_end_month": 3,
+     "season_end_day": 31,
+     "day_type": "holiday",
+     "period_label": "Off-peak",
+     "period_start_time": "00:00",
+     "period_end_time": "24:00"
+    },
+    {
+     "component_type": "energy",
+     "unit": "cents/kWh",
+     "rate_value": 12.86,
+     "season": "Non-winter (effective April 1, 2027)",
+     "season_start_month": 4,
+     "season_start_day": 1,
+     "season_end_month": 10,
+     "season_end_day": 31,
+     "day_type": "all",
+     "period_label": "All hours",
+     "period_start_time": "00:00",
+     "period_end_time": "24:00"
+    }
+   ],
+   "energy_scope": "bundled",
+   "closed_to_new": false,
+   "missing_fields": [
+    "FAM, DSM, storm rider amounts"
+   ],
+   "description": "Optional TOU tariff starting Nov 1, 2026 (winter rates; non-winter 12.860 effective April 1, 2027; higher winter rates from Jan 1, 2027: 38.281 on-peak / 19.067 off-peak).",
+   "needs_review": true
+  },
+  {
+   "customer_class": "residential",
+   "source_url": "https://www.nspower.ca/docs/default-source/regulatory/tariff-book-2026.pdf",
+   "name": "Multi-Unit Residential Buildings (MURB) Time of Use Tariff",
+   "rate_type": "seasonal_tou",
+   "energy_includes_riders": false,
+   "riders_referenced_not_shown": [
+    "Fuel Adjustment Mechanism (FAM)",
+    "DSM Cost Recovery Rider",
+    "Storm Cost Recovery Rider"
+   ],
+   "confidence": 0.8,
+   "extraction_tier": "twopass",
+   "code": "89",
+   "components": [
+    {
+     "component_type": "energy",
+     "unit": "\u00a2/kWh",
+     "rate_value": 11.826,
+     "season": "Non-winter",
+     "season_start_month": 4,
+     "season_start_day": 1,
+     "season_end_month": 10,
+     "season_end_day": 31,
+     "day_type": "weekday",
+     "period_label": "Off-peak",
+     "period_start_time": "21:00",
+     "period_end_time": "07:00"
+    },
+    {
+     "component_type": "energy",
+     "unit": "\u00a2/kWh",
+     "rate_value": 14.043,
+     "season": "Non-winter",
+     "season_start_month": 4,
+     "season_start_day": 1,
+     "season_end_month": 10,
+     "season_end_day": 31,
+     "day_type": "weekday",
+     "period_label": "On-peak",
+     "period_start_time": "07:00",
+     "period_end_time": "21:00"
+    },
+    {
+     "component_type": "energy",
+     "unit": "\u00a2/kWh",
+     "rate_value": 14.043,
+     "season": "Non-winter",
+     "season_start_month": 4,
+     "season_start_day": 1,
+     "season_end_month": 10,
+     "season_end_day": 31,
+     "day_type": "weekend",
+     "period_label": "On-peak (all hours)",
+     "period_start_time": "00:00",
+     "period_end_time": "24:00"
+    },
+    {
+     "component_type": "energy",
+     "unit": "\u00a2/kWh",
+     "rate_value": 14.043,
+     "season": "Non-winter",
+     "season_start_month": 4,
+     "season_start_day": 1,
+     "season_end_month": 10,
+     "season_end_day": 31,
+     "day_type": "holiday",
+     "period_label": "On-peak (all hours)",
+     "period_start_time": "00:00",
+     "period_end_time": "24:00"
+    },
+    {
+     "component_type": "energy",
+     "unit": "\u00a2/kWh",
+     "rate_value": 29.565,
+     "season": "Winter",
+     "season_start_month": 11,
+     "season_start_day": 1,
+     "season_end_month": 3,
+     "season_end_day": 31,
+     "day_type": "weekday",
+     "period_label": "On-peak (morning)",
+     "period_start_time": "07:00",
+     "period_end_time": "11:00"
+    },
+    {
+     "component_type": "energy",
+     "unit": "\u00a2/kWh",
+     "rate_value": 14.782,
+     "season": "Winter",
+     "season_start_month": 11,
+     "season_start_day": 1,
+     "season_end_month": 3,
+     "season_end_day": 31,
+     "day_type": "weekday",
+     "period_label": "Mid-peak",
+     "period_start_time": "11:00",
+     "period_end_time": "17:00"
+    },
+    {
+     "component_type": "energy",
+     "unit": "\u00a2/kWh",
+     "rate_value": 29.565,
+     "season": "Winter",
+     "season_start_month": 11,
+     "season_start_day": 1,
+     "season_end_month": 3,
+     "season_end_day": 31,
+     "day_type": "weekday",
+     "period_label": "On-peak (evening)",
+     "period_start_time": "17:00",
+     "period_end_time": "21:00"
+    },
+    {
+     "component_type": "energy",
+     "unit": "\u00a2/kWh",
+     "rate_value": 12.565,
+     "season": "Winter",
+     "season_start_month": 11,
+     "season_start_day": 1,
+     "season_end_month": 3,
+     "season_end_day": 31,
+     "day_type": "weekday",
+     "period_label": "Off-peak",
+     "period_start_time": "21:00",
+     "period_end_time": "07:00"
+    },
+    {
+     "component_type": "energy",
+     "unit": "\u00a2/kWh",
+     "rate_value": 29.565,
+     "season": "Winter",
+     "season_start_month": 11,
+     "season_start_day": 1,
+     "season_end_month": 3,
+     "season_end_day": 31,
+     "day_type": "weekend",
+     "period_label": "On-peak (all hours)",
+     "period_start_time": "00:00",
+     "period_end_time": "24:00"
+    },
+    {
+     "component_type": "energy",
+     "unit": "\u00a2/kWh",
+     "rate_value": 29.565,
+     "season": "Winter",
+     "season_start_month": 11,
+     "season_start_day": 1,
+     "season_end_month": 3,
+     "season_end_day": 31,
+     "day_type": "holiday",
+     "period_label": "On-peak (all hours)",
+     "period_start_time": "00:00",
+     "period_end_time": "24:00"
+    },
+    {
+     "component_type": "minimum",
+     "unit": "$/month",
+     "rate_value": 22.0
+    }
+   ],
+   "energy_scope": "bundled",
+   "closed_to_new": false,
+   "missing_fields": [
+    "effective date of Board's Order",
+    "FAM, DSM and Storm rider amounts"
+   ],
+   "description": "Optional TOU tariff for multi-unit residential buildings with a house meter and at least 10 units; seasonal peak/off-peak energy rates.",
+   "needs_review": true
+  }
+ ],
+ "rider_extras": [
+  {
+   "customer_class": "residential",
+   "source_url": "https://www.nspower.ca/about-us/producing/rate-options/the-demand-side-management-cost-recovery-rider-(dcrr)",
+   "name": "DSM Cost Recovery Rider (DCRR) - Domestic Service",
+   "rate_type": "flat",
+   "energy_includes_riders": false,
+   "confidence": 0.93,
+   "effective_date": "2026-01-01",
+   "extraction_tier": "rider_doc",
+   "components": [
+    {
+     "component_type": "adjustment",
+     "unit": "cents/kWh",
+     "rate_value": 0.648,
+     "tier_label": "DCRR Domestic Service, Time-of-Day, Time of Use, Critical Peak Pricing (PCR 0.642 + BA 0.006)",
+     "included_in_energy": true,
+     "rider_scope": "all_customers"
+    }
+   ],
+   "energy_scope": "bundled",
+   "closed_to_new": false,
+   "description": "DCRR rider for Domestic Service classes, Jan 1 - Dec 31, 2026; accounted for within the energy charge on the bill.",
+   "needs_review": false,
+   "code": ""
+  }
+ ]
+}
