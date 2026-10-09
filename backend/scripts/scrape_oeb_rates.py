@@ -1171,7 +1171,7 @@ def store_oeb_tariffs(utility_id: int, tariff_entries: list[dict], dry_run: bool
         serialize_components,
         supersede_tariff,
     )
-    from scripts.tariff_pipeline import choose_vintage_keeper
+    from scripts.tariff_pipeline import choose_vintage_keeper, supersede_clear_replacements
 
     class_map = {
         "residential": CustomerClass.RESIDENTIAL,
@@ -1190,6 +1190,7 @@ def store_oeb_tariffs(utility_id: int, tariff_entries: list[dict], dry_run: bool
     event_kw = {"actor_type": "oeb", "actor_id": "scrape_oeb_rates"}
 
     with Session(engine) as session:
+        fresh_ids: set[int] = set()
         for entry in tariff_entries:
             cc = class_map.get(entry["customer_class"])
             rt = type_map.get(entry["rate_type"])
@@ -1246,6 +1247,7 @@ def store_oeb_tariffs(utility_id: int, tariff_entries: list[dict], dry_run: bool
                         cf["ontario_ldc_delivery_meta"] = entry["ldc_delivery"]
                         existing.confidence_factors = cf
                     stored += 1
+                    fresh_ids.add(existing.id)
                     continue
                 if is_manual_or_pinned(existing):
                     record_event(
@@ -1324,6 +1326,17 @@ def store_oeb_tariffs(utility_id: int, tariff_entries: list[dict], dry_run: bool
                     **event_kw,
                 )
             stored += 1
+            fresh_ids.add(tariff_obj.id)
+
+        # R21: plain scraped copies of the same RPP plan (TOU / ULO / Tiered)
+        # left beside the feed rows are retired onto them (soft supersede).
+        if fresh_ids:
+            session.flush()
+            replaced = supersede_clear_replacements(
+                session, utility_id, fresh_ids, **event_kw,
+            )
+            if replaced:
+                log.info(f"  Retired {replaced} scraped copies replaced by OEB feed rows")
 
         session.commit()
 
