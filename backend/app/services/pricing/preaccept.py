@@ -145,6 +145,7 @@ def gate_grounding(
         if c.kind in {
             "season_calendar", "tou_schedule", "holiday_list",
             "tier_structure", "excluded_item", "event_day",
+            "fixed_charge", "fixed_monthly", "customer_charge",
         }:
             continue
         cells = list(c.cells or [])

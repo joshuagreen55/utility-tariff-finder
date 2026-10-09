@@ -279,3 +279,38 @@ class TestTierSeasonSynonyms(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestNonEnergyUnits(unittest.TestCase):
+    def test_monthly_fixed_charge_unit(self):
+        doc = (
+            "Domestic Service\n"
+            "Customer Charge $20.08 per month\n"
+            "Energy Charge 18.324 ¢/kWh\n"
+        )
+        r = verify_quote(
+            doc,
+            "Customer Charge $20.08 per month",
+            unit="$/month",
+            amount="20.08",
+        )
+        self.assertTrue(r.ok, r.reason)
+
+    def test_kwh_tier_breakpoint_unit(self):
+        doc = (
+            "Inclining Block\n"
+            "Tier threshold: First 1000 kWh\n"
+            "Energy Charge 12.258 ¢/kWh\n"
+        )
+        r = verify_quote(
+            doc,
+            "First 1000 kWh",
+            unit="kWh",
+            amount="1000",
+        )
+        self.assertTrue(r.ok, r.reason)
+
+    def test_unknown_unit_still_rejected(self):
+        r = verify_quote("foo 1.0 bar\n", "1.0", unit="widgets")
+        self.assertFalse(r.ok)
+        self.assertTrue(r.reason.startswith("unsupported_unit"), r.reason)
