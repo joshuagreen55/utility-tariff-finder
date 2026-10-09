@@ -1,16 +1,7 @@
 {
   "version": 1,
   "description": "Hand-verified residential plan components for the pricing compiler. Amounts are decimal strings. official_cents is the cited official all-in (\u00a2/kWh). The compiler must reproduce the exact Decimal sum of components; that sum matches official_cents when quantized to the same places as the citation.",
-  "prd_gaps": [
-    {
-      "id": "texas_no_default_supply",
-      "summary": "Texas competitive areas have no default/standard-offer supply (REG-9 / design \u00a72.3 B). Pedernales is a co-op with bundled power+delivery; ERCOT competitive wires-only UJs are held until Joshua decides whether POLR counts."
-    },
-    {
-      "id": "oer_treatment",
-      "summary": "Ontario Electricity Rebate (percent-of-bill credit) is not applied in these Ontario goldens; confirm OER policy with Joshua before folding it into provincial_ontario."
-    }
-  ],
+  "prd_gaps": [],
   "plans": [
     {
       "plan_key": "nsp-domestic",
@@ -3306,6 +3297,77 @@
         "19.128"
       ],
       "notes": "Event-day amount disposition=event_day; not in everyday all-in"
+    },
+    {
+      "plan_key": "oncor-tdu-residential",
+      "name": "Residential Delivery (TDU) \u2014 choose a retailer for supply",
+      "utility_name": "Oncor Electric Delivery",
+      "code": "R",
+      "rate_type": "flat",
+      "recipe_code": "texas_tdu",
+      "components": [
+        {
+          "code": "tdsp_energy",
+          "kind": "delivery_per_kwh",
+          "unit": "\u00a2/kWh",
+          "charge_category": "delivery",
+          "name": "TDSP energy charge",
+          "source_quote": "TDSP energy charge 4.1234 \u00a2/kWh",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "4.1234"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "transmission",
+          "kind": "delivery_per_kwh",
+          "unit": "\u00a2/kWh",
+          "charge_category": "transmission_delivery",
+          "name": "Transmission cost recovery",
+          "source_quote": "1.2345 \u00a2/kWh",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "1.2345"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "choose_retailer",
+          "kind": "excluded_item",
+          "unit": "\u00a2/kWh",
+          "name": "Supply \u2014 choose a retailer",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "0"
+            }
+          ],
+          "disposition": "not_applicable"
+        }
+      ],
+      "official_cents": [],
+      "official_delivery_cents": [
+        "5.3579"
+      ],
+      "notes": "ERCOT competitive: delivery 4.1234+1.2345=5.3579 \u00a2; no all-in; supply=choose_a_retailer (Joshua 2026-10-09)."
     }
-  ]
+  ],
+  "policy": {
+    "texas_competitive": "Store TDU delivery only; supply_status=choose_a_retailer; no invented supply; no all-in (recipe texas_tdu).",
+    "ontario_oer": "OER is a whole-bill percentage credit; leave out of per-kWh; record as bill-level note like taxes."
+  }
 }

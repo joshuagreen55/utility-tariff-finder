@@ -40,6 +40,20 @@ class TestGoldenExactMatch(unittest.TestCase):
         failures: list[str] = []
         for plan in self.plans:
             compiled = compile_plan(plan)
+            if not compiled.has_all_in:
+                # texas_tdu: delivery-only; match official_delivery_cents.
+                want = sorted(plan.official_delivery_cents)
+                places = _official_places(want) if want else 4
+                got = compiled.cents_sorted(places=places)
+                if got != want:
+                    failures.append(
+                        f"{plan.plan_key} (delivery-only): got {got} != {want}"
+                    )
+                if compiled.supply_status != "choose_a_retailer":
+                    failures.append(
+                        f"{plan.plan_key}: expected supply_status=choose_a_retailer"
+                    )
+                continue
             places = _official_places(plan.official_cents)
             got = compiled.cents_sorted(places=places)
             want = sorted(plan.official_cents)
