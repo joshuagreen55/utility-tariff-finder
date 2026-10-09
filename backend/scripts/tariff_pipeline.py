@@ -394,6 +394,10 @@ def fetch_page(url: str) -> tuple[str, str, int]:
 def _download_pdf(url: str) -> bytes | None:
     """Download a PDF, return raw bytes or None.
     Falls back to Playwright download for domains that block httpx."""
+    from app.services.tariff_docs import salesforce_distribution
+
+    if salesforce_distribution(url):
+        return _download_salesforce_distribution(url)
     domain = urlparse(url).netloc
     bare_domain = domain.replace("www.", "")
     use_browser = bare_domain in _BROWSER_REQUIRED_DOMAINS or domain in _js_rendered_domains
@@ -404,9 +408,11 @@ def _download_pdf(url: str) -> bytes | None:
             if resp.status_code != 200:
                 return None
             ctype = resp.headers.get("content-type", "")
-            if "pdf" not in ctype and not url.lower().endswith(".pdf"):
+            if "pdf" not in ctype and not url.lower().endswith(".pdf") and not resp.content[:5] == b"%PDF-":
                 return None
-            if len(resp.content) > 15_000_000:
+            # R23: whole tariff books (ConEd PSC 10 is 32 MB) are read page-
+            # selectively with pdftotext, so allow them up to 60 MB.
+            if len(resp.content) > 60_000_000:
                 log.warning(f"  PDF too large ({len(resp.content)} bytes), skipping")
                 return None
             return resp.content
@@ -417,6 +423,50 @@ def _download_pdf(url: str) -> bytes | None:
             log.info(f"  Retrying PDF download via Playwright for {url[:60]}")
 
     return _download_pdf_playwright(url)
+
+
+def _download_salesforce_distribution(url: str) -> bytes | None:
+    """R23: a Salesforce public content-distribution link (Xcel rate books)
+    is a JS viewer; render it once to read the content version id, then
+    fetch the file directly."""
+    from app.services.tariff_docs import salesforce_download_url
+
+    try:
+        context = _get_pw_mgr().new_context()
+        try:
+            page = context.new_page()
+            page.goto(url, timeout=30000, wait_until="networkidle")
+            page.wait_for_timeout(1500)
+            html = page.content()
+        finally:
+            context.close()
+        dl = salesforce_download_url(url, html)
+        if not dl:
+            log.info(f"  Salesforce distribution: no file id in viewer for {url[:70]}")
+            return None
+        resp = _get_http_client().get(dl, timeout=PDF_TIMEOUT)
+        if resp.status_code != 200 or resp.content[:5] != b"%PDF-" or len(resp.content) > 60_000_000:
+            return None
+        log.info(f"  PDF downloaded from Salesforce distribution ({len(resp.content)} bytes)")
+        return resp.content
+    except Exception as e:
+        log.warning(f"  Salesforce distribution download failed for {url[:60]}: {e}")
+        return None
+
+
+def set_state_selector_cookie(url: str, state: str) -> None:
+    """R23: multi-state utility sites (Xcel) render the rate-book list for
+    the state in a 'GeographicLocation' cookie (default Colorado). Set it for
+    the crawl domain so the utility's own state's documents are listed.
+    Harmless on sites that do not read it."""
+    name = US_STATE_FULL.get((state or "").strip().lower())
+    host = urlparse(url or "").netloc.lower()
+    if not name or not host:
+        return
+    dom = "." + ".".join(host.split(".")[-2:])
+    client = _get_http_client()
+    client.cookies.set("GeographicLocation", f"/Geographic Location/{name.title()}", domain=dom, path="/")
+    client.cookies.set("stateSet", "on", domain=dom, path="/")
 
 
 def _download_pdf_playwright(url: str) -> bytes | None:
@@ -442,7 +492,7 @@ def _download_pdf_playwright(url: str) -> bytes | None:
             with open(tmp_path, "rb") as f:
                 pdf_bytes = f.read()
             os.unlink(tmp_path)
-            if len(pdf_bytes) > 15_000_000:
+            if len(pdf_bytes) > 60_000_000:
                 log.warning(f"  Playwright PDF too large ({len(pdf_bytes)} bytes), skipping")
                 return None
             log.info(f"  PDF downloaded via Playwright ({len(pdf_bytes)} bytes)")
@@ -477,6 +527,12 @@ def _extract_pdf_pdfplumber(pdf_bytes: bytes, max_pages: int = 120) -> str:
       either OOM on or produce useless OCR-grade output for.
     """
     if len(pdf_bytes) > 18_000_000:
+        # R23: whole tariff books (ConEd PSC 10, 32 MB / 760 pages): read the
+        # front matter + residential rate-schedule sheets with pdftotext
+        # (fast, low memory) instead of refusing the document.
+        book = _tariff_book_pages_pdftotext(pdf_bytes)
+        if book:
+            return book
         log.warning(
             f"  PDF too large ({len(pdf_bytes)/1e6:.1f}MB), skipping pdfplumber"
         )
@@ -493,7 +549,9 @@ def _extract_pdf_pdfplumber(pdf_bytes: bytes, max_pages: int = 120) -> str:
     except ImportError:
         return ""
     text_parts = []
+    n_pages = 0
     with pdfplumber.open(io.BytesIO(pdf_bytes)) as pdf:
+        n_pages = len(pdf.pages)
         for i, page in enumerate(pdf.pages):
             if i >= max_pages:
                 break
@@ -514,7 +572,38 @@ def _extract_pdf_pdfplumber(pdf_bytes: bytes, max_pages: int = 120) -> str:
                     page.get_textmap.cache_clear()
                 except Exception:
                     pass
+    if n_pages > max_pages:
+        # R23: a tariff book longer than the cap (LIPA: SC No. 1 on page 273
+        # of 534) — append its residential rate-schedule sheets.
+        extra = _tariff_book_pages_pdftotext(pdf_bytes, skip_before=max_pages, front=0)
+        if extra:
+            text_parts.append(extra)
     return "\n\n".join(text_parts).strip()
+
+
+def _tariff_book_pages_pdftotext(pdf_bytes: bytes, *, skip_before: int = 0, front: int = 6) -> str:
+    """Front pages + residential rate-schedule sheets of a whole tariff book,
+    via poppler's pdftotext (installed in the image). '' when unavailable."""
+    import subprocess
+    import tempfile
+
+    from app.services.tariff_docs import residential_schedule_pages
+
+    try:
+        with tempfile.NamedTemporaryFile(suffix=".pdf") as f:
+            f.write(pdf_bytes)
+            f.flush()
+            out = subprocess.run(["pdftotext", "-layout", f.name, "-"], capture_output=True, timeout=120)
+        pages = out.stdout.decode("utf-8", "replace").split("\f")
+    except Exception as e:
+        log.info(f"  pdftotext unavailable for tariff book: {e}")
+        return ""
+    keep = [i for i in residential_schedule_pages(pages) if i >= skip_before]
+    if not keep:
+        return ""
+    idx = sorted(set(range(min(front, len(pages)))) | set(keep))
+    log.info(f"  Tariff book: {len(pages)} pages — reading residential schedule pages {[i + 1 for i in keep]}")
+    return "\n\n".join(f"[Page {i + 1}]\n{pages[i].strip()}" for i in idx)
 
 
 _RATE_SCHEDULE_RE = re.compile(
@@ -1644,7 +1733,9 @@ def _is_relevant_link(url: str, link_text: str, base_url: str) -> bool:
     if not url.startswith("http"):
         return False
     if not is_same_domain(url, base_url):
-        return False
+        from app.services.tariff_docs import same_owner
+        if not same_owner(url, base_url):  # R23: the utility's own CDN path (ConEd azurefd)
+            return False
     if url_is_homepage(url):
         return False
     combined = f"{url} {link_text}"
@@ -2054,16 +2145,18 @@ def phase2_discover_tariff_pages(rate_page_url: str) -> list[RatePage]:
     if page_is_rate_themed:
         existing_urls = {u for u, _ in level1_links}
         extra_pdfs: list[tuple[str, str]] = []
+        from app.services.tariff_docs import is_document_url, same_owner
         for a in link_soup.find_all("a", href=True):
             full_url = urljoin(rate_page_url, a["href"]).split("#")[0]
-            if not full_url.lower().endswith(".pdf"):
+            link_text = a.get_text(strip=True) or "PDF"
+            # R23: .ashx / ?file= rate documents count as PDFs (PSE&G tariff)
+            if not is_document_url(full_url, link_text):
                 continue
             if full_url in existing_urls:
                 continue
-            # Stay on same domain to avoid off-site PDFs
-            if not is_same_domain(full_url, rate_page_url):
+            # Stay on the utility's own domain / CDN path to avoid off-site PDFs
+            if not (is_same_domain(full_url, rate_page_url) or same_owner(full_url, rate_page_url)):
                 continue
-            link_text = a.get_text(strip=True) or "PDF"
             extra_pdfs.append((full_url, link_text))
             existing_urls.add(full_url)
         if extra_pdfs:
@@ -2118,6 +2211,11 @@ def phase2_discover_tariff_pages(rate_page_url: str) -> list[RatePage]:
     # level-1 cap keeps the current tariff book (PSE&G listed 15 PURPA sheets
     # ahead of its current tariff).
     level1_links = order_links_newest_first(level1_links)
+    # R23: the utility's own residential rate-schedule documents, then its
+    # complete current tariff and tariff sub-index pages, ahead of navigation
+    # (a URL year never pushes a current schedule past the cap — CPS).
+    from app.services.tariff_docs import is_document_url, prioritize_tariff_links
+    level1_links = prioritize_tariff_links(level1_links, rate_page_url)
 
     MAX_LEVEL1 = 15
     # Rate-book hubs: a rate-themed page linking to many PDFs is a tariff
@@ -2144,10 +2242,17 @@ def phase2_discover_tariff_pages(rate_page_url: str) -> list[RatePage]:
             continue
         seen_urls.add(url)
 
-        if url.lower().endswith(".pdf"):
+        if is_document_url(url, link_text):
             log.info(f"    Extracting PDF: {url[:70]}")
             raw_bytes = _download_pdf(url)
             pdf_text = ""
+            if raw_bytes and not url.lower().split("?")[0].endswith(".pdf") and raw_bytes[:5] != b"%PDF-":
+                raw_bytes = None  # handler URL that is not a PDF: treat as a page
+                page = _fetch_and_parse(url)
+                if page:
+                    page.title = page.title or link_text
+                    pages.append(page)
+                continue
             if raw_bytes:
                 pdf_text = _extract_pdf_pdfplumber(raw_bytes)
                 if len(pdf_text.strip()) < 200:
@@ -2205,6 +2310,11 @@ def phase2_discover_tariff_pages(rate_page_url: str) -> list[RatePage]:
             f"regulator rate-case / aggregator links from L2"
         )
 
+    # R23: tariff index -> sub-index -> rate schedule: own residential
+    # schedules / complete current tariff first at level 2 as well (ConEd
+    # PSC 10 page lists the tariff book after 900 links).
+    level2_candidates = prioritize_tariff_links(order_links_newest_first(level2_candidates), rate_page_url)
+
     # Level 2: fetch the deeper pages (capped to avoid runaway crawling)
     MAX_LEVEL2 = 10
     fetched_l2 = 0
@@ -2215,10 +2325,12 @@ def phase2_discover_tariff_pages(rate_page_url: str) -> list[RatePage]:
             break
         seen_urls.add(url)
 
-        if url.lower().endswith(".pdf"):
+        if is_document_url(url, link_text):
             log.info(f"    Extracting PDF (L2): {url[:70]}")
             raw_bytes = _download_pdf(url)
             pdf_text = ""
+            if raw_bytes and not url.lower().split("?")[0].endswith(".pdf") and raw_bytes[:5] != b"%PDF-":
+                raw_bytes = None
             if raw_bytes:
                 pdf_text = _extract_pdf_pdfplumber(raw_bytes)
                 if len(pdf_text.strip()) < 200:
@@ -2361,6 +2473,29 @@ def _select_rate_content(text: str, max_chars: int = 20000) -> str:
         r"per\s+(?:month|kWh|kW)|\$/\s*(?:kWh|kW|day|month)|¢/\s*kWh",
         re.IGNORECASE,
     )
+    # R23: residential rate-schedule headings with per-kWh amounts (tariff
+    # books: LIPA SC No. 1, ConEd SC 1, PSE&G Rate Schedule RS) come first.
+    from app.services.tariff_docs import residential_schedule_anchors
+
+    strong = residential_schedule_anchors(text) if len(text) > 100_000 else []
+    if strong:
+        windows = [(max(0, a - 500), min(len(text), a + 9000)) for a in strong]
+        merged_s: list[list[int]] = []
+        for s_, e_ in windows:
+            if merged_s and s_ <= merged_s[-1][1]:
+                merged_s[-1][1] = max(merged_s[-1][1], e_)
+            else:
+                merged_s.append([s_, e_])
+        parts_s, used_s = [], 0
+        for s_, e_ in merged_s:
+            chunk = text[s_:e_][: max(0, effective_max - used_s)]
+            if len(chunk) < 500:
+                break
+            parts_s.append(chunk)
+            used_s += len(chunk)
+        if parts_s:
+            return "[...document truncated...]\n" + "\n\n[...document truncated...]\n\n".join(parts_s)
+
     anchors: list[int] = []
     for m in _RESIDENTIAL_SIGNAL.finditer(text):
         nearby = text[m.start():min(len(text), m.start() + 2500)]
@@ -7801,6 +7936,52 @@ def parse_rider_document_deterministic(page: RatePage, hint: str = "") -> list[E
     return [_r22_rider_tariff(name, parsed, getattr(page, "url", "") or "")]
 
 
+def parse_rider_listing_page(page: RatePage, today=None, skip_names: list[str] | None = None) -> list[ExtractedTariff]:
+    """R23: a utility's own rider listing (Xcel "Rate Riders": name / effective
+    date / residential value rows + a monthly residential fuel table) read
+    deterministically — one rider tariff per row, plus the current month's
+    Fuel Cost Charge when the table is dated this calendar year. [] when the
+    page is not such a listing (< 3 rows). No LLM."""
+    from datetime import date
+
+    from app.services.rider_docs import parse_monthly_fuel_listing, parse_rider_listing
+
+    text = getattr(page, "content", "") or ""
+    rows = parse_rider_listing(text)
+    if len(rows) < 3:
+        return []
+    from app.services.rider_fold import _sig_words
+
+    url = getattr(page, "url", "") or ""
+    out: list[ExtractedTariff] = []
+    book = [_sig_words(n) for n in skip_names or []]
+    for r in rows:
+        w = _sig_words(r["name"])
+        if any(len(w & b) >= min(2, len(w)) for b in book if b):
+            log.info(f"    Rider listing: {r['name']} — tariff book sheet already read, listing value not used")
+            continue
+        parsed = ({"per_kwh": [], "pct": r["rate_value"]} if r["unit"] == "%" else
+                  {"per_kwh": [{"rate_value": r["rate_value"], "season": None, "label": r["name"]}], "pct": None})
+        t = _r22_rider_tariff(r["name"], parsed, url)
+        t.effective_date = r["effective"]
+        t.confidence_notes = {"rider_listing": True, "rider_listing_effective": r["effective"]}
+        out.append(t)
+    today = today or date.today()
+    m = re.search(r"last\s+updated\s+\d{1,2}/\d{1,2}/(20\d{2})", text, re.I)
+    if m and int(m.group(1)) == today.year:
+        fuel = parse_monthly_fuel_listing(text, today.month)
+        if fuel is not None:
+            label = f"Fuel Cost Charge ({today.strftime('%B')} {today.year})"
+            t = _r22_rider_tariff(label, {"per_kwh": [{"rate_value": fuel, "season": None, "label": label}],
+                                          "pct": None}, url)
+            t.confidence_notes = {"rider_listing": True, "fuel_month": f"{today.year}-{today.month:02d}"}
+            out.append(t)
+    elif re.search(r"fuel\s+cost\s+charge", text, re.I):
+        log.info("    Rider listing: fuel table not dated this year — fuel left unresolved")
+    log.info(f"    Rider listing read deterministically: {len(out)} rider(s) from {url[:70]}")
+    return out
+
+
 MAX_EXHIBIT_RIDER_FETCH = 16
 
 
@@ -7894,6 +8075,54 @@ def extract_generic_riders_from_book(pages: list[RatePage] | None, hints: list[s
             log.info(f"    {hint}: read from tariff book deterministically: {results[0]}")
         elif len(uniq) > 1:
             log.info(f"    {hint}: tariff book has conflicting amounts — left for review")
+    return out
+
+
+def extract_named_riders_from_book(pages: list[RatePage] | None, hints: list[str],
+                                   skip: set[str] | None = None) -> list[ExtractedTariff]:
+    """R23: each referenced rider's own sheet inside a fetched tariff book,
+    found by its NAME as a sheet title (Xcel MN Section 5: "TRANSMISSION COST
+    RECOVERY RIDER  Section No. 5") and read deterministically. One unique
+    amount per rider or nothing (never guess)."""
+    from app.services.rider_docs import find_rider_sheets, hint_heading_re, parse_rider_text
+
+    out: list[ExtractedTariff] = []
+    for hint in dict.fromkeys(hints or []):
+        if hint in (skip or set()):
+            continue
+        rx = hint_heading_re(hint)
+        if rx is None:
+            continue
+        results, url = [], ""
+        for page in pages or []:
+            content = getattr(page, "content", None) or ""
+            if len(content) < 2000:
+                continue
+            # an electric plan's riders never come from the gas rate book
+            if len(re.findall(r"GAS\s+RATE\s+BOOK", content)) > len(re.findall(r"ELECTRIC\s+RATE\s+BOOK", content)):
+                continue
+            for sheet in find_rider_sheets(content, rx):
+                if re.search(r"^\s*CANCELED(?:\s+[A-Z])?\s*$", sheet, re.M) and not re.search(r"\d\.\d{3,}", sheet):
+                    results.append({"per_kwh": [{"rate_value": 0.0, "season": None}], "pct": None, "canceled": True})
+                    url = url or (getattr(page, "url", "") or "")
+                    continue
+                r = parse_rider_text(sheet)
+                if not r:  # factor stated on the continuation sheet (Xcel RES)
+                    conts = [parse_rider_text(c) for c in find_rider_sheets(content, rx, continued=True)]
+                    conts = [c for c in conts if c]
+                    r = conts[0] if len({repr(c) for c in conts}) == 1 else None
+                if r:
+                    results.append(r)
+                    url = url or (getattr(page, "url", "") or "")
+        uniq = {repr({k: v for k, v in r.items() if k != "canceled"}) for r in results}
+        if len(uniq) == 1:
+            t = _r22_rider_tariff(f"{hint} (tariff book)", results[0], url)
+            if results[0].get("canceled"):
+                t.confidence_notes = {"rider_canceled_in_book": True}
+            out.append(t)
+            log.info(f"    {hint}: read from tariff book sheet: {results[0]}")
+        elif len(uniq) > 1:
+            log.info(f"    {hint}: tariff book sheets disagree — left for review")
     return out
 
 
@@ -8914,7 +9143,7 @@ def extract_riders_from_main_tariff_book(
     # residential extracts commonly list both riders.
     out: list[ExtractedTariff] = []
     if not want_fam and not want_dcrr:
-        return extract_generic_riders_from_book(pages, hints)
+        return _book_riders(pages, hints)
     fam_done = False
     dcrr_done = False
     for page in pages:
@@ -8953,7 +9182,24 @@ def extract_riders_from_main_tariff_book(
             break
     # R22: any other utility's rider sheets inside the book (deterministic).
     skip = ({"fuel"} if fam_done else set()) | ({"dsm"} if dcrr_done else set())
-    out.extend(extract_generic_riders_from_book(pages, hints, skip_families=skip))
+    out.extend(_book_riders(pages, hints, skip_families=skip, done=out))
+    return out
+
+
+def _book_riders(pages, hints, skip_families=None, done=None) -> list[ExtractedTariff]:
+    """Family reader first; then the R23 sheet-title reader for hints it did
+    not answer (incl. two hints sharing one family, e.g. RDF vs RES)."""
+    from collections import Counter
+
+    from app.services.price_basis import _keys
+
+    out = extract_generic_riders_from_book(pages, hints, skip_families=skip_families)
+    covered = set(skip_families or set())
+    for t in list(out) + list(done or []):
+        covered |= _keys(t.name or "")
+    fam_n = Counter(k for h in hints or [] for k in _keys(h))
+    skip = {h for h in hints or [] if _keys(h) and _keys(h) <= covered and all(fam_n[k] == 1 for k in _keys(h))}
+    out.extend(extract_named_riders_from_book(pages, hints, skip=skip))
     return out
 
 
@@ -9136,7 +9382,11 @@ def fetch_and_extract_referenced_riders(
 
     # Rider tables already in the main tariff book (NSP FAM ~p.65) — no
     # separate FAM URL needed.
-    book_extras = extract_riders_from_main_tariff_book(existing_pages, hints)
+    # R23: reading an already-fetched book costs nothing — use every rider
+    # the plans name, not the fetch-capped hint list.
+    book_hints = list(dict.fromkeys(hints + [str(n).strip() for t in tariffs
+                                             for n in (getattr(t, "riders_referenced_not_shown", None) or []) if str(n).strip()]))
+    book_extras = extract_riders_from_main_tariff_book(existing_pages, book_hints)
 
     # PGE: seed the tariff-index pages so Sch 1xx links are harvested even
     # when Brave only returns OPUC filings for Schedule 125.
@@ -9427,6 +9677,11 @@ def fetch_and_extract_referenced_riders(
             if re.search(r"EXHIBIT\s+OF\s+APPLICABLE\s+RIDERS", (page.content or "")[:3000], re.I):
                 exhibit_extras.extend(expand_applicable_riders_exhibit(
                     page, own_links + list(getattr(page, "links", None) or []), _fetch_one))
+                continue
+            # R23: rider listing page (Xcel "Rate Riders") — read every row.
+            listing = parse_rider_listing_page(page, skip_names=[t.name for t in book_extras])
+            if listing:
+                extra.extend(listing)
                 continue
             # Index / page-data hubs have no prices — never send to LLM (R12).
             if _is_pge_tariff_index_page(page, hint=hint):
@@ -15741,6 +15996,7 @@ def run_pipeline(
 
         # Phase 2
         try:
+            set_state_selector_cookie(current_url, state)
             pages = phase2_discover_tariff_pages(current_url)
             result.phase2_sub_pages = [
                 {"url": p.url, "title": p.title, "type": p.page_type, "has_content": bool(p.content)}
@@ -15893,9 +16149,19 @@ def run_pipeline(
             pages, utility_name, state, utility_domain,
         )
         if not identity_ok:
-            log.warning(f"  REJECTING {len(tariffs)} tariffs: {identity_reason}")
-            result.errors.append(f"Content identity check failed: {identity_reason}")
-            tariffs = []
+            from app.services.rate_publisher import flag_tariffs, identity_override
+
+            por = identity_override(pages, utility_name, state)
+            if por:
+                # R23: rates set/published by another official body (Hydro-
+                # Sherbrooke applies Hydro-Québec's rates) — keep, flagged.
+                flag_tariffs(tariffs, por)
+                log.info(f"  Identity: pages are from {utility_name}'s publisher of record "
+                         f"({por['publisher']}) / regulator — kept and flagged")
+            else:
+                log.warning(f"  REJECTING {len(tariffs)} tariffs: {identity_reason}")
+                result.errors.append(f"Content identity check failed: {identity_reason}")
+                tariffs = []
 
     # Bounded fetch of official rider/adjustment docs referenced by
     # residential extracts but missing from the Phase 2/3 page batch

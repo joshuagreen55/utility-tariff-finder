@@ -1,0 +1,1182 @@
+MINNESOTA ELECTRIC RATE BOOK - MPUC NO. 2
+RESIDENTIAL SERVICE Section No. 5
+RATE CODE A00, A01, A03 35th Revised Sheet No. 1
+AVAILABILITY
+Available to any residential customer for domestic purposes only in a single private residence and qualifying
+farm customers.
+DETERMINATION OF CUSTOMER BILLS
+Customer bills shall reflect energy charges (if applicable) based on customer’s kWh usage, plus a customer charge (if
+applicable), plus demand charges (if applicable) based on customer's kW billing demand as defined below. Bills may
+be subject to a minimum charge based on the monthly customer charge and / or certain monthly or annual demand
+charges. Bills also include applicable riders, adjustments, surcharges, voltage discounts, and energy credits. Details
+regarding the specific charges applicable to this service are listed below.
+RATE
+Standard Electric Space Heating
+Customer Charge per Month – Water Heating (A00) $0.00 N/A
+– Overhead (A01) $6.00 $6.00
+– Underground (A03) $6.00 $6.00
+Energy Charge per kWh
+June - September $0.13069 $0.13069
+Other Months $0.11364 $0.06537 R
+In addition, customer bills under this rate are subject to the following adjustments and/or charges.
+INTERIM RATE ADJUSTMENT
+A 7.14% Interim Rate Surcharge will be applied to rate components specified in the “Interim Rate Surcharge Rider” to
+service provided beginning January 1, 2025.
+FUEL CLAUSE
+Bills are subject to the adjustments provided for in the Fuel Clause Rider.
+RESOURCE ADJUSTMENT
+Bills are subject to the adjustments provided for in the Conservation Improvement Program Adjustment Rider,
+the State Energy Policy Rate Rider, the Renewable Development Fund Rider, the Transmission Cost Recovery
+Rider, the Renewable Energy Standard Rider and the Mercury Cost Recovery Rider.
+ENVIRONMENTAL IMPROVEMENT RIDER
+Bills are subject to the adjustments provided for in the Environmental Improvement Rider.
+MONTHLY MINIMUM CHARGE
+Customer Charge.
+SALES TRUE-UP RIDER
+Bills are subject to the adjustments provided for in the Sales True-Up Rider.
+(Continued on Sheet No. 5-1.1)
+Date Filed: 05-23-25 By: Ryan J. Long Effective Date: 06-01-25
+President, Northern States Power Company, a Minnesota corporation
+Docket No. E002/M-23-524 Order Date: 05-15-25
+
+Northern States Power Company, a Minnesota corporation
+Minneapolis, Minnesota 55401
+MINNESOTA ELECTRIC RATE BOOK - MPUC NO. 2
+RESIDENTIAL SERVICE (Continued) Section No. 5
+RATE CODE A00, A01, A03 11th Revised Sheet No. 1.1
+SURCHARGE
+In certain communities, bills are subject to surcharges provided for in a Surcharge Rider.
+T
+AFFORDABILITY CREDIT RIDER
+T
+Bills are subject to the adjustment provided for in the Affordability Credit Rider.
+The following are terms and conditions for service under this tariff.
+LATE PAYMENT CHARGE
+Any unpaid balance over $10.00 is subject to a 1.5% late payment charge or $1.00, whichever is greater, after
+the date due. The charge may be assessed as provided for in the General Rules and Regulations, Section 3.5.
+T
+AFFORDABILITY CREDIT
+T
+Energy discount is available to qualified customers under this schedule subject to the provisions contained in
+T
+the Affordability Credit Rider.
+OTHER PROVISIONS
+This schedule is also subject to provisions contained in Rules for Application of Residential Rates.
+Date Filed: 12-01-25 By: Bria E. Shea Effective Date: 01-09-26
+President, Northern States Power Company, a Minnesota corporation
+Docket No. E002/M-04-1956 & Order Date: 12-29-25
+E002/M-10-854 &
+E002/M-23-476
+
+Northern States Power Company, a Minnesota corporation
+Minneapol
+CONSERVATION IMPROVEMENT PROGRAM Section No. 5
+ADJUSTMENT RIDER 27th Revised Sheet No. 92
+APPLICABILITY
+Applicable to bills for electric service provided under the Company’s retail rate schedules. Exemptions are as
+follows:
+“Large Customer Facility” customers that have been exempted from the Company’s Conservation Improvement
+Program charges pursuant to Minn. Stat. 216B.241 subd. 1a (a) shall receive a monthly exemption from C
+conservation improvement program charges pursuant to Minn. Stat. 216B.16, subd. 6b Energy Conservation
+Improvement. Such monthly exemption will be effective beginning January 1 of the year following the grant of
+exemption. Upon exemption from conservation program charges, the “Large Customer Facility” customers can
+no longer participate in the Company’s Energy Conservation Improvement Program.
+“Qualified large-scale data center” customers that pay the required fee under Minn. Stat. 216B.72 are exempt N
+pursuant to Minn. Stat. 216B.241 subd. 1a (a) from the requirement to contribute to the Company’s
+Conservation Improvement Program. Upon exemption from conservation program charges, the “qualified large-
+scale data center” customers can no longer participate in the Company’s Energy Conservation Improvement
+Program. N
+RIDER
+There shall be included on each non-exempt customer’s monthly bill a Conservation Improvement Program
+(CIP) Adjustment, which shall be calculated by multiplying the monthly applicable billing kilowatt hours (kWh) by
+the CIP Adjustment Factor.
+DETERMINATION OF CONSERVATION IMPROVEMENT PROGRAM ADJUSTMENT FACTOR
+The CIP Adjustment Factor shall be calculated for each customer class by dividing the Recoverable
+Conservation Improvement Program Expense by the Projected Retail Sales for a designated recovery period.
+The factor may be adjusted annually with approval of the Minnesota Public Utilities Commission. The CIP
+Adjustment Factor for all rate schedules is:
+All Classes $0.001397 per kWh
+Recoverable Conservation Improvement Program Expense shall be the CIP expense not recovered through
+base rates as determined from the CIP Tracker account balance for a designated period. All costs appropriately
+charged to the CIP Tracker Account shall be eligible for recovery through this Rider. All revenues received from
+the CIP Adjustment Factor shall be credited to the CIP Tracker Account.
+Projected Retail Sales shall be the estimated kilowatt-hour sales to all non-exempt customers for the designated
+recovery period.
+(Continued on Sheet No. 5-92.1)
+Date Filed: 07-13-26 By: Bria E. Shea Effective Date: 08-01-26
+President, Northern States Power Company, a Minnesota corporation
+Docket No. E002/M-25-289 Order Date: 06-12-26
+
+Northern States Power Company, a Minnesota corporation
+Minneapolis, Minnesota 55401
+MINNESOTA ELECTRIC RATE BOOK - MPUC NO. 2
+CONSERVATION IMPROVEMENT PROGRAM Section No. 5
+ADJUSTMENT RIDER (Continued) 8th Revised Sheet No. 92.1
+DETERMINATION OF CONSERVATION COST RECOVERY CHARGE (CCRC)
+The CCRC is the amount included in base rates dedicated to the recovery of CIP costs as approved by the
+Minnesota Public Utilities Commission (or successor agency) in the Company’s last general rate case. The CCRC is
+approved and applied on a per kWh basis by dividing the test-year CIP expenses by the test-year sales volumes (net
+of CIP-exempt volumes). All revenues received from the CCRC shall be credited to the CIP Tracker Account. The
+CCRC for all rate schedules is:
+R
+All Classes $0.004955 per kWh
+DETERMINATION OF CCRC EXEMPTION ADJUSTMENT FACTOR
+For “Large Customer Facilities”, as defined in Minn. Stat. 216B.241 subd. 1, granted exemption by the
+Commissioner of the Minnesota Department of Commerce, Division of Energy Resources, pursuant to Minn.
+Stat. 216B.241, the CIP Adjustment Factor shall not apply and monthly bills will include a CCRC Exemption
+Adjustment credit determined by multiplying total billing kWh by the applicable CCRC Exemption Adjustment
+Factor. Customers’ accounts granted exemption by a decision of the Commissioner after the beginning of a
+calendar year shall be credited for any CIP collections billed after January 1st of the year following the
+Commissioner’s decision. The CCRC Exemption Adjustment Factor for all rate classes is:
+R
+All Classes $0.004955 per kWh
+PROVISION OF FORECAST DATA
+To assist commercial and industrial customers in budgeting and managing their energy costs, the Company will
+annually make available on April 1st a 24-month forecast of the CIP Adjustment Factor applicable to demand
+billed C&I customers under this Rider. The forecast period begins January 1st of the following year.
+EXEMPTION
+For customer premises recognized by the Company as not being subject to any of the costs of satisfying the
+solar energy standard under Minn. Stat. § 216B.1691, subd. 2f (“SES Costs”), the SES Costs reflected in the
+CIP Adjustment assessed to the accounts associated with these premises may be credited to these accounts,
+and the dollar amount of these credits shall be added as part of the Recoverable Conservation Improvement
+Program Expense applicable to the time period when the credit is issued.
+Date Filed: 10-17-23 By: Christopher B. Clark Effective Date: 01-01-24
+President, Northern States Power Company, a Minnesota corporation
+Docket No. E002/GR-21-630 Order Date: 10-06-23
+R
+R | 
+CONSERVATION IMPROVEMENT PROGRAM Section No. 5
+ADJUSTMENT RIDER (Continued) 8th Revised Sheet No. 92.1
+DETERMINATION OF CONSERVATION COST RECOVERY CHARGE (CCRC)
+The CCRC is the amount included in base rates dedicated to the recovery of CIP costs as approved by the
+Minnesota Public Utilities Commission (or successor agency) in the Company’s last general rate case. The CCRC is
+approved and applied on a per kWh basis by dividing the test-year CIP expenses by the test-year sales volumes (net
+of CIP-exempt volumes). All revenues received from the CCRC shall be credited to the CIP Tracker Account. The
+CCRC for all rate schedules is:
+R
+All Classes $0.004955 per kWh
+DETERMINATION OF CCRC EXEMPTION ADJUSTMENT FACTOR
+For “Large Customer Facilities”, as defined in Minn. Stat. 216B.241 subd. 1, granted exemption by the
+Commissioner of the Minnesota Department of Commerce, Division of Energy Resources, pursuant to Minn.
+Stat. 216B.241, the CIP Adjustment Factor shall not apply and monthly bills will include a CCRC Exemption
+Adjustment credit determined by multiplying total billing kWh by the applicable CCRC Exemption Adjustment
+Factor. Customers’ accounts granted exemption by a decision of the Commissioner after the beginning of a
+calendar year shall be credited for any CIP collections billed after January 1st of the year following the
+Commissioner’s decision. The CCRC Exemption Adjustment Factor for all rate classes is:
+R
+All Classes $0.004955 per kWh
+PROVISION OF FORECAST DATA
+To assist commercial and industrial customers in budgeting and managing their energy costs, the Company will
+annually make available on April 1st a 24-month forecast of the CIP Adjustment Factor applicable to demand
+billed C&I customers under this Rider. The forecast period begins January 1st of the following year.
+EXEMPTION
+For customer premises recognized by the Company as not being subject to any of the costs of satisfying the
+solar energy standard under Minn. Stat. § 216B.1691, subd. 2f (“SES Costs”), the SES Costs reflected in the
+CIP Adjustment assessed to the accounts associated with these premises may be credited to these accounts,
+and the dollar amount of these credits shall be added as part of the Recoverable Conservation Improvement
+Program Expense applicable to the time period when the credit is issued.
+Date Filed: 10-17-23 By: Christopher B. Clark Effective Date: 01-01-24
+President, Northern States Power Company, a Minnesota corporation
+Docket No. E002/GR-21-630 Order Date: 10-06-23
+R
+R | 
+ | 
+ | 
+ | 
+
+Northern States Power Company, a Minnesota corporation
+Minneapolis, Minnesota 55401
+MINNESOTA ELECTRIC RATE BOOK – MPUC NO. 2
+SURCHARGE RIDER Section No. 5
+9th Revised Sheet No. 93
+A surcharge will be included in the monthly customer bills in Minnesota communities in an amount equal to any
+franchise gross earnings or other fee, permit or usage fee, excise, city sales or other charge or tax now or
+hereafter imposed upon Company by a community, whether by ordinance, franchise or otherwise, applicable to
+electric service supplied by Company to a customer.
+The Company remits 100% of these fees collected from ratepayers to the local government unit.*
+The Company will notify the Minnesota Public Utilities Commission of any new, renewed, expired, or changed fee,
+authorized by Minn. Stat. § 216B.36 to raise revenue, at least 30 days prior to its implementation. If the Company C
+receives less than 30 days’ notice of a repealed or reduced fee from a city, the Company will notify the Minnesota C
+Public Utilities Commission within 10 business days of receiving notice. Notification to the Minnesota Public Utilities
+Commission will include a copy of the relevant franchise fee ordinance, or other operative document authorizing
+imposition of, or change in, the fee.
+Affected customers will be notified on the first bill on which a new or modified fee is listed via the standard bill
+message below:
+[The municipality] imposes a [X% of gross revenues/$X per meter/$X per kWh/$X per therm] fee on Xcel
+Energy collectable through a fee on Xcel Energy [electric/gas] accounts effective [effective date]. The line
+item appears on your bill as “City Fees.” Xcel Energy remits 100% of this fee to [the municipality].
+*The amount collected for Baker is applied to the community’s street lighting bill.
+Date Filed: 08-11-23 By: Christopher B. Clark Effective Date: 07-25-23
+President, Northern States Power Company, a Minnesota corporation
+Docket No. E,G999/CI-09-970 Order Date: 07-25-23
+
+Northern States Power Company, a Minnesota corporation
+SALES TRUE-UP RIDER Section No. 5
+3rd Revised Sheet No. 118.1
+APPLICABILITY
+Applicable to all retail electric services except protective and street lighting services.
+RIDER
+Customer bills will include a surcharge or credit determined by applying the applicable Sales True-Up Rider
+(STUR) factor to the customer’s billed kWh electric consumption.
+ANNUAL STUR FACTORS
+STUR factors for each applicable class will be determined and updated annually based on revenue differences for
+each calendar year that result from differences between approved and actual sales and customers. Updated factors
+for each calendar year, including a true-up for prior period, will apply for twelve months beginning April 1 following the
+applicable year.
+STUR FACTORS
+R
+Residential $0.00041 per kWh
+(Rate Codes A00, A01, A02, A03, A04, A05, A06, A08, A72, A74, A80, A81, A82, A83)
+R
+Non-Residential Non-Demand Billed $0.00034 per kWh
+(Rate Codes A05, A06, A09, A10, A11, A12, A13, A16, A18, A22, A91, A92, A93, A94)
+R
+Non-Residential Demand $0.00038 per kWh
+(Rate Codes A14, A15, A17, A19, A23, A24, A27, A29, A87, A88, A89, A90, Interdepartmental)
+R
+Public Authority ($0.00090) per kWh
+(Rate Codes A40, A41)
+R
+Metered Lighting $0.00597 per kWh
+(Rate Codes A34)
+DETERMINATION OF ANNUAL STUR FACTORS
+Annual STUR factors for each STUR category will be the applicable STUR Deferral divided by forecast sales, where:
+STUR Deferral = Calendar year difference between approved and actual base rate revenue
+Base rate revenue excludes fuel costs and cost recovery riders
+Approved base revenue is base rate revenue by STUR category approved by the Commission in the Company’s
+most recent concluded general rate proceeding.
+Forecast sales will be the most current sales forecast by STUR category for the period of April 1 through March 31
+following each calendar year.
+The Annual STUR factor to collect under-recovered revenues shall be capped at +3% of the total customer group
+base revenue for each of the rate classes. The STUR factor to return over-recovered revenues shall not be
+capped.
+TERM
+The Company will begin calculating Monthly Sales True-Up Rider Deferrals on January 1, 2023 and will file proposed
+Annual Sales True-Up Rider factors with the Commission annually on April 1 beginning April 1, 2024. The proposed
+rate will become effective on June 1 each year and remain in effect for the 12 months.
+Date Filed: 04-01-26 By: Bria E. Shea Effective Date: 06-01-26
+President, Northern States Power Company, a Minnesota corporation
+Docket No. E002/M-26-56 Order Date: 07-17-23
+
+Northern States Power Company, a Minnesota corporation
+Minneapolis, Minnesota 55401
+MINNESOTA ELECTRIC RATE BOOK – MPUC NO. 2
+AREA DEVELOPMENT RIDER Section No. 5
+6th Revised Sheet No. 119
+AVAILABILITY
+Available to new or existing demand metered customers located in Area Development Zones whose proper
+Standard Industrial Classification (SIC) is manufacturing or wholesale trade and who qualify for other
+development incentives offered by local government entities. The availability of this Rider is limited to specific
+Area Development Zones that meet the criteria listed below as set forth by the Commission.
+ZONE DESIGNATION
+Area Development Zones in the seven county Twin Cities’ metropolitan area (Anoka, Carver, Dakota, Hennepin,
+Ramsey, Scott, and Washington Counties) must be located within one of the cities lying within the "Fully
+Developed Area" as classified by the Metropolitan Council in the document entitled "Metropolitan Development
+and Investment Framework (December 1988)" that has experienced a decline in combined employment in
+manufacturing and wholesale trade between 1980 and the most recent year for which data are available as
+published by the Minnesota Department of Economic Security. Eligible communities are Bloomington, Columbia
+Heights/Hilltop, Crystal, Fridley, Golden Valley, Hopkins, Minneapolis, New Brighton, Roseville, South St. Paul,
+St. Louis Park, and St. Paul. Area Development Zones in cities located outside the seven county Twin Cities’
+metropolitan area must be located in a city with a minimum population of 25,000 based on the most recent U.S.
+Census of Population and must be located in a county (or counties) that have experienced a decline in
+combined employment in manufacturing and wholesale trade between 1987 and the most recent year for which
+data are available as published by the Minnesota Department of Economic Security. The Area Development
+Zone must be an existing or proposed industrial park with a minimum size of ten acres. The maximum total
+number of active zones at any time is 18; the maximum number of active zones in the seven county Twin Cities’
+metropolitan area is 15. The maximum number of active zones in any community is three. A zone can be
+"decertified" and a new Area Development Zone established at any time as long as there are no more than
+three Area Development Zones in a community at any point in time.
+RATE
+The rates and provisions of the customer's regular rate schedule shall apply except monthly demand charges
+for customer's Qualified Billing Demand shall be reduced as follows:
+Years Percent Reduction
+1 - 3 50%
+4 30%
+5 20%
+6 0%
+INTERIM RATE ADJUSTMENT N
+A 7.14% Interim Rate Surcharge will be applied to rate components specified in the “Interim Rate Surcharge Rider” to N
+service provided beginning January 1, 2025. N
+(Continued on Sheet No. 5-120)
+Date Filed: 11-01-24 By: Ryan J. Long Effective Date: 01-01-25
+President, Northern States Power Company, a Minnesota corporation
+Docket No. E002/GR-24-320 Order Date: 12-30-24
+
+Northern States Power Company, a Minnesota corporation
+INTERIM RATE SURCHARGE RIDER Section No. 5
+15th Revised Sheet No. 94
+D
+AVAILABILITY N
+The Interim Rate Surcharge applies to:
+1. Customer, Energy, Demand, and Minimum Charges (Excluding Customer Charges for EVAAH Programs)
+2. Energy Charge Credits
+3. Limited Energy Surcharges
+4. Controllable Demand Credits
+5. Voltage Discounts
+6. Fixed Charges for Low Wattage Unmetered Devices
+7. Lighting Rates per Luminaire and Lighting Rates per Unit
+8. Siren Service Rate per Horsepower
+9. Residential Controlled Air Conditioning and Water Heating Discounts
+10. Commercial and Industrial Controlled Air Conditioning Credits
+11. Off Season Load Rider
+12. Standby Service Rider
+13. Supplemental Generation Service Rider
+14. Tier 1 Energy Controlled Service Rider
+15. Area Development Rider
+16. Competitive Response Rider
+17. Tier 1 Peak Controlled Short Notice Rider
+18. Business Incentive and Sustainability Rider
+19. Photovoltaic Demand Credit Rider
+The Interim Rate Surcharge does not apply to:
+1. Fuel Clause Rider
+2. Conservation Improvement Program Adjustment Rider
+3. Low Income Discounts (Energy and Fuel Cost Charges)
+4. Low Income Program Surcharges
+5. City Requested Facilities Surcharge Rider
+6. Voluntary Renewable*Connect Program Riders
+7. WAPA Bill Credit Program Rider
+8. Mercury Cost Recovery Rider
+9. Environmental Improvement Rider
+10. State Energy Policy Rate Rider
+11. Renewable Development Fund Rider
+12. Transmission Cost Recovery Rider
+13. Renewable Energy Standard Rider
+14. Sales True-Up Rider
+15. Manual Meter Reading Service Rider
+16. Net Energy Billing Service
+17. Late Payment Charge
+18. Customer Charges for EVAAH Programs
+This temporary Interim Rate Surcharge Rider will expire when final rates become effective.
+RATE
+Each rate schedule that the Interim Rate Surcharge applies to contains the following text:
+INTERIM RATE ADJUSTMENT
+A 7.14% Interim Rate Surcharge will be applied to rate components specified in the “Interim Rate Surcharge Rider” to
+N
+service provided beginning January 1, 2025.
+Date Filed: 11-01-24 By: Ryan J. Long Effective Date: 01-01-25
+President, Northern States Power Company, a Minnesota corporation
+Docket No. E002/GR-24-320 Order Date: 12-30-24
+
+Northern States Power Company, a Minnesota corporation
+Minneapolis, Minnesota 55401
+MINNESOTA ELECTRIC RATE BOOK - MPUC NO. 2
+AFFORDABILITY CREDIT RIDER Section No. 5
+12th Revised Sheet No. 95
+PROGRAMS
+T
+Affordability Credit Program
+Eligible customers receive a $15 discount in each monthly billing period. Eligibility is determined by receipt of energy
+assistance during the current Low Income Home Energy Assistance Program (LIHEAP) season and the customer is
+62 years or older and/or disabled. The Affordability Credit Program is retroactive to October 1 and ends September T
+30 of each year.
+PowerON Program
+Eligibility is determined by customer receipt of energy assistance during the current (LIHEAP) season and agreement
+to a monthly payment plan that is based on no more than 3% off their annual income.
+Medical Affordability Program (MAP)
+Eligibility is determined by the customer’s valid medical form on file with the Company, an income no greater
+than 60% of the state median and agree to a monthly payment plan based on a percentage of their income.
+Program Parameters
+• Affordability Credit: Participating customers will receive an affordability credit limiting their bill to 3% of
+household annual income.
+• Arrearage Credit: Participating customers will receive an arrearage credit. Receipt of the arrearage
+forgiveness credit will require a customer copayment that does not exceed 3% of the household’s annual
+income. The arrearage credit is designed to eliminate customer arrears over a period of 12 to 24 months.
+• Customer Payment Requirements: Participating customers that miss two consecutive monthly payments will
+be removed from the Program and subject to regular collection practices, including service disconnection.
+T
+Low Usage Affordability Credit (LUAC) Program
+Eligible customers will receive a 35% discount on the base energy rate portion of their bill each month and paid
+in the following month. Eligibility will be determined on a customer’s annual average monthly energy usage of
+300 kWh or less and either a receipt of energy assistance during the current LIHEAP season or a valid program
+self-declaration of income form, as provided by the customer to the Company. Customers must have received a
+minimum of three billing statements.
+TERMS AND CONDITIONS OF SERVICE
+1. The company will review current billing information, approved LIHEAP benefits and household income
+to make payment arrangements with the customer. A mutually agreed to payment plan will be offered
+to the customer and a payment schedule provided.
+2. Customer must maintain an active account registered under customer’s name with the Company to be
+eligible for this discount Rider.
+3. Customers receiving assistance from LIHEAP with electric service through one meter for domestic and
+non-domestic purposes jointly may be eligible for this Discount Rider subject to Company’s verification
+and approval. The Company shall determine the kWh use that is for domestic purposes. This
+Discount Rider only applies to kWh use for domestic purposes.
+(Continued on Sheet No. 5-96)
+Date Filed: 12-01-25 By: Bria E. Shea Effective Date: 01-09-26
+President, Northern States Power Company, a Minnesota corporation
+Docket No. E002/M-04-1956 & E002/M-10-854 & Order Date: 12-29-25
+E002/M-23-476
+
+REVENUE DECOUPLING MECHANISM RIDER Section No. 5
+PILOT PROGRAM 7th Revised Sheet No. 117
+CANCELED D
+T
+(Continued on Sheet No. 5-118)
+Date Filed: 02-01-21 By: Christopher B. Clark Effective Date: 04-01-21
+President, Northern States Power Company, a Minnesota corporation
+Docket No. E002/M-19-688 Order Date: 06-28-21
+
+Northern States Power Company, a Minnesota corporation
+Minneapolis, Minnesota 55401
+MINNESOTA ELECTRIC RATE BOOK – MPUC NO. 2
+REVENUE DECOUPLING MECHANISM RIDER (Continued) Section No. 5
+PILOT PROGRAM 4th Revised Sheet No. 118
+CANCELED D
+T
+Date Filed: 02-01-21 By: Christopher B. Clark Effective Date: 04-01-21
+President, Northern States Power Company, a Minnesota corporation
+Docket No. E002/M-19-688 Order Date: 06-28-21
+
+Northern States Power Company, a Minnesota corporation
+REVENUE DECOUPLING MECHANISM RIDER (Continued) Section No. 5
+PILOT PROGRAM 4th Revised Sheet No. 118
+CANCELED D
+T
+Date Filed: 02-01-21 By: Christopher B. Clark Effective Date: 04-01-21
+President, Northern States Power Company, a Minnesota corporation
+Docket No. E002/M-19-688 Order Date: 06-28-21
+
+Northern States Power Company, a Minnesota corporation
+Minneapolis, Minnesota 55401
+MINNESOTA ELECTRIC RATE BOOK - MPUC NO. 2
+SALES TRUE-UP RIDER Section No. 5
+3rd Revised Sheet No. 118.1
+APPLICABILITY
+Applicable to all retail electric services except protective and street lighting services.
+RIDER
+Customer bills will include a surcharge or credit determined by applying the applicable Sales True-Up Rider
+(STUR) factor to the customer’s billed kWh electric consumption.
+ANNUAL STUR FACTORS
+STUR factors for each applicable class will be determined and updated annually based on revenue differences for
+each calendar year that result from differences between approved and actual sales and customers. Updated factors
+for each calendar year, including a true-up for prior period, will apply for twelve months beginning April 1 following the
+applicable year.
+STUR FACTORS
+R
+Residential $0.00041 per kWh
+(Rate Codes A00, A01, A02, A03, A04, A05, A06, A08, A72, A74, A80, A81, A82, A83)
+R
+Non-Residential Non-Demand Billed $0.00034 per kWh
+(Rate Codes A05, A06, A09, A10, A11, A12, A13, A16, A18, A22, A91, A92, A93, A94)
+R
+Non-Residential Demand $0.00038 per kWh
+(Rate Codes A14, A15, A17, A19, A23, A24, A27, A29, A87, A88, A89, A90, Interdepartmental)
+R
+Public Authority ($0.00090) per kWh
+(Rate Codes A40, A41)
+R
+Metered Lighting $0.00597 per kWh
+(Rate Codes A34)
+DETERMINATION OF ANNUAL STUR FACTORS
+Annual STUR factors for each STUR category will be the applicable STUR Deferral divided by forecast sales, where:
+STUR Deferral = Calendar year difference between approved and actual base rate revenue
+Base rate revenue excludes fuel costs and cost recovery riders
+Approved base revenue is base rate revenue by STUR category approved by the Commission in the Company’s
+most recent concluded general rate proceeding.
+Forecast sales will be the most current sales forecast by STUR category for the period of April 1 through March 31
+following each calendar year.
+The Annual STUR factor to collect under-recovered revenues shall be capped at +3% of the total customer group
+base revenue for each of the rate classes. The STUR factor to return over-recovered revenues shall not be
+capped.
+TERM
+The Company will begin calculating Monthly Sales True-Up Rider Deferrals on January 1, 2023 and will file proposed
+Annual Sales True-Up Rider factors with the Commission annually on April 1 beginning April 1, 2024. The proposed
+rate will become effective on June 1 each year and remain in effect for the 12 months.
+Date Filed: 04-01-26 By: Bria E. Shea Effective Date: 06-01-26
+President, Northern States Power Company, a Minnesota corporation
+Docket No. E002/M-26-56 Order Date: 07-17-23
+
+Northern States Power Company, a Minnesota corporation
+TRANSMISSION COST RECOVERY RIDER Section No. 5
+21st Revised Sheet No. 144
+APPLICATION
+Applicable to bills for electric service provided under the Company’s retail rate schedules.
+RIDER
+There shall be included on each customer’s monthly bill a Transmission Cost Recovery (TCR) adjustment,
+which shall be the TCR Adjustment Factor multiplied by the customer’s monthly billing energy or demand for
+electric service as described below. This TCR Adjustment shall be calculated before city surcharge and sales
+tax.
+DETERMINATION OF TCR ADJUSTMENT FACTORS
+A separate TCR Adjustment Factor shall be calculated for the following four customer groups: (1) Residential,
+(2) Commercial Non-Demand, and (3) Demand Billed. The TCR Adjustment Factor for each group shall be the C
+value obtained by multiplying each group’s weighting factor by the average retail cost per kWh. The average
+retail cost per kWh shall be determined by the forecasted balance of the TCR Tracker Account, divided by the
+forecasted retail sales for the calendar year. The Demand Billed customers’ TCR Adjustment Factor is
+calculated similarly, but the resulting per kWh charge is converted to a per kW charge for application to billed
+kW rather than billed kWh. TCR Adjustment Factors shall be rounded to the nearest $0.000001 per kWh or
+$0.001 per kW.
+The TCR Adjustment Factor for each customer group may be adjusted annually with approval of the Minnesota
+Public Utilities Commission (Commission). Each TCR Adjustment Factor shall apply to bills rendered
+subsequent to approval by the Commission. The TCR factor for each rate schedule is:
+Residential $0.006415 per kWh R
+Commercial (Non-Demand) $0.004445 per kWh R
+Demand Billed $0.68 per kW R
+D
+Recoverable Transmission and Distribution Costs shall be the annual revenue requirements for transmission
+and distribution costs associated with transmission projects and distribution planning and facilities eligible for
+recovery under Minnesota Statute Sections 216B.1645 or 216B.16, subd. 7b that are determined by the
+Commission to be eligible for recovery under this Transmission Cost Recovery Rider. A standard model will be
+used to calculate the total forecasted revenue requirements for eligible projects for the designated period. All
+costs appropriately charged to the Transmission Tracker Account shall be eligible for recovery through this
+Rider, and all revenues recovered from the TCR Adjustment shall be credited to the Transmission Tracker
+Account.
+Forecasted retail kWh sales and kW demands shall be those for the designated recovery period.
+(Continued on Sheet No. 5-145)
+Date Filed: 10-09-25 By: Bria E. Shea Effective Date: 04-01-26
+President, Northern States Power Company, a Minnesota corporation
+Docket No. E002/M-25-386 Order Date: 03-10-26
+
+Northern States Power Company, a Minnesota corporation
+Minneapolis, Minnesota 55401
+MNNESOTA ELECTRIC RATE BOOK - MPUC NO. 2
+TRANSMISSION COST RECOVERY RIDER Section No. 5
+(Continued) 5th Revised Sheet No. 145
+TRUE-UP
+For each 12-month period ending December 31, a true-up adjustment to the Tracker Account will be calculated
+reflecting the difference between the TCR Adjustment recoveries and the revenue requirements for such period.
+The total retail true-up adjustment shall be calculated and recorded by no later than May 1 of the following
+calendar year and will be included in average retail cost used to calculate the TCR Adjustment Factor for each
+customer group effective with the start of the next designated recovery period.
+For example, the Year 1 revenue requirements versus TCR Adjustment recoveries would be determined by May
+1 of Year 2, at which time the Company would record an adjustment to the Tracker Account. The difference
+between the Year 1 revenue requirements and Year 1 TCR Adjustment recoveries would be included in the
+calculation of the TCR Adjustment factors filed on September 1 of Year 2 to be effective January 1 of Year 3.
+PROVISION OF FORECAST DATA
+To assist commercial and industrial customers in budgeting and managing their energy costs, the Company will
+annually make available on September 1st a 24-month forecast of the TCR Adjustment Factor applicable to
+demand billed C&I customers under this Rider. The forecast period begins January 1st of the following year.
+This forecast will be provided only to customers who have signed a protective agreement with the Company.
+Date Filed: 11-02-15 By: Christopher B. Clark Effective Date: 10-01-17
+President, Northern States Power Company, a Minnesota corporation
+Docket No. E002/GR-15-826 Order Date: 06-12-17
+
+Northern States Power Company, a Minnesota corporation
+TRANSMISSION COST RECOVERY RIDER Section No. 5
+(Continued) 5th Revised Sheet No. 145
+TRUE-UP
+For each 12-month period ending December 31, a true-up adjustment to the Tracker Account will be calculated
+reflecting the difference between the TCR Adjustment recoveries and the revenue requirements for such period.
+The total retail true-up adjustment shall be calculated and recorded by no later than May 1 of the following
+calendar year and will be included in average retail cost used to calculate the TCR Adjustment Factor for each
+customer group effective with the start of the next designated recovery period.
+For example, the Year 1 revenue requirements versus TCR Adjustment recoveries would be determined by May
+1 of Year 2, at which time the Company would record an adjustment to the Tracker Account. The difference
+between the Year 1 revenue requirements and Year 1 TCR Adjustment recoveries would be included in the
+calculation of the TCR Adjustment factors filed on September 1 of Year 2 to be effective January 1 of Year 3.
+PROVISION OF FORECAST DATA
+To assist commercial and industrial customers in budgeting and managing their energy costs, the Company will
+annually make available on September 1st a 24-month forecast of the TCR Adjustment Factor applicable to
+demand billed C&I customers under this Rider. The forecast period begins January 1st of the following year.
+This forecast will be provided only to customers who have signed a protective agreement with the Company.
+Date Filed: 11-02-15 By: Christopher B. Clark Effective Date: 10-01-17
+President, Northern States Power Company, a Minnesota corporation
+Docket No. E002/GR-15-826 Order Date: 06-12-17
+
+Northern States Power Company, a Minnesota corporation
+Minneapolis, Minnesota 55401
+MINNESOTA ELECTRIC RATE BOOK - MPUC NO. 2
+RENEWABLE ENERGY STANDARD RIDER Section No. 5
+14th Revised Sheet No. 146
+APPLICATION
+Applicable to bills for electric service provided under the Company’s retail rate schedules.
+RIDER
+There shall be included on each customer’s monthly bill a Renewable Energy Standard (RES) adjustment which will
+be the RES Adjustment Factor applied to:
+1. Customer, Energy, Demand and Minimum Charges
+2. Energy Charge Credits
+3. Limited Energy Surcharges
+4. Controllable Demand Credits
+5. Voltage Discounts
+6. Lighting Rates per Luminaire and Lighting Rates per Unit
+7. Siren Service Rate per Horsepower
+8. Residential Controlled Air Conditioning and Water Heating Discounts
+9. Commercial and Industrial Controlled Air Conditioning Credits
+10. Standby Service Rider
+11. Supplemental Service Rider
+12. Tier 1 Energy Controlled Service Rider
+13. Tier 1 Peak Controlled Short Notice Rider
+14. Area Development Rider
+15. Fixed Charges for Low Wattage Unmetered Devices
+The RES Adjustment Factor does not apply to:
+1. Fuel Clause Rider
+2. Conservation Improvement Program Rider
+3. Off Season Load Rider
+4. Competitive Response Rider
+5. City Requested Facilities Surcharge Rider
+6. Voluntary Renewable*Connect Program Riders
+7. WAPA Bill Credit Program Rider
+8. Mercury Cost Recovery Rider
+9. Environmental Improvement Rider
+10. Business Incentive and Sustainability Rider
+11. State Energy Policy Rate Rider
+12. Renewable Development Fund Rider
+13. Transmission Cost Recovery Rider
+14. Renewable Energy Standard Rider
+15. Net Energy Billing Service
+16. Late Payment Charge
+17. Any currently applicable Interim Rate Surcharge Rider
+18. Affordability Program Surcharge
+T
+19. Affordability Credits
+T
+This RES adjustment shall be calculated before city surcharge and sales tax.
+(Continued on Sheet No. 5-147)
+Date Filed: 12-01-25 By: Bria E. Shea Effective Date: 01-09-26
+President, Northern States Power Company, a Minnesota corporation
+Docket No. E002/M-04-1956 & Order Date: 12-29-25
+E002/M-10-854 &
+E002/M-23-476
+RENEWABLE DEVELOPMENT FUND RIDER Section No. 5
+29th Revised Sheet No. 143
+APPLICATION
+Applicable to bills for electric service provided under the Company’s retail rate schedules.
+RIDER
+There shall be included on each customer’s monthly bill a Renewable Development Fund charge that shall be
+the applicable Renewable Development Fund factor multiplied by the customer’s monthly kWh electric
+consumption.
+DETERMINATION OF RENEWABLE DEVELOPMENT FUND FACTOR
+The applicable Renewable Development Fund factor shall be the quotient obtained by dividing the annual
+Renewable Development Fund Tracker amount by the annual forecasted kWh sales. The factor may be
+adjusted annually with approval of the Minnesota Public Utilities Commission.
+R
+Residential $0.001371 per kWh
+Commercial $0.001371 per kWh R
+Recoverable Renewable Development Fund Expense
+All costs appropriately charged to the Renewable Development Fund Tracker account shall be eligible for
+recovery through this Rider, and all revenues received from the Renewable Development Fund portion of the
+Resource Adjustment shall be credited to the Renewable Development Fund Tracker account.
+PROVISION OF FORECAST DATA
+To assist commercial and industrial customers in budgeting and managing their energy costs, the Company will
+annually make available on October 1st a 24-month forecast of the Renewable Development Fund Factor
+applicable to demand billed C&I customers under this Rider. The forecast period begins January 1st of the
+following year. This forecast will be provided only to customers who have signed a protective agreement with
+the Company.
+EXEMPTION
+For customer premises recognized by the Company as not being subject to any of the costs of satisfying the
+solar energy standard under Minn. Stat. § 216B.1691, subd. 2f (“SES Costs”), the SES Costs reflected in the
+Renewable Development Fund charge assessed to the accounts associated with these premises may be
+credited to these accounts, and the dollar amount of these credits shall be added as part of the annual
+Renewable Development Fund Tracker applicable to the time period when the credit is issued.
+Date Filed: 12-03-25 By: Bria E. Shea Effective Date: 04-01-26
+President, Northern States Power Company, a Minnesota corporation
+Docket No. E002/M-25-370 Order Date: 03-25-26
+
+Northern States Power Company, a Minnesota corporation
+Minneapolis, Minnesota 55401
+MINNESOTA ELECTRIC RATE BOOK - MPUC NO. 2
+TRANSMISSION COST RECOVERY RIDER Section No. 5
+21st Revised Sheet No. 144
+APPLICATION
+Applicable to bills for electric service provided under the Company’s retail rate schedules.
+RIDER
+There shall be included on each customer’s monthly bill a Transmission Cost Recovery (TCR) adjustment,
+which shall be the TCR Adjustment Factor multiplied by the customer’s monthly billing energy or demand for
+electric service as described below. This TCR Adjustment shall be calculated before city surcharge and sales
+tax.
+DETERMINATION OF TCR ADJUSTMENT FACTORS
+A separate TCR Adjustment Factor shall be calculated for the following four customer groups: (1) Residential,
+(2) Commercial Non-Demand, and (3) Demand Billed. The TCR Adjustment Factor for each group shall be the C
+value obtained by multiplying each group’s weighting factor by the average retail cost per kWh. The average
+retail cost per kWh shall be determined by the forecasted balance of the TCR Tracker Account, divided by the
+forecasted retail sales for the calendar year. The Demand Billed customers’ TCR Adjustment Factor is
+calculated similarly, but the resulting per kWh charge is converted to a per kW charge for application to billed
+kW rather than billed kWh. TCR Adjustment Factors shall be rounded to the nearest $0.000001 per kWh or
+$0.001 per kW.
+The TCR Adjustment Factor for each customer group may be adjusted annually with approval of the Minnesota
+Public Utilities Commission (Commission). Each TCR Adjustment Factor shall apply to bills rendered
+subsequent to approval by the Commission. The TCR factor for each rate schedule is:
+Residential $0.006415 per kWh R
+Commercial (Non-Demand) $0.004445 per kWh R
+Demand Billed $0.68 per kW R
+D
+Recoverable Transmission and Distribution Costs shall be the annual revenue requirements for transmission
+and distribution costs associated with transmission projects and distribution planning and facilities eligible for
+recovery under Minnesota Statute Sections 216B.1645 or 216B.16, subd. 7b that are determined by the
+Commission to be eligible for recovery under this Transmission Cost Recovery Rider. A standard model will be
+used to calculate the total forecasted revenue requirements for eligible projects for the designated period. All
+costs appropriately charged to the Transmission Tracker Account shall be eligible for recovery through this
+Rider, and all revenues recovered from the TCR Adjustment shall be credited to the Transmission Tracker
+Account.
+Forecasted retail kWh sales and kW demands shall be those for the designated recovery period.
+(Continued on Sheet No. 5-145)
+Date Filed: 10-09-25 By: Bria E. Shea Effective Date: 04-01-26
+President, Northern States Power Company, a Minnesota corporation
+Docket No. E002/M-25-386 Order Date: 03-10-26
+
+Northern States Power Company, a Minnesota corporation
+STATE ENERGY POLICY RATE RIDER Section No. 5
+17th Revised Sheet No. 142
+APPLICATION
+Applicable to bills for electric service provided under the Company’s retail rate schedules.
+RIDER
+There shall be included on each customer’s monthly bill a State Energy Policy Rate Rider which shall be the
+applicable State Energy Policy Rate Rider factor multiplied by the customer’s monthly kWh electric
+consumption.
+DETERMINATION OF STATE ENERGY POLICY RATE FACTOR
+The applicable State Energy Policy Rate Rider shall be the quotient obtained by dividing the annual State
+Energy Policy Tracker amount by the annual forecasted kWh sales. The factor may be adjusted annually with
+approval of the Minnesota Public Utilities Commission.
+Residential $0.000000 per kWh R
+Commercial $0.000000 per kWh R
+Recoverable State Energy Policy Rate Expense
+All costs appropriately charged to the State Energy Policy Tracker account shall be eligible for recovery through
+this Rider, and all revenues received from the State Energy Policy adjustment portion of the Resource
+Adjustment shall be credited to the State Energy Policy Tracker account.
+PROVISION OF FORECAST DATA
+To assist commercial and industrial customers in budgeting and managing their energy costs, the Company will
+annually make available on March 1st a 24-month forecast of the State Energy Policy Rate Factor applicable to
+demand billed C&I customers under this Rider. The forecast period begins January 1st of the following year.
+This forecast will be provided only to customers who have signed a protective agreement with the Company.
+Date Filed: 11-01-24 By: Ryan J. Long Effective Date: 01-01-25
+President, Northern States Power Company, a Minnesota corporation
+Docket No. E002/GR-24-320 Order Date: 12-30-24
+ | 
+ | 
+
+Northern States Power Company, a Minnesota corporation
+Minneapolis, Minnesota 55401
+MINNESOTA ELECTRIC RATE BOOK - MPUC NO. 2
+RENEWABLE DEVELOPMENT FUND RIDER Section No. 5
+29th Revised Sheet No. 143
+APPLICATION
+Applicable to bills for electric service provided under the Company’s retail rate schedules.
+RIDER
+There shall be included on each customer’s monthly bill a Renewable Development Fund charge that shall be
+the applicable Renewable Development Fund factor multiplied by the customer’s monthly kWh electric
+consumption.
+DETERMINATION OF RENEWABLE DEVELOPMENT FUND FACTOR
+The applicable Renewable Development Fund factor shall be the quotient obtained by dividing the annual
+Renewable Development Fund Tracker amount by the annual forecasted kWh sales. The factor may be
+adjusted annually with approval of the Minnesota Public Utilities Commission.
+R
+Residential $0.001371 per kWh
+Commercial $0.001371 per kWh R
+Recoverable Renewable Development Fund Expense
+All costs appropriately charged to the Renewable Development Fund Tracker account shall be eligible for
+recovery through this Rider, and all revenues received from the Renewable Development Fund portion of the
+Resource Adjustment shall be credited to the Renewable Development Fund Tracker account.
+PROVISION OF FORECAST DATA
+To assist commercial and industrial customers in budgeting and managing their energy costs, the Company will
+annually make available on October 1st a 24-month forecast of the Renewable Development Fund Factor
+applicable to demand billed C&I customers under this Rider. The forecast period begins January 1st of the
+following year. This forecast will be provided only to customers who have signed a protective agreement with
+the Company.
+EXEMPTION
+For customer premises recognized by the Company as not being subject to any of the costs of satisfying the
+solar energy standard under Minn. Stat. § 216B.1691, subd. 2f (“SES Costs”), the SES Costs reflected in the
+Renewable Development Fund charge assessed to the accounts associated with these premises may be
+credited to these accounts, and the dollar amount of these credits shall be added as part of the annual
+Renewable Development Fund Tracker applicable to the time period when the credit is issued.
+Date Filed: 12-03-25 By: Bria E. Shea Effective Date: 04-01-26
+President, Northern States Power Company, a Minnesota corporation
+Docket No. E002/M-25-370 Order Date: 03-25-26
+
+Northern States Power Company, a Minnesota corporation
+RENEWABLE ENERGY STANDARD RIDER Section No. 5
+14th Revised Sheet No. 146
+APPLICATION
+Applicable to bills for electric service provided under the Company’s retail rate schedules.
+RIDER
+There shall be included on each customer’s monthly bill a Renewable Energy Standard (RES) adjustment which will
+be the RES Adjustment Factor applied to:
+1. Customer, Energy, Demand and Minimum Charges
+2. Energy Charge Credits
+3. Limited Energy Surcharges
+4. Controllable Demand Credits
+5. Voltage Discounts
+6. Lighting Rates per Luminaire and Lighting Rates per Unit
+7. Siren Service Rate per Horsepower
+8. Residential Controlled Air Conditioning and Water Heating Discounts
+9. Commercial and Industrial Controlled Air Conditioning Credits
+10. Standby Service Rider
+11. Supplemental Service Rider
+12. Tier 1 Energy Controlled Service Rider
+13. Tier 1 Peak Controlled Short Notice Rider
+14. Area Development Rider
+15. Fixed Charges for Low Wattage Unmetered Devices
+The RES Adjustment Factor does not apply to:
+1. Fuel Clause Rider
+2. Conservation Improvement Program Rider
+3. Off Season Load Rider
+4. Competitive Response Rider
+5. City Requested Facilities Surcharge Rider
+6. Voluntary Renewable*Connect Program Riders
+7. WAPA Bill Credit Program Rider
+8. Mercury Cost Recovery Rider
+9. Environmental Improvement Rider
+10. Business Incentive and Sustainability Rider
+11. State Energy Policy Rate Rider
+12. Renewable Development Fund Rider
+13. Transmission Cost Recovery Rider
+14. Renewable Energy Standard Rider
+15. Net Energy Billing Service
+16. Late Payment Charge
+17. Any currently applicable Interim Rate Surcharge Rider
+18. Affordability Program Surcharge
+T
+19. Affordability Credits
+T
+This RES adjustment shall be calculated before city surcharge and sales tax.
+(Continued on Sheet No. 5-147)
+Date Filed: 12-01-25 By: Bria E. Shea Effective Date: 01-09-26
+President, Northern States Power Company, a Minnesota corporation
+Docket No. E002/M-04-1956 & Order Date: 12-29-25
+E002/M-10-854 &
+E002/M-23-476
+T
+T | 
+
+Northern States Power Company, a Minnesota corporation
+Minneapolis, Minnesota 55401
+MINNESOTA ELECTRIC RATE BOOK - MPUC NO. 2
+RENEWABLE ENERGY STANDARD RIDER (Continued) Section No. 5
+21st Revised Sheet No. 147
+DETERMINATION OF RES ADJUSTMENT FACTOR
+The Renewable Energy Standard (“RES”) Adjustment Factor shall be the RES annual forecasted revenue
+requirement as a percentage of “base” revenues. The RES annual forecasted revenue requirement shall be the sum
+of the Renewable Energy Standard Costs for the forecast period and any residual Tracker balance in the RES
+Tracker Account.
+The RES Adjustment Factor may be adjusted with the approval of the Minnesota Public Utilities Commission
+(Commission). The RES Factor is:
+All Classes 2.463% R
+RENEWABLE ENERGY STANDARD COSTS
+The RES Costs shall be the annual revenue requirements including operation and maintenance (O&M) expenses for
+Company owned Renewable Energy Project costs and capacity related renewable energy purchased power costs not
+recoverable through the FCR, that are eligible for recovery under Minnesota Statute Section 216B.1645 and for
+operation and O&M expenses for Company owned Energy Storage System Pilot Project costs that are eligible for
+recovery under Minnesota Statute Section 216B.16, subd. 7e. A standard model will be used to calculate the total
+forecasted revenue requirements for each annual period that is determined by the Commission to be eligible for
+recovery under this Renewable Energy Standard Rider.
+RES TRACKER ACCOUNT
+For each annual true-up period, a true-up adjustment to the RES Tracker Account (residual Tracker balance)
+will be calculated reflecting the difference between the RES Adjustment recoveries and the actual expenditures
+for such period. The true-up adjustment shall be included in calculating the RES Adjustment Factor effective
+with the start of the next annual recovery period.
+The RES Adjustment Factor includes a true-up of actuals as available for the previous recovery period and forecast
+information for the remainder of the recovery period. The Final true-up adjustment for a previous recovery period will
+be determined by September 1 of the following year, at which time the Company will record a Final adjustment to the
+RES Tracker Account.
+All costs appropriately charged to the RES Tracker Account shall be eligible for recovery through this rider.
+PROVISION OF FORECAST DATA
+To assist commercial and industrial customers in budgeting and managing their energy costs, the Company will
+annually make available on September 1st a 24-month forecast of the RES Adjustment Factor applicable to
+demand billed C&I customers under this Rider. The forecast period begins January 1st of the following year.
+This forecast will be provided only to customers who have signed a protective agreement with the Company.
+Date Filed: 04-29-26 By: Bria E. Shea Effective Date: 05-01-26
+President, Northern States Power Company, a Minnesota corporation
+Docket No. E002/M-25-400 Order Date: 04-23-26
+
+Northern States Power Company d/b/a Xcel Energy
+RENEWABLE ENERGY STANDARD RIDER (Continued) Section No. 5
+21st Revised Sheet No. 147
+DETERMINATION OF RES ADJUSTMENT FACTOR
+The Renewable Energy Standard (“RES”) Adjustment Factor shall be the RES annual forecasted revenue
+requirement as a percentage of “base” revenues. The RES annual forecasted revenue requirement shall be the sum
+of the Renewable Energy Standard Costs for the forecast period and any residual Tracker balance in the RES
+Tracker Account.
+The RES Adjustment Factor may be adjusted with the approval of the Minnesota Public Utilities Commission
+(Commission). The RES Factor is:
+All Classes 2.463% R
+RENEWABLE ENERGY STANDARD COSTS
+The RES Costs shall be the annual revenue requirements including operation and maintenance (O&M) expenses for
+Company owned Renewable Energy Project costs and capacity related renewable energy purchased power costs not
+recoverable through the FCR, that are eligible for recovery under Minnesota Statute Section 216B.1645 and for
+operation and O&M expenses for Company owned Energy Storage System Pilot Project costs that are eligible for
+recovery under Minnesota Statute Section 216B.16, subd. 7e. A standard model will be used to calculate the total
+forecasted revenue requirements for each annual period that is determined by the Commission to be eligible for
+recovery under this Renewable Energy Standard Rider.
+RES TRACKER ACCOUNT
+For each annual true-up period, a true-up adjustment to the RES Tracker Account (residual Tracker balance)
+will be calculated reflecting the difference between the RES Adjustment recoveries and the actual expenditures
+for such period. The true-up adjustment shall be included in calculating the RES Adjustment Factor effective
+with the start of the next annual recovery period.
+The RES Adjustment Factor includes a true-up of actuals as available for the previous recovery period and forecast
+information for the remainder of the recovery period. The Final true-up adjustment for a previous recovery period will
+be determined by September 1 of the following year, at which time the Company will record a Final adjustment to the
+RES Tracker Account.
+All costs appropriately charged to the RES Tracker Account shall be eligible for recovery through this rider.
+PROVISION OF FORECAST DATA
+To assist commercial and industrial customers in budgeting and managing their energy costs, the Company will
+annually make available on September 1st a 24-month forecast of the RES Adjustment Factor applicable to
+demand billed C&I customers under this Rider. The forecast period begins January 1st of the following year.
+This forecast will be provided only to customers who have signed a protective agreement with the Company.
+Date Filed: 04-29-26 By: Bria E. Shea Effective Date: 05-01-26
+President, Northern States Power Company, a Minnesota corporation
+Docket No. E002/M-25-400 Order Date: 04-23-26
+
+Northern States Power Company d/b/a Xcel Energy
+Minneapolis, Minnesota 55401
+MINNESOTA ELECTRIC RATE BOOK - MPUC NO. 2
+MANUAL METER READING SERVICE RIDER Section No. 5
+(AMI OPT-OUT OPTION) 1st Revised Sheet No. 148
+AVAILABILITY
+Available as an option to Residential Service, Residential Time of Day, Small General Service and Small
+General Time of Day Service customers who elect on-site meter reading service to opt out of energy usage
+measurements by standard advanced meters with two-way communication capabilities.
+RATE
+Fixed Charge per Month $15.00
+Non-Standard Meter Installation Charge $40.00
+Non-Standard Meter Removal Charge $40.00
+TERMS AND CONDITIONS OF SERVICE
+1. Customers who elect to receive this service will be subject to the Non-Standard Meter Installation Charge
+upon request for this service.
+2. A one-time waiver of the Non-Standard Meter Installation Charge will apply to customers who elect this
+service prior to the installation of a standard advanced meter at their premise(s) as part of the Company’s
+implementation of Advanced Metering Infrastructure.
+3. Customers who cancel this service or vacate the premise where the service was requested will be subject
+to the Non-Standard Meter Removal Charge.
+4. This rider will separately apply to each individual non-standard meter the customer requests be read
+manually.
+5. The Company reserves the right to refuse availability of this rider if the:
+a. Manual meter reading service would create a safety hazard for the customer, the public, or Company’s
+personnel or facilities,
+b. Customer does not allow the Company’s employees or agents access to the non-standard meter(s) at the
+customer’s premise(s), or
+c. Customer has a history of meter tampering.
+6. Entities such as multi-unit dwelling associations are not authorized to elect this rider on behalf of
+individually metered customers.
+7. Customers electing manual meter reading with this rider may receive bills based on estimated meter
+readings in any month where circumstances prevent a meter reading.
+8. Customers electing manual meter reading with the rider will be subject to a higher Service Reconnection N
+Charge as specified in the Section 1.2 of the GENERAL SERVICE RULES. N
+Date Filed: 05-20-22 By: Christopher B. Clark Effective Date: 04-01-23
+President, Northern States Power Company, a Minnesota Corporation
+Docket No. E002/M-22-233 Order Date: 03-22-23
+
+Northern States Power Company, a Minnesota corporation
+ENVIRONMENTAL IMPROVEMENT RIDER Section No. 5
+12th Revised Sheet No. 137
+APPLICATION
+Applicable to bills for electric service provided under the Company’s retail rate schedules.
+RIDER
+There shall be included on each customer’s monthly bill an Environmental Improvement Rider (EIR) adjustment.
+For all but demand-billed customers, the adjustment shall be the Full EIR Energy Adjustment Factor multiplied
+by the customer’s monthly billing kWh for electric service. For demand-billed customers, the adjustment shall
+be the Reduced EIR Energy Adjustment Factor multiplied by the customer’s monthly billing kWh for electric
+service, plus the EIR Demand Adjustment Factor multiplied by the customer’s monthly kW billing demand.
+These EIR adjustments shall be calculated before city surcharge and sales tax.
+DETERMINATION OF EIR ADJUSTMENT FACTORS
+The Full EIR Energy Adjustment Factor shall be the quotient obtained by dividing the forecasted balance of the
+EIR Tracker Account by the forecasted retail sales for the calendar year. The Reduced EIR Energy Adjustment
+Factor shall be the Full EIR Energy Adjustment Factor multiplied by 50%. The EIR Demand Adjustment Factor
+shall be the difference between the Full and Reduced factors, multiplied by the class load factor of 53.27% and
+multiplied by 730 hours in an average month. All factors shall be rounded to the nearest $0.000001 per kWh.
+The EIR Adjustment Factors may be adjusted annually with approval of the Minnesota Public Utilities
+Commission (Commission). The EIR Adjustment Factors shall apply to bills rendered on and after January 1st
+of the year.
+The EIR Adjustment Factor for each customer group may be adjusted annually. Each EIR Adjustment Factor
+shall apply to bills rendered on and after January 1 of the year. The EIR factor for each rate schedule is:
+Non-Demand Customers $0.000000 per kWh
+Demand Customers $0.000000 per kWh and
+$0.00 per kW
+Recoverable EIR Costs shall be the annual revenue requirements associated with emissions reduction projects
+(a) not recovered through base rates, (b) recorded in the EIR Tracker Account for the designated period, and (c)
+determined by the Commission to be eligible for recovery under this Rider pursuant to the terms of the
+Settlement Agreement approved by the Commission on March 8, 2004. A standard model will be used to
+calculate the total forecasted revenue requirements for eligible projects for the designated period. All costs
+appropriately charged to the EIR Tracker Account shall be eligible for recovery through this Rider, and all
+revenues recovered from the EIR Adjustment shall be credited to the EIR Tracker Account.
+Forecasted retail sales shall be the estimated retail electric sales for the designated recovery period.
+(Continued on Sheet No. 5-138)
+Date Filed: 11-02-15 By: Christopher B. Clark Effective Date: 10-01-17
+President, Northern States Power Company, a Minnesota corporation
+Docket No. E002/GR-15-826 Order Date: 06-12-17
+
+Northern States Power Company, a Minnesota corporation
+Minneapolis, Minnesota 55401
+MINNESOTA ELECTRIC RATE BOOK - MPUC NO. 2
+ENVIRONMENTAL IMPROVEMENT RIDER (Continued) Section No. 5
+5th Revised Sheet No. 138
+TRUE-UP
+For each 12-month period ending December 31, a true-up adjustment to the EIR Tracker Account will be
+calculated reflecting the difference between the EIR Adjustment recoveries and the revenue requirements for
+such period. The true-up adjustment shall be calculated and recorded by no later than May 1 of the following
+calendar year and will be included in calculating the EIR Adjustment Factor for each customer group effective
+with the start of the next designated recovery period. No carrying cost shall be applied.
+PROVISION OF FORECAST DATA
+To assist commercial and industrial customers in budgeting and managing their energy costs, the Company will
+annually make available on October 1st a 24-month forecast of the EIR Adjustment Factors applicable to
+demand billed C&I customers under this Rider. The forecast period begins January 1st of the following year.
+This forecast will be provided only to customers who have signed a protective agreement with the Company.
+Date Filed: 11-02-15 By: Christopher B. Clark Effective Date: 10-01-17
+President, Northern States Power Company, a Minnesota corporation
+Docket No. E002/GR-15-826 Order Date: 06-12-17
+
+Northern States Power Company, a Minnesota corporation
+ENVIRONMENTAL IMPROVEMENT RIDER (Continued) Section No. 5
+5th Revised Sheet No. 138
+TRUE-UP
+For each 12-month period ending December 31, a true-up adjustment to the EIR Tracker Account will be
+calculated reflecting the difference between the EIR Adjustment recoveries and the revenue requirements for
+such period. The true-up adjustment shall be calculated and recorded by no later than May 1 of the following
+calendar year and will be included in calculating the EIR Adjustment Factor for each customer group effective
+with the start of the next designated recovery period. No carrying cost shall be applied.
+PROVISION OF FORECAST DATA
+To assist commercial and industrial customers in budgeting and managing their energy costs, the Company will
+annually make available on October 1st a 24-month forecast of the EIR Adjustment Factors applicable to
+demand billed C&I customers under this Rider. The forecast period begins January 1st of the following year.
+This forecast will be provided only to customers who have signed a protective agreement with the Company.
+Date Filed: 11-02-15 By: Christopher B. Clark Effective Date: 10-01-17
+President, Northern States Power Company, a Minnesota corporation
+Docket No. E002/GR-15-826 Order Date: 06-12-17
+
+Northern States Power Company, a Minnesota corporation
+Minneapolis, Minnesota 55401
+MINNESOTA ELECTRIC RATE BOOK - MPUC NO. 2
+BUSINESS INCENTIVE AND SUSTAINABILITY RIDER Section No. 5
+6th Revised Sheet No. 139
+AVAILABILITY
+Available to new or existing demand-metered commercial and industrial customers with significant new Qualified
+Billing Demand. Service under the Rider is limited to customers whose application for service under the Rider is
+approved by the Company. Also available on a temporary and limited basis to existing demand-metered commercial
+and industrial customers with substantial load reductions directly associated with the COVID-19 coronavirus
+pandemic according to the provisions of the pandemic section of this rate schedule.
+RATE
+Demand Charge
+The rates and provisions of the customer's regular demand-metered rate schedule shall apply except monthly
+demand charges for customer's Qualified Billing Demand, before the application of voltage discounts, shall be
+reduced as follows:
+Years: 1 - 3 4 5 6
+Percent Reduction: 40% 20% 10% 0%
+Off-Peak Energy Charge
+New customers with a Qualified Billed Demand of 5,000 kW or greater and corresponding monthly load factor of
+70 percent or greater shall have a reduced Off Peak Period Energy Charge per kWh from customer's regular
+demand-metered rate schedule. The reduction, before the application of voltage discounts, shall be 50 percent
+for years 1 – 5.
+INTERIM RATE ADJUSTMENT N
+A 7.14% Interim Rate Surcharge will be applied to rate components specified in the “Interim Rate Surcharge Rider” to N
+service provided beginning January 1, 2025. N
+QUALIFIED BILLING DEMAND AND OFF-PEAK PERIOD ENERGY
+The portion of the customer's billing demand that qualifies for reduced demand charges. Qualified billing
+demand includes billing demands for standard demand, on-peak period demand, firm demand and controllable
+demand. Qualified billing demand does not include billing demands for off-peak period demand, distribution
+demand, transmission and distribution demand, contracted standby demand or contracted supplemental
+demand.
+New Customers. This Rider is available for new load that is associated with initial permanent service. For new
+Customers, the Qualified Billing Demand under this Rider must be a minimum of 350 kW at any single delivery
+point. A customer may receive the rate at multiple delivery points so long as each delivery point independently
+qualifies. The demand charge reduction shall not apply during any month in which the Qualified Billing Demand
+is below 350 kW; provided, however, the demand charge reduction shall apply during any month in which the
+Qualified Billing Demand is below 350 kW as a consequence of new conservation or load control by the
+customer. The off-peak period energy charge reduction shall not apply during any month in which the Qualified
+Billing Demand is below 5000 kW or the corresponding monthly load factor based on total Qualified Billing
+Demand and total monthly kWh usage is less than 70 percent.
+Existing Customers. For existing customers, Qualified Billing Demand is the new load of 350 kW or greater at
+any single delivery point incremental to that existing prior to approval for service under this Rider. A customer
+may receive the rate at multiple delivery points so long as each delivery point independently qualifies. The
+demand charge reduction shall not apply during any month in which the Qualified Billing Demand is below 350
+kW; provided, however, the demand charge reduction shall apply during any month in which the Qualified Billing
+Demand is below 350 kW as a consequence of new conservation or load control by the customer.
+(Continued on Sheet No. 5-140)
+Date Filed: 11-01-24 By: Ryan J. Long Effective Date: 01-01-25
+President, Northern States Power Company, a Minnesota corporation
+Docket No. E002/GR-24-320 Order Date: 12-30-24
+Years: | 1 - 3 | 4 | 5 | 6
+Percent Reduction: | 40% | 20% | 10% | 0%
+MERCURY COST RECOVERY RIDER Section No. 5
+8th Revised Sheet No. 136
+APPLICATION
+Applicable to bills for electric service provided under the Company’s retail rate schedules.
+RIDER
+There shall be included on each customer’s monthly bill a Mercury Cost Recovery (MCR) Rider adjustment
+which will be the MCR Adjustment Factor multiplied by the customer’s monthly billing kWh for electric service.
+This MCR adjustment shall be calculated before city charges and sales tax.
+DETERMINATION OF MERCURY COST RECOVERY FACTOR
+The MCR Adjustment Factor shall be the average retail cost per kWh. The average retail cost per kWh shall be
+determined by the forecasted balance of the MCR Tracker Account plus the Mercury Costs divided by the
+forecast retail sales for the designated period. The MCR Adjustment Factor shall be rounded to the nearest
+$0.000001 per kWh.
+The MCR Adjustment Factor may be adjusted with the approval of the Minnesota Public Utilities Commission
+(Commission). The MCR Adjustment Factor for each rate schedule is:
+All Classes $0.000000 per kWh
+MERCURY COSTS
+Recoverable mercury costs shall be the revenue requirements for the designated period including operation and
+maintenance (O&M) expenses associated with projects eligible for recovery under Minnesota Statute Sections
+216B.68 to 216B.688 that are determined by the Commission to be eligible for recovery under this Mercury Cost
+Recovery Rider. A standard model will be used to calculate the total forecasted revenue requirements for
+eligible projects for the designated period that is determined by the Commission to be eligible for recovery under
+this MCR Rider.
+FORECASTED RETAIL SALES
+Forecasted Retail Sales shall be the estimated total retail electric sales for the designated recovery period.
+MCR TRACKER ACCOUNT
+For each designated true-up period, a true-up adjustment to the MCR Tracker Account will be calculated
+reflecting the difference between the MCR Adjustment recoveries and the actual expenditures for such period.
+The true-up adjustment shall be included in calculating the MCR Adjustment Factor effective with the start of the
+next designated recovery period.
+The MCR Adjustment Factor includes a true-up of actuals as available for the previous recovery period and forecast
+information for the remainder of the recovery period. The Final true-up adjustment for a previous recovery period will
+be determined by October 1 of the following year, at which time the Company will record a Final adjustment to the
+MCR Tracker Account. All costs appropriately charged to the MCR Tracker Account shall be eligible for recovery
+through this rider.
+(Continued on Sheet No. 5-136.1)
+Date Filed: 11-02-15 By: Christopher B. Clark Effective Date: 10-01-17
+President, Northern States Power Company, a Minnesota corporation
+Docket No. E002/GR-15-826 Order Date: 06-12-17
+
+Northern States Power Company, a Minnesota corporation
+Minneapolis, Minnesota 55401
+MNNESOTA ELECTRIC RATE BOOK - MPUC NO. 2
+MERCURY COST RECOVERY RIDER (Continued) Section No. 5
+7th Revised Sheet No. 136.1
+PROVISION OF FORECAST DATA
+To assist commercial and industrial customers in budgeting and managing their energy costs, the Company will
+annually make available on October 1st a 24-month forecast of the MCR Adjustment Factor applicable to demand
+billed C&I customers under this Rider. The forecast period begins January 1st of the following year. This forecast will
+be provided only to customers who have signed a protective agreement with the Company.
+Date Filed: 11-02-15 By: Christopher B. Clark Effective Date: 10-01-17
+President, Northern States Power Company, a Minnesota corporation
+Docket No. E002/GR-15-826 Order Date: 06-12-17
+
+Northern States Power Company, a Minnesota corporation
+MERCURY COST RECOVERY RIDER (Continued) Section No. 5
+7th Revised Sheet No. 136.1
+PROVISION OF FORECAST DATA
+To assist commercial and industrial customers in budgeting and managing their energy costs, the Company will
+annually make available on October 1st a 24-month forecast of the MCR Adjustment Factor applicable to demand
+billed C&I customers under this Rider. The forecast period begins January 1st of the following year. This forecast will
+be provided only to customers who have signed a protective agreement with the Company.
+Date Filed: 11-02-15 By: Christopher B. Clark Effective Date: 10-01-17
+President, Northern States Power Company, a Minnesota corporation
+Docket No. E002/GR-15-826 Order Date: 06-12-17
+
+Northern States Power Company, a Minnesota corporation
+Minneapolis, Minnesota 55401
+MINNESOTA ELECTRIC RATE BOOK - MPUC NO. 2
+ENVIRONMENTAL IMPROVEMENT RIDER Section No. 5
+12th Revised Sheet No. 137
+APPLICATION
+Applicable to bills for electric service provided under the Company’s retail rate schedules.
+RIDER
+There shall be included on each customer’s monthly bill an Environmental Improvement Rider (EIR) adjustment.
+For all but demand-billed customers, the adjustment shall be the Full EIR Energy Adjustment Factor multiplied
+by the customer’s monthly billing kWh for electric service. For demand-billed customers, the adjustment shall
+be the Reduced EIR Energy Adjustment Factor multiplied by the customer’s monthly billing kWh for electric
+service, plus the EIR Demand Adjustment Factor multiplied by the customer’s monthly kW billing demand.
+These EIR adjustments shall be calculated before city surcharge and sales tax.
+DETERMINATION OF EIR ADJUSTMENT FACTORS
+The Full EIR Energy Adjustment Factor shall be the quotient obtained by dividing the forecasted balance of the
+EIR Tracker Account by the forecasted retail sales for the calendar year. The Reduced EIR Energy Adjustment
+Factor shall be the Full EIR Energy Adjustment Factor multiplied by 50%. The EIR Demand Adjustment Factor
+shall be the difference between the Full and Reduced factors, multiplied by the class load factor of 53.27% and
+multiplied by 730 hours in an average month. All factors shall be rounded to the nearest $0.000001 per kWh.
+The EIR Adjustment Factors may be adjusted annually with approval of the Minnesota Public Utilities
+Commission (Commission). The EIR Adjustment Factors shall apply to bills rendered on and after January 1st
+of the year.
+The EIR Adjustment Factor for each customer group may be adjusted annually. Each EIR Adjustment Factor
+shall apply to bills rendered on and after January 1 of the year. The EIR factor for each rate schedule is:
+Non-Demand Customers $0.000000 per kWh
+Demand Customers $0.000000 per kWh and
+$0.00 per kW
+Recoverable EIR Costs shall be the annual revenue requirements associated with emissions reduction projects
+(a) not recovered through base rates, (b) recorded in the EIR Tracker Account for the designated period, and (c)
+determined by the Commission to be eligible for recovery under this Rider pursuant to the terms of the
+Settlement Agreement approved by the Commission on March 8, 2004. A standard model will be used to
+calculate the total forecasted revenue requirements for eligible projects for the designated period. All costs
+appropriately charged to the EIR Tracker Account shall be eligible for recovery through this Rider, and all
+revenues recovered from the EIR Adjustment shall be credited to the EIR Tracker Account.
+Forecasted retail sales shall be the estimated retail electric sales for the designated recovery period.
+(Continued on Sheet No. 5-138)
+Date Filed: 11-02-15 By: Christopher B. Clark Effective Date: 10-01-17
+President, Northern States Power Company, a Minnesota corporation
+Docket No. E002/GR-15-826 Order Date: 06-12-17
+
+Northern States Power Company, a Minnesota corporation

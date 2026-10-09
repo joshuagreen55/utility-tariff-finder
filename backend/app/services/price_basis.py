@@ -24,6 +24,7 @@ PER_KWH_RIDER_RE = re.compile(
     r"storm|power\s+cost|purchased\s+power|\bpca\b|\bppca\b|\bfam\b|\bdcrr\b|\bscrr\b|\bbac\b|"
     r"resource\s+adjustment|renewable\s+(?:energy\s+)?(?:standard|development)|\bres\s+rider|"
     r"state\s+energy\s+policy|decoupling|mercury\s+cost|environmental\s+improvement|"
+    r"interim\s+rate\s+(?:surcharge|adjustment)|sales\s+true[\s-]*up|"
     r"applicable\s+riders|non[\s-]*bypassable|schedule\s*1\d{2}\b|sch\s*1\d{2}\b|"
     r"cost\s+recovery|adjustment\s+clause|rider\s+amounts?|rider\s+rates?",
     re.I,
@@ -59,6 +60,10 @@ def _ctype(c: Any) -> str:
     return str(getattr(v, "value", v) or "").lower()
 
 
+_NAME_STOP = {"rider", "rate", "rates", "the", "and", "for", "cost", "costs", "recovery", "adjustment", "adj",
+              "charge", "charges", "program", "schedule", "factor", "residential", "service", "clause", "tariff", "book"}
+
+
 def is_per_kwh_price_rider(hint: str) -> bool:
     h = str(hint or "")
     return bool(PER_KWH_RIDER_RE.search(h)) and not NOT_PRICE_RIDER_RE.search(h)
@@ -90,10 +95,22 @@ def unadded_price_riders(
     )
     folded = _keys(folded_text)
     declared = [str(r) for r in (riders_referenced or []) if is_per_kwh_price_rider(str(r))]
+    # R23: two declared riders of one family (Xcel MN "Renewable Development
+    # Fund" vs "Renewable Energy Standard"): the family alone no longer proves
+    # a rider was added — its own name must appear among the folded rows.
+    fam_count: dict[str, int] = {}
+    for r in declared:
+        for k in _keys(r):
+            fam_count[k] = fam_count.get(k, 0) + 1
+    folded_words = set(re.findall(r"[a-z]{3,}", folded_text.lower()))
     out = []
     for r in declared:
         k = _keys(r)
         if k and k <= folded:
+            if any(fam_count.get(x, 0) > 1 for x in k):
+                sig = {w for w in re.findall(r"[a-z]{3,}", r.lower()) if w not in _NAME_STOP}
+                if not sig or len(sig & folded_words) < min(2, len(sig)):
+                    out.append(r)
             continue
         if not k and energy_includes_riders:
             continue  # generic name, model says riders are in the price
