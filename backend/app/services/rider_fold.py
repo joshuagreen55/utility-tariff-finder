@@ -110,6 +110,26 @@ def _pct_rows(r: Any) -> list[dict]:
             and re.search(r"base", f"{_g(c, 'unit') or ''} {_g(c, 'period_label') or ''} {_g(c, 'tier_label') or ''}", re.I)]
 
 
+def plan_schedule_codes(plan: Any) -> set[str]:
+    """The plan's own schedule codes ("Schedule 1G" -> {"1G"}; code "A02, A04")."""
+    out: set[str] = set()
+    code = str(_g(plan, "code") or "")
+    for c in re.split(r"[,/]", re.sub(r"(?i)\b(?:rate\s+)?schedule\s+", "", code)):
+        if c.strip():
+            out.add(c.strip().upper())
+    for m in re.finditer(r"(?i)\b(?:rate\s+)?schedule\s+(?:no\.\s*)?([A-Z0-9][A-Z0-9-]{0,6})\b", str(_g(plan, "name") or "")):
+        out.add(m.group(1).upper())
+    return out
+
+
+def _schedule_filter(rows: list[dict], plan: Any) -> list[dict]:
+    tagged = [c for c in rows if _g(c, "applies_to_schedules")]
+    if not tagged:
+        return rows
+    codes = plan_schedule_codes(plan)
+    return [c for c in tagged if codes & {str(x).upper() for x in _g(c, "applies_to_schedules")}]
+
+
 def _pick(rows: list[dict], energy: dict, tou_rider: bool) -> float | None:
     """The one rider amount ($/kWh) for an ENERGY row, or None if not unique."""
     if not rows:
@@ -170,7 +190,7 @@ def plan_fold(plan: Any, riders: list[Any]) -> dict | None:
             continue
         r = chosen[0]
         pct = _pct_rows(r)
-        kwh = _per_kwh_rows(r)
+        kwh = _schedule_filter(_per_kwh_rows(r), plan)
         if pct and not kwh:
             if len({float(_g(c, "rate_value")) for c in pct}) != 1:
                 continue
