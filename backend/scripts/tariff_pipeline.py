@@ -12841,6 +12841,17 @@ def store_tariffs(
                     f"rate-book siblings (soft supersede)"
                 )
 
+        # R21: retire old copies that a row written this run clearly
+        # replaces — also when the coverage-gated reconcile below is skipped.
+        if fresh_by_key:
+            session.flush()
+            replaced = supersede_clear_replacements(
+                session, utility_id, {obj.id for obj in fresh_by_key.values()},
+                utility_name=u_name, actor_type=actor_type, actor_id=actor_id,
+            )
+            if replaced:
+                log.info(f"  Clear replacement: retired {replaced} old copies (soft supersede)")
+
         if stored >= 1:
             session.flush()
             _reconcile_missing_tariffs(
@@ -13892,6 +13903,225 @@ def supersede_older_vintages(
             )
     return absorbed
 
+
+
+# ---------------------------------------------------------------------------
+# R21: clear-replacement clean-up (runs even on partial extractions)
+# ---------------------------------------------------------------------------
+# The coverage-gated reconcile (RECONCILE_MIN_COVERAGE) skips utilities whose
+# run picked up < 75% of their live plans, and the vintage step only retires
+# a row onto a strictly newer *dated* edition. Old copies of a plan that this
+# run just re-read therefore stayed live beside the fresh row. This pass
+# retires an old row only when a row written THIS RUN is clearly the same
+# plan. Keepers are always fresh rows and fresh rows are never retired here,
+# so there is no chaining.
+
+# Words that never make two plans different once the rate code and rate-type
+# family already agree ("R-1B Time-of-Use Residential Service" vs
+# "Time of Use R-1B (TOU) Residential").
+_R21_GENERIC_WORDS: frozenset[str] = frozenset({
+    "residential", "residence", "service", "services", "rate", "rates",
+    "schedule", "plan", "pricing", "price", "prices", "tou", "time", "use",
+    "of", "day", "timeofuse", "timeofday", "tod", "tiered", "tier", "standard",
+    "customers", "customer", "option",
+})
+
+# Ontario RPP plan families written by the OEB feed (code OEB-RPP-*).
+_R21_RPP_NOISE: frozenset[str] = frozenset({
+    "rpp", "regulated", "price", "prices", "pricing", "plan", "residential",
+    "time", "of", "use", "tou", "ulo", "ultra", "low", "overnight", "tiered",
+    "tier", "rates", "rate", "electricity", "service", "the",
+})
+_R21_PARTIAL_SCOPES = ("delivery_only", "supply_only")
+
+
+def _r21_norm_code(code) -> str:
+    return re.sub(r"[^a-z0-9]", "", str(code or "").lower())
+
+
+def _r21_family(rate_type) -> str:
+    return _rate_type_family(rate_type)
+
+
+def rpp_plan_family(name: str, code: str | None = None) -> str | None:
+    """'tou' / 'ulo' / 'tiered' for an Ontario RPP plan name, else None.
+
+    Returns None when the name carries anything beyond RPP boilerplate
+    ("COVID-19 Recovery Rate for Time-of-Use Customers", "Heat Pump ..."),
+    so only plain RPP copies map to a family. Tier numbers are allowed
+    ("Tiered RPP - Tier 1" is a partial copy of the tiered plan).
+    """
+    raw = f"{name or ''} {code or ''}".lower()
+    toks = re.findall(r"[a-z]+|\d+", raw)
+    if any(t not in _R21_RPP_NOISE and not t.isdigit() for t in toks):
+        return None
+    ts = set(toks)
+    if "ulo" in ts or {"ultra", "overnight"} <= ts:
+        return "ulo"
+    if ts & {"tier", "tiered"}:
+        return "tiered"
+    if "tou" in ts or {"time", "use"} <= ts:
+        return "tou"
+    return None
+
+
+def _r21_is_oeb_feed_row(t) -> bool:
+    cf = getattr(t, "confidence_factors", None) or {}
+    return str(getattr(t, "code", "") or "").upper().startswith("OEB-RPP") or cf.get("origin") == "oeb_feed"
+
+
+def clearly_same_plan(old, new, *, utility_name: str = "") -> bool:
+    """True when ``new`` (written this run) is clearly the same plan as ``old``.
+
+    Any one of:
+    * the strict R20 edition test (``same_vintage_product``);
+    * the same non-empty rate code, compatible rate-type family ("complex"
+      is compatible with any family), and identical qualifier words once
+      codes, generic words and the utility's own name are removed;
+    * an Ontario OEB-feed row and a plain scraped copy of the same RPP
+      family (TOU / ULO / Tiered).
+    """
+    if _r20_same(old, new):
+        return True
+    on, nn = getattr(old, "name", "") or "", getattr(new, "name", "") or ""
+    if _r21_is_oeb_feed_row(new) and not _r21_is_oeb_feed_row(old):
+        fam_new = rpp_plan_family(nn.replace("—", " "), None)
+        fam_old = rpp_plan_family(on, getattr(old, "code", None))
+        return fam_new is not None and fam_new == fam_old
+    co, cn = _r21_norm_code(getattr(old, "code", None)), _r21_norm_code(getattr(new, "code", None))
+    if not co or co != cn:
+        return False
+    fo, fn = _r21_family(getattr(old, "rate_type", None)), _r21_family(getattr(new, "rate_type", None))
+    if fo != fn and "complex" not in (fo, fn):
+        return False
+    noise = set(_R21_GENERIC_WORDS)
+    noise |= _r20_code_pieces({str(old.code).lower(), str(new.code).lower()})
+    noise |= set(re.findall(r"[a-z]+", (utility_name or "").lower())) - _TARIFF_DISCRIMINATORS
+    # Full names (no blurb stripping): "Residential Service - General Use
+    # and Space Heat Two Meters" is a different plan from "Schedule R -
+    # Residential General Use" even though both are code R.
+    return _r21_full_qualifiers(on, old.code) - noise == _r21_full_qualifiers(nn, new.code) - noise
+
+
+def _r21_full_qualifiers(name: str, code: str | None) -> set[str]:
+    pieces = _r20_code_pieces(extract_ratebook_codes(name, code))
+    out = set()
+    for t in re.findall(r"[a-z]+|\d+(?:\.\d+)?", (name or "").lower()):
+        if t in pieces or t in _TARIFF_NAME_STOPWORDS or t in _R20_EDITION_WORDS:
+            continue
+        if re.fullmatch(r"(19|20)\d{2}", t):
+            continue
+        out.add(t)
+    return out
+
+
+def _r21_keeper_ok(new, *, today) -> bool:
+    eff = getattr(new, "effective_date", None)
+    if eff is not None and eff > today:
+        return False  # future-dated rows never retire a current one
+    cf = getattr(new, "confidence_factors", None) or {}
+    if _r21_is_oeb_feed_row(new) and not cf.get("ontario_ldc_delivery"):
+        return False  # commodity-only feed row is not the full price
+    return str(cf.get("energy_scope") or "") not in _R21_PARTIAL_SCOPES
+
+
+def _r21_date_ok(old, new) -> bool:
+    oe, ne = getattr(old, "effective_date", None), getattr(new, "effective_date", None)
+    if oe is None or ne is None or ne >= oe:
+        return True
+    # Official source over a third-party copy of the same plan wins even if
+    # the third-party row claims a later date (official sources first).
+    return (getattr(old, "source_type", None) == "third_party"
+            and getattr(new, "source_type", None) == "official")
+
+
+def plan_clear_replacements(live_rows: list, fresh_ids: set, *, utility_name: str = "", today=None) -> list[tuple]:
+    """Pure planner: [(old_row, keeper_row)] pairs to retire. See
+    ``supersede_clear_replacements``. Rows must share a customer class."""
+    from datetime import date as _date
+    from app.services.computable import evaluate_computable
+
+    today = today or _date.today()
+    fresh = [t for t in live_rows if t.id in fresh_ids and _r21_keeper_ok(t, today=today)]
+    plan = []
+    if not fresh:
+        return plan
+    for old in live_rows:
+        if old.id in fresh_ids or getattr(old, "openei_id", None) is not None:
+            continue
+        cands = [f for f in fresh
+                 if f.customer_class == old.customer_class
+                 and clearly_same_plan(old, f, utility_name=utility_name)
+                 and _r21_date_ok(old, f)]
+        if not cands:
+            continue
+        if any(not clearly_same_plan(a, b, utility_name=utility_name) and not clearly_same_plan(b, a, utility_name=utility_name)
+               for i, a in enumerate(cands) for b in cands[i + 1:]):
+            log.info(f"  Replace: '{old.name}' matches several different fresh plans — kept live")
+            continue
+        keeper = choose_vintage_keeper(cands)
+        try:
+            o_ok = evaluate_computable(old.rate_type, list(old.rate_components or []), name=old.name).computable
+            k_ok = evaluate_computable(keeper.rate_type, list(keeper.rate_components or []), name=keeper.name).computable
+        except Exception:
+            o_ok, k_ok = False, True
+        if o_ok and not k_ok:
+            log.info(f"  Replace: '{old.name}' is Mysa-complete and fresh '{keeper.name}' is not — kept live")
+            continue
+        plan.append((old, keeper))
+    return plan
+
+
+def supersede_clear_replacements(
+    session,
+    utility_id: int,
+    fresh_ids: set,
+    *,
+    utility_name: str = "",
+    reason: str = "replaced",
+    actor_type: str = "pipeline",
+    actor_id: str | None = None,
+) -> int:
+    """Soft-retire live rows that a row written this run clearly replaces.
+
+    Runs whether or not the coverage-gated reconcile runs. A protected
+    (approved / repair / manual) old row is never retired onto an
+    unprotected keeper: a ``hold`` event is logged instead. Never deletes.
+    """
+    from collections import defaultdict
+    from sqlalchemy import select
+    from app.models import Tariff
+    from app.services.tariff_history import is_protected, record_event, supersede_tariff
+
+    if not fresh_ids:
+        return 0
+    live = session.execute(
+        select(Tariff).where(
+            Tariff.utility_id == utility_id,
+            Tariff.superseded_by_tariff_id.is_(None),
+            Tariff.supersede_reason.is_(None),
+        )
+    ).scalars().all()
+    by_class: dict = defaultdict(list)
+    for t in live:
+        by_class[t.customer_class].append(t)
+    retired = 0
+    for rows in by_class.values():
+        for old, keeper in plan_clear_replacements(rows, set(fresh_ids), utility_name=utility_name):
+            if is_protected(old) and not is_protected(keeper):
+                record_event(
+                    session, decision="hold", reason="replaced_protected",
+                    utility_id=utility_id, before_tariff_id=old.id, after_tariff_id=keeper.id,
+                    actor_type=actor_type, actor_id=actor_id,
+                )
+                log.info(f"  Replace HOLD: protected '{old.name}' kept live beside '{keeper.name}'")
+                continue
+            supersede_tariff(session, old, successor=keeper, reason=reason,
+                             actor_type=actor_type, actor_id=actor_id)
+            retired += 1
+            log.info(f"  Replaced: '{old.name}' ({old.id}, eff={old.effective_date}) → "
+                     f"'{keeper.name}' ({keeper.id}, eff={keeper.effective_date})")
+    return retired
 
 
 def _check_fingerprints(utility_id: int, pages: list[RatePage]) -> bool:
