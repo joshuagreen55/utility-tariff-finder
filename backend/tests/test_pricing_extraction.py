@@ -84,11 +84,14 @@ class TestDualExtract(unittest.TestCase):
         def fn(doc, model, ctx):
             payload = _good_payload()
             if model.endswith("sonnet-5-5"):
+                # Keep quote/amount consistent so G3 passes; G2 catches the
+                # value disagreement.
                 payload[1]["cells"] = [{"amount": "2.500"}]
+                payload[1]["source_quote"] = "Fuel 2.500 ¢/kWh"
             return payload
 
         result = dual_extract_components(
-            DOC,
+            DOC + "\nFuel 2.500 ¢/kWh\n",
             plan_meta={
                 "plan_key": "rs", "name": "RS", "recipe_code": "bundled",
                 "source_url": "https://utility.example/rates.pdf",
