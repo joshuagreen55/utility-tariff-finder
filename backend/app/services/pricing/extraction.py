@@ -26,7 +26,7 @@ from app.services.pricing.extract_schema import (
     validate_extract_schema,
 )
 from app.services.pricing.preaccept import PreAcceptResult, run_preaccept
-from app.services.pricing.quote_verifier import verify_component_quote
+from app.services.pricing.quote_verifier import verify_component_cells
 from app.services.pricing.rider_census import DispositionInput, InventoryRider
 from app.services.pricing.types import ComponentInput, PlanInput
 
@@ -318,21 +318,7 @@ def dual_extract_components(
                 "tier_structure", "excluded_item", "event_day",
             }:
                 continue
-            cell = (c.cells or [{}])[0] if c.cells else {}
-            for cand in c.cells or []:
-                amt = str(cand.get("amount") or "")
-                if amt and c.source_quote and amt in str(c.source_quote):
-                    cell = cand
-                    break
-            vr = verify_component_quote(
-                document_text,
-                quote=c.source_quote,
-                unit=c.unit,
-                amount=cell.get("amount"),
-                cell=cell,
-                component_name=c.name or c.code,
-                require_row_col=True,
-            )
+            vr = verify_component_cells(document_text, c, require_row_col=True)
             if not vr.ok:
                 return ExtractionHold(
                     reason="quote_verify_failed",
