@@ -60,6 +60,9 @@ UNIT_PATTERNS: dict[str, re.Pattern[str]] = {
     ),
 }
 
+# A per-kWh unit with no currency marker; resolved from the quote or held.
+AMBIGUOUS_PER_KWH = "per_kwh"
+
 # Aliases → canonical family.
 _ALIAS: dict[str, str] = {}
 for _canon in UNIT_PATTERNS:
@@ -83,7 +86,7 @@ for _a, _c in [
     ("$/year", "$/year"), ("$/yr", "$/year"), ("per year", "$/year"), ("per_year", "$/year"),
     ("annual", "$/year"), ("annually", "$/year"),
     ("$/kw/month", "$/kw/month"), ("$/kw/mo", "$/kw/month"), ("per kw month", "$/kw/month"),
-    ("$/kw-mo", "$/kw/month"), ("per_kwh", "cents/kwh"),  # bare "per_kwh" → energy cents family
+    ("$/kw-mo", "$/kw/month"),
     ("kwh", "kwh"), ("kwh/day", "kwh"),
 ]:
     _ALIAS[_a.replace(" ", "")] = _c
@@ -109,14 +112,19 @@ def normalize_unit(unit: str | None) -> str:
         return "$/day"
     if "per year" in compact or "/yr" in nospace or "annual" in compact:
         return "$/year"
-    if "kw" in nospace and "mo" in nospace:
+    if "kw" in nospace and "mo" in nospace and "kwh" not in nospace:
         return "$/kw/month"
-    if "cent" in compact or compact.startswith("¢") or nospace.startswith("¢"):
+    if "cent" in compact or "¢" in nospace:
         return "cents/kwh"
-    if nospace in {"$/kwh", "usd/kwh"}:
-        return "$/kwh"
-    if "per_kwh" in nospace or "perkwh" in nospace:
-        return "cents/kwh"
+    if "kwh" in nospace:
+        if "mill" in nospace:
+            return "mills/kwh"
+        if any(t in nospace for t in ("$", "dollar", "usd", "cad")):
+            return "$/kwh"
+        if nospace.startswith(("c/", "c per")):
+            return "cents/kwh"
+        # "per kWh" with no currency could be ¢ or $ — never guess (100×).
+        return AMBIGUOUS_PER_KWH
     return nospace
 
 
@@ -138,6 +146,7 @@ def unit_pattern(unit_or_family: str | None) -> re.Pattern[str] | None:
 
 
 __all__ = [
+    "AMBIGUOUS_PER_KWH",
     "UNIT_PATTERNS",
     "normalize_unit",
     "to_monthly",

@@ -19,10 +19,29 @@ class TestNormalizeUnit(unittest.TestCase):
             ("$/year", "$/year"),
             ("annually", "$/year"),
             ("$/kW/month", "$/kw/month"),
-            ("per_kwh", "cents/kwh"),
+            ("per_kwh", "per_kwh"),
             ("¢/kWh", "cents/kwh"),
         ]:
             self.assertEqual(normalize_unit(raw), fam, raw)
+
+    def test_per_kwh_currency(self):
+        for raw, fam in [
+            ("$ per kWh", "$/kwh"),
+            ("dollars per kWh", "$/kwh"),
+            ("USD per kWh", "$/kwh"),
+            ("cents per kWh", "cents/kwh"),
+            ("¢ per kWh", "cents/kwh"),
+            ("mills per kWh", "mills/kwh"),
+            ("per kWh", "per_kwh"),
+            ("/kWh", "per_kwh"),
+        ]:
+            self.assertEqual(normalize_unit(raw), fam, raw)
+
+    def test_ambiguous_per_kwh_never_grounds(self):
+        doc = "Energy Charge 9.8¢ per kWh\n"
+        r = verify_quote(doc, "Energy Charge 9.8¢ per kWh", unit="per kWh",
+                         amount="9.8")
+        self.assertFalse(r.ok)
 
     def test_daily_yearly_to_monthly(self):
         self.assertEqual(
