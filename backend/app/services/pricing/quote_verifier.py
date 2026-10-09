@@ -16,6 +16,7 @@ accepted only when the *other* unit is grounded in context.
 from __future__ import annotations
 
 import re
+from contextvars import ContextVar
 from dataclasses import dataclass
 from decimal import Decimal, InvalidOperation
 from typing import Any
@@ -69,9 +70,56 @@ _DAY_ALIASES: dict[str, tuple[str, ...]] = {
     "all": (),
 }
 
+# One printed figure: 9.8, -1.297, 1,234.56 (grouped), 9,8 / 0,0982 (decimal
+# comma), or an integer. "6,605" is grouped in an English document and a
+# decimal in a French one; ``_figure_value`` decides by document locale.
 _NUMBER_RE = re.compile(
-    r"(?<![\d.])(?:-(?:\d+\.\d+|\d+)|\d+\.\d+|\d+)(?![\d.])"
+    r"(?<![\d.,])-?(?:\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d+[.,]\d+|\d+)(?![\d.]|,\d)"
 )
+_GROUPED_RE = re.compile(r"-?\d{1,3}(?:,\d{3})+(?:\.\d+)?")
+_COMMA_ONLY_DECIMAL_RE = re.compile(r"(?<![\d.,])\d+,(?:\d{1,2}|\d{4,})(?![\d.,])")
+_COMMA_BEFORE_UNIT_RE = re.compile(r"(?<![\d.,])\d+,\d+\s*(?:¢|\$|cents?\b)", re.I)
+_DOT_DECIMAL_RE = re.compile(r"(?<![\d.,])\d+\.\d+(?![\d.,])")
+
+_COMMA_DECIMAL: ContextVar[bool] = ContextVar("quote_comma_decimal", default=False)
+
+
+def is_decimal_comma_document(text: str) -> bool:
+    """True when the document writes decimals with a comma (``9,8 ¢``, ``0,0982 $``).
+
+    Evidence is figures that can only be comma decimals (one, two or 4+
+    digits after the comma) or a comma figure directly before ¢ / $ (French
+    order), counted against dot-decimal figures.
+    """
+    if not text:
+        return False
+    comma = len(_COMMA_ONLY_DECIMAL_RE.findall(text)) + len(_COMMA_BEFORE_UNIT_RE.findall(text))
+    return comma > len(_DOT_DECIMAL_RE.findall(text))
+
+
+def _figure_value(tok: str) -> Decimal | None:
+    """Numeric value of a ``_NUMBER_RE`` token under the current document locale."""
+    try:
+        if "," not in tok:
+            return Decimal(tok)
+        if _GROUPED_RE.fullmatch(tok):
+            if _COMMA_DECIMAL.get() and tok.count(",") == 1 and "." not in tok:
+                return Decimal(tok.replace(",", "."))
+            return Decimal(tok.replace(",", ""))
+        return Decimal(tok.replace(",", "."))
+    except InvalidOperation:
+        return None
+
+
+def _is_decimal_figure(tok: str) -> bool:
+    """A rate-like figure with a fractional part as printed (not a bare integer)."""
+    if "." in tok:
+        return True
+    if "," not in tok:
+        return False
+    return not _GROUPED_RE.fullmatch(tok) or (
+        _COMMA_DECIMAL.get() and tok.count(",") == 1
+    )
 
 # Normalize common PDF / HTML artifacts before verbatim search.
 _DASHES = re.compile(r"[\u2010-\u2015\u2212\ufe58\ufe63\uff0d]")
@@ -222,11 +270,8 @@ def _amount_in_quote(
     if not wants:
         return False
     for m in nums:
-        try:
-            got = Decimal(m.group(0))
-        except InvalidOperation:
-            continue
-        if any(got == w for w in wants):
+        got = _figure_value(m.group(0))
+        if got is not None and any(got == w for w in wants):
             return True
     return False
 
@@ -358,8 +403,6 @@ _GOVERNING: dict[str, dict[str, frozenset[str]]] = {
     },
 }
 _GOVERNING_RE = {dim: _alias_regex(list(t)) for dim, t in _GOVERNING.items()}
-_DECIMAL_RE = re.compile(r"\d\.\d")
-
 
 def _wanted_values(dim: str, value: str | None) -> frozenset[str] | None:
     """Canonical values a cell label stands for (``None`` = no constraint)."""
@@ -483,13 +526,13 @@ def _governing_above(
     the column when counts line up, else the nearest column.
     """
     row = spans[line_idx][2]
-    row_nums = [m for m in _NUMBER_RE.finditer(row) if "." in m.group(0)]
+    row_nums = [m for m in _NUMBER_RE.finditer(row) if _is_decimal_figure(m.group(0))]
     for back in range(1, _LABEL_LINE_LOOKBACK + 1):
         j = line_idx - back
         if j < 0:
             break
         line = spans[j][2]
-        if _DECIMAL_RE.search(line):
+        if any(_is_decimal_figure(t) for t in _NUMBER_RE.findall(line)):
             continue
         toks = _tokens(dim, line)
         if not toks:
@@ -693,7 +736,7 @@ def _find_quote_all(document_text: str, quote: str) -> tuple[str, list[tuple[int
     # Amount-anchored fuzzy: locate a *decimal* rate figure from the quote
     # (skip bare integers like clock hours), require ≥60% of significant quote
     # tokens within ±180 chars (PDF header reflow).
-    nums = [n for n in _NUMBER_RE.findall(collapsed_q) if "." in n]
+    nums = [n for n in _NUMBER_RE.findall(collapsed_q) if _is_decimal_figure(n)]
     tokens = [
         t for t in re.findall(r"[A-Za-z0-9.]+", collapsed_q.lower())
         if len(t) >= 3 and t not in {"the", "and", "per", "for", "with"}
@@ -735,11 +778,8 @@ def _amount_anchors(
     def _matches(text: str, wanted: list[Decimal]) -> list[re.Match[str]]:
         out = []
         for m in _NUMBER_RE.finditer(text):
-            try:
-                if Decimal(m.group(0)) in wanted:
-                    out.append(m)
-            except InvalidOperation:
-                continue
+            if _figure_value(m.group(0)) in wanted:
+                out.append(m)
         return out
 
     # In-quote figures first; nearby rows follow, so a figure the quote
@@ -782,6 +822,33 @@ def verify_quote(
     if document_text is None:
         return QuoteVerifyResult(False, "missing_document_text")
 
+    token = _COMMA_DECIMAL.set(is_decimal_comma_document(document_text))
+    try:
+        return _verify_quote(
+            document_text, quote, unit=unit, require_unit=require_unit,
+            amount=amount, season=season, period=period, day_type=day_type,
+            tier=tier, component_name=component_name,
+            require_row_col=require_row_col, reflow_lines=reflow_lines,
+        )
+    finally:
+        _COMMA_DECIMAL.reset(token)
+
+
+def _verify_quote(
+    document_text: str,
+    quote: str,
+    *,
+    unit: str | None,
+    require_unit: bool,
+    amount: str | Decimal | None,
+    season: str | None,
+    period: str | None,
+    day_type: str | None,
+    tier: str | None,
+    component_name: str | None,
+    require_row_col: bool,
+    reflow_lines: int,
+) -> QuoteVerifyResult:
     doc, found = _find_quote_all(document_text, quote)
     if not found:
         return QuoteVerifyResult(False, "quote_not_found")
@@ -875,7 +942,7 @@ def _verify_at(
                 # The printed figure must be the converted one (9.8 for
                 # 0.098), not the stored dollars amount in a cents column.
                 printed = [
-                    Decimal(spans[li][2][c0:c1]) for li, c0, c1 in anchors
+                    _figure_value(spans[li][2][c0:c1]) for li, c0, c1 in anchors
                     if c1 > c0
                 ]
                 if converted and any(p in converted for p in printed):

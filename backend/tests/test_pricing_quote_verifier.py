@@ -3,7 +3,79 @@ from __future__ import annotations
 
 import unittest
 
-from app.services.pricing.quote_verifier import verify_component_quote, verify_quote
+from app.services.pricing.quote_verifier import (
+    is_decimal_comma_document,
+    verify_component_quote,
+    verify_quote,
+)
+
+HQ_FR_DOC = (
+    "Tarif D\n"
+    "Redevance d'abonnement : 46,154 ¢ par jour\n"
+    "Prix de l'énergie :\n"
+    "6,905 ¢ le kWh pour les 40 premiers kilowattheures par jour\n"
+    "10,652 ¢ le kWh pour le reste de l'énergie consommée\n"
+)
+
+EN_DOC = (
+    "Residential Service\n"
+    "First 1,000 kWh per month 9.120 ¢/kWh\n"
+    "Over 1,000 kWh per month 11.430 ¢/kWh\n"
+    "Customer Charge $6,605 annual minimum\n"
+)
+
+
+class TestDecimalComma(unittest.TestCase):
+    def test_document_locale_detection(self):
+        self.assertTrue(is_decimal_comma_document(HQ_FR_DOC))
+        self.assertFalse(is_decimal_comma_document(EN_DOC))
+        self.assertTrue(is_decimal_comma_document("Énergie 9,8 ¢/kWh"))
+        self.assertFalse(is_decimal_comma_document(""))
+
+    def test_french_three_decimal_figure_grounds(self):
+        r = verify_quote(
+            HQ_FR_DOC, "6,905 ¢ le kWh pour les 40 premiers kilowattheures",
+            unit="¢/kWh", amount="6.905",
+        )
+        self.assertTrue(r.ok, r.reason)
+        r = verify_quote(
+            HQ_FR_DOC, "10,652 ¢ le kWh pour le reste", unit="¢/kWh", amount="10.652",
+        )
+        self.assertTrue(r.ok, r.reason)
+
+    def test_french_wrong_amount_still_fails(self):
+        r = verify_quote(
+            HQ_FR_DOC, "6,905 ¢ le kWh pour les 40 premiers kilowattheures",
+            unit="¢/kWh", amount="6905",
+        )
+        self.assertFalse(r.ok)
+
+    def test_short_comma_decimal_in_any_document(self):
+        doc = "Residential\nEnergy 9,8 ¢/kWh\nDelivery 3.100 ¢/kWh\nFuel 0.400 ¢/kWh\n"
+        self.assertFalse(is_decimal_comma_document(doc))
+        r = verify_quote(doc, "Energy 9,8 ¢/kWh", unit="¢/kWh", amount="9.8")
+        self.assertTrue(r.ok, r.reason)
+
+    def test_french_dollar_figure_with_sibling_cents(self):
+        doc = "Prix de l'énergie : 0,06905 $ le kWh\nRedevance 0,46154 $ par jour\n"
+        r = verify_quote(doc, "0,06905 $ le kWh", unit="$/kWh", amount="0.06905")
+        self.assertTrue(r.ok, r.reason)
+
+    def test_english_grouped_figures_are_not_decimals(self):
+        r = verify_quote(
+            EN_DOC, "Customer Charge $6,605 annual minimum", unit="$/month",
+            require_unit=False, amount="6.605",
+        )
+        self.assertFalse(r.ok)
+        self.assertEqual(r.reason, "amount_not_in_quote")
+        r = verify_quote(
+            EN_DOC, "Over 1,000 kWh per month 11.430 ¢/kWh", unit="¢/kWh", amount="1.000",
+        )
+        self.assertFalse(r.ok)
+        r = verify_quote(
+            EN_DOC, "Over 1,000 kWh per month 11.430 ¢/kWh", unit="¢/kWh", amount="11.430",
+        )
+        self.assertTrue(r.ok, r.reason)
 
 
 DOC = (
