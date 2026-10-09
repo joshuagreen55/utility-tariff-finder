@@ -7744,13 +7744,92 @@ Content:
 {content}"""
 
 
+_R22_BOOK_HEADINGS = {
+    "fuel": re.compile(r"FUEL\s+(?:ADJUSTMENT\s+CLAUSE|COST\s+RECOVERY|COST\s+ADJUSTMENT)|FIXED\s+FUEL\s+FACTOR"),
+    "dsm": re.compile(r"DEMAND\s+SIDE\s+(?:INVESTMENT\s+MECHANISM|MANAGEMENT)|ENERGY\s+EFFICIENCY\s+COST\s+RECOVERY"),
+    "eccr": re.compile(r"ENVIRONMENTAL\s+(?:COMPLIANCE\s+)?COST\s+RECOVERY"),
+    "transmission": re.compile(r"TRANSMISSION\s+COST\s+(?:RECOVERY|ADJUSTMENT)"),
+    "power_cost": re.compile(r"ENERGY\s+COST\s+(?:RECOVERY|ADJUSTMENT)|(?:PURCHASED\s+)?POWER\s+COST\s+ADJUSTMENT"),
+    "storm": re.compile(r"STORM\s+(?:RECOVERY|COST)"),
+}
+
+
+def _r22_rider_tariff(name: str, parsed: dict, url: str) -> ExtractedTariff:
+    from app.services.rider_docs import rider_components
+
+    return ExtractedTariff(
+        name=name[:160], customer_class="residential", rate_type="flat",
+        components=rider_components(parsed, name[:80]), source_url=url,
+        extraction_tier="rider_doc_parsed",
+    )
+
+
+def parse_rider_document_deterministic(page: RatePage, hint: str = "") -> list[ExtractedTariff]:
+    """R22: residential per-kWh / percent-of-base amount read straight from a
+    rider document. [] when not unambiguous (caller may use the LLM)."""
+    from app.services.price_basis import _keys
+    from app.services.rider_docs import parse_rider_text
+
+    text = getattr(page, "content", "") or ""
+    parsed = parse_rider_text(text)
+    if not parsed:
+        return []
+    head = " ".join(ln.strip() for ln in text.splitlines()[:12] if ln.strip())[:200]
+    name = hint or getattr(page, "title", "") or head
+    if not _keys(name) and _keys(head):
+        name = f"{name} — {head[:80]}"
+    if not _keys(name):
+        return []  # cannot tell which rider family this amount belongs to
+    log.info(f"    Rider doc read deterministically ({name[:60]}): {parsed}")
+    return [_r22_rider_tariff(name, parsed, getattr(page, "url", "") or "")]
+
+
+def extract_generic_riders_from_book(pages: list[RatePage] | None, hints: list[str],
+                                     skip_families: set[str] | None = None) -> list[ExtractedTariff]:
+    """R22: rider sheets inside an already-fetched tariff book (Evergy FAC
+    sheet 50.42, DSIM sheet 49.8 ...), read deterministically per family."""
+    from app.services.price_basis import _keys
+    from app.services.rider_docs import find_rider_sections, parse_rider_text
+
+    fams: dict[str, str] = {}
+    for h in hints or []:
+        for k in _keys(h):
+            if k in _R22_BOOK_HEADINGS and k not in (skip_families or set()):
+                fams.setdefault(k, h)
+    out: list[ExtractedTariff] = []
+    for fam, hint in fams.items():
+        results, url = [], ""
+        for page in pages or []:
+            content = getattr(page, "content", None) or ""
+            if len(content) < 2000:
+                continue
+            for sec in find_rider_sections(content, _R22_BOOK_HEADINGS[fam]):
+                r = parse_rider_text(sec)
+                if r:
+                    results.append(r)
+                    url = url or (getattr(page, "url", "") or "")
+        uniq = {repr(r) for r in results}
+        if len(uniq) == 1:
+            out.append(_r22_rider_tariff(f"{hint} (tariff book)", results[0], url))
+            log.info(f"    {hint}: read from tariff book deterministically: {results[0]}")
+        elif len(uniq) > 1:
+            log.info(f"    {hint}: tariff book has conflicting amounts — left for review")
+    return out
+
+
 def _extract_rider_document(
     page: RatePage,
     utility_name: str,
     state: str,
     hint: str = "",
 ) -> list[ExtractedTariff]:
-    """Rider-mode extract: per-kWh adjustments + classes, not plan listing."""
+    """Rider-mode extract: per-kWh adjustments + classes, not plan listing.
+
+    R22: a deterministic read of the rider sheet comes first (no LLM) when
+    it states the residential / secondary amount unambiguously."""
+    det = parse_rider_document_deterministic(page, hint)
+    if det:
+        return det
     content = _select_rate_content(page.content or "", max_chars=20000)
     if not content or len(content.strip()) < 80:
         return []
@@ -8753,9 +8832,9 @@ def extract_riders_from_main_tariff_book(
     want_dcrr = any(re.search(r"\bdsm\b|\bdcrr\b|demand[\s-]*side", h, re.I) for h in hints)
     # Always try DCRR when FAM is wanted — both live in the same book and
     # residential extracts commonly list both riders.
-    if not want_fam and not want_dcrr:
-        return []
     out: list[ExtractedTariff] = []
+    if not want_fam and not want_dcrr:
+        return extract_generic_riders_from_book(pages, hints)
     fam_done = False
     dcrr_done = False
     for page in pages:
@@ -8792,6 +8871,9 @@ def extract_riders_from_main_tariff_book(
                 )
         if fam_done and dcrr_done:
             break
+    # R22: any other utility's rider sheets inside the book (deterministic).
+    skip = ({"fuel"} if fam_done else set()) | ({"dsm"} if dcrr_done else set())
+    out.extend(extract_generic_riders_from_book(pages, hints, skip_families=skip))
     return out
 
 
@@ -8984,6 +9066,30 @@ def fetch_and_extract_referenced_riders(
             if key not in existing_urls and key not in seen_url:
                 seen_url.add(key)
                 candidate_urls.append((idx_url, "Schedule 1xx tariff index"))
+
+    # R22: rider schedules linked from the utility's own pages already
+    # fetched this run (rate/tariff index pages) — matched by rider code
+    # ("No. 98", "FCR", "EECRF") or title words; newest first. Before search.
+    try:
+        from app.services.rider_docs import rider_link_candidates
+
+        own_links: list[str] = []
+        for p in existing_pages or []:
+            for u in getattr(p, "links", None) or []:
+                if u and not _is_third_party_domain(u) and (
+                    not allowed_domains or _url_in_allowed_domains(u, allowed_domains)
+                ):
+                    own_links.append(u)
+        for hint in hints:
+            for u in rider_link_candidates(hint, own_links):
+                key = u.split("?")[0].rstrip("/").lower()
+                if key in existing_urls or key in seen_url or _is_stale_rider_document(u):
+                    continue
+                seen_url.add(key)
+                candidate_urls.append((u, hint))
+                log.info(f"    Rider-doc from site links ({hint[:40]}): {u[:90]}")
+    except Exception as e:  # discovery is best-effort
+        log.info(f"    Rider link discovery failed: {e}")
 
     for hint in hints:
         queries = []
