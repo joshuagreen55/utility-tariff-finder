@@ -18,6 +18,7 @@ from typing import Any, Callable
 
 from app.services.pricing.extract_schema import (
     applying_raw_components,
+    disposition_of,
     normalize_amount_string,
     validate_extract_schema,
 )
@@ -103,26 +104,31 @@ def _dispositions_from_raw(
         kind = str(raw.get("kind") or "")
         if kind not in _CENSUS_KINDS:
             continue
-        disp = str(raw.get("disposition") or "").strip().lower()
+        disp = disposition_of(raw)
         if not disp:
             continue
+        page = str(
+            raw.get("source_page") or raw.get("disposition_page") or ""
+        ).strip()
+        if not page and disp in {"not_found", "not_applicable"}:
+            page = disp  # auditable marker when no value page exists
+        quote = str(
+            raw.get("source_quote")
+            or raw.get("disposition_quote")
+            or raw.get("name")
+            or raw["code"]
+        )
         out.append(DispositionInput(
             rider_code=str(raw["code"]),
             disposition=disp,
-            disposition_page=str(
-                raw.get("source_page") or raw.get("disposition_page") or ""
-            ) or None,
-            disposition_quote=str(
-                raw.get("source_quote")
-                or raw.get("disposition_quote")
-                or raw.get("name")
-                or raw["code"]
-            ),
+            disposition_page=page or None,
+            disposition_quote=quote,
         ))
     return out
 
 
 def _require_citations(comps: list[ComponentInput]) -> str | None:
+    """Citations required only for priced (applies) components."""
     for c in comps:
         if c.kind in {
             "season_calendar", "tou_schedule", "holiday_list",
@@ -204,21 +210,23 @@ def dual_extract_components(
     except (KeyError, TypeError, ValueError, InvalidOperation) as e:
         return ExtractionHold(reason="malformed_extract", detail=str(e))
 
-    cite_a = _require_citations(comps_a)
+    # Citations + quote grounding only for PRICED (applies) components.
+    # not_found / not_applicable / optional may omit values without holding
+    # the whole extract (R28-1).
+    cite_a = _require_citations(applying_a)
     if cite_a:
         return ExtractionHold(
             reason="citation_incomplete", detail=f"model_a:{cite_a}",
             extract_a=comps_a, extract_b=comps_b,
         )
-    cite_b = _require_citations(comps_b)
+    cite_b = _require_citations(applying_b)
     if cite_b:
         return ExtractionHold(
             reason="citation_incomplete", detail=f"model_b:{cite_b}",
             extract_a=comps_a, extract_b=comps_b,
         )
 
-    # Early grounding on each extract independently (hold on either failure).
-    for label, comps in (("a", comps_a), ("b", comps_b)):
+    for label, comps in (("a", applying_a), ("b", applying_b)):
         for c in comps:
             if c.kind in {
                 "season_calendar", "tou_schedule", "holiday_list",
@@ -226,7 +234,6 @@ def dual_extract_components(
             }:
                 continue
             cell = (c.cells or [{}])[0] if c.cells else {}
-            # Prefer the cell whose amount is literally in the quote.
             for cand in c.cells or []:
                 amt = str(cand.get("amount") or "")
                 if amt and c.source_quote and amt in str(c.source_quote):

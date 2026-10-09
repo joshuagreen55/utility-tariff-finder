@@ -65,6 +65,15 @@ class TestRiderCensus(unittest.TestCase):
         self.assertFalse(result.complete)
         self.assertIn("dsm", result.invalid)
 
+    def test_not_found_closes_census_without_value_quote(self):
+        disps = [
+            DispositionInput("fam", "applies", "p.12", "FAM applies"),
+            DispositionInput("dsm", "applies", "p.14", "DSM applies"),
+            DispositionInput("storm", "not_found", "not_found", None),
+        ]
+        result = evaluate_rider_census(self.inventory, disps)
+        self.assertTrue(result.complete, result.reasons)
+
 
 if __name__ == "__main__":
     unittest.main()

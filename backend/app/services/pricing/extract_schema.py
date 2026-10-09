@@ -1,15 +1,13 @@
-"""Strict schema checks on dual-blind extraction payloads (PR R27-4).
-
-R27 format errors (~8 plans): non-numeric amounts, duplicate component
-codes, and missing applies/not dispositions. These checks run *before*
-quote grounding and G0–G6 so bad shapes never reach the calculator.
+"""Strict schema checks on dual-blind extraction payloads (PR R27-4 / R28-1).
 
 Rules:
-1. Every cell ``amount`` is a decimal *string* (no float, no prose).
+1. Every *priced* (disposition=applies) cell ``amount`` is a decimal *string*.
 2. Component ``code`` values are unique within one extract.
 3. Component ``name`` values are unique within one extract (case-insensitive).
-4. Every priced component carries an explicit disposition
-   (applies / not_applicable / optional / location_fee_or_tax / event_day).
+4. Every non-meta component carries an explicit disposition.
+5. Components with no value use ``not_found`` / ``not_applicable`` (empty
+   cells allowed) — that must NOT reject the whole extract (R28). A plan
+   is accepted when every *applies* component it needs is found and verified.
 """
 from __future__ import annotations
 
@@ -17,12 +15,21 @@ import re
 from decimal import Decimal, InvalidOperation
 from typing import Any
 
-from app.services.pricing.rider_census import VALID_DISPOSITIONS
+from app.services.pricing.rider_census import (
+    UNPRICED_DISPOSITIONS,
+    VALID_DISPOSITIONS,
+)
 
 # Kinds that do not need a numeric amount / disposition for compile.
 _META_KINDS = frozenset({
     "season_calendar", "tou_schedule", "holiday_list",
     "tier_structure", "excluded_item", "event_day",
+})
+
+# Dispositions that may omit cells (no amount found / does not apply).
+_EMPTY_CELLS_OK = frozenset({"not_found", "not_applicable"}) | frozenset({
+    # optional / event_day / location_fee may also lack everyday amounts
+    "optional", "event_day", "location_fee_or_tax",
 })
 
 _AMOUNT_OK = re.compile(r"^-?\d+(\.\d+)?$")
@@ -37,15 +44,13 @@ def _is_numeric_amount(value: Any) -> tuple[bool, str]:
     if value is None:
         return False, "amount_missing"
     if isinstance(value, int):
-        # Integers are fine as rates sometimes (e.g. 13); coerce via str later.
         return True, "ok"
     if isinstance(value, Decimal):
         return True, "ok"
     s = str(value).strip()
     if not s:
         return False, "amount_blank"
-    # Strip thin wrappers models sometimes add.
-    s = s.replace(",", "")  # thousands separators — still must be pure digits after
+    s = s.replace(",", "")
     if not _AMOUNT_OK.match(s):
         return False, f"amount_not_numeric:{s[:40]}"
     try:
@@ -62,8 +67,19 @@ def normalize_amount_string(value: Any) -> str:
     if isinstance(value, int) and not isinstance(value, bool):
         return str(value)
     s = str(value).strip().replace(",", "")
-    # Normalize -0 / trailing zeros lightly via Decimal.
     return format(Decimal(s), "f")
+
+
+def disposition_of(raw: dict[str, Any]) -> str:
+    return str(raw.get("disposition") or "").strip().lower()
+
+
+def is_priced_component(raw: dict[str, Any]) -> bool:
+    """True when the component must carry verified cells for acceptance."""
+    kind = str(raw.get("kind") or "").strip()
+    if kind in _META_KINDS:
+        return False
+    return disposition_of(raw) == "applies"
 
 
 def validate_extract_schema(
@@ -106,25 +122,42 @@ def validate_extract_schema(
         if not isinstance(cells, list):
             return f"cells_not_list:{code}"
 
-        if not is_meta:
-            priced += 1
-            if not cells:
-                return f"missing_cells:{code}"
-            for j, cell in enumerate(cells):
-                if not isinstance(cell, dict):
-                    return f"cell_not_object:{code}:{j}"
-                ok, reason = _is_numeric_amount(cell.get("amount"))
-                if not ok:
-                    return f"{reason}:{code}:cell{j}"
+        disp = disposition_of(raw) if not is_meta else ""
 
-        if require_disposition and not is_meta:
-            disp = str(raw.get("disposition") or "").strip().lower()
-            if not disp:
-                return f"missing_disposition:{code}"
-            if disp not in VALID_DISPOSITIONS:
-                return f"invalid_disposition:{code}:{disp}"
-            if disp == "applies":
-                applies += 1
+        if not is_meta:
+            if require_disposition:
+                if not disp:
+                    return f"missing_disposition:{code}"
+                if disp not in VALID_DISPOSITIONS:
+                    return f"invalid_disposition:{code}:{disp}"
+                if disp == "applies":
+                    applies += 1
+                    priced += 1
+
+            # Empty cells: OK for not_found / not_applicable / optional / …
+            # Applies must still carry at least one numeric cell.
+            if disp == "applies" or (not require_disposition and not cells):
+                if not cells:
+                    return f"missing_cells:{code}"
+                for j, cell in enumerate(cells):
+                    if not isinstance(cell, dict):
+                        return f"cell_not_object:{code}:{j}"
+                    ok, reason = _is_numeric_amount(cell.get("amount"))
+                    if not ok:
+                        return f"{reason}:{code}:cell{j}"
+            elif cells:
+                # Unpriced disposition but cells present — amounts must still
+                # be numeric if given (audit trail).
+                for j, cell in enumerate(cells):
+                    if not isinstance(cell, dict):
+                        return f"cell_not_object:{code}:{j}"
+                    if "amount" not in cell:
+                        continue
+                    ok, reason = _is_numeric_amount(cell.get("amount"))
+                    if not ok:
+                        return f"{reason}:{code}:cell{j}"
+            elif disp and disp not in _EMPTY_CELLS_OK and disp not in UNPRICED_DISPOSITIONS:
+                return f"missing_cells:{code}"
 
     # Uniqueness
     seen_c: set[str] = set()
@@ -141,6 +174,14 @@ def validate_extract_schema(
 
     if require_disposition and priced > 0 and applies == 0:
         return "no_applies_disposition"
+    # At least one applies is required when any non-meta row exists.
+    if require_disposition and applies == 0:
+        non_meta = sum(
+            1 for r in comps
+            if str(r.get("kind") or "") not in _META_KINDS
+        )
+        if non_meta > 0:
+            return "no_applies_disposition"
 
     return None
 
@@ -148,26 +189,30 @@ def validate_extract_schema(
 def applying_raw_components(
     raw_components: list[dict[str, Any]],
 ) -> list[dict[str, Any]]:
-    """Filter to disposition=applies (default applies when absent for meta)."""
+    """Filter to disposition=applies (meta kinds never compile)."""
     out = []
     for raw in raw_components:
         kind = str(raw.get("kind") or "")
         if kind in _META_KINDS:
             continue
-        disp = str(raw.get("disposition") or "applies").strip().lower()
-        if disp == "applies":
+        disp = disposition_of(raw)
+        # Blank disposition treated as applies for legacy callers that
+        # disable require_disposition; live path always sets it explicitly.
+        if disp in {"", "applies"}:
             out.append(raw)
     return out
 
 
-# JSON-schema-ish tool shape for the live harness / extractors (documentation
-# + optional runtime use). Amounts are strings; disposition is required.
+# JSON-schema-ish tool shape for the live harness / extractors.
 EXTRACTION_TOOL_SCHEMA: dict[str, Any] = {
     "name": "record_components",
     "description": (
         "Record tariff pricing components copied from the document. "
         "Amounts must be decimal strings. Codes and names must be unique. "
-        "Every priced component needs an explicit disposition."
+        "Every component needs an explicit disposition. If a listed "
+        "component has no value in the documents, set disposition to "
+        "not_found (or not_applicable) with empty cells — do not omit it "
+        "and do not invent an amount."
     ),
     "input_schema": {
         "type": "object",
@@ -214,8 +259,8 @@ EXTRACTION_TOOL_SCHEMA: dict[str, Any] = {
                         },
                     },
                     "required": [
-                        "code", "kind", "unit", "cells",
-                        "source_quote", "disposition",
+                        "code", "kind", "unit",
+                        "disposition",
                     ],
                 },
             }
@@ -228,6 +273,8 @@ EXTRACTION_TOOL_SCHEMA: dict[str, Any] = {
 __all__ = [
     "EXTRACTION_TOOL_SCHEMA",
     "applying_raw_components",
+    "disposition_of",
+    "is_priced_component",
     "normalize_amount_string",
     "validate_extract_schema",
 ]

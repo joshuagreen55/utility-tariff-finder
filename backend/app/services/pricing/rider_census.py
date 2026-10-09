@@ -12,6 +12,16 @@ from typing import Iterable
 VALID_DISPOSITIONS = frozenset({
     "applies",
     "not_applicable",
+    "not_found",  # searched the retained docs; value absent (R28)
+    "optional",
+    "location_fee_or_tax",
+    "event_day",
+})
+
+# Dispositions that close a census row without feeding the price compiler.
+UNPRICED_DISPOSITIONS = frozenset({
+    "not_applicable",
+    "not_found",
     "optional",
     "location_fee_or_tax",
     "event_day",
@@ -69,15 +79,24 @@ def evaluate_rider_census(
             invalid.append(entry.code)
             reasons.append(f"invalid_disposition:{entry.code}:{d.disposition}")
             continue
+        # not_found / not_applicable may lack a value quote; still need a
+        # page tag (or the synthetic "not_found" marker) so the census is
+        # auditable. Other dispositions keep the full citation rule.
         if require_citation:
-            if not (d.disposition_quote and str(d.disposition_quote).strip()):
-                invalid.append(entry.code)
-                reasons.append(f"missing_disposition_quote:{entry.code}")
-                continue
-            if not (d.disposition_page and str(d.disposition_page).strip()):
-                invalid.append(entry.code)
-                reasons.append(f"missing_disposition_page:{entry.code}")
-                continue
+            if d.disposition in {"not_found", "not_applicable"}:
+                if not (d.disposition_page and str(d.disposition_page).strip()):
+                    invalid.append(entry.code)
+                    reasons.append(f"missing_disposition_page:{entry.code}")
+                    continue
+            else:
+                if not (d.disposition_quote and str(d.disposition_quote).strip()):
+                    invalid.append(entry.code)
+                    reasons.append(f"missing_disposition_quote:{entry.code}")
+                    continue
+                if not (d.disposition_page and str(d.disposition_page).strip()):
+                    invalid.append(entry.code)
+                    reasons.append(f"missing_disposition_page:{entry.code}")
+                    continue
 
     # Dispositions for unknown inventory codes are non-blocking warnings;
     # they do not open the census, but they do not close a gap either.

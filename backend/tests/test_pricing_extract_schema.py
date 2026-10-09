@@ -86,10 +86,37 @@ class TestValidateExtractSchema(unittest.TestCase):
         applying = applying_raw_components(raw)
         self.assertEqual([c["code"] for c in applying], ["base"])
 
+    def test_not_found_empty_cells_ok(self):
+        """R28: missing value → not_found, do not reject the whole extract."""
+        err = validate_extract_schema([
+            _ok(),
+            _ok(code="storm", name="Storm", disposition="not_found",
+                cells=[], source_quote="", source_page=""),
+        ])
+        self.assertIsNone(err)
+        applying = applying_raw_components([
+            _ok(),
+            _ok(code="storm", name="Storm", disposition="not_found", cells=[]),
+        ])
+        self.assertEqual([c["code"] for c in applying], ["base"])
+
+    def test_not_applicable_empty_cells_ok(self):
+        err = validate_extract_schema([
+            _ok(),
+            _ok(code="cpp", name="CPP", disposition="not_applicable", cells=[]),
+        ])
+        self.assertIsNone(err)
+
+    def test_applies_still_requires_cells(self):
+        err = validate_extract_schema([_ok(cells=[])])
+        self.assertEqual(err, "missing_cells:base")
+
     def test_tool_schema_requires_disposition_and_string_amount(self):
         props = EXTRACTION_TOOL_SCHEMA["input_schema"]["properties"]["components"]
         item = props["items"]
         self.assertIn("disposition", item["required"])
+        self.assertNotIn("cells", item["required"])  # empty OK for not_found
+        self.assertIn("not_found", item["properties"]["disposition"]["enum"])
         amt = item["properties"]["cells"]["items"]["properties"]["amount"]
         self.assertEqual(amt["type"], "string")
 
@@ -134,6 +161,42 @@ class TestDualExtractSchemaHold(unittest.TestCase):
         )
         self.assertIsInstance(result, ExtractionHold)
         self.assertIn("duplicate_code", result.detail)
+
+    def test_not_found_rider_does_not_hold_extract(self):
+        """Priced base found; missing rider marked not_found → accept path open."""
+        from app.services.pricing.extraction import ExtractionAccept
+        from app.services.pricing.rider_census import InventoryRider
+
+        doc = "Energy Charge 10.000 ¢/kWh\n"
+
+        def fn(document, model, ctx):
+            return [
+                _ok(),
+                {
+                    "code": "storm",
+                    "kind": "rider_per_kwh",
+                    "unit": "¢/kWh",
+                    "name": "Storm Recovery",
+                    "disposition": "not_found",
+                    "cells": [],
+                    "source_page": "not_found",
+                    "source_quote": "Storm Recovery",
+                },
+            ]
+
+        result = dual_extract_components(
+            doc,
+            plan_meta={
+                "plan_key": "x", "name": "X", "recipe_code": "bundled",
+                "source_url": "https://utility.example/rates.pdf",
+            },
+            extract_fn=fn,
+            official_hosts=["utility.example"],
+            inventory=[InventoryRider("storm", "Storm Recovery")],
+            force=True,
+        )
+        self.assertIsInstance(result, ExtractionAccept, getattr(result, "detail", None))
+        self.assertEqual([c.code for c in result.plan.components], ["base"])
 
 
 if __name__ == "__main__":
