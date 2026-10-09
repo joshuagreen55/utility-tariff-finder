@@ -13,6 +13,15 @@ from app.models.refresh_run import RefreshRun, RefreshType
 from app.models.fingerprint import RatePageFingerprint
 from app.models.tariff_change_event import TariffChangeEvent
 from app.models.pin import TariffPin, TariffVerification
+from app.models.pricing import (
+    PricingComponent,
+    PricingComponentVersion,
+    PricingComponentKind,
+    PlanComposition,
+    PlanCompositionMember,
+    RiderDisposition,
+    MarketRecipeCode,
+)
 
 __all__ = [
     "Utility",
@@ -35,4 +44,11 @@ __all__ = [
     "TariffChangeEvent",
     "TariffPin",
     "TariffVerification",
+    "PricingComponent",
+    "PricingComponentVersion",
+    "PricingComponentKind",
+    "PlanComposition",
+    "PlanCompositionMember",
+    "RiderDisposition",
+    "MarketRecipeCode",
 ]

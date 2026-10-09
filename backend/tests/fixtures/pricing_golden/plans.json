@@ -1,0 +1,3311 @@
+{
+  "version": 1,
+  "description": "Hand-verified residential plan components for the pricing compiler. Amounts are decimal strings. official_cents is the cited official all-in (\u00a2/kWh). The compiler must reproduce the exact Decimal sum of components; that sum matches official_cents when quantized to the same places as the citation.",
+  "prd_gaps": [
+    {
+      "id": "texas_no_default_supply",
+      "summary": "Texas competitive areas have no default/standard-offer supply (REG-9 / design \u00a72.3 B). Pedernales is a co-op with bundled power+delivery; ERCOT competitive wires-only UJs are held until Joshua decides whether POLR counts."
+    },
+    {
+      "id": "oer_treatment",
+      "summary": "Ontario Electricity Rebate (percent-of-bill credit) is not applied in these Ontario goldens; confirm OER policy with Joshua before folding it into provincial_ontario."
+    }
+  ],
+  "plans": [
+    {
+      "plan_key": "nsp-domestic",
+      "name": "Domestic Service Tariff",
+      "utility_name": "Nova Scotia Power",
+      "code": "02",
+      "rate_type": "flat",
+      "recipe_code": "bundled",
+      "components": [
+        {
+          "code": "base",
+          "kind": "base_energy",
+          "unit": "\u00a2/kWh",
+          "name": "Energy Charge",
+          "source_page": "tariff-book-2026",
+          "source_quote": "18.324 \u00a2 per kWh",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "18.324"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "fam",
+          "kind": "rider_per_kwh",
+          "unit": "\u00a2/kWh",
+          "name": "FAM",
+          "source_quote": "0.156 \u00a2 per kWh",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "0.156"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "dsm",
+          "kind": "rider_per_kwh",
+          "unit": "\u00a2/kWh",
+          "name": "DCRR / DSM",
+          "source_quote": "0.648 \u00a2 per kWh",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "0.648"
+            }
+          ],
+          "disposition": "applies"
+        }
+      ],
+      "official_cents": [
+        "19.128"
+      ],
+      "notes": "May 2026 tariff book; FAM+DSM Domestic class"
+    },
+    {
+      "plan_key": "nsp-tod",
+      "name": "Domestic Service Time-Of-Day Tariff (Optional)",
+      "utility_name": "Nova Scotia Power",
+      "code": "05",
+      "rate_type": "tou",
+      "recipe_code": "bundled",
+      "components": [
+        {
+          "code": "base",
+          "kind": "base_energy",
+          "unit": "\u00a2/kWh",
+          "name": "TOD Energy",
+          "cells": [
+            {
+              "season": "all",
+              "period": "off_peak",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "11.632"
+            },
+            {
+              "season": "all",
+              "period": "mid_peak",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "19.459"
+            },
+            {
+              "season": "all",
+              "period": "on_peak",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "24.384"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "fam",
+          "kind": "rider_per_kwh",
+          "unit": "\u00a2/kWh",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "0.156"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "dsm",
+          "kind": "rider_per_kwh",
+          "unit": "\u00a2/kWh",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "0.648"
+            }
+          ],
+          "disposition": "applies"
+        }
+      ],
+      "official_cents": [
+        "12.436",
+        "20.263",
+        "25.188"
+      ],
+      "notes": null
+    },
+    {
+      "plan_key": "nsp-tou",
+      "name": "Domestic Service Time of Use Tariff",
+      "utility_name": "Nova Scotia Power",
+      "code": "80",
+      "rate_type": "seasonal_tou",
+      "recipe_code": "bundled",
+      "components": [
+        {
+          "code": "base",
+          "kind": "base_energy",
+          "unit": "\u00a2/kWh",
+          "cells": [
+            {
+              "season": "non_winter",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "12.860"
+            },
+            {
+              "season": "winter",
+              "period": "on_peak",
+              "day_type": "weekday",
+              "tier": "all",
+              "amount": "36.517"
+            },
+            {
+              "season": "winter",
+              "period": "off_peak",
+              "day_type": "weekday",
+              "tier": "all",
+              "amount": "18.324"
+            },
+            {
+              "season": "winter",
+              "period": "all",
+              "day_type": "weekend",
+              "tier": "all",
+              "amount": "18.324"
+            },
+            {
+              "season": "winter",
+              "period": "all",
+              "day_type": "holiday",
+              "tier": "all",
+              "amount": "18.324"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "fam",
+          "kind": "rider_per_kwh",
+          "unit": "\u00a2/kWh",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "0.156"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "dsm",
+          "kind": "rider_per_kwh",
+          "unit": "\u00a2/kWh",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "0.648"
+            }
+          ],
+          "disposition": "applies"
+        }
+      ],
+      "official_cents": [
+        "13.664",
+        "19.128",
+        "37.321"
+      ],
+      "notes": null
+    },
+    {
+      "plan_key": "nsp-murb-tou",
+      "name": "Multi-Unit Residential Buildings (MURB) Time of Use Tariff",
+      "utility_name": "Nova Scotia Power",
+      "code": "89",
+      "rate_type": "tou",
+      "recipe_code": "bundled",
+      "components": [
+        {
+          "code": "base",
+          "kind": "base_energy",
+          "unit": "\u00a2/kWh",
+          "cells": [
+            {
+              "season": "all",
+              "period": "p0",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "11.826"
+            },
+            {
+              "season": "all",
+              "period": "p1",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "12.565"
+            },
+            {
+              "season": "all",
+              "period": "p2",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "14.043"
+            },
+            {
+              "season": "all",
+              "period": "p3",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "14.782"
+            },
+            {
+              "season": "all",
+              "period": "p4",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "29.565"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "fam",
+          "kind": "rider_per_kwh",
+          "unit": "\u00a2/kWh",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "0.207"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "dsm",
+          "kind": "rider_per_kwh",
+          "unit": "\u00a2/kWh",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "0.749"
+            }
+          ],
+          "disposition": "applies"
+        }
+      ],
+      "official_cents": [
+        "12.782",
+        "13.521",
+        "14.999",
+        "15.738",
+        "30.521"
+      ],
+      "notes": null
+    },
+    {
+      "plan_key": "pge-or-default",
+      "name": "Schedule 7 Residential Service Price Plan (Default Plan)",
+      "utility_name": "Portland General Electric",
+      "code": "7",
+      "rate_type": "tiered",
+      "recipe_code": "bundled",
+      "components": [
+        {
+          "code": "base",
+          "kind": "base_energy",
+          "unit": "\u00a2/kWh",
+          "name": "Sch 7 energy",
+          "source_quote": "11.289 \u00a2 per kWh",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "0-2000",
+              "amount": "11.289"
+            },
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "2000+",
+              "amount": "11.289"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "sch1xx",
+          "kind": "rider_per_kwh",
+          "unit": "\u00a2/kWh",
+          "name": "Sch 125+1xx stack",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "0-2000",
+              "amount": "9.253"
+            },
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "2000+",
+              "amount": "9.253"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "sch102",
+          "kind": "credit",
+          "unit": "\u00a2/kWh",
+          "name": "Sch 102 credit first 2000",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "0-2000",
+              "amount": "-1.112"
+            },
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "2000+",
+              "amount": "0"
+            }
+          ],
+          "disposition": "applies"
+        }
+      ],
+      "official_cents": [
+        "19.430",
+        "20.542"
+      ],
+      "notes": "Sch 7 + Sch 100 applicable 1xx; Sch 102 credit to 2000 kWh"
+    },
+    {
+      "plan_key": "pge-or-tod",
+      "name": "Schedule 7 Time-of-Use Portfolio Option (Whole Premises)",
+      "utility_name": "Portland General Electric",
+      "code": "7-TOD",
+      "rate_type": "tou",
+      "recipe_code": "bundled",
+      "components": [
+        {
+          "code": "all_in",
+          "kind": "base_energy",
+          "unit": "\u00a2/kWh",
+          "name": "Sch 7-TOD all-in (base+Sch125+1xx)",
+          "cells": [
+            {
+              "season": "all",
+              "period": "off_peak",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "11.452"
+            },
+            {
+              "season": "all",
+              "period": "mid_peak",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "19.220"
+            },
+            {
+              "season": "all",
+              "period": "on_peak",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "45.653"
+            }
+          ],
+          "disposition": "applies"
+        }
+      ],
+      "official_cents": [
+        "11.452",
+        "19.220",
+        "45.653"
+      ],
+      "notes": null
+    },
+    {
+      "plan_key": "nlh-1.1",
+      "name": "Rate No. 1.1 Domestic",
+      "utility_name": "Newfoundland and Labrador Hydro",
+      "code": "1.1",
+      "rate_type": "flat",
+      "recipe_code": "bundled",
+      "components": [
+        {
+          "code": "base",
+          "kind": "base_energy",
+          "unit": "\u00a2/kWh",
+          "source_quote": "15.587 \u00a2 per kWh",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "15.587"
+            }
+          ],
+          "disposition": "applies"
+        }
+      ],
+      "official_cents": [
+        "15.587"
+      ],
+      "notes": null
+    },
+    {
+      "plan_key": "nlh-1.1s",
+      "name": "Rate No. 1.1S Domestic - Optional",
+      "utility_name": "Newfoundland and Labrador Hydro",
+      "code": "1.1S",
+      "rate_type": "seasonal",
+      "recipe_code": "bundled",
+      "components": [
+        {
+          "code": "base",
+          "kind": "base_energy",
+          "unit": "\u00a2/kWh",
+          "cells": [
+            {
+              "season": "winter",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "15.587"
+            },
+            {
+              "season": "non_winter",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "15.587"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "seasonal",
+          "kind": "rider_per_kwh",
+          "unit": "\u00a2/kWh",
+          "cells": [
+            {
+              "season": "winter",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "0.953"
+            },
+            {
+              "season": "non_winter",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "-1.297"
+            }
+          ],
+          "disposition": "applies"
+        }
+      ],
+      "official_cents": [
+        "14.290",
+        "16.540"
+      ],
+      "notes": null
+    },
+    {
+      "plan_key": "nlh-1.2d",
+      "name": "Rate No. 1.2D Domestic Diesel",
+      "utility_name": "Newfoundland and Labrador Hydro",
+      "code": "1.2D",
+      "rate_type": "tiered",
+      "recipe_code": "bundled",
+      "components": [
+        {
+          "code": "base",
+          "kind": "base_energy",
+          "unit": "\u00a2/kWh",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "block1",
+              "amount": "15.587"
+            },
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "block2",
+              "amount": "17.213"
+            },
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "block3",
+              "amount": "23.341"
+            }
+          ],
+          "disposition": "applies"
+        }
+      ],
+      "official_cents": [
+        "15.587",
+        "17.213",
+        "23.341"
+      ],
+      "notes": null
+    },
+    {
+      "plan_key": "pec-flat",
+      "name": "Residential Service - Flat Base Power Rate",
+      "utility_name": "Pedernales Electric Cooperative",
+      "code": "flat",
+      "rate_type": "flat",
+      "recipe_code": "bundled",
+      "components": [
+        {
+          "code": "delivery",
+          "kind": "base_energy",
+          "unit": "\u00a2/kWh",
+          "charge_category": "delivery",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "2.2546"
+            }
+          ],
+          "disposition": "applies",
+          "source_quote": "2.2546 \u00a2 delivery"
+        },
+        {
+          "code": "power",
+          "kind": "rider_per_kwh",
+          "unit": "\u00a2/kWh",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "6.59"
+            }
+          ],
+          "disposition": "applies",
+          "source_quote": "6.59 \u00a2 power"
+        },
+        {
+          "code": "transmission",
+          "kind": "rider_per_kwh",
+          "unit": "\u00a2/kWh",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "2.0688"
+            }
+          ],
+          "disposition": "applies",
+          "source_quote": "2.0688 \u00a2 transmission"
+        }
+      ],
+      "official_cents": [
+        "10.913"
+      ],
+      "notes": "2.2546+6.59+2.0688=10.9134; official display rounds to 10.913\u00a2"
+    },
+    {
+      "plan_key": "pec-tou",
+      "name": "Residential TOU Base Power Charge",
+      "utility_name": "Pedernales Electric Cooperative",
+      "code": "500.2.5",
+      "rate_type": "tou",
+      "recipe_code": "bundled",
+      "components": [
+        {
+          "code": "base",
+          "kind": "base_energy",
+          "unit": "\u00a2/kWh",
+          "cells": [
+            {
+              "season": "all",
+              "period": "off_peak",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "8.671"
+            },
+            {
+              "season": "all",
+              "period": "mid_peak_a",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "12.968"
+            },
+            {
+              "season": "all",
+              "period": "mid_peak_b",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "13.640"
+            },
+            {
+              "season": "all",
+              "period": "on_peak",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "20.508"
+            }
+          ],
+          "disposition": "applies"
+        }
+      ],
+      "official_cents": [
+        "8.671",
+        "12.968",
+        "13.640",
+        "20.508"
+      ],
+      "notes": null
+    },
+    {
+      "plan_key": "toronto-tou",
+      "name": "Time-of-Use (TOU) \u2014 Residential",
+      "utility_name": "Toronto Hydro",
+      "code": "OEB-RPP-TOU",
+      "rate_type": "tou",
+      "recipe_code": "provincial_ontario",
+      "components": [
+        {
+          "code": "rpp",
+          "kind": "regulated_commodity",
+          "unit": "$/kWh",
+          "name": "OEB RPP",
+          "cells": [
+            {
+              "season": "all",
+              "period": "off_peak",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "0.098"
+            },
+            {
+              "season": "all",
+              "period": "mid_peak",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "0.157"
+            },
+            {
+              "season": "all",
+              "period": "on_peak",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "0.203"
+            }
+          ],
+          "disposition": "applies",
+          "source_quote": "OEB RPP Nov 1 2025"
+        },
+        {
+          "code": "dc",
+          "kind": "delivery_per_kwh",
+          "unit": "$/kWh",
+          "name": "Distribution volumetric",
+          "loss_sensitive": false,
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "0.0016"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "net",
+          "kind": "delivery_per_kwh",
+          "unit": "$/kWh",
+          "name": "Transmission network",
+          "loss_sensitive": true,
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "0.01346"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "conn",
+          "kind": "delivery_per_kwh",
+          "unit": "$/kWh",
+          "name": "Transmission connection",
+          "loss_sensitive": true,
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "0.00895"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "wmsr",
+          "kind": "delivery_per_kwh",
+          "unit": "$/kWh",
+          "name": "WMSR",
+          "loss_sensitive": true,
+          "charge_category": "regulatory",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "0.0047"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "rrrp",
+          "kind": "delivery_per_kwh",
+          "unit": "$/kWh",
+          "name": "RRRP",
+          "loss_sensitive": true,
+          "charge_category": "regulatory",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "0.0006"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "lf",
+          "kind": "multiplier",
+          "unit": "dimensionless",
+          "name": "Total loss factor",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "1.0295"
+            }
+          ],
+          "disposition": "applies",
+          "multiplier_target_codes": [
+            "rpp",
+            "net",
+            "conn",
+            "wmsr",
+            "rrrp"
+          ]
+        }
+      ],
+      "official_cents": [
+        "13.102",
+        "19.176",
+        "23.912"
+      ],
+      "notes": "OEB RPP + BillData.xml; ENERGY=(RPP\u00d7LF)+DC+(Net+Conn+WMSR+RRRP)\u00d7LF"
+    },
+    {
+      "plan_key": "toronto-tiered",
+      "name": "Tiered Pricing \u2014 Residential",
+      "utility_name": "Toronto Hydro",
+      "code": "OEB-RPP-TIERED",
+      "rate_type": "tiered",
+      "recipe_code": "provincial_ontario",
+      "components": [
+        {
+          "code": "rpp",
+          "kind": "regulated_commodity",
+          "unit": "$/kWh",
+          "name": "OEB RPP",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "lower",
+              "amount": "0.12"
+            },
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "higher",
+              "amount": "0.142"
+            }
+          ],
+          "disposition": "applies",
+          "source_quote": "OEB RPP Nov 1 2025"
+        },
+        {
+          "code": "dc",
+          "kind": "delivery_per_kwh",
+          "unit": "$/kWh",
+          "name": "Distribution volumetric",
+          "loss_sensitive": false,
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "0.0016"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "net",
+          "kind": "delivery_per_kwh",
+          "unit": "$/kWh",
+          "name": "Transmission network",
+          "loss_sensitive": true,
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "0.01346"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "conn",
+          "kind": "delivery_per_kwh",
+          "unit": "$/kWh",
+          "name": "Transmission connection",
+          "loss_sensitive": true,
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "0.00895"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "wmsr",
+          "kind": "delivery_per_kwh",
+          "unit": "$/kWh",
+          "name": "WMSR",
+          "loss_sensitive": true,
+          "charge_category": "regulatory",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "0.0047"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "rrrp",
+          "kind": "delivery_per_kwh",
+          "unit": "$/kWh",
+          "name": "RRRP",
+          "loss_sensitive": true,
+          "charge_category": "regulatory",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "0.0006"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "lf",
+          "kind": "multiplier",
+          "unit": "dimensionless",
+          "name": "Total loss factor",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "1.0295"
+            }
+          ],
+          "disposition": "applies",
+          "multiplier_target_codes": [
+            "rpp",
+            "net",
+            "conn",
+            "wmsr",
+            "rrrp"
+          ]
+        }
+      ],
+      "official_cents": [
+        "15.367",
+        "17.632"
+      ],
+      "notes": "OEB RPP + BillData.xml; ENERGY=(RPP\u00d7LF)+DC+(Net+Conn+WMSR+RRRP)\u00d7LF"
+    },
+    {
+      "plan_key": "toronto-ulo",
+      "name": "Ultra-Low Overnight (ULO) \u2014 Residential",
+      "utility_name": "Toronto Hydro",
+      "code": "OEB-RPP-ULO",
+      "rate_type": "tou",
+      "recipe_code": "provincial_ontario",
+      "components": [
+        {
+          "code": "rpp",
+          "kind": "regulated_commodity",
+          "unit": "$/kWh",
+          "name": "OEB RPP",
+          "cells": [
+            {
+              "season": "all",
+              "period": "ulo",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "0.039"
+            },
+            {
+              "season": "all",
+              "period": "weekend_off",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "0.098"
+            },
+            {
+              "season": "all",
+              "period": "mid_peak",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "0.157"
+            },
+            {
+              "season": "all",
+              "period": "on_peak",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "0.391"
+            }
+          ],
+          "disposition": "applies",
+          "source_quote": "OEB RPP Nov 1 2025"
+        },
+        {
+          "code": "dc",
+          "kind": "delivery_per_kwh",
+          "unit": "$/kWh",
+          "name": "Distribution volumetric",
+          "loss_sensitive": false,
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "0.0016"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "net",
+          "kind": "delivery_per_kwh",
+          "unit": "$/kWh",
+          "name": "Transmission network",
+          "loss_sensitive": true,
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "0.01346"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "conn",
+          "kind": "delivery_per_kwh",
+          "unit": "$/kWh",
+          "name": "Transmission connection",
+          "loss_sensitive": true,
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "0.00895"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "wmsr",
+          "kind": "delivery_per_kwh",
+          "unit": "$/kWh",
+          "name": "WMSR",
+          "loss_sensitive": true,
+          "charge_category": "regulatory",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "0.0047"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "rrrp",
+          "kind": "delivery_per_kwh",
+          "unit": "$/kWh",
+          "name": "RRRP",
+          "loss_sensitive": true,
+          "charge_category": "regulatory",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "0.0006"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "lf",
+          "kind": "multiplier",
+          "unit": "dimensionless",
+          "name": "Total loss factor",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "1.0295"
+            }
+          ],
+          "disposition": "applies",
+          "multiplier_target_codes": [
+            "rpp",
+            "net",
+            "conn",
+            "wmsr",
+            "rrrp"
+          ]
+        }
+      ],
+      "official_cents": [
+        "7.028",
+        "13.102",
+        "19.176",
+        "43.266"
+      ],
+      "notes": "OEB RPP + BillData.xml; ENERGY=(RPP\u00d7LF)+DC+(Net+Conn+WMSR+RRRP)\u00d7LF"
+    },
+    {
+      "plan_key": "hydroone-tou",
+      "name": "Time-of-Use (TOU) \u2014 Residential",
+      "utility_name": "Hydro One",
+      "code": "OEB-RPP-TOU",
+      "rate_type": "tou",
+      "recipe_code": "provincial_ontario",
+      "components": [
+        {
+          "code": "rpp",
+          "kind": "regulated_commodity",
+          "unit": "$/kWh",
+          "name": "OEB RPP",
+          "cells": [
+            {
+              "season": "all",
+              "period": "off_peak",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "0.098"
+            },
+            {
+              "season": "all",
+              "period": "mid_peak",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "0.157"
+            },
+            {
+              "season": "all",
+              "period": "on_peak",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "0.203"
+            }
+          ],
+          "disposition": "applies",
+          "source_quote": "OEB RPP Nov 1 2025"
+        },
+        {
+          "code": "dc",
+          "kind": "delivery_per_kwh",
+          "unit": "$/kWh",
+          "name": "Distribution volumetric",
+          "loss_sensitive": false,
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "-0.0049"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "net",
+          "kind": "delivery_per_kwh",
+          "unit": "$/kWh",
+          "name": "Transmission network",
+          "loss_sensitive": true,
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "0.0141"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "conn",
+          "kind": "delivery_per_kwh",
+          "unit": "$/kWh",
+          "name": "Transmission connection",
+          "loss_sensitive": true,
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "0.01"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "wmsr",
+          "kind": "delivery_per_kwh",
+          "unit": "$/kWh",
+          "name": "WMSR",
+          "loss_sensitive": true,
+          "charge_category": "regulatory",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "0.0047"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "rrrp",
+          "kind": "delivery_per_kwh",
+          "unit": "$/kWh",
+          "name": "RRRP",
+          "loss_sensitive": true,
+          "charge_category": "regulatory",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "0.0006"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "lf",
+          "kind": "multiplier",
+          "unit": "dimensionless",
+          "name": "Total loss factor",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "1.057"
+            }
+          ],
+          "disposition": "applies",
+          "multiplier_target_codes": [
+            "rpp",
+            "net",
+            "conn",
+            "wmsr",
+            "rrrp"
+          ]
+        }
+      ],
+      "official_cents": [
+        "12.976",
+        "19.212",
+        "24.075"
+      ],
+      "notes": "OEB RPP + BillData.xml; ENERGY=(RPP\u00d7LF)+DC+(Net+Conn+WMSR+RRRP)\u00d7LF"
+    },
+    {
+      "plan_key": "hydroone-tiered",
+      "name": "Tiered Pricing \u2014 Residential",
+      "utility_name": "Hydro One",
+      "code": "OEB-RPP-TIERED",
+      "rate_type": "tiered",
+      "recipe_code": "provincial_ontario",
+      "components": [
+        {
+          "code": "rpp",
+          "kind": "regulated_commodity",
+          "unit": "$/kWh",
+          "name": "OEB RPP",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "lower",
+              "amount": "0.12"
+            },
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "higher",
+              "amount": "0.142"
+            }
+          ],
+          "disposition": "applies",
+          "source_quote": "OEB RPP Nov 1 2025"
+        },
+        {
+          "code": "dc",
+          "kind": "delivery_per_kwh",
+          "unit": "$/kWh",
+          "name": "Distribution volumetric",
+          "loss_sensitive": false,
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "-0.0049"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "net",
+          "kind": "delivery_per_kwh",
+          "unit": "$/kWh",
+          "name": "Transmission network",
+          "loss_sensitive": true,
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "0.0141"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "conn",
+          "kind": "delivery_per_kwh",
+          "unit": "$/kWh",
+          "name": "Transmission connection",
+          "loss_sensitive": true,
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "0.01"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "wmsr",
+          "kind": "delivery_per_kwh",
+          "unit": "$/kWh",
+          "name": "WMSR",
+          "loss_sensitive": true,
+          "charge_category": "regulatory",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "0.0047"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "rrrp",
+          "kind": "delivery_per_kwh",
+          "unit": "$/kWh",
+          "name": "RRRP",
+          "loss_sensitive": true,
+          "charge_category": "regulatory",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "0.0006"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "lf",
+          "kind": "multiplier",
+          "unit": "dimensionless",
+          "name": "Total loss factor",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "1.057"
+            }
+          ],
+          "disposition": "applies",
+          "multiplier_target_codes": [
+            "rpp",
+            "net",
+            "conn",
+            "wmsr",
+            "rrrp"
+          ]
+        }
+      ],
+      "official_cents": [
+        "15.302",
+        "17.627"
+      ],
+      "notes": "OEB RPP + BillData.xml; ENERGY=(RPP\u00d7LF)+DC+(Net+Conn+WMSR+RRRP)\u00d7LF"
+    },
+    {
+      "plan_key": "hydroone-ulo",
+      "name": "Ultra-Low Overnight (ULO) \u2014 Residential",
+      "utility_name": "Hydro One",
+      "code": "OEB-RPP-ULO",
+      "rate_type": "tou",
+      "recipe_code": "provincial_ontario",
+      "components": [
+        {
+          "code": "rpp",
+          "kind": "regulated_commodity",
+          "unit": "$/kWh",
+          "name": "OEB RPP",
+          "cells": [
+            {
+              "season": "all",
+              "period": "ulo",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "0.039"
+            },
+            {
+              "season": "all",
+              "period": "weekend_off",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "0.098"
+            },
+            {
+              "season": "all",
+              "period": "mid_peak",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "0.157"
+            },
+            {
+              "season": "all",
+              "period": "on_peak",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "0.391"
+            }
+          ],
+          "disposition": "applies",
+          "source_quote": "OEB RPP Nov 1 2025"
+        },
+        {
+          "code": "dc",
+          "kind": "delivery_per_kwh",
+          "unit": "$/kWh",
+          "name": "Distribution volumetric",
+          "loss_sensitive": false,
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "-0.0049"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "net",
+          "kind": "delivery_per_kwh",
+          "unit": "$/kWh",
+          "name": "Transmission network",
+          "loss_sensitive": true,
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "0.0141"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "conn",
+          "kind": "delivery_per_kwh",
+          "unit": "$/kWh",
+          "name": "Transmission connection",
+          "loss_sensitive": true,
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "0.01"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "wmsr",
+          "kind": "delivery_per_kwh",
+          "unit": "$/kWh",
+          "name": "WMSR",
+          "loss_sensitive": true,
+          "charge_category": "regulatory",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "0.0047"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "rrrp",
+          "kind": "delivery_per_kwh",
+          "unit": "$/kWh",
+          "name": "RRRP",
+          "loss_sensitive": true,
+          "charge_category": "regulatory",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "0.0006"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "lf",
+          "kind": "multiplier",
+          "unit": "dimensionless",
+          "name": "Total loss factor",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "1.057"
+            }
+          ],
+          "disposition": "applies",
+          "multiplier_target_codes": [
+            "rpp",
+            "net",
+            "conn",
+            "wmsr",
+            "rrrp"
+          ]
+        }
+      ],
+      "official_cents": [
+        "6.740",
+        "12.976",
+        "19.212",
+        "43.946"
+      ],
+      "notes": "OEB RPP + BillData.xml; ENERGY=(RPP\u00d7LF)+DC+(Net+Conn+WMSR+RRRP)\u00d7LF"
+    },
+    {
+      "plan_key": "kwh-tou",
+      "name": "Time-of-Use (TOU) \u2014 Residential",
+      "utility_name": "Kitchener-Wilmot Hydro",
+      "code": "OEB-RPP-TOU",
+      "rate_type": "tou",
+      "recipe_code": "provincial_ontario",
+      "components": [
+        {
+          "code": "rpp",
+          "kind": "regulated_commodity",
+          "unit": "$/kWh",
+          "name": "OEB RPP",
+          "cells": [
+            {
+              "season": "all",
+              "period": "off_peak",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "0.098"
+            },
+            {
+              "season": "all",
+              "period": "mid_peak",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "0.157"
+            },
+            {
+              "season": "all",
+              "period": "on_peak",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "0.203"
+            }
+          ],
+          "disposition": "applies",
+          "source_quote": "OEB RPP Nov 1 2025"
+        },
+        {
+          "code": "dc",
+          "kind": "delivery_per_kwh",
+          "unit": "$/kWh",
+          "name": "Distribution volumetric",
+          "loss_sensitive": false,
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "0.0008"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "net",
+          "kind": "delivery_per_kwh",
+          "unit": "$/kWh",
+          "name": "Transmission network",
+          "loss_sensitive": true,
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "0.0114"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "conn",
+          "kind": "delivery_per_kwh",
+          "unit": "$/kWh",
+          "name": "Transmission connection",
+          "loss_sensitive": true,
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "0.0017"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "wmsr",
+          "kind": "delivery_per_kwh",
+          "unit": "$/kWh",
+          "name": "WMSR",
+          "loss_sensitive": true,
+          "charge_category": "regulatory",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "0.0047"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "rrrp",
+          "kind": "delivery_per_kwh",
+          "unit": "$/kWh",
+          "name": "RRRP",
+          "loss_sensitive": true,
+          "charge_category": "regulatory",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "0.0006"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "lf",
+          "kind": "multiplier",
+          "unit": "dimensionless",
+          "name": "Total loss factor",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "1.035"
+            }
+          ],
+          "disposition": "applies",
+          "multiplier_target_codes": [
+            "rpp",
+            "net",
+            "conn",
+            "wmsr",
+            "rrrp"
+          ]
+        }
+      ],
+      "official_cents": [
+        "12.127",
+        "18.234",
+        "22.995"
+      ],
+      "notes": "OEB RPP + BillData.xml; ENERGY=(RPP\u00d7LF)+DC+(Net+Conn+WMSR+RRRP)\u00d7LF"
+    },
+    {
+      "plan_key": "hq-rate-d",
+      "name": "Rate D",
+      "utility_name": "Hydro-Qu\u00e9bec",
+      "code": "D",
+      "rate_type": "tiered",
+      "recipe_code": "bundled",
+      "components": [
+        {
+          "code": "base",
+          "kind": "base_energy",
+          "unit": "\u00a2/kWh",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "0-40kwh_day",
+              "amount": "7.065"
+            },
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "40kwh_day+",
+              "amount": "11.142"
+            }
+          ],
+          "disposition": "applies",
+          "source_quote": "Rate D Oct 2026"
+        }
+      ],
+      "official_cents": [
+        "7.065",
+        "11.142"
+      ],
+      "notes": null
+    },
+    {
+      "plan_key": "hq-rate-dp",
+      "name": "Rate DP",
+      "utility_name": "Hydro-Qu\u00e9bec",
+      "code": "DP",
+      "rate_type": "tiered",
+      "recipe_code": "bundled",
+      "components": [
+        {
+          "code": "base",
+          "kind": "base_energy",
+          "unit": "\u00a2/kWh",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "lower",
+              "amount": "6.878"
+            },
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "higher",
+              "amount": "10.458"
+            }
+          ],
+          "disposition": "applies"
+        }
+      ],
+      "official_cents": [
+        "6.878",
+        "10.458"
+      ],
+      "notes": null
+    },
+    {
+      "plan_key": "hq-rate-dt",
+      "name": "Rate DT",
+      "utility_name": "Hydro-Qu\u00e9bec",
+      "code": "DT",
+      "rate_type": "tou",
+      "recipe_code": "bundled",
+      "components": [
+        {
+          "code": "base",
+          "kind": "base_energy",
+          "unit": "\u00a2/kWh",
+          "cells": [
+            {
+              "season": "all",
+              "period": "off_peak",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "5.131"
+            },
+            {
+              "season": "all",
+              "period": "on_peak",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "30.001"
+            }
+          ],
+          "disposition": "applies"
+        }
+      ],
+      "official_cents": [
+        "5.131",
+        "30.001"
+      ],
+      "notes": null
+    },
+    {
+      "plan_key": "ga-r31",
+      "name": "Residential Service Schedule R-31",
+      "utility_name": "Georgia Power",
+      "code": "R-31",
+      "rate_type": "seasonal_tiered",
+      "recipe_code": "bundled",
+      "components": [
+        {
+          "code": "base",
+          "kind": "base_energy",
+          "unit": "\u00a2/kWh",
+          "cells": [
+            {
+              "season": "winter",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "8.2116"
+            },
+            {
+              "season": "summer",
+              "period": "all",
+              "day_type": "all",
+              "tier": "0-650",
+              "amount": "8.7738"
+            },
+            {
+              "season": "summer",
+              "period": "all",
+              "day_type": "all",
+              "tier": "1000+",
+              "amount": "15.0828"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "eccr",
+          "kind": "rider_percent",
+          "unit": "percent",
+          "percent_base_codes": [
+            "base"
+          ],
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "13.0205"
+            }
+          ],
+          "disposition": "applies",
+          "source_quote": "13.0205% of base bill"
+        },
+        {
+          "code": "dsm_r",
+          "kind": "rider_percent",
+          "unit": "percent",
+          "percent_base_codes": [
+            "base"
+          ],
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "1.1969"
+            }
+          ],
+          "disposition": "applies",
+          "source_quote": "1.1969% of base bill"
+        },
+        {
+          "code": "fcr27",
+          "kind": "rider_per_kwh",
+          "unit": "\u00a2/kWh",
+          "cells": [
+            {
+              "season": "winter",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "3.8561"
+            },
+            {
+              "season": "summer",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "3.8069"
+            }
+          ],
+          "disposition": "applies",
+          "source_quote": "FCR-27 Secondary"
+        }
+      ],
+      "official_cents": [
+        "13.2352",
+        "13.8281",
+        "21.0341"
+      ],
+      "notes": "R22 official full: base\u00d7(1+13.0205%+1.1969%)+FCR-27"
+    },
+    {
+      "plan_key": "ga-tou-rd",
+      "name": "Time of Use \u2013 Residential Demand",
+      "utility_name": "Georgia Power",
+      "code": "TOU-RD",
+      "rate_type": "tou",
+      "recipe_code": "bundled",
+      "components": [
+        {
+          "code": "base",
+          "kind": "base_energy",
+          "unit": "\u00a2/kWh",
+          "cells": [
+            {
+              "season": "all",
+              "period": "off_peak",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "1.5288"
+            },
+            {
+              "season": "all",
+              "period": "on_peak",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "14.2986"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "eccr",
+          "kind": "rider_percent",
+          "unit": "percent",
+          "percent_base_codes": [
+            "base"
+          ],
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "13.0205"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "dsm_r",
+          "kind": "rider_percent",
+          "unit": "percent",
+          "percent_base_codes": [
+            "base"
+          ],
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "1.1969"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "tou_fcr",
+          "kind": "rider_per_kwh",
+          "unit": "\u00a2/kWh",
+          "cells": [
+            {
+              "season": "all",
+              "period": "off_peak",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "3.7441"
+            },
+            {
+              "season": "all",
+              "period": "on_peak",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "5.2269"
+            }
+          ],
+          "disposition": "applies"
+        }
+      ],
+      "official_cents": [
+        "5.4903",
+        "21.5584"
+      ],
+      "notes": null
+    },
+    {
+      "plan_key": "dom-sch1",
+      "name": "Schedule 1 Residential",
+      "utility_name": "Dominion Energy Virginia",
+      "code": "1",
+      "rate_type": "seasonal_tiered",
+      "recipe_code": "bundled",
+      "components": [
+        {
+          "code": "base",
+          "kind": "base_energy",
+          "unit": "\u00a2/kWh",
+          "cells": [
+            {
+              "season": "winter",
+              "period": "all",
+              "day_type": "all",
+              "tier": "800+",
+              "amount": "6.0261"
+            },
+            {
+              "season": "summer",
+              "period": "all",
+              "day_type": "all",
+              "tier": "800+",
+              "amount": "7.9539"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "riders",
+          "kind": "rider_per_kwh",
+          "unit": "\u00a2/kWh",
+          "name": "Exhibit riders A+T1+DIST+GEN+non-bypassable",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "9.5822"
+            }
+          ],
+          "disposition": "applies",
+          "source_quote": "sum of applicable Schedule 1 riders = 9.5822 \u00a2"
+        }
+      ],
+      "official_cents": [
+        "15.6083",
+        "17.5361"
+      ],
+      "notes": null
+    },
+    {
+      "plan_key": "evergy-r",
+      "name": "Residential Service Schedule R",
+      "utility_name": "Evergy Metro",
+      "code": "R",
+      "rate_type": "seasonal",
+      "recipe_code": "bundled",
+      "components": [
+        {
+          "code": "base",
+          "kind": "base_energy",
+          "unit": "\u00a2/kWh",
+          "cells": [
+            {
+              "season": "winter",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "6.824"
+            },
+            {
+              "season": "summer",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "14.053"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "fac",
+          "kind": "rider_per_kwh",
+          "unit": "\u00a2/kWh",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "-0.021"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "dsim",
+          "kind": "rider_per_kwh",
+          "unit": "\u00a2/kWh",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "0.143"
+            }
+          ],
+          "disposition": "applies",
+          "source_quote": "Total DSIM $0.00143/kWh"
+        }
+      ],
+      "official_cents": [
+        "6.946",
+        "14.175"
+      ],
+      "notes": null
+    },
+    {
+      "plan_key": "al-fd",
+      "name": "Family Dwelling",
+      "utility_name": "Alabama Power",
+      "code": "FD",
+      "rate_type": "seasonal",
+      "recipe_code": "bundled",
+      "components": [
+        {
+          "code": "base",
+          "kind": "base_energy",
+          "unit": "\u00a2/kWh",
+          "cells": [
+            {
+              "season": "winter",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "12.2851"
+            },
+            {
+              "season": "summer",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "13.7380"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "ecr",
+          "kind": "rider_per_kwh",
+          "unit": "\u00a2/kWh",
+          "cells": [
+            {
+              "season": "winter",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "2.5392"
+            },
+            {
+              "season": "summer",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "2.8792"
+            }
+          ],
+          "disposition": "applies",
+          "source_quote": "ECR SEC 25.392 / 28.792 mills"
+        }
+      ],
+      "official_cents": [
+        "14.8243",
+        "16.6172"
+      ],
+      "notes": null
+    },
+    {
+      "plan_key": "xcel-mn-a01",
+      "name": "Residential A01",
+      "utility_name": "Northern States Power Company - Minnesota",
+      "code": "A01",
+      "rate_type": "seasonal",
+      "recipe_code": "bundled",
+      "components": [
+        {
+          "code": "base",
+          "kind": "base_energy",
+          "unit": "\u00a2/kWh",
+          "cells": [
+            {
+              "season": "winter",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "11.364"
+            },
+            {
+              "season": "summer",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "13.069"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "res",
+          "kind": "rider_percent",
+          "unit": "percent",
+          "percent_base_codes": [
+            "base"
+          ],
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "2.463"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "interim",
+          "kind": "rider_percent",
+          "unit": "percent",
+          "percent_base_codes": [
+            "base"
+          ],
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "7.14"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "tcr",
+          "kind": "rider_per_kwh",
+          "unit": "\u00a2/kWh",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "0.6415"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "cip",
+          "kind": "rider_per_kwh",
+          "unit": "\u00a2/kWh",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "0.1397"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "rdf",
+          "kind": "rider_per_kwh",
+          "unit": "\u00a2/kWh",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "0.1371"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "stu",
+          "kind": "rider_per_kwh",
+          "unit": "\u00a2/kWh",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "0.041"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "fuel",
+          "kind": "rider_per_kwh",
+          "unit": "\u00a2/kWh",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "-0.179"
+            }
+          ],
+          "disposition": "applies"
+        }
+      ],
+      "official_cents": [
+        "13.2356",
+        "15.1043"
+      ],
+      "notes": null
+    },
+    {
+      "plan_key": "ppl-rs",
+      "name": "Residential Service RS (delivery + default supply)",
+      "utility_name": "PPL Electric Utilities",
+      "code": "RS",
+      "rate_type": "flat",
+      "recipe_code": "deregulated",
+      "components": [
+        {
+          "code": "delivery",
+          "kind": "delivery_per_kwh",
+          "unit": "\u00a2/kWh",
+          "charge_category": "delivery",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "6.175"
+            }
+          ],
+          "disposition": "applies",
+          "source_quote": "RS distribution 6.175 \u00a2"
+        },
+        {
+          "code": "gsc",
+          "kind": "default_supply",
+          "unit": "\u00a2/kWh",
+          "charge_category": "supply",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "9.753"
+            }
+          ],
+          "disposition": "applies",
+          "source_quote": "GSC-1 9.753 \u00a2"
+        },
+        {
+          "code": "tsc",
+          "kind": "rider_per_kwh",
+          "unit": "\u00a2/kWh",
+          "charge_category": "supply",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "3.326"
+            }
+          ],
+          "disposition": "applies",
+          "source_quote": "TSC 3.326 \u00a2"
+        }
+      ],
+      "official_cents": [
+        "19.254"
+      ],
+      "notes": "combined_delivery_default_supply; fixed $15/mo out of Completeness"
+    },
+    {
+      "plan_key": "epcor-rolr",
+      "name": "EPCOR default home (RoLR + DAS-R)",
+      "utility_name": "EPCOR Distribution & Collection",
+      "code": "DAS-R",
+      "rate_type": "flat",
+      "recipe_code": "provincial_alberta",
+      "components": [
+        {
+          "code": "rolr",
+          "kind": "default_supply",
+          "unit": "\u00a2/kWh",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "12.01"
+            }
+          ],
+          "disposition": "applies",
+          "source_quote": "EPCOR Energy RoLR 12.01 \u00a2"
+        },
+        {
+          "code": "das",
+          "kind": "delivery_per_kwh",
+          "unit": "\u00a2/kWh",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "1.783"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "sas",
+          "kind": "delivery_per_kwh",
+          "unit": "\u00a2/kWh",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "4.050"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "rider_g",
+          "kind": "rider_per_kwh",
+          "unit": "\u00a2/kWh",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "0.130"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "rider_j",
+          "kind": "rider_per_kwh",
+          "unit": "\u00a2/kWh",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "-0.016"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "rider_k",
+          "kind": "rider_per_kwh",
+          "unit": "\u00a2/kWh",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "0.103"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "laf",
+          "kind": "excluded_item",
+          "unit": "\u00a2/kWh",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "0"
+            }
+          ],
+          "disposition": "location_fee_or_tax",
+          "name": "Edmonton Local Access Fee"
+        }
+      ],
+      "official_cents": [
+        "18.060"
+      ],
+      "notes": null
+    },
+    {
+      "plan_key": "fortis-rolr",
+      "name": "FortisAlberta default home (RoLR + Rate 11)",
+      "utility_name": "FortisAlberta",
+      "code": "Rate11",
+      "rate_type": "flat",
+      "recipe_code": "provincial_alberta",
+      "components": [
+        {
+          "code": "rolr",
+          "kind": "default_supply",
+          "unit": "\u00a2/kWh",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "12.01"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "tx",
+          "kind": "delivery_per_kwh",
+          "unit": "\u00a2/kWh",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "4.2560"
+            }
+          ],
+          "disposition": "applies",
+          "name": "Transmission"
+        },
+        {
+          "code": "btar",
+          "kind": "multiplier",
+          "unit": "dimensionless",
+          "multiplier_target_codes": [
+            "tx"
+          ],
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "0.9941"
+            }
+          ],
+          "disposition": "applies",
+          "source_quote": "BTAR \u22120.59% of transmission"
+        },
+        {
+          "code": "dist",
+          "kind": "delivery_per_kwh",
+          "unit": "\u00a2/kWh",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "3.3477"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "qtar",
+          "kind": "rider_per_kwh",
+          "unit": "\u00a2/kWh",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "0.0155"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "bpar",
+          "kind": "rider_per_kwh",
+          "unit": "\u00a2/kWh",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "0.1198"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "franchise",
+          "kind": "excluded_item",
+          "unit": "\u00a2/kWh",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "0"
+            }
+          ],
+          "disposition": "location_fee_or_tax"
+        }
+      ],
+      "official_cents": [
+        "19.7239"
+      ],
+      "notes": "exact 19.7238896\u2026; citation rounds to 19.7239\u00a2"
+    },
+    {
+      "plan_key": "atco-rolr",
+      "name": "ATCO Electric default home (DERS + D11)",
+      "utility_name": "ATCO Electric",
+      "code": "D11",
+      "rate_type": "flat",
+      "recipe_code": "provincial_alberta",
+      "components": [
+        {
+          "code": "rolr",
+          "kind": "default_supply",
+          "unit": "\u00a2/kWh",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "12.02"
+            }
+          ],
+          "disposition": "applies",
+          "source_quote": "DERS 12.02 \u00a2"
+        },
+        {
+          "code": "d11",
+          "kind": "delivery_per_kwh",
+          "unit": "\u00a2/kWh",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "13.82"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "rider_b",
+          "kind": "rider_per_kwh",
+          "unit": "\u00a2/kWh",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "0.133"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "rider_g",
+          "kind": "rider_per_kwh",
+          "unit": "\u00a2/kWh",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "-0.212"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "rider_s",
+          "kind": "rider_per_kwh",
+          "unit": "\u00a2/kWh",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "0.068"
+            }
+          ],
+          "disposition": "applies"
+        }
+      ],
+      "official_cents": [
+        "25.829"
+      ],
+      "notes": null
+    },
+    {
+      "plan_key": "fpl-rs1",
+      "name": "Residential Service RS-1",
+      "utility_name": "Florida Power & Light",
+      "code": "RS-1",
+      "rate_type": "tiered",
+      "recipe_code": "bundled",
+      "components": [
+        {
+          "code": "base",
+          "kind": "base_energy",
+          "unit": "\u00a2/kWh",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "0-1000",
+              "amount": "12.258"
+            },
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "1000+",
+              "amount": "14.258"
+            }
+          ],
+          "disposition": "applies",
+          "source_quote": "FPL Oct-2026 sheet all-in"
+        }
+      ],
+      "official_cents": [
+        "12.258",
+        "14.258"
+      ],
+      "notes": null
+    },
+    {
+      "plan_key": "dte-d1",
+      "name": "Residential Rate D1 (everyday, no event)",
+      "utility_name": "DTE Electric",
+      "code": "D1",
+      "rate_type": "flat",
+      "recipe_code": "bundled",
+      "components": [
+        {
+          "code": "base",
+          "kind": "base_energy",
+          "unit": "\u00a2/kWh",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "18.508"
+            }
+          ],
+          "disposition": "applies",
+          "source_quote": "D1 everyday all-in 18.508 \u00a2 (CPP event excluded)"
+        }
+      ],
+      "official_cents": [
+        "18.508"
+      ],
+      "notes": "Event-day CPP kept out of everyday price"
+    },
+    {
+      "plan_key": "sdge-dr",
+      "name": "Domestic Service DR",
+      "utility_name": "San Diego Gas & Electric",
+      "code": "DR",
+      "rate_type": "seasonal",
+      "recipe_code": "bundled",
+      "components": [
+        {
+          "code": "base",
+          "kind": "base_energy",
+          "unit": "\u00a2/kWh",
+          "cells": [
+            {
+              "season": "winter",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "41.299"
+            },
+            {
+              "season": "summer",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "52.000"
+            }
+          ],
+          "disposition": "applies",
+          "source_quote": "8-1-26 Total Rates"
+        }
+      ],
+      "official_cents": [
+        "41.299",
+        "52.000"
+      ],
+      "notes": null
+    },
+    {
+      "plan_key": "bch-tiered",
+      "name": "Residential tiered rate",
+      "utility_name": "BC Hydro",
+      "code": "1101",
+      "rate_type": "tiered",
+      "recipe_code": "bundled",
+      "components": [
+        {
+          "code": "base",
+          "kind": "base_energy",
+          "unit": "\u00a2/kWh",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "step1",
+              "amount": "11.87"
+            },
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "step2",
+              "amount": "14.08"
+            }
+          ],
+          "disposition": "applies"
+        }
+      ],
+      "official_cents": [
+        "11.87",
+        "14.08"
+      ],
+      "notes": null
+    },
+    {
+      "plan_key": "bch-flat",
+      "name": "Residential flat rate",
+      "utility_name": "BC Hydro",
+      "code": "1151",
+      "rate_type": "flat",
+      "recipe_code": "bundled",
+      "components": [
+        {
+          "code": "base",
+          "kind": "base_energy",
+          "unit": "\u00a2/kWh",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "12.7"
+            }
+          ],
+          "disposition": "applies"
+        }
+      ],
+      "official_cents": [
+        "12.7"
+      ],
+      "notes": null
+    },
+    {
+      "plan_key": "pge-ca-e1",
+      "name": "Tiered Rate Plan (E-1)",
+      "utility_name": "Pacific Gas & Electric",
+      "code": "E-1",
+      "rate_type": "tiered",
+      "recipe_code": "bundled",
+      "components": [
+        {
+          "code": "base",
+          "kind": "base_energy",
+          "unit": "\u00a2/kWh",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "tier1",
+              "amount": "33"
+            },
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "tier2",
+              "amount": "41"
+            }
+          ],
+          "disposition": "applies",
+          "source_quote": "PG&E Mar 2026 price sheet"
+        }
+      ],
+      "official_cents": [
+        "33",
+        "41"
+      ],
+      "notes": null
+    },
+    {
+      "plan_key": "nwe-mt",
+      "name": "Residential (supply + delivery combined)",
+      "utility_name": "NorthWestern Energy Montana",
+      "code": "REDS-1+ESS-1",
+      "rate_type": "flat",
+      "recipe_code": "bundled",
+      "components": [
+        {
+          "code": "supply",
+          "kind": "base_energy",
+          "unit": "\u00a2/kWh",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "6.6043"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "deferred",
+          "kind": "rider_per_kwh",
+          "unit": "\u00a2/kWh",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "1.2176"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "tx",
+          "kind": "rider_per_kwh",
+          "unit": "\u00a2/kWh",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "1.5239"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "delivery",
+          "kind": "rider_per_kwh",
+          "unit": "\u00a2/kWh",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "5.7183"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "bpa",
+          "kind": "credit",
+          "unit": "\u00a2/kWh",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "-0.2133"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "usbc",
+          "kind": "rider_per_kwh",
+          "unit": "\u00a2/kWh",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "0.1334"
+            }
+          ],
+          "disposition": "applies"
+        }
+      ],
+      "official_cents": [
+        "14.984"
+      ],
+      "notes": "R17 official Oct 1 2026; half-plans rejected"
+    },
+    {
+      "plan_key": "epe-sch01",
+      "name": "Schedule 01 Residential (secondary + FFF + EECRF)",
+      "utility_name": "El Paso Electric",
+      "code": "01",
+      "rate_type": "seasonal",
+      "recipe_code": "bundled",
+      "components": [
+        {
+          "code": "base",
+          "kind": "base_energy",
+          "unit": "\u00a2/kWh",
+          "cells": [
+            {
+              "season": "summer",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "12.897"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "fff",
+          "kind": "rider_per_kwh",
+          "unit": "\u00a2/kWh",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "1.6154"
+            }
+          ],
+          "disposition": "applies",
+          "source_quote": "Sch 98 secondary 0.016154 $/kWh"
+        },
+        {
+          "code": "eecrf",
+          "kind": "rider_per_kwh",
+          "unit": "\u00a2/kWh",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "0.0687"
+            }
+          ],
+          "disposition": "applies",
+          "source_quote": "Sch 97 residential 0.000687 $/kWh"
+        }
+      ],
+      "official_cents": [
+        "14.5811"
+      ],
+      "notes": null
+    },
+    {
+      "plan_key": "nsp-cpp-interim",
+      "name": "Domestic Service Critical Peak Pricing Tariff (Interim Energy Charge)",
+      "utility_name": "Nova Scotia Power",
+      "code": "70",
+      "rate_type": "tou",
+      "recipe_code": "bundled",
+      "components": [
+        {
+          "code": "base",
+          "kind": "base_energy",
+          "unit": "\u00a2/kWh",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "18.324"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "fam",
+          "kind": "rider_per_kwh",
+          "unit": "\u00a2/kWh",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "0.156"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "dsm",
+          "kind": "rider_per_kwh",
+          "unit": "\u00a2/kWh",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "0.648"
+            }
+          ],
+          "disposition": "applies"
+        },
+        {
+          "code": "cpp_event",
+          "kind": "event_day",
+          "unit": "\u00a2/kWh",
+          "cells": [
+            {
+              "season": "all",
+              "period": "all",
+              "day_type": "all",
+              "tier": "all",
+              "amount": "182.871"
+            }
+          ],
+          "disposition": "event_day",
+          "name": "Critical peak event (excluded from everyday)"
+        }
+      ],
+      "official_cents": [
+        "19.128"
+      ],
+      "notes": "Event-day amount disposition=event_day; not in everyday all-in"
+    }
+  ]
+}
