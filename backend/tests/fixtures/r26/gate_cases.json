@@ -1,0 +1,2266 @@
+{
+ "source": "R25 runs/r25/b1_results.json + R20 runs/r20/b2_results.json; old rows from the R25/R20 snapshots",
+ "cases": [
+  {
+   "id": "R25-381-Residential TOU Rider (RTR-1)",
+   "why": "R25 fix 1: FPL RTR-1 refresh lost TOU (adders hours not shown)",
+   "expect": [
+    "tou_adders_unused",
+    "tou_downgrade"
+   ],
+   "new": {
+    "name": "Residential TOU Rider (RTR-1)",
+    "code": "RTR-1",
+    "rate_type": "tiered",
+    "effective_date": null,
+    "source_url": "https://www.fpl.com/content/dam/fplgp/us/en/rates/pdf/new-customer-overview.pdf",
+    "energy_scope": "bundled",
+    "components": [
+     {
+      "component_type": "fixed",
+      "unit": "$/month",
+      "rate_value": 10.52
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.12258,
+      "tier_min_kwh": 0,
+      "tier_max_kwh": 1000,
+      "tier_label": "all-in \u22641,000 kWh: base 7.865 + conservation 0.148 + capacity 0.052 + environmental 0.345 + storm 0.995 + fuel 2.893 + transition credit -0.040"
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.14257999999999998,
+      "tier_min_kwh": 1000,
+      "tier_label": "all-in >1,000 kWh: base 8.865 + conservation 0.148 + capacity 0.052 + environmental 0.345 + storm 0.995 + fuel 3.893 + transition credit -0.040"
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": 0.00148,
+      "period_label": "Conservation",
+      "included_in_energy": true
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": 0.00052,
+      "period_label": "Capacity",
+      "included_in_energy": true
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": 0.00345,
+      "period_label": "Environmental",
+      "included_in_energy": true
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": 0.00995,
+      "period_label": "Storm Protection",
+      "included_in_energy": true
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": 0.03893,
+      "period_label": "Fuel >1,000 kWh",
+      "included_in_energy": true
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": -0.0004,
+      "period_label": "Transition Credit",
+      "included_in_energy": false
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": 0.1441,
+      "period_label": "On-Peak Energy Charge adder (hours not shown)",
+      "included_in_energy": false
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": -0.06157,
+      "period_label": "Off-Peak Energy Charge adder (hours not shown)",
+      "included_in_energy": false
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": 0.00226,
+      "period_label": "On-Peak Fuel Charge",
+      "included_in_energy": false
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": -0.00098,
+      "period_label": "Off-Peak Fuel Charge",
+      "included_in_energy": false
+     }
+    ]
+   },
+   "old": {
+    "id": 71291,
+    "name": "Residential TOU Rider (RTR-1)",
+    "code": "RTR-1",
+    "rate_type": "tou_tiered",
+    "effective_date": "2026-09-01",
+    "confidence_factors": {
+     "energy_scope": "bundled"
+    },
+    "components": [
+     {
+      "component_type": "fixed",
+      "unit": "$/month",
+      "rate_value": 10.52,
+      "adjustment": false,
+      "included_in_energy": false
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.26894,
+      "tier_min_kwh": 0.0,
+      "tier_max_kwh": 1000.0,
+      "tier_label": "all-in \u22641,000 kWh: base 7.865 + on-peak 14.410 + conservation 0.148 + capacity 0.052 + environmenta\u2026",
+      "period_label": "On-Peak",
+      "adjustment": false,
+      "included_in_energy": false
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.28894,
+      "tier_min_kwh": 1000.0,
+      "tier_label": "all-in >1,000 kWh: base 8.865 + on-peak 14.410 + conservation 0.148 + capacity 0.052 + environmenta\u2026",
+      "period_label": "On-Peak",
+      "adjustment": false,
+      "included_in_energy": false
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.06003,
+      "tier_min_kwh": 0.0,
+      "tier_max_kwh": 1000.0,
+      "tier_label": "all-in \u22641,000 kWh: base 7.865 - 6.157 + 0.148 + 0.052 + 0.345 + 0.995 + fuel 2.893 - off-peak fuel\u2026",
+      "period_label": "Off-Peak",
+      "adjustment": false,
+      "included_in_energy": false
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.08003,
+      "tier_min_kwh": 1000.0,
+      "tier_label": "all-in >1,000 kWh: base 8.865 - 6.157 + 0.148 + 0.052 + 0.345 + 0.995 + fuel 3.893 - off-peak fuel\u2026",
+      "period_label": "Off-Peak",
+      "adjustment": false,
+      "included_in_energy": false
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": 0.00148,
+      "period_label": "Conservation Charge",
+      "adjustment": false,
+      "included_in_energy": true
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": 0.00052,
+      "period_label": "Capacity Charge",
+      "adjustment": false,
+      "included_in_energy": true
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": 0.00345,
+      "period_label": "Environmental Charge",
+      "adjustment": false,
+      "included_in_energy": true
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": 0.00995,
+      "period_label": "Storm Protection Charge",
+      "adjustment": false,
+      "included_in_energy": true
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": -0.0004,
+      "period_label": "Transition Credit",
+      "adjustment": false,
+      "included_in_energy": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "R25-304-Rate Schedule No. D1.11",
+   "why": "R25 fix 2: DTE CPP folded into everyday energy",
+   "expect": [
+    "event_in_everyday",
+    "tou_downgrade"
+   ],
+   "new": {
+    "name": "Rate Schedule No. D1.11 Residential Service Rate \u2013 Standard TOU",
+    "code": "D1.11",
+    "rate_type": "seasonal_tou",
+    "effective_date": "2026-03-05",
+    "source_url": "https://www.michigan.gov/-/media/Project/Websites/mpsc/consumer/rate-books/electric/dte/dtee1cur.pdf",
+    "energy_scope": "bundled",
+    "components": [
+     {
+      "component_type": "fixed",
+      "unit": "$/month",
+      "rate_value": 8.5,
+      "period_label": "Service Charge"
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": 0.09726000000000001,
+      "period_label": "Distribution Charge",
+      "included_in_energy": true
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": 0.00842,
+      "period_label": "Critical Peak Capacity Energy (per kWh $)",
+      "included_in_energy": true
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": 0.108,
+      "period_label": "Critical Peak Hours non-capacity energy",
+      "included_in_energy": true
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.29775,
+      "tier_label": "all-in: capacity 5.360 + non-capacity 9.047 + distribution 9.726 +riders",
+      "period_label": "On-Peak",
+      "season": "Summer",
+      "period_start_time": "15:00",
+      "period_end_time": "19:00",
+      "day_type": "weekday"
+     }
+    ]
+   },
+   "old": {
+    "id": 71302,
+    "name": "Standard Base Rate (D1.11)",
+    "code": "D1.11",
+    "rate_type": "seasonal_tou",
+    "effective_date": "2025-02-06",
+    "confidence_factors": {
+     "energy_scope": "bundled"
+    },
+    "components": [
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.24133,
+      "tier_label": "all-in: capacity 5.360 + non-capacity 9.047 + distribution 9.726",
+      "period_label": "Peak",
+      "season": "Summer",
+      "adjustment": false,
+      "period_start_time": "15:00:00",
+      "period_end_time": "19:00:00",
+      "day_type": "weekday",
+      "included_in_energy": false
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.18435,
+      "tier_label": "all-in: capacity 3.240 + non-capacity 5.469 + distribution 9.726",
+      "period_label": "Off-peak",
+      "season": "Summer",
+      "adjustment": false,
+      "period_start_time": "19:00:00",
+      "period_end_time": "15:00:00",
+      "day_type": "weekday",
+      "included_in_energy": false
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.18435,
+      "tier_label": "all-in: capacity 3.240 + non-capacity 5.469 + distribution 9.726",
+      "period_label": "Off-peak",
+      "season": "Summer",
+      "adjustment": false,
+      "period_start_time": "00:00:00",
+      "period_end_time": "00:00:00",
+      "day_type": "weekend",
+      "included_in_energy": false
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.18435,
+      "tier_label": "all-in: capacity 3.240 + non-capacity 5.469 + distribution 9.726",
+      "period_label": "Off-peak",
+      "season": "Summer",
+      "adjustment": false,
+      "period_start_time": "00:00:00",
+      "period_end_time": "00:00:00",
+      "day_type": "holiday",
+      "included_in_energy": false
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.20045,
+      "tier_label": "all-in: capacity 3.839 + non-capacity 6.480 + distribution 9.726",
+      "period_label": "Peak",
+      "season": "Non-summer",
+      "adjustment": false,
+      "period_start_time": "15:00:00",
+      "period_end_time": "19:00:00",
+      "day_type": "weekday",
+      "included_in_energy": false
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.18435,
+      "tier_label": "all-in: capacity 3.240 + non-capacity 5.469 + distribution 9.726",
+      "period_label": "Off-peak",
+      "season": "Non-summer",
+      "adjustment": false,
+      "period_start_time": "19:00:00",
+      "period_end_time": "15:00:00",
+      "day_type": "weekday",
+      "included_in_energy": false
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.18435,
+      "tier_label": "all-in: capacity 3.240 + non-capacity 5.469 + distribution 9.726",
+      "period_label": "Off-peak",
+      "season": "Non-summer",
+      "adjustment": false,
+      "period_start_time": "00:00:00",
+      "period_end_time": "00:00:00",
+      "day_type": "weekend",
+      "included_in_energy": false
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.18435,
+      "tier_label": "all-in: capacity 3.240 + non-capacity 5.469 + distribution 9.726",
+      "period_label": "Off-peak",
+      "season": "Non-summer",
+      "adjustment": false,
+      "period_start_time": "00:00:00",
+      "period_end_time": "00:00:00",
+      "day_type": "holiday",
+      "included_in_energy": false
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": 0.09726,
+      "period_label": "Distribution kWh (year-round)",
+      "adjustment": false,
+      "included_in_energy": true
+     },
+     {
+      "component_type": "fixed",
+      "unit": "$/month",
+      "rate_value": 8.5,
+      "period_label": "Service Charge",
+      "adjustment": false,
+      "included_in_energy": false
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/month",
+      "rate_value": -8.5,
+      "period_label": "RIA Credit (eligible customers only)",
+      "adjustment": false,
+      "included_in_energy": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "R25-304-Rate Schedule No. D1",
+   "why": "R25 fix 2: DTE D1 CPP in everyday energy",
+   "expect": [
+    "event_in_everyday"
+   ],
+   "new": {
+    "name": "Rate Schedule No. D1 Residential Service Rate \u2013 Non-Transmitting Meter",
+    "code": "D1",
+    "rate_type": "tiered",
+    "effective_date": "2026-03-05",
+    "source_url": "https://www.michigan.gov/-/media/Project/Websites/mpsc/consumer/rate-books/electric/dte/dtee1cur.pdf",
+    "energy_scope": "bundled",
+    "components": [
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": 0.05842,
+      "period_label": "Non-Capacity Energy Charge",
+      "included_in_energy": true
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": 0.09726000000000001,
+      "period_label": "Distribution Charge",
+      "included_in_energy": true
+     },
+     {
+      "component_type": "fixed",
+      "unit": "$/month",
+      "rate_value": 8.5,
+      "period_label": "Service Charge"
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": 0.00842,
+      "period_label": "Critical Peak Capacity Energy (per kWh $)",
+      "included_in_energy": true
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": 0.108,
+      "period_label": "Critical Peak Hours non-capacity energy",
+      "included_in_energy": true
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.3015,
+      "tier_min_kwh": 0,
+      "tier_max_kwh": 17,
+      "tier_label": "all-in first 17 kWh/day: capacity 2.940 + non-capacity 5.842 + distribution 9.726 +riders"
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.31449,
+      "tier_min_kwh": 17,
+      "tier_label": "all-in over 17 kWh/day: capacity 4.239 + non-capacity 5.842 + distribution 9.726 +riders"
+     }
+    ]
+   },
+   "old": {
+    "id": 71311,
+    "name": "Non-Transmitting Meter Rate (D1)",
+    "code": "D1",
+    "rate_type": "tiered",
+    "effective_date": "2025-02-06",
+    "confidence_factors": {
+     "energy_scope": "bundled"
+    },
+    "components": [
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.18508,
+      "tier_min_kwh": 0.0,
+      "tier_max_kwh": 17.0,
+      "tier_label": "all-in first 17 kWh/day: capacity 2.940 + non-capacity 5.842 + distribution 9.726",
+      "adjustment": false,
+      "included_in_energy": false
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.19807,
+      "tier_min_kwh": 17.0,
+      "tier_label": "all-in additional kWh: capacity 4.239 + non-capacity 5.842 + distribution 9.726",
+      "adjustment": false,
+      "included_in_energy": false
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": 0.09726,
+      "period_label": "Distribution kWh",
+      "adjustment": false,
+      "included_in_energy": true
+     },
+     {
+      "component_type": "fixed",
+      "unit": "$/month",
+      "rate_value": 8.5,
+      "period_label": "Service Charge",
+      "adjustment": false,
+      "included_in_energy": false
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/month",
+      "rate_value": -8.5,
+      "period_label": "RIA Credit (eligible customers)",
+      "adjustment": false,
+      "included_in_energy": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "R25-304-Rate Schedule No. D2",
+   "why": "R25 fix 2/3: DTE D2",
+   "expect": [
+    "event_in_everyday"
+   ],
+   "new": {
+    "name": "Rate Schedule No. D2 Residential Service Rate - Space Heating",
+    "code": "D2",
+    "rate_type": "seasonal_tiered",
+    "effective_date": "2026-03-05",
+    "source_url": "https://www.michigan.gov/-/media/Project/Websites/mpsc/consumer/rate-books/electric/dte/dtee1cur.pdf",
+    "energy_scope": "bundled",
+    "components": [
+     {
+      "component_type": "fixed",
+      "unit": "$/month",
+      "rate_value": 8.5,
+      "period_label": "Service Charge"
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": 0.05298,
+      "period_label": "Non-Capacity energy charge",
+      "included_in_energy": true
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": 0.09726000000000001,
+      "period_label": "Distribution charge",
+      "included_in_energy": true
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": 0.00842,
+      "period_label": "Critical Peak Capacity Energy (per kWh $)",
+      "included_in_energy": true
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": 0.108,
+      "period_label": "Critical Peak Hours non-capacity energy",
+      "included_in_energy": true
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.29479,
+      "tier_min_kwh": 0,
+      "tier_max_kwh": 17,
+      "tier_label": "all-in: capacity 2.813 + non-capacity 5.298 + distribution 9.726, first 17 kWh/day +riders",
+      "season": "June-October"
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.30687,
+      "tier_min_kwh": 17,
+      "tier_label": "all-in: capacity 4.021 + non-capacity 5.298 + distribution 9.726, over 17 kWh/day +riders",
+      "season": "June-October"
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.28324,
+      "tier_min_kwh": 0,
+      "tier_max_kwh": 20,
+      "tier_label": "all-in: capacity 1.658 + non-capacity 5.298 + distribution 9.726, first 20 kWh/day +riders",
+      "season": "November-May"
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.27314,
+      "tier_min_kwh": 20,
+      "tier_label": "all-in: capacity 0.648 + non-capacity 5.298 + distribution 9.726, over 20 kWh/day +riders",
+      "season": "November-May"
+     }
+    ]
+   },
+   "old": null
+  },
+  {
+   "id": "R20b2-895-Rate Schedule RS - Residential",
+   "why": "R25 fix 4: PPL pro-forma source",
+   "expect": [
+    "unfiled_source"
+   ],
+   "new": {
+    "name": "Rate Schedule RS - Residential Service",
+    "code": "RS",
+    "rate_type": "flat",
+    "effective_date": "2026-10-01",
+    "source_url": "https://www.pplelectric.com/site/-/media/PPLElectric/At-Your-Service/Docs/Current-Electric-Tariff/2026/September/Pro-Forma-Retail-Tariff-Supplement---CPTR.pdf",
+    "energy_scope": "delivery_only",
+    "components": [
+     {
+      "component_type": "fixed",
+      "unit": "$/month",
+      "rate_value": 15.0
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.06175,
+      "tier_label": "Distribution charge (includes ACR 5, USR, SDER)"
+     }
+    ]
+   },
+   "old": null
+  },
+  {
+   "id": "R20b2-819-Residential Electric Vehicle P",
+   "why": "Xcel MN 2019 stale book, -40% same effective date",
+   "expect": [
+    "price_jump"
+   ],
+   "new": {
+    "name": "Residential Electric Vehicle Pilot Service - Bundled",
+    "code": "A80",
+    "rate_type": "seasonal_tou",
+    "effective_date": "2019-01-01",
+    "source_url": "https://www.xcelenergy.com/staticfiles/xe/Regulatory/Regulatory%20PDFs/rates/MN/Me_Section_5.pdf",
+    "energy_scope": "bundled",
+    "components": [
+     {
+      "component_type": "fixed",
+      "unit": "$/month",
+      "rate_value": 17.47,
+      "period_label": "Customer Charge Bundled (A80)"
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": 0.004436,
+      "tier_label": "Transmission Cost Recovery - Residential",
+      "included_in_energy": true
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": 0.001097,
+      "tier_label": "RDF Rider",
+      "included_in_energy": true
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.220733,
+      "tier_label": "All-in (base + riders)",
+      "period_label": "On-Peak",
+      "season": "Summer",
+      "period_start_time": "09:00",
+      "period_end_time": "21:00",
+      "day_type": "weekday"
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.049313,
+      "tier_label": "All-in (base + riders)",
+      "period_label": "Off-Peak",
+      "season": "Summer",
+      "period_start_time": "21:00",
+      "period_end_time": "09:00",
+      "day_type": "weekday"
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.049313,
+      "tier_label": "All-in (base + riders)",
+      "period_label": "Off-Peak",
+      "season": "Summer",
+      "period_start_time": "00:00",
+      "period_end_time": "00:00",
+      "day_type": "weekend"
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.049313,
+      "tier_label": "All-in (base + riders)",
+      "period_label": "Off-Peak",
+      "season": "Summer",
+      "period_start_time": "00:00",
+      "period_end_time": "00:00",
+      "day_type": "holiday"
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.178813,
+      "tier_label": "All-in (base + riders)",
+      "period_label": "On-Peak",
+      "season": "Other Months",
+      "period_start_time": "09:00",
+      "period_end_time": "21:00",
+      "day_type": "weekday"
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.049313,
+      "tier_label": "All-in (base + riders)",
+      "period_label": "Off-Peak",
+      "season": "Other Months",
+      "period_start_time": "21:00",
+      "period_end_time": "09:00",
+      "day_type": "weekday"
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.049313,
+      "tier_label": "All-in (base + riders)",
+      "period_label": "Off-Peak",
+      "season": "Other Months",
+      "period_start_time": "00:00",
+      "period_end_time": "00:00",
+      "day_type": "weekend"
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.049313,
+      "tier_label": "All-in (base + riders)",
+      "period_label": "Off-Peak",
+      "season": "Other Months",
+      "period_start_time": "00:00",
+      "period_end_time": "00:00",
+      "day_type": "holiday"
+     }
+    ]
+   },
+   "old": {
+    "id": 63265,
+    "name": "Residential Electric Vehicle Pilot Service",
+    "code": "A80, A81",
+    "rate_type": "tou",
+    "effective_date": "2019-01-01",
+    "confidence_factors": {},
+    "components": [
+     {
+      "component_type": "fixed",
+      "unit": "$/month",
+      "rate_value": 17.47,
+      "tier_label": "Bundled",
+      "adjustment": false,
+      "included_in_energy": false
+     },
+     {
+      "component_type": "fixed",
+      "unit": "$/month",
+      "rate_value": 7.1,
+      "tier_label": "Pre-Pay Option",
+      "adjustment": false,
+      "included_in_energy": false
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.2152,
+      "period_label": "On-Peak",
+      "season": "Summer",
+      "adjustment": false,
+      "included_in_energy": false
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.17328,
+      "period_label": "On-Peak",
+      "season": "Winter",
+      "adjustment": false,
+      "included_in_energy": false
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.04378,
+      "period_label": "Off-Peak",
+      "adjustment": false,
+      "included_in_energy": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "R20b2-1000-Time of Use \u2013 TOUDR-Residentia",
+   "why": "SDG&E Time-of-Use plan extracted as flat",
+   "expect": [
+    "tou_downgrade"
+   ],
+   "new": {
+    "name": "Time of Use \u2013 TOUDR-Residential",
+    "code": "TOUDR",
+    "rate_type": "flat",
+    "effective_date": "2026-08-01",
+    "source_url": "https://www.sdge.com/sites/default/files/SDCP_SDGE%20JRC%2008.01.2026_Final.pdf",
+    "energy_scope": "bundled",
+    "components": [
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": 0.13251,
+      "period_label": "Generation Rate",
+      "included_in_energy": true
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": 0.04772,
+      "period_label": "PCIA",
+      "included_in_energy": true
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": 0.28884,
+      "period_label": "SDG&E Delivery Rate (includes Base Services Charge)",
+      "included_in_energy": true
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": 0.00517,
+      "period_label": "Franchise Fees",
+      "included_in_energy": true
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": 0.00343,
+      "period_label": "Franchise Fees (page total 0.45907 includes this)",
+      "included_in_energy": true
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.47767,
+      "tier_label": "all-in: generation 0.13251 + PCIA 0.04772 + delivery 0.28884 (excl. franchise fees 0.00517) +riders"
+     }
+    ]
+   },
+   "old": {
+    "id": 57141,
+    "name": "Time of Use \u2013 TOUDR-Residential",
+    "code": "TOUDR",
+    "rate_type": "tou",
+    "effective_date": "2026-06-01",
+    "confidence_factors": {},
+    "components": [
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.12524,
+      "tier_label": "Generation Rate",
+      "adjustment": false,
+      "included_in_energy": false
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": 0.04987,
+      "tier_label": "PCIA",
+      "adjustment": false,
+      "included_in_energy": false
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.29258,
+      "tier_label": "SDG&E Delivery Rate",
+      "adjustment": false,
+      "included_in_energy": false
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": 0.00517,
+      "tier_label": "Franchise Fees",
+      "adjustment": false,
+      "included_in_energy": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "R25-381-RS-2 EV Full Installation",
+   "why": "FPL RS-2 EV TOU refresh, unchanged shape",
+   "expect": [],
+   "new": {
+    "name": "RS-2 EV Full Installation",
+    "code": "RS-2",
+    "rate_type": "tou",
+    "effective_date": null,
+    "source_url": "https://www.fpl.com/content/dam/fplgp/us/en/rates/pdf/new-customer-overview.pdf",
+    "energy_scope": "bundled",
+    "components": [
+     {
+      "component_type": "fixed",
+      "unit": "$/month",
+      "rate_value": 36.0,
+      "period_label": "Monthly Program Charge"
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.27510999999999997,
+      "tier_label": "all-in: base 22.583 + conservation 0.148 + capacity 0.052 + environmental 0.345 + storm 0.995 + on-peak fuel 3.428 + transition credit -0.040",
+      "period_label": "On-Peak",
+      "day_type": "all"
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.0662,
+      "tier_label": "all-in: base 2.016 + conservation 0.148 + capacity 0.052 + environmental 0.345 + storm 0.995 + off-peak fuel 3.104 + transition credit -0.040",
+      "period_label": "Off-Peak",
+      "day_type": "all"
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": 0.00148,
+      "period_label": "Conservation Charge",
+      "included_in_energy": true
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": 0.00052,
+      "period_label": "Capacity Charge",
+      "included_in_energy": true
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": 0.00345,
+      "period_label": "Environmental Charge",
+      "included_in_energy": true
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": 0.00995,
+      "period_label": "Storm Protection Charge",
+      "included_in_energy": true
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": 0.03428,
+      "period_label": "On-Peak Fuel Charge",
+      "included_in_energy": true
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": 0.03104,
+      "period_label": "Off-Peak Fuel Charge",
+      "included_in_energy": true
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": -0.0004,
+      "period_label": "Transition Credit",
+      "included_in_energy": false
+     }
+    ]
+   },
+   "old": {
+    "id": 71294,
+    "name": "RS-2 EV Full Installation",
+    "code": "RS-2 EV Full Installation",
+    "rate_type": "tou",
+    "effective_date": "2026-10-01",
+    "confidence_factors": {
+     "energy_scope": "bundled"
+    },
+    "components": [
+     {
+      "component_type": "fixed",
+      "unit": "$/month",
+      "rate_value": 36.0,
+      "period_label": "Monthly Program Charge",
+      "adjustment": false,
+      "included_in_energy": false
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.27511,
+      "tier_label": "all-in: 22.583 + conservation 0.148 + capacity 0.052 + environmental 0.345 + storm 0.995 + on-peak\u2026",
+      "period_label": "On-Peak",
+      "adjustment": false,
+      "included_in_energy": false
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.0662,
+      "tier_label": "all-in: 2.016 + conservation 0.148 + capacity 0.052 + environmental 0.345 + storm 0.995 + off-peak\u2026",
+      "period_label": "Off-Peak",
+      "adjustment": false,
+      "included_in_energy": false
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": 0.00148,
+      "period_label": "Conservation Charge",
+      "adjustment": false,
+      "included_in_energy": true
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": 0.00052,
+      "period_label": "Capacity Charge",
+      "adjustment": false,
+      "included_in_energy": true
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": 0.00345,
+      "period_label": "Environmental Charge",
+      "adjustment": false,
+      "included_in_energy": true
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": 0.00995,
+      "period_label": "Storm Protection Charge",
+      "adjustment": false,
+      "included_in_energy": true
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": 0.03428,
+      "period_label": "On-Peak Fuel Charge",
+      "adjustment": false,
+      "included_in_energy": true
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": 0.03104,
+      "period_label": "Off-Peak Fuel Charge",
+      "adjustment": false,
+      "included_in_energy": true
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": -0.0004,
+      "period_label": "Transition Credit",
+      "adjustment": false,
+      "included_in_energy": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "R25-381-RS-1 EV Full Installation",
+   "why": "FPL RS-1 EV refresh",
+   "expect": [],
+   "new": {
+    "name": "RS-1 EV Full Installation",
+    "code": null,
+    "rate_type": "flat",
+    "effective_date": null,
+    "source_url": "https://www.fpl.com/content/dam/fplgp/us/en/rates/pdf/new-customer-overview.pdf",
+    "energy_scope": "bundled",
+    "components": [
+     {
+      "component_type": "fixed",
+      "unit": "$/month",
+      "rate_value": 25.57,
+      "period_label": "Monthly Program Charge"
+     },
+     {
+      "component_type": "fixed",
+      "unit": "$/month",
+      "rate_value": 19.81,
+      "period_label": "Monthly charge (column labeled Monthly Off-Peak Energy Charge)"
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.27067,
+      "tier_label": "as printed; no other per-kWh riders shown on this row",
+      "period_label": "Energy charge (On-Peak Energy Charge column)"
+     }
+    ]
+   },
+   "old": {
+    "id": 71292,
+    "name": "RS-1 EV Full Installation",
+    "code": null,
+    "rate_type": "complex",
+    "effective_date": null,
+    "confidence_factors": {
+     "energy_scope": "bundled"
+    },
+    "components": [
+     {
+      "component_type": "fixed",
+      "unit": "$/month",
+      "rate_value": 25.57,
+      "period_label": "Monthly Program Charge",
+      "adjustment": false,
+      "included_in_energy": false
+     },
+     {
+      "component_type": "fixed",
+      "unit": "$/month",
+      "rate_value": 19.81,
+      "period_label": "Monthly Off-Peak Energy Charge",
+      "adjustment": false,
+      "included_in_energy": false
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": 0.00148,
+      "period_label": "Conservation",
+      "adjustment": false,
+      "included_in_energy": true
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": 0.00052,
+      "period_label": "Capacity",
+      "adjustment": false,
+      "included_in_energy": true
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": 0.00345,
+      "period_label": "Environmental",
+      "adjustment": false,
+      "included_in_energy": true
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": 0.00995,
+      "period_label": "Storm protection",
+      "adjustment": false,
+      "included_in_energy": true
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": 0.02893,
+      "period_label": "Fuel \u22641,000 kWh",
+      "adjustment": false,
+      "included_in_energy": true
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.315,
+      "tier_label": "as printed; no clock hours shown (all-in +riders)",
+      "period_label": "On-Peak Energy Charge",
+      "adjustment": false,
+      "day_type": "all",
+      "included_in_energy": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "R20b2-768-Optional Residential Service,",
+   "why": "SRP ORM-CPP: event price correctly moved out of everyday energy",
+   "expect": [],
+   "new": {
+    "name": "Optional Residential Service, Multi-Family, Critical Peak Price (ORM-CPP)",
+    "code": "ORM-CPP",
+    "rate_type": "seasonal_tou",
+    "effective_date": null,
+    "source_url": "https://www.nvenergy.com/publish/content/dam/nvenergy/bill_inserts/2026/10_oct/np_res_opt_rate-10_1_30.pdf",
+    "energy_scope": "bundled",
+    "components": [
+     {
+      "component_type": "fixed",
+      "unit": "$/month",
+      "rate_value": 8.2
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": -0.0025,
+      "period_label": "DEAA",
+      "included_in_energy": true
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": 0.00254,
+      "period_label": "EE",
+      "included_in_energy": true
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": 0.00029,
+      "period_label": "NDPP",
+      "included_in_energy": true
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": 0.55816,
+      "period_label": "Critical peak period (base BTGR+BTER, replaces other energy during events; hours not stated)",
+      "included_in_energy": false
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": 0.08499,
+      "period_label": "Summer RMEVRR (optional EV recharge rider, 12:01 a.m.-8:00 a.m. base)",
+      "season": "Summer",
+      "included_in_energy": false
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": 0.065,
+      "period_label": "Winter RMEVRR (optional EV recharge rider, base)",
+      "season": "Winter",
+      "included_in_energy": false
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": 0.00039,
+      "period_label": "Universal Energy Charge (billed in addition)",
+      "included_in_energy": true
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": 0.00053,
+      "period_label": "TRED",
+      "included_in_energy": true
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": -0.00052,
+      "period_label": "REPR",
+      "included_in_energy": true
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": 7e-05,
+      "period_label": "ESAP",
+      "included_in_energy": true
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.32022,
+      "tier_label": "all-in: base 0.31626 + DEAA -0.00250 + TRED 0.00044 + EE 0.00254 + NDPP 0.00029 + ESAP 0.00006 +riders",
+      "period_label": "Summer on-peak",
+      "season": "Summer",
+      "period_start_time": "18:01",
+      "period_end_time": "21:00",
+      "day_type": "all"
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.09537,
+      "tier_label": "all-in: base 0.09454 + riders 0.00083",
+      "period_label": "Summer off-peak",
+      "season": "Summer",
+      "period_start_time": "21:00",
+      "period_end_time": "18:01",
+      "day_type": "all"
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.07316,
+      "tier_label": "all-in: base 0.07233 + riders 0.00083",
+      "period_label": "Winter",
+      "season": "Winter",
+      "period_start_time": "00:00",
+      "period_end_time": "00:00",
+      "day_type": "all"
+     }
+    ]
+   },
+   "old": {
+    "id": 66508,
+    "name": "Optional Residential Service, Multi-Family, Critical Peak Price (ORM-CPP)",
+    "code": "ORM-CPP",
+    "rate_type": "seasonal_tou",
+    "effective_date": null,
+    "confidence_factors": {},
+    "components": [
+     {
+      "component_type": "fixed",
+      "unit": "$/month",
+      "rate_value": 8.2,
+      "adjustment": false,
+      "included_in_energy": false
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.56059,
+      "period_label": "Critical peak period",
+      "season": "Summer",
+      "adjustment": false,
+      "included_in_energy": false
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.31869,
+      "period_label": "On-peak",
+      "season": "Summer",
+      "adjustment": false,
+      "included_in_energy": false
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.09697,
+      "period_label": "Off-peak",
+      "season": "Summer",
+      "adjustment": false,
+      "included_in_energy": false
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.08742,
+      "period_label": "RMEVRR",
+      "season": "Summer",
+      "adjustment": false,
+      "included_in_energy": false
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.07476,
+      "season": "Winter",
+      "adjustment": false,
+      "included_in_energy": false
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.06743,
+      "period_label": "RMEVRR",
+      "season": "Winter",
+      "adjustment": false,
+      "included_in_energy": false
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": 0.0,
+      "tier_label": "DEAA, all kWh",
+      "adjustment": false,
+      "included_in_energy": false
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": 0.00053,
+      "tier_label": "TRED, all kWh",
+      "adjustment": false,
+      "included_in_energy": false
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": -0.00052,
+      "tier_label": "REPR, all kWh",
+      "adjustment": false,
+      "included_in_energy": false
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": 0.00193,
+      "tier_label": "EE, all kWh",
+      "adjustment": false,
+      "included_in_energy": false
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": 0.00029,
+      "tier_label": "NDPP, all kWh",
+      "adjustment": false,
+      "included_in_energy": false
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": 7e-05,
+      "tier_label": "ESAP, all kWh",
+      "adjustment": false,
+      "included_in_energy": false
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": -0.3109,
+      "tier_label": "EEC NMR-G Banking NMR-A",
+      "period_label": "Critical peak period",
+      "adjustment": false,
+      "included_in_energy": false
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": -0.18481,
+      "tier_label": "EEC NMR-G Banking NMR-A",
+      "period_label": "On-peak",
+      "adjustment": false,
+      "included_in_energy": false
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": -0.07437,
+      "tier_label": "EEC NMR-G Banking NMR-A",
+      "period_label": "Off-peak",
+      "adjustment": false,
+      "included_in_energy": false
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": -0.07246,
+      "tier_label": "EEC NMR-G Banking NMR-A",
+      "period_label": "RMEVRR",
+      "season": "Summer",
+      "adjustment": false,
+      "included_in_energy": false
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": -0.04586,
+      "tier_label": "EEC NMR-G Banking NMR-A",
+      "season": "Winter",
+      "adjustment": false,
+      "included_in_energy": false
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": -0.04439,
+      "tier_label": "EEC NMR-G Banking NMR-A",
+      "period_label": "RMEVRR",
+      "season": "Winter",
+      "adjustment": false,
+      "included_in_energy": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "R20b2-1000-DR-Residential-CARE",
+   "why": "SDG&E flat plan; old supplier-product labels are not TOU periods",
+   "expect": [],
+   "new": {
+    "name": "DR-Residential-CARE",
+    "code": "DR CARE",
+    "rate_type": "flat",
+    "effective_date": "2026-08-01",
+    "source_url": "https://www.sdge.com/sites/default/files/SDCP_SDGE%20JRC%2008.01.2026_Final.pdf",
+    "energy_scope": "bundled",
+    "components": [
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": 0.04771,
+      "period_label": "PCIA",
+      "included_in_energy": true
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": 0.00517,
+      "period_label": "Franchise Fees",
+      "included_in_energy": true
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": 0.00343,
+      "period_label": "Franchise Fees (page total 0.45907 includes this)",
+      "included_in_energy": true
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.28592,
+      "tier_label": "all-in total electricity cost: generation 0.13832 + PCIA 0.04771 + delivery 0.08673 + franchise fees 0.00455 (printed total) +riders",
+      "day_type": "all"
+     }
+    ]
+   },
+   "old": {
+    "id": 57139,
+    "name": "DR-Residential-CARE",
+    "code": "DRLI",
+    "rate_type": "flat",
+    "effective_date": "2026-01-01",
+    "confidence_factors": {},
+    "components": [
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.1312,
+      "period_label": "SDG&E Standard 41% Renewable",
+      "adjustment": false,
+      "included_in_energy": false
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.1271,
+      "period_label": "SDCP PowerBase 41% Renewable",
+      "adjustment": false,
+      "included_in_energy": false
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.13808,
+      "period_label": "SDCP PowerOn 45% Renewable",
+      "adjustment": false,
+      "included_in_energy": false
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.14808,
+      "period_label": "SDCP Power100 100% Renewable",
+      "adjustment": false,
+      "included_in_energy": false
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": 0.04977,
+      "period_label": "PCIA - SDG&E Standard 41% Renewable",
+      "adjustment": false,
+      "included_in_energy": false
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/kWh",
+      "rate_value": 0.03557,
+      "period_label": "PCIA - SDCP PowerBase/PowerOn/Power100",
+      "adjustment": false,
+      "included_in_energy": false
+     },
+     {
+      "component_type": "demand",
+      "unit": "$/kWh",
+      "rate_value": 0.08091,
+      "period_label": "SDG&E Delivery Rate DRLI",
+      "adjustment": false,
+      "included_in_energy": false
+     },
+     {
+      "component_type": "demand",
+      "unit": "$/kWh",
+      "rate_value": 0.08092,
+      "period_label": "SDCP Delivery Rate DRLI",
+      "adjustment": false,
+      "included_in_energy": false
+     },
+     {
+      "component_type": "fixed",
+      "unit": "$/% kWh",
+      "rate_value": 0.00463,
+      "period_label": "Franchise Fees DRLI",
+      "adjustment": false,
+      "included_in_energy": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "R20b2-10-Rate FD-D Family Dwelling",
+   "why": "Alabama FD-D: old demand_tou with one All-hours row is not TOU",
+   "expect": [],
+   "new": {
+    "name": "Rate FD-D Family Dwelling - Residential Service Demand (Optional)",
+    "code": "FD-D",
+    "rate_type": "demand",
+    "effective_date": null,
+    "source_url": "https://www.alabamapower.com/content/dam/alabama-power/pdfs-docs/Rates/fd-d.pdf",
+    "energy_scope": "bundled",
+    "components": [
+     {
+      "component_type": "fixed",
+      "unit": "$/month",
+      "rate_value": 14.5,
+      "tier_label": "Base Charge per Customer"
+     },
+     {
+      "component_type": "demand",
+      "unit": "$/kW",
+      "rate_value": 8.0,
+      "tier_label": "Demand charge per kW of Billing Capacity (measured in peak periods: Apr-Oct weekdays 13:00-17:00; Nov-Mar weekdays 06:00-09:00)"
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.079607,
+      "tier_label": "all hours (RSE and CNP included)",
+      "day_type": "all"
+     }
+    ]
+   },
+   "old": {
+    "id": 63542,
+    "name": "Rate FD-D Family Dwelling - Residential Service Demand (Optional)",
+    "code": "FD-D",
+    "rate_type": "demand_tou",
+    "effective_date": "2022-04-01",
+    "confidence_factors": {},
+    "components": [
+     {
+      "component_type": "fixed",
+      "unit": "$/month",
+      "rate_value": 14.5,
+      "adjustment": false,
+      "included_in_energy": false
+     },
+     {
+      "component_type": "demand",
+      "unit": "$/kW",
+      "rate_value": 8.0,
+      "period_label": "Peak Period (Apr-Oct: 1pm-5pm weekdays; Nov-Mar: 6am-9am weekdays)",
+      "adjustment": false,
+      "included_in_energy": false
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.079607,
+      "period_label": "All hours",
+      "adjustment": false,
+      "included_in_energy": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "R20b2-419-Residential Service Schedule R",
+   "why": "Georgia R-31 refresh",
+   "expect": [],
+   "new": {
+    "name": "Residential Service Schedule R-31",
+    "code": "R-31",
+    "rate_type": "seasonal_tiered",
+    "effective_date": "2026-06-01",
+    "source_url": "https://www.georgiapower.com/content/dam/georgia-power/pdfs/tariffs/r.pdf",
+    "energy_scope": "bundled",
+    "components": [
+     {
+      "component_type": "fixed",
+      "unit": "$/day",
+      "rate_value": 0.4603,
+      "period_label": "Basic Service Charge"
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.08211600000000001,
+      "tier_label": "All kWh",
+      "season": "Winter"
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.087738,
+      "tier_min_kwh": 0,
+      "tier_max_kwh": 650,
+      "tier_label": "First 650 kWh",
+      "season": "Summer"
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.145738,
+      "tier_min_kwh": 650,
+      "tier_max_kwh": 1000,
+      "tier_label": "Next 350 kWh",
+      "season": "Summer"
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.15082800000000002,
+      "tier_min_kwh": 1000,
+      "tier_label": "Over 1000 kWh",
+      "season": "Summer"
+     }
+    ]
+   },
+   "old": {
+    "id": 70046,
+    "name": "Residential Tariff",
+    "code": "R-31",
+    "rate_type": "seasonal_tiered",
+    "effective_date": "2026-06-01",
+    "confidence_factors": {},
+    "components": [
+     {
+      "component_type": "fixed",
+      "unit": "$/month",
+      "rate_value": 0.0,
+      "tier_label": "Base Charge (placeholder - value not shown)",
+      "adjustment": false,
+      "included_in_energy": false
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.0,
+      "tier_min_kwh": 0.0,
+      "tier_max_kwh": 650.0,
+      "tier_label": "Tier 1 (Summer, up to 650 kWh)",
+      "season": "Summer",
+      "adjustment": false,
+      "day_type": "all",
+      "included_in_energy": false
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.0,
+      "tier_min_kwh": 650.0,
+      "tier_max_kwh": 1000.0,
+      "tier_label": "Tier 2 (Summer, 650-1000 kWh)",
+      "season": "Summer",
+      "adjustment": false,
+      "day_type": "all",
+      "included_in_energy": false
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.0,
+      "tier_min_kwh": 1000.0,
+      "tier_label": "Tier 3 (Summer, over 1000 kWh)",
+      "season": "Summer",
+      "adjustment": false,
+      "day_type": "all",
+      "included_in_energy": false
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.0,
+      "tier_min_kwh": 0.0,
+      "tier_max_kwh": 650.0,
+      "tier_label": "Tier 1 (Winter, up to 650 kWh)",
+      "season": "Winter",
+      "adjustment": false,
+      "day_type": "all",
+      "included_in_energy": false
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.0,
+      "tier_min_kwh": 650.0,
+      "tier_max_kwh": 1000.0,
+      "tier_label": "Tier 2 (Winter, 650-1000 kWh)",
+      "season": "Winter",
+      "adjustment": false,
+      "day_type": "all",
+      "included_in_energy": false
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.0,
+      "tier_min_kwh": 1000.0,
+      "tier_label": "Tier 3 (Winter, over 1000 kWh)",
+      "season": "Winter",
+      "adjustment": false,
+      "day_type": "all",
+      "included_in_energy": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "R20b2-1741-Rate #1.1 Domestic Service",
+   "why": "Ontario/Canada refresh",
+   "expect": [],
+   "new": {
+    "name": "Rate #1.1 Domestic Service",
+    "code": "1.1",
+    "rate_type": "flat",
+    "effective_date": "2026-07-01",
+    "source_url": "https://www.newfoundlandpower.com/-/media/PDFs/Business-Services/Commercial-Rates/RateBook_July1_2026_20260612.pdf",
+    "energy_scope": "bundled",
+    "components": [
+     {
+      "component_type": "fixed",
+      "unit": "$/month",
+      "rate_value": 17.36,
+      "tier_label": "Not exceeding 200 Amp service"
+     },
+     {
+      "component_type": "fixed",
+      "unit": "$/month",
+      "rate_value": 22.36,
+      "tier_label": "Exceeding 200 Amp service"
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.15587,
+      "tier_label": "All kWh (includes Municipal Tax and Rate Stabilization Adjustments)"
+     }
+    ]
+   },
+   "old": {
+    "id": 60239,
+    "name": "Rate #1.1 Domestic Service",
+    "code": "1.1",
+    "rate_type": "flat",
+    "effective_date": "2026-07-01",
+    "confidence_factors": {},
+    "components": [
+     {
+      "component_type": "fixed",
+      "unit": "$/month",
+      "rate_value": 17.36,
+      "tier_label": "Not Exceeding 200 Amp Service",
+      "adjustment": false,
+      "included_in_energy": false
+     },
+     {
+      "component_type": "fixed",
+      "unit": "$/month",
+      "rate_value": 22.36,
+      "tier_label": "Exceeding 200 Amp Service",
+      "adjustment": false,
+      "included_in_energy": false
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.15587,
+      "adjustment": false,
+      "included_in_energy": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "R20b2-1717-Rate of Last Resort",
+   "why": "Alberta RoLR refresh",
+   "expect": [],
+   "new": {
+    "name": "Rate of Last Resort",
+    "code": null,
+    "rate_type": "flat",
+    "effective_date": "2025-01-01",
+    "source_url": "https://www.epcor.com/ca/en/ab/edmonton/start-services/home/rate-of-last-resort.html",
+    "energy_scope": "bundled",
+    "components": [
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.1201,
+      "day_type": "all"
+     }
+    ]
+   },
+   "old": {
+    "id": 69627,
+    "name": "Rate of Last Resort",
+    "code": "RoLR",
+    "rate_type": "flat",
+    "effective_date": "2025-01-01",
+    "confidence_factors": {},
+    "components": [
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.1201,
+      "adjustment": false,
+      "included_in_energy": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "R20b2-553-Separately Metered Electric Ve",
+   "why": "seasonal TOU refresh",
+   "expect": [],
+   "new": {
+    "name": "Separately Metered Electric Vehicle Time of Use",
+    "code": "RTOU-EV",
+    "rate_type": "seasonal_tou",
+    "effective_date": "2026-02-04",
+    "source_url": "https://www.evergy.com/-/media/documents/billing/missouri/detailed_tariffs_mo/mo-metro-rate.pdf",
+    "energy_scope": "bundled",
+    "components": [
+     {
+      "component_type": "fixed",
+      "unit": "$/month",
+      "rate_value": 3.25
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.35879,
+      "period_label": "Peak",
+      "season": "Summer",
+      "period_start_time": "16:00",
+      "period_end_time": "20:00",
+      "day_type": "weekday"
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.1196,
+      "period_label": "Off-Peak",
+      "season": "Summer",
+      "period_start_time": "06:00",
+      "period_end_time": "16:00",
+      "day_type": "weekday"
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.1196,
+      "period_label": "Off-Peak",
+      "season": "Summer",
+      "period_start_time": "20:00",
+      "period_end_time": "00:00",
+      "day_type": "weekday"
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.0299,
+      "period_label": "Super Off-Peak",
+      "season": "Summer",
+      "period_start_time": "00:00",
+      "period_end_time": "06:00",
+      "day_type": "weekday"
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.1196,
+      "period_label": "Off-Peak",
+      "season": "Summer",
+      "period_start_time": "06:00",
+      "period_end_time": "00:00",
+      "day_type": "weekend"
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.0299,
+      "period_label": "Super Off-Peak",
+      "season": "Summer",
+      "period_start_time": "00:00",
+      "period_end_time": "06:00",
+      "day_type": "weekend"
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.1196,
+      "period_label": "Off-Peak",
+      "season": "Summer",
+      "period_start_time": "06:00",
+      "period_end_time": "00:00",
+      "day_type": "holiday"
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.0299,
+      "period_label": "Super Off-Peak",
+      "season": "Summer",
+      "period_start_time": "00:00",
+      "period_end_time": "06:00",
+      "day_type": "holiday"
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.27305,
+      "period_label": "Peak",
+      "season": "Winter",
+      "period_start_time": "16:00",
+      "period_end_time": "20:00",
+      "day_type": "weekday"
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.09102,
+      "period_label": "Off-Peak",
+      "season": "Winter",
+      "period_start_time": "06:00",
+      "period_end_time": "16:00",
+      "day_type": "weekday"
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.09102,
+      "period_label": "Off-Peak",
+      "season": "Winter",
+      "period_start_time": "20:00",
+      "period_end_time": "00:00",
+      "day_type": "weekday"
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.02275,
+      "period_label": "Super Off-Peak",
+      "season": "Winter",
+      "period_start_time": "00:00",
+      "period_end_time": "06:00",
+      "day_type": "weekday"
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.09102,
+      "period_label": "Off-Peak",
+      "season": "Winter",
+      "period_start_time": "06:00",
+      "period_end_time": "00:00",
+      "day_type": "weekend"
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.02275,
+      "period_label": "Super Off-Peak",
+      "season": "Winter",
+      "period_start_time": "00:00",
+      "period_end_time": "06:00",
+      "day_type": "weekend"
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.09102,
+      "period_label": "Off-Peak",
+      "season": "Winter",
+      "period_start_time": "06:00",
+      "period_end_time": "00:00",
+      "day_type": "holiday"
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.02275,
+      "period_label": "Super Off-Peak",
+      "season": "Winter",
+      "period_start_time": "00:00",
+      "period_end_time": "06:00",
+      "day_type": "holiday"
+     }
+    ]
+   },
+   "old": {
+    "id": 63148,
+    "name": "Separately Metered Electric Vehicle Time of Use",
+    "code": "RTOU-EV",
+    "rate_type": "seasonal_tou",
+    "effective_date": "2026-02-04",
+    "confidence_factors": {},
+    "components": [
+     {
+      "component_type": "fixed",
+      "unit": "$/month",
+      "rate_value": 3.25,
+      "adjustment": false,
+      "included_in_energy": false
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.35879,
+      "period_label": "Peak",
+      "season": "Summer",
+      "adjustment": false,
+      "included_in_energy": false
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.1196,
+      "period_label": "Off-Peak",
+      "season": "Summer",
+      "adjustment": false,
+      "included_in_energy": false
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.0299,
+      "period_label": "Super Off-Peak",
+      "season": "Summer",
+      "adjustment": false,
+      "included_in_energy": false
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.27305,
+      "period_label": "Peak",
+      "season": "Winter",
+      "adjustment": false,
+      "included_in_energy": false
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.09102,
+      "period_label": "Off-Peak",
+      "season": "Winter",
+      "adjustment": false,
+      "included_in_energy": false
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.02275,
+      "period_label": "Super Off-Peak",
+      "season": "Winter",
+      "adjustment": false,
+      "included_in_energy": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "R20b2-664-R-1 Heat Pump",
+   "why": "seasonal plan; Heat Pump label is not a TOU period",
+   "expect": [],
+   "new": {
+    "name": "R-1 Heat Pump (Nov 1-Apr 30)",
+    "code": "R-1",
+    "rate_type": "seasonal",
+    "effective_date": null,
+    "source_url": "https://www.nationalgridus.com/media/pdfs/billing-payments/electric-rates/ma/2026/0326meco.pdf",
+    "energy_scope": "delivery_only",
+    "components": [
+     {
+      "component_type": "fixed",
+      "unit": "$/month",
+      "rate_value": 10.0
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.05851,
+      "tier_label": "Heat Pump kWh net retail delivery price (all delivery charges included)",
+      "season": "Heat Pump kWh (Nov 1-Apr 30)"
+     }
+    ]
+   },
+   "old": {
+    "id": 71002,
+    "name": "R-1",
+    "code": "R-1",
+    "rate_type": "seasonal",
+    "effective_date": "2026-05-01",
+    "confidence_factors": {},
+    "components": [
+     {
+      "component_type": "fixed",
+      "unit": "$/month",
+      "rate_value": 10.0,
+      "adjustment": false,
+      "included_in_energy": false
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.11028,
+      "season": "Non-Winter (May 1 - October 31)",
+      "adjustment": false,
+      "day_type": "all",
+      "included_in_energy": false
+     },
+     {
+      "component_type": "energy",
+      "unit": "$/kWh",
+      "rate_value": 0.06791,
+      "period_label": "Heat Pump kWh (Nov 1-Apr 30)",
+      "season": "Winter (November 1 - April 30)",
+      "adjustment": false,
+      "day_type": "all",
+      "included_in_energy": false
+     }
+    ]
+   }
+  }
+ ]
+}

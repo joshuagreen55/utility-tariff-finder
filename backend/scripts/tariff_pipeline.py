@@ -13224,6 +13224,40 @@ def _computable_regression(existing, rate_type, new_components) -> list[str] | N
     return list(new.reasons) if old.computable else None
 
 
+# R26 write gate: proposals held this process (runner / tests read this).
+GATE_HOLDS: list[dict] = []
+
+
+def mark_unfiled_sources(tariffs: list, pages) -> int:
+    """Flag extracts whose source document is pro-forma / draft / undated
+    ("Effective: XXXX"). The write gate holds them (R25: PPL pro-forma)."""
+    from app.services.write_gate import unfiled_source
+
+    texts = {getattr(p, "url", ""): getattr(p, "content", "") or "" for p in (pages or [])}
+    n = 0
+    for t in tariffs or []:
+        r = unfiled_source(t.source_url, texts.get(t.source_url))
+        if r:
+            t.source_unfiled = r
+            n += 1
+    if n:
+        log.warning(f"  Write gate: {n} extract(s) come from unfiled / pro-forma documents")
+    return n
+
+
+def _gate_same_code_row(live_rows: list, name: str, code: str | None, rate_type) -> object | None:
+    codes = extract_ratebook_codes(name, code)
+    if not codes:
+        return None
+    fam = _rate_type_family(rate_type)
+    for r in live_rows:
+        if extract_ratebook_codes(r.name, r.code) == codes:
+            rf = _rate_type_family(r.rate_type)
+            if rf == fam or "complex" in (rf, fam):
+                return r
+    return None
+
+
 def store_tariffs(
     utility_id: int,
     tariffs: list[ExtractedTariff],
@@ -13304,6 +13338,29 @@ def store_tariffs(
         # (inserted, revised, re-verified or held). Used by the OpenEI
         # matcher and to keep reconciliation away from these rows.
         fresh_by_key: dict = {}
+        # R26 write gate context: live rows per class, and whether the
+        # coverage-gated reconciliation will be skipped for that class.
+        from app.services import write_gate as _wg
+        _gate_live: dict = {}
+        _gate_extracted: dict = {}
+        _gate_keep_ids: set = set()  # live rows a held proposal was compared with
+        for _et in tariffs:
+            _c = class_map.get(_et.customer_class)
+            if _c:
+                _gate_extracted[_c] = _gate_extracted.get(_c, 0) + 1
+        for _c in _gate_extracted:
+            _gate_live[_c] = list(session.execute(
+                select(Tariff).where(
+                    Tariff.utility_id == utility_id,
+                    Tariff.customer_class == _c,
+                    Tariff.superseded_by_tariff_id.is_(None),
+                    Tariff.supersede_reason.is_(None),
+                )
+            ).scalars().all())
+        _gate_skip = {
+            _c: _gate_extracted[_c] < len(_gate_live.get(_c, [])) * RECONCILE_MIN_COVERAGE
+            for _c in _gate_extracted
+        }
         for et in tariffs:
             cc = class_map.get(et.customer_class)
             rt = type_map.get(et.rate_type)
@@ -13568,6 +13625,70 @@ def store_tariffs(
                 fresh_by_key[(et.name, cc)] = existing
                 continue
 
+            # R26 write gate (after the computable guard, whose hold is more
+            # specific): compare with the live plan this write would
+            # replace (same name, else a clearly-same plan by schedule code)
+            # and HOLD (no insert, no supersede) on any rule hit.
+            gate_old = existing
+            if gate_old is None:
+                from types import SimpleNamespace as _NS
+                _proxy = _NS(name=et.name, code=code_clipped, rate_type=rt, customer_class=cc,
+                             effective_date=eff_date, source_type=new_source_type,
+                             confidence_factors=conf_factors, openei_id=None, id=None)
+                _same = [r for r in _gate_live.get(cc, [])
+                         if clearly_same_plan(r, _proxy, utility_name=u_name)]
+                gate_old = _same[0] if len(_same) == 1 else None
+                if gate_old is None and not _same:
+                    # Same schedule code under another name / family (a TOU
+                    # plan re-extracted as flat): still the plan it replaces.
+                    _codes = extract_ratebook_codes(et.name, code_clipped)
+                    _by_code = [r for r in _gate_live.get(cc, [])
+                                if _codes and extract_ratebook_codes(r.name, r.code) == _codes]
+                    gate_old = _by_code[0] if len(_by_code) == 1 else None
+            gate_dup = None
+            if gate_old is None:
+                gate_dup = _gate_same_code_row(_gate_live.get(cc, []), et.name, code_clipped, rt)
+            gate_hits = _wg.evaluate(
+                new_type=_wg._val(rt), new_comps=new_components, old=gate_old,
+                extracted_comps=et.components, new_eff=eff_date, new_scope=scope,
+                source_url=et.source_url, unfiled_reason=getattr(et, "source_unfiled", None),
+                dup_row=gate_dup, reconcile_skipped=bool(_gate_skip.get(cc)),
+            )
+            if gate_hits:
+                ref = gate_old or gate_dup
+                payload = {
+                    "proposed": {
+                        "name": et.name, "code": code_clipped or None, "rate_type": rt.value,
+                        "effective_date": eff_date.isoformat() if eff_date else None,
+                        "source_url": et.source_url,
+                        "components": serialize_components(new_components),
+                        "confidence_factors": conf_factors,
+                    },
+                    "gate": [{"rule": r, "detail": d} for r, d in gate_hits],
+                    "compared_with": getattr(ref, "id", None),
+                }
+                record_event(
+                    session, decision="hold", reason=f"write_gate:{gate_hits[0][0]}"[:50],
+                    utility_id=utility_id, before_tariff_id=getattr(ref, "id", None),
+                    source_url=et.source_url, source_document_hash=doc_hash,
+                    payload=payload, **event_kw,
+                )
+                GATE_HOLDS.append({"utility_id": utility_id, "name": et.name,
+                                   "compared_with": getattr(ref, "id", None),
+                                   "rules": [r for r, _ in gate_hits],
+                                   "details": [d for _, d in gate_hits]})
+                log.warning(
+                    f"    HOLD-GATE '{et.name}': " + " | ".join(f"{r}: {d}" for r, d in gate_hits)
+                    + (f" (live row {ref.id} unchanged)" if ref is not None else " (not written)")
+                )
+                held += 1
+                if getattr(ref, "id", None) is not None:
+                    _gate_keep_ids.add(ref.id)
+                if existing is not None:
+                    fresh_by_key[(et.name, cc)] = existing
+                continue
+
+
             tariff_obj = Tariff(
                 utility_id=utility_id,
                 name=et.name,
@@ -13682,13 +13803,14 @@ def store_tariffs(
             _reconcile_missing_tariffs(
                 session, utility_id, tariffs, fresh_by_key,
                 actor_type=actor_type, actor_id=actor_id,
+                extra_keep_ids=_gate_keep_ids,
             )
 
         session.commit()
 
     log.info(
         f"  Stored {stored} tariffs for utility {utility_id}"
-        + (f" ({held} held: protected live rows)" if held else "")
+        + (f" ({held} held for review)" if held else "")
     )
     return stored
 
@@ -13701,6 +13823,7 @@ def _reconcile_missing_tariffs(
     *,
     actor_type: str,
     actor_id: str | None,
+    extra_keep_ids: set | None = None,
 ) -> int:
     """Soft-retire live rows that a (near-)complete extraction no longer lists.
 
@@ -13737,7 +13860,7 @@ def _reconcile_missing_tariffs(
         select(Tariff).where(Tariff.utility_id == utility_id)
     ).scalars().all()
     successor_ids = {t.superseded_by_tariff_id for t in all_rows if t.superseded_by_tariff_id}
-    keep_ids = {obj.id for obj in fresh_by_key.values()}
+    keep_ids = {obj.id for obj in fresh_by_key.values()} | set(extra_keep_ids or ())
 
     retired = 0
     for cc, names in names_by_class.items():
@@ -14762,6 +14885,21 @@ def supersede_older_vintages(
                     f"alongside newer scraped '{keeper.name}'"
                 )
                 continue
+            from app.services.write_gate import pair_check as _pair_check
+            hits = _pair_check(loser, keeper)
+            if hits:
+                record_event(
+                    session, decision="hold", reason=f"write_gate:{hits[0][0]}"[:50],
+                    utility_id=utility_id, before_tariff_id=loser.id, after_tariff_id=keeper.id,
+                    payload={"gate": [{"rule": r, "detail": d} for r, d in hits], "path": "vintage"},
+                    actor_type=actor_type, actor_id=actor_id,
+                )
+                GATE_HOLDS.append({"utility_id": utility_id, "name": loser.name, "compared_with": keeper.id,
+                                   "rules": [r for r, _ in hits], "details": [d for _, d in hits],
+                                   "path": "vintage"})
+                log.warning(f"  Vintage HOLD-GATE: '{loser.name}' kept live: "
+                            + " | ".join(f"{r}: {d}" for r, d in hits))
+                continue
             supersede_tariff(
                 session, loser,
                 successor=keeper,
@@ -14990,6 +15128,21 @@ def supersede_clear_replacements(
                     actor_type=actor_type, actor_id=actor_id,
                 )
                 log.info(f"  Replace HOLD: protected '{old.name}' kept live beside '{keeper.name}'")
+                continue
+            from app.services.write_gate import pair_check as _pair_check
+            hits = _pair_check(old, keeper)
+            if hits:
+                record_event(
+                    session, decision="hold", reason=f"write_gate:{hits[0][0]}"[:50],
+                    utility_id=utility_id, before_tariff_id=old.id, after_tariff_id=keeper.id,
+                    payload={"gate": [{"rule": r, "detail": d} for r, d in hits], "path": "clear_replacement"},
+                    actor_type=actor_type, actor_id=actor_id,
+                )
+                GATE_HOLDS.append({"utility_id": utility_id, "name": old.name, "compared_with": keeper.id,
+                                   "rules": [r for r, _ in hits], "details": [d for _, d in hits],
+                                   "path": "clear_replacement"})
+                log.warning(f"  Replace HOLD-GATE: '{old.name}' kept live beside '{keeper.name}': "
+                            + " | ".join(f"{r}: {d}" for r, d in hits))
                 continue
             supersede_tariff(session, old, successor=keeper, reason=reason,
                              actor_type=actor_type, actor_id=actor_id)
@@ -15848,6 +16001,24 @@ def run_pipeline(
         existing_url=existing_rate_url or "",
         override_url=rate_page_url_override or "",
     )
+    # R26 fixes 5-6: start from the utility's current official book when one
+    # is known (PPL / PSE&G full tariff with the default-supply schedule;
+    # Xcel MN current rate book; El Paso TX Schedule 01). An operator
+    # override still wins; a known-stale saved URL is not kept as alternate.
+    if not rate_page_url_override and not preferred_primary:
+        from app.services import start_page as _sp
+        try:
+            cb = _sp.resolve_current_book(utility_name, state, lambda u: fetch_page(u)[0])
+        except Exception as e:  # never block a run on this lookup
+            log.warning(f"  Current-book lookup failed: {e}")
+            cb = None
+        if cb:
+            preferred_primary = cb[0]
+            stale_why = _sp.known_stale_document(existing_rate_url or "")
+            if existing_rate_url and existing_rate_url != cb[0] and not stale_why:
+                preferred_alts = [existing_rate_url, *preferred_alts]
+            log.info(f"  Using current official book ({cb[1]}): {cb[0][:110]}"
+                     + (f" — saved URL is stale: {stale_why}" if stale_why else ""))
     rate_page_url = preferred_primary or existing_rate_url or rate_page_url_override or ""
     alt_urls: list[str] = list(preferred_alts)
     if rate_page_url_override:
@@ -15923,6 +16094,7 @@ def run_pipeline(
                 validation, valid_tariffs = phase4_validate(tariffs, utility_name, state)
                 result.phase4_validation = validation
                 if valid_tariffs and not dry_run:
+                    mark_unfiled_sources(valid_tariffs, smart_pages)
                     store_tariffs(
                         utility_id, valid_tariffs, dry_run,
                         source_hashes=_page_document_hashes(smart_pages),
@@ -16278,6 +16450,7 @@ def run_pipeline(
     successful_url = result.phase1_rate_page_url or rate_page_url
 
     if valid_tariffs and not dry_run:
+        mark_unfiled_sources(valid_tariffs, pages)
         stored = store_tariffs(
             utility_id, valid_tariffs, dry_run, source_hashes=_page_document_hashes(pages),
         )

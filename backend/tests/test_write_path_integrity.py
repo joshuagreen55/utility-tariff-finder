@@ -78,7 +78,9 @@ class TestStoreTariffsScenarioB(PostgresTestCase):
         old = self.make_tariff(uid, "Residential Service", [_energy(0.20)])
         sibling = self.make_tariff(uid, "Residential Time-of-Day", [_energy(0.25)])
 
-        tp.store_tariffs(uid, [_et("Residential Service", [_energy(0.02)])], dry_run=False)
+        # R26: a realistic revision (a >35% move with no newer effective date
+        # is held by the write gate — see tests/test_r26_write_gate.py).
+        tp.store_tariffs(uid, [_et("Residential Service", [_energy(0.18)])], dry_run=False)
 
         prior = self.get_tariff(old)
         self.assertEqual(prior.supersede_reason, "refresh")
@@ -87,7 +89,7 @@ class TestStoreTariffsScenarioB(PostgresTestCase):
         new = self.get_tariff(prior.superseded_by_tariff_id)
         self.assertEqual(new.name, "Residential Service")
         self.assertIsNone(new.supersede_reason)
-        self.assertEqual(energy_values(new), [0.02])
+        self.assertEqual(energy_values(new), [0.18])
         # 1 of 2 live residential rows re-extracted: partial, nothing retired.
         self.assertIsNone(self.get_tariff(sibling).supersede_reason)
 
@@ -180,9 +182,14 @@ class TestStoreTariffsScenarioB(PostgresTestCase):
 
         r = self.get_tariff(repaired)
         self.assertIsNone(r.supersede_reason, "protected wins a same-vintage tie")
-        scraped = [t for t in self.tariffs_for(uid) if t.id != repaired][0]
-        self.assertEqual(scraped.supersede_reason, "vintage")
-        self.assertEqual(scraped.superseded_by_tariff_id, repaired)
+        others = [t for t in self.tariffs_for(uid) if t.id != repaired]
+        if others:  # written, then retired onto the protected keeper
+            self.assertEqual(others[0].supersede_reason, "vintage")
+            self.assertEqual(others[0].superseded_by_tariff_id, repaired)
+        else:  # R26: the -89% scrape is held by the write gate before any write
+            holds = [e for e in self.events_for(uid)
+                     if e.decision == "hold" and (e.reason or "").startswith("write_gate:")]
+            self.assertEqual([h.before_tariff_id for h in holds], [repaired])
 
 
 class TestOebPathAfterHydroOneRepair(PostgresTestCase):

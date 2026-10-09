@@ -252,9 +252,106 @@ def document_year(url: str) -> int | None:
 
 
 def is_stale_document(url: str, today: date | None = None) -> bool:
+    if known_stale_document(url):
+        return True
     today = today or date.today()
     y = document_year(url)
     return y is not None and y <= today.year - 2
+
+
+# R26 fixes 5-6: current official books to start from.
+#  * PPL / PSE&G: the full current tariff carries both the delivery schedule
+#    (RS) and the default-supply price (GSC-1 + TSC / BGS-RSCP) so the run can
+#    build the "delivery + default supply" plan (Joshua's default 2). Their
+#    file names change every month, so the newest matching link on the
+#    official index page is used.
+#  * Xcel MN: the current rate book (xe-responsive) instead of the static
+#    2019 path; El Paso Electric (TX): the eff 08-01-2026 Schedule 01.
+# Con Edison is not listed: its residential supply price is split across
+# monthly MSC statements (capacity only on the public statement), so there is
+# no single default-supply sheet to pair (R26 report).
+PPL_TARIFF_INDEX = "https://www.pplelectric.com/site/more/about-us/electric-rates-and-rules/current-electric-tariff"
+PSEG_TARIFF_INDEX = "https://nj.pseg.com/aboutpseg/regulatorypage/electrictariffs"
+XCEL_MN_CURRENT_BOOK = (
+    "https://www.xcelenergy.com/staticfiles/xe-responsive/Company/Rates%20&%20Regulations/Me_Section_5.pdf"
+)
+EPE_TX_SCHEDULE_01 = (
+    "https://www.epelectric.com/el-paso-electric/uploads/regulatory/"
+    "section-1-sheet-040-schedule-01-residential-service-rate-eff_08-01-2026.pdf"
+)
+CURRENT_BOOKS: list[dict] = [
+    {"match": re.compile(r"\bppl electric utilities\b", re.I), "states": {"PA", None},
+     "index": PPL_TARIFF_INDEX, "base": "https://www.pplelectric.com",
+     "link": re.compile(r"/[^\"'<>\s]*Current-Electric-Tariff/20\d\d/[A-Za-z]+/[^\"'<>\s]*master[^\"'<>\s]*\.pdf", re.I),
+     "why": "PPL master tariff: RS delivery + GSC-1 default supply + TSC"},
+    {"match": re.compile(r"\bpublic service elec(?:tric)?\.? (?:&|and) gas\b|\bpse&g\b", re.I), "states": {"NJ", None},
+     "index": PSEG_TARIFF_INDEX, "base": "https://nj.pseg.com",
+     "link": re.compile(r"/-/media/pseg/public-site/documents/current-electric-tariff/electric-tariff-[^\"'<>\s]*?effective-(20\d{6})\.ashx", re.I),
+     "why": "PSE&G full electric tariff: RS delivery + BGS-RSCP default supply"},
+    {"match": re.compile(r"\bnorthern states power\b.*\bminnesota\b", re.I), "states": {"MN", None},
+     "url": XCEL_MN_CURRENT_BOOK, "why": "Xcel MN current rate book (not the static 2019 path)"},
+    {"match": re.compile(r"\bel paso electric\b", re.I), "states": {"TX", None},
+     "url": EPE_TX_SCHEDULE_01, "why": "El Paso Electric TX Schedule 01 eff 08-01-2026"},
+]
+KNOWN_STALE_DOCUMENTS: list[tuple[re.Pattern, str]] = [
+    (re.compile(r"xcelenergy\.com/staticfiles/xe/Regulatory/Regulatory(?:%20|\s)PDFs/rates/MN/", re.I),
+     "Xcel MN static rate book (last updated 2019)"),
+    (re.compile(r"epelectric\.com/files/html/Rates_and_Regulatory/", re.I),
+     "retired El Paso Electric tariff path"),
+]
+
+
+def known_stale_document(url: str | None) -> str | None:
+    for rx, why in KNOWN_STALE_DOCUMENTS:
+        if url and rx.search(unquote(url)) or (url and rx.search(url)):
+            return why
+    return None
+
+
+def current_book_entry(utility_name: str | None, state: str | None = None) -> dict | None:
+    st = (state or "").upper() or None
+    for e in CURRENT_BOOKS:
+        if e["match"].search(utility_name or "") and (st in e["states"]):
+            return e
+    return None
+
+
+def _link_date_key(href: str) -> tuple:
+    m = re.search(r"(20\d{2})(\d{2})(\d{2})", href)
+    if m:
+        return (int(m.group(1)), int(m.group(2)), int(m.group(3)))
+    months = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"]
+    m = re.search(r"/(20\d{2})/([A-Za-z]+)/", href)
+    if m and m.group(2)[:3].lower() in months:
+        return (int(m.group(1)), months.index(m.group(2)[:3].lower()) + 1, 0)
+    return (0, 0, 0)
+
+
+def pick_current_book_link(entry: dict, index_html: str) -> str | None:
+    """Newest link on the index page matching the entry's pattern (absolute)."""
+    links = {m.group(0) for m in entry["link"].finditer(index_html or "")}
+    if not links:
+        return None
+    best = max(links, key=lambda h: (_link_date_key(h), h))
+    if best.startswith("http"):
+        return best
+    return entry["base"].rstrip("/") + "/" + best.lstrip("/")
+
+
+def resolve_current_book(utility_name: str | None, state: str | None, fetch) -> tuple[str, str] | None:
+    """(url, why) of the current official book for this utility, or None.
+    ``fetch(url) -> html`` is injected (no network in this module)."""
+    e = current_book_entry(utility_name, state)
+    if not e:
+        return None
+    if e.get("url"):
+        return e["url"], e["why"]
+    try:
+        html = fetch(e["index"]) or ""
+    except Exception:
+        return None
+    link = pick_current_book_link(e, html)
+    return (link, e["why"]) if link else None
 
 
 def is_about_utility_page(url: str, utility_name: str, utility_domain: str | None = None) -> bool:
