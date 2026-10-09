@@ -29,6 +29,7 @@ from app.services.pricing.preaccept import PreAcceptResult, run_preaccept
 from app.services.pricing.quote_verifier import verify_component_cells
 from app.services.pricing.rider_census import DispositionInput, InventoryRider
 from app.services.pricing.types import ComponentInput, PlanInput
+from app.services.source_type import UtilitySourceContext
 
 # Existing model ids only — do not add or rename.
 HAIKU_MODEL = os.environ.get("HAIKU_MODEL", "claude-haiku-5-5")
@@ -156,6 +157,7 @@ def dual_extract_components(
     model_a: str | None = None,
     model_b: str | None = None,
     official_hosts: list[str] | None = None,
+    source_ctx: UtilitySourceContext | None = None,
     source_url: str | None = None,
     inventory: list[InventoryRider] | None = None,
     dispositions: list[DispositionInput] | None = None,
@@ -348,6 +350,7 @@ def dual_extract_components(
         document_text=document_text,
         source_url=source_url or plan_meta.get("source_url"),
         official_hosts=official_hosts or [],
+        source_ctx=source_ctx,
         extract_a=applying_a,
         extract_b=applying_b,
         inventory=inventory,

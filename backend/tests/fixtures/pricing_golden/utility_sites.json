@@ -1,0 +1,30 @@
+{
+  "description": "Known official web presence for the golden / replay utilities, used to build the G0 admissibility context offline. Production builds the same context from utilities.website_url / tariff_page_urls / rate_page_url_override (source_type.context_from_utility). Never derive these from the URLs a run fetched.",
+  "utilities": {
+    "ATCO Electric": {"website_url": "https://www.atco.com", "country": "CA", "state_province": "AB"},
+    "Alabama Power": {"website_url": "https://www.alabamapower.com", "country": "US", "state_province": "AL"},
+    "BC Hydro": {"website_url": "https://www.bchydro.com", "country": "CA", "state_province": "BC"},
+    "DTE Electric": {"website_url": "https://www.dteenergy.com", "country": "US", "state_province": "MI"},
+    "Dominion Energy Virginia": {"website_url": "https://www.dominionenergy.com", "country": "US", "state_province": "VA"},
+    "EPCOR Distribution & Collection": {"website_url": "https://www.epcor.com", "country": "CA", "state_province": "AB"},
+    "El Paso Electric": {"website_url": "https://www.epelectric.com", "country": "US", "state_province": "TX"},
+    "Evergy Metro": {"website_url": "https://www.evergy.com", "country": "US", "state_province": "MO"},
+    "Florida Power & Light": {"website_url": "https://www.fpl.com", "country": "US", "state_province": "FL"},
+    "FortisAlberta": {"website_url": "https://www.fortisalberta.com", "country": "CA", "state_province": "AB"},
+    "Georgia Power": {"website_url": "https://www.georgiapower.com", "country": "US", "state_province": "GA"},
+    "Hydro One": {"website_url": "https://www.hydroone.com", "country": "CA", "state_province": "ON"},
+    "Hydro-Québec": {"website_url": "https://www.hydroquebec.com", "country": "CA", "state_province": "QC"},
+    "Kitchener-Wilmot Hydro": {"website_url": "https://www.kwhydro.ca", "country": "CA", "state_province": "ON"},
+    "Newfoundland and Labrador Hydro": {"website_url": "https://nlhydro.com", "country": "CA", "state_province": "NL"},
+    "NorthWestern Energy Montana": {"website_url": "https://www.northwesternenergy.com", "country": "US", "state_province": "MT"},
+    "Northern States Power Company - Minnesota": {"website_url": "https://www.xcelenergy.com", "country": "US", "state_province": "MN"},
+    "Nova Scotia Power": {"website_url": "https://www.nspower.ca", "country": "CA", "state_province": "NS"},
+    "Oncor Electric Delivery": {"website_url": "https://www.oncor.com", "country": "US", "state_province": "TX"},
+    "PPL Electric Utilities": {"website_url": "https://www.pplelectric.com", "country": "US", "state_province": "PA"},
+    "Pacific Gas & Electric": {"website_url": "https://www.pge.com", "country": "US", "state_province": "CA"},
+    "Pedernales Electric Cooperative": {"website_url": "https://www.pec.coop", "tariff_page_urls": ["https://mypec.com/rates-services/residential-rates/"], "country": "US", "state_province": "TX"},
+    "Portland General Electric": {"website_url": "https://portlandgeneral.com", "tariff_page_urls": ["https://assets.ctfassets.net/416ywc1laqmd/"], "country": "US", "state_province": "OR"},
+    "San Diego Gas & Electric": {"website_url": "https://www.sdge.com", "country": "US", "state_province": "CA"},
+    "Toronto Hydro": {"website_url": "https://www.torontohydro.com", "country": "CA", "state_province": "ON"}
+  }
+}
