@@ -311,3 +311,78 @@ class TestStoreTariffsGate(PostgresTestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+# ---------------------------------------------------------------- R26 live-check replay
+REPLAY = Path(__file__).parent / "fixtures" / "r26" / "dte_c1_replay.json"
+
+
+class TestNewRules(unittest.TestCase):
+    def test_not_a_plan_and_no_energy_price(self):
+        fixed_only = [{"component_type": "fixed", "unit": "$/month", "rate_value": 10.52}]
+        rules = [r for r, _ in wg.evaluate(new_type="flat", new_comps=fixed_only, is_new_plan=True,
+                                           new_name="Residential Service (typical bill illustration)")]
+        self.assertEqual(rules, ["not_a_plan", "no_energy_price"])
+        self.assertEqual(wg.evaluate(new_type="flat", new_comps=[_e(0.12)], is_new_plan=True,
+                                     new_name="Residential Service"), [])
+
+    def test_old_staying_live_is_a_duplicate_only_when_reconcile_skipped(self):
+        old = _row("tou", TOU2, eff=date(2025, 2, 6))
+        hits = wg.evaluate(new_type="tou", new_comps=TOU2, old=old, new_eff=date(2026, 3, 5),
+                           old_stays_live=True, reconcile_skipped=True)
+        self.assertEqual([r for r, _ in hits], ["dup_same_code"])
+        self.assertEqual(wg.evaluate(new_type="tou", new_comps=TOU2, old=old, new_eff=date(2026, 3, 5),
+                                     old_stays_live=True, reconcile_skipped=False), [])
+
+
+class TestR26LiveCheckReplay(PostgresTestCase):
+    """The R26 live check wrote 3 DTE rows beside their live same-code rows
+    (reconcile skipped, no clear replacement) and a fixed-only FPL "typical
+    bill illustration". Replaying the exact proposals must write nothing."""
+
+    def _load(self, uid, rows):
+        from sqlalchemy import text as _t
+        ids = {}
+        for r in rows:
+            comps = [{k: v for k, v in c.items()} for c in r["components"]]
+            tid = self.make_tariff(uid, r["name"], comps, rate_type=r["rate_type"], approved=r["approved"],
+                                   confidence_factors=r["confidence_factors"], source_url=r["source_url"],
+                                   effective_date=date.fromisoformat(r["effective_date"]) if r["effective_date"] else None)
+            with self.session() as s:
+                s.execute(_t("update tariffs set code=:c where id=:i"), {"c": r["code"], "i": tid})
+                s.commit()
+            ids[r["id"]] = tid
+        return ids
+
+    def _ets(self, props):
+        import dataclasses
+        from scripts import tariff_pipeline as tp
+        names = {f.name for f in dataclasses.fields(tp.ExtractedTariff)}
+        return [tp.ExtractedTariff(**{k: v for k, v in p.items() if k in names}) for p in props]
+
+    def test_dte_proposals_are_all_held(self):
+        from scripts import tariff_pipeline as tp
+        data = json.loads(REPLAY.read_text())
+        uid = self.make_utility("DTE Electric Company", state="MI")
+        ids = self._load(uid, data["dte_live"])
+        before = sorted(t.id for t in self.tariffs_for(uid, live_only=True))
+        n = tp.store_tariffs(uid, self._ets(data["dte_proposals"]), dry_run=False)
+        self.assertEqual(n, 0)
+        self.assertEqual(sorted(t.id for t in self.tariffs_for(uid, live_only=True)), before)
+        self.assertEqual(len(self.tariffs_for(uid)), len(before), "nothing inserted")
+        holds = [e for e in self.events_for(uid) if e.decision == "hold" and (e.reason or "").startswith("write_gate:")]
+        self.assertEqual(len(holds), 5)
+        by_old = {h.before_tariff_id: h.reason for h in holds}
+        # D1 / D1.8 / D1.11 would have stayed live beside the new rows.
+        for snap_id in (71311, 71306, 71302):
+            self.assertEqual(by_old.get(ids[snap_id]), "write_gate:dup_same_code", snap_id)
+
+    def test_fpl_bill_illustration_is_held(self):
+        from scripts import tariff_pipeline as tp
+        data = json.loads(REPLAY.read_text())
+        uid = self.make_utility("Florida Power & Light Co", state="FL")
+        self.make_tariff(uid, "Residential Service (RS-1)", [_e(0.12298)], rate_type="tiered")
+        tp.store_tariffs(uid, self._ets(data["fpl_illustration"]), dry_run=False)
+        self.assertEqual(len(self.tariffs_for(uid)), 1)
+        holds = [e for e in self.events_for(uid) if e.decision == "hold"]
+        self.assertEqual(holds[0].reason, "write_gate:not_a_plan")
