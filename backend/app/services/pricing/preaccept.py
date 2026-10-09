@@ -28,6 +28,13 @@ _FORBIDDEN_EDITION_MARKERS = (
     "illustrative", "subject to approval", "typical bill",
 )
 
+# Plausible compiled $/kWh. Below the floor or above the ceiling is almost
+# always a cents/dollars (100×) slip. The ceiling leaves room for labelled
+# critical-peak prices (NS Power CPP ~$1.82).
+ALL_IN_MIN_DOLLARS = Decimal("0.01")
+DELIVERY_MIN_DOLLARS = Decimal("0")
+MAX_DOLLARS_PER_KWH = Decimal("2.50")
+
 
 @dataclass
 class GateFailure:
@@ -255,6 +262,15 @@ def gate_structure(plan: PlanInput, compiled: CompiledPlan) -> list[GateFailure]
         failures.append(GateFailure("G4", "recompile_mismatch"))
     if again.has_all_in != compiled.has_all_in:
         failures.append(GateFailure("G4", "all_in_flag_mismatch"))
+    floor = ALL_IN_MIN_DOLLARS if compiled.has_all_in else DELIVERY_MIN_DOLLARS
+    for cell in compiled.cells:
+        value = cell.dollars_per_kwh
+        if value < floor or value > MAX_DOLLARS_PER_KWH:
+            failures.append(GateFailure(
+                "G4", "implausible_price",
+                f"{cell.key.as_dict()} = ${value}/kWh outside "
+                f"[{floor}, {MAX_DOLLARS_PER_KWH}]",
+            ))
     return failures
 
 
@@ -290,8 +306,12 @@ def gate_oracle(
         oracles.append(money(typical_bill_cents_per_kwh))
     for o in typical_bill_oracles or []:
         cents = getattr(o, "cents_per_kwh", None)
-        if cents is None and isinstance(o, dict):
-            cents = o.get("cents_per_kwh")
+        label = getattr(o, "label", None)
+        if isinstance(o, dict):
+            cents = o.get("cents_per_kwh", cents)
+            label = o.get("label", label)
+        if label == "typical_bill":
+            continue  # bill ÷ kWh includes fixed charges; not an all-in rate
         if cents is not None:
             oracles.append(money(cents))
     if not oracles:
