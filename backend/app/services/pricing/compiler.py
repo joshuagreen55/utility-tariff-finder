@@ -132,6 +132,8 @@ def plan_from_dict(raw: dict[str, Any]) -> PlanInput:
         expected_dollars=expected,
         bill_level_notes=list(raw.get("bill_level_notes") or []),
         notes=raw.get("notes"),
+        clocks=list(raw.get("clocks") or []),
+        seasons=list(raw.get("seasons") or []),
     )
 
 

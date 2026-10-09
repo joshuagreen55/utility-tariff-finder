@@ -13,6 +13,8 @@ class TestPricingGoldenHarness(unittest.TestCase):
         self.assertEqual(report.matched, report.scored)
         self.assertEqual(report.accuracy, 1.0)
         self.assertEqual(report.held, 0)
+        self.assertGreaterEqual(report.clocks_scored, 5)
+        self.assertEqual(report.clocks_matched, report.clocks_scored)
 
     def test_live_dry_extract_perfect_when_forced(self):
         report = run_harness(mode="live", force_extract=True)
@@ -22,6 +24,8 @@ class TestPricingGoldenHarness(unittest.TestCase):
             for s in report.plans if not s.matched
         ])
         self.assertEqual(report.accuracy, 1.0)
+        self.assertGreaterEqual(report.clocks_scored, 5)
+        self.assertEqual(report.clocks_matched, report.clocks_scored)
 
     def test_live_respects_feature_flag_off(self):
         report = run_harness(mode="live", force_extract=False)

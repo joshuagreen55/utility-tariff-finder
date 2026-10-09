@@ -107,3 +107,6 @@ class PlanInput:
     # Bill-level notes (OER, taxes, franchise fees) — never folded into $/kWh.
     bill_level_notes: list[str] = field(default_factory=list)
     notes: str | None = None
+    # Published TOU clocks / season calendars (golden scoring; empty = skip).
+    clocks: list[dict[str, Any]] = field(default_factory=list)
+    seasons: list[dict[str, Any]] = field(default_factory=list)
