@@ -25,6 +25,7 @@ import re
 from typing import Any
 
 from app.services.price_basis import NOT_PRICE_RIDER_RE, _keys, unadded_price_riders
+from app.services.rider_docs import EXHIBIT_HINT_RE, GENERIC_EXHIBIT_HINT_RE
 
 _MONTHS = {m: i for i, m in enumerate(
     ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"], 1)}
@@ -162,6 +163,56 @@ def _pick(rows: list[dict], energy: dict, tou_rider: bool) -> float | None:
     return vals.pop() if len(vals) == 1 else None
 
 
+def _already_included(plan: Any, r: Any) -> bool:
+    """An earlier phase-4 step already stacked this rider into ENERGY
+    (an included adjustment row labelled with the rider's name)."""
+    name = str(_g(r, "name") or "").strip().lower()
+    if not name:
+        return False
+    for c in _g(plan, "components") or []:
+        if _ctype(c) == "adjustment" and _g(c, "included_in_energy"):
+            lab = str(_g(c, "period_label") or _g(c, "tier_label") or "").strip().lower()
+            if lab.startswith(name):
+                return True
+    return False
+
+
+def _exhibit_group(plan: Any, riders: list[Any], energy: list[dict]) -> dict | None:
+    """R22c: every rider an 'Exhibit of Applicable Riders' section lists as
+    applicable to this plan's schedule — all of them or none (a partial sum
+    would still be a wrong price)."""
+    codes = plan_schedule_codes(plan)
+    if not codes:
+        return None
+    groups: dict[tuple, dict[str, Any]] = {}
+    for r in riders:
+        n = _g(r, "confidence_notes") or {}
+        if n.get("exhibit_rider") and codes & set(n.get("exhibit_schedules") or []):
+            groups.setdefault(tuple(n.get("exhibit_section_codes") or ()), {})[n["exhibit_rider"]] = r
+    if len(groups) != 1:
+        return None
+    (section, got), = groups.items()
+    if not section or set(section) != set(got):
+        return None
+    out = {"per_kwh": [], "pct": []}
+    for code in section:
+        r = got[code]
+        if _already_included(plan, r):
+            continue
+        kwh = _schedule_filter(_per_kwh_rows(r), plan)
+        pct = _pct_rows(r)
+        if pct and not kwh:
+            if len({float(_g(c, "rate_value")) for c in pct}) != 1:
+                return None
+            out["pct"].append((r, float(_g(pct[0], "rate_value")) / 100.0))
+            continue
+        picks = [_pick(kwh, e, False) for e in energy]
+        if not kwh or any(p is None for p in picks):
+            return None
+        out["per_kwh"].append((r, picks))
+    return out
+
+
 def plan_fold(plan: Any, riders: list[Any]) -> dict | None:
     """What to fold into ``plan`` from rider schedules (pure; None = nothing)."""
     comps = list(_g(plan, "components") or [])
@@ -177,10 +228,16 @@ def plan_fold(plan: Any, riders: list[Any]) -> dict | None:
     need: set[str] = set()
     for u in unadded:
         need |= _keys(str(u))
-    if not need:
+    exhibit = _exhibit_group(plan, riders, energy) if any(EXHIBIT_HINT_RE.search(str(u)) for u in unadded) else None
+    if not need and not exhibit:
         return None
     tou_plan = _is_tou_plan(plan)
     out = {"per_kwh": [], "pct": [], "families": set()}
+    if exhibit:
+        out["per_kwh"].extend(exhibit["per_kwh"])
+        out["pct"].extend(exhibit["pct"])
+        out["families"].add("exhibit")
+    done = {id(r) for r, _ in out["per_kwh"] + out["pct"]}
     for fam in sorted(need):
         cands = [r for r in riders if fam in rider_family(r)]
         tou_c = [r for r in cands if _TOU_RE.search(str(_g(r, "name") or ""))]
@@ -189,6 +246,9 @@ def plan_fold(plan: Any, riders: list[Any]) -> dict | None:
         if len(chosen) != 1:
             continue
         r = chosen[0]
+        if id(r) in done or _already_included(plan, r):
+            out["families"].add(fam)
+            continue
         pct = _pct_rows(r)
         kwh = _schedule_filter(_per_kwh_rows(r), plan)
         if pct and not kwh:
@@ -246,6 +306,8 @@ def apply_fold(plan: Any, fold: dict) -> list[str]:
     fams = fold["families"]
 
     def _resolved(h: str) -> bool:
+        if "exhibit" in fams and (EXHIBIT_HINT_RE.search(str(h)) or GENERIC_EXHIBIT_HINT_RE.search(str(h))):
+            return True
         k = _keys(str(h))
         return bool(k) and k <= fams
 

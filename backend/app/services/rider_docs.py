@@ -57,7 +57,10 @@ def parse_rider_text(text: str) -> dict | None:
     mt = parse_monthly_factor_table(text)
     if mt:
         return mt
-    lines = [ln for ln in (text or "").splitlines()]
+    # "... increased by 0.1765 cents per kilowatt-\nhour." (wrapped statement)
+    text = re.sub(r"(?i)kilowatt-\s*\n\s*hour", "kilowatt-hour", text or "")
+    text = re.sub(r"(?i)\b(cents|¢)\s*\n\s*(per\s+kilowatt)", r"\1 \2", text)
+    lines = [ln for ln in text.splitlines()]
     # Per-schedule rider tables ("Schedules 1, 1G, 1P ... 1.2730¢/kWh"): return
     # every row tagged with its schedule codes; the fold picks the plan's row.
     sched_rows = []
@@ -271,3 +274,82 @@ def parse_monthly_factor_table(text: str) -> dict | None:
         season = None if len(groups) == 1 else f"{cap[ms[0] - 1]}-{cap[ms[-1] - 1]}"
         per.append({"rate_value": v, "season": season})
     return {"per_kwh": per, "pct": None}
+
+
+# --- R22c: "Exhibit of Applicable Riders" (Dominion VA) ---------------------
+
+EXHIBIT_HINT_RE = re.compile(r"(?i)\b(?:exhibit\s+of\s+)?applicable\s+riders\b")
+_EXHIBIT_SECTION_RE = re.compile(r"(?m)^(I{1,3}|IV|VI{0,3}|IX|X)\.\s+(The riders listed below.*)$")
+_EXHIBIT_ROW_RE = re.compile(r"^([A-Z][A-Z0-9]{0,4})(?:\s+\|)?\s+(\S.*)$")
+_DATE_RE = re.compile(r"\b\d{2}-\d{2}-\d{2,4}\b")
+
+
+def _schedule_list(text: str) -> set[str]:
+    text = re.sub(r"\b(GS|DP)-\s+(\d)", r"\1-\2", text)
+    return {m.upper() for m in re.findall(r"\b([A-Z]{0,3}-?\d{1,2}[A-Z]{0,3}|[A-Z]{2,4}(?:-[A-Z0-9]+)?)\b", text)}
+
+
+def parse_applicable_riders_exhibit(text: str) -> list[dict]:
+    """Sections of an 'Exhibit of Applicable Riders' that say the listed riders
+    ARE applicable to named rate schedules, plus non-bypassable sections.
+
+    Returns [{"schedules": {"1", "1G", ...}, "riders": [(code, description)],
+    "non_bypassable": bool}]. Circumstantial 'may apply' sections (economic
+    development, green programs ...) are never returned. Non-bypassable
+    'may apply' riders are returned flagged: the caller includes one only
+    when its own sheet says it applies to all retail customers."""
+    if not re.search(r"(?i)EXHIBIT\s+OF\s+APPLICABLE\s+RIDERS", text or ""):
+        return []
+    heads = list(_EXHIBIT_SECTION_RE.finditer(text))
+    out = []
+    for i, m in enumerate(heads):
+        end = heads[i + 1].start() if i + 1 < len(heads) else len(text)
+        body = text[m.start():end]
+        header, _, table = body.partition("Rider Description")
+        nonbyp = bool(re.search(r"(?i)\bnon-?bypassable\b", header))
+        if not table:
+            continue
+        if re.search(r"(?i)\bmay\s+apply\b", header) and not nonbyp:
+            continue  # circumstantial riders (economic development, green programs ...)
+        if not nonbyp and not re.search(r"(?i)\bare\s+applicable\b", header):
+            continue
+        sched_txt = re.split(r"(?i)\bas well as\b|\.\s*$", header.split("Schedules", 1)[-1])[0] if not nonbyp else ""
+        riders, seen = [], set()
+        for ln in table.splitlines():
+            ln = ln.strip()
+            if re.match(r"(?i)^\(continued\)|^filed\b", ln):
+                break
+            rm = _EXHIBIT_ROW_RE.match(ln)
+            if not rm or rm.group(1) in seen:
+                continue
+            desc = _DATE_RE.sub("", rm.group(2))
+            desc = re.sub(r"(?i)\b(through and|including)\b|\|", " ", desc)
+            desc = re.sub(r"(?i)(?:^|\s+)(electricity supply|distribution|non-?bypassable)\s*$", "", desc.strip())
+            seen.add(rm.group(1))
+            riders.append((rm.group(1), re.sub(r"\s+", " ", desc).strip()))
+        if riders:
+            out.append({"schedules": _schedule_list(sched_txt), "riders": riders, "non_bypassable": nonbyp})
+    return out
+
+
+UNIVERSAL_NONBYPASSABLE_RE = re.compile(r"(?i)applicable\s+to\s+all\s+retail\s+customers\b[\s\S]{0,120}?non-?bypassable")
+# Generic rider hints an exhibit expansion answers (no family of their own).
+GENERIC_EXHIBIT_HINT_RE = re.compile(
+    r"(?i)^\W*(?:(?:applicable\s+)?riders?(?:\s+amounts?)?(?:\s*\(exhibit of applicable riders\))?|non-?bypassable\s+charges?)\W*$")
+
+
+def exhibit_rider_url(code: str, links: list[str], exhibit_url: str = "") -> tuple[str, bool]:
+    """URL of rider ``code``'s own sheet: a site link named rider-<code>.pdf,
+    else the sibling of the exhibit PDF (returned with verified=False — the
+    caller must confirm the fetched sheet is headed RIDER <CODE>)."""
+    pat = re.compile(rf"(?i)/rider[-_]{re.escape(code)}\.pdf(?:$|\?)")
+    for u in links or []:
+        if pat.search(u or ""):
+            return u, True
+    if exhibit_url and "/" in exhibit_url:
+        return exhibit_url.rsplit("/", 1)[0] + f"/rider-{code.lower()}.pdf", False
+    return "", False
+
+
+def is_rider_sheet(text: str, code: str) -> bool:
+    return bool(re.search(rf"(?m)^\s*(?:[A-Z ]+\s)?RIDER\s+{re.escape(code)}\b", (text or "")[:600]))
