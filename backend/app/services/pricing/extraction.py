@@ -18,6 +18,7 @@ from typing import Any, Callable
 
 from app.services.pricing.amount_parse import (
     normalize_amount_string,
+    blank_applying_codes,
     sanitize_extract_amounts,
 )
 from app.services.pricing.extract_schema import (
@@ -279,6 +280,15 @@ def dual_extract_components(
         except (KeyError, TypeError, ValueError, InvalidOperation) as e:
             return ExtractionHold(reason="malformed_extract", detail=str(e))
         retried_b = True
+
+    for label, raw in (("a", raw_a), ("b", raw_b)):
+        blank = blank_applying_codes(raw)
+        if blank:
+            return ExtractionHold(
+                reason="applies_amount_blank",
+                detail=f"model_{label}:" + ",".join(blank),
+                extract_a=comps_a, extract_b=comps_b,
+            )
 
     if not _has_energy(applying_a):
         return ExtractionHold(
