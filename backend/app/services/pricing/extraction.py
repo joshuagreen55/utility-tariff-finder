@@ -60,6 +60,9 @@ class ExtractionAccept:
     preaccept: PreAcceptResult
     model_a: str
     model_b: str
+    # Full extracts (incl. tou_schedule / season_calendar meta) for clock scoring.
+    extract_a: list[ComponentInput] = field(default_factory=list)
+    extract_b: list[ComponentInput] = field(default_factory=list)
 
 
 def _raw_to_component(raw: dict[str, Any]) -> ComponentInput:
@@ -284,7 +287,12 @@ def dual_extract_components(
         )
 
     return ExtractionAccept(
-        plan=plan, preaccept=pre, model_a=m_a, model_b=m_b
+        plan=plan,
+        preaccept=pre,
+        model_a=m_a,
+        model_b=m_b,
+        extract_a=comps_a,
+        extract_b=comps_b,
     )
 
 
