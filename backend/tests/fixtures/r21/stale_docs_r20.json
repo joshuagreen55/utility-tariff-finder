@@ -1,0 +1,139 @@
+{
+ "pdf_moddate_snippets": {
+  "alabama_xfdt": "/ModDate (D:20241219114624-06'00')",
+  "elpaso_rate01_xmp": "<xmp:ModifyDate>2018-01-18T13:40:21-07:00"
+ },
+ "plans": {
+  "10": [
+   {
+    "name": "Rate XFDE Family Dwelling-Efficiency Residential Service (Optional) (Restricted)",
+    "eff": "",
+    "src": "https://www.alabamapower.com/content/dam/alabama-power/pdfs-docs/Rates/xfde.pdf"
+   },
+   {
+    "name": "Rate XFDT Family Dwelling-Time of Use Residential Service (Optional)",
+    "eff": "2010-03-18",
+    "src": "https://www.alabamapower.com/content/dam/alabama-power/pdfs-docs/Rates/xfdt.pdf"
+   },
+   {
+    "name": "Rate FD Family Dwelling-Residential Service",
+    "eff": "",
+    "src": "https://www.alabamapower.com/content/dam/alabama-power/pdfs-docs/Rates/fd.pdf"
+   },
+   {
+    "name": "Rate RTA \u2013 Energy Only Residential Time Advantage (Optional)",
+    "eff": "",
+    "src": "https://www.alabamapower.com/content/dam/alabama-power/pdfs-docs/Rates/rta_energy.pdf"
+   },
+   {
+    "name": "Rate RTA Residential Time Advantage (Optional)",
+    "eff": "",
+    "src": "https://www.alabamapower.com/content/dam/alabama-power/pdfs-docs/Rates/rta.pdf"
+   },
+   {
+    "name": "Rate FD-D Family Dwelling - Residential Service Demand (Optional)",
+    "eff": "",
+    "src": "https://www.alabamapower.com/content/dam/alabama-power/pdfs-docs/Rates/fd-d.pdf"
+   }
+  ],
+  "338": [
+   {
+    "name": "Schedule No. 01 Residential Service Rate - Standard Service Monthly Rate",
+    "eff": "2017-07-18",
+    "src": "https://www.epelectric.com/files/html/Rates_and_Regulatory/Docket_46831_Stamped_Tariffs/03_-_Rate_01_Residential_Service_Rate.pdf"
+   },
+   {
+    "name": "Schedule No. 01 Residential Service Rate - Alternate Time-of-Use (TOU) Monthly Rate",
+    "eff": "2017-07-18",
+    "src": "https://www.epelectric.com/files/html/Rates_and_Regulatory/Docket_46831_Stamped_Tariffs/03_-_Rate_01_Residential_Service_Rate.pdf"
+   },
+   {
+    "name": "Schedule No. 01 Residential Service Rate - Off-Peak Water Heating Rider",
+    "eff": "2017-07-18",
+    "src": "https://www.epelectric.com/files/html/Rates_and_Regulatory/Docket_46831_Stamped_Tariffs/03_-_Rate_01_Residential_Service_Rate.pdf"
+   },
+   {
+    "name": "Schedule No. 01 Residential Service Rate - Low Income Rider",
+    "eff": "2017-07-18",
+    "src": "https://www.epelectric.com/files/html/Rates_and_Regulatory/Docket_46831_Stamped_Tariffs/03_-_Rate_01_Residential_Service_Rate.pdf"
+   }
+  ],
+  "819": [
+   {
+    "name": "Residential Service (Standard)",
+    "eff": "2019-01-01",
+    "src": "https://www.xcelenergy.com/staticfiles/xe/Regulatory/Regulatory%20PDFs/rates/MN/Me_Section_5.pdf"
+   },
+   {
+    "name": "Residential Service - Electric Space Heating",
+    "eff": "2019-01-01",
+    "src": "https://www.xcelenergy.com/staticfiles/xe/Regulatory/Regulatory%20PDFs/rates/MN/Me_Section_5.pdf"
+   },
+   {
+    "name": "Residential Time of Day Service (Standard)",
+    "eff": "2019-01-01",
+    "src": "https://www.xcelenergy.com/staticfiles/xe/Regulatory/Regulatory%20PDFs/rates/MN/Me_Section_5.pdf"
+   },
+   {
+    "name": "Residential Time of Day Service - Electric Space Heating",
+    "eff": "2019-01-01",
+    "src": "https://www.xcelenergy.com/staticfiles/xe/Regulatory/Regulatory%20PDFs/rates/MN/Me_Section_5.pdf"
+   },
+   {
+    "name": "Residential Time of Use Pilot Program Service",
+    "eff": "2018-08-07",
+    "src": "https://www.xcelenergy.com/staticfiles/xe/Regulatory/Regulatory%20PDFs/rates/MN/Me_Section_5.pdf"
+   },
+   {
+    "name": "Residential Electric Vehicle Service",
+    "eff": "2019-01-01",
+    "src": "https://www.xcelenergy.com/staticfiles/xe/Regulatory/Regulatory%20PDFs/rates/MN/Me_Section_5.pdf"
+   },
+   {
+    "name": "Residential Electric Vehicle Pilot Service - Bundled",
+    "eff": "2019-01-01",
+    "src": "https://www.xcelenergy.com/staticfiles/xe/Regulatory/Regulatory%20PDFs/rates/MN/Me_Section_5.pdf"
+   },
+   {
+    "name": "Residential Electric Vehicle Pilot Service - Pre-Pay Option",
+    "eff": "2019-01-01",
+    "src": "https://www.xcelenergy.com/staticfiles/xe/Regulatory/Regulatory%20PDFs/rates/MN/Me_Section_5.pdf"
+   },
+   {
+    "name": "Energy Controlled Service (Non-Demand Metered)",
+    "eff": "2019-01-01",
+    "src": "https://www.xcelenergy.com/staticfiles/xe/Regulatory/Regulatory%20PDFs/rates/MN/Me_Section_5.pdf"
+   },
+   {
+    "name": "Limited Off Peak Service - Residential",
+    "eff": "2019-01-01",
+    "src": "https://www.xcelenergy.com/staticfiles/xe/Regulatory/Regulatory%20PDFs/rates/MN/Me_Section_5.pdf"
+   }
+  ],
+  "51": [
+   {
+    "name": "Rate Schedule TOU-E Residential Time-of-Use Service Time-of-Use 4PM-7PM Weekdays",
+    "eff": "2024-03-08",
+    "src": "https://www.aps.com/-/media/APS/APSCOM-PDFs/Utility/Regulatory-and-Legal/Regulatory-Plan-Details-Tariffs/Residential/Service-Plans/Time-of-Use-4pm-7pmWeekdays_R-TOU-E.pdf"
+   }
+  ]
+ },
+ "pdf_modified": {
+  "https://www.alabamapower.com/content/dam/alabama-power/pdfs-docs/Rates/xfdt.pdf": [
+   2024,
+   12
+  ],
+  "https://www.epelectric.com/files/html/Rates_and_Regulatory/Docket_46831_Stamped_Tariffs/03_-_Rate_01_Residential_Service_Rate.pdf": [
+   2018,
+   1
+  ],
+  "https://www.aps.com/-/media/APS/APSCOM-PDFs/Utility/Regulatory-and-Legal/Regulatory-Plan-Details-Tariffs/Residential/Service-Plans/Time-of-Use-4pm-7pmWeekdays_R-TOU-E.pdf": [
+   2024,
+   3
+  ],
+  "https://www.xcelenergy.com/staticfiles/xe/Regulatory/Regulatory%20PDFs/rates/MN/Me_Section_5.pdf": [
+   2019,
+   4
+  ]
+ }
+}
