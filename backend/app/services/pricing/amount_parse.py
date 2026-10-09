@@ -10,6 +10,10 @@ import re
 from decimal import Decimal, InvalidOperation
 from typing import Any
 
+from app.services.pricing.units import AMBIGUOUS_PER_KWH, normalize_unit
+
+_PER_KWH_FAMILIES = frozenset({"cents/kwh", "$/kwh", "mills/kwh", AMBIGUOUS_PER_KWH})
+
 # Truly missing — no number to price.
 _BLANK_TOKENS = frozenset({
     "", "-", "—", "–", "−", "n/a", "na", "none", "null", "nil",
@@ -44,11 +48,36 @@ def is_blank_amount(value: Any) -> bool:
     return s in _BLANK_TOKENS
 
 
-def parse_amount(value: Any) -> Decimal | None:
+_THOUSANDS_GROUPS = re.compile(r"^-?\d{1,3}(?:,\d{3})+$")
+
+
+def _normalize_separators(s: str, *, single_group_decimal: bool) -> str:
+    """Resolve , / . separators ("1,234.56", "1.234,56", "9,8", "0,704").
+
+    A lone ",ddd" ("6,704") is ambiguous: thousands unless the caller knows
+    the value is a per-kWh price (``single_group_decimal``), where 6 704 is
+    impossible and the French decimal comma is meant.
+    """
+    if "," not in s:
+        return s
+    if "." in s:
+        if s.rfind(",") > s.rfind("."):
+            return s.replace(".", "").replace(",", ".")  # 1.234,56
+        return s.replace(",", "")  # 1,234.56
+    if s.count(",") == 1 and not _THOUSANDS_GROUPS.match(s):
+        return s.replace(",", ".")  # 9,8 / 0,0987
+    if s.count(",") == 1 and (single_group_decimal or s.lstrip("-").startswith("0,")):
+        return s.replace(",", ".")
+    return s.replace(",", "")
+
+
+def parse_amount(value: Any, *, per_kwh: bool = False) -> Decimal | None:
     """Return a Decimal, or None when the amount is blank / unparseable.
 
     Never raises ``ConversionSyntax``. Ranges are treated as missing
-    (ambiguous). Accounting ``(1.297)`` → -1.297.
+    (ambiguous). Accounting ``(1.297)`` → -1.297. Decimal commas are
+    understood; pass ``per_kwh=True`` for energy prices so "6,704" means
+    6.704.
     """
     if isinstance(value, bool):
         return None
@@ -74,12 +103,12 @@ def parse_amount(value: Any) -> Decimal | None:
         .replace("\ufeff", "")
     )
     s = _CURRENCY.sub("", s).strip()
-    s = s.replace(",", "").replace(" ", "")
+    s = s.replace(" ", "").replace("\u00a0", "").replace("\u202f", "")
 
     # Accounting negative.
     m = _PARENS_NEG.match(s)
     if m:
-        inner = parse_amount(m.group(1))
+        inner = parse_amount(m.group(1), per_kwh=per_kwh)
         return None if inner is None else -inner
 
     # Ambiguous range → missing.
@@ -89,7 +118,8 @@ def parse_amount(value: Any) -> Decimal | None:
     # "0.12perkwh" / "12.5¢" after currency strip.
     m = _TRAILING_TEXT.match(s)
     if m:
-        s = m.group("num").replace(",", "")
+        s = m.group("num")
+    s = _normalize_separators(s, single_group_decimal=per_kwh)
 
     if not _PLAIN.match(s):
         # Last chance: leading number.
@@ -112,54 +142,81 @@ def normalize_amount_string(value: Any) -> str | None:
     return format(d, "f")
 
 
+# $ figures at or above this are fixed / demand charges, never a $/kWh price.
+_MAX_DOLLARS_PER_KWH_FIGURE = Decimal("2")
+_ONE = Decimal("1")
+_HUNDRED = Decimal("100")
+_HUNDREDTH = Decimal("0.01")
+
+
 def _quote_dollar_amounts(quote: str) -> list[Decimal]:
-    """Dollar figures printed in the quote (``$0.10815``, ``$ 9.75``)."""
+    """Per-kWh-sized dollar figures in the quote (``$0.10815``).
+
+    ``$14.50`` (a customer charge in the same sentence) is ignored.
+    """
     out: list[Decimal] = []
     for m in re.finditer(r"\$\s*(\d+(?:\.\d+)?)", quote or ""):
         try:
-            out.append(Decimal(m.group(1)))
+            d = Decimal(m.group(1))
         except InvalidOperation:
             continue
+        if 0 < d < _MAX_DOLLARS_PER_KWH_FIGURE:
+            out.append(d)
     return out
 
 
 def _reconcile_energy_unit(
-    amount: Decimal,
+    amounts: list[Decimal],
     unit: str,
     quote: str | None,
 ) -> tuple[Decimal, str]:
-    """Fix $ vs ¢ mismatches using the quote as the ground truth.
+    """One (scale factor, unit) for a whole component, from its quote.
 
     Common model error: ``unit=¢/kWh`` with amount ``0.10815`` while the
     quote shows ``$0.10815`` (or the reverse with ``9.8`` under ``$/kWh``).
+    Every cell gets the same factor; cells implying different factors are
+    left untouched so grounding / plausibility gates hold them.
     """
-    from app.services.pricing.units import normalize_unit
-
     fam = normalize_unit(unit)
     q = quote or ""
-    has_dollar = bool(re.search(r"\$\s*\d", q))
-    has_cent = bool(re.search(r"¢|\bcents?\b", q, re.I))
     dollars = _quote_dollar_amounts(q)
+    has_cent = bool(re.search(r"¢|\bcents?\b", q, re.I))
 
-    # Prefer an exact $ figure from the quote when the stored amount is a
-    # 100× / 1× mis-scale of it (Xcel CIP: amount 0.1813 vs $0.001813).
-    if fam in {"cents/kwh", "$/kwh"} and dollars:
-        for d in dollars:
-            if d == 0:
-                continue
-            if amount == d:
-                return d, "$/kWh"
-            if amount == d * Decimal("100") or amount == d / Decimal("100"):
-                return d, "$/kWh"
+    if fam == AMBIGUOUS_PER_KWH:
+        if has_cent and not dollars:
+            return _ONE, "¢/kWh"
+        if not dollars or has_cent:
+            return _ONE, unit
+        fam = "$/kwh"
+    if fam not in {"cents/kwh", "$/kwh"} or not amounts:
+        return _ONE, unit
 
-    # Unit claims cents, amount looks like dollars, quote shows $X.XX.
-    if fam == "cents/kwh" and amount < Decimal("2") and has_dollar:
-        return amount, "$/kWh"
-    # Unit claims dollars, amount looks like cents (≥ 2) — residential
-    # $/kWh never exceeds ~$1; treat as printed ¢ and convert.
-    if fam == "$/kwh" and amount >= Decimal("2"):
-        return amount / Decimal("100"), "$/kWh"
-    return amount, unit
+    if dollars:
+        factors: set[Decimal] = set()
+        for a in amounts:
+            for d in dollars:
+                if a == d:
+                    factors.add(_ONE)
+                elif a == d * _HUNDRED:
+                    factors.add(_HUNDREDTH)
+                elif a == d / _HUNDRED:
+                    factors.add(_HUNDRED)
+        if len(factors) == 1:
+            return factors.pop(), "$/kWh"
+        if factors:
+            return _ONE, unit
+
+    # Unit claims cents, every amount looks like dollars, quote shows $.
+    if (fam == "cents/kwh" and dollars and not has_cent
+            and all(a < _MAX_DOLLARS_PER_KWH_FIGURE for a in amounts)):
+        return _ONE, "$/kWh"
+    # Unit claims dollars, every amount looks like printed ¢.
+    if (fam == "$/kwh" and not dollars
+            and all(a >= _MAX_DOLLARS_PER_KWH_FIGURE for a in amounts)):
+        return _HUNDREDTH, "$/kWh"
+    if fam == "$/kwh" and normalize_unit(unit) == AMBIGUOUS_PER_KWH:
+        return _ONE, "$/kWh"
+    return _ONE, unit
 
 
 def sanitize_extract_amounts(
@@ -201,25 +258,30 @@ def sanitize_extract_amounts(
 
         quote = str(row.get("source_quote") or row.get("quote") or "")
         unit = str(row.get("unit") or "")
+        per_kwh = normalize_unit(unit) in _PER_KWH_FAMILIES
         cells_in = row.get("cells")
         if not isinstance(cells_in, list):
             cells_in = []
         cells_out: list[dict[str, Any]] = []
-        any_ok = False
-        unit_out = unit
+        parsed_amounts: list[Decimal] = []
         for cell in cells_in:
             if not isinstance(cell, dict):
                 continue
             cell = dict(cell)
             if "amount" in cell:
-                parsed = parse_amount(cell.get("amount"))
+                parsed = parse_amount(cell.get("amount"), per_kwh=per_kwh)
                 if parsed is None:
                     # Drop blank cell; do not keep unparseable text.
                     continue
-                parsed, unit_out = _reconcile_energy_unit(parsed, unit_out, quote)
-                cell["amount"] = format(parsed, "f")
-                any_ok = True
+                cell["amount"] = parsed
+                parsed_amounts.append(parsed)
             cells_out.append(cell)
+        any_ok = bool(parsed_amounts)
+
+        factor, unit_out = _reconcile_energy_unit(parsed_amounts, unit, quote)
+        for cell in cells_out:
+            if "amount" in cell:
+                cell["amount"] = format(cell["amount"] * factor, "f")
 
         if unit_out != unit:
             row["unit"] = unit_out
