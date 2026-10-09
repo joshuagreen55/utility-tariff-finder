@@ -373,3 +373,105 @@ class PlanRiderDisposition(Base):
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now()
     )
+
+
+class DocumentRole(str, enum.Enum):
+    """Roles a retained official document can play in a pricing document set."""
+
+    TARIFF = "tariff"
+    RIDER_SHEET = "rider_sheet"
+    DEFAULT_SUPPLY = "default_supply"
+    PROVINCIAL_COMMODITY = "provincial_commodity"
+    DELIVERY = "delivery"
+    TYPICAL_BILL = "typical_bill"  # G6 oracle only — never a stored price
+
+
+class PricingDocumentSet(Base):
+    """Per-utility bundle of official documents needed to price residential plans.
+
+    Soft-supersede: live when both supersede columns are NULL. One live set
+    per utility (partial unique index in the migration).
+    """
+
+    __tablename__ = "pricing_document_sets"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    utility_id: Mapped[int] = mapped_column(
+        Integer, ForeignKey("utilities.id"), nullable=False, index=True
+    )
+    recipe_code: Mapped[str | None] = mapped_column(String(40), nullable=True)
+    as_of_date: Mapped[date | None] = mapped_column(Date, nullable=True)
+    status: Mapped[str] = mapped_column(
+        String(20), nullable=False, server_default="live"
+    )
+    superseded_by_set_id: Mapped[int | None] = mapped_column(
+        Integer,
+        ForeignKey("pricing_document_sets.id", ondelete="SET NULL"),
+        nullable=True,
+        index=True,
+    )
+    supersede_reason: Mapped[str | None] = mapped_column(String(50), nullable=True)
+    superseded_at: Mapped[datetime | None] = mapped_column(
+        DateTime(timezone=True), nullable=True
+    )
+    notes: Mapped[str | None] = mapped_column(Text, nullable=True)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now()
+    )
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now(), onupdate=func.now()
+    )
+
+    members: Mapped[list["PricingDocumentSetMember"]] = relationship(
+        "PricingDocumentSetMember",
+        back_populates="document_set",
+        lazy="selectin",
+        cascade="all, delete-orphan",
+    )
+
+    def __repr__(self) -> str:
+        return (
+            f"<PricingDocumentSet(id={self.id}, utility_id={self.utility_id}, "
+            f"recipe={self.recipe_code})>"
+        )
+
+
+class PricingDocumentSetMember(Base):
+    """One URL (with edition metadata) inside a pricing document set."""
+
+    __tablename__ = "pricing_document_set_members"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    document_set_id: Mapped[int] = mapped_column(
+        Integer,
+        ForeignKey("pricing_document_sets.id", ondelete="CASCADE"),
+        nullable=False,
+        index=True,
+    )
+    role: Mapped[str] = mapped_column(String(40), nullable=False, index=True)
+    url: Mapped[str] = mapped_column(Text, nullable=False)
+    title: Mapped[str | None] = mapped_column(String(500), nullable=True)
+    edition_label: Mapped[str | None] = mapped_column(String(200), nullable=True)
+    effective_date: Mapped[date | None] = mapped_column(Date, nullable=True)
+    publisher_host: Mapped[str | None] = mapped_column(String(200), nullable=True)
+    is_selected: Mapped[bool] = mapped_column(
+        Boolean, nullable=False, server_default="true"
+    )
+    reject_reason: Mapped[str | None] = mapped_column(String(80), nullable=True)
+    content_hash: Mapped[str | None] = mapped_column(String(64), nullable=True)
+    retrieved_at: Mapped[datetime | None] = mapped_column(
+        DateTime(timezone=True), nullable=True
+    )
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now()
+    )
+
+    document_set: Mapped["PricingDocumentSet"] = relationship(
+        "PricingDocumentSet", back_populates="members"
+    )
+
+    def __repr__(self) -> str:
+        return (
+            f"<PricingDocumentSetMember(id={self.id}, role={self.role!r}, "
+            f"url={self.url!r})>"
+        )
