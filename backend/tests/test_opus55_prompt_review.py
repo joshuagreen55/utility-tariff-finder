@@ -268,7 +268,9 @@ class TestClosedAndDeliveryScopeInStoreFactors(unittest.TestCase):
             needs_review=True,
             missing_fields=["winter off-peak hours"],
             riders_referenced_not_shown=["FAM"],
-            energy_scope="delivery_only",
+            # R21: a lone "delivery_only" plan is never stored (no half-plans,
+            # see test_r21_supply_delivery); scope is still carried through.
+            energy_scope="delivery_plus_default_supply",
             closed_to_new=True,
             components=[
                 {"component_type": "energy", "unit": "¢/kWh", "rate_value": 10.0},
@@ -285,7 +287,7 @@ class TestClosedAndDeliveryScopeInStoreFactors(unittest.TestCase):
             logging.disable(logging.NOTSET)
         self.assertEqual(len(valid), 1)
         self.assertTrue(valid[0].needs_review)
-        self.assertEqual(valid[0].energy_scope, "delivery_only")
+        self.assertEqual(valid[0].energy_scope, "delivery_plus_default_supply")
         self.assertTrue(valid[0].closed_to_new)
 
 

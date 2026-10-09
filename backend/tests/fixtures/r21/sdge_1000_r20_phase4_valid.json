@@ -1,0 +1,913 @@
+[
+ {
+  "name": "DR-Residential-CARE",
+  "code": "DR CARE",
+  "customer_class": "residential",
+  "rate_type": "flat",
+  "description": "SDG&E bundled residential CARE rate (DRLI) comparison: generation + PCIA + delivery (incl. base services charge) + franchise fees, per kWh.",
+  "source_url": "https://www.sdge.com/sites/default/files/SDCP_SDGE%20JRC%2008.01.2026_Final.pdf",
+  "effective_date": "2026-08-01",
+  "components": [
+   {
+    "component_type": "adjustment",
+    "unit": "$/kWh",
+    "rate_value": 0.04771,
+    "period_label": "PCIA",
+    "included_in_energy": true,
+    "rider_scope": "all_customers",
+    "day_type": null
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "$/kWh",
+    "rate_value": 0.00517,
+    "period_label": "Franchise Fees",
+    "included_in_energy": true,
+    "rider_scope": "all_customers",
+    "day_type": null
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "$/kWh",
+    "rate_value": 0.00343,
+    "period_label": "Franchise Fees (page total 0.45907 includes this)",
+    "included_in_energy": true,
+    "rider_scope": "all_customers",
+    "day_type": null
+   },
+   {
+    "component_type": "energy",
+    "unit": "$/kWh",
+    "rate_value": 0.28592,
+    "day_type": "all",
+    "tier_label": "all-in total electricity cost: generation 0.13832 + PCIA 0.04771 + delivery 0.08673 + franchise fees 0.00455 (printed total) +riders"
+   }
+  ],
+  "confidence": 0.8,
+  "needs_review": false,
+  "completeness_reasons": [],
+  "computable_reasons": [],
+  "extraction_tier": "twopass",
+  "missing_fields": [
+   "separate fixed monthly charge (base services charge is included in delivery rate)"
+  ],
+  "riders_referenced_not_shown": [],
+  "energy_scope": "bundled",
+  "closed_to_new": false,
+  "energy_includes_riders": true,
+  "empty_reason": "",
+  "linked_document_hint": "",
+  "confidence_notes": {}
+ },
+ {
+  "name": "DR FERA (Standard \u2013 DR-Residential-FERA)",
+  "code": "DR FERA",
+  "customer_class": "residential",
+  "rate_type": "flat",
+  "description": "SDG&E bundled standard residential FERA rate: generation + PCIA + delivery + franchise fees, per kWh.",
+  "source_url": "https://www.sdge.com/sites/default/files/SDCP_SDGE%20JRC%2008.01.2026_Final.pdf",
+  "effective_date": "2026-08-01",
+  "components": [
+   {
+    "component_type": "adjustment",
+    "unit": "$/kWh",
+    "rate_value": 0.13832,
+    "period_label": "Generation Rate",
+    "included_in_energy": true,
+    "rider_scope": "all_customers",
+    "day_type": null
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "$/kWh",
+    "rate_value": 0.04771,
+    "period_label": "PCIA",
+    "included_in_energy": true,
+    "rider_scope": "all_customers",
+    "day_type": null
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "$/kWh",
+    "rate_value": 0.18029,
+    "period_label": "SDG&E Delivery Rate (includes Base Services Charge)",
+    "included_in_energy": true,
+    "rider_scope": "all_customers",
+    "day_type": null
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "$/kWh",
+    "rate_value": 0.00517,
+    "period_label": "Franchise Fees",
+    "included_in_energy": true,
+    "rider_scope": "all_customers",
+    "day_type": null
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "$/kWh",
+    "rate_value": 0.00343,
+    "period_label": "Franchise Fees (page total 0.45907 includes this)",
+    "included_in_energy": true,
+    "rider_scope": "all_customers",
+    "day_type": null
+   },
+   {
+    "component_type": "energy",
+    "unit": "$/kWh",
+    "rate_value": 0.37977,
+    "tier_label": "all-in: generation 0.13832 + PCIA 0.04771 + delivery 0.18029 + franchise fees 0.00485 +riders",
+    "day_type": "all"
+   }
+  ],
+  "confidence": 0.8,
+  "needs_review": false,
+  "completeness_reasons": [],
+  "computable_reasons": [],
+  "extraction_tier": "twopass",
+  "missing_fields": [
+   "separate fixed charge (included in delivery rate)"
+  ],
+  "riders_referenced_not_shown": [],
+  "energy_scope": "bundled",
+  "closed_to_new": false,
+  "energy_includes_riders": true,
+  "empty_reason": "",
+  "linked_document_hint": "",
+  "confidence_notes": {}
+ },
+ {
+  "name": "Time of Use \u2013 TOUDR-Residential",
+  "code": "TOUDR",
+  "customer_class": "residential",
+  "rate_type": "flat",
+  "description": "SDG&E bundled TOUDR residential time-of-use rate; page shows only a blended per-kWh cost, no TOU periods.",
+  "source_url": "https://www.sdge.com/sites/default/files/SDCP_SDGE%20JRC%2008.01.2026_Final.pdf",
+  "effective_date": "2026-08-01",
+  "components": [
+   {
+    "component_type": "adjustment",
+    "unit": "$/kWh",
+    "rate_value": 0.13251,
+    "period_label": "Generation Rate",
+    "included_in_energy": true,
+    "rider_scope": "all_customers",
+    "day_type": null
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "$/kWh",
+    "rate_value": 0.04772,
+    "period_label": "PCIA",
+    "included_in_energy": true,
+    "rider_scope": "all_customers",
+    "day_type": null
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "$/kWh",
+    "rate_value": 0.28884,
+    "period_label": "SDG&E Delivery Rate (includes Base Services Charge)",
+    "included_in_energy": true,
+    "rider_scope": "all_customers",
+    "day_type": null
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "$/kWh",
+    "rate_value": 0.00517,
+    "period_label": "Franchise Fees",
+    "included_in_energy": true,
+    "rider_scope": "all_customers",
+    "day_type": null
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "$/kWh",
+    "rate_value": 0.00343,
+    "period_label": "Franchise Fees (page total 0.45907 includes this)",
+    "included_in_energy": true,
+    "rider_scope": "all_customers",
+    "day_type": null
+   },
+   {
+    "component_type": "energy",
+    "unit": "$/kWh",
+    "rate_value": 0.47767,
+    "tier_label": "all-in: generation 0.13251 + PCIA 0.04772 + delivery 0.28884 (excl. franchise fees 0.00517) +riders",
+    "day_type": null
+   }
+  ],
+  "confidence": 0.6,
+  "needs_review": true,
+  "completeness_reasons": [],
+  "computable_reasons": [],
+  "extraction_tier": "twopass",
+  "missing_fields": [
+   "TOU period prices",
+   "TOU clock times",
+   "season dates",
+   "fixed monthly charge (Base Services Charge is included in delivery rate)",
+   "duplicate_plan_price_conflict"
+  ],
+  "riders_referenced_not_shown": [],
+  "energy_scope": "bundled",
+  "closed_to_new": false,
+  "energy_includes_riders": true,
+  "empty_reason": "",
+  "linked_document_hint": "",
+  "confidence_notes": {
+   "duplicate_plan_other_prices": {
+    "name": "TOUDR FERA (Time of Use \u2013 TOUDR-Residential-FERA)",
+    "source_url": "https://www.sdge.com/sites/default/files/SDCP_SDGE%20JRC%2008.01.2026_Final.pdf",
+    "energy": [
+     {
+      "season": null,
+      "months": [
+       null,
+       null
+      ],
+      "day_type": null,
+      "hours": [
+       null,
+       null
+      ],
+      "label": "all-in: generation 0.13252 + PCIA 0.04771 + SDG&E delivery (incl. Base Services Charge) 0.18585; franchise fees excluded +riders",
+      "rate_value": 0.37278
+     }
+    ]
+   }
+  }
+ },
+ {
+  "name": "TOUDR1 CARE",
+  "code": "TOUDR1 CARE",
+  "customer_class": "residential",
+  "rate_type": "flat",
+  "description": "SDG&E Time of Use residential TOUDR1 CARE, SDG&E 41% Renewable bundled average per-kWh cost components (generation + PCIA + delivery).",
+  "source_url": "https://www.sdge.com/sites/default/files/SDCP_SDGE%20JRC%2008.01.2026_Final.pdf",
+  "effective_date": "2026-08-01",
+  "components": [
+   {
+    "component_type": "adjustment",
+    "unit": "$/kWh",
+    "rate_value": 0.04771,
+    "period_label": "PCIA",
+    "included_in_energy": true,
+    "rider_scope": "all_customers",
+    "day_type": null
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "$/kWh",
+    "rate_value": 0.09724,
+    "period_label": "SDG&E Delivery Rate (includes Base Services Charge)",
+    "included_in_energy": true,
+    "rider_scope": "all_customers",
+    "day_type": null
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "$/kWh",
+    "rate_value": 0.00293,
+    "period_label": "Franchise Fees",
+    "included_in_energy": true,
+    "rider_scope": "all_customers",
+    "day_type": null
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "$/kWh",
+    "rate_value": 0.00343,
+    "period_label": "Franchise Fees (page total 0.45907 includes this)",
+    "included_in_energy": true,
+    "rider_scope": "all_customers",
+    "day_type": null
+   },
+   {
+    "component_type": "energy",
+    "unit": "$/kWh",
+    "rate_value": 0.28029,
+    "tier_label": "all-in: generation 0.12898 + PCIA 0.04771 + delivery 0.09724 (excl. franchise fees) +riders",
+    "day_type": null
+   }
+  ],
+  "confidence": 0.6,
+  "needs_review": true,
+  "completeness_reasons": [],
+  "computable_reasons": [],
+  "extraction_tier": "twopass",
+  "missing_fields": [
+   "TOU period hours",
+   "TOU period-specific prices",
+   "seasons",
+   "fixed charge"
+  ],
+  "riders_referenced_not_shown": [],
+  "energy_scope": "bundled",
+  "closed_to_new": false,
+  "energy_includes_riders": true,
+  "empty_reason": "",
+  "linked_document_hint": "",
+  "confidence_notes": {}
+ },
+ {
+  "name": "TOUDR1 FERA",
+  "code": "TOUDR1 FERA",
+  "customer_class": "residential",
+  "rate_type": "flat",
+  "description": "SDG&E Time of Use residential FERA rate TOUDR1 with SDG&E 41% renewable bundled service; averaged per-kWh components only, TOU periods not shown.",
+  "source_url": "https://www.sdge.com/sites/default/files/SDCP_SDGE%20JRC%2008.01.2026_Final.pdf",
+  "effective_date": "2026-08-01",
+  "components": [
+   {
+    "component_type": "adjustment",
+    "unit": "$/kWh",
+    "rate_value": 0.04771,
+    "period_label": "PCIA",
+    "included_in_energy": true,
+    "rider_scope": "all_customers",
+    "day_type": null
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "$/kWh",
+    "rate_value": 0.00323,
+    "period_label": "Franchise Fees",
+    "included_in_energy": true,
+    "rider_scope": "all_customers",
+    "day_type": null
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "$/kWh",
+    "rate_value": 0.00343,
+    "period_label": "Franchise Fees (page total 0.45907 includes this)",
+    "included_in_energy": true,
+    "rider_scope": "all_customers",
+    "day_type": null
+   },
+   {
+    "component_type": "energy",
+    "unit": "$/kWh",
+    "rate_value": 0.37075,
+    "tier_label": "all-in: generation 0.12898 + PCIA 0.04771 + delivery (incl. Base Services Charge) 0.18740 (franchise fees excluded) +riders",
+    "day_type": null
+   }
+  ],
+  "confidence": 0.6,
+  "needs_review": true,
+  "completeness_reasons": [],
+  "computable_reasons": [],
+  "extraction_tier": "twopass",
+  "missing_fields": [
+   "TOU period clocks",
+   "TOU day types",
+   "seasons",
+   "separate fixed charge (Base Services Charge included in delivery rate)"
+  ],
+  "riders_referenced_not_shown": [],
+  "energy_scope": "bundled",
+  "closed_to_new": false,
+  "energy_includes_riders": true,
+  "empty_reason": "",
+  "linked_document_hint": "",
+  "confidence_notes": {}
+ },
+ {
+  "name": "Time of Use \u2013 TOUDR2-Residential",
+  "code": "TOUDR2",
+  "customer_class": "residential",
+  "rate_type": "flat",
+  "description": "SDG&E bundled residential TOUDR2 average per-kWh rate (generation + PCIA + delivery incl. base services charge); TOU period prices not shown on page.",
+  "source_url": "https://www.sdge.com/sites/default/files/SDCP_SDGE%20JRC%2008.01.2026_Final.pdf",
+  "effective_date": "2026-08-01",
+  "components": [
+   {
+    "component_type": "adjustment",
+    "unit": "$/kWh",
+    "rate_value": 0.04772,
+    "period_label": "PCIA",
+    "included_in_energy": true,
+    "rider_scope": "all_customers",
+    "day_type": null
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "$/kWh",
+    "rate_value": 0.00343,
+    "period_label": "Franchise Fees (page total 0.45907 includes this)",
+    "included_in_energy": true,
+    "rider_scope": "all_customers",
+    "day_type": null
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "$/kWh",
+    "rate_value": 0.00517,
+    "period_label": "Franchise Fees",
+    "included_in_energy": true,
+    "rider_scope": "all_customers",
+    "day_type": null
+   },
+   {
+    "component_type": "energy",
+    "unit": "$/kWh",
+    "rate_value": 0.46424,
+    "tier_label": "all-in: generation 0.11794 + PCIA 0.04772 + delivery 0.28998 (excl. franchise fees) +riders",
+    "day_type": null
+   }
+  ],
+  "confidence": 0.6,
+  "needs_review": true,
+  "completeness_reasons": [],
+  "computable_reasons": [],
+  "extraction_tier": "twopass",
+  "missing_fields": [
+   "TOU period clock times",
+   "TOU period prices",
+   "seasons",
+   "fixed charge",
+   "duplicate_plan_price_conflict"
+  ],
+  "riders_referenced_not_shown": [],
+  "energy_scope": "bundled",
+  "closed_to_new": false,
+  "energy_includes_riders": true,
+  "empty_reason": "",
+  "linked_document_hint": "",
+  "confidence_notes": {
+   "duplicate_plan_other_prices": {
+    "name": "TOUDR2 CARE (Time of Use \u2013 TOUDR2-Residential-CARE)",
+    "source_url": "https://www.sdge.com/sites/default/files/SDCP_SDGE%20JRC%2008.01.2026_Final.pdf",
+    "energy": [
+     {
+      "season": null,
+      "months": [
+       null,
+       null
+      ],
+      "day_type": null,
+      "hours": [
+       null,
+       null
+      ],
+      "label": "All hours",
+      "rate_value": 0.2738
+     }
+    ]
+   }
+  }
+ },
+ {
+  "name": "TOUDR2 FERA",
+  "code": "TOUDR2 FERA",
+  "customer_class": "residential",
+  "rate_type": "flat",
+  "description": "SDG&E bundled service (41% renewable) Time of Use TOUDR2 Residential FERA; page gives only average per-kWh components, no TOU hours.",
+  "source_url": "https://www.sdge.com/sites/default/files/SDCP_SDGE%20JRC%2008.01.2026_Final.pdf",
+  "effective_date": "2026-08-01",
+  "components": [
+   {
+    "component_type": "adjustment",
+    "unit": "$/kWh",
+    "rate_value": 0.11795,
+    "period_label": "Generation",
+    "included_in_energy": true,
+    "rider_scope": "all_customers",
+    "day_type": null
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "$/kWh",
+    "rate_value": 0.04771,
+    "period_label": "PCIA",
+    "included_in_energy": true,
+    "rider_scope": "all_customers",
+    "day_type": null
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "$/kWh",
+    "rate_value": 0.15812,
+    "period_label": "SDG&E Delivery (incl. Base Services Charge)",
+    "included_in_energy": true,
+    "rider_scope": "all_customers",
+    "day_type": null
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "$/kWh",
+    "rate_value": 0.00427,
+    "period_label": "Franchise Fees",
+    "included_in_energy": true,
+    "rider_scope": "all_customers",
+    "day_type": null
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "$/kWh",
+    "rate_value": 0.00343,
+    "period_label": "Franchise Fees (page total 0.45907 includes this)",
+    "included_in_energy": true,
+    "rider_scope": "all_customers",
+    "day_type": null
+   },
+   {
+    "component_type": "energy",
+    "unit": "$/kWh",
+    "rate_value": 0.33148,
+    "tier_label": "all-in: generation 0.11795 + PCIA 0.04771 + SDG&E delivery 0.15812 +riders",
+    "day_type": "all"
+   }
+  ],
+  "confidence": 0.6,
+  "needs_review": true,
+  "completeness_reasons": [],
+  "computable_reasons": [],
+  "extraction_tier": "twopass",
+  "missing_fields": [
+   "TOU period prices and clock times",
+   "season dates",
+   "fixed monthly charge (Base Services Charge is folded into delivery rate)"
+  ],
+  "riders_referenced_not_shown": [],
+  "energy_scope": "bundled",
+  "closed_to_new": false,
+  "energy_includes_riders": true,
+  "empty_reason": "",
+  "linked_document_hint": "",
+  "confidence_notes": {}
+ },
+ {
+  "name": "TOU-ELEC",
+  "code": "TOU-ELEC",
+  "customer_class": "residential",
+  "rate_type": "flat",
+  "description": "SDG&E residential TOU-ELEC bundled comparison rate (SDG&E 41% renewable default service): generation + PCIA + delivery (includes Base Services Charge); TOU periods not shown.",
+  "source_url": "https://www.sdge.com/sites/default/files/SDCP_SDGE%20JRC%2008.01.2026_Final.pdf",
+  "effective_date": "2026-08-01",
+  "components": [
+   {
+    "component_type": "adjustment",
+    "unit": "$/kWh",
+    "rate_value": 0.10004,
+    "period_label": "Generation",
+    "included_in_energy": true,
+    "rider_scope": "all_customers",
+    "day_type": null
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "$/kWh",
+    "rate_value": 0.04771,
+    "period_label": "PCIA",
+    "included_in_energy": true,
+    "rider_scope": "all_customers",
+    "day_type": null
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "$/kWh",
+    "rate_value": 0.28511,
+    "period_label": "SDG&E Delivery (includes Base Services Charge)",
+    "included_in_energy": true,
+    "rider_scope": "all_customers",
+    "day_type": null
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "$/kWh",
+    "rate_value": 0.00476,
+    "period_label": "Franchise Fees",
+    "included_in_energy": true,
+    "rider_scope": "all_customers",
+    "day_type": null
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "$/kWh",
+    "rate_value": 0.00343,
+    "period_label": "Franchise Fees (page total 0.45907 includes this)",
+    "included_in_energy": true,
+    "rider_scope": "all_customers",
+    "day_type": null
+   },
+   {
+    "component_type": "energy",
+    "unit": "$/kWh",
+    "rate_value": 0.44105,
+    "day_type": "all",
+    "tier_label": "all-in: generation 0.10004 + PCIA 0.04771 + SDG&E delivery 0.28511 (incl. Base Services Charge); franchise fees excluded +riders"
+   }
+  ],
+  "confidence": 0.7,
+  "needs_review": true,
+  "completeness_reasons": [],
+  "computable_reasons": [],
+  "extraction_tier": "twopass",
+  "missing_fields": [
+   "TOU period hours",
+   "seasons",
+   "fixed monthly charge (embedded in delivery rate)",
+   "time-differentiated prices"
+  ],
+  "riders_referenced_not_shown": [],
+  "energy_scope": "bundled",
+  "closed_to_new": false,
+  "energy_includes_riders": true,
+  "empty_reason": "",
+  "linked_document_hint": "",
+  "confidence_notes": {}
+ },
+ {
+  "name": "EVTOU",
+  "code": "EVTOU",
+  "customer_class": "residential",
+  "rate_type": "flat",
+  "description": "SDG&E bundled residential Time of Use EV rate (EVTOU); page shows a single average all-in $/kWh, not period prices.",
+  "source_url": "https://www.sdge.com/sites/default/files/SDCP_SDGE%20JRC%2008.01.2026_Final.pdf",
+  "effective_date": "2026-08-01",
+  "components": [
+   {
+    "component_type": "adjustment",
+    "unit": "$/kWh",
+    "rate_value": 0.04771,
+    "period_label": "PCIA",
+    "included_in_energy": true,
+    "rider_scope": "all_customers",
+    "day_type": null
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "$/kWh",
+    "rate_value": 0.00499,
+    "period_label": "Franchise Fees",
+    "included_in_energy": true,
+    "rider_scope": "all_customers",
+    "day_type": null
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "$/kWh",
+    "rate_value": 0.00343,
+    "period_label": "Franchise Fees (page total 0.45907 includes this)",
+    "included_in_energy": true,
+    "rider_scope": "all_customers",
+    "day_type": null
+   },
+   {
+    "component_type": "energy",
+    "unit": "$/kWh",
+    "rate_value": 0.46183,
+    "tier_label": "all-in: generation 0.10486 + PCIA 0.04771 + delivery 0.30084 (franchise fees 0.00499 excluded) +riders",
+    "day_type": null
+   }
+  ],
+  "confidence": 0.7,
+  "needs_review": true,
+  "completeness_reasons": [],
+  "computable_reasons": [],
+  "extraction_tier": "twopass",
+  "missing_fields": [
+   "TOU period prices and hours",
+   "season dates",
+   "fixed monthly charge"
+  ],
+  "riders_referenced_not_shown": [],
+  "energy_scope": "bundled",
+  "closed_to_new": false,
+  "energy_includes_riders": true,
+  "empty_reason": "",
+  "linked_document_hint": "",
+  "confidence_notes": {}
+ },
+ {
+  "name": "EVTOU2",
+  "code": "EVTOU2",
+  "customer_class": "residential",
+  "rate_type": "tou",
+  "description": "SDG&E Time of Use residential EV rate EVTOU2, SDG&E 41% Renewable bundled service; the page shows only an average per-kWh price, not TOU period prices.",
+  "source_url": "https://www.sdge.com/sites/default/files/SDCP_SDGE%20JRC%2008.01.2026_Final.pdf",
+  "effective_date": "2026-08-01",
+  "components": [
+   {
+    "component_type": "adjustment",
+    "unit": "$/kWh",
+    "rate_value": 0.11455,
+    "period_label": "Generation Rate",
+    "included_in_energy": true,
+    "rider_scope": "all_customers",
+    "day_type": null
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "$/kWh",
+    "rate_value": 0.04771,
+    "period_label": "PCIA",
+    "included_in_energy": true,
+    "rider_scope": "all_customers",
+    "day_type": null
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "$/kWh",
+    "rate_value": 0.27955,
+    "period_label": "SDG&E Delivery Rate (includes Base Services Charge)",
+    "included_in_energy": true,
+    "rider_scope": "all_customers",
+    "day_type": null
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "$/kWh",
+    "rate_value": 0.00368,
+    "period_label": "Franchise Fees",
+    "included_in_energy": true,
+    "rider_scope": "all_customers",
+    "day_type": null
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "$/kWh",
+    "rate_value": 0.00343,
+    "period_label": "Franchise Fees (page total 0.45907 includes this)",
+    "included_in_energy": true,
+    "rider_scope": "all_customers",
+    "day_type": null
+   },
+   {
+    "component_type": "energy",
+    "unit": "$/kWh",
+    "rate_value": 0.44892,
+    "period_label": "all-in average (generation + PCIA + delivery)",
+    "tier_label": "all-in: generation 0.11455 + PCIA 0.04771 + delivery 0.27955; franchise fees excluded +riders",
+    "day_type": "all"
+   }
+  ],
+  "confidence": 0.5,
+  "needs_review": true,
+  "completeness_reasons": [
+   "tou_missing_clock_windows"
+  ],
+  "computable_reasons": [
+   "tou_missing_clock_windows"
+  ],
+  "extraction_tier": "twopass",
+  "missing_fields": [
+   "TOU period prices",
+   "TOU period hours",
+   "season dates",
+   "day types",
+   "fixed charge"
+  ],
+  "riders_referenced_not_shown": [],
+  "energy_scope": "bundled",
+  "closed_to_new": false,
+  "energy_includes_riders": true,
+  "empty_reason": "",
+  "linked_document_hint": "",
+  "confidence_notes": {}
+ },
+ {
+  "name": "EVTOU5",
+  "code": "EVTOU5",
+  "customer_class": "residential",
+  "rate_type": "flat",
+  "description": "SDG&E Time of Use EV residential rate EVTOU5, bundled SDG&E service (generation + PCIA + delivery + franchise fees), average per-kWh cost.",
+  "source_url": "https://www.sdge.com/sites/default/files/SDCP_SDGE%20JRC%2008.01.2026_Final.pdf",
+  "effective_date": "2026-08-01",
+  "components": [
+   {
+    "component_type": "adjustment",
+    "unit": "$/kWh",
+    "rate_value": 0.04771,
+    "period_label": "PCIA",
+    "included_in_energy": true,
+    "rider_scope": "all_customers",
+    "day_type": null
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "$/kWh",
+    "rate_value": 0.20481,
+    "period_label": "SDG&E Delivery Rate (includes Base Services Charge)",
+    "included_in_energy": true,
+    "rider_scope": "all_customers",
+    "day_type": null
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "$/kWh",
+    "rate_value": 0.00517,
+    "period_label": "Franchise Fees",
+    "included_in_energy": true,
+    "rider_scope": "all_customers",
+    "day_type": null
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "$/kWh",
+    "rate_value": 0.00343,
+    "period_label": "Franchise Fees (page total 0.45907 includes this)",
+    "included_in_energy": true,
+    "rider_scope": "all_customers",
+    "day_type": null
+   },
+   {
+    "component_type": "energy",
+    "unit": "$/kWh",
+    "rate_value": 0.36461,
+    "tier_label": "all-in: generation 0.09962 + PCIA 0.04771 + delivery 0.20481 (incl. Base Services Charge) + franchise fees 0.00387 +riders",
+    "day_type": "all"
+   }
+  ],
+  "confidence": 0.7,
+  "needs_review": true,
+  "completeness_reasons": [],
+  "computable_reasons": [],
+  "extraction_tier": "twopass",
+  "missing_fields": [
+   "TOU period hours/seasons and per-period prices",
+   "fixed monthly charge (Base Services Charge is folded into delivery rate)"
+  ],
+  "riders_referenced_not_shown": [],
+  "energy_scope": "bundled",
+  "closed_to_new": false,
+  "energy_includes_riders": true,
+  "empty_reason": "",
+  "linked_document_hint": "",
+  "confidence_notes": {}
+ },
+ {
+  "name": "DT-Residential",
+  "code": "DT",
+  "customer_class": "residential",
+  "rate_type": "flat",
+  "description": "SDG&E bundled DT residential rate (41% renewable default), all-in per kWh including generation, PCIA, delivery (incl. Base Services Charge) and franchise fees.",
+  "source_url": "https://www.sdge.com/sites/default/files/SDCP_SDGE%20JRC%2008.01.2026_Final.pdf",
+  "effective_date": "2026-08-01",
+  "components": [
+   {
+    "component_type": "adjustment",
+    "unit": "$/kWh",
+    "rate_value": 0.04771,
+    "period_label": "PCIA",
+    "included_in_energy": true,
+    "rider_scope": "all_customers",
+    "day_type": null
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "$/kWh",
+    "rate_value": 0.15774,
+    "period_label": "SDG&E Delivery Rate (includes Base Services Charge)",
+    "included_in_energy": true,
+    "rider_scope": "all_customers",
+    "day_type": null
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "$/kWh",
+    "rate_value": 0.00517,
+    "period_label": "Franchise Fees",
+    "included_in_energy": true,
+    "rider_scope": "all_customers",
+    "day_type": null
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "$/kWh",
+    "rate_value": 0.00343,
+    "period_label": "Franchise Fees (page total 0.45907 includes this)",
+    "included_in_energy": true,
+    "rider_scope": "all_customers",
+    "day_type": null
+   },
+   {
+    "component_type": "energy",
+    "unit": "$/kWh",
+    "rate_value": 0.35752,
+    "tier_label": "all-in total as printed: generation 0.13832 + PCIA 0.04771 + delivery 0.15774 + franchise fees 0.00514 +riders",
+    "day_type": null
+   }
+  ],
+  "confidence": 0.8,
+  "needs_review": true,
+  "completeness_reasons": [],
+  "computable_reasons": [],
+  "extraction_tier": "twopass",
+  "missing_fields": [
+   "TOU periods and seasons for DT",
+   "separate fixed charge"
+  ],
+  "riders_referenced_not_shown": [],
+  "energy_scope": "bundled",
+  "closed_to_new": false,
+  "energy_includes_riders": true,
+  "empty_reason": "",
+  "linked_document_hint": "",
+  "confidence_notes": {}
+ }
+]

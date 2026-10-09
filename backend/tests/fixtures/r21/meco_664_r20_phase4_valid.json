@@ -1,0 +1,216 @@
+[
+ {
+  "name": "R-1",
+  "code": "R-1",
+  "customer_class": "residential",
+  "rate_type": "complex",
+  "description": "Massachusetts Electric Company R-1 residential delivery service: customer charge plus net delivery price per kWh (distribution plus all delivery-side adjustment factors); supply not shown.",
+  "source_url": "https://www.nationalgridus.com/media/pdfs/billing-payments/electric-rates/ma/2026/0726meco.pdf",
+  "effective_date": "2026-05-01",
+  "components": [
+   {
+    "component_type": "fixed",
+    "unit": "$/month",
+    "rate_value": 10.0,
+    "day_type": null
+   },
+   {
+    "component_type": "energy",
+    "unit": "$/kWh",
+    "rate_value": 0.11028,
+    "tier_label": "All kWh - net retail delivery price (all-in delivery)",
+    "day_type": "all"
+   },
+   {
+    "component_type": "energy",
+    "unit": "$/kWh",
+    "rate_value": 0.06791,
+    "tier_label": "Heat Pump kWh (Nov 1-Apr 30) - net retail delivery price (all-in delivery)",
+    "season": "Heat pump season",
+    "season_start_month": 11,
+    "season_start_day": 1,
+    "season_end_month": 4,
+    "season_end_day": 30,
+    "day_type": "all"
+   }
+  ],
+  "confidence": 0.7,
+  "needs_review": true,
+  "completeness_reasons": [],
+  "computable_reasons": [],
+  "extraction_tier": "twopass",
+  "missing_fields": [
+   "basic service/supply price",
+   "farm discount applies as (10%) - not converted"
+  ],
+  "riders_referenced_not_shown": [],
+  "energy_scope": "delivery_only",
+  "closed_to_new": false,
+  "energy_includes_riders": true,
+  "empty_reason": "",
+  "linked_document_hint": "",
+  "confidence_notes": {}
+ },
+ {
+  "name": "R-2",
+  "code": "R-2",
+  "customer_class": "residential",
+  "rate_type": "complex",
+  "description": "Massachusetts Electric Company R-2 residential delivery service rate (assistance/low-income rate) with total net retail delivery price; heat pump kWh rate Nov 1-Apr 30.",
+  "source_url": "https://www.nationalgridus.com/media/pdfs/billing-payments/electric-rates/ma/2026/0526meco.pdf",
+  "effective_date": "2026-05-01",
+  "components": [
+   {
+    "component_type": "fixed",
+    "unit": "$/month",
+    "rate_value": 10.0,
+    "day_type": null
+   },
+   {
+    "component_type": "energy",
+    "unit": "$/kWh",
+    "rate_value": 0.11028,
+    "tier_label": "All kWh - total retail delivery price (all-in: distribution + all printed delivery adjustment factors)",
+    "day_type": null
+   },
+   {
+    "component_type": "energy",
+    "unit": "$/kWh",
+    "rate_value": 0.06791,
+    "tier_label": "Heat Pump kWh (Nov 1-Apr 30) - total retail delivery price",
+    "season": "Heat pump season",
+    "season_start_month": 11,
+    "season_start_day": 1,
+    "season_end_month": 4,
+    "season_end_day": 30,
+    "day_type": null
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "%",
+    "rate_value": -10,
+    "rider_scope": "some_kwh_or_customers",
+    "period_label": "Farm Discount",
+    "day_type": null
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "%",
+    "rate_value": -32,
+    "rider_scope": "some_kwh_or_customers",
+    "period_label": "Low Income Discount (range (32%) - (71%))",
+    "day_type": null
+   }
+  ],
+  "confidence": 0.7,
+  "needs_review": true,
+  "completeness_reasons": [],
+  "computable_reasons": [],
+  "extraction_tier": "twopass",
+  "missing_fields": [
+   "supply/basic service commodity price",
+   "heat pump kWh applicability details"
+  ],
+  "riders_referenced_not_shown": [
+   "Basic Service supply price"
+  ],
+  "energy_scope": "delivery_only",
+  "closed_to_new": false,
+  "energy_includes_riders": true,
+  "empty_reason": "",
+  "linked_document_hint": "",
+  "confidence_notes": {}
+ },
+ {
+  "name": "R-2 (Low Income)",
+  "code": "R-2",
+  "customer_class": "residential",
+  "rate_type": "flat",
+  "description": "Residential low-income assistance delivery rate (net distribution rate) with a percentage low income discount; supply and transmission not shown on this page.",
+  "source_url": "https://www.nationalgridus.com/media/pdfs/billing-payments/electric-rates/ma/2026/0326meco.pdf",
+  "effective_date": "2026-03-01",
+  "components": [
+   {
+    "component_type": "fixed",
+    "unit": "$/month",
+    "rate_value": 10.0,
+    "period_label": "Customer charge",
+    "day_type": null
+   },
+   {
+    "component_type": "energy",
+    "unit": "$/kWh",
+    "rate_value": 0.10088,
+    "tier_label": "All kWh - net distribution rate (base distribution plus distribution riders, all-in)",
+    "season": null,
+    "day_type": null
+   }
+  ],
+  "confidence": 0.6,
+  "needs_review": true,
+  "completeness_reasons": [],
+  "computable_reasons": [],
+  "extraction_tier": "twopass",
+  "missing_fields": [
+   "supply/default service price",
+   "transmission and other delivery charges from the delivery summary",
+   "low income discount applied as a percentage (32%)-(71%), not converted"
+  ],
+  "riders_referenced_not_shown": [
+   "Low Income Discount (32%)-(71%)",
+   "Heat Pump kWh rate $0.05851 (Nov 1-Apr 30) not extracted"
+  ],
+  "energy_scope": "delivery_only",
+  "closed_to_new": false,
+  "energy_includes_riders": true,
+  "empty_reason": "",
+  "linked_document_hint": "",
+  "confidence_notes": {}
+ },
+ {
+  "name": "R-1 Heat Pump (Nov 1-Apr 30)",
+  "code": "R-1",
+  "customer_class": "residential",
+  "rate_type": "seasonal",
+  "description": "Residential R-1 heat pump delivery rate for Nov 1-Apr 30 kWh; delivery only, supply not shown.",
+  "source_url": "https://www.nationalgridus.com/media/pdfs/billing-payments/electric-rates/ma/2026/0326meco.pdf",
+  "effective_date": "",
+  "components": [
+   {
+    "component_type": "fixed",
+    "unit": "$/month",
+    "rate_value": 10.0,
+    "day_type": null
+   },
+   {
+    "component_type": "energy",
+    "unit": "$/kWh",
+    "rate_value": 0.05851,
+    "season": "Heat Pump kWh (Nov 1-Apr 30)",
+    "season_start_month": 11,
+    "season_start_day": 1,
+    "season_end_month": 4,
+    "season_end_day": 30,
+    "tier_label": "Heat Pump kWh net retail delivery price (all delivery charges included)",
+    "day_type": null
+   }
+  ],
+  "confidence": 0.8,
+  "needs_review": true,
+  "completeness_reasons": [],
+  "computable_reasons": [
+   "season_gap"
+  ],
+  "extraction_tier": "twopass",
+  "missing_fields": [
+   "basic service/supply price"
+  ],
+  "riders_referenced_not_shown": [],
+  "energy_scope": "delivery_only",
+  "closed_to_new": false,
+  "energy_includes_riders": true,
+  "empty_reason": "",
+  "linked_document_hint": "",
+  "confidence_notes": {}
+ }
+]
