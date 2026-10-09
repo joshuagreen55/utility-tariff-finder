@@ -33,6 +33,7 @@ import hashlib
 import json
 import logging
 import os
+import copy
 import re
 import sys
 import time
@@ -6686,6 +6687,33 @@ def _find_sibling_base_energy(
     return candidates[0][1]
 
 
+def fold_batch_rider_schedules(tariffs: list[ExtractedTariff], riders: list[ExtractedTariff] | None = None) -> int:
+    """R22: fold rider-only schedules in this batch (fuel, ECCR, DSM, FAC ...)
+    into the residential plans that name them — deterministic, no LLM.
+    See app.services.rider_fold for the rules."""
+    from app.services.rider_fold import apply_fold, plan_fold
+
+    from app.services.price_basis import NOT_PRICE_RIDER_RE
+
+    pool = riders if riders is not None else tariffs
+    riders = [t for t in pool if _is_rider_only_tariff(t)
+              and str(t.customer_class or "residential").lower() == "residential"
+              and not NOT_PRICE_RIDER_RE.search(str(t.name or ""))]
+    if not riders:
+        return 0
+    n = 0
+    for t in tariffs:
+        if t in riders or str(t.customer_class or "").lower() != "residential":
+            continue
+        fold = plan_fold(t, riders)
+        if not fold:
+            continue
+        names = apply_fold(t, fold)
+        n += 1
+        log.info(f"    '{t.name}': folded rider schedules into ENERGY: {names}")
+    return n
+
+
 def salvage_relative_rider_only_tariffs(tariffs: list[ExtractedTariff]) -> int:
     """Inject sibling base ENERGY into seasonal rider-only extracts.
 
@@ -11727,6 +11755,8 @@ def phase4_validate(
     # R8: run base-price derivation (NL 1.1S / 1.2DS allowed derivation e)
     # BEFORE the optional-programme drop — those extracts hold only seasonal
     # ± adjustments until salvage injects the sibling base ENERGY.
+    # R22: snapshot rider-only schedules (unit-normalized) for the final fold.
+    r22_rider_pool = [copy.deepcopy(t) for t in tariffs if _is_rider_only_tariff(t)]
     n_salvaged = salvage_relative_rider_only_tariffs(tariffs)
     n_shared = apply_shared_stacking_riders_across_batch(tariffs)
     # After riders are on the ENERGY plans, drop resolved FAM/DSM hints so
@@ -12116,6 +12146,10 @@ def phase4_validate(
     duplicates_dropped = n_before_r18 - len(valid_tariffs)
     # R21: after every rider fold — plans still missing referenced per-kWh
     # riders are "base only" (flagged, not Mysa-complete).
+    # R22: fold named rider schedules from this batch (after every other fold).
+    n_folded = fold_batch_rider_schedules(valid_tariffs, riders=r22_rider_pool)
+    if n_folded:
+        r18_info = {**(r18_info or {}), "rider_schedules_folded": n_folded}
     n_base_only = mark_base_only_plans(valid_tariffs)
     n_wrong_state = flag_wrong_jurisdiction(valid_tariffs, state)
     if n_wrong_state:

@@ -1,0 +1,439 @@
+{
+ "419": {
+  "utility_name": "Georgia Power Co",
+  "state": "GA",
+  "phase3_tariffs": [
+   {
+    "name": "Time of Use \u2013 Residential Demand",
+    "code": "TOU-RD-11",
+    "customer_class": "residential",
+    "rate_type": "demand_tou",
+    "description": "Residential TOU demand schedule with summer weekday 2-7pm on-peak, basic service charge per day, and maximum kW demand charge.",
+    "source_url": "https://www.georgiapower.com/content/dam/georgia-power/pdfs/residential-pdfs/tariffs/2025/tou-rd-11.pdf",
+    "effective_date": "",
+    "components": [
+     {
+      "component_type": "fixed",
+      "unit": "$/day",
+      "rate_value": 0.4603,
+      "period_label": "Basic Service Charge"
+     },
+     {
+      "component_type": "energy",
+      "unit": "\u00a2/kWh",
+      "rate_value": 14.2986,
+      "period_label": "On-Peak",
+      "day_type": "weekday",
+      "period_start_time": "14:00",
+      "period_end_time": "19:00",
+      "season": "Summer",
+      "season_start_month": 6,
+      "season_start_day": 1,
+      "season_end_month": 9,
+      "season_end_day": 30
+     },
+     {
+      "component_type": "energy",
+      "unit": "\u00a2/kWh",
+      "rate_value": 1.5288,
+      "period_label": "Off-Peak",
+      "day_type": "weekday",
+      "period_start_time": "19:00",
+      "period_end_time": "14:00",
+      "season": "Summer",
+      "season_start_month": 6,
+      "season_start_day": 1,
+      "season_end_month": 9,
+      "season_end_day": 30
+     },
+     {
+      "component_type": "energy",
+      "unit": "\u00a2/kWh",
+      "rate_value": 1.5288,
+      "period_label": "Off-Peak",
+      "day_type": "weekend",
+      "period_start_time": "00:00",
+      "period_end_time": "00:00",
+      "season": "Summer",
+      "season_start_month": 6,
+      "season_start_day": 1,
+      "season_end_month": 9,
+      "season_end_day": 30
+     },
+     {
+      "component_type": "energy",
+      "unit": "\u00a2/kWh",
+      "rate_value": 1.5288,
+      "period_label": "Off-Peak",
+      "day_type": "holiday",
+      "period_start_time": "00:00",
+      "period_end_time": "00:00",
+      "season": "Summer",
+      "season_start_month": 6,
+      "season_start_day": 1,
+      "season_end_month": 9,
+      "season_end_day": 30
+     },
+     {
+      "component_type": "energy",
+      "unit": "\u00a2/kWh",
+      "rate_value": 1.5288,
+      "period_label": "Off-Peak",
+      "day_type": "all",
+      "period_start_time": "00:00",
+      "period_end_time": "00:00",
+      "season": "Winter",
+      "season_start_month": 10,
+      "season_start_day": 1,
+      "season_end_month": 5,
+      "season_end_day": 31
+     },
+     {
+      "component_type": "demand",
+      "unit": "$/kW",
+      "rate_value": 12.21,
+      "period_label": "Maximum kW"
+     }
+    ],
+    "confidence": 0.85,
+    "needs_review": true,
+    "completeness_reasons": [],
+    "computable_reasons": [],
+    "extraction_tier": "vision",
+    "missing_fields": [
+     "Environmental Compliance Cost Recovery amount",
+     "Demand Side Management amount",
+     "Fuel Cost Recovery amount",
+     "Municipal franchise fee",
+     "effective full date (billing month January 2025)"
+    ],
+    "riders_referenced_not_shown": [
+     "Environmental Compliance Cost Recovery",
+     "Demand Side Management Residential Schedule",
+     "Fuel Cost Recovery",
+     "Municipal Franchise Fee"
+    ],
+    "energy_scope": "bundled",
+    "closed_to_new": false,
+    "energy_includes_riders": false,
+    "empty_reason": "",
+    "linked_document_hint": "",
+    "confidence_notes": {}
+   },
+   {
+    "name": "Residential Service Schedule R-31",
+    "code": "R-31",
+    "customer_class": "residential",
+    "rate_type": "seasonal_tiered",
+    "description": "Residential service for domestic uses in a dwelling unit; winter flat rate, summer three-tier rate; billing months.",
+    "source_url": "https://www.georgiapower.com/content/dam/georgia-power/pdfs/tariffs/r.pdf",
+    "effective_date": "2026-06-01",
+    "components": [
+     {
+      "component_type": "fixed",
+      "unit": "$/day",
+      "rate_value": 0.4603,
+      "period_label": "Basic Service Charge"
+     },
+     {
+      "component_type": "energy",
+      "unit": "\u00a2/kWh",
+      "rate_value": 8.2116,
+      "season": "Winter",
+      "season_start_month": 10,
+      "season_start_day": 1,
+      "season_end_month": 5,
+      "season_end_day": 31,
+      "tier_label": "All kWh"
+     },
+     {
+      "component_type": "energy",
+      "unit": "\u00a2/kWh",
+      "rate_value": 8.7738,
+      "season": "Summer",
+      "season_start_month": 6,
+      "season_start_day": 1,
+      "season_end_month": 9,
+      "season_end_day": 30,
+      "tier_label": "First 650 kWh",
+      "tier_min_kwh": 0,
+      "tier_max_kwh": 650,
+      "tier_basis": "month"
+     },
+     {
+      "component_type": "energy",
+      "unit": "\u00a2/kWh",
+      "rate_value": 14.5738,
+      "season": "Summer",
+      "season_start_month": 6,
+      "season_start_day": 1,
+      "season_end_month": 9,
+      "season_end_day": 30,
+      "tier_label": "Next 350 kWh",
+      "tier_min_kwh": 650,
+      "tier_max_kwh": 1000,
+      "tier_basis": "month"
+     },
+     {
+      "component_type": "energy",
+      "unit": "\u00a2/kWh",
+      "rate_value": 15.0828,
+      "season": "Summer",
+      "season_start_month": 6,
+      "season_start_day": 1,
+      "season_end_month": 9,
+      "season_end_day": 30,
+      "tier_label": "Over 1000 kWh",
+      "tier_min_kwh": 1000,
+      "tier_max_kwh": null,
+      "tier_basis": "month"
+     }
+    ],
+    "confidence": 0.9,
+    "needs_review": true,
+    "completeness_reasons": [],
+    "computable_reasons": [],
+    "extraction_tier": "vision",
+    "missing_fields": [
+     "Environmental Compliance Cost Recovery amount",
+     "Demand Side Management Residential amount",
+     "Fuel Cost Recovery amount",
+     "Municipal Franchise Fee"
+    ],
+    "riders_referenced_not_shown": [
+     "Environmental Compliance Cost Recovery Schedule",
+     "Demand Side Management Residential Schedule",
+     "Fuel Cost Recovery Schedule",
+     "Municipal Franchise Fee Schedule"
+    ],
+    "energy_scope": "bundled",
+    "closed_to_new": false,
+    "energy_includes_riders": false,
+    "empty_reason": "",
+    "linked_document_hint": "",
+    "confidence_notes": {}
+   },
+   {
+    "name": "Income Qualified Discount Service Rider Schedule: IQD-1",
+    "code": "IQD-1",
+    "customer_class": "residential",
+    "rate_type": "flat",
+    "description": "Monthly bill discount for qualifying income-eligible residential customers on R, FLAT, TOU-REO, TOU-OA, TOU-RD, PPS and PBD schedules.",
+    "source_url": "https://www.georgiapower.com/content/dam/georgia-power/pdfs/tariffs/iqd.pdf",
+    "effective_date": "",
+    "components": [
+     {
+      "component_type": "adjustment",
+      "unit": "$/month",
+      "rate_value": -24.0,
+      "period_label": "Non-fuel Discount (up to)",
+      "included_in_energy": false,
+      "rider_scope": "some_kwh_or_customers"
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "$/month",
+      "rate_value": -9.5,
+      "period_label": "Fuel Discount (up to)",
+      "included_in_energy": false,
+      "rider_scope": "some_kwh_or_customers"
+     }
+    ],
+    "confidence": 0.85,
+    "needs_review": true,
+    "completeness_reasons": [],
+    "computable_reasons": [],
+    "extraction_tier": "vision",
+    "missing_fields": [
+     "energy price (rider only)",
+     "effective date (billing month of May 2024 only)"
+    ],
+    "riders_referenced_not_shown": [],
+    "energy_scope": "bundled",
+    "closed_to_new": false,
+    "energy_includes_riders": false,
+    "empty_reason": "",
+    "linked_document_hint": "",
+    "confidence_notes": {}
+   },
+   {
+    "name": "Fuel Cost Recovery Schedule FCR-27",
+    "code": "FCR-27",
+    "customer_class": "residential",
+    "rate_type": "seasonal",
+    "description": "Fuel cost recovery rider per kWh for Secondary Distribution customers (applies to residential), by season.",
+    "source_url": "https://www.georgiapower.com/content/dam/georgia-power/pdfs/tariffs/fcr.pdf",
+    "effective_date": "",
+    "components": [
+     {
+      "component_type": "adjustment",
+      "unit": "\u00a2/kWh",
+      "rate_value": 3.8069,
+      "period_label": "Fuel Cost Recovery - Secondary Distribution",
+      "season": "June-September",
+      "season_start_month": 6,
+      "season_start_day": 1,
+      "season_end_month": 9,
+      "season_end_day": 30,
+      "included_in_energy": false,
+      "rider_scope": "all_customers"
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "\u00a2/kWh",
+      "rate_value": 3.8561,
+      "period_label": "Fuel Cost Recovery - Secondary Distribution",
+      "season": "October-May",
+      "season_start_month": 10,
+      "season_start_day": 1,
+      "season_end_month": 5,
+      "season_end_day": 31,
+      "included_in_energy": false,
+      "rider_scope": "all_customers"
+     }
+    ],
+    "confidence": 0.8,
+    "needs_review": true,
+    "completeness_reasons": [],
+    "computable_reasons": [],
+    "extraction_tier": "vision",
+    "missing_fields": [
+     "base residential energy rate (not on this page)",
+     "full effective date (only billing month June 2026)"
+    ],
+    "riders_referenced_not_shown": [
+     "Income Qualified Discount Service Rider"
+    ],
+    "energy_scope": "supply_only",
+    "closed_to_new": false,
+    "energy_includes_riders": false,
+    "empty_reason": "",
+    "linked_document_hint": "",
+    "confidence_notes": {}
+   },
+   {
+    "name": "Environmental Compliance Cost Recovery Schedule: ECCR-15",
+    "code": "ECCR-15",
+    "customer_class": "residential",
+    "rate_type": "flat",
+    "description": "Rider increasing bills of retail schedules referencing ECCR by a percentage of base bill calculations (bills rendered for billing month of June, 2026).",
+    "source_url": "https://www.georgiapower.com/content/dam/georgia-power/pdfs/tariffs/eccr.pdf",
+    "effective_date": "",
+    "components": [
+     {
+      "component_type": "adjustment",
+      "unit": "% of base bill",
+      "rate_value": 13.0205,
+      "period_label": "ECCR percentage of base bill",
+      "included_in_energy": false,
+      "rider_scope": "all_customers"
+     }
+    ],
+    "confidence": 0.8,
+    "needs_review": true,
+    "completeness_reasons": [],
+    "computable_reasons": [],
+    "extraction_tier": "vision",
+    "missing_fields": [
+     "base energy price (rider-only document)"
+    ],
+    "riders_referenced_not_shown": [],
+    "energy_scope": "bundled",
+    "closed_to_new": false,
+    "energy_includes_riders": false,
+    "empty_reason": "",
+    "linked_document_hint": "",
+    "confidence_notes": {}
+   },
+   {
+    "name": "Demand Side Management Residential Schedule DSM-R-16",
+    "code": "DSM-R-16",
+    "customer_class": "residential",
+    "rate_type": "flat",
+    "description": "Rider increasing residential bills by 1.1969% of base bill calculations (excluding RTP incremental usage revenue) to recover residential DSM program costs.",
+    "source_url": "https://www.georgiapower.com/content/dam/georgia-power/pdfs/tariffs/dsm-r.pdf",
+    "effective_date": "",
+    "components": [
+     {
+      "component_type": "adjustment",
+      "unit": "% of base bill",
+      "rate_value": 1.1969,
+      "included_in_energy": false,
+      "rider_scope": "all_customers",
+      "period_label": "DSM-R percent-of-bill adjustment"
+     }
+    ],
+    "confidence": 0.85,
+    "needs_review": true,
+    "completeness_reasons": [],
+    "computable_reasons": [],
+    "extraction_tier": "vision",
+    "missing_fields": [
+     "base energy price",
+     "effective_date full date (bills rendered for billing month of June 2026)"
+    ],
+    "riders_referenced_not_shown": [],
+    "energy_scope": "supply_only",
+    "closed_to_new": false,
+    "energy_includes_riders": false,
+    "empty_reason": "",
+    "linked_document_hint": "",
+    "confidence_notes": {}
+   },
+   {
+    "name": "Time of Use Fuel Cost Recovery Schedule TOU-FCR-7",
+    "code": "TOU-FCR-7",
+    "customer_class": "residential",
+    "rate_type": "tou",
+    "description": "Fuel cost recovery rider added to bills under Georgia Power residential TOU schedules (TOU-REO, TOU-OA, TOU-RD, etc.); secondary distribution rates shown.",
+    "source_url": "https://www.georgiapower.com/content/dam/georgia-power/pdfs/tariffs/tou-fcr.pdf",
+    "effective_date": "",
+    "components": [
+     {
+      "component_type": "adjustment",
+      "unit": "\u00a2/kWh",
+      "rate_value": 5.2269,
+      "period_label": "On-Peak (Secondary Distribution)",
+      "day_type": "weekday",
+      "period_start_time": "14:00",
+      "period_end_time": "19:00",
+      "season": "Summer",
+      "season_start_month": 6,
+      "season_start_day": 1,
+      "season_end_month": 9,
+      "season_end_day": 30,
+      "included_in_energy": false,
+      "rider_scope": "all_customers"
+     },
+     {
+      "component_type": "adjustment",
+      "unit": "\u00a2/kWh",
+      "rate_value": 3.7441,
+      "period_label": "Off-Peak (Secondary Distribution): all other hours, weekends, Independence Day and Labor Day, and Oct\u2013May",
+      "day_type": "all",
+      "included_in_energy": false,
+      "rider_scope": "all_customers"
+     }
+    ],
+    "confidence": 0.0,
+    "needs_review": true,
+    "completeness_reasons": [],
+    "computable_reasons": [],
+    "extraction_tier": "vision",
+    "missing_fields": [
+     "base energy charges (in retail rate schedules, not on this page)",
+     "effective day-of-month (billing month of June 2026)"
+    ],
+    "riders_referenced_not_shown": [
+     "Residential TOU retail rate schedules base energy"
+    ],
+    "energy_scope": "supply_only",
+    "closed_to_new": false,
+    "energy_includes_riders": false,
+    "empty_reason": "",
+    "linked_document_hint": "",
+    "confidence_notes": {}
+   }
+  ]
+ }
+}
