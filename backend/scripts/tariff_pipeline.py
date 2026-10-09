@@ -7339,6 +7339,29 @@ def apply_source_quality_rules(tariffs: list[ExtractedTariff]) -> tuple[list[Ext
     return kept, {"retail_offers_dropped": dropped, "marketing_rounded_plans": marketing}
 
 
+def flag_wrong_jurisdiction(tariffs: list[ExtractedTariff], state: str) -> int:
+    """R21 fix 7: the source URL names another state/province (and not the
+    utility's own) — e.g. an Iowa utility priced from "sd-electric-tariffs.pdf".
+    Flagged ``wrong_jurisdiction_document``, needs_review, not Mysa-complete.
+    """
+    from app.services.jurisdiction import url_jurisdictions, wrong_jurisdiction
+
+    n = 0
+    for t in tariffs:
+        src = t.source_url or ""
+        if not wrong_jurisdiction(src, state):
+            continue
+        _r18_add_missing(t, "wrong_jurisdiction_document")
+        _r18_note(t, "wrong_jurisdiction", {
+            "utility_state": str(state).upper(),
+            "document_states": sorted(url_jurisdictions(src)),
+        })
+        t.needs_review = True
+        n += 1
+        log.warning(f"    '{t.name}': source is for {sorted(url_jurisdictions(src))}, utility is {state} — not Mysa-complete")
+    return n
+
+
 def mark_base_only_plans(tariffs: list[ExtractedTariff]) -> int:
     """R21 safety net: a plan whose source references per-kWh fuel / cost-
     recovery riders that are NOT in its ENERGY price is "base only".
@@ -12094,6 +12117,9 @@ def phase4_validate(
     # R21: after every rider fold — plans still missing referenced per-kWh
     # riders are "base only" (flagged, not Mysa-complete).
     n_base_only = mark_base_only_plans(valid_tariffs)
+    n_wrong_state = flag_wrong_jurisdiction(valid_tariffs, state)
+    if n_wrong_state:
+        r18_info = {**(r18_info or {}), "wrong_jurisdiction_plans": n_wrong_state}
     if n_base_only:
         r18_info = {**(r18_info or {}), "base_only_plans": n_base_only}
     if sq_info["retail_offers_dropped"] or sq_info["marketing_rounded_plans"]:
