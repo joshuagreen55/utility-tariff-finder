@@ -313,8 +313,12 @@ def gate_oracle(
         oracles.append(money(typical_bill_cents_per_kwh))
     for o in typical_bill_oracles or []:
         cents = getattr(o, "cents_per_kwh", None)
-        if cents is None and isinstance(o, dict):
-            cents = o.get("cents_per_kwh")
+        label = getattr(o, "label", None)
+        if isinstance(o, dict):
+            cents = o.get("cents_per_kwh", cents)
+            label = o.get("label", label)
+        if label == "typical_bill":
+            continue  # bill ÷ kWh includes fixed charges; not an all-in rate
         if cents is not None:
             oracles.append(money(cents))
     if not oracles:
