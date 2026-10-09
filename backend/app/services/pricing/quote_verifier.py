@@ -20,37 +20,12 @@ from dataclasses import dataclass
 from decimal import Decimal, InvalidOperation
 from typing import Any
 
+from app.services.pricing.units import UNIT_PATTERNS as _UNIT_PATTERNS
+from app.services.pricing.units import normalize_unit as _normalize_unit_table
 
 _UNIT_WINDOW = 120
 _HEADER_LINE_LOOKBACK = 12
 _LABEL_LINE_LOOKBACK = 30  # merged season headers can sit well above the row
-
-_UNIT_PATTERNS: dict[str, re.Pattern[str]] = {
-    "$/kwh": re.compile(r"\$\s*/\s*kwh|\$\/kwh|dollars?\s+per\s+kwh", re.I),
-    "cents/kwh": re.compile(
-        r"¢\s*/\s*kwh|¢\s+per\s+kwh|c/\s*kwh|cents?\s*/\s*kwh|cents?\s+per\s+kwh|"
-        r"¢/kwh|¢\s*per\s*kilowatt|\bcents?\b",
-        re.I,
-    ),
-    "percent": re.compile(r"%|percent(?:age)?\s+of|per\s*cent", re.I),
-    "mills/kwh": re.compile(r"mills?\s*/\s*kwh|mills?\s+per\s+kwh", re.I),
-    "dimensionless": re.compile(r"factor|multiplier|×|x\s+\d", re.I),
-    # Non-energy metadata (R28): fixed monthly charges + tier breakpoints.
-    "$/month": re.compile(
-        r"\$\s*/\s*mo(?:nth)?|\$\s*per\s*mo(?:nth)?|per\s*month|/mo\b|"
-        r"monthly\s+charge|customer\s+charge|basic\s+charge|service\s+charge",
-        re.I,
-    ),
-    "$/day": re.compile(
-        r"\$\s*/\s*day|\$\s*per\s*day|per\s*day|daily\s+charge|¢\s*/\s*day",
-        re.I,
-    ),
-    "kwh": re.compile(
-        r"\bkwh\b|kilowatt[\s-]?hours?|kwh/day|kwh\s+per\s+day|"
-        r"first\s+\d+|block\s+size|tier\s+threshold",
-        re.I,
-    ),
-}
 
 _SEASON_ALIASES: dict[str, tuple[str, ...]] = {
     "summer": (
@@ -98,26 +73,7 @@ _SPACES = re.compile(r"[\u00a0\u2000-\u200b\u202f\u205f\u3000]+")
 
 
 def _normalize_unit(unit: str | None) -> str:
-    u = (unit or "").strip().lower().replace(" ", "")
-    if u in {"$/kwh", "usd/kwh", "cad/kwh"}:
-        return "$/kwh"
-    if u in {"¢/kwh", "c/kwh", "cents/kwh"} or (
-        "cent" in u and "month" not in u and "day" not in u
-    ) or u.startswith("¢"):
-        return "cents/kwh"
-    if u in {"percent", "%", "pct"}:
-        return "percent"
-    if u in {"mills/kwh", "mill/kwh"}:
-        return "mills/kwh"
-    if u in {"dimensionless", "factor", "x"}:
-        return "dimensionless"
-    if u in {"$/month", "$/mo", "usd/month", "cad/month", "$/mo."}:
-        return "$/month"
-    if u in {"$/day", "usd/day", "cad/day", "¢/day", "cents/day"}:
-        return "$/day"
-    if u in {"kwh", "kwh/day", "kilowatthour", "kilowatt-hour"}:
-        return "kwh"
-    return u
+    return _normalize_unit_table(unit)
 
 
 def _normalize_text(text: str) -> str:
@@ -216,10 +172,13 @@ def _amount_candidates(
     amount: str | Decimal,
     stored_unit: str | None,
     context_units: set[str],
+    *,
+    quote: str | None = None,
 ) -> list[Decimal]:
     """Exact amount plus unit-aware ¢↔$ forms when the other unit is in context.
 
-    Does **not** blindly accept 100× (that was the R27 SDG&E false pass).
+    Does **not** blindly accept 100× (that was the R27 SDG&E false pass)
+    unless the quote itself shows the sibling unit marker ($ vs ¢).
     """
     try:
         want = amount if isinstance(amount, Decimal) else Decimal(str(amount))
@@ -227,11 +186,14 @@ def _amount_candidates(
         return []
     out = [want]
     norm = _normalize_unit(stored_unit)
+    q = (quote or "").lower()
+    quote_has_dollar = bool(re.search(r"\$\s*\d", q))
+    quote_has_cent = bool(re.search(r"¢|\bcents?\b", q))
     # Stored $/kWh, document shows cents → accept cents form.
-    if norm == "$/kwh" and "cents/kwh" in context_units:
+    if norm == "$/kwh" and ("cents/kwh" in context_units or quote_has_cent):
         out.append(want * Decimal("100"))
     # Stored ¢/kWh, document shows dollars → accept dollars form.
-    if norm == "cents/kwh" and "$/kwh" in context_units:
+    if norm == "cents/kwh" and ("$/kwh" in context_units or quote_has_dollar):
         out.append(want / Decimal("100"))
     return out
 
@@ -248,7 +210,9 @@ def _amount_in_quote(
     nums = list(_NUMBER_RE.finditer(quote))
     if not nums:
         return True
-    wants = _amount_candidates(amount, unit, context_units or set())
+    wants = _amount_candidates(
+        amount, unit, context_units or set(), quote=quote,
+    )
     if not wants:
         return True
     for m in nums:
@@ -445,7 +409,12 @@ def _row_col_labels_ok(
 
 
 def _find_quote(document_text: str, quote: str) -> tuple[int, str, str]:
-    """Return (index, doc_used, quote_used). Tries normalized dash/space forms."""
+    """Return (index, doc_used, quote_used). Tries normalized dash/space forms.
+
+    PDF reflows often break a model quote across lines or reorder a header
+    around the number. When the verbatim / collapsed forms miss, fall back
+    to an amount-anchored window that still contains most quote tokens.
+    """
     q = str(quote)
     idx = document_text.find(q)
     if idx >= 0:
@@ -462,6 +431,31 @@ def _find_quote(document_text: str, quote: str) -> tuple[int, str, str]:
     idx = collapsed_doc.find(collapsed_q)
     if idx >= 0:
         return idx, collapsed_doc, collapsed_q
+
+    # Amount-anchored fuzzy: locate a *decimal* rate figure from the quote
+    # (skip bare integers like clock hours), require ≥60% of significant quote
+    # tokens within ±180 chars (PDF header reflow).
+    nums = [n for n in _NUMBER_RE.findall(collapsed_q) if "." in n]
+    tokens = [
+        t for t in re.findall(r"[A-Za-z0-9.]+", collapsed_q.lower())
+        if len(t) >= 3 and t not in {"the", "and", "per", "for", "with"}
+    ]
+    if nums and tokens:
+        need = max(2, int(round(len(tokens) * 0.6)))
+        for num in nums:
+            start = 0
+            while True:
+                j = collapsed_doc.find(num, start)
+                if j < 0:
+                    break
+                lo = max(0, j - 180)
+                hi = min(len(collapsed_doc), j + len(num) + 180)
+                window = collapsed_doc[lo:hi].lower()
+                hits = sum(1 for t in tokens if t in window)
+                if hits >= need:
+                    # Use the window as the grounded quote span.
+                    return lo, collapsed_doc, collapsed_doc[lo:hi]
+                start = j + len(num)
 
     return -1, document_text, q
 
@@ -494,10 +488,22 @@ def verify_quote(
     quote_col = idx - spans[line_idx][0]
     context_units = _context_unit_family(document_text, spans, idx, len(q))
 
-    if amount is not None and not _amount_in_quote(
-        q, amount, unit=unit, context_units=context_units,
-    ):
-        return QuoteVerifyResult(False, "amount_not_in_quote", idx)
+    if amount is not None:
+        amount_ok = _amount_in_quote(
+            q, amount, unit=unit, context_units=context_units,
+        )
+        if not amount_ok:
+            # PDF reflow: number often sits on the line above/below the
+            # header span the model copied. Accept when the amount appears
+            # in a ±2-line band around the grounded quote.
+            lo = max(0, line_idx - 2)
+            hi = min(len(spans), line_idx + 3)
+            band = "\n".join(spans[i][2] for i in range(lo, hi))
+            amount_ok = _amount_in_quote(
+                band, amount, unit=unit, context_units=context_units,
+            )
+        if not amount_ok:
+            return QuoteVerifyResult(False, "amount_not_in_quote", idx)
 
     if require_unit and unit:
         norm = _normalize_unit(unit)

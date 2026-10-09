@@ -127,6 +127,68 @@ class TestDualExtract(unittest.TestCase):
         self.assertIsInstance(result, ExtractionHold)
         self.assertEqual(result.reason, "quote_verify_failed")
 
+    def test_missing_energy_retries_once(self):
+        calls: list[dict] = []
+
+        def fn(doc, model, ctx):
+            calls.append(dict(ctx))
+            if ctx.get("require_applying_energy"):
+                return _good_payload()
+            # First pass: fixed charge only (no energy).
+            return [{
+                "code": "cust",
+                "kind": "fixed_monthly",
+                "unit": "$/month",
+                "name": "Customer",
+                "disposition": "applies",
+                "cells": [{"amount": "10.00"}],
+                "source_page": "p.1",
+                "source_quote": "Customer charge $10.00",
+            }]
+
+        doc = DOC + "\nCustomer charge $10.00\n"
+        result = dual_extract_components(
+            doc,
+            plan_meta={
+                "plan_key": "rs", "name": "RS", "recipe_code": "bundled",
+                "source_url": "https://utility.example/rates.pdf",
+            },
+            extract_fn=fn,
+            official_hosts=["utility.example"],
+            force=True,
+        )
+        self.assertIsInstance(result, ExtractionAccept)
+        # Two models × (first pass + energy retry) = 4 calls.
+        self.assertEqual(len(calls), 4)
+        self.assertTrue(any(c.get("require_applying_energy") for c in calls))
+
+    def test_missing_energy_holds_after_retry(self):
+        def fn(doc, model, ctx):
+            return [{
+                "code": "cust",
+                "kind": "fixed_monthly",
+                "unit": "$/month",
+                "name": "Customer",
+                "disposition": "applies",
+                "cells": [{"amount": "10.00"}],
+                "source_page": "p.1",
+                "source_quote": "Customer charge $10.00",
+            }]
+
+        result = dual_extract_components(
+            "Customer charge $10.00\n",
+            plan_meta={
+                "plan_key": "rs", "name": "RS", "recipe_code": "bundled",
+                "source_url": "https://utility.example/rates.pdf",
+            },
+            extract_fn=fn,
+            official_hosts=["utility.example"],
+            force=True,
+        )
+        self.assertIsInstance(result, ExtractionHold)
+        self.assertEqual(result.reason, "missing_energy_charge")
+        self.assertIn("after_retry", result.detail)
+
     def test_model_ids_are_repo_defaults(self):
         self.assertEqual(ex.HAIKU_MODEL, os.environ.get("HAIKU_MODEL", "claude-haiku-5-5"))
         self.assertEqual(ex.SONNET_MODEL, os.environ.get("SONNET_MODEL", "claude-sonnet-5-5"))

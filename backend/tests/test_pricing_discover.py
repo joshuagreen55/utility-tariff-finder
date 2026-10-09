@@ -31,6 +31,15 @@ class TestRejectFilters(unittest.TestCase):
         )
         self.assertTrue(is_non_english_locale_url("https://x.com/es/rates.pdf"))
 
+    def test_non_utility_domain_rejected(self):
+        from app.services.pricing.document_set import DocumentCandidate
+        from app.services.pricing.discover import reject_reason_for_candidate
+        cand = DocumentCandidate(
+            url="https://www.quickelectricity.com/oncor-rates",
+            title="Oncor rates",
+        )
+        self.assertEqual(reject_reason_for_candidate(cand), "non_utility_domain")
+
     def test_non_english_kept_without_english_twin(self):
         only_es = DocumentCandidate(
             url="https://x.com/es/rates/tou.pdf", title="TOU Español",

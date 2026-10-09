@@ -7,7 +7,11 @@ from typing import Any
 
 
 def money(value: Any) -> Decimal:
-    """Parse a exact decimal from str/int/Decimal. Rejects float."""
+    """Parse an exact decimal from str/int/Decimal. Rejects float.
+
+    Accepts common model mess (``$0.12``, commas, accounting ``(1.2)``)
+    via ``amount_parse.parse_amount``. Still rejects binary floats.
+    """
     if isinstance(value, float):
         raise TypeError(
             "float is not allowed in the pricing compiler; "
@@ -15,7 +19,13 @@ def money(value: Any) -> Decimal:
         )
     if isinstance(value, Decimal):
         return value
-    return Decimal(str(value))
+    if isinstance(value, int) and not isinstance(value, bool):
+        return Decimal(value)
+    from app.services.pricing.amount_parse import parse_amount
+    parsed = parse_amount(value)
+    if parsed is None:
+        raise ValueError(f"unparseable money amount: {value!r}")
+    return parsed
 
 
 def to_dollars_per_kwh(amount: Decimal, unit: str) -> Decimal:

@@ -91,27 +91,83 @@ def gate_edition(
     return []
 
 
+# Kinds that affect the all-in energy price (must agree across models).
+_PRICED_ENERGY_KINDS = frozenset({
+    "base_energy", "delivery_energy", "supply_energy", "commodity_energy",
+    "regulated_commodity", "default_supply", "delivery_per_kwh",
+    "supply_per_kwh", "energy",
+    "rider_per_kwh", "rider_percent", "credit", "loss_factor", "fuel",
+})
+# Metadata / schedule kinds — disagreement here must not hold the plan (R29-4).
+_METADATA_KINDS = frozenset({
+    "season_calendar", "tou_schedule", "holiday_list", "tier_structure",
+    "excluded_item", "event_day", "fixed_charge", "fixed_monthly",
+    "customer_charge", "demand_charge",
+})
+
+
+def _unit_family(unit: str) -> str:
+    u = (unit or "").strip().lower().replace(" ", "")
+    if u in {"$/kwh", "usd/kwh", "cad/kwh"}:
+        return "$/kwh"
+    if "cent" in u or u.startswith("¢") or u in {"c/kwh", "¢/kwh"}:
+        return "cents/kwh"
+    if u in {"percent", "%", "pct"}:
+        return "percent"
+    return u
+
+
 def gate_agreement(
     extract_a: list[ComponentInput],
     extract_b: list[ComponentInput],
 ) -> list[GateFailure]:
-    """G2: two blind extractions agree after canonicalisation."""
+    """G2: two blind extractions agree on priced energy components.
+
+    Metadata-only differences (TOU clocks, season calendars, fixed monthly
+    charges, display names) do not hold the plan (R29-4).
+    """
+    def _priced(comps: list[ComponentInput]) -> list[ComponentInput]:
+        out = []
+        for c in comps:
+            if c.kind in _METADATA_KINDS:
+                continue
+            if c.kind in _PRICED_ENERGY_KINDS or c.kind.endswith("_energy"):
+                out.append(c)
+            elif c.kind.startswith("rider") or c.kind in {"credit", "fuel"}:
+                out.append(c)
+        # If nothing matched the allowlist, fall back to non-metadata rows
+        # so an empty allowlist does not silently pass.
+        if not out:
+            out = [c for c in comps if c.kind not in _METADATA_KINDS]
+        return out
+
     def _canon(comps: list[ComponentInput]) -> dict[str, tuple]:
         out = {}
-        for c in comps:
-            cells = tuple(
-                sorted(
-                    (
-                        str(cell.get("season") or "all"),
-                        str(cell.get("period") or "all"),
-                        str(cell.get("day_type") or "all"),
-                        str(cell.get("tier") or "all"),
-                        str(money(cell["amount"])),
-                    )
-                    for cell in c.cells
-                )
-            )
-            out[c.code] = (c.kind, c.unit, cells)
+        for c in _priced(comps):
+            cells = []
+            for cell in c.cells:
+                try:
+                    amt = money(cell["amount"])
+                except Exception:
+                    continue
+                # Normalize ¢ ↔ $ so models quoting either unit can agree.
+                family = _unit_family(c.unit)
+                if family == "cents/kwh":
+                    amt_cmp = amt / money("100")
+                    family = "$/kwh"
+                else:
+                    amt_cmp = amt
+                # Normalize decimal string so 0.10 == 0.100000.
+                amt_s = format(amt_cmp.normalize(), "f")
+                cells.append((
+                    str(cell.get("season") or "all"),
+                    str(cell.get("period") or "all"),
+                    str(cell.get("day_type") or "all"),
+                    str(cell.get("tier") or "all"),
+                    amt_s,
+                ))
+            cells_t = tuple(sorted(cells))
+            out[c.code.lower()] = (c.kind, family, cells_t)
         return out
 
     a, b = _canon(extract_a), _canon(extract_b)

@@ -78,6 +78,8 @@ THIRD_PARTY_DOMAINS = frozenset({
     "energypal.com", "electricchoice.com", "paylesspower.com",
     "texaselectricityratings.com", "powertochoose.org",
     "electricityrates.com", "utilitygenius.com", "switchwise.com",
+    # Texas retail / plan-shop sites that are not TDU tariff books (R29 Oncor).
+    "quickelectricity.com", "comparepower.com", "texaspowerguide.com",
     "energyrates.ca", "ratehub.ca", "chooseenergy.com",
     "smartenergyusa.com", "gatby.com", "poweroutage.us",
     "njenergyratings.com", "energypricing.com",

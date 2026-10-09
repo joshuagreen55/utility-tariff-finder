@@ -16,10 +16,13 @@ from dataclasses import dataclass, field
 from decimal import InvalidOperation
 from typing import Any, Callable
 
+from app.services.pricing.amount_parse import (
+    normalize_amount_string,
+    sanitize_extract_amounts,
+)
 from app.services.pricing.extract_schema import (
     applying_raw_components,
     disposition_of,
-    normalize_amount_string,
     validate_extract_schema,
 )
 from app.services.pricing.preaccept import PreAcceptResult, run_preaccept
@@ -73,7 +76,10 @@ def _raw_to_component(raw: dict[str, Any]) -> ComponentInput:
             continue
         cell = dict(cell)
         if "amount" in cell:
-            cell["amount"] = normalize_amount_string(cell["amount"])
+            norm = normalize_amount_string(cell["amount"])
+            if norm is None:
+                continue
+            cell["amount"] = norm
         cells.append(cell)
     return ComponentInput(
         code=str(raw["code"]),
@@ -186,8 +192,36 @@ def dual_extract_components(
         # Explicitly omit any prior rate values.
         "blind": True,
     }
-    raw_a = list(extract_fn(document_text, m_a, dict(ctx)) or [])
-    raw_b = list(extract_fn(document_text, m_b, dict(ctx)) or [])
+
+    _ENERGY_KINDS = {
+        "base_energy", "delivery_energy", "supply_energy", "commodity_energy",
+        "regulated_commodity", "default_supply", "delivery_per_kwh",
+        "supply_per_kwh", "energy",
+    }
+
+    def _has_energy(comps: list[ComponentInput]) -> bool:
+        return any(
+            c.kind in _ENERGY_KINDS
+            or c.kind.endswith("_energy")
+            or c.kind.endswith("_per_kwh")
+            or "energy" in c.kind
+            or "commodity" in c.kind
+            or "supply" in c.kind
+            for c in comps
+        )
+
+    def _pull(model: str, *, energy_retry: bool = False) -> list[dict[str, Any]]:
+        call_ctx = dict(ctx)
+        if energy_retry:
+            # One-shot nudge only — still blind to prior numeric values.
+            call_ctx["require_applying_energy"] = True
+            call_ctx["retry_reason"] = "missing_energy_charge"
+        return sanitize_extract_amounts(
+            list(extract_fn(document_text, model, call_ctx) or [])
+        )
+
+    raw_a = _pull(m_a)
+    raw_b = _pull(m_b)
 
     # Schema first — numbers only, unique codes/names, explicit dispositions.
     for label, raw in (("a", raw_a), ("b", raw_b)):
@@ -209,6 +243,57 @@ def dual_extract_components(
         ]
     except (KeyError, TypeError, ValueError, InvalidOperation) as e:
         return ExtractionHold(reason="malformed_extract", detail=str(e))
+
+    # R29-3: every plan needs ≥1 applying energy (/kWh) charge. One retry
+    # per side when the first pass returned only fixed/meta rows.
+    retried_a = retried_b = False
+    if not _has_energy(applying_a):
+        raw_a = _pull(m_a, energy_retry=True)
+        schema_err = validate_extract_schema(raw_a)
+        if schema_err:
+            return ExtractionHold(
+                reason="schema_invalid",
+                detail=f"model_a:retry:{schema_err}",
+            )
+        try:
+            comps_a = [_raw_to_component(r) for r in raw_a]
+            applying_a = [
+                _raw_to_component(r) for r in applying_raw_components(raw_a)
+            ]
+        except (KeyError, TypeError, ValueError, InvalidOperation) as e:
+            return ExtractionHold(reason="malformed_extract", detail=str(e))
+        retried_a = True
+    if not _has_energy(applying_b):
+        raw_b = _pull(m_b, energy_retry=True)
+        schema_err = validate_extract_schema(raw_b)
+        if schema_err:
+            return ExtractionHold(
+                reason="schema_invalid",
+                detail=f"model_b:retry:{schema_err}",
+            )
+        try:
+            comps_b = [_raw_to_component(r) for r in raw_b]
+            applying_b = [
+                _raw_to_component(r) for r in applying_raw_components(raw_b)
+            ]
+        except (KeyError, TypeError, ValueError, InvalidOperation) as e:
+            return ExtractionHold(reason="malformed_extract", detail=str(e))
+        retried_b = True
+
+    if not _has_energy(applying_a):
+        return ExtractionHold(
+            reason="missing_energy_charge",
+            detail="model_a:no_applying_energy_component"
+            + (":after_retry" if retried_a else ""),
+            extract_a=comps_a, extract_b=comps_b,
+        )
+    if not _has_energy(applying_b):
+        return ExtractionHold(
+            reason="missing_energy_charge",
+            detail="model_b:no_applying_energy_component"
+            + (":after_retry" if retried_b else ""),
+            extract_a=comps_a, extract_b=comps_b,
+        )
 
     # Citations + quote grounding only for PRICED (applies) components.
     # not_found / not_applicable / optional may omit values without holding

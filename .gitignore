@@ -30,6 +30,9 @@ frontend/dist/
 logs/
 !logs/.gitkeep
 
+# Local replay / campaign run artifacts (fixtures live under tests/)
+runs/
+
 # Docker
 *.log
 
