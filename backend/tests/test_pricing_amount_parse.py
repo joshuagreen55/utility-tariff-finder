@@ -109,5 +109,78 @@ class TestSanitizeExtract(unittest.TestCase):
         self.assertEqual(out[0]["cells"][0]["amount"], "0.043481")
 
 
+def _row(unit, amounts, quote):
+    return [{
+        "code": "base", "kind": "base_energy", "unit": unit, "name": "Energy",
+        "disposition": "applies", "cells": [{"amount": a} for a in amounts],
+        "source_quote": quote, "source_page": "p1",
+    }]
+
+
+class TestDecimalComma(unittest.TestCase):
+    def test_decimal_comma(self):
+        self.assertEqual(parse_amount("9,8"), Decimal("9.8"))
+        self.assertEqual(parse_amount("0,704"), Decimal("0.704"))
+        self.assertEqual(parse_amount("12,5¢"), Decimal("12.5"))
+        self.assertEqual(parse_amount("1.234,56"), Decimal("1234.56"))
+
+    def test_thousands_groups(self):
+        self.assertEqual(parse_amount("1,000"), Decimal("1000"))
+        self.assertEqual(parse_amount("1,234,567"), Decimal("1234567"))
+
+    def test_lone_group_is_decimal_for_per_kwh(self):
+        self.assertEqual(parse_amount("6,704", per_kwh=True), Decimal("6.704"))
+        out = sanitize_extract_amounts(_row("¢/kWh", ["6,704"], "6,704 ¢/kWh"))
+        self.assertEqual(out[0]["cells"][0]["amount"], "6.704")
+
+
+class TestReconcileComponentLevel(unittest.TestCase):
+    def test_one_factor_for_every_cell(self):
+        """Quote cites one cell in $; every cell is rescaled the same way."""
+        out = sanitize_extract_amounts(_row(
+            "¢/kWh", ["10.815", "9.241"],
+            "Energy Charge per kWh June - September $0.10815",
+        ))
+        self.assertEqual(out[0]["unit"], "$/kWh")
+        self.assertEqual(
+            [c["amount"] for c in out[0]["cells"]], ["0.10815", "0.09241"],
+        )
+
+    def test_conflicting_factors_left_alone(self):
+        out = sanitize_extract_amounts(_row(
+            "¢/kWh", ["0.10815", "9.241"],
+            "Summer $0.10815 Other months $0.09241",
+        ))
+        self.assertEqual(out[0]["unit"], "¢/kWh")
+        self.assertEqual(
+            [c["amount"] for c in out[0]["cells"]], ["0.10815", "9.241"],
+        )
+
+    def test_fixed_charge_dollar_figure_ignored(self):
+        """$14.50 customer charge must not rescale a 0.145 ¢ rider."""
+        out = sanitize_extract_amounts(_row(
+            "¢/kWh", ["0.145"],
+            "Base Charge $14.50 per customer; rider 0.145¢ per kWh",
+        ))
+        self.assertEqual(out[0]["unit"], "¢/kWh")
+        self.assertEqual(out[0]["cells"][0]["amount"], "0.145")
+
+    def test_small_cent_rider_not_promoted_to_dollars(self):
+        out = sanitize_extract_amounts(_row(
+            "¢/kWh", ["0.9"], "Rider 0.9¢ per kWh, minimum $1.50",
+        ))
+        self.assertEqual(out[0]["unit"], "¢/kWh")
+
+    def test_ambiguous_per_kwh_resolved_from_quote(self):
+        cents = sanitize_extract_amounts(_row("per kWh", ["9.8"], "9.8¢ per kWh"))
+        self.assertEqual(cents[0]["unit"], "¢/kWh")
+        dollars = sanitize_extract_amounts(
+            _row("per kWh", ["0.098"], "$0.098 per kWh"),
+        )
+        self.assertEqual(dollars[0]["unit"], "$/kWh")
+        unknown = sanitize_extract_amounts(_row("per kWh", ["9.8"], "9.8 per kWh"))
+        self.assertEqual(unknown[0]["unit"], "per kWh")
+
+
 if __name__ == "__main__":
     unittest.main()
