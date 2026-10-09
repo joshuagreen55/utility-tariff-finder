@@ -7,18 +7,25 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from decimal import Decimal
-from typing import Iterable
+from typing import Any, Iterable
 from urllib.parse import urlparse
 
 from app.services.pricing.compiler import CompiledPlan, compile_plan
 from app.services.pricing.quote_verifier import verify_component_quote
+from app.services.pricing.recipes import NON_PRICED_KINDS
 from app.services.pricing.rider_census import (
     CensusResult,
     DispositionInput,
     InventoryRider,
     evaluate_rider_census,
 )
-from app.services.pricing.types import ComponentInput, PlanInput, money
+from app.services.pricing.types import (
+    ComponentInput,
+    PlanInput,
+    energy_dollars_per_kwh,
+    money,
+    normalize_cell_label,
+)
 from app.services.source_type import THIRD_PARTY_DOMAINS
 
 
@@ -98,86 +105,63 @@ def gate_edition(
     return []
 
 
-# Kinds that affect the all-in energy price (must agree across models).
-_PRICED_ENERGY_KINDS = frozenset({
-    "base_energy", "delivery_energy", "supply_energy", "commodity_energy",
-    "regulated_commodity", "default_supply", "delivery_per_kwh",
-    "supply_per_kwh", "energy",
-    "rider_per_kwh", "rider_percent", "credit", "loss_factor", "fuel",
-})
 # Metadata / schedule kinds — disagreement here must not hold the plan (R29-4).
-_METADATA_KINDS = frozenset({
-    "season_calendar", "tou_schedule", "holiday_list", "tier_structure",
-    "excluded_item", "event_day", "fixed_charge", "fixed_monthly",
-    "customer_charge", "demand_charge",
-})
+# Every other kind can move the price and must agree across models.
+_METADATA_KINDS = NON_PRICED_KINDS
 
 
-def _unit_family(unit: str) -> str:
-    u = (unit or "").strip().lower().replace(" ", "")
-    if u in {"$/kwh", "usd/kwh", "cad/kwh"}:
-        return "$/kwh"
-    if "cent" in u or u.startswith("¢") or u in {"c/kwh", "¢/kwh"}:
-        return "cents/kwh"
-    if u in {"percent", "%", "pct"}:
-        return "percent"
-    return u
+def _agreement_amount(c: ComponentInput, raw: Any) -> str:
+    """Comparable amount: energy in $/kWh, percents/factors as printed."""
+    try:
+        amt = money(raw)
+    except Exception:
+        return f"unparsed:{raw!r}"
+    if c.kind == "credit":
+        amt = abs(amt)
+    if c.kind in {"rider_percent", "multiplier"}:
+        return f"{c.kind}:{format(amt.normalize(), 'f')}"
+    try:
+        dollars = energy_dollars_per_kwh(amt, c.unit)
+    except ValueError:
+        unit = (c.unit or "").strip().lower().replace(" ", "")
+        return f"{unit}:{format(amt.normalize(), 'f')}"
+    return f"$/kwh:{format(dollars.normalize(), 'f')}"
+
+
+def _agreement_canon(comps: list[ComponentInput]) -> dict[str, tuple]:
+    out: dict[str, tuple] = {}
+    for c in comps:
+        if c.kind in _METADATA_KINDS:
+            continue
+        cells = tuple(sorted(
+            (
+                *(normalize_cell_label(cell.get(d)) for d in
+                  ("season", "period", "day_type", "tier")),
+                _agreement_amount(c, cell.get("amount")),
+            )
+            for cell in c.cells
+        ))
+        out[c.code.strip().lower()] = (c.kind, cells)
+    return out
 
 
 def gate_agreement(
     extract_a: list[ComponentInput],
     extract_b: list[ComponentInput],
+    *,
+    recipe_code: str | None = None,
 ) -> list[GateFailure]:
-    """G2: two blind extractions agree on priced energy components.
+    """G2: the two blind extractions' **applying** components agree.
 
-    Metadata-only differences (TOU clocks, season calendars, fixed monthly
-    charges, display names) do not hold the plan (R29-4).
+    Every priced kind (including loss-factor multipliers) must match by
+    code, kind, cell labels and amount (¢ ↔ $ normalized). With a
+    ``recipe_code``, both sides are also compiled and must price every cell
+    identically — that catches disagreements on ``loss_sensitive``, percent
+    bases, multiplier targets and charge categories. Metadata-only
+    differences (TOU clocks, season calendars, fixed monthly charges,
+    display names) do not hold the plan (R29-4).
     """
-    def _priced(comps: list[ComponentInput]) -> list[ComponentInput]:
-        out = []
-        for c in comps:
-            if c.kind in _METADATA_KINDS:
-                continue
-            if c.kind in _PRICED_ENERGY_KINDS or c.kind.endswith("_energy"):
-                out.append(c)
-            elif c.kind.startswith("rider") or c.kind in {"credit", "fuel"}:
-                out.append(c)
-        # If nothing matched the allowlist, fall back to non-metadata rows
-        # so an empty allowlist does not silently pass.
-        if not out:
-            out = [c for c in comps if c.kind not in _METADATA_KINDS]
-        return out
-
-    def _canon(comps: list[ComponentInput]) -> dict[str, tuple]:
-        out = {}
-        for c in _priced(comps):
-            cells = []
-            for cell in c.cells:
-                try:
-                    amt = money(cell["amount"])
-                except Exception:
-                    continue
-                # Normalize ¢ ↔ $ so models quoting either unit can agree.
-                family = _unit_family(c.unit)
-                if family == "cents/kwh":
-                    amt_cmp = amt / money("100")
-                    family = "$/kwh"
-                else:
-                    amt_cmp = amt
-                # Normalize decimal string so 0.10 == 0.100000.
-                amt_s = format(amt_cmp.normalize(), "f")
-                cells.append((
-                    str(cell.get("season") or "all"),
-                    str(cell.get("period") or "all"),
-                    str(cell.get("day_type") or "all"),
-                    str(cell.get("tier") or "all"),
-                    amt_s,
-                ))
-            cells_t = tuple(sorted(cells))
-            out[c.code.lower()] = (c.kind, family, cells_t)
-        return out
-
-    a, b = _canon(extract_a), _canon(extract_b)
+    a, b = _agreement_canon(extract_a), _agreement_canon(extract_b)
     if a != b:
         only_a = sorted(set(a) - set(b))
         only_b = sorted(set(b) - set(a))
@@ -187,6 +171,29 @@ def gate_agreement(
             "extractors_disagree",
             f"only_a={only_a}; only_b={only_b}; disagree={disagree}",
         )]
+    if not recipe_code:
+        return []
+
+    def _compiled(comps: list[ComponentInput]) -> dict:
+        plan = PlanInput(
+            plan_key="g2", name="g2", recipe_code=recipe_code, components=comps,
+        )
+        return {c.key: c.dollars_per_kwh for c in compile_plan(plan).cells}
+
+    try:
+        priced_a = _compiled(extract_a)
+    except Exception:
+        return []  # G4 reports model A's compile failure
+    try:
+        priced_b = _compiled(extract_b)
+    except Exception as e:
+        return [GateFailure("G2", "extract_b_not_compilable", str(e))]
+    if priced_a != priced_b:
+        diff = sorted(
+            k.as_dict().__repr__() for k in set(priced_a) | set(priced_b)
+            if priced_a.get(k) != priced_b.get(k)
+        )
+        return [GateFailure("G2", "compiled_disagree", "; ".join(diff))]
     return []
 
 
@@ -344,6 +351,9 @@ def run_preaccept(
 ) -> PreAcceptResult:
     """Run G0–G6. Accepted only when every gate passes.
 
+    ``extract_a`` / ``extract_b`` are each blind model's **applying**
+    components (G2 compares them and compiles both).
+
     Pass a non-empty ``inventory`` to exercise G5. Pass typical-bill oracles
     (from ``inventory_from_docs.extract_typical_bill_oracles``) to exercise G6.
     """
@@ -354,7 +364,9 @@ def run_preaccept(
     failures.extend(gate_edition(
         edition_label=edition_label, document_text=document_text
     ))
-    failures.extend(gate_agreement(extract_a, extract_b))
+    failures.extend(gate_agreement(
+        extract_a, extract_b, recipe_code=plan.recipe_code,
+    ))
     failures.extend(gate_grounding(plan.components, document_text))
 
     compiled: CompiledPlan | None = None
