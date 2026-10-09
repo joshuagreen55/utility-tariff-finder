@@ -682,12 +682,34 @@ def _set_llm_cache(content_hash: str, model: str, tariffs: list[dict]) -> None:
         log.warning(f"    Failed to write PDF cache: {e}")
 
 
+_PDF_MODIFIED: dict[str, tuple[int, int]] = {}
+_PDF_MODDATE_RE = re.compile(rb"/ModDate\s*\(\s*D:(\d{4})(\d{2})")
+_PDF_XMP_MOD_RE = re.compile(rb"<xmp:ModifyDate>\s*(\d{4})-(\d{2})|xmp:ModifyDate=\"(\d{4})-(\d{2})")
+
+
+def pdf_modified_vintage(pdf_bytes: bytes) -> tuple[int, int] | None:
+    """(year, month) of the PDF's last-modified metadata (Info /ModDate or
+    XMP ModifyDate); newest wins. None when absent or implausible."""
+    found = []
+    head = pdf_bytes or b""
+    for m in _PDF_MODDATE_RE.finditer(head):
+        found.append((int(m.group(1)), int(m.group(2))))
+    for m in _PDF_XMP_MOD_RE.finditer(head):
+        y, mo = (m.group(1), m.group(2)) if m.group(1) else (m.group(3), m.group(4))
+        found.append((int(y), int(mo)))
+    found = [v for v in found if 1995 <= v[0] <= date.today().year + 1 and 1 <= v[1] <= 12]
+    return max(found) if found else None
+
+
 def fetch_pdf_text(url: str) -> str:
     """Download a PDF and extract text. Tries pdfplumber first, falls back to OCR.
     OCR results are cached by content hash so the same PDF is never re-OCR'd."""
     pdf_bytes = _download_pdf(url)
     if not pdf_bytes:
         return ""
+    md = pdf_modified_vintage(pdf_bytes)
+    if md:
+        _PDF_MODIFIED[url] = md  # R21 fix 6: document age evidence
 
     content_hash = hashlib.sha256(pdf_bytes).hexdigest()
 
@@ -11036,8 +11058,9 @@ def set_run_document_context(pages=None, known_urls=None, *, ctx=None) -> None:
         if ctx is not None and classify_source(u, ctx).source_type == THIRD_PARTY:
             continue
         known.append(u)
+    pdf_mod = {u: _PDF_MODIFIED[u] for u in page_v if u in _PDF_MODIFIED}
     _RUN_DOC_CONTEXT.clear()
-    _RUN_DOC_CONTEXT.update({"page_vintages": page_v, "known_urls": known})
+    _RUN_DOC_CONTEXT.update({"page_vintages": page_v, "known_urls": known, "pdf_modified": pdf_mod})
 
 
 _R19_BOOK_URL_RE = re.compile(
@@ -11050,6 +11073,68 @@ _R19_BOOK_URL_RE = re.compile(
 def _r19_is_book_url(url: str) -> bool:
     path = re.sub(r"%20|[_\-+.]", " ", urlparse(str(url or "")).path)
     return bool(_R19_BOOK_URL_RE.search(path)) and not _R19_NOT_CURRENT_URL_RE.search(str(url or ""))
+
+
+_R21_STALE_FLAG_MONTHS = 24       # "about 2 years": flag for review
+_R21_STALE_INCOMPLETE_MONTHS = 36  # clearly outdated document: not Mysa-complete
+
+
+def flag_stale_source_documents(
+    tariffs: list[ExtractedTariff], doc_context: dict | None = None,
+    *, today: date | None = None,
+) -> int:
+    """R21 fix 6: absolute document age.
+
+    A plan's document date is the NEWEST of: the PDF's modified date, the
+    date printed on its cover, the newest effective date printed for plans
+    taken from it, and a date in its URL (a 2024 re-issue of a 2010 sheet is
+    current). Older than ~2 years → ``stale_rate_document`` (needs_review).
+    Older than 3 years on document-level evidence (PDF modified / cover /
+    URL date) → also ``price_basis='stale_document'``: not Mysa-complete.
+    Never changes prices.
+    """
+    ctxd = doc_context if doc_context is not None else _RUN_DOC_CONTEXT
+    today = today or date.today()
+    page_v = dict((ctxd or {}).get("page_vintages") or {})
+    pdf_mod = dict((ctxd or {}).get("pdf_modified") or {})
+    plan_dates: dict[str, list[tuple[int, int]]] = {}
+    for t in tariffs:
+        d = _parse_effective_date(getattr(t, "effective_date", None), today=today)
+        if d and d <= today:
+            plan_dates.setdefault(t.source_url or "", []).append((d.year, d.month))
+    now_m = _r19_months((today.year, today.month))
+    n = 0
+    for t in tariffs:
+        if _is_rider_only_tariff(t):
+            continue
+        src = t.source_url or ""
+        doc_ev = [v for v in (pdf_mod.get(src), page_v.get(src), url_document_vintage(src, today=today)) if v]
+        ev = doc_ev + plan_dates.get(src, [])
+        if not ev:
+            continue
+        newest = max(ev)
+        age = now_m - _r19_months(newest)
+        if age <= _R21_STALE_FLAG_MONTHS:
+            continue
+        basis = "pdf_modified" if pdf_mod.get(src) == newest else (
+            "document_date" if newest in doc_ev else "printed_effective_date")
+        _r18_add_missing(t, "stale_rate_document")
+        _r18_note(t, "stale_rate_document", {
+            "plan_document": src,
+            "document_date": f"{newest[0]}-{newest[1]:02d}",
+            "age_months": age,
+            "evidence": basis,
+        })
+        t.needs_review = True
+        if age > _R21_STALE_INCOMPLETE_MONTHS and doc_ev and max(doc_ev) == newest:
+            if (t.confidence_notes or {}).get("price_basis") in (None, "full"):
+                _r18_note(t, "price_basis", "stale_document")
+        log.warning(
+            f"    '{t.name}': source document dated {newest[0]}-{newest[1]:02d} "
+            f"({age} months old, {basis}) — stale, needs_review"
+        )
+        n += 1
+    return n
 
 
 def flag_older_source_documents(
@@ -11541,6 +11626,9 @@ def reconcile_same_utility_plans(
     n_tmp = mark_temporary_only_plans(kept)
     n_guard = flag_optional_priced_below_base(kept)
     n_old = flag_older_source_documents(kept)
+    n_stale = flag_stale_source_documents(kept)
+    if n_stale:
+        info["stale_documents"] = n_stale
     n_sup = flag_supply_sheet_currency(kept)
     if n_sup:
         info["supply_sheet_not_current"] = n_sup
