@@ -23,6 +23,9 @@ from app.models.pricing import (
     RiderInventoryEntry,
     RiderDisposition,
     MarketRecipeCode,
+    DocumentRole,
+    PricingDocumentSet,
+    PricingDocumentSetMember,
 )
 
 __all__ = [
@@ -55,4 +58,7 @@ __all__ = [
     "RiderInventoryEntry",
     "RiderDisposition",
     "MarketRecipeCode",
+    "DocumentRole",
+    "PricingDocumentSet",
+    "PricingDocumentSetMember",
 ]

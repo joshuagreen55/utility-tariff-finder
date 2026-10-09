@@ -1,0 +1,355 @@
+{
+  "version": 1,
+  "description": "Curated official document candidates per golden utility. Roles: tariff, rider_sheet, default_supply, provincial_commodity, delivery. Builder picks current edition and demotes marketing PDFs.",
+  "as_of": "2026-10-09",
+  "utilities": {
+    "Nova Scotia Power": [
+      {
+        "role": "tariff",
+        "url": "https://www.nspower.ca/docs/default-source/regulatory/tariff-book-2026.pdf",
+        "title": "NS Power Tariff Book 2026",
+        "edition_label": "May 2026 tariff book",
+        "effective_date": "2026-05-01"
+      }
+    ],
+    "Portland General Electric": [
+      {
+        "role": "tariff",
+        "url": "https://portlandgeneral.com/about/info/pricing",
+        "title": "PGE Pricing",
+        "effective_date": "2026-01-01"
+      },
+      {
+        "role": "tariff",
+        "url": "https://edocs.puc.state.or.us/efdocs/UBA/ue452uba342429171.pdf",
+        "title": "PGE Tariff UE 452",
+        "edition_label": "UE 452",
+        "effective_date": "2026-01-01"
+      }
+    ],
+    "Newfoundland and Labrador Hydro": [
+      {
+        "role": "tariff",
+        "url": "https://nlhydro.com/wp-content/uploads/2026/01/Schedule-of-Rates-Rules-and-Regulations_Jan_2026.pdf",
+        "title": "NL Hydro Schedule Jan 2026",
+        "edition_label": "January 2026",
+        "effective_date": "2026-01-01"
+      },
+      {
+        "role": "tariff",
+        "url": "https://nlhydro.com/wp-content/uploads/2026/07/Schedule-of-Rates-Rules-and-Regulations_Jul_2026.pdf",
+        "title": "NL Hydro Schedule Jul 2026",
+        "edition_label": "July 2026",
+        "effective_date": "2026-07-01"
+      }
+    ],
+    "Pedernales Electric Cooperative": [
+      {
+        "role": "tariff",
+        "url": "https://www.pec.coop/about/rates/",
+        "title": "PEC Rates",
+        "effective_date": "2026-01-01"
+      }
+    ],
+    "Toronto Hydro": [
+      {
+        "role": "provincial_commodity",
+        "url": "https://www.oeb.ca/consumer-information-and-protection/electricity-rates",
+        "title": "OEB RPP electricity rates",
+        "edition_label": "OEB RPP Nov 1 2025",
+        "effective_date": "2025-11-01"
+      },
+      {
+        "role": "delivery",
+        "url": "https://www.oeb.ca/_html/calculator/data/BillData.xml",
+        "title": "OEB BillData LDC delivery",
+        "edition_label": "BillData.xml",
+        "effective_date": "2025-11-01"
+      }
+    ],
+    "Hydro One": [
+      {
+        "role": "provincial_commodity",
+        "url": "https://www.oeb.ca/consumer-information-and-protection/electricity-rates",
+        "title": "OEB RPP electricity rates",
+        "edition_label": "OEB RPP Nov 1 2025",
+        "effective_date": "2025-11-01"
+      },
+      {
+        "role": "delivery",
+        "url": "https://www.oeb.ca/_html/calculator/data/BillData.xml",
+        "title": "OEB BillData LDC delivery",
+        "edition_label": "BillData.xml",
+        "effective_date": "2025-11-01"
+      }
+    ],
+    "Kitchener-Wilmot Hydro": [
+      {
+        "role": "provincial_commodity",
+        "url": "https://www.oeb.ca/consumer-information-and-protection/electricity-rates",
+        "title": "OEB RPP electricity rates",
+        "edition_label": "OEB RPP Nov 1 2025",
+        "effective_date": "2025-11-01"
+      },
+      {
+        "role": "delivery",
+        "url": "https://www.oeb.ca/_html/calculator/data/BillData.xml",
+        "title": "OEB BillData LDC delivery",
+        "edition_label": "BillData.xml",
+        "effective_date": "2025-11-01"
+      }
+    ],
+    "Hydro-Québec": [
+      {
+        "role": "tariff",
+        "url": "https://www.hydroquebec.com/data/documents-donnees/pdf/electricity-rates.pdf?v=20261001",
+        "title": "Hydro-Québec Electricity Rates",
+        "edition_label": "2026-10-01",
+        "effective_date": "2026-04-01"
+      }
+    ],
+    "Georgia Power": [
+      {
+        "role": "tariff",
+        "url": "https://www.georgiapower.com/content/dam/georgia-power/pdfs/tariffs/r.pdf",
+        "title": "Georgia Power Schedule R",
+        "effective_date": "2026-01-01"
+      },
+      {
+        "role": "tariff",
+        "url": "https://www.georgiapower.com/content/dam/georgia-power/pdfs/residential-pdfs/tariffs/2025/tou-rd-11.pdf",
+        "title": "Georgia Power TOU-RD",
+        "effective_date": "2025-01-01"
+      },
+      {
+        "role": "rider_sheet",
+        "url": "https://www.georgiapower.com/content/dam/georgia-power/pdfs/tariffs/eccr.pdf",
+        "title": "ECCR",
+        "effective_date": "2026-01-01"
+      },
+      {
+        "role": "rider_sheet",
+        "url": "https://www.georgiapower.com/content/dam/georgia-power/pdfs/tariffs/fcr.pdf",
+        "title": "FCR fuel",
+        "effective_date": "2026-01-01"
+      },
+      {
+        "role": "rider_sheet",
+        "url": "https://www.georgiapower.com/content/dam/georgia-power/pdfs/tariffs/dsm-r.pdf",
+        "title": "DSM-R",
+        "effective_date": "2026-01-01"
+      }
+    ],
+    "Dominion Energy Virginia": [
+      {
+        "role": "tariff",
+        "url": "https://www.dominionenergy.com/-/media/content/rates-and-tariffs/pdfs/virginia/residential/schedule-1.pdf",
+        "title": "Schedule 1",
+        "effective_date": "2026-01-01"
+      },
+      {
+        "role": "rider_sheet",
+        "url": "https://www.dominionenergy.com/-/media/content/rates-and-tariffs/pdfs/virginia/shared/exhibit-of-applicable-riders.pdf",
+        "title": "Exhibit of applicable riders",
+        "effective_date": "2026-01-01"
+      },
+      {
+        "role": "rider_sheet",
+        "url": "https://www.dominionenergy.com/-/media/content/rates-and-tariffs/pdfs/virginia/residential/fuel-deferral.pdf",
+        "title": "Fuel deferral",
+        "effective_date": "2026-01-01"
+      }
+    ],
+    "Evergy Metro": [
+      {
+        "role": "tariff",
+        "url": "https://www.evergy.com/-/media/documents/billing/missouri/detailed_tariffs_mo/mo-metro-rate.pdf",
+        "title": "Evergy Metro rate book",
+        "effective_date": "2026-01-01"
+      }
+    ],
+    "Alabama Power": [
+      {
+        "role": "tariff",
+        "url": "https://www.alabamapower.com/content/dam/alabama-power/pdfs-docs/Rates/fd.pdf",
+        "title": "Alabama Power Rate FD",
+        "effective_date": "2026-01-01"
+      },
+      {
+        "role": "rider_sheet",
+        "url": "https://www.alabamapower.com/content/dam/alabama-power/pdfs-docs/Rates/rta_energy.pdf",
+        "title": "RTA energy",
+        "effective_date": "2026-01-01"
+      }
+    ],
+    "Northern States Power Company - Minnesota": [
+      {
+        "role": "tariff",
+        "url": "https://www.xcelenergy.com/staticfiles/xe/Regulatory/Regulatory%20PDFs/rates/MN/Me_Section_5.pdf",
+        "title": "Xcel MN Section 5",
+        "effective_date": "2026-01-01"
+      }
+    ],
+    "PPL Electric Utilities": [
+      {
+        "role": "delivery",
+        "url": "https://www.pplelectric.com/site/-/media/PPLElectric/At-Your-Service/Docs/Current-Electric-Tariff/2026/October/402master4_posted-10-2-26.pdf",
+        "title": "PPL Electric Tariff Oct 2026",
+        "edition_label": "October 2026",
+        "effective_date": "2026-10-01"
+      },
+      {
+        "role": "default_supply",
+        "url": "https://www.pplelectric.com/about-us/electric-rates",
+        "title": "PPL electric rates / default supply",
+        "effective_date": "2026-10-01"
+      }
+    ],
+    "EPCOR Distribution & Collection": [
+      {
+        "role": "default_supply",
+        "url": "https://www.epcor.com/ca/en/ab/edmonton/start-services/home/rate-of-last-resort.html",
+        "title": "EPCOR Rate of Last Resort",
+        "edition_label": "ROLR",
+        "effective_date": "2025-07-01"
+      },
+      {
+        "role": "delivery",
+        "url": "https://www.epcor.com/ca/en/ab/edmonton/start-services/home/rate-of-last-resort.html",
+        "title": "EPCOR delivery (same ROLR page lists delivery)",
+        "effective_date": "2025-07-01"
+      }
+    ],
+    "FortisAlberta": [
+      {
+        "role": "default_supply",
+        "url": "https://www.fortisalberta.com/rates-and-options/rates-and-billing/rate-of-last-resort",
+        "title": "FortisAlberta Rate of Last Resort",
+        "edition_label": "ROLR",
+        "effective_date": "2025-07-01"
+      },
+      {
+        "role": "delivery",
+        "url": "https://www.fortisalberta.com/rates-and-options/rates-and-billing/distribution-rates",
+        "title": "FortisAlberta distribution rates",
+        "effective_date": "2025-07-01"
+      }
+    ],
+    "ATCO Electric": [
+      {
+        "role": "default_supply",
+        "url": "https://www.atco.com/en-ca/for-home/electricity/rates.html",
+        "title": "ATCO electricity rates / ROLR",
+        "effective_date": "2025-07-01"
+      },
+      {
+        "role": "delivery",
+        "url": "https://www.atco.com/en-ca/for-home/electricity/rates.html",
+        "title": "ATCO delivery",
+        "effective_date": "2025-07-01"
+      }
+    ],
+    "Florida Power & Light": [
+      {
+        "role": "tariff",
+        "url": "https://www.fpl.com/content/dam/fplgp/us/en/rates/pdf/new-customer-overview.pdf",
+        "title": "FPL new customer overview (marketing)",
+        "edition_label": "marketing overview"
+      },
+      {
+        "role": "tariff",
+        "url": "https://www.fpl.com/content/dam/fplgp/us/en/rates/pdf/residential-rates-oct2026.pdf",
+        "title": "FPL Residential Rates October 2026",
+        "edition_label": "October 2026 rates",
+        "effective_date": "2026-10-01"
+      }
+    ],
+    "DTE Electric": [
+      {
+        "role": "tariff",
+        "url": "https://www.dteenergy.com/content/dam/dteenergy/deg/website/residential/Service-Request/pricing/residential-pricing-options/ResidentialElectricRateCard.pdf",
+        "title": "DTE Residential Electric Rate Card",
+        "effective_date": "2026-01-01"
+      },
+      {
+        "role": "rider_sheet",
+        "url": "https://newlook.dteenergy.com/wps/wcm/connect/dte-web/home/service-request/residential/rates",
+        "title": "DTE residential rates / riders index",
+        "effective_date": "2026-01-01"
+      }
+    ],
+    "San Diego Gas & Electric": [
+      {
+        "role": "tariff",
+        "url": "https://www.sdge.com/sites/default/files/SDCP_SDGE%20JRC%2008.01.2026_Final.pdf",
+        "title": "SDG&E JRC 08.01.2026",
+        "effective_date": "2026-08-01"
+      },
+      {
+        "role": "tariff",
+        "url": "https://www.sdge.com/total-electric-rates",
+        "title": "SDG&E Total Electric Rates",
+        "effective_date": "2026-08-01"
+      }
+    ],
+    "BC Hydro": [
+      {
+        "role": "tariff",
+        "url": "https://app.bchydro.com/accounts-billing/rates-energy-use/electricity-rates/residential-rates/flat.html",
+        "title": "BC Hydro flat residential",
+        "effective_date": "2026-04-01"
+      },
+      {
+        "role": "tariff",
+        "url": "https://app.bchydro.com/accounts-billing/rates-energy-use/electricity-rates/residential-rates/tiered.html",
+        "title": "BC Hydro tiered residential",
+        "effective_date": "2026-04-01"
+      }
+    ],
+    "Pacific Gas & Electric": [
+      {
+        "role": "tariff",
+        "url": "https://www.pge.com/assets/pge/docs/account/rate-plans/residential-electric-rate-plan-pricing.pdf",
+        "title": "PG&E residential electric rate plan pricing",
+        "effective_date": "2026-06-01"
+      }
+    ],
+    "NorthWestern Energy Montana": [
+      {
+        "role": "tariff",
+        "url": "https://www.northwesternenergy.com/docs/default-source/documents/rates-and-tariffs/montana/electric/mt_electric_rates.pdf",
+        "title": "NorthWestern Energy Montana electric rates",
+        "effective_date": "2026-01-01"
+      }
+    ],
+    "El Paso Electric": [
+      {
+        "role": "tariff",
+        "url": "https://www.epelectric.com/el-paso-electric/uploads/regulatory/section-1-sheet-040-schedule-01-residential-service-rate-eff_08-01-2026.pdf",
+        "title": "EPE Schedule 01 Residential",
+        "edition_label": "eff 08-01-2026",
+        "effective_date": "2026-08-01"
+      },
+      {
+        "role": "rider_sheet",
+        "url": "https://www.epelectric.com/el-paso-electric/uploads/regulatory/section-1-sheet-340-schedule-98-fixed-fuel-factor-eff_07-01-2025.pdf",
+        "title": "EPE Fixed Fuel Factor",
+        "effective_date": "2025-07-01"
+      }
+    ],
+    "Oncor Electric Delivery": [
+      {
+        "role": "delivery",
+        "url": "https://www.oncor.com/content/dam/oncorwww/documents/about-us/rates-tariffs/Tariff%20for%20Retail%20Delivery%20Service.pdf",
+        "title": "Oncor Tariff for Retail Delivery Service",
+        "effective_date": "2026-01-01"
+      },
+      {
+        "role": "delivery",
+        "url": "https://www.oncor.com/en/about-us/rates-and-tariffs",
+        "title": "Oncor rates and tariffs index",
+        "effective_date": "2026-01-01"
+      }
+    ]
+  }
+}
