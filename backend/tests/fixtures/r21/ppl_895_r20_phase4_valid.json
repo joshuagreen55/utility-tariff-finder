@@ -1,0 +1,136 @@
+[
+ {
+  "name": "GSC-1 Fixed Price Option - Residential",
+  "code": "GSC-1",
+  "customer_class": "residential",
+  "rate_type": "flat",
+  "description": "Fixed price default generation supply charge for residential customers on RS and RTS, July 1 - Nov 30, 2026, with transmission service charge folded in.",
+  "source_url": "https://www.pplelectric.com/site/-/media/PPLElectric/At-Your-Service/Docs/Current-Electric-Tariff/2026/October/402master4_posted-10-2-26.pdf",
+  "effective_date": "2026-07-01",
+  "components": [
+   {
+    "component_type": "energy",
+    "unit": "$/kWh",
+    "rate_value": 0.13079,
+    "tier_label": "all-in: GSC-1 0.09753 + TSC 0.03326 = 0.13079",
+    "day_type": "all"
+   },
+   {
+    "component_type": "adjustment",
+    "unit": "$/kWh",
+    "rate_value": 0.03326,
+    "period_label": "Transmission Service Charge (RS and RTS)",
+    "included_in_energy": true,
+    "rider_scope": "all_customers",
+    "day_type": null
+   }
+  ],
+  "confidence": 0.7,
+  "needs_review": true,
+  "completeness_reasons": [],
+  "computable_reasons": [],
+  "extraction_tier": "twopass",
+  "missing_fields": [
+   "distribution charges (not in content)",
+   "MFC 1.80% percentage not applied to per-kWh"
+  ],
+  "riders_referenced_not_shown": [],
+  "energy_scope": "supply_only",
+  "closed_to_new": false,
+  "energy_includes_riders": true,
+  "empty_reason": "",
+  "linked_document_hint": "",
+  "confidence_notes": {}
+ },
+ {
+  "name": "Rate Schedule RS - Residential Service",
+  "code": "RS",
+  "customer_class": "residential",
+  "rate_type": "flat",
+  "description": "Single phase residential distribution service; CPTR and GSC-1 apply to all kWh but their amounts are not shown.",
+  "source_url": "https://www.pplelectric.com/site/-/media/PPLElectric/At-Your-Service/Docs/Current-Electric-Tariff/2026/September/Pro-Forma-Retail-Tariff-Supplement---CPTR.pdf",
+  "effective_date": "2026-10-01",
+  "components": [
+   {
+    "component_type": "fixed",
+    "unit": "$/month",
+    "rate_value": 15.0,
+    "day_type": null
+   },
+   {
+    "component_type": "energy",
+    "unit": "$/kWh",
+    "rate_value": 0.06175,
+    "tier_label": "Distribution charge (includes ACR 5, USR, SDER)",
+    "day_type": null
+   }
+  ],
+  "confidence": 0.8,
+  "needs_review": true,
+  "completeness_reasons": [],
+  "computable_reasons": [],
+  "extraction_tier": "twopass",
+  "missing_fields": [
+   "CPTR rate",
+   "GSC-1 rate"
+  ],
+  "riders_referenced_not_shown": [
+   "Customer Protection Transmission Rider (CPTR)",
+   "Generation Supply Charge-1 (GSC-1)",
+   "Merchant Function Charge 1.80% of GSC-1 and CPTR",
+   "Riders in Rider Matrix page 18"
+  ],
+  "energy_scope": "delivery_only",
+  "closed_to_new": false,
+  "energy_includes_riders": false,
+  "empty_reason": "",
+  "linked_document_hint": "",
+  "confidence_notes": {}
+ },
+ {
+  "name": "Rate Schedule RTS (R) - Residential Service \u2013 Thermal Storage",
+  "code": "RTS (R)",
+  "customer_class": "residential",
+  "rate_type": "flat",
+  "description": "Single phase residential thermal storage service distribution charge; closed to new service locations after Dec 31, 1995.",
+  "source_url": "https://www.pplelectric.com/site/-/media/PPLElectric/At-Your-Service/Docs/Current-Electric-Tariff/2026/September/Pro-Forma-Retail-Tariff-Supplement---CPTR.pdf",
+  "effective_date": "2026-10-01",
+  "components": [
+   {
+    "component_type": "fixed",
+    "unit": "$/month",
+    "rate_value": 18.06,
+    "period_label": "Customer Charge",
+    "day_type": null
+   },
+   {
+    "component_type": "energy",
+    "unit": "$/kWh",
+    "rate_value": 0.04992,
+    "tier_label": "Distribution charge (includes ACR 5, USR, SDER)",
+    "day_type": null
+   }
+  ],
+  "confidence": 0.8,
+  "needs_review": true,
+  "completeness_reasons": [],
+  "computable_reasons": [],
+  "extraction_tier": "twopass",
+  "missing_fields": [
+   "Generation Supply Charge-1 rate",
+   "Customer Protection Transmission Rider rate"
+  ],
+  "riders_referenced_not_shown": [
+   "Generation Supply Charge-1",
+   "Customer Protection Transmission Rider (CPTR)",
+   "Merchant Function Charge (1.80% residential)",
+   "Riders in Rider Matrix (Page 18)"
+  ],
+  "energy_scope": "delivery_only",
+  "closed_to_new": true,
+  "energy_includes_riders": false,
+  "empty_reason": "",
+  "linked_document_hint": "",
+  "confidence_notes": {}
+ }
+]

@@ -11138,7 +11138,11 @@ _R20_DELIVERY_LABEL_RE = re.compile(
     re.I,
 )
 _R20_MISSING_DELIVERY_RE = re.compile(r"deliver|distribution", re.I)
-_R20_MISSING_SUPPLY_RE = re.compile(r"supply|generation|\bbgs\b|commodity|energy\s+charge", re.I)
+_R20_MISSING_SUPPLY_RE = re.compile(
+    r"supply|generation|\bbgs\b|commodity|energy\s+charge|\bgsc\b|price\s+to\s+compare|\bptc\b|"
+    r"basic\s+service|default\s+service|standard\s+offer",
+    re.I,
+)
 _R20_SUPPLY_STALE_MONTHS = 12
 _R20_SUPPLY_TRAIL_MONTHS = 6
 
@@ -11188,7 +11192,13 @@ def _r20_has_energy(t: ExtractedTariff) -> bool:
 
 def is_supply_only_plan(t: ExtractedTariff) -> bool:
     """Energy supply prices with no delivery charges at all."""
-    if not _r20_has_energy(t) or _r20_has_delivery(t):
+    if not _r20_has_energy(t):
+        return False
+    # R21: the model's own energy_scope is authoritative ("Transmission
+    # Service Charge" must not count as delivery — PPL GSC-1).
+    if str(getattr(t, "energy_scope", "") or "") == "supply_only":
+        return True
+    if _r20_has_delivery(t):
         return False
     missing = " ".join(str(m) for m in (getattr(t, "missing_fields", None) or []))
     signal = " ".join([t.name or "", t.description or "", _r20_labels(t)])
@@ -11201,6 +11211,8 @@ def is_supply_only_plan(t: ExtractedTariff) -> bool:
 
 def is_delivery_only_plan(t: ExtractedTariff) -> bool:
     """Delivery charges present but the energy supply price is missing."""
+    if str(getattr(t, "energy_scope", "") or "") == "delivery_only":
+        return True
     if not _r20_has_delivery(t):
         return False
     missing = " ".join(str(m) for m in (getattr(t, "missing_fields", None) or []))
@@ -11237,47 +11249,142 @@ def _r20_pair(supply: ExtractedTariff, deliveries: list[ExtractedTariff]):
     return hits[0] if len(hits) == 1 else None
 
 
+_R21_OPTIONAL_SUPPLY_RE = re.compile(
+    r"time[-\s]*of[-\s]*(?:use|day)|\btou\b|\btod\b|optional|program|pilot|\bev\b|"
+    r"electric\s+vehicle|green|renewable|\d+[-\s]*(?:year|yr)s?\b",
+    re.I,
+)
+
+
+def _r21_energy_rows(t: ExtractedTariff) -> list[dict]:
+    return [c for c in t.components or [] if isinstance(c, dict)
+            and str(c.get("component_type") or "").lower() == "energy"]
+
+
+def _r21_per_kwh(c: dict) -> bool:
+    return str(c.get("unit") or "$/kWh").replace(" ", "").lower() in ("$/kwh", "")
+
+
+def default_supply_plan(supply: list[ExtractedTariff]) -> ExtractedTariff | None:
+    """The one standard-offer / default supply price in a run, if exactly one.
+
+    Optional supply products (TOU programs, EV, green, multi-year fixed
+    terms) are not the default. Returns None when it is ambiguous.
+    """
+    std = [t for t in supply if not _R21_OPTIONAL_SUPPLY_RE.search(f"{t.name} {t.description or ''}")]
+    flat = [t for t in std if len({round(float(c.get("rate_value") or 0), 6) for c in _r21_energy_rows(t)}) <= 2]
+    return flat[0] if len(flat) == 1 else None
+
+
+def _r21_fold(delivery: ExtractedTariff, supply: ExtractedTariff) -> list[dict] | None:
+    """Components of one all-in plan: delivery + default supply.
+
+    The shape (periods / tiers / seasons) comes from whichever side has more
+    than one per-kWh price; the other side must be a single per-kWh price.
+    Each stored ENERGY price = supply + delivery per-kWh (full price), with
+    both halves kept as ADJUSTMENT audit rows (included_in_energy=true).
+    Returns None when both sides vary (cannot be combined safely).
+    """
+    de, se = _r21_energy_rows(delivery), _r21_energy_rows(supply)
+    if not se or not all(_r21_per_kwh(c) for c in de + se):
+        return None
+    dv = {round(float(c.get("rate_value") or 0), 6) for c in de}
+    sv = {round(float(c.get("rate_value") or 0), 6) for c in se}
+    if len(dv) > 1 and len(sv) > 1:
+        return None
+    d_add = next(iter(dv)) if len(dv) == 1 else None
+    s_add = next(iter(sv)) if len(sv) == 1 else None
+    out: list[dict] = []
+    shape, add, add_label, base_label = (se, d_add or 0.0, "delivery", "supply") if d_add is not None or not de else (de, s_add, "supply", "delivery")
+    for c in shape:
+        c = dict(c)
+        base = float(c.get("rate_value") or 0)
+        c["rate_value"] = round(base + add, 6)
+        lab = c.get("tier_label") or ""
+        c["tier_label"] = f"all-in: {base_label} {base:.5f} + {add_label} {add:.5f}" + (f" ({lab})" if lab and not lab.startswith("all-in") else "")
+        out.append(c)
+    if de:
+        out.append({"component_type": "adjustment", "unit": "$/kWh",
+                    "rate_value": d_add if d_add is not None else 0.0,
+                    "tier_label": "Delivery per-kWh (folded into energy)" if d_add is not None else "Delivery per-kWh varies by period (folded into energy)",
+                    "included_in_energy": True})
+    out.append({"component_type": "adjustment", "unit": "$/kWh",
+                "rate_value": s_add if s_add is not None else 0.0,
+                "tier_label": f"Default supply: {supply.name}"[:250],
+                "included_in_energy": True})
+    for c in delivery.components or []:
+        if isinstance(c, dict) and str(c.get("component_type") or "").lower() not in ("energy",):
+            out.append(dict(c))
+    for c in supply.components or []:
+        if not isinstance(c, dict):
+            continue
+        ct = str(c.get("component_type") or "").lower()
+        if ct in ("energy",):
+            continue
+        if ct == "adjustment" and c.get("included_in_energy"):
+            continue  # already inside the supply energy price
+        c = dict(c)
+        c["tier_label"] = f"Supply: {c.get('tier_label') or c.get('period_label') or ''}".strip()
+        out.append(c)
+    return out
+
+
 def combine_supply_with_delivery(valid: list[ExtractedTariff]) -> tuple[list[ExtractedTariff], dict]:
-    """Merge supply-only plans into their delivery plan; drop unmatched ones."""
+    """Joshua default 2: delivery + standard-offer supply, combined and
+    labelled. Never store half-plans.
+
+    * A supply-only plan is paired with its delivery plan by schedule code /
+      qualifiers; unpaired delivery plans get the run's single default
+      supply price (R21), if there is exactly one.
+    * The combined plan's ENERGY is the full price (supply + delivery per
+      kWh), named "... (delivery + default supply)".
+    * Unpaired supply-only plans and model-declared delivery-only plans are
+      dropped and reported (``supply_only_dropped`` / ``delivery_only_dropped``).
+    """
     supply = [t for t in valid if is_supply_only_plan(t)]
-    if not supply:
+    # Only the model's own "delivery_only" is trusted on its own; the label
+    # heuristic is used only when the run also has a supply price to pair
+    # (bundled plans with "Distribution charge" labels are not half-plans).
+    declared = [t for t in valid if t not in supply
+                and str(getattr(t, "energy_scope", "") or "") == "delivery_only"]
+    heuristic = [t for t in valid if supply and t not in supply and t not in declared
+                 and str(getattr(t, "energy_scope", "") or "") not in ("bundled", "delivery_plus_default_supply")
+                 and is_delivery_only_plan(t)]
+    deliveries = declared + heuristic
+    if not supply and not deliveries:
         return valid, {}
-    deliveries = [t for t in valid if t not in supply and is_delivery_only_plan(t)]
+    combined, dropped, d_dropped = [], [], []
+    pairs: list[tuple] = []
     used: set[int] = set()
-    combined, dropped = [], []
-    out = [t for t in valid if t not in supply]
+    paired_supply: set[int] = set()
     for s_t in supply:
         d = _r20_pair(s_t, [x for x in deliveries if id(x) not in used])
-        if d is None:
-            dropped.append(s_t.name)
-            log.warning(
-                f"    Supply-only plan '{s_t.name}' has no matching delivery plan in "
-                f"this run — not stored (never supply-only)"
-            )
+        if d is not None:
+            used.add(id(d))
+            paired_supply.add(id(s_t))
+            pairs.append((d, s_t))
+    default = default_supply_plan(supply)
+    if default is not None:
+        for d in deliveries:
+            if id(d) not in used:
+                used.add(id(d))
+                paired_supply.add(id(default))
+                pairs.append((d, default))
+    out = [t for t in valid if t not in supply and t not in deliveries]
+    for d, s_t in pairs:
+        comps = _r21_fold(d, s_t)
+        if comps is None:
+            d_dropped.append(d.name)
+            log.warning(f"    '{d.name}': delivery and supply both vary by period — cannot combine; not stored")
             continue
-        used.add(id(d))
-        comps = []
-        for c in d.components or []:
-            if not isinstance(c, dict):
-                continue
-            c = dict(c)
-            if str(c.get("component_type") or "").lower() == "energy":
-                # Delivery per-kWh charges add on top of the supply price.
-                c["component_type"] = "adjustment"
-                c["tier_label"] = f"Delivery: {c.get('tier_label') or c.get('period_label') or 'distribution'}"
-            comps.append(c)
-        for c in s_t.components or []:
-            if not isinstance(c, dict):
-                continue
-            c = dict(c)
-            lab = c.get("tier_label") or c.get("period_label") or ""
-            if str(c.get("component_type") or "").lower() != "energy":
-                c["tier_label"] = f"Supply: {lab}".strip()
-            comps.append(c)
         d.components = comps
-        d.rate_type = s_t.rate_type or d.rate_type
-        d.name = f"{d.name} (delivery + default supply)"
-        if s_t.effective_date and (not d.effective_date or s_t.effective_date > d.effective_date):
+        if _rate_type_family(d.rate_type) == "flat" and _rate_type_family(s_t.rate_type) != "flat":
+            d.rate_type = s_t.rate_type
+        # No parentheses: a shared "(…)" would read as a marketed alias and
+        # merge different schedules (PPL RS vs RTS (R)) in same-plan dedupe.
+        d.name = f"{d.name} — delivery + default supply"
+        d.energy_scope = "delivery_plus_default_supply"
+        if s_t.effective_date and (not d.effective_date or str(s_t.effective_date) > str(d.effective_date)):
             d.effective_date = s_t.effective_date
         d.missing_fields = [
             m for m in (list(d.missing_fields or []) + list(s_t.missing_fields or []))
@@ -11290,13 +11397,26 @@ def combine_supply_with_delivery(valid: list[ExtractedTariff]) -> tuple[list[Ext
             "delivery_source": d.source_url,
             "label": "delivery + default supply",
         })
+        out.append(d)
         combined.append(d.name)
         log.info(f"    Combined delivery + default supply → '{d.name}'")
+    for s_t in supply:
+        if id(s_t) not in paired_supply:
+            dropped.append(s_t.name)
+            log.warning(f"    Supply-only plan '{s_t.name}' has no matching delivery plan in this run — not stored (never supply-only)")
+    for d in deliveries:
+        if id(d) not in used and d not in declared:
+            out.append(d)  # heuristic only: left as extracted (old behaviour)
+        elif id(d) not in used:
+            d_dropped.append(d.name)
+            log.warning(f"    Delivery-only plan '{d.name}' has no default supply price in this run — not stored (never half-plans)")
     info = {}
     if combined:
         info["supply_combined"] = combined
     if dropped:
         info["supply_only_dropped"] = dropped
+    if d_dropped:
+        info["delivery_only_dropped"] = d_dropped
     return out, info
 
 
