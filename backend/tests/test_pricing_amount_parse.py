@@ -5,6 +5,7 @@ import unittest
 from decimal import Decimal
 
 from app.services.pricing.amount_parse import (
+    blank_applying_codes,
     normalize_amount_string,
     parse_amount,
     sanitize_extract_amounts,
@@ -70,6 +71,35 @@ class TestSanitizeExtract(unittest.TestCase):
         self.assertEqual(by["cpp"]["cells"], [])
         self.assertEqual(by["base"]["disposition"], "applies")
         self.assertIsNone(validate_extract_schema(out))
+        self.assertEqual(blank_applying_codes(out), ["cpp"])
+
+    def test_partly_blank_applying_component_flagged(self):
+        raw = [{
+            "code": "base", "kind": "base_energy", "unit": "¢/kWh",
+            "name": "Energy", "disposition": "applies",
+            "cells": [
+                {"tier": "1", "amount": "9.100"},
+                {"tier": "2", "amount": ""},
+            ],
+        }]
+        out = sanitize_extract_amounts(raw)
+        self.assertEqual(out[0]["disposition"], "applies")
+        self.assertEqual(len(out[0]["cells"]), 1)
+        self.assertEqual(blank_applying_codes(out), ["base"])
+
+    def test_blank_unpriced_or_non_applying_not_flagged(self):
+        raw = [
+            {"code": "cust", "kind": "fixed_charge", "unit": "$/month",
+             "name": "Customer charge", "disposition": "applies",
+             "cells": [{"amount": "—"}]},
+            {"code": "storm", "kind": "rider_per_kwh", "unit": "¢/kWh",
+             "name": "Storm", "disposition": "not_applicable",
+             "cells": [{"amount": ""}]},
+            {"code": "base", "kind": "base_energy", "unit": "¢/kWh",
+             "name": "Energy", "disposition": "applies",
+             "cells": [{"amount": "9.1"}]},
+        ]
+        self.assertEqual(blank_applying_codes(sanitize_extract_amounts(raw)), [])
 
     def test_disposition_commentary_clipped(self):
         raw = [{
