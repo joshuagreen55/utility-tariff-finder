@@ -130,8 +130,16 @@ def gate_agreement(
 def gate_grounding(
     components: list[ComponentInput],
     document_text: str,
+    *,
+    require_row_col: bool = True,
 ) -> list[GateFailure]:
-    """G3: every priced value's quote is verbatim in the document with unit."""
+    """G3: every priced value's quote is verbatim with unit + row/col context.
+
+    Unit may come from a table column/row header or section heading.
+    When cells carry season/period/day_type, the quote must sit in a row
+    or column that names those labels; the quoted number must match a
+    stored cell amount.
+    """
     failures: list[GateFailure] = []
     for c in components:
         if c.kind in {
@@ -139,8 +147,38 @@ def gate_grounding(
             "tier_structure", "excluded_item", "event_day",
         }:
             continue
+        cells = list(c.cells or [])
+        if not cells:
+            result = verify_component_quote(
+                document_text,
+                quote=c.source_quote,
+                unit=c.unit,
+                component_name=c.name or c.code,
+                require_row_col=False,
+            )
+            if not result.ok:
+                failures.append(GateFailure(
+                    "G3", f"grounding_failed:{c.code}", result.reason
+                ))
+            continue
+        # Prefer the cell whose amount appears in the quote; else first cell.
+        quote = c.source_quote or ""
+        matched_cell = None
+        for cell in cells:
+            amt = str(cell.get("amount") or "")
+            if amt and amt in quote:
+                matched_cell = cell
+                break
+        if matched_cell is None:
+            matched_cell = cells[0]
         result = verify_component_quote(
-            document_text, quote=c.source_quote, unit=c.unit
+            document_text,
+            quote=c.source_quote,
+            unit=c.unit,
+            amount=matched_cell.get("amount"),
+            cell=matched_cell,
+            component_name=c.name or c.code,
+            require_row_col=require_row_col,
         )
         if not result.ok:
             failures.append(GateFailure(

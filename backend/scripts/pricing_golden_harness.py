@@ -139,20 +139,54 @@ def _unit_anchor(unit: str) -> str:
     return unit or ""
 
 
+def _cell_label_prefix(cell: dict) -> str:
+    """Season/period/day_type/tier tokens so dry quotes pass row/col G3."""
+    parts = []
+    season = str(cell.get("season") or "all")
+    period = str(cell.get("period") or "all")
+    day = str(cell.get("day_type") or "all")
+    tier = str(cell.get("tier") or "all")
+    if season != "all":
+        parts.append(season.replace("_", " "))
+    if period != "all":
+        parts.append(period.replace("_", "-"))
+    if day != "all":
+        parts.append(day.replace("_", " "))
+    if tier not in {"all", "1"}:
+        parts.append(f"tier {tier}")
+    return " ".join(parts)
+
+
 def _dry_quote_and_line(c) -> tuple[str, str]:
     """Return (source_quote, document_line) that agree for G3 grounding.
 
-    The quote must appear verbatim in the line, and the unit-anchor token
-    must sit within the verifier's context window of that quote.
+    The quote must appear verbatim in the line, carry a stored cell amount,
+    and include season/period labels so header-aware row/col checks pass.
     """
     anchor = _unit_anchor(c.unit)
+    cell = (c.cells or [{}])[0] if c.cells else {}
+    amount = str(cell.get("amount") or "")
+    labels = _cell_label_prefix(cell)
+    name = (c.name or c.code or "").strip()
+
     if c.source_quote:
-        quote = str(c.source_quote)
-        return quote, f"{quote} ({anchor})"
-    if c.cells:
-        quote = f"{c.cells[0]['amount']} {anchor}"
-        return quote, quote
-    quote = f"{c.code} {anchor}"
+        q = str(c.source_quote)
+        # Reuse the golden quote only when it already carries the cell amount
+        # (or has no digits). A quote citing a different number is rewritten
+        # so dry-live G3 amount grounding stays honest.
+        import re as _re
+        has_digits = bool(_re.search(r"\d", q))
+        if amount and amount in q:
+            line = f"{labels} {q} ({anchor})".strip()
+            return q, line
+        if not has_digits:
+            line = f"{labels} {q} {amount} ({anchor})".strip()
+            # Quote stays the label span; amount sits beside it on the line.
+            return q, line
+
+    # Synthesize a quote that embeds amount + labels + unit.
+    bits = [x for x in (labels, name, amount, anchor) if x]
+    quote = " ".join(bits) if bits else f"{c.code} {anchor}"
     return quote, quote
 
 
