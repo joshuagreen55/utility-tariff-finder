@@ -209,11 +209,38 @@ def unfiled_source(source_url: str | None, page_text: str | None = None) -> str 
     return None
 
 
+_NOT_A_PLAN_RE = re.compile(
+    r"\b(typical|sample|example|illustrative)\s+(monthly\s+)?bills?\b|\bbill\s+(illustration|example|comparison|calculator)\b|"
+    r"\billustration\b", re.I)
+
+
+def _num(v):
+    try:
+        return float(v)
+    except (TypeError, ValueError):
+        return None
+
+
+def has_energy_price(components: Iterable) -> bool:
+    return any((_num(_g(c, "rate_value")) or 0) > 0 for c in energy_rows(components))
+
+
 def evaluate(*, new_type: str, new_comps, old=None, extracted_comps=None,
              new_eff: date | None = None, new_scope: str = "", source_url: str | None = None,
-             unfiled_reason: str | None = None, dup_row=None, reconcile_skipped: bool = False) -> list[tuple[str, str]]:
-    """[(rule, detail)] — empty means the write may proceed."""
+             unfiled_reason: str | None = None, dup_row=None, reconcile_skipped: bool = False,
+             old_stays_live: bool = False, new_name: str | None = None,
+             is_new_plan: bool = False) -> list[tuple[str, str]]:
+    """[(rule, detail)] — empty means the write may proceed.
+
+    ``old_stays_live``: the live row compared with would NOT be retired by this
+    write (not a same-name refresh and not a clear replacement) — with the
+    reconcile skipped, the write would add a same-code duplicate (R26 DTE).
+    ``is_new_plan``: no live row is replaced (a brand-new plan)."""
     out: list[tuple[str, str]] = []
+    if new_name and _NOT_A_PLAN_RE.search(new_name):
+        out.append(("not_a_plan", f"'{new_name[:60]}' is a bill illustration, not a tariff"))
+    if is_new_plan and not has_energy_price(new_comps):
+        out.append(("no_energy_price", "new plan has no energy price"))
     r = unfiled_reason or unfiled_source(source_url)
     if r:
         out.append(("unfiled_source", r))
@@ -235,6 +262,10 @@ def evaluate(*, new_type: str, new_comps, old=None, extracted_comps=None,
                        old_scope=str(ocf.get("energy_scope") or ""), new_scope=new_scope)
         if r:
             out.append(("price_jump", r))
+        if old_stays_live and reconcile_skipped:
+            out.append(("dup_same_code", f"live row {_g(old, 'id')} '{str(_g(old, 'name'))[:60]}' has the same "
+                                         f"schedule code and would stay live beside the new row "
+                                         f"(not a clear replacement; reconciliation skipped)"))
     elif dup_row is not None and reconcile_skipped:
         out.append(("dup_same_code", f"live row {_g(dup_row, 'id')} '{str(_g(dup_row, 'name'))[:60]}' has the same "
                                      f"schedule code and the reconciliation is skipped"))

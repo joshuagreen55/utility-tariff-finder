@@ -13648,11 +13648,30 @@ def store_tariffs(
             gate_dup = None
             if gate_old is None:
                 gate_dup = _gate_same_code_row(_gate_live.get(cc, []), et.name, code_clipped, rt)
+            # Would the compared row really be retired by this write? Only a
+            # same-name refresh or a clear replacement retires it; otherwise
+            # (R26 DTE) the insert would sit beside it as a duplicate.
+            gate_old_stays = False
+            if gate_old is not None and gate_old is not existing and _gate_skip.get(cc):
+                from types import SimpleNamespace as _NS2
+                from datetime import datetime as _dt, timezone as _tz
+                _p = _NS2(id=-1, name=et.name, code=code_clipped or None, rate_type=rt, customer_class=cc,
+                          effective_date=eff_date, confidence_factors=conf_factors,
+                          source_type=new_source_type, openei_id=None, source_url=et.source_url,
+                          rate_components=list(new_components), last_verified_at=_dt.now(_tz.utc))
+                try:
+                    _pairs = plan_clear_replacements([gate_old, _p], {-1}, utility_name=u_name)
+                    gate_old_stays = not any(o is gate_old for o, _k in _pairs)
+                except Exception as _e:  # cannot tell -> treat as staying live
+                    log.info(f"    write gate: replacement check failed ({_e}) — treating live row as kept")
+                    gate_old_stays = True
             gate_hits = _wg.evaluate(
                 new_type=_wg._val(rt), new_comps=new_components, old=gate_old,
                 extracted_comps=et.components, new_eff=eff_date, new_scope=scope,
                 source_url=et.source_url, unfiled_reason=getattr(et, "source_unfiled", None),
                 dup_row=gate_dup, reconcile_skipped=bool(_gate_skip.get(cc)),
+                old_stays_live=gate_old_stays, new_name=et.name,
+                is_new_plan=(gate_old is None and gate_dup is None and existing is None),
             )
             if gate_hits:
                 ref = gate_old or gate_dup
