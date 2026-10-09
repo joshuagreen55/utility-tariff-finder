@@ -1,6 +1,7 @@
 """In-memory types for the pricing compiler. All money is ``Decimal``."""
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass, field
 from decimal import Decimal
 from typing import Any
@@ -44,6 +45,31 @@ def to_dollars_per_kwh(amount: Decimal, unit: str) -> Decimal:
     raise ValueError(f"unsupported pricing unit: {unit!r}")
 
 
+def energy_dollars_per_kwh(amount: Decimal, unit: str) -> Decimal:
+    """Strict per-kWh conversion for additive charges.
+
+    Unlike ``to_dollars_per_kwh`` this refuses percent / dimensionless /
+    fixed units, so a mislabelled 5 % rider can never be summed as $5/kWh.
+    """
+    u = re.sub(r"\s+", "", (unit or "").lower())
+    if "kwh" not in u or re.search(r"kw(?:/|per)(?:mo|month)", u):
+        raise ValueError(f"unit {unit!r} is not a per-kWh energy unit")
+    if "¢" in u or "cent" in u or u.startswith("c/"):
+        return amount / Decimal("100")
+    if "mill" in u:
+        return amount / Decimal("1000")
+    if "$" in u or "usd" in u or "cad" in u or "dollar" in u:
+        return amount
+    raise ValueError(f"unit {unit!r} does not say $ or ¢ per kWh")
+
+
+def normalize_cell_label(value: Any) -> str:
+    """Canonical grid label: lower-case, ``-`` / en-dash / spaces → ``_``."""
+    s = str(value or "").strip().lower()
+    s = re.sub(r"[\s\-\u2010-\u2015]+", "_", s).strip("_")
+    return s or "all"
+
+
 @dataclass(frozen=True, order=True)
 class CellKey:
     """One cell of the season × period × day_type × tier grid."""
@@ -57,10 +83,10 @@ class CellKey:
     def from_mapping(cls, raw: dict[str, Any] | None) -> "CellKey":
         raw = raw or {}
         return cls(
-            season=str(raw.get("season") or "all"),
-            period=str(raw.get("period") or "all"),
-            day_type=str(raw.get("day_type") or "all"),
-            tier=str(raw.get("tier") or "all"),
+            season=normalize_cell_label(raw.get("season")),
+            period=normalize_cell_label(raw.get("period")),
+            day_type=normalize_cell_label(raw.get("day_type")),
+            tier=normalize_cell_label(raw.get("tier")),
         )
 
     def as_dict(self) -> dict[str, str]:
@@ -92,7 +118,13 @@ class ComponentInput:
         out: dict[CellKey, Decimal] = {}
         for raw in self.cells:
             key = CellKey.from_mapping(raw)
-            out[key] = money(raw["amount"])
+            amt = money(raw["amount"])
+            if key in out and out[key] != amt:
+                raise ValueError(
+                    f"component {self.code!r} has two amounts for cell "
+                    f"{key.as_dict()}: {out[key]} vs {amt}"
+                )
+            out[key] = amt
         return out
 
 

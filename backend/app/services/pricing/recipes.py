@@ -7,7 +7,7 @@ LLM. Ambiguous percent bases or missing required sides raise ``RecipeError``
 from __future__ import annotations
 
 from decimal import Decimal
-from typing import Callable
+from typing import Callable, Iterable
 
 from app.services.pricing.policy import (
     OER_FORBIDDEN_CODES,
@@ -17,15 +17,41 @@ from app.services.pricing.policy import (
 from app.services.pricing.types import (
     CellKey,
     ComponentInput,
+    energy_dollars_per_kwh,
     money,
-    to_dollars_per_kwh,
 )
 
 ZERO = Decimal("0")
+_DIMS = ("season", "period", "day_type", "tier")
+
+# Kinds that never enter the per-kWh sum (schedules, fixed / demand charges,
+# exclusions). Anything else a recipe does not consume is a hold.
+NON_PRICED_KINDS = frozenset({
+    "season_calendar", "tou_schedule", "holiday_list", "tier_structure",
+    "fixed_charge", "fixed_monthly", "customer_charge", "demand_charge",
+    "excluded_item", "event_day",
+})
 
 
 class RecipeError(ValueError):
     """Blocking recipe failure — composition must be held, not published."""
+
+
+def _require_consumed(
+    components: list[ComponentInput],
+    consumed: Iterable[ComponentInput],
+    recipe: str,
+) -> None:
+    """Every priced component must be used by the recipe — never dropped."""
+    used = {c.code for c in consumed}
+    for c in components:
+        if c.kind in NON_PRICED_KINDS:
+            continue
+        if c.code not in used:
+            raise RecipeError(
+                f"{recipe} recipe does not price component {c.code!r} "
+                f"(kind {c.kind!r}, category {c.charge_category!r}); hold"
+            )
 
 
 def _reject_oer_in_per_kwh(components: list[ComponentInput]) -> None:
@@ -54,71 +80,146 @@ def _index(components: list[ComponentInput]) -> dict[str, ComponentInput]:
     return out
 
 
-def _cell_union(
+def _cell_matches(cell: CellKey, key: CellKey) -> bool:
+    return all(
+        getattr(cell, d) in ("all", getattr(key, d)) for d in _DIMS
+    )
+
+
+def _specificity(cell: CellKey) -> int:
+    return sum(1 for d in _DIMS if getattr(cell, d) != "all")
+
+
+def _resolve(comp: ComponentInput, key: CellKey) -> Decimal | None:
+    """Most specific cell of ``comp`` that covers ``key`` (``all`` = wildcard).
+
+    A single unlabelled cell applies everywhere. Two equally specific
+    matching cells with different amounts are ambiguous → ``RecipeError``.
+    """
+    amounts = comp.amounts_by_cell()
+    if len(amounts) == 1:
+        only_key, only_amt = next(iter(amounts.items()))
+        if _specificity(only_key) == 0:
+            return only_amt
+    matches = [(k, v) for k, v in amounts.items() if _cell_matches(k, key)]
+    if not matches:
+        return None
+    best = max(_specificity(k) for k, _ in matches)
+    top = {v for k, v in matches if _specificity(k) == best}
+    if len(top) > 1:
+        raise RecipeError(
+            f"component {comp.code!r} is ambiguous for cell {key.as_dict()}"
+        )
+    return top.pop()
+
+
+def _compatible(a: CellKey, b: CellKey) -> bool:
+    return all(
+        getattr(a, d) == getattr(b, d) or "all" in (getattr(a, d), getattr(b, d))
+        for d in _DIMS
+    )
+
+
+def _meet(a: CellKey, b: CellKey) -> CellKey:
+    return CellKey(*(
+        getattr(a, d) if getattr(a, d) != "all" else getattr(b, d) for d in _DIMS
+    ))
+
+
+def _build_grid(
     components: list[ComponentInput],
     *,
-    primary_kinds: set[str] | None = None,
+    primary_kinds: set[str],
 ) -> list[CellKey]:
-    """Union of priced cells.
+    """Price grid: start from one wildcard cell and split it wherever a
+    priced component distinguishes a label (primaries first).
 
-    When ``primary_kinds`` is set (e.g. ``{base_energy}``), only those
-    components define the grid. Rider-only wildcard cells (``all/all/all``)
-    must not create phantom all-in rows of "just the rider".
+    A flat base with a seasonal rider becomes summer/winter rows; a
+    weekday-only on-peak never grows a weekend on-peak row; a winter rate
+    that is flat across tiers stays one row. Every grid key must then be
+    covered by every component, and every labelled cell must be used by some
+    key. Either miss means mismatched labels or a missing cell → hold, never
+    a silent zero.
     """
-    skip = {
-        "season_calendar", "tou_schedule", "holiday_list",
-        "tier_structure", "fixed_charge", "fixed_monthly", "customer_charge",
-        "excluded_item", "event_day",
-        "multiplier", "rider_percent",
-    }
-    keys: set[CellKey] = set()
-    for c in components:
-        if c.kind in skip:
-            continue
-        if primary_kinds is not None and c.kind not in primary_kinds:
-            continue
-        keys.update(c.amounts_by_cell())
-    if not keys:
-        raise RecipeError("no priced cells on applying components")
-    return sorted(keys)
-
-
-def _lookup(comp: ComponentInput, key: CellKey) -> Decimal | None:
-    """Resolve a cell with wildcards: exact → season/period/tier fallbacks → all."""
-    amounts = comp.amounts_by_cell()
-    if key in amounts:
-        return amounts[key]
-    # Progressive relaxation: try replacing day_type, then period, then season, then tier.
-    candidates = [
-        key,
-        CellKey(key.season, key.period, "all", key.tier),
-        CellKey(key.season, "all", key.day_type, key.tier),
-        CellKey(key.season, "all", "all", key.tier),
-        CellKey("all", key.period, key.day_type, key.tier),
-        CellKey("all", key.period, "all", key.tier),
-        CellKey("all", "all", "all", key.tier),
-        CellKey(key.season, key.period, key.day_type, "all"),
-        CellKey(key.season, "all", "all", "all"),
-        CellKey("all", "all", "all", "all"),
+    priced = [
+        c for c in components
+        if c.kind not in NON_PRICED_KINDS and c.kind != "multiplier"
     ]
-    for cand in candidates:
-        if cand in amounts:
-            return amounts[cand]
-    # Single-cell components apply everywhere.
-    if len(amounts) == 1:
-        return next(iter(amounts.values()))
-    return None
+    cells_by_code = {c.code: c.amounts_by_cell() for c in priced}
+    if not any(cells_by_code.values()):
+        raise RecipeError("no priced cells on applying components")
+
+    ordered = sorted(priced, key=lambda c: c.kind not in primary_kinds)
+    grid: list[CellKey] = [CellKey()]
+    for i, c in enumerate(ordered):
+        cells = list(cells_by_code[c.code])
+        refined: list[CellKey] = []
+        for key in grid:
+            meets = {_meet(key, cell) for cell in cells if _compatible(cell, key)}
+            if not meets:
+                refined.append(key)
+                continue
+            if len(meets) > 1 and key in meets:
+                raise RecipeError(
+                    f"component {c.code!r} mixes a catch-all cell with "
+                    f"specific cells for {key.as_dict()} (ambiguous)"
+                )
+            if i and len(meets) == 1 and key not in meets:
+                # A summer-only rider on a flat base would shrink the grid
+                # to summer and drop the rest of the year.
+                raise RecipeError(
+                    f"component {c.code!r} prices only "
+                    f"{next(iter(meets)).as_dict()} of {key.as_dict()} "
+                    f"(partial coverage)"
+                )
+            refined.extend(sorted(meets))
+        grid = list(dict.fromkeys(refined))
+
+    for c in priced:
+        for key in grid:
+            if _resolve(c, key) is None:
+                raise RecipeError(
+                    f"component {c.code!r} has no amount for cell "
+                    f"{key.as_dict()} (labels do not line up with the base)"
+                )
+        for cell in cells_by_code[c.code]:
+            if _specificity(cell) and not any(
+                _cell_matches(cell, key) for key in grid
+            ):
+                raise RecipeError(
+                    f"component {c.code!r} cell {cell.as_dict()} matches no "
+                    f"base price cell (label mismatch)"
+                )
+    return grid
 
 
 def _as_dollars(comp: ComponentInput, key: CellKey) -> Decimal:
-    raw = _lookup(comp, key)
+    raw = _resolve(comp, key)
     if raw is None:
-        return ZERO
+        raise RecipeError(
+            f"component {comp.code!r} has no amount for cell {key.as_dict()}"
+        )
     if comp.kind == "rider_percent":
+        if (comp.unit or "").strip().lower() not in {"percent", "%", "pct"}:
+            raise RecipeError(
+                f"percent rider {comp.code!r} must use a percent unit, "
+                f"got {comp.unit!r}"
+            )
         return raw  # percent points
     if comp.kind == "multiplier":
+        if (comp.unit or "").strip().lower() not in {"dimensionless", "factor", "x"}:
+            raise RecipeError(
+                f"multiplier {comp.code!r} must be dimensionless, got {comp.unit!r}"
+            )
         return raw  # dimensionless factor
-    return to_dollars_per_kwh(raw, comp.unit)
+    try:
+        dollars = energy_dollars_per_kwh(raw, comp.unit)
+    except ValueError as e:
+        raise RecipeError(f"component {comp.code!r}: {e}") from e
+    if comp.kind == "credit":
+        # A credit lowers the price whichever sign the document printed.
+        return -abs(dollars)
+    return dollars
 
 
 def _percent_effect(
@@ -171,8 +272,9 @@ def recipe_bundled(components: list[ComponentInput]) -> dict[CellKey, Decimal]:
     ]
     if not any(c.kind == "base_energy" for c in applying):
         raise RecipeError("bundled recipe requires at least one base_energy component")
+    _require_consumed(components, applying, "bundled")
     out: dict[CellKey, Decimal] = {}
-    for key in _cell_union(applying, primary_kinds={"base_energy"}):
+    for key in _build_grid(applying, primary_kinds={"base_energy"}):
         base = sum(
             (_as_dollars(c, key) for c in applying if c.kind == "base_energy"),
             ZERO,
@@ -192,64 +294,77 @@ def recipe_bundled(components: list[ComponentInput]) -> dict[CellKey, Decimal]:
     return out
 
 
+def _is_priced(c: ComponentInput) -> bool:
+    return c.kind not in NON_PRICED_KINDS and c.kind != "multiplier"
+
+
+def _split_categories(
+    components: list[ComponentInput],
+) -> tuple[list[ComponentInput], list[ComponentInput]]:
+    """Delivery vs supply sides for wires/supply recipes (explicit, no guess)."""
+    delivery_cats = {"delivery", "transmission_delivery", "regulatory"}
+    supply_cats = {"supply", "default_supply", "transmission_supply"}
+    delivery: list[ComponentInput] = []
+    supply: list[ComponentInput] = []
+    for c in components:
+        if not _is_priced(c):
+            continue
+        is_delivery = (
+            c.kind == "delivery_per_kwh" or c.charge_category in delivery_cats
+        )
+        is_supply = c.kind == "default_supply" or c.charge_category in supply_cats
+        if is_delivery and is_supply:
+            raise RecipeError(
+                f"component {c.code!r} is tagged both delivery and supply "
+                f"(kind {c.kind!r}, category {c.charge_category!r})"
+            )
+        if is_delivery:
+            delivery.append(c)
+        elif is_supply:
+            supply.append(c)
+    return delivery, supply
+
+
+def _sum_cell(
+    priced: list[ComponentInput],
+    components: list[ComponentInput],
+    key: CellKey,
+) -> Decimal:
+    by_code = _index(components)
+    total = sum(
+        (_as_dollars(c, key) for c in priced if c.kind != "rider_percent"),
+        ZERO,
+    )
+    total += _percent_effect(
+        [c for c in priced if c.kind == "rider_percent"], by_code, key
+    )
+    return total
+
+
 def recipe_deregulated(components: list[ComponentInput]) -> dict[CellKey, Decimal]:
     """All-in = delivery + default_supply (explicit charge map, no double count).
 
     Requires both sides. Transmission / regulatory sit where the composition's
-    ``charge_category`` places them (delivery vs supply). Half-plans raise.
+    ``charge_category`` places them (delivery vs supply). Half-plans raise, and
+    so does any priced component with no side (it would otherwise be dropped).
 
     Markets with no default supply (Texas competitive) use ``texas_tdu`` instead.
     """
     _reject_oer_in_per_kwh(components)
-    delivery = [
-        c for c in components
-        if c.kind == "delivery_per_kwh"
-        or c.charge_category in {"delivery", "transmission_delivery", "regulatory"}
-        or (c.kind == "rider_per_kwh" and c.charge_category == "delivery")
-    ]
-    supply = [
-        c for c in components
-        if c.kind == "default_supply"
-        or c.charge_category in {"supply", "default_supply", "transmission_supply"}
-        or (c.kind == "rider_per_kwh" and c.charge_category == "supply")
-    ]
-    # Also allow base_energy tagged as delivery (some books print delivery as energy).
-    delivery += [
-        c for c in components
-        if c.kind == "base_energy" and c.charge_category == "delivery"
-    ]
+    _index(components)
+    delivery, supply = _split_categories(components)
     if not delivery:
         raise RecipeError("deregulated recipe missing delivery side (missing_delivery)")
     if not supply:
         raise RecipeError("deregulated recipe missing default supply (missing_supply)")
-
     priced = delivery + supply
-    # Deduplicate by code if a component matched both filters.
-    seen: set[str] = set()
-    unique: list[ComponentInput] = []
-    for c in priced:
-        if c.code in seen:
-            continue
-        seen.add(c.code)
-        unique.append(c)
-
-    # Grid from delivery + supply cores (not rider-only wildcards).
-    primary = {
-        c.kind for c in unique
-        if c.kind in {"delivery_per_kwh", "default_supply", "base_energy"}
-    }
+    _require_consumed(components, priced, "deregulated")
     out: dict[CellKey, Decimal] = {}
-    for key in _cell_union(unique, primary_kinds=primary or None):
-        total = ZERO
-        for c in unique:
-            if c.kind == "rider_percent":
-                continue
-            total += _as_dollars(c, key)
-        by_code = _index(components)
-        total += _percent_effect(
-            [c for c in components if c.kind == "rider_percent"], by_code, key
-        )
-        out[key] = total
+    grid = _build_grid(
+        priced, primary_kinds={"delivery_per_kwh", "default_supply", "base_energy"},
+    )
+    for key in grid:
+        out[key] = _sum_cell(priced, components, key)
     return out
 
 
@@ -263,42 +378,20 @@ def recipe_texas_tdu(components: list[ComponentInput]) -> dict[CellKey, Decimal]
     ``has_all_in=False`` and ``supply_status=choose_a_retailer``.
     """
     _reject_oer_in_per_kwh(components)
-    supply = [
-        c for c in components
-        if c.kind == "default_supply"
-        or c.charge_category in {"supply", "default_supply", "transmission_supply"}
-    ]
+    _index(components)
+    delivery, supply = _split_categories(components)
     if supply:
         raise RecipeError(
             "texas_tdu must not include a supply price "
             "(choose_a_retailer — do not invent supply)"
         )
-    delivery = [
-        c for c in components
-        if c.kind == "delivery_per_kwh"
-        or c.charge_category in {"delivery", "transmission_delivery", "regulatory"}
-        or (c.kind == "rider_per_kwh" and c.charge_category == "delivery")
-        or (c.kind == "base_energy" and c.charge_category == "delivery")
-    ]
     if not delivery:
         raise RecipeError("texas_tdu missing delivery / TDU charges")
-
-    seen: set[str] = set()
-    unique: list[ComponentInput] = []
-    for c in delivery:
-        if c.code in seen:
-            continue
-        seen.add(c.code)
-        unique.append(c)
-
-    primary = {
-        c.kind for c in unique
-        if c.kind in {"delivery_per_kwh", "base_energy"}
-    }
+    _require_consumed(components, delivery, "texas_tdu")
     out: dict[CellKey, Decimal] = {}
-    for key in _cell_union(unique, primary_kinds=primary or None):
-        total = sum((_as_dollars(c, key) for c in unique), ZERO)
-        out[key] = total
+    grid = _build_grid(delivery, primary_kinds={"delivery_per_kwh", "base_energy"})
+    for key in grid:
+        out[key] = _sum_cell(delivery, components, key)
     return out
 
 
@@ -309,16 +402,21 @@ def recipe_provincial_ontario(
 
     Commodity is ``regulated_commodity``. Loss factor is a ``multiplier``
     targeting commodity + loss_sensitive delivery lines. Distribution
-    volumetric (``loss_sensitive=False``) is added without LF.
+    volumetric (``loss_sensitive=False``) is added without LF. Per-kWh rate
+    riders and credits are delivery lines (same ``loss_sensitive`` rule).
 
     OER is **not** applied here (bill-level note, like taxes).
     """
     _reject_oer_in_per_kwh(components)
+    _index(components)
     commodity = [c for c in components if c.kind == "regulated_commodity"]
     if not commodity:
         raise RecipeError("ontario recipe missing regulated_commodity")
-    delivery = [c for c in components if c.kind == "delivery_per_kwh"]
-    if not delivery:
+    delivery = [
+        c for c in components
+        if c.kind in {"delivery_per_kwh", "rider_per_kwh", "credit"}
+    ]
+    if not any(c.kind == "delivery_per_kwh" for c in delivery):
         raise RecipeError("ontario recipe missing delivery_per_kwh")
     multipliers = [c for c in components if c.kind == "multiplier"]
     if len(multipliers) != 1:
@@ -330,10 +428,13 @@ def recipe_provincial_ontario(
     lf_amounts = lf_comp.amounts_by_cell()
     if len(lf_amounts) != 1:
         raise RecipeError("loss factor must be a single dimensionless cell")
-    lf = next(iter(lf_amounts.values()))
+    lf = _as_dollars(lf_comp, CellKey())
+    _require_consumed(
+        components, commodity + delivery + multipliers, "provincial_ontario",
+    )
 
     out: dict[CellKey, Decimal] = {}
-    for key in _cell_union(commodity + delivery, primary_kinds={"regulated_commodity"}):
+    for key in _build_grid(commodity + delivery, primary_kinds={"regulated_commodity"}):
         comm = sum((_as_dollars(c, key) for c in commodity), ZERO)
         dist = ZERO
         loss_sens = ZERO
@@ -356,43 +457,52 @@ def recipe_provincial_alberta(
     before summing. Municipal franchise / local access fees stay excluded.
     """
     _reject_oer_in_per_kwh(components)
+    by_code = _index(components)
     supply = [c for c in components if c.kind == "default_supply"]
     delivery = [
         c for c in components
-        if c.kind in {"delivery_per_kwh", "rider_per_kwh", "credit", "base_energy"}
+        if c.kind in {
+            "delivery_per_kwh", "rider_per_kwh", "credit", "base_energy",
+            "rider_percent",
+        }
     ]
     if not supply:
         raise RecipeError("alberta recipe missing default_supply")
     if not delivery:
         raise RecipeError("alberta recipe missing delivery components")
 
-    by_code = _index(components)
     multipliers = [c for c in components if c.kind == "multiplier"]
+    for m in multipliers:
+        targets = list(m.multiplier_target_codes or [])
+        if not targets:
+            raise RecipeError(f"alberta multiplier {m.code!r} has no target codes")
+        missing = [t for t in targets if t not in by_code]
+        if missing:
+            raise RecipeError(
+                f"alberta multiplier {m.code!r} targets missing codes {missing}"
+            )
 
     def _scaled(comp: ComponentInput, key: CellKey) -> Decimal:
         amt = _as_dollars(comp, key)
         for m in multipliers:
             if comp.code in (m.multiplier_target_codes or []):
-                factor = _as_dollars(m, key)
-                # factor is stored as the remaining share (e.g. 0.9941 = 1 − 0.59%)
-                # or as a percent-reduction if unit is percent — require dimensionless.
-                if m.unit.lower() not in {"dimensionless", "factor", "x"}:
-                    raise RecipeError(
-                        f"alberta multiplier {m.code!r} must be dimensionless, "
-                        f"got {m.unit!r}"
-                    )
-                amt = amt * factor
+                # Stored as the remaining share (e.g. 0.9941 = 1 − 0.59%).
+                amt = amt * _as_dollars(m, key)
         return amt
 
-    priced = supply + [
-        c for c in delivery
-        if c.kind != "rider_percent"
-    ]
+    priced = supply + delivery
+    _require_consumed(components, priced + multipliers, "provincial_alberta")
     out: dict[CellKey, Decimal] = {}
-    for key in _cell_union(priced, primary_kinds={"default_supply", "delivery_per_kwh", "base_energy"}):
-        total = sum((_scaled(c, key) for c in priced), ZERO)
+    grid = _build_grid(
+        priced, primary_kinds={"default_supply", "delivery_per_kwh", "base_energy"},
+    )
+    for key in grid:
+        total = sum(
+            (_scaled(c, key) for c in priced if c.kind != "rider_percent"),
+            ZERO,
+        )
         total += _percent_effect(
-            [c for c in components if c.kind == "rider_percent"], by_code, key
+            [c for c in priced if c.kind == "rider_percent"], by_code, key
         )
         out[key] = total
     return out
