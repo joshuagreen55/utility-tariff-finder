@@ -30,7 +30,27 @@ from app.services.pricing.document_set import (
     looks_like_rates_url,
     parse_effective_date,
 )
-from app.services.source_type import THIRD_PARTY_DOMAINS
+from app.services.source_type import (
+    THIRD_PARTY,
+    UtilitySourceContext,
+    classify_source,
+    is_regulator_publisher_host,
+    is_third_party_host,
+    normalize_host,
+)
+
+_CA_PROVINCES = frozenset(
+    "AB BC MB NB NL NS NT NU ON PE QC SK YT".split()
+)
+# State-run retail-choice sites that publish the default-supply price to
+# compare. They are not the utility's domain but are the official source.
+STATE_SUPPLY_PUBLISHERS = frozenset({
+    "pluginillinois.org", "papowerswitch.com", "powertochoose.org",
+    "energychoice.ohio.gov", "energizect.com", "energyswitchma.gov",
+})
+_LANGUAGE_WORDS_RE = re.compile(
+    r"\b(?:english|anglais|espa[nñ]ol|spanish|fran[cç]ais|french|en|es|fr)\b"
+)
 
 # Extra reject markers beyond document_set._MARKETING_MARKERS.
 _FAQ_MARKERS = (
@@ -109,19 +129,80 @@ def is_english_locale_url(url: str, title: str | None = None) -> bool:
     return any(m in h for m in _ENGLISH_MARKERS)
 
 
+def discovery_source_context(
+    *,
+    website_url: str | None = None,
+    state: str = "",
+    rate_page_url: str | None = None,
+    official_urls: Iterable[str] = (),
+) -> UtilitySourceContext:
+    """Source context for discovery: website + configured URLs + Phase-1 rate page.
+
+    The Phase-1 rate page widens a known official set (a tariff book on a
+    sister domain) but never defines it alone, and a regulator rate page
+    never does: with neither a website nor configured URLs every
+    non-blocklisted host stays ``unknown`` and is kept.
+    """
+    st = (state or "").strip().upper()
+    urls = [u for u in official_urls if u]
+    if (
+        rate_page_url
+        and (website_url or urls)
+        and not is_third_party_host(rate_page_url)
+        and not is_regulator_publisher_host(rate_page_url)
+    ):
+        urls.append(rate_page_url)
+    return UtilitySourceContext(
+        website_url=website_url,
+        official_urls=tuple(dict.fromkeys(urls)),
+        country=("CA" if st in _CA_PROVINCES else "US") if st else None,
+        state_province=st or None,
+    )
+
+
+def non_utility_domain(url: str, ctx: UtilitySourceContext | None = None) -> bool:
+    """True for blocklisted hosts, and for foreign hosts when the utility's own is known.
+
+    Generic file hosts and government hosts stay (classified ``unknown``), as
+    do the jurisdiction's rate-publishing board and state supply publishers.
+    """
+    if is_third_party_host(url):
+        return True
+    if ctx is None:
+        return False
+    host = normalize_host(url)
+    if any(host == d or host.endswith("." + d) for d in STATE_SUPPLY_PUBLISHERS):
+        return False
+    return classify_source(url, ctx).source_type == THIRD_PARTY
+
+
+def _language_neutral_title(title: str | None) -> str:
+    t = _LANGUAGE_WORDS_RE.sub(" ", (title or "").lower())
+    return re.sub(r"[\W_]+", " ", t).strip()
+
+
+def _is_locale_twin(cand: DocumentCandidate, other: DocumentCandidate) -> bool:
+    """``other`` is a non-foreign-locale copy of the same document as ``cand``."""
+    if other.url == cand.url or is_non_english_locale_url(other.url, other.title):
+        return False
+    a, b = urlparse(cand.url), urlparse(other.url)
+    if normalize_host(cand.url) != normalize_host(other.url):
+        return False
+    if _similar_path(a.path.lower(), b.path.lower()):
+        return True
+    ta, tb = _language_neutral_title(cand.title), _language_neutral_title(other.title)
+    return bool(ta) and ta == tb
+
+
 def reject_reason_for_candidate(
     cand: DocumentCandidate,
     *,
     siblings: Iterable[DocumentCandidate] | None = None,
+    source_ctx: UtilitySourceContext | None = None,
 ) -> str | None:
     """Return a reject reason, or None if the candidate may stay."""
     url, title, snip = cand.url, cand.title, cand.text_snippet
-    # Hard-reject known aggregator / non-utility domains (e.g. quickelectricity.com).
-    try:
-        host = (urlparse(url).hostname or "").lower().removeprefix("www.")
-    except Exception:
-        host = ""
-    if host and any(host == d or host.endswith("." + d) for d in THIRD_PARTY_DOMAINS):
+    if non_utility_domain(url, source_ctx):
         return "non_utility_domain"
     # More specific rejects first (FAQ / bill-insert also match marketing markers).
     if is_faq_url(url, title):
@@ -130,28 +211,13 @@ def reject_reason_for_candidate(
         return "bill_insert"
     if is_marketing_url(url, title) and not looks_like_rates_url(url, title):
         return "marketing_page"
-    if is_non_english_locale_url(url, title):
-        # Keep Spanish/French only when no English twin exists among siblings.
-        sibs = list(siblings or [])
-        has_english = any(
-            is_english_locale_url(s.url, s.title)
-            or (
-                not is_non_english_locale_url(s.url, s.title)
-                and looks_like_rates_url(s.url, s.title)
-            )
-            for s in sibs
-            if s.url != url
-        )
-        # Also treat a same-path English locale variant as twin.
-        path = urlparse(url).path.lower()
-        twin = any(
-            is_english_locale_url(s.url, s.title)
-            and _similar_path(path, urlparse(s.url).path.lower())
-            for s in sibs
-            if s.url != url
-        )
-        if has_english or twin:
-            return "non_english_locale"
+    # A French/Spanish document goes only when a copy of the same document in
+    # the default locale is also present: in Québec or a bilingual utility the
+    # French document may be the only edition of that schedule.
+    if is_non_english_locale_url(url, title) and any(
+        _is_locale_twin(cand, s) for s in (siblings or [])
+    ):
+        return "non_english_locale"
     return None
 
 
@@ -166,12 +232,16 @@ def _similar_path(a: str, b: str) -> bool:
 
 def filter_discovery_candidates(
     candidates: list[DocumentCandidate],
+    *,
+    source_ctx: UtilitySourceContext | None = None,
 ) -> tuple[list[DocumentCandidate], list[dict[str, str]]]:
-    """Drop FAQ / bill-insert / marketing / non-English twins before classify."""
+    """Drop foreign-domain / FAQ / bill-insert / marketing / locale twins before classify."""
     kept: list[DocumentCandidate] = []
     rejected: list[dict[str, str]] = []
     for cand in candidates:
-        reason = reject_reason_for_candidate(cand, siblings=candidates)
+        reason = reject_reason_for_candidate(
+            cand, siblings=candidates, source_ctx=source_ctx,
+        )
         if reason:
             rejected.append({"url": cand.url, "reason": reason})
         else:
@@ -223,6 +293,7 @@ def discover_document_set(
     phase1_fn: Phase1Fn | None = None,
     phase2_fn: Phase2Fn | None = None,
     disable_browser_agent: bool = True,
+    official_urls: Iterable[str] = (),
 ) -> DiscoveryResult:
     """Run Phase 1+2 discovery and assemble a pricing document set.
 
@@ -267,7 +338,13 @@ def discover_document_set(
     if rate_url and not any(c.url == rate_url for c in candidates):
         candidates.insert(0, DocumentCandidate(url=rate_url, title=utility_name))
 
-    filtered, rejected = filter_discovery_candidates(candidates)
+    source_ctx = discovery_source_context(
+        website_url=website_url,
+        state=state,
+        rate_page_url=rate_url,
+        official_urls=official_urls,
+    )
+    filtered, rejected = filter_discovery_candidates(candidates, source_ctx=source_ctx)
     if rejected:
         notes.append(f"rejected_pre_classify:{len(rejected)}")
 
@@ -483,12 +560,15 @@ __all__ = [
     "DiscoveredPage",
     "DiscoveryResult",
     "R28_NON_GOLDEN_FIXTURES",
+    "STATE_SUPPLY_PUBLISHERS",
     "assert_r28_fixture",
     "discover_document_set",
+    "discovery_source_context",
     "filter_discovery_candidates",
     "is_bill_insert_url",
     "is_faq_url",
     "is_non_english_locale_url",
+    "non_utility_domain",
     "pages_to_candidates",
     "reject_reason_for_candidate",
     "run_r28_fixture_discovery",

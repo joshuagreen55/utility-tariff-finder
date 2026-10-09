@@ -168,6 +168,75 @@ def looks_like_rates_url(url: str, title: str | None = None) -> bool:
     return any(m in hay for m in _RATES_MARKERS)
 
 
+_MONTH_ALT = (
+    r"jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may|june?|"
+    r"july?|aug(?:ust)?|sep(?:t(?:ember)?)?|oct(?:ober)?|"
+    r"nov(?:ember)?|dec(?:ember)?"
+)
+_YMD_RE = re.compile(r"(?<!\d)(20\d{2})[-_/](\d{1,2})[-_/](\d{1,2})(?!\d)")
+_MDY_RE = re.compile(r"(?<!\d)(\d{1,2})[-_/](\d{1,2})[-_/](20\d{2})(?!\d)")
+_MDYY_RE = re.compile(r"(?<!\d)(\d{1,2})[-_/](\d{1,2})[-_/](\d{2})(?!\d)")
+_MONTH_DAY_YEAR_RE = re.compile(
+    rf"(?<![a-z])({_MONTH_ALT})\.?[_\s\-]+(\d{{1,2}})(?:st|nd|rd|th)?,?[_\s\-]+(20\d{{2}})(?!\d)",
+    re.I,
+)
+_MONTH_YEAR_RE = re.compile(rf"(?<![a-z])({_MONTH_ALT})[_\s\-]*(20\d{{2}})(?!\d)", re.I)
+# A date in document text counts only when the text says it is the effective
+# date; tariff text is full of filed / issued / advice-letter / decision dates.
+_EFFECTIVE_ANCHOR_RE = re.compile(
+    r"(?:\beffective\b|\beff\.|\bin effect\b|\ben vigueur\b)[^.\n]{0,40}$", re.I,
+)
+
+
+def _month_num(token: str) -> int | None:
+    key = token.lower().rstrip(".")
+    return _MONTHS.get(key) or _MONTHS.get(key[:3])
+
+
+def _numeric_md(a: int, b: int) -> tuple[int, int] | None:
+    """(month, day) from ``a/b``; None when month-first vs day-first is ambiguous."""
+    if a != b and a <= 12 and b <= 12:
+        return None
+    if a <= 12:
+        return a, b
+    if b <= 12:
+        return b, a
+    return None
+
+
+def _dates_in(text: str) -> list[tuple[int, date]]:
+    """Every full date in ``text`` with its start offset, plus month-year as day 1."""
+    out: list[tuple[int, date]] = []
+    spans: list[tuple[int, int]] = []
+
+    def add(pos: int, end: int, y: int, mo: int, d: int) -> None:
+        if any(s <= pos < e for s, e in spans):
+            return
+        if 1 <= mo <= 12 and 2000 <= y <= 2100:
+            try:
+                out.append((pos, date(y, mo, d)))
+                spans.append((pos, end))
+            except ValueError:
+                pass
+
+    for m in _YMD_RE.finditer(text):
+        add(m.start(), m.end(), int(m.group(1)), int(m.group(2)), int(m.group(3)))
+    for m in _MONTH_DAY_YEAR_RE.finditer(text):
+        mo = _month_num(m.group(1))
+        if mo:
+            add(m.start(), m.end(), int(m.group(3)), mo, int(m.group(2)))
+    for pat, century in ((_MDY_RE, 0), (_MDYY_RE, 2000)):
+        for m in pat.finditer(text):
+            md = _numeric_md(int(m.group(1)), int(m.group(2)))
+            if md:
+                add(m.start(), m.end(), century + int(m.group(3)), md[0], md[1])
+    for m in _MONTH_YEAR_RE.finditer(text):
+        mo = _month_num(m.group(1))
+        if mo:
+            add(m.start(), m.end(), int(m.group(2)), mo, 1)
+    return sorted(out, key=lambda t: t[0])
+
+
 def parse_effective_date(
     *,
     url: str = "",
@@ -175,57 +244,36 @@ def parse_effective_date(
     edition_label: str | None = None,
     text_snippet: str | None = None,
 ) -> date | None:
-    """Best-effort date from URL / label / snippet. Never invents."""
-    hay = " ".join(
-        x for x in (url, title or "", edition_label or "", (text_snippet or "")[:1500])
-        if x
-    )
-    # ISO-ish in URL: 2026-05-01, 2026_07_01, 08-01-2026, 8-1-26
-    patterns = [
-        re.compile(r"(20\d{2})[-_/](\d{1,2})[-_/](\d{1,2})"),
-        re.compile(r"(?<!\d)(\d{1,2})[-_/](\d{1,2})[-_/](20\d{2})(?!\d)"),
-        re.compile(r"(?<!\d)(\d{1,2})[-_/](\d{1,2})[-_/](\d{2})(?!\d)"),
-    ]
-    for pat in patterns:
-        m = pat.search(hay)
-        if not m:
-            continue
-        a, b, c = m.groups()
-        try:
-            if len(a) == 4:  # Y-M-D
-                y, mo, d = int(a), int(b), int(c)
-            elif len(c) == 4:  # M-D-Y
-                mo, d, y = int(a), int(b), int(c)
-            else:  # M-D-YY
-                mo, d, y = int(a), int(b), 2000 + int(c)
-            if 1 <= mo <= 12 and 1 <= d <= 31 and 2000 <= y <= 2100:
-                return date(y, mo, d)
-        except ValueError:
-            continue
+    """Best-effort date from URL / label / snippet. Never invents.
 
-    # Month name + year: Jul_2026, October 2026, May 2026 tariff
-    m = re.search(
-        r"(jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may|jun(?:e)?|"
-        r"jul(?:y)?|aug(?:ust)?|sep(?:t(?:ember)?)?|oct(?:ober)?|"
-        r"nov(?:ember)?|dec(?:ember)?)[_\s\-]+(20\d{2})",
-        hay,
-        re.I,
-    )
-    if m:
-        key = m.group(1).lower()
-        mo = _MONTHS.get(key) or _MONTHS.get(key[:3])
-        if mo:
-            return date(int(m.group(2)), mo, 1)
-
-    # Compact: oct2026, jul2026
-    m = re.search(
-        r"(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)(20\d{2})",
-        hay,
-        re.I,
-    )
-    if m:
-        return date(int(m.group(2)), _MONTHS[m.group(1).lower()], 1)
+    URL, title and edition label name the edition, so any full date there
+    counts. In document text only a date introduced by "effective" counts.
+    Numeric dates whose month/day order is ambiguous (``06/07/2026``) are
+    skipped rather than guessed.
+    """
+    for field_text in (edition_label or "", title or "", url or ""):
+        found = _dates_in(field_text)
+        if found:
+            return found[0][1]
+    snippet = (text_snippet or "")[:1500]
+    for pos, d in _dates_in(snippet):
+        if _EFFECTIVE_ANCHOR_RE.search(snippet[max(0, pos - 60):pos]):
+            return d
     return None
+
+
+_SUPPLY_RECIPES = frozenset({"deregulated", "provincial_ontario", "provincial_alberta"})
+_DEFAULT_SUPPLY_RE = re.compile(
+    r"\brate[\s-]of[\s-]last[\s-]resort\b|\brolr\b|\brro\b|\bdefault[\s-]supply\b"
+    r"|\bprice[\s-]to[\s-]compare\b|\bstandard[\s-]offer\b"
+    r"|\bbasic[\s-]generation[\s-]service\b"
+    r"|\bbasic[\s-]service\b(?![\s-]*(?:charge|fee|customer charge))"
+    r"|\bprovider[\s-]of[\s-]last[\s-]resort\b"
+)
+
+
+def _host_is(host: str, domain: str) -> bool:
+    return host == domain or host.endswith("." + domain)
 
 
 def classify_role(
@@ -240,35 +288,26 @@ def classify_role(
     title = (candidate.title or "").lower()
     snippet = (candidate.text_snippet or "")[:2000].lower()
     hay = f"{url} {title} {snippet}"
+    host = publisher_host(candidate.url or "")
+    on_board_host = _host_is(host, "oeb.ca") or _host_is(host, "auc.ab.ca")
 
     if "billdata" in hay or "bill calculator" in hay:
         return ROLE_DELIVERY
-    if "oeb.ca" in hay and ("electricity-rates" in hay or "rpp" in hay):
+    if _host_is(host, "oeb.ca") and ("electricity-rates" in hay or re.search(r"\brpp\b", hay)):
         return ROLE_PROVINCIAL_COMMODITY
-    if any(t in hay for t in (
-        "rate-of-last-resort", "rate of last resort", "rolr", "rro",
-        "default supply", "price to compare", "standard offer",
-        "basic generation service", "basic service", "basic-service",
-        "provider of last resort", "provider-of-last-resort",
-    )):
+    # Bundled / Texas TDU sets have no supply document; a bundled tariff that
+    # prints "Basic Service Charge" or "standard offer" is still the tariff.
+    if recipe_code in _SUPPLY_RECIPES and _DEFAULT_SUPPLY_RE.search(hay):
         if recipe_code == "provincial_ontario":
             return ROLE_PROVINCIAL_COMMODITY
         return ROLE_DEFAULT_SUPPLY
-    if any(t in hay for t in ("rider", "fuel-deferral", "exhibit-of-applicable",
-                              "eccr", "fcr", "dsm-r", "fam", "pca")):
-        # Rider sheets named explicitly; tariff books also contain "rider"
-        # but prefer rider_sheet when the path looks sheet-like.
-        if re.search(r"rider[-_]|/rider|/fuel|/eccr|/fcr|/dsm", url):
-            return ROLE_RIDER_SHEET
+    if re.search(r"rider[-_]|/rider|/fuel|/eccr|/fcr|/dsm", url):
+        return ROLE_RIDER_SHEET
     if recipe_code == "texas_tdu":
         return ROLE_DELIVERY
-    if recipe_code in {"provincial_ontario", "provincial_alberta", "deregulated"}:
+    if recipe_code in _SUPPLY_RECIPES and not on_board_host:
         # Non-commodity utility-hosted docs are delivery for those recipes.
-        if "oeb.ca" not in hay and "auc.ab.ca" not in hay:
-            if recipe_code == "provincial_alberta" and "rolr" not in hay:
-                return ROLE_DELIVERY
-            if recipe_code != "provincial_alberta":
-                return ROLE_DELIVERY
+        return ROLE_DELIVERY
     return ROLE_TARIFF
 
 

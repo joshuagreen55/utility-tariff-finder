@@ -73,6 +73,120 @@ class TestRejectFilters(unittest.TestCase):
         self.assertEqual({r["reason"] for r in rejected}, {"marketing_page"})
 
 
+class TestReviewDiscoveryFixes(unittest.TestCase):
+    """Review of #91: domain filter beyond the blocklist, twin-only locale rule."""
+
+    def _ctx(self, **kw):
+        from app.services.pricing.discover import discovery_source_context
+        return discovery_source_context(**kw)
+
+    def test_foreign_domain_rejected_when_utility_site_known(self):
+        ctx = self._ctx(website_url="https://www.consumersenergy.com", state="MI")
+        news = DocumentCandidate(
+            url="https://www.mlive.com/news/2026/rates-rise.html",
+            title="Consumers Energy rate schedule changes",
+        )
+        own = DocumentCandidate(
+            url="https://www.consumersenergy.com/rates/tariff-book.pdf",
+            title="Rate Book",
+        )
+        self.assertEqual(
+            reject_reason_for_candidate(news, source_ctx=ctx), "non_utility_domain",
+        )
+        self.assertIsNone(reject_reason_for_candidate(own, source_ctx=ctx))
+
+    def test_foreign_domain_kept_without_known_site(self):
+        cand = DocumentCandidate(url="https://www.smallcoop.org/rates.pdf", title="Rates")
+        self.assertIsNone(reject_reason_for_candidate(cand, source_ctx=self._ctx(state="KS")))
+
+    def test_rate_page_domain_counts_as_official(self):
+        ctx = self._ctx(
+            website_url="https://www.ku.com",
+            state="KY",
+            rate_page_url="https://lge-ku.com/rates",
+        )
+        book = DocumentCandidate(url="https://lge-ku.com/files/tariff-book.pdf")
+        self.assertIsNone(reject_reason_for_candidate(book, source_ctx=ctx))
+
+    def test_rate_page_alone_does_not_define_official_host(self):
+        ctx = self._ctx(state="ON", rate_page_url="https://www.oeb.ca/rates")
+        own = DocumentCandidate(url="https://www.londonhydro.com/rates/residential")
+        self.assertIsNone(reject_reason_for_candidate(own, source_ctx=ctx))
+        ctx = self._ctx(
+            website_url="https://www.londonhydro.com", state="ON",
+            rate_page_url="https://www.oeb.ca/rates",
+        )
+        self.assertEqual(ctx.official_urls, ())
+        self.assertIsNone(reject_reason_for_candidate(own, source_ctx=ctx))
+
+    def test_generic_government_board_and_supply_publishers_kept(self):
+        ctx = self._ctx(website_url="https://www.comed.com", state="IL")
+        for url in (
+            "https://s3.amazonaws.com/bucket/rider-fuel.pdf",
+            "https://www.icc.illinois.gov/docket/rates.pdf",
+            "https://www.pluginillinois.org/FixedRateBreakdownComEd.aspx",
+        ):
+            self.assertIsNone(
+                reject_reason_for_candidate(DocumentCandidate(url=url), source_ctx=ctx), url,
+            )
+        on_ctx = self._ctx(website_url="https://www.londonhydro.com", state="ON")
+        oeb = DocumentCandidate(url="https://www.oeb.ca/consumer-information-and-protection/electricity-rates")
+        self.assertIsNone(reject_reason_for_candidate(oeb, source_ctx=on_ctx))
+        ab = DocumentCandidate(url="https://www.oeb.ca/rates")
+        ab_ctx = self._ctx(website_url="https://www.epcor.com", state="AB")
+        self.assertEqual(reject_reason_for_candidate(ab, source_ctx=ab_ctx), "non_utility_domain")
+
+    def test_discover_document_set_rejects_foreign_page(self):
+        pages = [
+            DiscoveredPage(url="https://www.example-utility.com/rates/schedule-r.pdf",
+                           title="Schedule R", content="Energy Charge 10 ¢/kWh"),
+            DiscoveredPage(url="https://www.ratesblog.net/example-utility-rates",
+                           title="Example Utility rate schedule explained",
+                           content="Energy 99 ¢/kWh"),
+        ]
+        result = discover_document_set(
+            utility_name="Example Utility",
+            state="MO",
+            website_url="https://www.example-utility.com",
+            recipe_code="bundled",
+            as_of=date(2026, 10, 9),
+            phase1_fn=lambda n, s, w: (pages[0].url, 1, []),
+            phase2_fn=lambda u: pages,
+        )
+        self.assertEqual(
+            result.rejected,
+            [{"url": "https://www.ratesblog.net/example-utility-rates",
+              "reason": "non_utility_domain"}],
+        )
+        self.assertNotIn(pages[1].url, result.document_set.selected_urls())
+
+    def test_french_only_document_kept_beside_unrelated_english_page(self):
+        fr = DocumentCandidate(
+            url="https://www.hydroquebec.com/fr/tarifs/tarif-d.pdf", title="Tarif D",
+        )
+        unrelated = DocumentCandidate(
+            url="https://www.hydroquebec.com/en/rates/rider-schedule.pdf",
+            title="Rider schedule",
+        )
+        self.assertIsNone(reject_reason_for_candidate(fr, siblings=[fr, unrelated]))
+
+    def test_unmarked_same_path_copy_is_a_twin(self):
+        es = DocumentCandidate(url="https://x.com/es/rates/tou.pdf")
+        en = DocumentCandidate(url="https://x.com/rates/tou.pdf")
+        self.assertEqual(
+            reject_reason_for_candidate(es, siblings=[es, en]), "non_english_locale",
+        )
+
+    def test_title_twin_on_same_host(self):
+        es = DocumentCandidate(url="https://x.com/docs/a1.pdf?lang=es", title="TOU-E (Español)")
+        en = DocumentCandidate(url="https://x.com/docs/b7.pdf", title="TOU-E English")
+        other_host = DocumentCandidate(url="https://y.com/docs/b7.pdf", title="TOU-E English")
+        self.assertEqual(
+            reject_reason_for_candidate(es, siblings=[es, en]), "non_english_locale",
+        )
+        self.assertIsNone(reject_reason_for_candidate(es, siblings=[es, other_host]))
+
+
 class TestDiscoverWiring(unittest.TestCase):
     def test_injectable_phase_fns_no_network(self):
         pages = [
