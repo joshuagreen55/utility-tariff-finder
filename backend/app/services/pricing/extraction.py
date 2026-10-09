@@ -13,8 +13,14 @@ import json
 import os
 import re
 from dataclasses import dataclass, field
+from decimal import InvalidOperation
 from typing import Any, Callable
 
+from app.services.pricing.extract_schema import (
+    applying_raw_components,
+    normalize_amount_string,
+    validate_extract_schema,
+)
 from app.services.pricing.preaccept import PreAcceptResult, run_preaccept
 from app.services.pricing.quote_verifier import verify_component_quote
 from app.services.pricing.rider_census import DispositionInput, InventoryRider
@@ -57,11 +63,19 @@ class ExtractionAccept:
 
 
 def _raw_to_component(raw: dict[str, Any]) -> ComponentInput:
+    cells = []
+    for cell in raw.get("cells") or []:
+        if not isinstance(cell, dict):
+            continue
+        cell = dict(cell)
+        if "amount" in cell:
+            cell["amount"] = normalize_amount_string(cell["amount"])
+        cells.append(cell)
     return ComponentInput(
         code=str(raw["code"]),
         kind=str(raw["kind"]),
         unit=str(raw["unit"]),
-        cells=list(raw.get("cells") or []),
+        cells=cells,
         name=str(raw.get("name") or raw["code"]),
         charge_category=raw.get("charge_category"),
         percent_base_codes=list(raw.get("percent_base_codes") or []),
@@ -70,6 +84,39 @@ def _raw_to_component(raw: dict[str, Any]) -> ComponentInput:
         source_page=raw.get("source_page") or raw.get("page"),
         source_quote=raw.get("source_quote") or raw.get("quote"),
     )
+
+
+_CENSUS_KINDS = frozenset({
+    "rider_per_kwh", "rider_percent", "credit", "excluded_item", "event_day",
+})
+
+
+def _dispositions_from_raw(
+    raw_components: list[dict[str, Any]],
+) -> list[DispositionInput]:
+    """Build census dispositions from extract disposition fields (riders only)."""
+    out: list[DispositionInput] = []
+    for raw in raw_components:
+        kind = str(raw.get("kind") or "")
+        if kind not in _CENSUS_KINDS:
+            continue
+        disp = str(raw.get("disposition") or "").strip().lower()
+        if not disp:
+            continue
+        out.append(DispositionInput(
+            rider_code=str(raw["code"]),
+            disposition=disp,
+            disposition_page=str(
+                raw.get("source_page") or raw.get("disposition_page") or ""
+            ) or None,
+            disposition_quote=str(
+                raw.get("source_quote")
+                or raw.get("disposition_quote")
+                or raw.get("name")
+                or raw["code"]
+            ),
+        ))
+    return out
 
 
 def _require_citations(comps: list[ComponentInput]) -> str | None:
@@ -130,13 +177,28 @@ def dual_extract_components(
         # Explicitly omit any prior rate values.
         "blind": True,
     }
-    raw_a = extract_fn(document_text, m_a, dict(ctx))
-    raw_b = extract_fn(document_text, m_b, dict(ctx))
+    raw_a = list(extract_fn(document_text, m_a, dict(ctx)) or [])
+    raw_b = list(extract_fn(document_text, m_b, dict(ctx)) or [])
+
+    # Schema first — numbers only, unique codes/names, explicit dispositions.
+    for label, raw in (("a", raw_a), ("b", raw_b)):
+        schema_err = validate_extract_schema(raw)
+        if schema_err:
+            return ExtractionHold(
+                reason="schema_invalid",
+                detail=f"model_{label}:{schema_err}",
+            )
 
     try:
-        comps_a = [_raw_to_component(r) for r in (raw_a or [])]
-        comps_b = [_raw_to_component(r) for r in (raw_b or [])]
-    except (KeyError, TypeError, ValueError) as e:
+        comps_a = [_raw_to_component(r) for r in raw_a]
+        comps_b = [_raw_to_component(r) for r in raw_b]
+        applying_a = [
+            _raw_to_component(r) for r in applying_raw_components(raw_a)
+        ]
+        applying_b = [
+            _raw_to_component(r) for r in applying_raw_components(raw_b)
+        ]
+    except (KeyError, TypeError, ValueError, InvalidOperation) as e:
         return ExtractionHold(reason="malformed_extract", detail=str(e))
 
     cite_a = _require_citations(comps_a)
@@ -183,15 +245,21 @@ def dual_extract_components(
                     extract_a=comps_a, extract_b=comps_b,
                 )
 
+    # Compiler only sees applies; G2 still compares full extracts.
     plan = PlanInput(
         plan_key=str(plan_meta["plan_key"]),
         name=str(plan_meta.get("name") or plan_meta["plan_key"]),
         recipe_code=str(plan_meta["recipe_code"]),
-        components=comps_a,  # agreed set; G2 checks a==b before accept
+        components=applying_a,
         code=plan_meta.get("code"),
         rate_type=plan_meta.get("rate_type"),
         utility_name=plan_meta.get("utility_name"),
     )
+
+    # Prefer caller-supplied dispositions; else derive from extract fields.
+    disps = dispositions
+    if disps is None:
+        disps = _dispositions_from_raw(raw_a)
 
     pre = run_preaccept(
         plan,
@@ -201,7 +269,7 @@ def dual_extract_components(
         extract_a=comps_a,
         extract_b=comps_b,
         inventory=inventory,
-        dispositions=dispositions,
+        dispositions=disps,
         edition_label=edition_label or plan_meta.get("edition_label"),
         typical_bill_cents_per_kwh=typical_bill_cents_per_kwh,
     )
