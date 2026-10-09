@@ -133,7 +133,6 @@ class TestRowColGrounding(unittest.TestCase):
         self.assertTrue(r.ok)
 
 
-<<<<<<< HEAD
 # OEB RPP: stored $/kWh, page prints ¢/kWh (R28 Ontario holds).
 OEB_DOC = (
     "Electricity rates\n"
@@ -278,12 +277,6 @@ class TestTierSeasonSynonyms(unittest.TestCase):
         self.assertTrue(r.ok, r.reason)
 
 
-if __name__ == "__main__":
-    unittest.main()
-
-
-=======
->>>>>>> 9f582b7 (PR R28-3: move non-energy unit tests above __main__)
 class TestNonEnergyUnits(unittest.TestCase):
     def test_monthly_fixed_charge_unit(self):
         doc = (
