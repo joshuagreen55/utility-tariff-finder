@@ -373,9 +373,19 @@ def tariff_contract(tariff: Any, *, holiday_calendar: str | None = None) -> dict
         # Commodity-only OEB RPP (no BillData LDC fold yet). Skip the warning
         # once ontario_ldc_delivery marks delivery+regulatory as folded in.
         warnings.append("commodity_only_bill_incomplete")
+    # R21: "base only" — the source says per-kWh fuel / cost-recovery riders
+    # apply but the stored price leaves them out. Not Mysa-complete.
+    from app.services.price_basis import base_only_from_factors
+
+    reasons = list(res.reasons)
+    if base_only_from_factors(cf, _get(tariff, "rate_components") or []):
+        reasons.append("base_only_riders_not_added")
     return {
-        "computable": res.computable,
-        "computable_reasons": list(res.reasons),
+        "computable": not reasons,
+        "computable_reasons": reasons,
         "computable_warnings": warnings,
-        "needs_review": bool(cf.get("needs_review") or cf.get("tou_seasonal_incomplete")),
+        "needs_review": bool(
+            cf.get("needs_review") or cf.get("tou_seasonal_incomplete")
+            or "base_only_riders_not_added" in reasons
+        ),
     }

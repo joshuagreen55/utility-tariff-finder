@@ -330,6 +330,7 @@ def _live_residential_rows(session: Session, *, verified_only: bool = False):
 def _mysa_ready_stats(rows) -> dict:
     """Evaluate the computable contract over tariff rows; return counts + reasons."""
     from app.services.computable import evaluate_computable
+    from app.services.price_basis import base_only_from_factors
 
     ok = 0
     utils_ok: set[int] = set()
@@ -344,7 +345,11 @@ def _mysa_ready_stats(rows) -> dict:
         res = evaluate_computable(
             t.rate_type, t.rate_components, name=t.name, holiday_calendar=holiday_calendar
         )
-        reason_codes = {r.split(":", 1)[0] for r in res.reasons}
+        reasons_all = list(res.reasons)
+        # R21: base-only prices (riders referenced, not added) are not Mysa-complete.
+        if base_only_from_factors(getattr(t, "confidence_factors", None), t.rate_components):
+            reasons_all.append("base_only_riders_not_added")
+        reason_codes = {r.split(":", 1)[0] for r in reasons_all}
         # evaluate_computable emits missing_energy_rates when no numeric ENERGY
         # rows exist — that is the same gate Mysa uses for flat tariffs.
         if "missing_energy_rates" in reason_codes:
@@ -357,11 +362,11 @@ def _mysa_ready_stats(rows) -> dict:
             tou_missing_day_type += 1
         if "seasonal_missing_calendar_dates" in reason_codes:
             seasonal_missing_dates += 1
-        if res.computable:
+        if not reasons_all:
             ok += 1
             utils_ok.add(t.utility_id)
         else:
-            reasons.update(r.split(":", 1)[0] for r in res.reasons)
+            reasons.update(r.split(":", 1)[0] for r in reasons_all)
     return {
         "served": len(rows),
         "mysa_ready": ok,
