@@ -5645,6 +5645,12 @@ _ALL_IN_ABBREV_DELIVERY_RE = re.compile(
     r"all[\s-]*in\s*:?\s*\(?\s*\d+(?:\.\d+)?\s*\+",
     re.IGNORECASE,
 )
+_RIDERS_EXCLUDED_RE = re.compile(
+    r"\b(?:excl(?:\.|uding|udes)?|without|before|not\s+including|less)\s+(?:all\s+|applicable\s+)?riders?\b"
+    r"|\briders?\s+(?:are\s+)?(?:not\s+included|excluded|not\s+shown|extra|additional)\b",
+    re.IGNORECASE,
+)
+
 _ALL_IN_RIDERS_RE = re.compile(
     r"\briders?\b|fam|dsm|fuel|pca|storm|dcrr|scrr",
     re.IGNORECASE,
@@ -6032,6 +6038,9 @@ def _energy_already_includes_stacking_riders(energy_row: dict) -> bool:
         return False
     # Sch 125 TOD-only annotation — not a claim that all riders folded.
     if re.search(r"all[\s-]*in\s*\+\s*sch\s*125", label, re.I):
+        return False
+    # "(riders not included)" / "(excl. riders)" is the opposite claim (R22c, Dominion 1S/1P).
+    if _RIDERS_EXCLUDED_RE.search(label):
         return False
     if _ALL_IN_RIDERS_RE.search(label):
         return True
@@ -6755,6 +6764,14 @@ def _donor_rider_candidates(tariffs: list[ExtractedTariff]) -> list[tuple[Extrac
     out: list[tuple[ExtractedTariff, dict]] = []
     for t in tariffs:
         if _is_optional_program_tariff(t):
+            continue
+        # R22c: per-schedule rider tables and exhibit riders are applied only
+        # by fold_batch_rider_schedules (plan's own schedule row; whole exhibit
+        # section or nothing) — never by name-based stacking.
+        if t.extraction_tier == "rider_doc_parsed" and (
+            (t.confidence_notes or {}).get("exhibit_rider")
+            or any(isinstance(c, dict) and c.get("applies_to_schedules") for c in t.components or [])
+        ):
             continue
         donor_name = str(t.name or "")
         if _OPTIONAL_PROGRAMME_NAME_RE.search(donor_name):
@@ -7782,6 +7799,69 @@ def parse_rider_document_deterministic(page: RatePage, hint: str = "") -> list[E
         return []  # cannot tell which rider family this amount belongs to
     log.info(f"    Rider doc read deterministically ({name[:60]}): {parsed}")
     return [_r22_rider_tariff(name, parsed, getattr(page, "url", "") or "")]
+
+
+MAX_EXHIBIT_RIDER_FETCH = 16
+
+
+def expand_applicable_riders_exhibit(page: RatePage, links: list[str] | None, fetch) -> list[ExtractedTariff]:
+    """R22c: an 'Exhibit of Applicable Riders' lists rider codes, not amounts.
+    Fetch each listed rider's own sheet (site link rider-<code>.pdf, or the
+    exhibit's sibling URL when the sheet is verified as RIDER <CODE>), read
+    the per-kWh amounts deterministically, and tag each rider with the
+    schedules / section it applies to (the fold adds a section only when
+    every rider in it was read). No LLM."""
+    from app.services.rider_docs import (
+        UNIVERSAL_NONBYPASSABLE_RE, exhibit_rider_url, is_rider_sheet,
+        parse_applicable_riders_exhibit, parse_rider_text,
+    )
+
+    sections = parse_applicable_riders_exhibit(getattr(page, "content", "") or "")
+    cache: dict[str, tuple[dict | None, str, str]] = {}  # code -> (parsed, url, text)
+    budget = [MAX_EXHIBIT_RIDER_FETCH]
+
+    def _read(code: str) -> tuple[dict | None, str, str]:
+        if code not in cache:
+            cache[code] = (None, "", "")
+            url, verified = exhibit_rider_url(code, links or [], getattr(page, "url", "") or "")
+            if url and budget[0] > 0:
+                budget[0] -= 1
+                p = fetch(url)
+                text = getattr(p, "content", "") or ""
+                if text and (verified or is_rider_sheet(text, code)):
+                    cache[code] = (parse_rider_text(text), url, text)
+            if cache[code][0] is None:
+                log.info(f"    Exhibit rider {code}: sheet not read — its section stays unresolved")
+        return cache[code]
+
+    # Non-bypassable riders count only when their own sheet says they apply to
+    # every retail customer; a sheet we could not read keeps the group open.
+    nb: list[tuple[str, str]] = []
+    for sec in sections:
+        if not sec.get("non_bypassable"):
+            continue
+        for code, desc in sec["riders"]:
+            parsed, _url, text = _read(code)
+            if text and not UNIVERSAL_NONBYPASSABLE_RE.search(text):
+                continue
+            nb.append((code, desc))
+    out: list[ExtractedTariff] = []
+    for sec in sections:
+        if sec.get("non_bypassable"):
+            continue
+        members = list(sec["riders"]) + [x for x in nb if x[0] not in {c for c, _ in sec["riders"]}]
+        codes = [c for c, _ in members]
+        for code, desc in members:
+            parsed, url, _text = _read(code)
+            if parsed is None:
+                continue
+            t = _r22_rider_tariff(f"Rider {code} {desc}".strip(), parsed, url)
+            t.confidence_notes = {"exhibit_rider": code, "exhibit_schedules": sorted(sec["schedules"]),
+                                  "exhibit_section_codes": codes, "exhibit_url": getattr(page, "url", ""),
+                                  "non_bypassable": (code, desc) in nb}
+            out.append(t)
+    log.info(f"    Exhibit of applicable riders: {len(sections)} section(s), {len(out)} rider sheet(s) read")
+    return out
 
 
 def extract_generic_riders_from_book(pages: list[RatePage] | None, hints: list[str],
@@ -9070,10 +9150,10 @@ def fetch_and_extract_referenced_riders(
     # R22: rider schedules linked from the utility's own pages already
     # fetched this run (rate/tariff index pages) — matched by rider code
     # ("No. 98", "FCR", "EECRF") or title words; newest first. Before search.
+    own_links: list[str] = []
     try:
         from app.services.rider_docs import rider_link_candidates
 
-        own_links: list[str] = []
         for p in existing_pages or []:
             for u in getattr(p, "links", None) or []:
                 if u and not _is_third_party_domain(u) and (
@@ -9340,8 +9420,14 @@ def fetch_and_extract_referenced_riders(
         return [], [], hints
 
     extra: list[ExtractedTariff] = list(book_extras)
+    exhibit_extras: list[ExtractedTariff] = []
     for page, hint in fetched:
         try:
+            # R22c: exhibit of applicable riders -> each rider's own sheet (no LLM).
+            if re.search(r"EXHIBIT\s+OF\s+APPLICABLE\s+RIDERS", (page.content or "")[:3000], re.I):
+                exhibit_extras.extend(expand_applicable_riders_exhibit(
+                    page, own_links + list(getattr(page, "links", None) or []), _fetch_one))
+                continue
             # Index / page-data hubs have no prices — never send to LLM (R12).
             if _is_pge_tariff_index_page(page, hint=hint):
                 log.info(
@@ -9377,10 +9463,9 @@ def fetch_and_extract_referenced_riders(
 
     useful = _filter_useful_rider_extracts(extra)
     # Book extras are already adjustment-shaped; keep them even if filter is strict.
-    if book_extras:
-        for et in book_extras:
-            if et not in useful:
-                useful.append(et)
+    for et in list(book_extras) + exhibit_extras:
+        if et not in useful:
+            useful.append(et)
     unresolved = hints if not useful else []
     stats["rider_docs_extracted"] = len(useful)
     log.info(
