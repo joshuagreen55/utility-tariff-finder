@@ -1,0 +1,446 @@
+{
+  "version": 1,
+  "utilities": {
+    "Nova Scotia Power": {
+      "recipe_code": "bundled",
+      "inventory": [
+        {
+          "code": "fam",
+          "name": "FAM",
+          "kind": "rider_per_kwh"
+        },
+        {
+          "code": "dsm",
+          "name": "DCRR / DSM",
+          "kind": "rider_per_kwh"
+        }
+      ],
+      "typical_bills": [
+        {
+          "cents_per_kwh": "19.128",
+          "kwh": 1000,
+          "source_quote": "Typical bill all-in price 19.128 ¢ per kWh",
+          "label": "golden_official"
+        }
+      ],
+      "notes": [
+        "from_plan_components:2"
+      ]
+    },
+    "Portland General Electric": {
+      "recipe_code": "bundled",
+      "inventory": [
+        {
+          "code": "sch1xx",
+          "name": "Sch 125+1xx stack",
+          "kind": "rider_per_kwh"
+        },
+        {
+          "code": "sch102",
+          "name": "Sch 102 credit first 2000",
+          "kind": "credit"
+        }
+      ],
+      "typical_bills": [],
+      "notes": [
+        "from_plan_components:2"
+      ]
+    },
+    "Newfoundland and Labrador Hydro": {
+      "recipe_code": "bundled",
+      "inventory": [],
+      "typical_bills": [],
+      "notes": []
+    },
+    "Pedernales Electric Cooperative": {
+      "recipe_code": "bundled",
+      "inventory": [
+        {
+          "code": "power",
+          "name": "power",
+          "kind": "rider_per_kwh"
+        },
+        {
+          "code": "transmission",
+          "name": "transmission",
+          "kind": "rider_per_kwh"
+        }
+      ],
+      "typical_bills": [],
+      "notes": [
+        "from_plan_components:2"
+      ]
+    },
+    "Toronto Hydro": {
+      "recipe_code": "provincial_ontario",
+      "inventory": [],
+      "typical_bills": [],
+      "notes": []
+    },
+    "Hydro One": {
+      "recipe_code": "provincial_ontario",
+      "inventory": [],
+      "typical_bills": [],
+      "notes": []
+    },
+    "Kitchener-Wilmot Hydro": {
+      "recipe_code": "provincial_ontario",
+      "inventory": [],
+      "typical_bills": [],
+      "notes": []
+    },
+    "Hydro-Québec": {
+      "recipe_code": "bundled",
+      "inventory": [],
+      "typical_bills": [],
+      "notes": []
+    },
+    "Georgia Power": {
+      "recipe_code": "bundled",
+      "inventory": [
+        {
+          "code": "eccr",
+          "name": "ECCR",
+          "kind": "rider_per_kwh"
+        },
+        {
+          "code": "fcr",
+          "name": "FCR fuel",
+          "kind": "rider_per_kwh"
+        },
+        {
+          "code": "dsm_r",
+          "name": "DSM-R",
+          "kind": "rider_per_kwh"
+        },
+        {
+          "code": "fcr27",
+          "name": "fcr27",
+          "kind": "rider_per_kwh"
+        }
+      ],
+      "typical_bills": [],
+      "notes": [
+        "from_rider_sheets:3",
+        "from_plan_components:3"
+      ]
+    },
+    "Dominion Energy Virginia": {
+      "recipe_code": "bundled",
+      "inventory": [
+        {
+          "code": "exhibit",
+          "name": "Exhibit of applicable riders",
+          "kind": "rider_per_kwh"
+        },
+        {
+          "code": "fuel_deferral",
+          "name": "Fuel deferral",
+          "kind": "rider_per_kwh"
+        },
+        {
+          "code": "riders",
+          "name": "Exhibit riders A+T1+DIST+GEN+non-bypassable",
+          "kind": "rider_per_kwh"
+        }
+      ],
+      "typical_bills": [],
+      "notes": [
+        "from_rider_sheets:2",
+        "from_plan_components:1"
+      ]
+    },
+    "Evergy Metro": {
+      "recipe_code": "bundled",
+      "inventory": [
+        {
+          "code": "fac",
+          "name": "fac",
+          "kind": "rider_per_kwh"
+        },
+        {
+          "code": "dsim",
+          "name": "dsim",
+          "kind": "rider_per_kwh"
+        }
+      ],
+      "typical_bills": [],
+      "notes": [
+        "from_plan_components:2"
+      ]
+    },
+    "Alabama Power": {
+      "recipe_code": "bundled",
+      "inventory": [
+        {
+          "code": "rta_energy",
+          "name": "RTA energy",
+          "kind": "rider_per_kwh"
+        },
+        {
+          "code": "ecr",
+          "name": "ecr",
+          "kind": "rider_per_kwh"
+        }
+      ],
+      "typical_bills": [],
+      "notes": [
+        "from_rider_sheets:1",
+        "from_plan_components:1"
+      ]
+    },
+    "Northern States Power Company - Minnesota": {
+      "recipe_code": "bundled",
+      "inventory": [
+        {
+          "code": "res",
+          "name": "res",
+          "kind": "rider_percent"
+        },
+        {
+          "code": "interim",
+          "name": "interim",
+          "kind": "rider_percent"
+        },
+        {
+          "code": "tcr",
+          "name": "tcr",
+          "kind": "rider_per_kwh"
+        },
+        {
+          "code": "cip",
+          "name": "cip",
+          "kind": "rider_per_kwh"
+        },
+        {
+          "code": "rdf",
+          "name": "rdf",
+          "kind": "rider_per_kwh"
+        },
+        {
+          "code": "stu",
+          "name": "stu",
+          "kind": "rider_per_kwh"
+        },
+        {
+          "code": "fuel",
+          "name": "fuel",
+          "kind": "rider_per_kwh"
+        }
+      ],
+      "typical_bills": [],
+      "notes": [
+        "from_plan_components:7"
+      ]
+    },
+    "PPL Electric Utilities": {
+      "recipe_code": "deregulated",
+      "inventory": [
+        {
+          "code": "tsc",
+          "name": "tsc",
+          "kind": "rider_per_kwh"
+        }
+      ],
+      "typical_bills": [],
+      "notes": [
+        "from_plan_components:1"
+      ]
+    },
+    "EPCOR Distribution & Collection": {
+      "recipe_code": "provincial_alberta",
+      "inventory": [
+        {
+          "code": "rider_g",
+          "name": "rider_g",
+          "kind": "rider_per_kwh"
+        },
+        {
+          "code": "rider_j",
+          "name": "rider_j",
+          "kind": "rider_per_kwh"
+        },
+        {
+          "code": "rider_k",
+          "name": "rider_k",
+          "kind": "rider_per_kwh"
+        },
+        {
+          "code": "laf",
+          "name": "Edmonton Local Access Fee",
+          "kind": "excluded_item"
+        }
+      ],
+      "typical_bills": [],
+      "notes": [
+        "from_plan_components:4"
+      ]
+    },
+    "FortisAlberta": {
+      "recipe_code": "provincial_alberta",
+      "inventory": [
+        {
+          "code": "qtar",
+          "name": "qtar",
+          "kind": "rider_per_kwh"
+        },
+        {
+          "code": "bpar",
+          "name": "bpar",
+          "kind": "rider_per_kwh"
+        },
+        {
+          "code": "franchise",
+          "name": "franchise",
+          "kind": "excluded_item"
+        }
+      ],
+      "typical_bills": [],
+      "notes": [
+        "from_plan_components:3"
+      ]
+    },
+    "ATCO Electric": {
+      "recipe_code": "provincial_alberta",
+      "inventory": [
+        {
+          "code": "rider_b",
+          "name": "rider_b",
+          "kind": "rider_per_kwh"
+        },
+        {
+          "code": "rider_g",
+          "name": "rider_g",
+          "kind": "rider_per_kwh"
+        },
+        {
+          "code": "rider_s",
+          "name": "rider_s",
+          "kind": "rider_per_kwh"
+        }
+      ],
+      "typical_bills": [],
+      "notes": [
+        "from_plan_components:3"
+      ]
+    },
+    "Florida Power & Light": {
+      "recipe_code": "bundled",
+      "inventory": [],
+      "typical_bills": [],
+      "notes": []
+    },
+    "DTE Electric": {
+      "recipe_code": "bundled",
+      "inventory": [
+        {
+          "code": "dte",
+          "name": "DTE residential rates / riders index",
+          "kind": "rider_per_kwh"
+        }
+      ],
+      "typical_bills": [],
+      "notes": [
+        "from_rider_sheets:1"
+      ]
+    },
+    "San Diego Gas & Electric": {
+      "recipe_code": "bundled",
+      "inventory": [],
+      "typical_bills": [],
+      "notes": []
+    },
+    "BC Hydro": {
+      "recipe_code": "bundled",
+      "inventory": [],
+      "typical_bills": [
+        {
+          "cents_per_kwh": "12.7",
+          "kwh": null,
+          "source_quote": "Published all-in price 12.7 ¢ per kWh",
+          "label": "golden_official"
+        }
+      ],
+      "notes": []
+    },
+    "Pacific Gas & Electric": {
+      "recipe_code": "bundled",
+      "inventory": [],
+      "typical_bills": [],
+      "notes": []
+    },
+    "NorthWestern Energy Montana": {
+      "recipe_code": "bundled",
+      "inventory": [
+        {
+          "code": "deferred",
+          "name": "deferred",
+          "kind": "rider_per_kwh"
+        },
+        {
+          "code": "tx",
+          "name": "tx",
+          "kind": "rider_per_kwh"
+        },
+        {
+          "code": "delivery",
+          "name": "delivery",
+          "kind": "rider_per_kwh"
+        },
+        {
+          "code": "bpa",
+          "name": "bpa",
+          "kind": "credit"
+        },
+        {
+          "code": "usbc",
+          "name": "usbc",
+          "kind": "rider_per_kwh"
+        }
+      ],
+      "typical_bills": [],
+      "notes": [
+        "from_plan_components:5"
+      ]
+    },
+    "El Paso Electric": {
+      "recipe_code": "bundled",
+      "inventory": [
+        {
+          "code": "epe",
+          "name": "EPE Fixed Fuel Factor",
+          "kind": "rider_per_kwh"
+        },
+        {
+          "code": "fff",
+          "name": "fff",
+          "kind": "rider_per_kwh"
+        },
+        {
+          "code": "eecrf",
+          "name": "eecrf",
+          "kind": "rider_per_kwh"
+        }
+      ],
+      "typical_bills": [],
+      "notes": [
+        "from_rider_sheets:1",
+        "from_plan_components:2"
+      ]
+    },
+    "Oncor Electric Delivery": {
+      "recipe_code": "texas_tdu",
+      "inventory": [
+        {
+          "code": "choose_retailer",
+          "name": "Supply — choose a retailer",
+          "kind": "excluded_item"
+        }
+      ],
+      "typical_bills": [],
+      "notes": [
+        "from_plan_components:1"
+      ]
+    }
+  }
+}

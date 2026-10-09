@@ -178,25 +178,43 @@ def gate_oracle(
     compiled: CompiledPlan,
     *,
     typical_bill_cents_per_kwh: Decimal | None = None,
+    typical_bill_oracles: list | None = None,
     tolerance_cents: Decimal = Decimal("0.05"),
 ) -> list[GateFailure]:
-    """G6: optional typical-bill / published all-in cross-check (never stored)."""
-    if typical_bill_cents_per_kwh is None:
-        return []
+    """G6: optional typical-bill / published all-in cross-check (never stored).
+
+    Accepts a single ``typical_bill_cents_per_kwh`` and/or a list of
+    ``TypicalBillOracle``-like objects (``.cents_per_kwh``) extracted from
+    the document set. For single-cell plans, *every* provided oracle must
+    match within tolerance. Multi-cell plans skip rather than guess.
+    """
     if not compiled.has_all_in:
         return []  # texas_tdu has no all-in to reconcile
+    oracles: list[Decimal] = []
+    if typical_bill_cents_per_kwh is not None:
+        oracles.append(money(typical_bill_cents_per_kwh))
+    for o in typical_bill_oracles or []:
+        cents = getattr(o, "cents_per_kwh", None)
+        if cents is None and isinstance(o, dict):
+            cents = o.get("cents_per_kwh")
+        if cents is not None:
+            oracles.append(money(cents))
+    if not oracles:
+        return []
     cells = compiled.cents_sorted()
     if len(cells) != 1:
         # Multi-cell plans: oracle must name the cell; skip rather than guess.
         return []
-    delta = abs(cells[0] - typical_bill_cents_per_kwh)
-    if delta > tolerance_cents:
-        return [GateFailure(
-            "G6",
-            "typical_bill_mismatch",
-            f"compiled={cells[0]} oracle={typical_bill_cents_per_kwh} delta={delta}",
-        )]
-    return []
+    failures: list[GateFailure] = []
+    for oracle in oracles:
+        delta = abs(cells[0] - oracle)
+        if delta > tolerance_cents:
+            failures.append(GateFailure(
+                "G6",
+                "typical_bill_mismatch",
+                f"compiled={cells[0]} oracle={oracle} delta={delta}",
+            ))
+    return failures
 
 
 def run_preaccept(
@@ -211,8 +229,13 @@ def run_preaccept(
     dispositions: list[DispositionInput] | None = None,
     edition_label: str | None = None,
     typical_bill_cents_per_kwh: Decimal | None = None,
+    typical_bill_oracles: list | None = None,
 ) -> PreAcceptResult:
-    """Run G0–G6. Accepted only when every gate passes."""
+    """Run G0–G6. Accepted only when every gate passes.
+
+    Pass a non-empty ``inventory`` to exercise G5. Pass typical-bill oracles
+    (from ``inventory_from_docs.extract_typical_bill_oracles``) to exercise G6.
+    """
     failures: list[GateFailure] = []
     failures.extend(gate_admissibility(
         source_url=source_url, official_hosts=official_hosts
@@ -228,7 +251,9 @@ def run_preaccept(
         compiled = compile_plan(plan)
         failures.extend(gate_structure(plan, compiled))
         failures.extend(gate_oracle(
-            compiled, typical_bill_cents_per_kwh=typical_bill_cents_per_kwh
+            compiled,
+            typical_bill_cents_per_kwh=typical_bill_cents_per_kwh,
+            typical_bill_oracles=typical_bill_oracles,
         ))
     except Exception as e:  # RecipeError and friends
         failures.append(GateFailure("G4", "compile_failed", str(e)))
