@@ -170,7 +170,7 @@ def _amount_in_quote(quote: str, amount: str | Decimal | None) -> bool:
         return True  # don't fail grounding on unparseable expected amount
     for m in nums:
         try:
-            got = Decimal(m.group(1))
+            got = Decimal(m.group(0))
         except InvalidOperation:
             continue
         if got == want:
