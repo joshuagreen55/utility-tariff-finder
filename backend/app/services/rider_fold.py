@@ -265,7 +265,48 @@ def plan_fold(plan: Any, riders: list[Any]) -> dict | None:
             continue
         out["per_kwh"].append((r, picks))
         out["families"].add(fam)
-    return out if out["families"] else None
+    # R23: hints answered by rider NAME — a family with two riders (Xcel MN
+    # "Renewable Development Fund" vs "Renewable Energy Standard") or no
+    # family at all ("State Energy Policy Rate Rider"). The rider whose name
+    # shares the most significant words with the hint, if unique.
+    done = {id(r) for r, _ in out["per_kwh"] + out["pct"]}
+    out["hints"] = set()
+    for h in unadded:
+        hk = _keys(str(h))
+        if hk and hk <= out["families"]:
+            continue
+        hw = _sig_words(str(h))
+        if not hw:
+            continue
+        scored = sorted(((len(hw & _sig_words(str(_g(r, "name") or ""))), i) for i, r in enumerate(riders)), reverse=True)
+        if not scored or scored[0][0] < min(2, len(hw)) or (len(scored) > 1 and scored[1][0] == scored[0][0]):
+            continue
+        r = riders[scored[0][1]]
+        if id(r) in done or _already_included(plan, r):
+            out["hints"].add(str(h))
+            continue
+        pct = _pct_rows(r)
+        kwh = _schedule_filter(_per_kwh_rows(r), plan)
+        if pct and not kwh and len({float(_g(c, "rate_value")) for c in pct}) == 1:
+            out["pct"].append((r, float(_g(pct[0], "rate_value")) / 100.0))
+        elif kwh:
+            picks = [_pick(kwh, e, False) for e in energy]
+            if any(p is None for p in picks):
+                continue
+            out["per_kwh"].append((r, picks))
+        else:
+            continue
+        done.add(id(r))
+        out["hints"].add(str(h))
+    return out if (out["families"] or out["hints"]) else None
+
+
+_STOP_WORDS = {"rider", "rate", "rates", "the", "and", "for", "cost", "costs", "recovery", "adjustment", "adj",
+               "charge", "charges", "program", "schedule", "factor", "residential", "service", "clause", "tariff"}
+
+
+def _sig_words(s: str) -> set[str]:
+    return {w for w in re.findall(r"[a-z]{3,}", (s or "").lower()) if w not in _STOP_WORDS}
 
 
 def apply_fold(plan: Any, fold: dict) -> list[str]:
@@ -280,7 +321,13 @@ def apply_fold(plan: Any, fold: dict) -> list[str]:
     for i, e in enumerate(energy):
         base = float(e["rate_value"])
         e.setdefault("base_rate_value", base)
-        e["rate_value"] = round(base * (1 + pct_total) + adds[i], 6)
+        # R23: percent-of-base riders apply to the BASE energy charge, not to
+        # per-kWh riders already stacked into an "all-in" ENERGY value.
+        stacked = sum(float(_g(c, "rate_value") or 0) for c in comps
+                      if _ctype(c) == "adjustment" and _g(c, "included_in_energy")
+                      and str(_g(c, "unit") or "").startswith("$")
+                      and _g(c, "season") in (None, "", e.get("season"))) if pct_total else 0.0
+        e["rate_value"] = round(base + (base - stacked) * pct_total + adds[i], 6)
     for r, picks in fold["per_kwh"]:
         for e, p in zip(energy, picks):
             audit.append({
@@ -305,7 +352,11 @@ def apply_fold(plan: Any, fold: dict) -> list[str]:
     plan.components = comps
     fams = fold["families"]
 
+    named = fold.get("hints") or set()
+
     def _resolved(h: str) -> bool:
+        if str(h) in named:
+            return True
         if "exhibit" in fams and (EXHIBIT_HINT_RE.search(str(h)) or GENERIC_EXHIBIT_HINT_RE.search(str(h))):
             return True
         k = _keys(str(h))

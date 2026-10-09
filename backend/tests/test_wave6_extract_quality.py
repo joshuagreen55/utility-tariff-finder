@@ -532,7 +532,12 @@ class TestReferencedRiderDocFetch(unittest.TestCase):
                 {"component_type": "energy", "unit": "¢/kWh", "rate_value": 11.224},
             ],
         )
-        with mock.patch.object(tp, "brave_search", return_value=[]):
+        # Hermetic: no network, so the rider stays unresolved. (R23: the live
+        # crawler now reaches PGE's ctfassets rider PDFs and resolves Sch 125.)
+        with mock.patch.object(tp, "brave_search", return_value=[]), \
+             mock.patch.object(tp, "_fetch_and_parse", return_value=None), \
+             mock.patch.object(tp, "_fetch_as_pdf_via_download", return_value=None), \
+             mock.patch.object(tp, "_refetch_pge_index_raw", return_value=None):
             merged, _pages = tp.enrich_tariffs_with_referenced_rider_docs(
                 [et], "Portland General Electric", "OR",
                 website_url="https://portlandgeneral.com",

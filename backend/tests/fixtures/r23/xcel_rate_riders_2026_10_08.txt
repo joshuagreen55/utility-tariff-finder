@@ -1,0 +1,518 @@
+Electric Riders
+Electric Riders
+Effective Date
+$/kWh
+Transmission Cost Recovery
+Jan. 1, 2026
+Residential
+$0.004436
+Commercial (non-demand)
+$0.003006
+Demand Billed
+$0.323/kW
+Critical Peak Price
+$0.000947
+Conservation Improvement Program Adj.
+Dec. 31, 2025
+$0.001397
+Renewable Development Fund Rider
+Feb. 1, 2025
+$0.001097
+State Energy Policy
+Jan. 1, 2025
+$0.000000
+Renewable Energy Standard Cost Recovery
+Jan. 1, 2025
+2.41%
+Mercury Cost Recovery
+Jan. 1, 2011
+-
+The Minnesota Public Utilities Commission approves monthly fuel rates for calendar year, shown in the Commission-Approved Rates column below. For some months, there may be a true-up factor applied to adjust for prior period over- or under-collection.  For those months, the Fuel Cost Charge column has been adjusted to account for the amount listed in the True-Up Factor column.  The amounts shown in the Fuel Cost Charge column will be shown on a separate line on your monthly bill.
+(Tables last updated 04/01/2026)
+Residential Customers
+Month
+Commission-Approved Rate ($/kWh)
+True-Up
+NPTC Refund
+2025 Mid-Year Adj.
+Prairie Island Outage Refund
+Fuel Cost Charge ($/kWh)
+January
+$0.02848
+($0.00174)
+($0.00679)
+($0.00427)
+$0.01568
+February
+$0.03039
+($0.00201)
+($0.00786)
+($0.00477)
+$0.01575
+March
+$0.03048
+($0.00183)
+($0.00718)
+($0.00466)
+$0.01681
+April
+$0.03110
+($0.00112)
+($0.00499)
+$0.02499
+May
+$0.03234
+($0.00099)
+($0.00440)
+$0.02695
+June
+$0.03450
+($0.00088)
+($0.00389)
+$0.02973
+July
+$0.03332
+($0.00074)
+($0.00331)
+$0.02927
+August
+$0.03213
+($0.00079)
+($0.00354)
+$0.02780
+September
+$0.02967
+($0.00096)
+($0.00423)
+$0.02448
+October
+$0.02791
+($0.00101)
+($0.00447)
+(0.02422)
+(0.00179)
+November
+$0.02486
+($0.00103)
+($0.00457)
+$0.01926
+December
+$0.02644
+($0.00089)
+($0.00393)
+$0.02162
+C&I Non-Demand
+Month
+Commission-Approved Rate ($/kWh)
+True-Up
+NPTC Refund
+2025 Mid-Year Adj.
+Prairie Island Outage Refund
+Fuel Cost Charge ($/kWh)
+January
+$0.02845
+($0.00174)
+($0.00678)
+($0.00427)
+$0.01566
+February
+$0.03037
+($0.00201)
+($0.00785)
+($0.00477)
+$0.01574
+March
+$0.03046
+($0.00183)
+($0.00717
+($0.00467
+$0.01679
+April
+$0.03108
+($0.00112)
+($0.00499)
+$0.02497
+May
+$0.03231
+($0.00099)
+($0.00439)
+$0.02693
+June
+$0.03447
+($0.00088)
+($0.00388)
+$0.02971
+July
+$0.03329
+($0.00074)
+($0.00331)
+$0.02924
+August
+$0.03210
+($0.00079)
+($0.00353)
+$0.02778
+September
+$0.02964
+($0.00096)
+($0.00423)
+$0.02445
+October
+$0.02789
+($0.00101)
+($0.00446)
+(0.02420)
+(0.00179)
+November
+$0.02484
+($0.00103)
+($0.00456)
+$0.01925
+December
+$0.02641
+($0.00089)
+($0.00393)
+$0.02159
+C&I Demand Non-Time of Day
+Month
+Commission-Approved Rate ($/kWh)
+True-Up
+NPTC Refund
+2025 Mid-Year Adj.
+Prairie Island Outage Refund
+Fuel Cost Charge ($/kWh)
+January
+$0.02802
+($0.00172)
+($0.00668)
+($0.00420)
+$0.01542
+February
+$0.02991
+($0.00198)
+($0.00773)
+($0.00469)
+$0.01551
+March
+$0.03000
+($0.00181)
+($0.00706)
+($0.00459)
+$0.01654
+April
+$0.03061
+($0.00110)
+($0.00491)
+$0.02460
+May
+$0.03183
+($0.00097)
+($0.00433)
+$0.02653
+June
+$0.03395
+($0.00086)
+($0.00383)
+$0.02926
+July
+$0.03279
+($0.00073)
+($0.00326)
+$0.02880
+August
+$0.03161
+($0.00078)
+($0.00348)
+$0.02735
+September
+$0.02920
+($0.00094)
+($0.00416)
+$0.02410
+October
+$0.02747
+($0.00099)
+($0.00440)
+(0.02384)
+(0.00175)
+November
+$0.02446
+($0.00101)
+($0.00450)
+$0.01895
+December
+$0.02602
+($0.00087)
+($0.00387)
+$0.02128
+C&I Time of Day customers during On-Peak hours
+Month
+Commission-Approved Rate ($/kWh)
+True-Up
+NPTC Refund
+2025 Mid-Year Adj.
+Prairie Island Outage Refund
+Fuel Cost Charge ($/kWh)
+January
+$0.03560
+($0.00218)
+($0.00849)
+($0.00534)
+$0.01959
+February
+$0.03801
+($0.00251)
+($0.00983)
+($0.00596)
+$0.01971
+March
+$0.03813
+($0.00229)
+(0.00897)
+($0.00584)
+$0.02102
+April
+$0.03888
+($0.00140)
+($0.00624)
+$0.03124
+May
+$0.04043
+($0.00124)
+($0.00550)
+$0.03369
+June
+$0.04315
+($0.00110)
+($0.00486)
+$0.03719
+July
+$0.04168
+($0.00093)
+($0.00414)
+$0.03661
+August
+$0.04018
+($0.00099)
+($0.00442)
+$0.03477
+September
+$0.03710
+($0.00120)
+($0.00529)
+$0.03061
+October
+$0.03490
+($0.00126)
+($0.00559)
+(0.03028)
+(0.00223)
+November
+$0.03108
+($0.00129)
+($0.00571)
+$0.02408
+December
+$0.03306
+($0.00111)
+($0.00492)
+$0.02703
+C&I Time of Day customers during Off-Peak hours
+Month
+Commission-Approved Rate ($/kWh)
+True-Up
+NPTC Refund
+2025 Mid-Year Adj.
+Prairie Island Outage Refund
+Fuel Cost Charge ($/kWh)
+January
+$0.02236
+($0.00137)
+($0.00533)
+($0.00335)
+$0.01231
+February
+$0.02386
+($0.00158)
+($0.00617)
+($0.00375)
+$0.01237
+March
+$0.02393
+($0.00144)
+($0.00563)
+($0.00367)
+$0.01319
+April
+$0.02443
+($0.00088)
+($0.00392)
+$0.01963
+May
+$0.02539
+($0.00078)
+($0.00345)
+$0.02116
+June
+$0.02708
+($0.00069)
+($0.00305)
+$0.02334
+July
+$0.02614
+($0.00058)
+($0.00260)
+$0.02296
+August
+$0.02521
+($0.00062)
+($0.00278)
+$0.02181
+September
+$0.02329
+($0.00075)
+($0.00332)
+$0.01922
+October
+$0.02192
+($0.00079)
+($0.00351)
+(0.01902)
+(0.00140)
+November
+$0.01952
+($0.00081)
+($0.00359)
+$0.01512
+December
+$0.02076
+($0.00070)
+($0.00309)
+$0.01697
+Outdoor Lighting
+Month
+Commission-Approved Rate ($/kWh)
+True-Up
+NPTC Refund
+2025 Mid-Year Adj.
+Prairie Island Outage Refund
+Fuel Cost Charge ($/kWh)
+January
+$0.02141
+($0.00131)
+($0.00510)
+($0.00321)
+$0.01179
+February
+$0.02284
+($0.00151)
+($0.00591)
+($0.00359)
+$0.01184
+March
+$0.02291
+($0.00138)
+($0.00539)
+($0.00351)
+$0.01263
+April
+$0.02339
+($0.00084)
+($0.00375)
+$0.01880
+May
+$0.02431
+($0.00074)
+($0.00330)
+$0.02027
+June
+$0.02592
+($0.00066)
+($0.00292)
+$0.02234
+July
+$0.02502
+($0.00056)
+($0.00249)
+$0.02197
+August
+$0.02413
+($0.00060)
+($0.00266)
+$0.02087
+September
+$0.02230
+($0.00072)
+($0.00318)
+$0.01840
+October
+$0.02099
+($0.00076)
+($0.00336)
+(0.01821)
+(0.00134)
+November
+$0.01868
+($0.00077)
+($0.00343)
+$0.01448
+December
+$0.01987
+($0.00067)
+($0.00296)
+$0.01624
+C&I General Time of Use Pilot
+Month
+Prairie Island Outage Refund
+Peak
+Base
+Off-Peak
+January
+$0.02034
+$0.01640
+$0.00807
+February
+$0.02045
+$0.01649
+$0.00810
+March
+$0.02181
+$0.01759
+$0.00864
+April
+$0.03242
+$0.02616
+$0.01287
+May
+$0.03498
+$0.03498
+$0.01387
+June
+$0.03860
+$0.03111
+$0.01528
+July
+$0.03800
+$0.03063
+$0.01502
+August
+$0.03609
+$0.02909
+$0.01427
+September
+$0.03178
+$0.02562
+$0.01259
+October
+Peak: (0.03143) | Base: (0.02535) | Off-Peak:(0.01247)
+(0.00232)
+(0.00187)
+(0.00091)
+November
+$0.02499
+$0.02015
+$0.00991
+December
+$0.02805
+$0.02261
+$0.01112
