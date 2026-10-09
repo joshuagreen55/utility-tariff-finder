@@ -97,6 +97,99 @@ class TestTypicalBillOracle(unittest.TestCase):
         self.assertEqual(fails[0].reason, "typical_bill_mismatch")
 
 
+class TestReviewInventoryFixes(unittest.TestCase):
+    """Review of #92: census code keys, rider token noise, G6 oracle labels."""
+
+    def test_census_matches_printed_code_forms(self):
+        from app.services.pricing.rider_census import InventoryRider
+        inventory = [
+            InventoryRider("dsm_r", "DSM-R"),
+            InventoryRider("eccr", "ECCR"),
+        ]
+        disps = [
+            DispositionInput("DSM-R", "applies", "p.3", "Rider DSM-R 0.4 ¢/kWh"),
+            DispositionInput("ECCR", "not_applicable", "p.4"),
+        ]
+        census = evaluate_rider_census(inventory, disps)
+        self.assertTrue(census.complete, census.reasons)
+        self.assertFalse(any("disposition_without_inventory" in r for r in census.reasons))
+
+    def test_rate_schedule_mentions_are_not_riders(self):
+        text = (
+            "Residential Service Schedule RS. Customers may elect Schedule TOU-D "
+            "or Schedule GS. Also see Rider FAC."
+        )
+        codes = {r.code for r in riders_from_text(text)}
+        self.assertEqual(codes, {"fac"})
+
+    def test_subject_to_prose_is_not_a_rider(self):
+        for text in (
+            "Rates are subject to the riders listed below.\n",
+            "Bills are subject to adjustments as approved by the Commission.\n",
+            "Charges are subject to clauses in effect from time to time.\n",
+        ):
+            self.assertEqual(riders_from_text(text), [], text)
+
+    def test_subject_to_lists_still_found(self):
+        text = (
+            "Subject to riders FAC, DSM-R and ECR2.\n"
+            "Plus adjustments Fuel Adjustment Clause and Storm Recovery.\n"
+            "Subject to Schedule ECCR.\n"
+        )
+        codes = {r.code for r in riders_from_text(text)}
+        self.assertTrue({"fac", "dsm_r", "ecr2", "fuel", "storm", "eccr"} <= codes, codes)
+
+    def test_merge_dedupes_on_normalized_code(self):
+        from app.services.pricing.inventory_from_docs import merge_inventory
+        from app.services.pricing.rider_census import InventoryRider
+        merged = merge_inventory(
+            [InventoryRider("dsm_r", "DSM-R sheet")], [InventoryRider("DSM-R", "text")],
+        )
+        self.assertEqual(len(merged), 1)
+
+    def test_typical_bill_average_is_not_an_all_in_oracle(self):
+        from app.services.pricing.inventory_from_docs import comparable_oracles
+        doc = (
+            "Typical bill for 1000 kWh: $142.00 ($0.142 per kWh)\n"
+            "Energy Charge 10.000 ¢/kWh\n"
+        )
+        oracles = extract_typical_bill_oracles(doc)
+        self.assertEqual([o.label for o in oracles], ["typical_bill"])
+        self.assertEqual(comparable_oracles(oracles), [])
+        plan = plan_from_dict({
+            "plan_key": "demo", "name": "Demo", "recipe_code": "bundled",
+            "components": [{
+                "code": "base", "kind": "base_energy", "unit": "¢/kWh",
+                "disposition": "applies",
+                "cells": [{"season": "all", "period": "all",
+                           "day_type": "all", "tier": "all", "amount": "10.000"}],
+            }],
+            "official_cents": ["10.000"],
+        })
+        self.assertEqual(gate_oracle(compile_plan(plan), typical_bill_oracles=oracles), [])
+
+    def test_neighbouring_rate_row_is_not_the_oracle(self):
+        doc = "Typical bill comparison (see table)\nEnergy Charge 10.000 ¢/kWh\nTypical bill 1000 kWh: 13.20 ¢/kWh all-in price"
+        oracles = extract_typical_bill_oracles(doc)
+        self.assertEqual([o.cents_per_kwh for o in oracles], [Decimal("13.20")])
+
+    def test_prose_containing_all_in_letters_is_not_an_oracle(self):
+        doc = (
+            "Customers installing EV chargers receive 6.175 ¢/kWh credit.\n"
+            "Small Industrial 14.40 ¢/kWh\n"
+            "The tariff shall include 7.693 cents per kWh for fuel.\n"
+            "Charges are all in addition to 3.10 ¢/kWh delivery.\n"
+        )
+        self.assertEqual(extract_typical_bill_oracles(doc), [])
+
+    def test_heading_then_figure_on_next_line(self):
+        doc = "All-in price per kWh\n12.75 ¢/kWh\n"
+        oracles = extract_typical_bill_oracles(doc)
+        self.assertEqual(
+            [(o.cents_per_kwh, o.label) for o in oracles], [(Decimal("12.75"), "all_in")],
+        )
+
+
 class TestInventoryClosesG5(unittest.TestCase):
     def test_nsp_inventory_from_plan_components(self):
         plans = json.loads((GOLDEN_DIR / "plans.json").read_text())["plans"]

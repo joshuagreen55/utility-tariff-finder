@@ -22,7 +22,7 @@ from decimal import Decimal
 from typing import Any, Iterable
 
 from app.services.pricing.document_set import DocumentMember, ROLE_RIDER_SHEET
-from app.services.pricing.rider_census import InventoryRider
+from app.services.pricing.rider_census import InventoryRider, normalize_rider_code
 from app.services.pricing.types import money
 
 # Rider kinds that belong on the closed census (not calendars / base energy).
@@ -36,12 +36,24 @@ _CENSUS_KINDS = frozenset({
 
 _SUBJECT_TO_RE = re.compile(
     r"(?:subject\s+to|plus|including)\s+(?:the\s+)?"
-    r"(?:riders?|adjustments?|clauses?)\s+"
+    r"(?:riders?|adjustments?|clauses?|schedules?)\s+"
     r"([A-Za-z0-9][A-Za-z0-9\-/,\s&]{1,80}?)(?:\.|;|\n|$)",
     re.I,
 )
+# "Schedule RS" / "Schedule GS" name rate schedules (the plan itself and its
+# commercial siblings), not riders; schedules that are riders show up in a
+# "subject to …" list instead.
 _RIDER_TOKEN_RE = re.compile(
-    r"\b(?:Rider|Schedule|Clause)\s+([A-Z][A-Z0-9\-]{0,12})\b"
+    r"\b(?:Rider|Clause)\s+([A-Z][A-Z0-9\-]{0,12})\b"
+)
+# Inside a "subject to riders …" list, a bare token is a code only when it is
+# printed like one (FAC, DSM-R, ECR2); "listed below" / "as approved" are prose.
+_CODE_SHAPED_RE = re.compile(r"^[A-Z][A-Z0-9\-]{1,12}$|^[A-Z]{1,6}-?\d{1,4}[A-Z]?$")
+_NAMED_RIDER_RE = re.compile(
+    r"\b(?:rider|clause|adjustment|surcharge|factor|recovery)\s*$", re.I,
+)
+_LIST_ITEM_RE = re.compile(
+    r"^(?:(?P<kw>Rider|Schedule|Clause)\s+)?(?P<tok>[A-Za-z][A-Za-z0-9\-]{1,12})", re.I,
 )
 _FILENAME_RIDER_RE = re.compile(
     r"(?:^|/)(?:rider[-_])?([a-z0-9][a-z0-9\-_]{1,20})"
@@ -50,12 +62,24 @@ _FILENAME_RIDER_RE = re.compile(
 )
 
 # Typical / published all-in figures (oracle only).
+# Whole words only: unanchored "all in" matched "installing", "Small
+# Industrial" and "shall include", turning tariff prose into oracles.
+_ALL_IN_PATTERN = (
+    r"\ball-in\b|\ball\s+in\s+(?:price|rate|cost)\b"
+    r"|\btotal\s+(?:price|rate)\s+per\s+kwh\b"
+)
 _TYPICAL_BILL_RE = re.compile(
-    r"(?:typical\s+bill|average\s+monthly\s+bill|sample\s+bill|"
-    r"all[- ]?in(?:\s+price)?|total\s+(?:price|rate)\s+per\s+kwh)"
-    r"[^\n]{0,120}?",
+    r"\btypical\s+bill\b|\baverage\s+monthly\s+bill\b|\bsample\s+bill\b|"
+    + _ALL_IN_PATTERN,
     re.I,
 )
+# A typical / average bill divided by kWh includes the fixed charges, so only
+# a figure labelled as the all-in per-kWh price is comparable to the compiled
+# energy cell; typical-bill figures are kept for audit but G6 skips them.
+_ALL_IN_RE = re.compile(_ALL_IN_PATTERN, re.I)
+_UNIT_WORDS_RE = re.compile(r"cents?|per|kwh|usd|cad")
+ORACLE_ALL_IN = "all_in"
+ORACLE_TYPICAL_BILL = "typical_bill"
 _CENTS_IN_LINE_RE = re.compile(
     r"(\d+\.\d{2,5})\s*(?:¢|cents?)\s*(?:per\s*)?(?:/)?\s*kwh",
     re.I,
@@ -105,8 +129,7 @@ class InventoryBuildResult:
 
 
 def _norm_code(raw: str) -> str:
-    code = re.sub(r"[^A-Za-z0-9]+", "_", (raw or "").strip()).strip("_")
-    return code.lower()
+    return normalize_rider_code(raw)
 
 
 def rider_code_from_url(url: str, title: str | None = None) -> str | None:
@@ -211,13 +234,16 @@ def riders_from_text(document_text: str) -> list[InventoryRider]:
             part = part.strip()
             if not part:
                 continue
-            tok = re.match(
-                r"(?:Rider|Schedule|Clause)?\s*([A-Za-z][A-Za-z0-9\-]{1,12})",
-                part,
-                re.I,
-            )
-            if tok:
-                _add(tok.group(1), part)
+            tok = _LIST_ITEM_RE.match(part)
+            if not tok:
+                continue
+            code = tok.group("tok")
+            if (
+                (tok.group("kw") and code[0].isupper())
+                or _CODE_SHAPED_RE.match(code)
+                or (code[0].isupper() and _NAMED_RIDER_RE.search(part))
+            ):
+                _add(code, part)
 
     for m in _RIDER_TOKEN_RE.finditer(document_text):
         _add(m.group(1), m.group(0))
@@ -253,9 +279,10 @@ def merge_inventory(*groups: Iterable[InventoryRider]) -> list[InventoryRider]:
     seen: set[str] = set()
     for group in groups:
         for r in group:
-            if r.code in seen:
+            key = normalize_rider_code(r.code)
+            if key in seen:
                 continue
-            seen.add(r.code)
+            seen.add(key)
             out.append(r)
     return out
 
@@ -272,11 +299,16 @@ def extract_typical_bill_oracles(
     lines = document_text.splitlines()
     for i, line in enumerate(lines):
         if not _TYPICAL_BILL_RE.search(line):
-            # Also accept a nearby header: check window of ±1 line.
-            window = " ".join(lines[max(0, i - 1): i + 2])
-            if not _TYPICAL_BILL_RE.search(window):
-                continue
-        hay = " ".join(lines[max(0, i - 1): i + 2])
+            continue
+        # The figure must sit on the label line, or on the next line when the
+        # label line is a bare heading; a neighbouring rate row is not it.
+        hay = line
+        if (
+            not re.search(r"\d", line)
+            and i + 1 < len(lines)
+            and not re.search(r"[a-z]", _UNIT_WORDS_RE.sub("", lines[i + 1].lower()))
+        ):
+            hay = f"{line} {lines[i + 1]}"
         cents = None
         m = _CENTS_IN_LINE_RE.search(hay)
         if m:
@@ -289,19 +321,19 @@ def extract_typical_bill_oracles(
             continue
         kwh_m = _KWH_RE.search(hay)
         kwh = int(kwh_m.group(1)) if kwh_m else None
-        quote = line.strip()[:200]
+        quote = hay.strip()[:200]
         oracles.append(TypicalBillOracle(
             cents_per_kwh=cents,
             kwh=kwh,
             source_quote=quote,
             source_url=source_url,
-            label="typical_bill",
+            label=ORACLE_ALL_IN if _ALL_IN_RE.search(hay) else ORACLE_TYPICAL_BILL,
         ))
-    # Dedupe by (cents, kwh)
+    # Dedupe by (cents, kwh, label)
     uniq: list[TypicalBillOracle] = []
     seen: set[tuple] = set()
     for o in oracles:
-        key = (str(o.cents_per_kwh), o.kwh)
+        key = (str(o.cents_per_kwh), o.kwh, o.label)
         if key in seen:
             continue
         seen.add(key)
@@ -369,8 +401,16 @@ def dispositions_from_plan_components(
     return out
 
 
+def comparable_oracles(oracles: Iterable[TypicalBillOracle]) -> list[TypicalBillOracle]:
+    """Oracles G6 may compare against a single all-in cell (all-in labelled only)."""
+    return [o for o in oracles if o.label == ORACLE_ALL_IN]
+
+
 __all__ = [
+    "ORACLE_ALL_IN",
+    "ORACLE_TYPICAL_BILL",
     "InventoryBuildResult",
+    "comparable_oracles",
     "TypicalBillOracle",
     "build_inventory_from_document_set",
     "dispositions_from_plan_components",

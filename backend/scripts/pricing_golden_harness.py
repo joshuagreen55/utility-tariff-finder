@@ -64,6 +64,7 @@ from app.services.pricing.extraction import (  # noqa: E402
 )
 from app.services.pricing.inventory_from_docs import (  # noqa: E402
     build_inventory_from_document_set,
+    comparable_oracles,
     dispositions_from_plan_components,
     riders_from_text,
 )
@@ -357,8 +358,9 @@ def _inventory_for_plan(
             for d in disp_dicts
         ]
     typical = None
-    if built.typical_bills:
-        typical = built.typical_bills[0].cents_per_kwh
+    all_in = comparable_oracles(built.typical_bills)
+    if all_in:
+        typical = all_in[0].cents_per_kwh
     return inventory, dispositions, typical
 
 
