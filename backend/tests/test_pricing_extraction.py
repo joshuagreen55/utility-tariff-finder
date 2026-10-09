@@ -108,6 +108,26 @@ class TestDualExtract(unittest.TestCase):
         self.assertEqual(result.reason, "preaccept_failed")
         self.assertIn("G2", result.detail)
 
+    def test_disposition_disagreement_holds(self):
+        def fn(doc, model, ctx):
+            payload = _good_payload()
+            if model.endswith("sonnet-5-5"):
+                payload[1]["disposition"] = "optional"
+            return payload
+
+        result = dual_extract_components(
+            DOC,
+            plan_meta={
+                "plan_key": "rs", "name": "RS", "recipe_code": "bundled",
+                "source_url": "https://utility.example/rates.pdf",
+            },
+            extract_fn=fn,
+            official_hosts=["utility.example"],
+            force=True,
+        )
+        self.assertIsInstance(result, ExtractionHold)
+        self.assertIn("G2:extractors_disagree", result.detail)
+
     def test_bad_quote_holds(self):
         def fn(doc, model, ctx):
             payload = _good_payload()

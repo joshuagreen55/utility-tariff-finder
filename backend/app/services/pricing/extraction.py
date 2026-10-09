@@ -340,7 +340,8 @@ def dual_extract_components(
                     extract_a=comps_a, extract_b=comps_b,
                 )
 
-    # Compiler only sees applies; G2 still compares full extracts.
+    # Compiler and G2 see only applying components: a rider one model calls
+    # optional / not_applicable must not agree with one the other prices.
     plan = PlanInput(
         plan_key=str(plan_meta["plan_key"]),
         name=str(plan_meta.get("name") or plan_meta["plan_key"]),
@@ -361,8 +362,8 @@ def dual_extract_components(
         document_text=document_text,
         source_url=source_url or plan_meta.get("source_url"),
         official_hosts=official_hosts or [],
-        extract_a=comps_a,
-        extract_b=comps_b,
+        extract_a=applying_a,
+        extract_b=applying_b,
         inventory=inventory,
         dispositions=disps,
         edition_label=edition_label or plan_meta.get("edition_label"),
