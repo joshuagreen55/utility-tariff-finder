@@ -17,6 +17,9 @@ Live
 
     Pass ``--real-llm`` to call Haiku 5.5 + Sonnet 5.5 against fetched
     document-set text (requires ANTHROPIC_API_KEY; spends real $; not for CI).
+    Real-LLM mode does **not** hand the model the golden component list
+    (codes/names/units) or seed G5 dispositions from it — inventory comes
+    from the utility's document set + document text, same as non-golden.
 
 Exit codes
     0 — all scored plans exact-match (prices + clocks)
@@ -62,6 +65,7 @@ from app.services.pricing.extraction import (  # noqa: E402
 from app.services.pricing.inventory_from_docs import (  # noqa: E402
     build_inventory_from_document_set,
     dispositions_from_plan_components,
+    riders_from_text,
 )
 from app.services.pricing.rider_census import (  # noqa: E402
     DispositionInput,
@@ -308,33 +312,106 @@ def _inventory_for_plan(
     raw_plan: dict[str, Any],
     *,
     from_document_set: bool,
+    document_text: str | None = None,
+    seed_from_golden: bool = True,
 ) -> tuple[list[InventoryRider], list[DispositionInput], Any]:
     """Build G5 inventory + dispositions + optional G6 typical-bill.
 
-    Dry path seeds inventory from the golden's own rider components so the
-    census closes. Real-LLM path also folds rider_sheet members from the
-    curated document set (the R27 gap: empty inventory meant G5 never ran).
+    Dry path (``seed_from_golden=True``) seeds inventory + dispositions from
+    the golden's own rider components so the census closes without network.
+
+    Real-LLM path (``seed_from_golden=False``) builds inventory only from
+    document-set members + fetched document text — never from the golden
+    component list. Dispositions come from the extract itself (caller
+    passes ``dispositions=None`` into ``dual_extract_components``).
     """
     members = (raw_plan.get("document_set") or {}).get("documents") or []
+    plan_components = (raw_plan.get("components") or []) if seed_from_golden else []
+    doc_texts: list[tuple[str | None, str]] = []
+    if document_text and from_document_set and not seed_from_golden:
+        urls = _document_urls(raw_plan)
+        doc_texts.append((urls[0] if urls else None, document_text))
     built = build_inventory_from_document_set(
         members=members if from_document_set else [],
-        plan_components=raw_plan.get("components") or [],
+        document_texts=doc_texts or None,
+        plan_components=plan_components,
     )
     inventory = list(built.inventory)
-    disp_dicts = dispositions_from_plan_components(raw_plan.get("components") or [])
-    dispositions = [
-        DispositionInput(
-            rider_code=d["rider_code"],
-            disposition=d["disposition"],
-            disposition_page=d.get("disposition_page"),
-            disposition_quote=d.get("disposition_quote"),
+    if document_text and from_document_set and not seed_from_golden:
+        # Fold any extra "subject to Rider X" hits (merge is idempotent).
+        from app.services.pricing.inventory_from_docs import merge_inventory
+        inventory = merge_inventory(inventory, riders_from_text(document_text))
+
+    dispositions: list[DispositionInput] = []
+    if seed_from_golden:
+        disp_dicts = dispositions_from_plan_components(
+            raw_plan.get("components") or []
         )
-        for d in disp_dicts
-    ]
+        dispositions = [
+            DispositionInput(
+                rider_code=d["rider_code"],
+                disposition=d["disposition"],
+                disposition_page=d.get("disposition_page"),
+                disposition_quote=d.get("disposition_quote"),
+            )
+            for d in disp_dicts
+        ]
     typical = None
     if built.typical_bills:
         typical = built.typical_bills[0].cents_per_kwh
     return inventory, dispositions, typical
+
+
+def build_real_llm_extract_prompt(
+    *,
+    plan_raw: dict[str, Any],
+    document: str,
+    inventory: list[InventoryRider] | None = None,
+) -> str:
+    """Prompt for live real-LLM extract — no golden component answer key.
+
+    The model must discover priced components from the documents. Optional
+    ``inventory`` is document-derived rider codes only (G5 closed world),
+    never golden plan components.
+    """
+    inv_lines = ""
+    if inventory:
+        inv_lines = (
+            "Closed rider inventory from the utility's own documents "
+            "(codes only — find amounts in the text; do not invent riders):\n"
+            + "\n".join(
+                f"- {r.code}" + (f" ({r.name})" if r.name else "")
+                for r in inventory
+            )
+            + "\n\n"
+        )
+    return (
+        f'Today is 2026-10-09. You are copying numbers from official tariff '
+        f'documents for {plan_raw.get("utility_name")}, residential plan '
+        f'"{plan_raw.get("name")}" (code {plan_raw.get("code")}, rate type '
+        f'{plan_raw.get("rate_type")}, pricing recipe {plan_raw.get("recipe_code")}).\n'
+        f"Do NOT compute any totals. Discover every priced charge that a "
+        f"residential customer on this plan pays (base energy, delivery, "
+        f"supply/commodity, fuel and other per-kWh riders, and fixed monthly "
+        f"customer charges when printed). For each, copy the CURRENT (in "
+        f"effect today) value exactly as printed. Amounts must be decimal "
+        f"strings. Codes and names must be unique. "
+        f"Every component needs an explicit disposition "
+        f"(applies / not_applicable / not_found / optional / "
+        f"location_fee_or_tax / event_day). "
+        f"If a charge is mentioned but no amount appears, disposition "
+        f"not_found with empty cells — do not invent values. "
+        f"Return one cell per distinct season/period/day_type/tier using "
+        f"labels as printed in the document (\"all\" when not differentiated).\n"
+        f"Also emit a tou_schedule component (kind tou_schedule) with cells "
+        f"carrying period/season/day_type/start/end when the document states "
+        f"clock windows, and a season_calendar component when inclusive season "
+        f"dates are stated. Never invent clocks or season dates.\n"
+        f"source_quote must be a short VERBATIM span containing the number. "
+        f"source_page: the [DOC n] tag.\n"
+        f"{inv_lines}"
+        f"<document>\n{document}\n</document>"
+    )
 
 
 def _document_urls(raw_plan: dict[str, Any]) -> list[str]:
@@ -427,56 +504,20 @@ def _make_real_llm_extract_fn(
     plan_raw: dict[str, Any],
     document: str,
     meter: _LlmSpendMeter,
+    inventory: list[InventoryRider] | None = None,
 ) -> ExtractFn:
-    """Build an extract_fn that calls Anthropic with EXTRACTION_TOOL_SCHEMA."""
+    """Build an extract_fn that calls Anthropic with EXTRACTION_TOOL_SCHEMA.
+
+    Does not embed the golden component list — only document-derived rider
+    codes (optional) plus the plan's name/code/recipe.
+    """
     import httpx
     from app.services import anthropic_compat
 
-    def _labels(field: str) -> list[str]:
-        return sorted({
-            str(cell.get(field) or "all")
-            for c in plan_raw.get("components") or []
-            for cell in (c.get("cells") or [])
-        })
-
-    inv = "\n".join(
-        json.dumps(
-            {
-                k: c.get(k)
-                for k in (
-                    "code", "kind", "unit", "name", "charge_category",
-                    "percent_base_codes", "multiplier_target_codes",
-                    "loss_sensitive", "disposition",
-                )
-                if c.get(k) not in (None, [], "")
-            },
-            ensure_ascii=False,
-        )
-        for c in plan_raw.get("components") or []
-    )
-    prompt = (
-        f'Today is 2026-10-09. You are copying numbers from official tariff '
-        f'documents for {plan_raw.get("utility_name")}, residential plan '
-        f'"{plan_raw.get("name")}" (code {plan_raw.get("code")}, rate type '
-        f'{plan_raw.get("rate_type")}, pricing recipe {plan_raw.get("recipe_code")}).\n'
-        f"Do NOT compute any totals. For each item in the component inventory "
-        f"below, find its CURRENT (in effect today) value in the document and "
-        f"copy it exactly as printed. Use exactly the inventory code/kind/unit. "
-        f"Amounts must be decimal strings. Codes and names must be unique. "
-        f"Every priced component needs an explicit disposition "
-        f"(applies / not_applicable / optional / location_fee_or_tax / event_day). "
-        f'Return one cell per distinct season/period/day_type/tier. '
-        f'Label seasons {_labels("season")}; periods {_labels("period")}; '
-        f'day_types {_labels("day_type")}; '
-        f'tiers {_labels("tier")} ("all" when not differentiated).\n'
-        f"Also emit a tou_schedule component (kind tou_schedule) with cells "
-        f"carrying period/season/day_type/start/end when the document states "
-        f"clock windows, and a season_calendar component when inclusive season "
-        f"dates are stated. Never invent clocks or season dates.\n"
-        f"source_quote must be a short VERBATIM span containing the number. "
-        f"source_page: the [DOC n] tag.\n"
-        f"Component inventory (no values given):\n{inv}\n\n"
-        f"<document>\n{document}\n</document>"
+    prompt = build_real_llm_extract_prompt(
+        plan_raw=plan_raw,
+        document=document,
+        inventory=inventory,
     )
 
     def extract_fn(_document: str, model: str, _ctx: dict) -> list[dict]:
@@ -524,9 +565,6 @@ def _score_live(
 ) -> PlanScore:
     urls = _document_urls(raw_plan)
     hosts = _official_hosts(urls, raw_plan)
-    inventory, dispositions, typical = _inventory_for_plan(
-        raw_plan, from_document_set=real_llm,
-    )
     source_url = urls[0] if urls else (raw_plan.get("source_url") or "https://golden.example/tariff.pdf")
 
     if real_llm:
@@ -552,10 +590,24 @@ def _score_live(
                 has_all_in=True,
                 error=f"no_document_fetched:{fetch_log}",
             )
+        # Inventory from docs only — never golden component list / dispositions.
+        inventory, _disp_unused, typical = _inventory_for_plan(
+            raw_plan,
+            from_document_set=True,
+            document_text=doc,
+            seed_from_golden=False,
+        )
+        dispositions = None  # derive from extract (PR R28-5)
         extract_fn = _make_real_llm_extract_fn(
-            plan_raw=raw_plan, document=doc, meter=meter,
+            plan_raw=raw_plan,
+            document=doc,
+            meter=meter,
+            inventory=inventory,
         )
     else:
+        inventory, dispositions, typical = _inventory_for_plan(
+            raw_plan, from_document_set=False, seed_from_golden=True,
+        )
         payload = _dry_extract_payload(plan, raw_plan)
         doc = raw_plan.get("document_text") or _build_dry_document(plan, payload)
         if not doc.strip():
