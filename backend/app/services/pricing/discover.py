@@ -31,23 +31,16 @@ from app.services.pricing.document_set import (
     parse_effective_date,
 )
 from app.services.source_type import (
+    CA_PROVINCES as _CA_PROVINCES,
+    STATE_SUPPLY_PUBLISHERS,
     THIRD_PARTY,
     UtilitySourceContext,
     classify_source,
     is_regulator_publisher_host,
+    is_state_supply_publisher_host,
     is_third_party_host,
     normalize_host,
 )
-
-_CA_PROVINCES = frozenset(
-    "AB BC MB NB NL NS NT NU ON PE QC SK YT".split()
-)
-# State-run retail-choice sites that publish the default-supply price to
-# compare. They are not the utility's domain but are the official source.
-STATE_SUPPLY_PUBLISHERS = frozenset({
-    "pluginillinois.org", "papowerswitch.com", "powertochoose.org",
-    "energychoice.ohio.gov", "energizect.com", "energyswitchma.gov",
-})
 _LANGUAGE_WORDS_RE = re.compile(
     r"\b(?:english|anglais|espa[nñ]ol|spanish|fran[cç]ais|french|en|es|fr)\b"
 )
@@ -171,7 +164,7 @@ def non_utility_domain(url: str, ctx: UtilitySourceContext | None = None) -> boo
     if ctx is None:
         return False
     host = normalize_host(url)
-    if any(host == d or host.endswith("." + d) for d in STATE_SUPPLY_PUBLISHERS):
+    if is_state_supply_publisher_host(host):
         return False
     return classify_source(url, ctx).source_type == THIRD_PARTY
 

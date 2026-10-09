@@ -152,6 +152,15 @@ REGULATOR_PUBLISHERS: dict[tuple[str, str], frozenset[str]] = {
     ("CA", "AB"): frozenset({"auc.ab.ca"}),
 }
 
+# State-run retail-choice sites that publish the default-supply price to
+# compare. Not the utility's domain, but the sanctioned source for that price.
+STATE_SUPPLY_PUBLISHERS = frozenset({
+    "pluginillinois.org", "papowerswitch.com", "powertochoose.org",
+    "energychoice.ohio.gov", "energizect.com", "energyswitchma.gov",
+})
+
+CA_PROVINCES = frozenset("AB BC MB NB NL NS NT NU ON PE QC SK YT".split())
+
 # Two-label public suffixes we see on utility hosts (``hydro.qc.ca``,
 # ``ville.montreal.qc.ca``, ``co.uk``). Anything else: last two labels.
 _TWO_LABEL_SUFFIXES = frozenset({
@@ -255,6 +264,11 @@ def is_regulator_publisher_host(url_or_host: str | None) -> bool:
     """Host of a board on ``REGULATOR_PUBLISHERS`` (any jurisdiction)."""
     host = normalize_host(url_or_host)
     return bool(host) and any(_host_in(host, doms) for doms in REGULATOR_PUBLISHERS.values())
+
+
+def is_state_supply_publisher_host(url_or_host: str | None) -> bool:
+    host = normalize_host(url_or_host)
+    return bool(host) and _host_in(host, STATE_SUPPLY_PUBLISHERS)
 
 
 def configured_urls(tariff_page_urls: Any, rate_page_url_override: str | None = None) -> tuple[str, ...]:

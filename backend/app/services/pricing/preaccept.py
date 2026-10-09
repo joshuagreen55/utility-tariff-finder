@@ -26,7 +26,15 @@ from app.services.pricing.types import (
     money,
     normalize_cell_label,
 )
-from app.services.source_type import THIRD_PARTY_DOMAINS
+from app.services.source_type import (
+    OFFICIAL,
+    UtilitySourceContext,
+    classify_source,
+    has_official_host,
+    is_state_supply_publisher_host,
+    is_third_party_host,
+    normalize_host,
+)
 
 
 # Edition markers that must never become live/current (PRC-10 / E12 / E13).
@@ -74,20 +82,38 @@ def _host(url: str | None) -> str:
 def gate_admissibility(
     *,
     source_url: str | None,
-    official_hosts: Iterable[str],
+    official_hosts: Iterable[str] = (),
+    source_ctx: UtilitySourceContext | None = None,
 ) -> list[GateFailure]:
-    """G0: document domain on official allowlist (or labelled third-party later)."""
+    """G0: the source document is published by the utility or a sanctioned board.
+
+    Admitted when ``classify_source`` calls it official for the utility's
+    known site (``source_ctx``: website, configured rate URLs, and the
+    jurisdiction's rate-publishing board), when it is a state supply
+    publisher, or when its host is in the caller's ``official_hosts``. The
+    allowlist must come from what is known about the utility, never from
+    the URLs that were fetched; with nothing known the plan holds.
+    """
     host = _host(source_url)
     if not host:
         return [GateFailure("G0", "missing_source_url")]
-    # Hard-block known aggregators.
-    for blocked in THIRD_PARTY_DOMAINS:
-        if host == blocked or host.endswith("." + blocked):
-            return [GateFailure("G0", "third_party_blocked", host)]
-    allow = {h.lower().lstrip(".") for h in official_hosts if h}
-    if allow and not any(host == a or host.endswith("." + a) for a in allow):
-        return [GateFailure("G0", "domain_not_allowlisted", host)]
-    return []
+    if is_third_party_host(host):
+        return [GateFailure("G0", "third_party_blocked", host)]
+    if is_state_supply_publisher_host(host):
+        return []
+    allow = {normalize_host(h) or h.lower().lstrip(".") for h in official_hosts if h}
+    if any(host == a or host.endswith("." + a) for a in allow):
+        return []
+    if source_ctx is not None:
+        cls = classify_source(source_url, source_ctx)
+        if cls.source_type == OFFICIAL:
+            return []
+        if not allow and not has_official_host(source_ctx) and cls.reason != "generic_host":
+            return [GateFailure("G0", "no_official_host", host)]
+        return [GateFailure("G0", "domain_not_official", f"{host}:{cls.reason}")]
+    if not allow:
+        return [GateFailure("G0", "no_official_host", host)]
+    return [GateFailure("G0", "domain_not_allowlisted", host)]
 
 
 def gate_edition(
@@ -322,8 +348,12 @@ def run_preaccept(
     edition_label: str | None = None,
     typical_bill_cents_per_kwh: Decimal | None = None,
     typical_bill_oracles: list | None = None,
+    source_ctx: UtilitySourceContext | None = None,
 ) -> PreAcceptResult:
     """Run G0–G6. Accepted only when every gate passes.
+
+    G0 needs what is known about the utility: ``source_ctx`` (production:
+    ``source_type.context_from_utility``) and/or explicit ``official_hosts``.
 
     ``extract_a`` / ``extract_b`` are each blind model's **applying**
     components (G2 compares them and compiles both).
@@ -333,7 +363,7 @@ def run_preaccept(
     """
     failures: list[GateFailure] = []
     failures.extend(gate_admissibility(
-        source_url=source_url, official_hosts=official_hosts
+        source_url=source_url, official_hosts=official_hosts, source_ctx=source_ctx,
     ))
     failures.extend(gate_edition(
         edition_label=edition_label, document_text=document_text
