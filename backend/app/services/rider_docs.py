@@ -58,6 +58,24 @@ def parse_rider_text(text: str) -> dict | None:
     if mt:
         return mt
     lines = [ln for ln in (text or "").splitlines()]
+    # Per-schedule rider tables ("Schedules 1, 1G, 1P ... 1.2730¢/kWh"): return
+    # every row tagged with its schedule codes; the fold picks the plan's row.
+    sched_rows = []
+    for i, ln in enumerate(lines):
+        m = re.match(r"^\s*(?:rate\s+)?schedules?\s+(.+?)\s+(?=\(?-?[$\d.]+\s*(?:¢|cents?)?\s*/?\s*kwh|\(?-?\$?\d*\.\d+\s*¢)", ln, re.I)
+        if not m:
+            continue
+        kwh = re.search(r"(\()?(-)?\s*(?:\$\s*(\d*\.\d{3,6})|(\d+\.\d{2,5})\s*¢)\s*\)?\s*/?\s*(?:kwh)?", ln[m.end():], re.I)
+        if not kwh:
+            continue
+        v = float(kwh.group(3)) if kwh.group(3) else float(kwh.group(4)) / 100.0
+        if kwh.group(1) or kwh.group(2):
+            v = -v
+        codes = [c.strip().upper() for c in re.split(r",|\band\b", re.sub(r"\(.*?\)", "", m.group(1))) if c.strip()]
+        sched_rows.append({"rate_value": round(v, 8), "season": _season_for(lines, i), "schedules": codes,
+                           "label": ln.strip()[:80]})
+    if len(sched_rows) >= 2:
+        return {"per_kwh": sched_rows, "pct": None, "by_schedule": True}
     pcts = {float(m.group(1)) for m in _PCT_RE.finditer(text or "")}
     per: list[dict] = []
     col_dollar_until = -1
@@ -74,6 +92,8 @@ def parse_rider_text(text: str) -> dict | None:
             tier = "secondary"
         if tier is None:
             continue
+        if re.search(r"\bschedules?\s+\w", ln, re.I) and not re.search(r"residential", ln, re.I):
+            continue  # "Schedule 10 (Secondary)" is another class's row
         vals = _values(ln, dollar_column=i <= col_dollar_until)
         if not vals:
             continue
@@ -90,6 +110,12 @@ def parse_rider_text(text: str) -> dict | None:
                 if re.match(r"^\s*(?:service\s+)?total\b", lines[j], re.I) and _values(lines[j]):
                     per.append({"rate_value": _values(lines[j])[-1], "season": None, "label": "Residential total"})
                     break
+    if not per and not pcts:
+        stmt = [(_values(ln)[0], i) for i, ln in enumerate(lines)
+                if re.search(r"per\s+kilowatt[\s-]*hour|per\s+kwh|/\s*kwh", ln, re.I)
+                and re.search(r"increased|decreased|charge|factor|rate", ln, re.I) and len(_values(ln)) == 1]
+        if len({round(v, 8) for v, _ in stmt}) == 1:
+            per.append({"rate_value": stmt[0][0], "season": None, "label": "single rider amount"})
     by_season: dict = {}
     for p in per:
         by_season.setdefault(p["season"], set()).add(round(p["rate_value"], 6))
@@ -109,9 +135,14 @@ def parse_rider_text(text: str) -> dict | None:
 
 def rider_components(parsed: dict, label: str) -> list[dict]:
     """ADJUSTMENT rows ($/kWh or % of base) for a rider-only ExtractedTariff."""
-    rows = [{"component_type": "adjustment", "unit": "$/kWh", "rate_value": p["rate_value"],
-             "season": p["season"], "period_label": f"{label} - Secondary/Residential"}
-            for p in parsed.get("per_kwh") or []]
+    rows = []
+    for p in parsed.get("per_kwh") or []:
+        row = {"component_type": "adjustment", "unit": "$/kWh", "rate_value": p["rate_value"],
+               "season": p["season"], "period_label": f"{label} - Secondary/Residential"}
+        if p.get("schedules"):
+            row["applies_to_schedules"] = p["schedules"]
+            row["period_label"] = f"{label} - Schedules {', '.join(p['schedules'])}"[:120]
+        rows.append(row)
     if parsed.get("pct") is not None:
         rows.append({"component_type": "adjustment", "unit": "% of base bill", "rate_value": parsed["pct"],
                      "period_label": f"{label} percentage of base bill"})

@@ -43,6 +43,43 @@ class Parse(unittest.TestCase):
         self.assertIsNone(parse_rider_text("Secondary customers 1.000¢ per kWh\nSecondary service 2.000¢ per kWh"))
 
 
+class ScheduleRows(unittest.TestCase):
+    def test_dominion_rows_tagged(self):
+        r = parse_rider_text(FIX["dom_rider_e"])
+        self.assertTrue(r["by_schedule"])
+        row1 = [p for p in r["per_kwh"] if "1G" in p["schedules"]][0]
+        self.assertEqual(row1["rate_value"], 0.000625)  # not Schedule 10 (Secondary) 0.0322c
+
+    def test_single_statement(self):
+        self.assertEqual(parse_rider_text(FIX["dom_rider_a"])["per_kwh"][0]["rate_value"], 0.037648)
+
+    def test_fold_picks_plan_schedule_row(self):
+        page = tp.RatePage(url="https://www.dominionenergy.com/x/rider-t1.pdf", page_type="pdf", content=FIX["dom_rider_t1"])
+        plan = tp.ExtractedTariff(name="Schedule 1G Residential Service", code="1G", customer_class="residential",
+                                  rate_type="flat", riders_referenced_not_shown=["Rider T1 Transmission"],
+                                  components=[{"component_type": "energy", "unit": "$/kWh", "rate_value": 0.05}])
+        logging.disable(logging.WARNING)
+        try:
+            riders = tp.parse_rider_document_deterministic(page, "Rider T1 Transmission")
+            tp.fold_batch_rider_schedules([plan], riders=riders)
+        finally:
+            logging.disable(logging.NOTSET)
+        self.assertAlmostEqual(plan.components[0]["rate_value"], 0.05 + 0.01273, places=6)
+
+    def test_no_schedule_match_not_folded(self):
+        page = tp.RatePage(url="https://www.dominionenergy.com/x/rider-t1.pdf", page_type="pdf", content=FIX["dom_rider_t1"])
+        plan = tp.ExtractedTariff(name="Residential Plan X", code="RX", customer_class="residential", rate_type="flat",
+                                  riders_referenced_not_shown=["Rider T1 Transmission"],
+                                  components=[{"component_type": "energy", "unit": "$/kWh", "rate_value": 0.05}])
+        logging.disable(logging.WARNING)
+        try:
+            riders = tp.parse_rider_document_deterministic(page, "Rider T1 Transmission")
+            n = tp.fold_batch_rider_schedules([plan], riders=riders)
+        finally:
+            logging.disable(logging.NOTSET)
+        self.assertEqual(n, 0)
+
+
 class MonthlyTable(unittest.TestCase):
     def test_alabama_bill_calculation_factors(self):
         r = parse_rider_text(FIX["al_bcf_2026"])  # SEC column, mills/kWh
