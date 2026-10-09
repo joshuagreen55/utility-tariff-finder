@@ -2,9 +2,15 @@
 
 Public surface:
 - ``compile_plan`` — recipe + applying components → all-in $/kWh cells
-- ``load_golden_plan`` / ``GOLDEN_DIR`` — hand-verified fixtures for PR A
+  (or delivery-only for ``texas_tdu``)
+- ``load_golden_plans`` / ``GOLDEN_DIR`` — hand-verified fixtures
 """
-from app.services.pricing.compiler import CompiledPlan, compile_plan
+from app.services.pricing.compiler import CompiledPlan, compile_plan, load_golden_plans
+from app.services.pricing.policy import (
+    OER_BILL_LEVEL_NOTE,
+    SUPPLY_STATUS_CHOOSE_RETAILER,
+    TEXAS_TDU_RECIPE,
+)
 from app.services.pricing.types import (
     CellKey,
     ComponentInput,
@@ -17,8 +23,12 @@ __all__ = [
     "CellKey",
     "CompiledPlan",
     "ComponentInput",
+    "OER_BILL_LEVEL_NOTE",
     "PlanInput",
+    "SUPPLY_STATUS_CHOOSE_RETAILER",
+    "TEXAS_TDU_RECIPE",
     "compile_plan",
+    "load_golden_plans",
     "money",
     "to_dollars_per_kwh",
 ]

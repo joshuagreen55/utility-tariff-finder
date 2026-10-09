@@ -98,7 +98,12 @@ class PlanInput:
     rate_type: str | None = None
     utility_name: str | None = None
     # Official all-in ¢/kWh for golden assertions (display / rounded form).
+    # Empty for texas_tdu plans (no all-in by policy).
     official_cents: list[Decimal] = field(default_factory=list)
+    # Official delivery-only ¢/kWh (texas_tdu goldens).
+    official_delivery_cents: list[Decimal] = field(default_factory=list)
     # Exact expected $/kWh cells (optional; derived from components when empty).
     expected_dollars: list[Decimal] = field(default_factory=list)
+    # Bill-level notes (OER, taxes, franchise fees) — never folded into $/kWh.
+    bill_level_notes: list[str] = field(default_factory=list)
     notes: str | None = None

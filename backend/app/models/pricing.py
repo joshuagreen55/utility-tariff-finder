@@ -62,6 +62,7 @@ class RiderDisposition(str, enum.Enum):
 class MarketRecipeCode(str, enum.Enum):
     BUNDLED = "bundled"
     DEREGULATED = "deregulated"
+    TEXAS_TDU = "texas_tdu"  # delivery only; supply = choose_a_retailer
     PROVINCIAL_ONTARIO = "provincial_ontario"
     PROVINCIAL_ALBERTA = "provincial_alberta"
 
@@ -205,6 +206,14 @@ class PlanComposition(Base):
         String(20), nullable=False, server_default="live", index=True
     )
     price_basis_label: Mapped[str | None] = mapped_column(String(80), nullable=True)
+    # False for texas_tdu: delivery stored, no household all-in.
+    has_all_in: Mapped[bool] = mapped_column(
+        Boolean, nullable=False, server_default="true"
+    )
+    # e.g. choose_a_retailer for ERCOT competitive wires-only.
+    supply_status: Mapped[str | None] = mapped_column(String(40), nullable=True)
+    # Bill-level notes (OER, taxes, franchise fees) — never in per-kWh.
+    bill_level_notes: Mapped[list | None] = mapped_column(JSONB, nullable=True)
     effective_date: Mapped[date | None] = mapped_column(Date, nullable=True)
     notes: Mapped[str | None] = mapped_column(Text, nullable=True)
 

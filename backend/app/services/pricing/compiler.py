@@ -1,11 +1,16 @@
 """Compile a plan composition into all-in $/kWh cells (exact Decimal)."""
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from decimal import Decimal
 from pathlib import Path
 from typing import Any
 
+from app.services.pricing.policy import (
+    OER_BILL_LEVEL_NOTE,
+    SUPPLY_STATUS_CHOOSE_RETAILER,
+    TEXAS_TDU_RECIPE,
+)
 from app.services.pricing.recipes import RecipeError, get_recipe
 from app.services.pricing.types import (
     CellKey,
@@ -32,10 +37,14 @@ class CompiledPlan:
     plan_key: str
     recipe_code: str
     cells: list[CompiledCell]
+    # False for texas_tdu: cells are delivery-only, not a household all-in.
+    has_all_in: bool = True
+    supply_status: str | None = None
+    bill_level_notes: list[str] = field(default_factory=list)
     breakdown_note: str | None = None
 
     def dollars_sorted(self) -> list[Decimal]:
-        """Unique all-in $/kWh values, sorted (matches golden assertion style)."""
+        """Unique cell $/kWh values, sorted (all-in or delivery-only)."""
         return sorted({c.dollars_per_kwh for c in self.cells})
 
     def cents_sorted(self, places: int | None = None) -> list[Decimal]:
@@ -44,6 +53,14 @@ class CompiledPlan:
             return vals
         q = Decimal(10) ** -places
         return sorted({v.quantize(q) for v in vals})
+
+
+def _bill_notes_for(plan: PlanInput) -> list[str]:
+    notes = list(plan.bill_level_notes)
+    if plan.recipe_code == "provincial_ontario":
+        if OER_BILL_LEVEL_NOTE not in notes:
+            notes.append(OER_BILL_LEVEL_NOTE)
+    return notes
 
 
 def compile_plan(plan: PlanInput) -> CompiledPlan:
@@ -56,10 +73,22 @@ def compile_plan(plan: PlanInput) -> CompiledPlan:
         CompiledCell(key=k, dollars_per_kwh=v)
         for k, v in sorted(raw.items(), key=lambda kv: kv[0])
     ]
+    has_all_in = plan.recipe_code != TEXAS_TDU_RECIPE
+    supply_status = (
+        SUPPLY_STATUS_CHOOSE_RETAILER if plan.recipe_code == TEXAS_TDU_RECIPE else None
+    )
     return CompiledPlan(
         plan_key=plan.plan_key,
         recipe_code=plan.recipe_code,
         cells=cells,
+        has_all_in=has_all_in,
+        supply_status=supply_status,
+        bill_level_notes=_bill_notes_for(plan),
+        breakdown_note=(
+            "delivery_only; supply=choose_a_retailer"
+            if not has_all_in
+            else None
+        ),
     )
 
 
@@ -88,6 +117,7 @@ def plan_from_dict(raw: dict[str, Any]) -> PlanInput:
         if disp == "applies":
             applying.append(c)
     official = [money(x) for x in (raw.get("official_cents") or [])]
+    delivery_official = [money(x) for x in (raw.get("official_delivery_cents") or [])]
     expected = [money(x) for x in (raw.get("expected_dollars") or [])]
     return PlanInput(
         plan_key=str(raw["plan_key"]),
@@ -98,7 +128,9 @@ def plan_from_dict(raw: dict[str, Any]) -> PlanInput:
         rate_type=raw.get("rate_type"),
         utility_name=raw.get("utility_name"),
         official_cents=official,
+        official_delivery_cents=delivery_official,
         expected_dollars=expected,
+        bill_level_notes=list(raw.get("bill_level_notes") or []),
         notes=raw.get("notes"),
     )
 

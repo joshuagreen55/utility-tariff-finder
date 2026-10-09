@@ -9,6 +9,11 @@ from __future__ import annotations
 from decimal import Decimal
 from typing import Callable
 
+from app.services.pricing.policy import (
+    OER_FORBIDDEN_CODES,
+    OER_FORBIDDEN_NAME_FRAGMENTS,
+    TEXAS_TDU_RECIPE,
+)
 from app.services.pricing.types import (
     CellKey,
     ComponentInput,
@@ -21,6 +26,23 @@ ZERO = Decimal("0")
 
 class RecipeError(ValueError):
     """Blocking recipe failure — composition must be held, not published."""
+
+
+def _reject_oer_in_per_kwh(components: list[ComponentInput]) -> None:
+    """OER is bill-level only — never a priced per-kWh component."""
+    for c in components:
+        code = (c.code or "").strip().lower()
+        name = (c.name or "").strip().lower()
+        if code in OER_FORBIDDEN_CODES:
+            raise RecipeError(
+                f"OER component {c.code!r} must be a bill-level note, "
+                f"not a per-kWh input"
+            )
+        if any(frag in name for frag in OER_FORBIDDEN_NAME_FRAGMENTS):
+            raise RecipeError(
+                f"OER component {c.name!r} must be a bill-level note, "
+                f"not a per-kWh input"
+            )
 
 
 def _index(components: list[ComponentInput]) -> dict[str, ComponentInput]:
@@ -138,6 +160,7 @@ def recipe_bundled(components: list[ComponentInput]) -> dict[CellKey, Decimal]:
     Percentage riders scale only the named base set (usually ``base_energy``).
     Credits are negative adders. Event-day / excluded / fixed are ignored here.
     """
+    _reject_oer_in_per_kwh(components)
     by_code = _index(components)
     applying = [
         c for c in components
@@ -173,7 +196,10 @@ def recipe_deregulated(components: list[ComponentInput]) -> dict[CellKey, Decima
 
     Requires both sides. Transmission / regulatory sit where the composition's
     ``charge_category`` places them (delivery vs supply). Half-plans raise.
+
+    Markets with no default supply (Texas competitive) use ``texas_tdu`` instead.
     """
+    _reject_oer_in_per_kwh(components)
     delivery = [
         c for c in components
         if c.kind == "delivery_per_kwh"
@@ -226,6 +252,55 @@ def recipe_deregulated(components: list[ComponentInput]) -> dict[CellKey, Decima
     return out
 
 
+def recipe_texas_tdu(components: list[ComponentInput]) -> dict[CellKey, Decimal]:
+    """Delivery-only (TDU) for markets with no default supply.
+
+    Joshua 2026-10-09: store TDU delivery charges; mark supply
+    ``choose_a_retailer``; never invent a supply price; never publish all-in.
+
+    Returns **delivery** $/kWh cells only. The compiler sets
+    ``has_all_in=False`` and ``supply_status=choose_a_retailer``.
+    """
+    _reject_oer_in_per_kwh(components)
+    supply = [
+        c for c in components
+        if c.kind == "default_supply"
+        or c.charge_category in {"supply", "default_supply", "transmission_supply"}
+    ]
+    if supply:
+        raise RecipeError(
+            "texas_tdu must not include a supply price "
+            "(choose_a_retailer — do not invent supply)"
+        )
+    delivery = [
+        c for c in components
+        if c.kind == "delivery_per_kwh"
+        or c.charge_category in {"delivery", "transmission_delivery", "regulatory"}
+        or (c.kind == "rider_per_kwh" and c.charge_category == "delivery")
+        or (c.kind == "base_energy" and c.charge_category == "delivery")
+    ]
+    if not delivery:
+        raise RecipeError("texas_tdu missing delivery / TDU charges")
+
+    seen: set[str] = set()
+    unique: list[ComponentInput] = []
+    for c in delivery:
+        if c.code in seen:
+            continue
+        seen.add(c.code)
+        unique.append(c)
+
+    primary = {
+        c.kind for c in unique
+        if c.kind in {"delivery_per_kwh", "base_energy"}
+    }
+    out: dict[CellKey, Decimal] = {}
+    for key in _cell_union(unique, primary_kinds=primary or None):
+        total = sum((_as_dollars(c, key) for c in unique), ZERO)
+        out[key] = total
+    return out
+
+
 def recipe_provincial_ontario(
     components: list[ComponentInput],
 ) -> dict[CellKey, Decimal]:
@@ -234,7 +309,10 @@ def recipe_provincial_ontario(
     Commodity is ``regulated_commodity``. Loss factor is a ``multiplier``
     targeting commodity + loss_sensitive delivery lines. Distribution
     volumetric (``loss_sensitive=False``) is added without LF.
+
+    OER is **not** applied here (bill-level note, like taxes).
     """
+    _reject_oer_in_per_kwh(components)
     commodity = [c for c in components if c.kind == "regulated_commodity"]
     if not commodity:
         raise RecipeError("ontario recipe missing regulated_commodity")
@@ -276,6 +354,7 @@ def recipe_provincial_alberta(
     Multipliers (e.g. Fortis BTAR on transmission) scale their target codes
     before summing. Municipal franchise / local access fees stay excluded.
     """
+    _reject_oer_in_per_kwh(components)
     supply = [c for c in components if c.kind == "default_supply"]
     delivery = [
         c for c in components
@@ -321,6 +400,7 @@ def recipe_provincial_alberta(
 RECIPES: dict[str, Callable[[list[ComponentInput]], dict[CellKey, Decimal]]] = {
     "bundled": recipe_bundled,
     "deregulated": recipe_deregulated,
+    TEXAS_TDU_RECIPE: recipe_texas_tdu,
     "provincial_ontario": recipe_provincial_ontario,
     "provincial_alberta": recipe_provincial_alberta,
 }
