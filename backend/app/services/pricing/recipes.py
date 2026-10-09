@@ -67,7 +67,8 @@ def _cell_union(
     """
     skip = {
         "season_calendar", "tou_schedule", "holiday_list",
-        "tier_structure", "fixed_charge", "excluded_item", "event_day",
+        "tier_structure", "fixed_charge", "fixed_monthly", "customer_charge",
+        "excluded_item", "event_day",
         "multiplier", "rider_percent",
     }
     keys: set[CellKey] = set()

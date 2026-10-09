@@ -20,7 +20,9 @@ from app.services.pricing.rider_census import (
     VALID_DISPOSITIONS,
 )
 
-# Kinds that do not need a numeric amount / disposition for compile.
+# Kinds that do not need a numeric amount / disposition for the energy
+# compiler. ``tier_structure`` holds kWh breakpoints (R28). Fixed monthly
+# charges use real amounts + $/month units but are skipped by recipes.
 _META_KINDS = frozenset({
     "season_calendar", "tou_schedule", "holiday_list",
     "tier_structure", "excluded_item", "event_day",

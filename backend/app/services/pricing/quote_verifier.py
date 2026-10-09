@@ -35,6 +35,21 @@ _UNIT_PATTERNS: dict[str, re.Pattern[str]] = {
     "percent": re.compile(r"%|percent(?:age)?\s+of|per\s*cent", re.I),
     "mills/kwh": re.compile(r"mills?\s*/\s*kwh|mills?\s+per\s+kwh", re.I),
     "dimensionless": re.compile(r"factor|multiplier|×|x\s+\d", re.I),
+    # Non-energy metadata (R28): fixed monthly charges + tier breakpoints.
+    "$/month": re.compile(
+        r"\$\s*/\s*mo(?:nth)?|\$\s*per\s*mo(?:nth)?|per\s*month|/mo\b|"
+        r"monthly\s+charge|customer\s+charge|basic\s+charge|service\s+charge",
+        re.I,
+    ),
+    "$/day": re.compile(
+        r"\$\s*/\s*day|\$\s*per\s*day|per\s*day|daily\s+charge|¢\s*/\s*day",
+        re.I,
+    ),
+    "kwh": re.compile(
+        r"\bkwh\b|kilowatt[\s-]?hours?|kwh/day|kwh\s+per\s+day|"
+        r"first\s+\d+|block\s+size|tier\s+threshold",
+        re.I,
+    ),
 }
 
 _SEASON_ALIASES: dict[str, tuple[str, ...]] = {
@@ -86,7 +101,9 @@ def _normalize_unit(unit: str | None) -> str:
     u = (unit or "").strip().lower().replace(" ", "")
     if u in {"$/kwh", "usd/kwh", "cad/kwh"}:
         return "$/kwh"
-    if u in {"¢/kwh", "c/kwh", "cents/kwh"} or "cent" in u or u.startswith("¢"):
+    if u in {"¢/kwh", "c/kwh", "cents/kwh"} or (
+        "cent" in u and "month" not in u and "day" not in u
+    ) or u.startswith("¢"):
         return "cents/kwh"
     if u in {"percent", "%", "pct"}:
         return "percent"
@@ -94,6 +111,12 @@ def _normalize_unit(unit: str | None) -> str:
         return "mills/kwh"
     if u in {"dimensionless", "factor", "x"}:
         return "dimensionless"
+    if u in {"$/month", "$/mo", "usd/month", "cad/month", "$/mo."}:
+        return "$/month"
+    if u in {"$/day", "usd/day", "cad/day", "¢/day", "cents/day"}:
+        return "$/day"
+    if u in {"kwh", "kwh/day", "kilowatthour", "kilowatt-hour"}:
+        return "kwh"
     return u
 
 
