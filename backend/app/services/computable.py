@@ -375,11 +375,14 @@ def tariff_contract(tariff: Any, *, holiday_calendar: str | None = None) -> dict
         warnings.append("commodity_only_bill_incomplete")
     # R21: "base only" — the source says per-kWh fuel / cost-recovery riders
     # apply but the stored price leaves them out. Not Mysa-complete.
-    from app.services.price_basis import base_only_from_factors
+    from app.services.price_basis import not_full_price_reasons
 
     reasons = list(res.reasons)
-    if base_only_from_factors(cf, _get(tariff, "rate_components") or []):
-        reasons.append("base_only_riders_not_added")
+    # R21 fix 5: rounded marketing-page prices are not the tariff price.
+    reasons += not_full_price_reasons(
+        cf, _get(tariff, "rate_components") or [], _get(tariff, "source_url"),
+        _get(tariff, "name"),
+    )
     return {
         "computable": not reasons,
         "computable_reasons": reasons,
@@ -387,5 +390,7 @@ def tariff_contract(tariff: Any, *, holiday_calendar: str | None = None) -> dict
         "needs_review": bool(
             cf.get("needs_review") or cf.get("tou_seasonal_incomplete")
             or "base_only_riders_not_added" in reasons
+            or "marketing_page_rounded_price" in reasons
+            or "retail_offer_not_tariff" in reasons
         ),
     }
