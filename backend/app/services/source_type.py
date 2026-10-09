@@ -119,6 +119,13 @@ THIRD_PARTY_DOMAINS = frozenset({
     "utilitycheck.co", "kadoa.com", "zipelectricity.com", "solartopps.com",
     "scribd.com", "powernw.com", "offgridsolarsystem.ca", "iamhome.app",
     "spotlightdelaware.org", "dailytrib.com", "12news.com", "financenewstalk.com",
+    # R24 (phase-1 starting-page replay over the 40 trial utilities):
+    # rate-comparison / solar-marketing / ratings / news sites that
+    # out-scored the utility's own pages (ComEd, SDG&E, SMUD, APS, NSP-MN).
+    "wattcosts.com", "clearwaycommunitysolar.com", "utilityrates.com",
+    "nectarclimate.com", "fitchratings.com", "priceofelectricity.com",
+    "hudsonenergy.net", "newselectricity.com", "sourcewatch.org",
+    "green-technology.org", "clearesult.com", "kpbs.org",
 })
 
 # File/CDN/site-builder hosts shared by many unrelated organisations. A host

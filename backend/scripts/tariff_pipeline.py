@@ -1515,22 +1515,15 @@ def _discover_utility_domain(utility_name: str, state: str) -> str | None:
     except Exception:
         return None
 
-    name_lower = clean_name.lower().replace(" ", "")
-    for r in results:
-        url = r["url"]
-        domain = urlparse(url).netloc.replace("www.", "")
-
-        if any(domain == d or domain.endswith(f".{d}") for d in THIRD_PARTY_DOMAINS):
-            continue
-
-        domain_base = domain.split(".")[0] if "." in domain else domain
-        name_words = [w.lower() for w in clean_name.split() if len(w) > 2]
-        matching = sum(1 for w in name_words if w in domain_base)
-        if matching >= 1 or name_lower[:6] in domain_base:
-            log.info(f"  Phase 1: Discovered domain {domain} from {url[:60]}")
-            return domain
-
-    return None
+    # R24: generic words ("power") and state names no longer match
+    # (mnpower.com is not Northern States Power); acronyms / title
+    # abbreviations do (smud.org, sdge.com, "(ComEd)" → comed.com); city
+    # and .gov hosts only for city-run utilities (not unionmissouri.gov).
+    from app.services.start_page import pick_discovered_domain
+    domain = pick_discovered_domain(results or [], utility_name)
+    if domain:
+        log.info(f"  Phase 1: Discovered domain {domain}")
+    return domain
 
 
 _R20_NON_RESIDENTIAL_DOC_RE = re.compile(
@@ -1562,6 +1555,12 @@ def order_links_newest_first(links, *, today: date | None = None):
 @llm_cost.with_phase("phase1")
 def phase1_find_rate_page(utility_name: str, state: str, website_url: str | None) -> tuple[str, int, list[str]]:
     """Search for the utility's rate page. Returns (best_url, num_results, alt_urls)."""
+    from app.services import start_page as _sp
+    if website_url and not _sp.acceptable_utility_host(website_url, utility_name):
+        # R24: a saved website that is a third-party / file host (APS →
+        # solartopps.com) must not anchor the search.
+        log.info(f"  Phase 1: Ignoring non-utility website_url {website_url}")
+        website_url = None
     utility_domain = urlparse(website_url).netloc if website_url else None
     clean_name = _clean_utility_name(utility_name)
     total_searches = 0
@@ -1579,6 +1578,13 @@ def phase1_find_rate_page(utility_name: str, state: str, website_url: str | None
         total_searches += 1
         if utility_domain:
             website_url = f"https://{utility_domain}"
+
+    # R24: the operator's published tariff / rate-book index beats any
+    # search hit (Xcel rate_books, FirstEnergy state tariff pages).
+    hub = _sp.official_tariff_hub(utility_domain, state)
+    if hub:
+        log.info(f"  Phase 1: Using official tariff hub for {utility_domain}: {hub}")
+        return hub, 1, []
 
     query = f'{clean_name} residential electric rates {state}'
     log.info(f"  Phase 1: Searching [{query}]")
@@ -1610,6 +1616,39 @@ def phase1_find_rate_page(utility_name: str, state: str, website_url: str | None
 
     # Drop hard-blocked results (3rd party aggregators)
     scored = [(s, r) for s, r in scored if s > -900]
+
+    # R24: no domain yet — a candidate carrying the utility's legal name on
+    # a rate / tariff document names it (xcelenergy.com for NSP-Minnesota).
+    if not utility_domain and scored:
+        inferred = _sp.infer_domain_from_candidates([r for _, r in scored], utility_name)
+        if inferred:
+            utility_domain = inferred
+            website_url = f"https://{inferred}"
+            log.info(f"  Phase 1: Inferred utility domain {inferred} from candidates")
+            hub = _sp.official_tariff_hub(utility_domain, state)
+            if hub:
+                log.info(f"  Phase 1: Using official tariff hub for {utility_domain}: {hub}")
+                return hub, len(results or []), [r["url"] for _, r in scored][:5]
+            scored = [(score_search_result(r, utility_name, utility_domain, state), r) for _, r in scored]
+            scored = [(s, r) for s, r in scored if s > -900]
+
+    # R24: third-party "about this utility" pages never start a crawl; the
+    # utility's own current pages go first, its supply / price-to-compare
+    # sheets and documents dated 2+ years back after them.
+    dropped = [r["url"] for s, r in scored
+               if _sp.candidate_tier(r["url"], utility_name, utility_domain) == _sp.THIRD]
+    for u in dropped:
+        log.info(f"    Dropped third-party page: {u[:80]}")
+    scored = [(s, r) for s, r in scored if r["url"] not in dropped]
+    if scored:
+        top_before = max(sc for sc, _ in scored)
+        scored = _sp.rerank_candidates(scored, utility_name, utility_domain)
+        if scored[0][0] < top_before:
+            # Promoted over higher-scoring supply / dated / unknown pages:
+            # carry the best score so the low-score cutoff keeps it (R20
+            # PSE&G electrictariffs over the BGS price-to-compare sheet).
+            log.info(f"  Phase 1: Preferring {scored[0][1]['url'][:80]} over higher-scored candidates")
+            scored[0] = (top_before, scored[0][1])
 
     if not scored:
         return "", 0, []
@@ -13849,6 +13888,56 @@ def prefer_official_targets(
     ctx,
     *,
     locked: bool = False,
+    utility_name: str = "",
+) -> tuple[str, list[str]]:
+    """``_prefer_official_targets_base`` plus the R24 starting-page check:
+    a supply / price-to-compare sheet, a document dated two or more years
+    back, or a third-party page yields to a clean URL already on file
+    (JCP&L price_to_compare → new_jersey_tariffs.html; Ameren Illinois
+    2022 .ashx → its rates page). Locked (operator) primaries stay."""
+    primary, pool = _prefer_official_targets_base(primary, alts, known_urls, ctx, locked=locked)
+    if locked or not primary:
+        return primary, pool
+    from app.services import start_page as _sp
+    from app.services.source_type import THIRD_PARTY, classify_source
+
+    dom = _sp.normalize_host(getattr(ctx, "website_url", None) or "") or None
+    if dom and not _sp.acceptable_utility_host(dom, utility_name or ""):
+        dom = None
+    if not _sp.is_bad_start(primary, utility_name or "", dom):
+        return primary, pool
+    state = (getattr(ctx, "state_province", None) or "").upper()
+    st_name = _sp.US_STATES.get(state, "")
+    st_re = re.compile(re.escape(st_name).replace(r"\ ", "[-_ ]?"), re.I) if st_name else None
+    good = [
+        (i, u) for i, u in enumerate(pool)
+        if not url_is_homepage(u)
+        and classify_source(u, ctx).source_type != THIRD_PARTY
+        and not _sp.is_bad_start(u, utility_name or "", dom)
+    ]
+    if not good:
+        return primary, pool
+
+    def _key(iu):
+        i, u = iu
+        path = unquote(urlparse(u).path)
+        return (0 if (st_re and st_re.search(path)) else 1,
+                0 if re.search(r"tariff|rate", path, re.I) else 1, i)
+
+    _, new_primary = min(good, key=_key)
+    log.info(f"  R24: start {primary[:80]} is a supply / dated / third-party page — "
+             f"preferring {new_primary[:80]}")
+    pool = [u for u in pool if u != new_primary] + [primary]
+    return new_primary, pool
+
+
+def _prefer_official_targets_base(
+    primary: str,
+    alts: list[str],
+    known_urls: list[str],
+    ctx,
+    *,
+    locked: bool = False,
 ) -> tuple[str, list[str]]:
     """Order fetch targets official → unknown → third-party.
 
@@ -15794,6 +15883,7 @@ def run_pipeline(
         _known_rate_urls(info),
         source_ctx,
         locked=bool(rate_page_url_override or preferred_primary),
+        utility_name=utility_name,
     )
     # R13: PGE schedule index lists current Sched_007 — prefer it over an
     # older combined all_tariffs_*.pdf that Phase 1 site-search returns.
