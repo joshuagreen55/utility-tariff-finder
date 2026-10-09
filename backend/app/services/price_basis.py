@@ -126,3 +126,22 @@ def base_only_from_factors(confidence_factors: dict | None, components: Iterable
         energy_includes_riders=cf.get("energy_includes_riders"),
         components=components,
     )
+
+
+def not_full_price_reasons(confidence_factors: dict | None, components: Iterable[Any] | None,
+                           source_url: str | None = None, name: str | None = None) -> list[str]:
+    """Why a stored row's price is not the full per-kWh price (empty → full)."""
+    cf = confidence_factors or {}
+    out = []
+    if base_only_from_factors(cf, components):
+        out.append("base_only_riders_not_added")
+    from app.services.source_quality import is_retail_offer, marketing_rounded_price
+
+    if cf.get("price_basis") == "marketing_rounded" or (
+        source_url and cf.get("price_basis") != "full"
+        and marketing_rounded_price(source_url, components)
+    ):
+        out.append("marketing_page_rounded_price")
+    if cf.get("retail_offer") or (name and source_url is not None and is_retail_offer(name, source_url)):
+        out.append("retail_offer_not_tariff")
+    return out

@@ -7287,6 +7287,36 @@ def flag_plans_missing_referenced_riders(tariffs: list[ExtractedTariff]) -> int:
     return flagged
 
 
+def apply_source_quality_rules(tariffs: list[ExtractedTariff]) -> tuple[list[ExtractedTariff], dict]:
+    """R21 fix 5: official tariff over retail offers / marketing pages.
+
+    * a competitive retailer's contract offer (fixed-term, guaranteed-rate,
+      electricity+gas bundle, offers / sign-up pages) is dropped — never
+      stored as the utility's tariff;
+    * a plan priced from a marketing page with every per-kWh price rounded
+      to 0.1 cent is kept but marked ``price_basis='marketing_rounded'``,
+      flagged, and not counted Mysa-complete (the official tariff wins).
+    """
+    from app.services.source_quality import is_retail_offer, marketing_rounded_price
+
+    kept: list[ExtractedTariff] = []
+    dropped: list[str] = []
+    marketing = 0
+    for t in tariffs:
+        if is_retail_offer(t.name, t.source_url or "", getattr(t, "description", "") or ""):
+            dropped.append(t.name)
+            log.warning(f"    '{t.name}': retailer contract offer, not the utility tariff — dropped")
+            continue
+        if marketing_rounded_price(t.source_url or "", t.components):
+            _r18_note(t, "price_basis", "marketing_rounded")
+            _r18_add_missing(t, "marketing_page_rounded_price")
+            t.needs_review = True
+            marketing += 1
+            log.warning(f"    '{t.name}': rounded prices from a marketing page — flagged, not Mysa-complete")
+        kept.append(t)
+    return kept, {"retail_offers_dropped": dropped, "marketing_rounded_plans": marketing}
+
+
 def mark_base_only_plans(tariffs: list[ExtractedTariff]) -> int:
     """R21 safety net: a plan whose source references per-kWh fuel / cost-
     recovery riders that are NOT in its ENERGY price is "base only".
@@ -11967,6 +11997,7 @@ def phase4_validate(
 
     # R18: one copy per plan, optional-variant reconcile + below-base guard,
     # temporary-price handling, and missing-plan hints (all-in values now).
+    valid_tariffs, sq_info = apply_source_quality_rules(valid_tariffs)
     n_before_r18 = len(valid_tariffs)
     valid_tariffs, r18_info = reconcile_same_utility_plans(
         valid_tariffs, utility_name, all_in=tariffs,
@@ -11977,6 +12008,8 @@ def phase4_validate(
     n_base_only = mark_base_only_plans(valid_tariffs)
     if n_base_only:
         r18_info = {**(r18_info or {}), "base_only_plans": n_base_only}
+    if sq_info["retail_offers_dropped"] or sq_info["marketing_rounded_plans"]:
+        r18_info = {**(r18_info or {}), **sq_info}
     flagged_tariffs = [t.name for t in valid_tariffs if t.needs_review]
 
     llm_cost.record_tier_acceptance(
