@@ -56,11 +56,11 @@ class ScheduleRows(unittest.TestCase):
     def test_fold_picks_plan_schedule_row(self):
         page = tp.RatePage(url="https://www.dominionenergy.com/x/rider-t1.pdf", page_type="pdf", content=FIX["dom_rider_t1"])
         plan = tp.ExtractedTariff(name="Schedule 1G Residential Service", code="1G", customer_class="residential",
-                                  rate_type="flat", riders_referenced_not_shown=["Rider T1 Transmission"],
+                                  rate_type="flat", riders_referenced_not_shown=["Transmission Rider T1"],
                                   components=[{"component_type": "energy", "unit": "$/kWh", "rate_value": 0.05}])
         logging.disable(logging.WARNING)
         try:
-            riders = tp.parse_rider_document_deterministic(page, "Rider T1 Transmission")
+            riders = tp.parse_rider_document_deterministic(page, "Transmission Rider T1")
             tp.fold_batch_rider_schedules([plan], riders=riders)
         finally:
             logging.disable(logging.NOTSET)
@@ -69,11 +69,11 @@ class ScheduleRows(unittest.TestCase):
     def test_no_schedule_match_not_folded(self):
         page = tp.RatePage(url="https://www.dominionenergy.com/x/rider-t1.pdf", page_type="pdf", content=FIX["dom_rider_t1"])
         plan = tp.ExtractedTariff(name="Residential Plan X", code="RX", customer_class="residential", rate_type="flat",
-                                  riders_referenced_not_shown=["Rider T1 Transmission"],
+                                  riders_referenced_not_shown=["Transmission Rider T1"],
                                   components=[{"component_type": "energy", "unit": "$/kWh", "rate_value": 0.05}])
         logging.disable(logging.WARNING)
         try:
-            riders = tp.parse_rider_document_deterministic(page, "Rider T1 Transmission")
+            riders = tp.parse_rider_document_deterministic(page, "Transmission Rider T1")
             n = tp.fold_batch_rider_schedules([plan], riders=riders)
         finally:
             logging.disable(logging.NOTSET)
