@@ -1173,9 +1173,10 @@ def store_oeb_tariffs(utility_id: int, tariff_entries: list[dict], dry_run: bool
     )
     from scripts.tariff_pipeline import choose_vintage_keeper, supersede_clear_replacements
 
+    # R21: the database is residential-only. Small Business (commercial)
+    # entries are never stored, even if a caller still builds them.
     class_map = {
         "residential": CustomerClass.RESIDENTIAL,
-        "commercial": CustomerClass.COMMERCIAL,
     }
     type_map = {
         "tou": RateType.TOU,
@@ -1194,7 +1195,13 @@ def store_oeb_tariffs(utility_id: int, tariff_entries: list[dict], dry_run: bool
         for entry in tariff_entries:
             cc = class_map.get(entry["customer_class"])
             rt = type_map.get(entry["rate_type"])
-            if not cc or not rt:
+            if not cc:
+                log.info(
+                    f"  Skipping non-residential OEB entry '{entry.get('name')}' "
+                    f"({entry.get('customer_class')}) — residential only"
+                )
+                continue
+            if not rt:
                 continue
 
             eff_date = None
@@ -1372,8 +1379,6 @@ def main():
     except Exception as e:
         log.warning(f"BillData.xml unavailable ({e}) — storing commodity-only RPP")
 
-    # Commercial stays province-wide commodity (no LDC fold).
-    commercial_tariffs = build_tariff_entries(rates, "commercial")
 
     if args.output:
         # Sample templates: commodity-only + one LDC-folded residential if matched.
@@ -1402,9 +1407,7 @@ def main():
                 "mid_peak_dollar_kwh": rates.ulo.mid_peak if rates.ulo else None,
                 "on_peak_dollar_kwh": rates.ulo.on_peak if rates.ulo else None,
             },
-            "tariff_templates_commodity": (
-                build_tariff_entries(rates, "residential") + commercial_tariffs
-            ),
+            "tariff_templates_commodity": build_tariff_entries(rates, "residential"),
             "tariff_templates_sample_ldc": (
                 build_tariff_entries(rates, "residential", ldc=sample_ldc)
                 if sample_ldc else None
@@ -1429,8 +1432,7 @@ def main():
         if ldc:
             matched += 1
         residential_tariffs = build_tariff_entries(rates, "residential", ldc=ldc)
-        all_tariffs = residential_tariffs + commercial_tariffs
-        count = store_oeb_tariffs(util["id"], all_tariffs, args.dry_run)
+        count = store_oeb_tariffs(util["id"], residential_tariffs, args.dry_run)
         total_stored += count
         action = "Would store" if args.dry_run else "Stored"
         tag = f" +BillData[{ldc.distributor}]" if ldc else " (commodity-only)"

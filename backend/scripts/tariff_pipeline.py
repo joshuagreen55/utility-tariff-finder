@@ -13174,9 +13174,8 @@ def _try_centralized_regulator(
             except Exception as be:
                 log.warning(f"  BillData.xml unavailable ({be}) — commodity-only RPP")
 
-            res_tariffs = build_tariff_entries(rates, "residential", ldc=ldc)
-            com_tariffs = build_tariff_entries(rates, "commercial")
-            all_tariffs = res_tariffs + com_tariffs
+            # R21: residential only — no Small Business (commercial) rows.
+            all_tariffs = build_tariff_entries(rates, "residential", ldc=ldc)
 
             if not dry_run:
                 count = store_oeb_tariffs(utility_id, all_tariffs, dry_run)
