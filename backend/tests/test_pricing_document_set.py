@@ -71,6 +71,90 @@ class TestClassifyAndDates(unittest.TestCase):
             date(2026, 10, 1),
         )
 
+    def test_snippet_date_must_be_the_effective_date(self):
+        self.assertEqual(
+            parse_effective_date(
+                url="https://x.com/rates/schedule-r.pdf",
+                text_snippet="Filed 2024-11-15 in Docket 24-0001. Effective January 1, 2026.",
+            ),
+            date(2026, 1, 1),
+        )
+        self.assertEqual(
+            parse_effective_date(
+                text_snippet="Issued: May 1, 2026\nEffective for bills rendered on and after June 15, 2026",
+            ),
+            date(2026, 6, 15),
+        )
+        self.assertIsNone(
+            parse_effective_date(text_snippet="Advice Letter 4021-E dated 2023-03-02"),
+        )
+
+    def test_url_and_title_dates_still_count(self):
+        self.assertEqual(
+            parse_effective_date(url="https://x.com/2026-05-01/schedule.pdf"),
+            date(2026, 5, 1),
+        )
+        self.assertEqual(
+            parse_effective_date(title="Rates effective October 1, 2026"),
+            date(2026, 10, 1),
+        )
+
+    def test_ambiguous_numeric_order_not_guessed(self):
+        self.assertIsNone(parse_effective_date(url="https://x.com/rates-06-07-2026.pdf"))
+        self.assertEqual(
+            parse_effective_date(url="https://x.com/rates-07-15-2026.pdf"),
+            date(2026, 7, 15),
+        )
+        self.assertEqual(
+            parse_effective_date(text_snippet="Effective 15/07/2026"),
+            date(2026, 7, 15),
+        )
+
+    def test_basic_service_charge_is_not_default_supply(self):
+        bundled = DocumentCandidate(
+            url="https://www.georgiapower.com/rates/residential-service-r.pdf",
+            title="Residential Service R",
+            text_snippet="Basic Service Charge $14.00 per month. Energy Charge 9 ¢/kWh",
+        )
+        self.assertEqual(classify_role(bundled, recipe_code="bundled"), "tariff")
+        dereg = DocumentCandidate(
+            url="https://www.utility.com/delivery/schedule.pdf",
+            text_snippet="Basic Service Charge $8.00 per month. Distribution 4 ¢/kWh",
+        )
+        self.assertEqual(classify_role(dereg, recipe_code="deregulated"), "delivery")
+        supply = DocumentCandidate(
+            url="https://www.nationalgridus.com/MA-Home/Rates/Basic-Service",
+            title="Basic Service Supply",
+        )
+        self.assertEqual(classify_role(supply, recipe_code="deregulated"), "default_supply")
+
+    def test_bundled_never_gets_default_supply_role(self):
+        cand = DocumentCandidate(
+            url="https://www.utility.com/rates/schedule-rs.pdf",
+            text_snippet="Customers may compare this price to compare with standard offer.",
+        )
+        self.assertEqual(classify_role(cand, recipe_code="bundled"), "tariff")
+
+    def test_supply_tokens_are_whole_words(self):
+        cand = DocumentCandidate(
+            url="https://www.utility.com/delivery/errors-and-corrections.pdf",
+            title="Carrollton delivery rates",
+        )
+        self.assertEqual(classify_role(cand, recipe_code="deregulated"), "delivery")
+        rro = DocumentCandidate(url="https://www.epcor.com/rro-rates.pdf", title="RRO rates")
+        self.assertEqual(classify_role(rro, recipe_code="provincial_alberta"), "default_supply")
+
+    def test_ldc_page_mentioning_oeb_is_delivery(self):
+        ldc = DocumentCandidate(
+            url="https://www.londonhydro.com/residential/rates",
+            text_snippet="RPP prices are set by the OEB, see oeb.ca. Delivery charge 3 ¢/kWh",
+        )
+        self.assertEqual(classify_role(ldc, recipe_code="provincial_ontario"), "delivery")
+
+    def test_rider_path_without_rider_word(self):
+        cand = DocumentCandidate(url="https://www.utility.com/fuel/adjustment-2026.pdf")
+        self.assertEqual(classify_role(cand, recipe_code="bundled"), "rider_sheet")
+
     def test_marketing_marker(self):
         self.assertTrue(
             is_marketing_url(
