@@ -15,6 +15,11 @@ import re
 from decimal import Decimal, InvalidOperation
 from typing import Any
 
+from app.services.pricing.amount_parse import (
+    normalize_amount_string as _parse_normalize_amount,
+    parse_amount,
+    sanitize_extract_amounts,
+)
 from app.services.pricing.rider_census import (
     UNPRICED_DISPOSITIONS,
     VALID_DISPOSITIONS,
@@ -38,38 +43,33 @@ _AMOUNT_OK = re.compile(r"^-?\d+(\.\d+)?$")
 
 
 def _is_numeric_amount(value: Any) -> tuple[bool, str]:
-    """Return (ok, reason). Rejects float, bool, blank, and non-decimal text."""
+    """Return (ok, reason). Accepts $, commas, accounting negatives via parse."""
     if isinstance(value, bool):
         return False, "amount_is_bool"
     if isinstance(value, float):
         return False, "amount_is_float"
     if value is None:
         return False, "amount_missing"
-    if isinstance(value, int):
-        return True, "ok"
-    if isinstance(value, Decimal):
-        return True, "ok"
-    s = str(value).strip()
-    if not s:
-        return False, "amount_blank"
-    s = s.replace(",", "")
-    if not _AMOUNT_OK.match(s):
+    parsed = parse_amount(value)
+    if parsed is None:
+        s = str(value).strip() if value is not None else ""
+        if not s:
+            return False, "amount_blank"
         return False, f"amount_not_numeric:{s[:40]}"
-    try:
-        Decimal(s)
-    except (InvalidOperation, ValueError):
-        return False, f"amount_not_decimal:{s[:40]}"
     return True, "ok"
 
 
 def normalize_amount_string(value: Any) -> str:
-    """Canonical decimal string for a validated amount."""
-    if isinstance(value, Decimal):
-        return format(value, "f")
-    if isinstance(value, int) and not isinstance(value, bool):
-        return str(value)
-    s = str(value).strip().replace(",", "")
-    return format(Decimal(s), "f")
+    """Canonical decimal string for a validated amount.
+
+    Raises ``ValueError`` only when the amount is blank/unparseable — callers
+    that need soft failure should use ``amount_parse.normalize_amount_string``
+    (returns None) or ``sanitize_extract_amounts`` first.
+    """
+    out = _parse_normalize_amount(value)
+    if out is None:
+        raise ValueError(f"unparseable_amount:{value!r}")
+    return out
 
 
 def disposition_of(raw: dict[str, Any]) -> str:

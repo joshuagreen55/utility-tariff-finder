@@ -30,6 +30,7 @@ from app.services.pricing.document_set import (
     looks_like_rates_url,
     parse_effective_date,
 )
+from app.services.source_type import THIRD_PARTY_DOMAINS
 
 # Extra reject markers beyond document_set._MARKETING_MARKERS.
 _FAQ_MARKERS = (
@@ -115,6 +116,13 @@ def reject_reason_for_candidate(
 ) -> str | None:
     """Return a reject reason, or None if the candidate may stay."""
     url, title, snip = cand.url, cand.title, cand.text_snippet
+    # Hard-reject known aggregator / non-utility domains (e.g. quickelectricity.com).
+    try:
+        host = (urlparse(url).hostname or "").lower().removeprefix("www.")
+    except Exception:
+        host = ""
+    if host and any(host == d or host.endswith("." + d) for d in THIRD_PARTY_DOMAINS):
+        return "non_utility_domain"
     # More specific rejects first (FAQ / bill-insert also match marketing markers).
     if is_faq_url(url, title):
         return "faq_page"

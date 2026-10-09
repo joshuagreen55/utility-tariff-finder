@@ -126,6 +126,7 @@ class TestDualExtractSchemaHold(unittest.TestCase):
         doc = "Energy Charge 10.000 ¢/kWh\n"
 
         def fn(document, model, ctx):
+            # Blank/N/A amounts sanitize to not_found; alone → no applies.
             return [_ok(cells=[{"amount": "N/A"}])]
 
         result = dual_extract_components(
@@ -140,7 +141,7 @@ class TestDualExtractSchemaHold(unittest.TestCase):
         )
         self.assertIsInstance(result, ExtractionHold)
         self.assertEqual(result.reason, "schema_invalid")
-        self.assertIn("amount_not_numeric", result.detail)
+        self.assertIn("no_applies_disposition", result.detail)
 
     def test_duplicate_code_holds(self):
         def fn(document, model, ctx):
