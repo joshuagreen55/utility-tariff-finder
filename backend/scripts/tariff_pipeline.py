@@ -7287,6 +7287,40 @@ def flag_plans_missing_referenced_riders(tariffs: list[ExtractedTariff]) -> int:
     return flagged
 
 
+def mark_base_only_plans(tariffs: list[ExtractedTariff]) -> int:
+    """R21 safety net: a plan whose source references per-kWh fuel / cost-
+    recovery riders that are NOT in its ENERGY price is "base only".
+
+    Marked ``price_basis='base_only'`` (+ ``riders_not_added``), flagged
+    (``base_only_riders_not_added``), and never counted as Mysa-complete
+    (see app.services.price_basis). Prices are never changed or guessed.
+    """
+    from app.services.price_basis import unadded_price_riders
+
+    n = 0
+    for t in tariffs:
+        if _is_rider_only_tariff(t) or str(t.customer_class or "").lower() != "residential":
+            continue
+        if not any(isinstance(c, dict) and str(c.get("component_type") or "").lower() == "energy"
+                   for c in t.components or []):
+            continue
+        riders = unadded_price_riders(
+            riders_referenced=getattr(t, "riders_referenced_not_shown", None),
+            missing_fields=getattr(t, "missing_fields", None),
+            energy_includes_riders=getattr(t, "energy_includes_riders", None),
+            components=t.components,
+        )
+        if not riders:
+            continue
+        _r18_note(t, "price_basis", "base_only")
+        _r18_note(t, "riders_not_added", riders[:12])
+        _r18_add_missing(t, "base_only_riders_not_added")
+        t.needs_review = True
+        n += 1
+        log.warning(f"    '{t.name}': BASE ONLY — per-kWh riders referenced but not added: {riders[:4]}")
+    return n
+
+
 def annotate_sch102_first_block_on_tou(tariffs: list[ExtractedTariff]) -> int:
     """Document Sch 102 first-2,000 kWh credit when folded into TOD periods.
 
@@ -11818,6 +11852,11 @@ def phase4_validate(
         valid_tariffs, utility_name, all_in=tariffs,
     )
     duplicates_dropped = n_before_r18 - len(valid_tariffs)
+    # R21: after every rider fold — plans still missing referenced per-kWh
+    # riders are "base only" (flagged, not Mysa-complete).
+    n_base_only = mark_base_only_plans(valid_tariffs)
+    if n_base_only:
+        r18_info = {**(r18_info or {}), "base_only_plans": n_base_only}
     flagged_tariffs = [t.name for t in valid_tariffs if t.needs_review]
 
     llm_cost.record_tier_acceptance(
