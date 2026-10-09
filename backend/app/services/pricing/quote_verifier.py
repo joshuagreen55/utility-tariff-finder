@@ -4,13 +4,14 @@ Every stored number must cite a page + verbatim span. The verifier checks:
 
 1. The quote appears in the retained document text.
 2. The unit token is grounded nearby — in the local window **or** in a
-   table column/row header or section heading that scopes the number
-   (R27: 8 correct reads were held because ¢/kWh sat only in the header).
+   table column/row header or section heading that scopes the number.
 3. Optionally, the quoted number matches the stored amount, and the quote
    sits in a row/column consistent with the component's season / period /
-   day_type / tier labels (R27: 5 wrong reads passed loose grounding).
+   day_type / tier labels.
 
-No LLM.
+R28: tier/season matching is synonym- and span-aware (merged headers);
+Ontario RPP ($/kWh stored, ¢ printed) and similar unit conversions are
+accepted only when the *other* unit is grounded in context.
 """
 from __future__ import annotations
 
@@ -20,18 +21,15 @@ from decimal import Decimal, InvalidOperation
 from typing import Any
 
 
-# Local char window around the quote for unit-token grounding.
 _UNIT_WINDOW = 120
-# Lines above the quote searched for column headers / section headings.
 _HEADER_LINE_LOOKBACK = 12
-# Lines above searched for season/period section headings.
-_LABEL_LINE_LOOKBACK = 20
+_LABEL_LINE_LOOKBACK = 30  # merged season headers can sit well above the row
 
 _UNIT_PATTERNS: dict[str, re.Pattern[str]] = {
     "$/kwh": re.compile(r"\$\s*/\s*kwh|\$\/kwh|dollars?\s+per\s+kwh", re.I),
     "cents/kwh": re.compile(
         r"¢\s*/\s*kwh|¢\s+per\s+kwh|c/\s*kwh|cents?\s*/\s*kwh|cents?\s+per\s+kwh|"
-        r"¢/kwh|¢\s*per\s*kilowatt",
+        r"¢/kwh|¢\s*per\s*kilowatt|\bcents?\b",
         re.I,
     ),
     "percent": re.compile(r"%|percent(?:age)?\s+of|per\s*cent", re.I),
@@ -39,29 +37,49 @@ _UNIT_PATTERNS: dict[str, re.Pattern[str]] = {
     "dimensionless": re.compile(r"factor|multiplier|×|x\s+\d", re.I),
 }
 
-# Synonyms so "winter" matches "Winter Season" / "Oct–May", etc.
 _SEASON_ALIASES: dict[str, tuple[str, ...]] = {
-    "summer": ("summer", "jun", "july", "aug", "may through", "june through"),
-    "winter": ("winter", "nov", "dec", "jan", "feb", "oct through", "november"),
+    "summer": (
+        "summer", "jun", "july", "aug", "may through", "june through",
+        "may 1", "may –", "may-", "jun-", "summer season", "summer period",
+    ),
+    "winter": (
+        "winter", "nov", "dec", "jan", "feb", "oct through", "november",
+        "nov 1", "nov –", "nov-", "winter season", "winter period",
+        "december", "january", "february",
+    ),
+    "non_winter": (
+        "non-winter", "non winter", "nonwinter", "summer", "shoulder",
+        "apr", "may", "june", "july", "aug", "sep", "oct",
+        "april through", "may through", "non-heating",
+    ),
     "all": (),
 }
 _PERIOD_ALIASES: dict[str, tuple[str, ...]] = {
-    "on_peak": ("on-peak", "on peak", "onpeak", "peak", "high"),
-    "off_peak": ("off-peak", "off peak", "offpeak", "low"),
-    "mid_peak": ("mid-peak", "mid peak", "midpeak", "shoulder"),
-    "super_off_peak": ("super off", "super-off", "overnight", "ulo"),
+    "on_peak": ("on-peak", "on peak", "onpeak", "peak", "high", "on–peak"),
+    "off_peak": ("off-peak", "off peak", "offpeak", "low", "off–peak"),
+    "mid_peak": (
+        "mid-peak", "mid peak", "midpeak", "shoulder", "mid–peak",
+        "partial-peak", "partial peak",
+    ),
+    "super_off_peak": ("super off", "super-off", "overnight", "ulo", "ultra-low"),
+    "ulo": ("ulo", "ultra-low", "ultra low", "overnight"),
+    "weekend_off": ("weekend off", "weekend off-peak", "weekend off peak"),
     "all": (),
 }
 _DAY_ALIASES: dict[str, tuple[str, ...]] = {
-    "weekday": ("weekday", "week day", "monday", "business day"),
-    "weekend": ("weekend", "saturday", "sunday", "holiday"),
+    "weekday": ("weekday", "week day", "monday", "business day", "weekdays"),
+    "weekend": ("weekend", "saturday", "sunday", "holiday", "weekends"),
+    "holiday": ("holiday", "statutory", "stat holiday"),
     "all": (),
 }
 
-# Leading minus is part of the token (don't let ``-0.0049`` match as ``0.0049``).
 _NUMBER_RE = re.compile(
     r"(?<![\d.])(?:-(?:\d+\.\d+|\d+)|\d+\.\d+|\d+)(?![\d.])"
 )
+
+# Normalize common PDF / HTML artifacts before verbatim search.
+_DASHES = re.compile(r"[\u2010-\u2015\u2212\ufe58\ufe63\uff0d]")
+_SPACES = re.compile(r"[\u00a0\u2000-\u200b\u202f\u205f\u3000]+")
 
 
 def _normalize_unit(unit: str | None) -> str:
@@ -79,11 +97,17 @@ def _normalize_unit(unit: str | None) -> str:
     return u
 
 
+def _normalize_text(text: str) -> str:
+    t = _DASHES.sub("-", text)
+    t = _SPACES.sub(" ", t)
+    return t
+
+
 @dataclass(frozen=True)
 class QuoteVerifyResult:
     ok: bool
     reason: str
-    quote_index: int | None = None  # start offset in document_text when found
+    quote_index: int | None = None
 
     @property
     def passed(self) -> bool:
@@ -91,7 +115,6 @@ class QuoteVerifyResult:
 
 
 def _line_spans(document_text: str) -> list[tuple[int, int, str]]:
-    """Return (start, end, line_text) for each line including the newline."""
     spans: list[tuple[int, int, str]] = []
     start = 0
     for line in document_text.splitlines(keepends=True):
@@ -118,15 +141,8 @@ def _unit_in_headers(
     quote_col: int,
     unit_pat: re.Pattern[str],
 ) -> bool:
-    """True when the unit appears in a column header, row header, or section heading.
-
-    Column header: a lookback line whose unit token sits near ``quote_col``.
-    Row header: unit on the same line left of the quote (rare but real).
-    Section heading: a short lookback line that is mostly label + unit.
-    """
     if line_idx < 0 or line_idx >= len(spans):
         return False
-    # Same-line row header region (left of the number).
     same = spans[line_idx][2]
     left = same[: max(0, quote_col)]
     if unit_pat.search(left):
@@ -138,42 +154,86 @@ def _unit_in_headers(
             break
         header = spans[j][2]
         if not header.strip():
-            # Blank line — still allow one more step for section titles.
             continue
         for m in unit_pat.finditer(header):
-            # Column alignment: unit token within ~24 chars of quote column,
-            # or the whole header line is short (section / column title).
             if abs(m.start() - quote_col) <= 24 or len(header.strip()) <= 60:
                 return True
-            # Multi-column header row: any unit on a line that looks like a
-            # header (contains "kwh" / "charge" / "rate") counts.
-            if re.search(r"kwh|charge|rate|¢|cent|\$", header, re.I):
+            if re.search(r"kwh|charge|rate|¢|cent|\$|price", header, re.I):
                 return True
     return False
 
 
-def _amount_in_quote(quote: str, amount: str | Decimal | None) -> bool:
-    """True when a number in ``quote`` equals ``amount`` (exact Decimal).
+def _context_unit_family(
+    document_text: str,
+    spans: list[tuple[int, int, str]],
+    idx: int,
+    qlen: int,
+) -> set[str]:
+    """Which unit families appear near the quote (window + headers)."""
+    start = max(0, idx - _UNIT_WINDOW)
+    end = min(len(document_text), idx + qlen + _UNIT_WINDOW)
+    window = document_text[start:end]
+    found: set[str] = set()
+    for family, pat in _UNIT_PATTERNS.items():
+        if family in {"percent", "dimensionless", "mills/kwh"}:
+            continue
+        if pat.search(window):
+            found.add(family)
+    line_idx = _line_index_at(spans, idx)
+    quote_col = idx - spans[line_idx][0]
+    for family, pat in _UNIT_PATTERNS.items():
+        if family in {"percent", "dimensionless", "mills/kwh"}:
+            continue
+        if _unit_in_headers(spans, line_idx, quote_col, pat):
+            found.add(family)
+    return found
 
-    No 100× fuzziness — quoting ``0.52`` for stored ``52`` must fail (R27 SDG&E).
-    Quotes with no numeric token at all (document-label citations) skip this
-    check; row/col + unit grounding still apply.
+
+def _amount_candidates(
+    amount: str | Decimal,
+    stored_unit: str | None,
+    context_units: set[str],
+) -> list[Decimal]:
+    """Exact amount plus unit-aware ¢↔$ forms when the other unit is in context.
+
+    Does **not** blindly accept 100× (that was the R27 SDG&E false pass).
     """
+    try:
+        want = amount if isinstance(amount, Decimal) else Decimal(str(amount))
+    except (InvalidOperation, ValueError):
+        return []
+    out = [want]
+    norm = _normalize_unit(stored_unit)
+    # Stored $/kWh, document shows cents → accept cents form.
+    if norm == "$/kwh" and "cents/kwh" in context_units:
+        out.append(want * Decimal("100"))
+    # Stored ¢/kWh, document shows dollars → accept dollars form.
+    if norm == "cents/kwh" and "$/kwh" in context_units:
+        out.append(want / Decimal("100"))
+    return out
+
+
+def _amount_in_quote(
+    quote: str,
+    amount: str | Decimal | None,
+    *,
+    unit: str | None = None,
+    context_units: set[str] | None = None,
+) -> bool:
     if amount is None or amount == "":
         return True
     nums = list(_NUMBER_RE.finditer(quote))
     if not nums:
         return True
-    try:
-        want = amount if isinstance(amount, Decimal) else Decimal(str(amount))
-    except (InvalidOperation, ValueError):
-        return True  # don't fail grounding on unparseable expected amount
+    wants = _amount_candidates(amount, unit, context_units or set())
+    if not wants:
+        return True
     for m in nums:
         try:
             got = Decimal(m.group(0))
         except InvalidOperation:
             continue
-        if got == want:
+        if any(got == w for w in wants):
             return True
     return False
 
@@ -181,17 +241,74 @@ def _amount_in_quote(quote: str, amount: str | Decimal | None) -> bool:
 def _label_aliases(kind: str, value: str | None) -> tuple[str, ...]:
     if not value or value == "all":
         return ()
-    v = value.strip().lower().replace(" ", "_")
+    v = value.strip().lower().replace(" ", "_").replace("-", "_")
     table = {
         "season": _SEASON_ALIASES,
         "period": _PERIOD_ALIASES,
         "day_type": _DAY_ALIASES,
     }.get(kind, {})
     aliases = table.get(v, ())
-    # Always include the raw token and dash/space variants.
     raw = value.strip().lower()
-    extras = (raw, raw.replace("_", "-"), raw.replace("_", " "), v)
-    return tuple(dict.fromkeys(aliases + extras))
+    extras = (
+        raw,
+        raw.replace("_", "-"),
+        raw.replace("_", " "),
+        raw.replace("_", "–"),
+        v,
+        v.replace("_", "-"),
+        v.replace("_", " "),
+    )
+    return tuple(dict.fromkeys([a for a in aliases + extras if a]))
+
+
+def _tier_aliases(tier: str) -> tuple[str, ...]:
+    """Synonyms for tier / block / step labels (R28 FPL, HQ, BCH, GA)."""
+    t = tier.strip().lower()
+    out: list[str] = [t, t.replace("_", " "), t.replace("_", "-")]
+
+    # step1 / step 1 / tier 1
+    m = re.match(r"(?:step|tier|block|level)\s*[_-]?\s*(\d+)", t)
+    if m:
+        n = m.group(1)
+        out.extend([
+            f"step {n}", f"step{n}", f"tier {n}", f"tier{n}",
+            f"block {n}", f"level {n}", f"step {n} energy",
+        ])
+
+    # 0-1000 / 1000+ / 0-650
+    m = re.match(r"(\d+)\s*[-–to]+\s*(\d+)(\+)?", t.replace(" ", ""))
+    if m:
+        a, b, plus = m.group(1), m.group(2), m.group(3) or ""
+        out.extend([
+            f"{a}-{b}", f"{a} – {b}", f"{a} to {b}",
+            f"first {b}", f"first {b} kwh", f"0-{b}",
+            f"{a} through {b}",
+        ])
+        if plus or t.endswith("+"):
+            out.extend([f"over {b}", f"above {b}", f">{b}+", f"more than {b}"])
+
+    # 1000+
+    m = re.match(r"(\d+)\s*\+", t)
+    if m:
+        n = m.group(1)
+        out.extend([f"{n}+", f"over {n}", f"above {n}", f"more than {n}",
+                    f"over {n} kwh", f"above {n} kwh"])
+
+    # 0-40kwh_day / 40kwh_day+
+    m = re.match(r"(\d+)\s*kwh[_\s-]*day", t)
+    if m:
+        n = m.group(1)
+        out.extend([
+            f"{n} kwh", f"{n} kwh per day", f"first {n}",
+            f"first {n} kwh", f"first {n} kwh/day", f"0-{n}",
+        ])
+    m = re.match(r"(\d+)\s*kwh[_\s-]*day\+", t)
+    if m:
+        n = m.group(1)
+        out.extend([f"over {n}", f"above {n}", f"remaining", f"balance",
+                    f"additional", f"{n}+"])
+
+    return tuple(dict.fromkeys(a for a in out if a))
 
 
 def _context_has_label(hay: str, aliases: tuple[str, ...]) -> bool:
@@ -199,6 +316,17 @@ def _context_has_label(hay: str, aliases: tuple[str, ...]) -> bool:
         return True
     low = hay.lower()
     return any(a and a in low for a in aliases)
+
+
+def _header_band(header: str, quote_col: int) -> str:
+    """Slice around the quote column; keep the full line when short/merged."""
+    if len(header) <= 80:
+        return header
+    lo = max(0, quote_col - 30)
+    hi = min(len(header), quote_col + 40)
+    # Also keep leading row-header tokens (merged-cell leftovers).
+    lead = header[: min(40, len(header))]
+    return f"{lead} {header[lo:hi]}"
 
 
 def _row_col_labels_ok(
@@ -212,19 +340,8 @@ def _row_col_labels_ok(
     tier: str | None,
     component_name: str | None,
 ) -> tuple[bool, str]:
-    """Require season/period/day_type evidence in the quote's row or column.
-
-    Period / day_type must appear on the **same line** (row label) or in the
-    column header at the quote's column — not merely somewhere else in the
-    table (that let On-Peak numbers pass as Off-Peak in R27). Season may
-    also come from the nearest section heading above. Component name is
-    advisory only (not required): extractors often quote the number alone.
-    """
     same_line = spans[line_idx][2] if 0 <= line_idx < len(spans) else ""
 
-    # Column header slice near the quote — only lines that look like headers
-    # (unit / "Period" / "Charge"), never sibling data rows (those carry the
-    # *other* period's label and would false-pass row checks).
     col_bits: list[str] = []
     for back in range(1, _HEADER_LINE_LOOKBACK + 1):
         j = line_idx - back
@@ -235,28 +352,31 @@ def _row_col_labels_ok(
             continue
         looks_header = bool(re.search(
             r"¢\s*/\s*kwh|cents?\s*/?\s*kwh|\$\s*/\s*kwh|\bperiod\b|\bcharge\b|"
-            r"\brate\b|\benergy charge\b",
+            r"\brate\b|\benergy charge\b|\bprice\b|\btier\b|\bstep\b|\bblock\b|"
+            r"\bseason\b|\bsummer\b|\bwinter\b",
             header,
             re.I,
         ))
-        # A numeric rate row (period label + amount) is not a header.
         is_data_row = (
             len(_NUMBER_RE.findall(header)) >= 1
-            and re.search(r"peak|off|weekend|weekday|tier|block|summer|winter", header, re.I)
+            and re.search(
+                r"peak|off|weekend|weekday|tier|block|summer|winter|step",
+                header,
+                re.I,
+            )
         )
         if is_data_row and not looks_header:
             continue
         if not looks_header:
             continue
-        lo = max(0, quote_col - 18)
-        hi = min(len(header), quote_col + 24)
-        col_bits.append(header[lo:hi] if len(header) > 50 else header)
-        break
+        col_bits.append(_header_band(header, quote_col))
+        # Keep collecting a second header row (multi-row / merged headers).
+        if len(col_bits) >= 2:
+            break
     col_hay = " ".join(col_bits)
 
-    # Nearest section heading (short, ≤1 number) above — for season.
-    # Skip sibling rate rows; do not stop the search on them.
-    section = ""
+    # Section headings: season banners, merged cells above the table.
+    sections: list[str] = []
     for back in range(1, _LABEL_LINE_LOOKBACK + 1):
         j = line_idx - back
         if j < 0:
@@ -265,37 +385,62 @@ def _row_col_labels_ok(
         if not line:
             continue
         if len(_NUMBER_RE.findall(line)) >= 1 and re.search(
-            r"peak|off|weekend|weekday|tier|block", line, re.I
+            r"peak|off|weekend|weekday|tier|block|step", line, re.I
         ):
-            continue  # sibling data row — keep looking for a season heading
-        if len(line) <= 80 and len(_NUMBER_RE.findall(line)) <= 1:
-            section = line
-            break
+            continue
+        if len(line) <= 100 and len(_NUMBER_RE.findall(line)) <= 1:
+            sections.append(line)
+            if len(sections) >= 3:
+                break
+    section = " ".join(sections)
 
     row_or_col = f"{same_line} {col_hay}"
+    broad = f"{row_or_col} {section}"
 
     period_aliases = _label_aliases("period", period)
     if period_aliases and not _context_has_label(row_or_col, period_aliases):
-        return False, "label_not_in_row_col:period"
+        # Period may also sit in a merged header span above the row.
+        if not _context_has_label(broad, period_aliases):
+            return False, "label_not_in_row_col:period"
 
     day_aliases = _label_aliases("day_type", day_type)
     if day_aliases and not _context_has_label(row_or_col, day_aliases):
-        return False, "label_not_in_row_col:day_type"
+        if not _context_has_label(broad, day_aliases):
+            return False, "label_not_in_row_col:day_type"
 
     season_aliases = _label_aliases("season", season)
-    if season_aliases and not _context_has_label(
-        f"{row_or_col} {section}", season_aliases
-    ):
+    if season_aliases and not _context_has_label(broad, season_aliases):
         return False, "label_not_in_row_col:season"
 
     if tier and tier not in {"all", "1"}:
-        tier_aliases = (tier.lower(), f"tier {tier}", f"block {tier}", f"step {tier}")
-        if not _context_has_label(f"{row_or_col} {section}", tier_aliases):
+        tier_aliases = _tier_aliases(tier)
+        if not _context_has_label(broad, tier_aliases):
             return False, "label_not_in_row_col:tier"
 
-    # component_name intentionally not required — see docstring.
     _ = component_name
     return True, "ok"
+
+
+def _find_quote(document_text: str, quote: str) -> tuple[int, str, str]:
+    """Return (index, doc_used, quote_used). Tries normalized dash/space forms."""
+    q = str(quote)
+    idx = document_text.find(q)
+    if idx >= 0:
+        return idx, document_text, q
+
+    norm_doc = _normalize_text(document_text)
+    norm_q = _normalize_text(q)
+    idx = norm_doc.find(norm_q)
+    if idx >= 0:
+        return idx, norm_doc, norm_q
+
+    collapsed_doc = re.sub(r"\s+", " ", norm_doc)
+    collapsed_q = re.sub(r"\s+", " ", norm_q).strip()
+    idx = collapsed_doc.find(collapsed_q)
+    if idx >= 0:
+        return idx, collapsed_doc, collapsed_q
+
+    return -1, document_text, q
 
 
 def verify_quote(
@@ -312,36 +457,24 @@ def verify_quote(
     component_name: str | None = None,
     require_row_col: bool = False,
 ) -> QuoteVerifyResult:
-    """Check that ``quote`` appears verbatim in ``document_text``.
-
-    Unit grounding accepts the local window **or** a table column/row header
-    / section heading that scopes the number. When ``require_row_col`` or any
-    cell label is provided, the quote's row/column context must mention those
-    labels. When ``amount`` is set, a number inside the quote must equal it.
-    """
     if not quote or not str(quote).strip():
         return QuoteVerifyResult(False, "empty_quote")
     if document_text is None:
         return QuoteVerifyResult(False, "missing_document_text")
 
-    q = str(quote)
-    idx = document_text.find(q)
+    idx, document_text, q = _find_quote(document_text, quote)
     if idx < 0:
-        collapsed_doc = re.sub(r"\s+", " ", document_text)
-        collapsed_q = re.sub(r"\s+", " ", q).strip()
-        idx2 = collapsed_doc.find(collapsed_q)
-        if idx2 < 0:
-            return QuoteVerifyResult(False, "quote_not_found")
-        idx = idx2
-        document_text = collapsed_doc
-        q = collapsed_q
-
-    if amount is not None and not _amount_in_quote(q, amount):
-        return QuoteVerifyResult(False, "amount_not_in_quote", idx)
+        return QuoteVerifyResult(False, "quote_not_found")
 
     spans = _line_spans(document_text)
     line_idx = _line_index_at(spans, idx)
     quote_col = idx - spans[line_idx][0]
+    context_units = _context_unit_family(document_text, spans, idx, len(q))
+
+    if amount is not None and not _amount_in_quote(
+        q, amount, unit=unit, context_units=context_units,
+    ):
+        return QuoteVerifyResult(False, "amount_not_in_quote", idx)
 
     if require_unit and unit:
         norm = _normalize_unit(unit)
@@ -351,9 +484,43 @@ def verify_quote(
         start = max(0, idx - _UNIT_WINDOW)
         end = min(len(document_text), idx + len(q) + _UNIT_WINDOW)
         window = document_text[start:end]
-        if not pat.search(window):
-            if not _unit_in_headers(spans, line_idx, quote_col, pat):
-                return QuoteVerifyResult(False, "unit_not_in_context", idx)
+        unit_ok = bool(pat.search(window)) or _unit_in_headers(
+            spans, line_idx, quote_col, pat,
+        )
+        # Ontario RPP / similar: stored $/kWh, page prints ¢/kWh (or reverse).
+        # Accept the sibling energy unit only when an amount was supplied and
+        # the quote already matched via the 100× conversion (keeps bare
+        # "18.324" + $/kWh in a cents-only doc as a hold).
+        if not unit_ok and norm in {"$/kwh", "cents/kwh"} and amount is not None:
+            sibling = "cents/kwh" if norm == "$/kwh" else "$/kwh"
+            spat = _UNIT_PATTERNS[sibling]
+            sibling_grounded = bool(spat.search(window)) or _unit_in_headers(
+                spans, line_idx, quote_col, spat,
+            )
+            if sibling_grounded:
+                try:
+                    want = (
+                        amount if isinstance(amount, Decimal)
+                        else Decimal(str(amount))
+                    )
+                except (InvalidOperation, ValueError):
+                    want = None
+                converted = [
+                    c for c in _amount_candidates(
+                        amount, unit, context_units | {sibling},
+                    )
+                    if want is not None and c != want
+                ]
+                # Quote must cite the converted figure (9.8 for 0.098), not
+                # the stored dollars amount sitting in a cents column.
+                if converted and any(
+                    _amount_in_quote(q, c, unit=None, context_units=set())
+                    for c in converted
+                ):
+                    unit_ok = True
+                    context_units.add(sibling)
+        if not unit_ok:
+            return QuoteVerifyResult(False, "unit_not_in_context", idx)
 
     need_row_col = require_row_col or any(
         v and v != "all" for v in (season, period, day_type, tier)
@@ -385,7 +552,6 @@ def verify_component_quote(
     component_name: str | None = None,
     require_row_col: bool = False,
 ) -> QuoteVerifyResult:
-    """Convenience for a priced component version's evidence fields."""
     if not quote:
         return QuoteVerifyResult(False, "missing_quote")
     cell = cell or {}
