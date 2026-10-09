@@ -142,6 +142,8 @@ def not_full_price_reasons(confidence_factors: dict | None, components: Iterable
         and marketing_rounded_price(source_url, components)
     ):
         out.append("marketing_page_rounded_price")
+    if cf.get("wrong_jurisdiction"):
+        out.append("wrong_jurisdiction_document")
     if cf.get("price_basis") == "stale_document":
         out.append("stale_rate_document")
     if cf.get("retail_offer") or (name and source_url is not None and is_retail_offer(name, source_url)):

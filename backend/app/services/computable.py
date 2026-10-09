@@ -393,5 +393,6 @@ def tariff_contract(tariff: Any, *, holiday_calendar: str | None = None) -> dict
             or "marketing_page_rounded_price" in reasons
             or "retail_offer_not_tariff" in reasons
             or "stale_rate_document" in reasons
+            or "wrong_jurisdiction_document" in reasons
         ),
     }
