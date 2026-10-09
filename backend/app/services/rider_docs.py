@@ -54,6 +54,9 @@ def _season_for(lines: list[str], i: int) -> str | None:
 
 def parse_rider_text(text: str) -> dict | None:
     """{'per_kwh': [{'rate_value', 'season', 'label'}], 'pct': float|None} or None."""
+    mt = parse_monthly_factor_table(text)
+    if mt:
+        return mt
     lines = [ln for ln in (text or "").splitlines()]
     pcts = {float(m.group(1)) for m in _PCT_RE.finditer(text or "")}
     per: list[dict] = []
@@ -145,20 +148,29 @@ def _hint_tokens(hint: str) -> tuple[set[str], set[str]]:
     return codes, words
 
 
-def rider_link_candidates(hint: str, links: list[str], limit: int = 2) -> list[str]:
+def rider_link_candidates(hint: str, links: list[str], limit: int = 2, *, year: int | None = None) -> list[str]:
     """Links (already harvested from the utility's own pages) that name this
     rider: an explicit code ("No. 98" → schedule-98, "FCR", "ECCR") or at
     least two distinctive words of its title in the URL. Newest year first."""
+    from datetime import date
+
+    from app.services.price_basis import _keys
+
     codes, words = _hint_tokens(hint)
-    if not codes and len(words) < 2:
+    fam = _keys(hint)
+    if not codes and len(words) < 2 and not fam:
         return []
+    this_year = str(year or date.today().year)
     scored = []
     for url in dict.fromkeys(links or []):
         path = re.sub(r"%20|[_\-./]+", " ", url.lower().split("?")[0].split("://", 1)[-1])
         toks = set(path.split())
         code_hit = any(c.lower() in toks or f"schedule {c}" in path for c in codes)
         word_hits = sum(1 for w in words if w in toks)
-        if not code_hit and word_hits < 2:
+        # current-year factor sheets ("bill-calculation-factors-2026.pdf") carry
+        # the amounts for formula-only riders (fuel / energy cost recovery)
+        factor_sheet = bool(fam & {"fuel", "power_cost"}) and "factors" in toks and this_year in toks
+        if not code_hit and word_hits < 2 and not factor_sheet:
             continue
         if not re.search(r"\.pdf\b|tariff|rider|schedule|rate", url, re.I):
             continue
@@ -166,3 +178,65 @@ def rider_link_candidates(hint: str, links: list[str], limit: int = 2) -> list[s
         scored.append((-(int(code_hit) * 3 + word_hits), -(max(years) if years else 0), url))
     scored.sort()
     return [u for *_, u in scored[:limit]]
+
+
+_MONTH_NAMES = ["january", "february", "march", "april", "may", "june", "july", "august",
+                "september", "october", "november", "december"]
+
+
+def parse_monthly_factor_table(text: str) -> dict | None:
+    """A 12-month factor table with a secondary-voltage column ("SEC.") in
+    mills or cents per kWh (Alabama Power "Bill Calculation Factors").
+    Months with equal values are grouped into seasons ("June-September")."""
+    lines = (text or "").splitlines()
+    unit = None
+    if re.search(r"mills?\s+per\s+kwh|mills?/kwh", text or "", re.I):
+        unit = 1000.0
+    elif re.search(r"cents?\s+per\s+kwh|¢\s*/\s*kwh", text or "", re.I):
+        unit = 100.0
+    if unit is None:
+        return None
+    pos = None
+    for ln in lines:
+        if "|" in ln:
+            continue
+        m = re.search(r"\bSEC(?:ONDARY|\.)?(?=\s|$)(.*)$", ln)
+        if m:
+            pos = 1 + len(m.group(1).split())
+            break
+    if not pos:
+        return None
+    vals: dict[int, float] = {}
+    for ln in lines:
+        if "|" in ln:
+            continue
+        m = re.match(r"^\s*([A-Za-z]+)\b(.*)$", ln)
+        if not m or m.group(1).lower() not in _MONTH_NAMES:
+            continue
+        nums = re.findall(r"-?\d+\.\d+", m.group(2))
+        if len(nums) < pos:
+            continue
+        mi = _MONTH_NAMES.index(m.group(1).lower()) + 1
+        v = round(float(nums[-pos]) / unit, 6)
+        if mi in vals and vals[mi] != v:
+            return None
+        vals[mi] = v
+    if len(vals) != 12:
+        return None
+    groups: list[list] = []  # [value, [months]] in calendar order, wrap-around merged
+    for mi in range(1, 13):
+        if groups and groups[-1][0] == vals[mi]:
+            groups[-1][1].append(mi)
+        else:
+            groups.append([vals[mi], [mi]])
+    if len(groups) > 1 and groups[0][0] == groups[-1][0]:
+        groups[0][1] = groups[-1][1] + groups[0][1]
+        groups.pop()
+    if len({g[0] for g in groups}) != len(groups):
+        return None  # same value in non-adjacent seasons — keep it simple, no guess
+    cap = [m.capitalize() for m in _MONTH_NAMES]
+    per = []
+    for v, ms in groups:
+        season = None if len(groups) == 1 else f"{cap[ms[0] - 1]}-{cap[ms[-1] - 1]}"
+        per.append({"rate_value": v, "season": season})
+    return {"per_kwh": per, "pct": None}

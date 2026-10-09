@@ -43,6 +43,18 @@ class Parse(unittest.TestCase):
         self.assertIsNone(parse_rider_text("Secondary customers 1.000¢ per kWh\nSecondary service 2.000¢ per kWh"))
 
 
+class MonthlyTable(unittest.TestCase):
+    def test_alabama_bill_calculation_factors(self):
+        r = parse_rider_text(FIX["al_bcf_2026"])  # SEC column, mills/kWh
+        got = {p["season"]: p["rate_value"] for p in r["per_kwh"]}
+        self.assertEqual(got, {"October-May": 0.025392, "June-September": 0.028792})
+
+    def test_alabama_factor_sheet_found(self):
+        links = [urljoin("https://www.alabamapower.com/", u) for u in FIX["al_res_links"]]
+        got = rider_link_candidates("Rate ECR (Energy Cost Recovery)", links, year=2026)
+        self.assertTrue(got and got[0].endswith("bill-calculation-factors-2026.pdf"), got)
+
+
 class Discovery(unittest.TestCase):
     def setUp(self):
         self.links = [urljoin("https://www.epelectric.com/", u) for u in FIX["ep_tx_links"]]

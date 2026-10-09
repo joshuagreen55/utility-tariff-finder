@@ -27,5 +27,16 @@
   "https://www.epelectric.com/el-paso-electric/uploads/regulatory/tx-tariff-96-military-base-recovery-factor-sept-2026.pdf",
   "https://www.epelectric.com/el-paso-electric/uploads/tx-covid19-project-no-50664-asset-surcharge-09012025.pdf",
   "https://www.epelectric.com/el-paso-electric/uploads/tx-schedule-whev-whole-house-ev-pilot-incentive-credit.pdf"
+ ],
+ "al_bcf_2026": "ALABAMA POWER COMPANY\nBILL CALCULATION FACTORS\n2026\nECR FACTOR (Mills per KWH)\nNDR ACTUAL\nMonth Res / Comm FACTOR SEC. PRI. TRAN.\nJanuary 1.50 / 4.50 26.000 25.392 23.950 23.329\nFebruary 1.50 / 4.50 26.000 25.392 23.950 23.329\nMarch 1.50 / 4.50 26.000 25.392 23.950 23.329\nApril 1.50 / 4.50 26.000 25.392 23.950 23.329\nMay 1.50 / 4.50 26.000 25.392 23.950 23.329\nJune 1.50 / 4.50 26.000 28.792 27.158 26.453\nJuly 1.50 / 4.50 26.000 28.792 27.158 26.453\nAugust 1.50 / 4.50 26.000 28.792 27.158 26.453\nSeptember 1.50 / 4.50 26.000 28.792 27.158 26.453\nOctober 1.50 / 4.50 26.000 25.392 23.950 23.329\nNovember 1.50 / 4.50 26.000 25.392 23.950 23.329\nDecember 1.50 / 4.50 26.000 25.392 23.950 23.329\n |  | ECR FACTOR (Mills per KWH) |  |  | \nMonth | NDR\nRes / Comm | ACTUAL\nFACTOR | SEC. | PRI. | TRAN.\nJanuary | 1.50 / 4.50 | 26.000 | 25.392 | 23.950 | 23.329\nFebruary | 1.50 / 4.50 | 26.000 | 25.392 | 23.950 | 23.329\nMarch | 1.50 / 4.50 | 26.000 | 25.392 | 23.950 | 23.329\nApril | 1.50 / 4.50 | 26.000 | 25.392 | 23.950 | 23.329\nMay | 1.50 / 4.50 | 26.000 | 25.392 | 23.950 | 23.329\nJune | 1.50 / 4.50 | 26.000 | 28.792 | 27.158 | 26.453\nJuly | 1.50 / 4.50 | 26.000 | 28.792 | 27.158 | 26.453\nAugust | 1.50 / 4.50 | 26.000 | 28.792 | 27.158 | 26.453\nSeptember | 1.50 / 4.50 | 26.000 | 28.792 | 27.158 | 26.453\nOctober | 1.50 / 4.50 | 26.000 | 25.392 | 23.950 | 23.329\nNovember | 1.50 / 4.50 | 26.000 | 25.392 | 23.950 | 23.329\nDecember | 1.50 / 4.50 | 26.000 | 25.392 | 23.950 | 23.329",
+ "al_res_links": [
+  "/content/dam/alabama-power/pdfs-docs/Rates/OPS.pdf",
+  "/content/dam/alabama-power/pdfs-docs/Rates/xfde.pdf",
+  "/content/dam/alabama-power/pdfs-docs/Rates/xfdt.pdf",
+  "/content/dam/alabama-power/pdfs-docs/bill-calculation-factors/Bill_Calculation_Factors_2022.pdf",
+  "/content/dam/alabama-power/pdfs-docs/bill-calculation-factors/bill-calculation-factors-2025.pdf",
+  "/content/dam/alabama-power/pdfs-docs/bill-calculation-factors/bill-calculation-factors-2026.pdf",
+  "/content/dam/alabama-power/pdfs-docs/bill-calculation-factors/bill_calculation_factors_2023.pdf",
+  "/content/dam/alabama-power/pdfs-docs/bill-calculation-factors/bill_calculation_factors_2024.pdf"
  ]
 }
