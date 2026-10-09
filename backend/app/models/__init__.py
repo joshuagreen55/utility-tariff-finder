@@ -19,6 +19,8 @@ from app.models.pricing import (
     PricingComponentKind,
     PlanComposition,
     PlanCompositionMember,
+    PlanRiderDisposition,
+    RiderInventoryEntry,
     RiderDisposition,
     MarketRecipeCode,
 )
@@ -49,6 +51,8 @@ __all__ = [
     "PricingComponentKind",
     "PlanComposition",
     "PlanCompositionMember",
+    "PlanRiderDisposition",
+    "RiderInventoryEntry",
     "RiderDisposition",
     "MarketRecipeCode",
 ]

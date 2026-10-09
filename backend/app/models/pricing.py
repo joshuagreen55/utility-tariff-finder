@@ -241,6 +241,11 @@ class PlanComposition(Base):
         lazy="selectin",
         cascade="all, delete-orphan",
     )
+    rider_dispositions: Mapped[list["PlanRiderDisposition"]] = relationship(
+        "PlanRiderDisposition",
+        lazy="selectin",
+        cascade="all, delete-orphan",
+    )
 
     def __repr__(self) -> str:
         return (
@@ -285,4 +290,86 @@ class PlanCompositionMember(Base):
     )
     component_version: Mapped["PricingComponentVersion"] = relationship(
         "PricingComponentVersion", lazy="joined"
+    )
+
+
+class RiderInventoryEntry(Base):
+    """Closed-world rider census entry for one utility (PR B).
+
+    A plan under this utility cannot be Mysa-complete / computable until every
+    live inventory entry has a cited disposition on the plan composition.
+    """
+
+    __tablename__ = "rider_inventory_entries"
+    # Live uniqueness is a partial unique index in the migration
+    # (utility_id, code) WHERE not superseded — history can reuse codes.
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    utility_id: Mapped[int] = mapped_column(
+        Integer, ForeignKey("utilities.id"), nullable=False, index=True
+    )
+    code: Mapped[str] = mapped_column(String(100), nullable=False)
+    name: Mapped[str] = mapped_column(String(500), nullable=False)
+    # rider_per_kwh | rider_percent | credit | event_day | excluded_item | …
+    kind: Mapped[str] = mapped_column(String(40), nullable=False)
+    # tariff_index | schedule_reference | regulator_list | manual
+    discovered_from: Mapped[str | None] = mapped_column(String(40), nullable=True)
+    source_url: Mapped[str | None] = mapped_column(Text, nullable=True)
+    source_page: Mapped[str | None] = mapped_column(String(80), nullable=True)
+    source_quote: Mapped[str | None] = mapped_column(Text, nullable=True)
+
+    superseded_by_entry_id: Mapped[int | None] = mapped_column(
+        Integer,
+        ForeignKey("rider_inventory_entries.id", ondelete="SET NULL"),
+        nullable=True,
+        index=True,
+    )
+    supersede_reason: Mapped[str | None] = mapped_column(String(50), nullable=True)
+    superseded_at: Mapped[datetime | None] = mapped_column(
+        DateTime(timezone=True), nullable=True
+    )
+
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now()
+    )
+
+    def __repr__(self) -> str:
+        return (
+            f"<RiderInventoryEntry(id={self.id}, utility_id={self.utility_id}, "
+            f"code={self.code!r})>"
+        )
+
+
+class PlanRiderDisposition(Base):
+    """Cited census decision for one inventory rider on one plan composition."""
+
+    __tablename__ = "plan_rider_dispositions"
+    __table_args__ = (
+        UniqueConstraint(
+            "composition_id", "rider_code",
+            name="uq_plan_rider_dispositions_comp_code",
+        ),
+    )
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    composition_id: Mapped[int] = mapped_column(
+        Integer,
+        ForeignKey("plan_compositions.id", ondelete="CASCADE"),
+        nullable=False,
+        index=True,
+    )
+    rider_code: Mapped[str] = mapped_column(String(100), nullable=False)
+    # applies | not_applicable | optional | location_fee_or_tax | event_day
+    disposition: Mapped[str] = mapped_column(String(40), nullable=False)
+    disposition_page: Mapped[str | None] = mapped_column(String(80), nullable=True)
+    disposition_quote: Mapped[str | None] = mapped_column(Text, nullable=True)
+    inventory_entry_id: Mapped[int | None] = mapped_column(
+        Integer,
+        ForeignKey("rider_inventory_entries.id", ondelete="SET NULL"),
+        nullable=True,
+        index=True,
+    )
+
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now()
     )
