@@ -248,7 +248,8 @@ def classify_role(
     if any(t in hay for t in (
         "rate-of-last-resort", "rate of last resort", "rolr", "rro",
         "default supply", "price to compare", "standard offer",
-        "basic generation service", "provider of last resort",
+        "basic generation service", "basic service", "basic-service",
+        "provider of last resort", "provider-of-last-resort",
     )):
         if recipe_code == "provincial_ontario":
             return ROLE_PROVINCIAL_COMMODITY

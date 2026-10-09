@@ -5,8 +5,13 @@ Public surface:
   (or delivery-only for ``texas_tdu``)
 - ``load_golden_plans`` / ``GOLDEN_DIR`` — hand-verified fixtures
 - ``build_document_set`` — per-utility official document bundle
+- ``discover_document_set`` — Phase 1+2 crawl → filtered document set
 """
 from app.services.pricing.compiler import CompiledPlan, compile_plan, load_golden_plans
+from app.services.pricing.discover import (
+    DiscoveryResult,
+    discover_document_set,
+)
 from app.services.pricing.document_set import (
     DocumentCandidate,
     DocumentSetResult,
@@ -37,9 +42,11 @@ __all__ = [
     "PlanInput",
     "SUPPLY_STATUS_CHOOSE_RETAILER",
     "TEXAS_TDU_RECIPE",
+    "DiscoveryResult",
     "build_document_set",
     "build_golden_document_set",
     "compile_plan",
+    "discover_document_set",
     "load_golden_plans",
     "money",
     "r27_coverage_report",
