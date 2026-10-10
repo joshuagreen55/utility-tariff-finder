@@ -1,8 +1,8 @@
 """Robust amount parsing for messy model extracts (PR R29-1).
 
 Handles ``$0.12``, ``1,234.56``, ``(1.297)`` negatives, en-dashes used as
-minus, and blank / n/a / em-dash / ranges. A blank or unparseable amount is
-a missing piece (caller marks ``not_found``), never a whole-plan crash.
+minus, and blank / n/a / em-dash / ranges. A blank or unparseable amount
+never crashes the plan; on an applying priced component it holds it.
 """
 from __future__ import annotations
 
@@ -10,7 +10,10 @@ import re
 from decimal import Decimal, InvalidOperation
 from typing import Any
 
+from app.services.pricing.recipes import NON_PRICED_KINDS as _UNPRICED_KINDS
 from app.services.pricing.units import AMBIGUOUS_PER_KWH, normalize_unit
+
+BLANK_APPLIES_KEY = "amount_blank_applies"
 
 _PER_KWH_FAMILIES = frozenset({"cents/kwh", "$/kwh", "mills/kwh", AMBIGUOUS_PER_KWH})
 
@@ -226,7 +229,11 @@ def sanitize_extract_amounts(
 
     - Parseable amounts → canonical decimal strings.
     - ``applies`` components whose cells are all blank/unparseable →
-      ``not_found`` with empty cells (one missing piece, not a plan hold).
+      ``not_found`` with empty cells so the extract stays well-formed. When
+      the component feeds the all-in price, it is also flagged
+      ``BLANK_APPLIES_KEY`` (as is one that lost only some cells) and the
+      caller must hold the plan: a rider that applies with no amount would
+      otherwise close the census and understate the all-in.
     - Disposition strings with trailing commentary are clipped to the
       first token (``applies; …`` → ``applies``).
     - Energy $ vs ¢ mismatches reconciled from the quote.
@@ -264,6 +271,7 @@ def sanitize_extract_amounts(
             cells_in = []
         cells_out: list[dict[str, Any]] = []
         parsed_amounts: list[Decimal] = []
+        dropped = 0
         for cell in cells_in:
             if not isinstance(cell, dict):
                 continue
@@ -272,6 +280,7 @@ def sanitize_extract_amounts(
                 parsed = parse_amount(cell.get("amount"), per_kwh=per_kwh)
                 if parsed is None:
                     # Drop blank cell; do not keep unparseable text.
+                    dropped += 1
                     continue
                 cell["amount"] = parsed
                 parsed_amounts.append(parsed)
@@ -285,6 +294,13 @@ def sanitize_extract_amounts(
 
         if unit_out != unit:
             row["unit"] = unit_out
+        kind = str(row.get("kind") or "").strip()
+        if (
+            disp == "applies"
+            and kind not in _UNPRICED_KINDS
+            and (not any_ok or dropped)
+        ):
+            row[BLANK_APPLIES_KEY] = True
         if disp == "applies" and not any_ok:
             row["disposition"] = "not_found"
             row["cells"] = []
@@ -294,7 +310,18 @@ def sanitize_extract_amounts(
     return out
 
 
+def blank_applying_codes(raw_components: list[dict[str, Any]] | None) -> list[str]:
+    """Codes of applying, all-in-feeding components whose amount was blank."""
+    return [
+        str(r.get("code") or "?")
+        for r in raw_components or []
+        if isinstance(r, dict) and r.get(BLANK_APPLIES_KEY)
+    ]
+
+
 __all__ = [
+    "BLANK_APPLIES_KEY",
+    "blank_applying_codes",
     "is_blank_amount",
     "normalize_amount_string",
     "parse_amount",

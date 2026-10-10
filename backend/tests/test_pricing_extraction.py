@@ -128,6 +128,31 @@ class TestDualExtract(unittest.TestCase):
         self.assertIsInstance(result, ExtractionHold)
         self.assertIn("G2:extractors_disagree", result.detail)
 
+    def test_rider_applies_with_blank_amount_holds(self):
+        """Never accept a possibly understated all-in: base alone is 8¢."""
+        from app.services.pricing.rider_census import DispositionInput, InventoryRider
+
+        def fn(doc, model, ctx):
+            payload = _good_payload()
+            payload[1]["cells"] = [{"amount": "n/a"}]
+            return payload
+
+        result = dual_extract_components(
+            DOC,
+            plan_meta={
+                "plan_key": "rs", "name": "RS", "recipe_code": "bundled",
+                "source_url": "https://utility.example/rates.pdf",
+            },
+            extract_fn=fn,
+            official_hosts=["utility.example"],
+            inventory=[InventoryRider("fuel", "Fuel")],
+            dispositions=[DispositionInput("fuel", "not_found", "not_found")],
+            force=True,
+        )
+        self.assertIsInstance(result, ExtractionHold)
+        self.assertEqual(result.reason, "applies_amount_blank")
+        self.assertEqual(result.detail, "model_a:fuel")
+
     def test_bad_quote_holds(self):
         def fn(doc, model, ctx):
             payload = _good_payload()
