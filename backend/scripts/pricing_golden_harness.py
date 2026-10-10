@@ -447,6 +447,13 @@ def _build_dry_document(plan: PlanInput, payload: list[dict]) -> str:
     lines = []
     for c in plan.components:
         lines.append(_dry_quote_and_line(c)[1])
+        # Every cell is grounded, so every cell's figure must be printed.
+        anchor = _unit_anchor(c.unit)
+        name = (c.name or c.code or "").strip()
+        for cell in (c.cells or [])[1:]:
+            bits = [_cell_label_prefix(cell), name,
+                    str(cell.get("amount") or ""), f"({anchor})"]
+            lines.append(" ".join(b for b in bits if b))
     # Include schedule quotes so meta components ground if ever checked.
     for raw in payload:
         if raw.get("kind") in {"tou_schedule", "season_calendar"}:

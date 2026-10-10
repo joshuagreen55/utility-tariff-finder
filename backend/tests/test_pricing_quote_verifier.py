@@ -101,7 +101,7 @@ class TestRowColGrounding(unittest.TestCase):
             require_row_col=True,
         )
         self.assertFalse(r.ok)
-        self.assertTrue(r.reason.startswith("label_not_in_row_col"), r.reason)
+        self.assertEqual(r.reason, "label_conflict:period")
 
     def test_season_section_heading(self):
         r = verify_quote(
@@ -310,6 +310,161 @@ class TestNonEnergyUnits(unittest.TestCase):
         r = verify_quote("foo 1.0 bar\n", "1.0", unit="widgets")
         self.assertFalse(r.ok)
         self.assertTrue(r.reason.startswith("unsupported_unit"), r.reason)
+
+
+TOU_LINE = "Prices (¢/kWh): Off-peak 9.8; Mid-peak 15.7; On-peak 20.3\n"
+
+
+class TestAmountMustBePrinted(unittest.TestCase):
+    def test_quote_without_number_fails(self):
+        r = verify_quote(DOC, "Energy Charge", unit="¢/kWh", amount="99.1")
+        self.assertFalse(r.ok)
+        self.assertEqual(r.reason, "amount_not_in_quote")
+
+    def test_unparseable_amount_fails(self):
+        r = verify_quote(DOC, "18.324 ¢ per kWh", unit="¢/kWh", amount="n/a")
+        self.assertFalse(r.ok)
+        self.assertEqual(r.reason, "amount_unparseable")
+
+    def test_sibling_unit_needs_printed_figure(self):
+        doc = "Time-of-use prices (¢/kWh)\nOn-peak\n\n\n\n20.3\n"
+        r = verify_quote(doc, "On-peak", unit="$/kWh", amount="0.203")
+        self.assertFalse(r.ok)
+
+
+class TestGoverningLabel(unittest.TestCase):
+    def _v(self, doc, quote, amount, **labels):
+        return verify_quote(doc, quote, unit="¢/kWh", amount=amount,
+                            require_row_col=True, **labels)
+
+    def test_multi_value_line_wrong_period_fails(self):
+        r = self._v(TOU_LINE, TOU_LINE.strip(), "15.7", period="on_peak")
+        self.assertEqual(r.reason, "label_conflict:period")
+
+    def test_multi_value_line_right_period_passes(self):
+        for amount, period in (("9.8", "off_peak"), ("15.7", "mid_peak"),
+                               ("20.3", "on_peak")):
+            r = self._v(TOU_LINE, TOU_LINE.strip(), amount, period=period)
+            self.assertTrue(r.ok, (period, r.reason))
+
+    def test_peak_inside_off_peak_is_not_on_peak(self):
+        r = self._v(TOU_LINE, "Off-peak 9.8", "9.8", period="on_peak")
+        self.assertEqual(r.reason, "label_conflict:period")
+
+    def test_trailing_labels(self):
+        doc = "Energy (¢/kWh): 9.8 off-peak, 15.7 mid-peak, 20.3 on-peak\n"
+        q = doc.strip()
+        self.assertTrue(self._v(doc, q, "15.7", period="mid_peak").ok)
+        self.assertEqual(
+            self._v(doc, q, "15.7", period="off_peak").reason,
+            "label_conflict:period",
+        )
+
+    def test_neighbor_row_figure_not_borrowed(self):
+        r = self._v(TABLE_DOC, "On-Peak                 20.888", "12.042",
+                    period="on_peak")
+        self.assertFalse(r.ok)
+
+    def test_sub_period_matches_family(self):
+        doc = "Energy (¢/kWh)\nMid-Peak A 12.968\nMid-Peak B 13.640\n"
+        r = self._v(doc, "Mid-Peak A 12.968", "12.968", period="mid_peak_a")
+        self.assertTrue(r.ok, r.reason)
+
+    def test_weekend_off_peak(self):
+        r = self._v(OEB_ULO_DOC, "Weekend off-peak", "9.8",
+                    period="weekend_off")
+        self.assertTrue(r.ok, r.reason)
+
+    def test_month_range_columns(self):
+        q = "13.4851¢ per kWh for the first 750 kWh"
+        self.assertTrue(self._v(
+            AL_DOC, q, "13.4851", season="winter", tier="first_750_kWh",
+        ).ok)
+        r = self._v(AL_DOC, "13.7380¢ per kWh for all over 1000 kWh",
+                    "13.7380", season="winter")
+        self.assertEqual(r.reason, "label_conflict:season")
+
+    def test_same_price_two_seasons_both_ground(self):
+        for season in ("winter", "non_winter"):
+            r = self._v(NLH_DOC, "Energy Charge 15.587 ¢/kWh", "15.587",
+                        season=season)
+            self.assertTrue(r.ok, (season, r.reason))
+
+
+OEB_ULO_DOC = (
+    "ULO period Hours Price\n"
+    "Ultra-low overnight\nEvery day from 11 p.m. to 7 a.m.\n3.9¢ per kWh\n"
+    "Weekend off-peak\nWeekends and statutory holidays from 7 a.m. to 11 p.m.\n"
+    "9.8¢ per kWh\n"
+)
+
+AL_DOC = (
+    "Charge for Energy:\n"
+    "BILLING MONTHS JUNE - SEPTEMBER BILLING MONTHS OCTOBER - MAY\n"
+    "13.4851¢ per kWh for the first 1000 kWh, 13.4851¢ per kWh for the first 750 kWh,\n"
+    "plus plus\n"
+    "13.7380¢ per kWh for all over 1000 kWh. 12.2851¢ per kWh for all over 750 kWh.\n"
+)
+
+
+class TestLabelMatching(unittest.TestCase):
+    def test_month_abbreviation_needs_word_boundary(self):
+        doc = "Rates may decrease after review.\nEnergy Charge 12.000 ¢/kWh\n"
+        r = verify_quote(doc, "Energy Charge 12.000 ¢/kWh", unit="¢/kWh",
+                         amount="12.000", season="winter", require_row_col=True)
+        self.assertEqual(r.reason, "label_not_in_row_col:season")
+
+    def test_multiline_quote_keeps_lines(self):
+        doc = (
+            "Summer\nOn-Peak 20.100 ¢/kWh\n"
+            "Winter\nOn-Peak 15.000 ¢/kWh\n"
+        )
+        quote = "Winter On-Peak 15.000"
+        ok = verify_quote(doc, quote, unit="¢/kWh", amount="15.000",
+                          season="winter", period="on_peak",
+                          require_row_col=True)
+        self.assertTrue(ok.ok, ok.reason)
+        bad = verify_quote(doc, quote, unit="¢/kWh", amount="15.000",
+                           season="summer", period="on_peak",
+                           require_row_col=True)
+        self.assertFalse(bad.ok)
+
+
+class TestEveryCell(unittest.TestCase):
+    def _comp(self, cells, quote):
+        from app.services.pricing.types import ComponentInput
+        return ComponentInput(code="base", kind="base_energy", unit="¢/kWh",
+                              name="Energy Charge", cells=cells,
+                              source_quote=quote)
+
+    def test_ungrounded_second_cell_fails(self):
+        from app.services.pricing.quote_verifier import verify_component_cells
+        c = self._comp(
+            [{"amount": "12.042", "period": "off_peak"},
+             {"amount": "99.999", "period": "on_peak"}],
+            "Off-Peak                12.042",
+        )
+        r = verify_component_cells(TABLE_DOC, c)
+        self.assertEqual(r.reason, "cell1:amount_not_in_quote")
+
+    def test_table_rows_ground_each_cell(self):
+        from app.services.pricing.quote_verifier import verify_component_cells
+        c = self._comp(
+            [{"amount": "12.042", "period": "off_peak"},
+             {"amount": "20.888", "period": "on_peak"},
+             {"amount": "26.395", "period": "on_peak", "season": "winter"}],
+            "Off-Peak                12.042",
+        )
+        self.assertTrue(verify_component_cells(TABLE_DOC, c).ok)
+
+    def test_swapped_cells_fail(self):
+        from app.services.pricing.quote_verifier import verify_component_cells
+        c = self._comp(
+            [{"amount": "20.888", "period": "off_peak"},
+             {"amount": "12.042", "period": "on_peak"}],
+            "Off-Peak                12.042",
+        )
+        self.assertFalse(verify_component_cells(TABLE_DOC, c).ok)
 
 
 if __name__ == "__main__":

@@ -11,7 +11,7 @@ from typing import Any, Iterable
 from urllib.parse import urlparse
 
 from app.services.pricing.compiler import CompiledPlan, compile_plan
-from app.services.pricing.quote_verifier import verify_component_quote
+from app.services.pricing.quote_verifier import verify_component_cells
 from app.services.pricing.recipes import NON_PRICED_KINDS
 from app.services.pricing.rider_census import (
     CensusResult,
@@ -218,38 +218,8 @@ def gate_grounding(
             "fixed_charge", "fixed_monthly", "customer_charge",
         }:
             continue
-        cells = list(c.cells or [])
-        if not cells:
-            result = verify_component_quote(
-                document_text,
-                quote=c.source_quote,
-                unit=c.unit,
-                component_name=c.name or c.code,
-                require_row_col=False,
-            )
-            if not result.ok:
-                failures.append(GateFailure(
-                    "G3", f"grounding_failed:{c.code}", result.reason
-                ))
-            continue
-        # Prefer the cell whose amount appears in the quote; else first cell.
-        quote = c.source_quote or ""
-        matched_cell = None
-        for cell in cells:
-            amt = str(cell.get("amount") or "")
-            if amt and amt in quote:
-                matched_cell = cell
-                break
-        if matched_cell is None:
-            matched_cell = cells[0]
-        result = verify_component_quote(
-            document_text,
-            quote=c.source_quote,
-            unit=c.unit,
-            amount=matched_cell.get("amount"),
-            cell=matched_cell,
-            component_name=c.name or c.code,
-            require_row_col=require_row_col,
+        result = verify_component_cells(
+            document_text, c, require_row_col=require_row_col,
         )
         if not result.ok:
             failures.append(GateFailure(
