@@ -26,6 +26,7 @@ from app.services.pricing.extract_schema import (
     disposition_of,
     validate_extract_schema,
 )
+from app.services.pricing.kind_canon import canonicalize_extract
 from app.services.pricing.preaccept import PreAcceptResult, run_preaccept
 from app.services.pricing.quote_verifier import verify_component_cells
 from app.services.pricing.rider_census import DispositionInput, InventoryRider
@@ -219,8 +220,12 @@ def dual_extract_components(
             # One-shot nudge only — still blind to prior numeric values.
             call_ctx["require_applying_energy"] = True
             call_ctx["retry_reason"] = "missing_energy_charge"
-        return sanitize_extract_amounts(
-            list(extract_fn(document_text, model, call_ctx) or [])
+        return canonicalize_extract(
+            sanitize_extract_amounts(
+                list(extract_fn(document_text, model, call_ctx) or [])
+            ),
+            plan_meta.get("recipe_code"),
+            document_text,
         )
 
     raw_a = _pull(m_a)
