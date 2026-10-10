@@ -330,7 +330,7 @@ def dual_extract_components(
                 "tier_structure", "excluded_item", "event_day",
             }:
                 continue
-            vr = verify_component_cells(document_text, c, require_row_col=True)
+            vr = verify_component_cells(document_text, c)
             if not vr.ok:
                 return ExtractionHold(
                     reason="quote_verify_failed",

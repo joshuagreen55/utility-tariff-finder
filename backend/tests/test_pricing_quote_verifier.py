@@ -174,24 +174,8 @@ class TestRowColGrounding(unittest.TestCase):
             "12.042",
             unit="¢/kWh",
             amount="12.042",
-            period="off_peak",
-            component_name="Energy Charge",
-            require_row_col=True,
         )
         self.assertTrue(r.ok, r.reason)
-
-    def test_wrong_period_row_fails(self):
-        """On-Peak number cited as Off-Peak → hold."""
-        r = verify_quote(
-            WRONG_ROW,
-            "20.888",
-            unit="¢/kWh",
-            amount="20.888",
-            period="off_peak",
-            require_row_col=True,
-        )
-        self.assertFalse(r.ok)
-        self.assertEqual(r.reason, "label_conflict:period")
 
     def test_season_section_heading(self):
         r = verify_quote(
@@ -199,9 +183,6 @@ class TestRowColGrounding(unittest.TestCase):
             "26.395",
             unit="¢/kWh",
             amount="26.395",
-            season="winter",
-            period="on_peak",
-            require_row_col=True,
         )
         self.assertTrue(r.ok, r.reason)
 
@@ -214,7 +195,6 @@ class TestRowColGrounding(unittest.TestCase):
             amount="52",
         )
         self.assertFalse(r.ok)
-        self.assertEqual(r.reason, "amount_not_in_quote")
 
     def test_amount_match_passes(self):
         r = verify_quote(
@@ -275,8 +255,6 @@ class TestOntarioAndPplGrounding(unittest.TestCase):
             "9.8",
             unit="$/kWh",
             amount="0.098",
-            period="off_peak",
-            require_row_col=True,
         )
         self.assertTrue(r.ok, r.reason)
 
@@ -286,8 +264,6 @@ class TestOntarioAndPplGrounding(unittest.TestCase):
             "20.3",
             unit="$/kWh",
             amount="0.203",
-            period="on_peak",
-            require_row_col=True,
         )
         self.assertTrue(r.ok, r.reason)
 
@@ -297,8 +273,6 @@ class TestOntarioAndPplGrounding(unittest.TestCase):
             "9.753",
             unit="¢/kWh",
             amount="9.753",
-            component_name="Generation Supply Charge",
-            require_row_col=True,
         )
         self.assertTrue(r.ok, r.reason)
 
@@ -311,7 +285,6 @@ class TestOntarioAndPplGrounding(unittest.TestCase):
             amount="52",
         )
         self.assertFalse(r.ok)
-        self.assertEqual(r.reason, "amount_not_in_quote")
 
 
 class TestTierSeasonSynonyms(unittest.TestCase):
@@ -321,9 +294,6 @@ class TestTierSeasonSynonyms(unittest.TestCase):
             "8.7738",
             unit="¢/kWh",
             amount="8.7738",
-            season="summer",
-            tier="0-650",
-            require_row_col=True,
         )
         self.assertTrue(r.ok, r.reason)
 
@@ -333,9 +303,6 @@ class TestTierSeasonSynonyms(unittest.TestCase):
             "15.0828",
             unit="¢/kWh",
             amount="15.0828",
-            season="summer",
-            tier="1000+",
-            require_row_col=True,
         )
         self.assertTrue(r.ok, r.reason)
 
@@ -345,8 +312,6 @@ class TestTierSeasonSynonyms(unittest.TestCase):
             "11.87",
             unit="¢/kWh",
             amount="11.87",
-            tier="step1",
-            require_row_col=True,
         )
         self.assertTrue(r.ok, r.reason)
 
@@ -356,8 +321,6 @@ class TestTierSeasonSynonyms(unittest.TestCase):
             "15.587 ¢/kWh",
             unit="¢/kWh",
             amount="15.587",
-            season="non_winter",
-            require_row_col=True,
         )
         self.assertTrue(r.ok, r.reason)
 
@@ -422,65 +385,6 @@ class TestAmountMustBePrinted(unittest.TestCase):
         self.assertFalse(r.ok)
 
 
-class TestGoverningLabel(unittest.TestCase):
-    def _v(self, doc, quote, amount, **labels):
-        return verify_quote(doc, quote, unit="¢/kWh", amount=amount,
-                            require_row_col=True, **labels)
-
-    def test_multi_value_line_wrong_period_fails(self):
-        r = self._v(TOU_LINE, TOU_LINE.strip(), "15.7", period="on_peak")
-        self.assertEqual(r.reason, "label_conflict:period")
-
-    def test_multi_value_line_right_period_passes(self):
-        for amount, period in (("9.8", "off_peak"), ("15.7", "mid_peak"),
-                               ("20.3", "on_peak")):
-            r = self._v(TOU_LINE, TOU_LINE.strip(), amount, period=period)
-            self.assertTrue(r.ok, (period, r.reason))
-
-    def test_peak_inside_off_peak_is_not_on_peak(self):
-        r = self._v(TOU_LINE, "Off-peak 9.8", "9.8", period="on_peak")
-        self.assertEqual(r.reason, "label_conflict:period")
-
-    def test_trailing_labels(self):
-        doc = "Energy (¢/kWh): 9.8 off-peak, 15.7 mid-peak, 20.3 on-peak\n"
-        q = doc.strip()
-        self.assertTrue(self._v(doc, q, "15.7", period="mid_peak").ok)
-        self.assertEqual(
-            self._v(doc, q, "15.7", period="off_peak").reason,
-            "label_conflict:period",
-        )
-
-    def test_neighbor_row_figure_not_borrowed(self):
-        r = self._v(TABLE_DOC, "On-Peak                 20.888", "12.042",
-                    period="on_peak")
-        self.assertFalse(r.ok)
-
-    def test_sub_period_matches_family(self):
-        doc = "Energy (¢/kWh)\nMid-Peak A 12.968\nMid-Peak B 13.640\n"
-        r = self._v(doc, "Mid-Peak A 12.968", "12.968", period="mid_peak_a")
-        self.assertTrue(r.ok, r.reason)
-
-    def test_weekend_off_peak(self):
-        r = self._v(OEB_ULO_DOC, "Weekend off-peak", "9.8",
-                    period="weekend_off")
-        self.assertTrue(r.ok, r.reason)
-
-    def test_month_range_columns(self):
-        q = "13.4851¢ per kWh for the first 750 kWh"
-        self.assertTrue(self._v(
-            AL_DOC, q, "13.4851", season="winter", tier="first_750_kWh",
-        ).ok)
-        r = self._v(AL_DOC, "13.7380¢ per kWh for all over 1000 kWh",
-                    "13.7380", season="winter")
-        self.assertEqual(r.reason, "label_conflict:season")
-
-    def test_same_price_two_seasons_both_ground(self):
-        for season in ("winter", "non_winter"):
-            r = self._v(NLH_DOC, "Energy Charge 15.587 ¢/kWh", "15.587",
-                        season=season)
-            self.assertTrue(r.ok, (season, r.reason))
-
-
 OEB_ULO_DOC = (
     "ULO period Hours Price\n"
     "Ultra-low overnight\nEvery day from 11 p.m. to 7 a.m.\n3.9¢ per kWh\n"
@@ -497,27 +401,28 @@ AL_DOC = (
 )
 
 
-class TestLabelMatching(unittest.TestCase):
-    def test_month_abbreviation_needs_word_boundary(self):
-        doc = "Rates may decrease after review.\nEnergy Charge 12.000 ¢/kWh\n"
-        r = verify_quote(doc, "Energy Charge 12.000 ¢/kWh", unit="¢/kWh",
-                         amount="12.000", season="winter", require_row_col=True)
-        self.assertEqual(r.reason, "label_not_in_row_col:season")
+class TestLabelsAreTrusted(unittest.TestCase):
+    """Which row a figure is (season / period / tier) is the model's call.
 
-    def test_multiline_quote_keeps_lines(self):
-        doc = (
-            "Summer\nOn-Peak 20.100 ¢/kWh\n"
-            "Winter\nOn-Peak 15.000 ¢/kWh\n"
-        )
-        quote = "Winter On-Peak 15.000"
-        ok = verify_quote(doc, quote, unit="¢/kWh", amount="15.000",
-                          season="winter", period="on_peak",
-                          require_row_col=True)
-        self.assertTrue(ok.ok, ok.reason)
-        bad = verify_quote(doc, quote, unit="¢/kWh", amount="15.000",
-                           season="summer", period="on_peak",
-                           require_row_col=True)
-        self.assertFalse(bad.ok)
+    G3 checks only that the cited figure and unit are printed; G2 catches a
+    mislabelled row because the second model prices it differently.
+    """
+
+    def test_any_label_on_a_printed_figure_grounds(self):
+        doc = "Summer\nOn-Peak 20.100 ¢/kWh\nWinter\nOn-Peak 15.000 ¢/kWh\n"
+        self.assertTrue(verify_quote(doc, "On-Peak 15.000", unit="¢/kWh",
+                                     amount="15.000").ok)
+
+    def test_figure_must_still_be_printed(self):
+        doc = "Summer\nOn-Peak 20.100 ¢/kWh\n"
+        r = verify_quote(doc, "On-Peak 20.100", unit="¢/kWh", amount="15.000")
+        self.assertFalse(r.ok)
+        self.assertEqual(r.reason, "amount_not_in_quote")
+
+    def test_neighbor_row_figure_not_borrowed(self):
+        r = verify_quote(TABLE_DOC, "On-Peak                 20.888",
+                         unit="¢/kWh", amount="12.042")
+        self.assertFalse(r.ok)
 
 
 class TestEveryCell(unittest.TestCase):
@@ -547,14 +452,15 @@ class TestEveryCell(unittest.TestCase):
         )
         self.assertTrue(verify_component_cells(TABLE_DOC, c).ok)
 
-    def test_swapped_cells_fail(self):
+    def test_swapped_labels_still_ground(self):
+        """Both figures are printed; the swap is G2's to catch, not G3's."""
         from app.services.pricing.quote_verifier import verify_component_cells
         c = self._comp(
             [{"amount": "20.888", "period": "off_peak"},
              {"amount": "12.042", "period": "on_peak"}],
             "Off-Peak                12.042",
         )
-        self.assertFalse(verify_component_cells(TABLE_DOC, c).ok)
+        self.assertTrue(verify_component_cells(TABLE_DOC, c).ok)
 
 
 if __name__ == "__main__":

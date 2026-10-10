@@ -226,15 +226,11 @@ def gate_agreement(
 def gate_grounding(
     components: list[ComponentInput],
     document_text: str,
-    *,
-    require_row_col: bool = True,
 ) -> list[GateFailure]:
-    """G3: every priced value's quote is verbatim with unit + row/col context.
+    """G3: every priced value's quote is verbatim and prints its amount + unit.
 
-    Unit may come from a table column/row header or section heading.
-    When cells carry season/period/day_type, the quote must sit in a row
-    or column that names those labels; the quoted number must match a
-    stored cell amount.
+    Which row a cell is (season / period / tier) is the model's call,
+    cross-checked by G2; see ``quote_verifier``.
     """
     failures: list[GateFailure] = []
     for c in components:
@@ -244,9 +240,7 @@ def gate_grounding(
             "fixed_charge", "fixed_monthly", "customer_charge",
         }:
             continue
-        result = verify_component_cells(
-            document_text, c, require_row_col=require_row_col,
-        )
+        result = verify_component_cells(document_text, c)
         if not result.ok:
             failures.append(GateFailure(
                 "G3", f"grounding_failed:{c.code}", result.reason

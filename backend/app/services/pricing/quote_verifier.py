@@ -1,17 +1,18 @@
 """Verbatim quote grounding for priced component values (G3).
 
-Every stored number must cite a page + verbatim span. The verifier checks:
+The model chooses the row: its quote and its season / period / day-type /
+tier labels say which printed figure a cell is, and the two blind
+extractions must agree on those labels (G2). The verifier only checks what
+the document text can prove:
 
 1. The quote appears in the retained document text.
-2. The unit token is grounded nearby — in the local window **or** in a
-   table column/row header or section heading that scopes the number.
-3. Optionally, the quoted number matches the stored amount, and the quote
-   sits in a row/column consistent with the component's season / period /
-   day_type / tier labels.
-
-R28: tier/season matching is synonym- and span-aware (merged headers);
-Ontario RPP ($/kWh stored, ¢ printed) and similar unit conversions are
-accepted only when the *other* unit is grounded in context.
+2. A figure printed in the quote equals the stored amount. A label-only
+   quote may point at the figure on the next lines of a reflowed row.
+   Printed signs ("-", parentheses) count; ¢ ↔ $ conversion is allowed only
+   when the document prints that scale at the figure.
+3. The unit is printed: the currency scale nearest the figure ($, ¢, %,
+   mills) matches the stored unit, and the stored unit's denominator (kWh,
+   kW, day, month, year) appears on the figure's row or the headings above.
 """
 from __future__ import annotations
 
@@ -21,54 +22,8 @@ from dataclasses import dataclass
 from decimal import Decimal, InvalidOperation
 from typing import Any
 
-from app.services.pricing.types import normalize_cell_label
-from app.services.pricing.units import UNIT_PATTERNS as _UNIT_PATTERNS
-from app.services.pricing.units import normalize_unit as _normalize_unit_table
-
-_UNIT_WINDOW = 120
 _HEADER_LINE_LOOKBACK = 12
-_LABEL_LINE_LOOKBACK = 30  # merged season headers can sit well above the row
 _TABLE_LINES = 25  # other rows of the table a multi-cell quote cites
-
-# Matched on word boundaries (see ``_alias_regex``), so "dec" never matches
-# "decrease". Bare "may" is left out: it is usually the verb.
-_SEASON_ALIASES: dict[str, tuple[str, ...]] = {
-    "summer": (
-        "summer", "jun", "june", "july", "aug", "august", "may through",
-        "june through", "may 1", "may –", "may-", "may to", "jun-",
-        "summer season", "summer period",
-    ),
-    "winter": (
-        "winter", "nov", "dec", "jan", "feb", "oct through", "november",
-        "nov 1", "nov –", "nov-", "winter season", "winter period",
-        "december", "january", "february",
-    ),
-    "non_winter": (
-        "non-winter", "non winter", "nonwinter", "summer", "shoulder",
-        "apr", "april", "june", "july", "aug", "august", "sep", "september",
-        "oct", "october", "april through", "may through", "may 1", "may-",
-        "may –", "may to", "non-heating",
-    ),
-    "all": (),
-}
-_PERIOD_ALIASES: dict[str, tuple[str, ...]] = {
-    "on_peak": ("on-peak", "on peak", "onpeak", "peak", "high", "on–peak"),
-    "off_peak": ("off-peak", "off peak", "offpeak", "low", "off–peak"),
-    "mid_peak": (
-        "mid-peak", "mid peak", "midpeak", "shoulder", "mid–peak",
-        "partial-peak", "partial peak",
-    ),
-    "super_off_peak": ("super off", "super-off", "overnight", "ulo", "ultra-low"),
-    "ulo": ("ulo", "ultra-low", "ultra low", "overnight"),
-    "weekend_off": ("weekend off", "weekend off-peak", "weekend off peak"),
-    "all": (),
-}
-_DAY_ALIASES: dict[str, tuple[str, ...]] = {
-    "weekday": ("weekday", "week day", "monday", "business day", "weekdays"),
-    "weekend": ("weekend", "saturday", "sunday", "holiday", "weekends"),
-    "holiday": ("holiday", "statutory", "stat holiday"),
-    "all": (),
-}
 
 # One printed figure: 9.8, -1.297, 1,234.56 (grouped), 9,8 / 0,0982 (decimal
 # comma), or an integer. "6,605" is grouped in an English document and a
@@ -80,8 +35,71 @@ _GROUPED_RE = re.compile(r"-?\d{1,3}(?:,\d{3})+(?:\.\d+)?")
 _COMMA_ONLY_DECIMAL_RE = re.compile(r"(?<![\d.,])\d+,(?:\d{1,2}|\d{4,})(?![\d.,])")
 _COMMA_BEFORE_UNIT_RE = re.compile(r"(?<![\d.,])\d+,\d+\s*(?:¢|\$|cents?\b)", re.I)
 _DOT_DECIMAL_RE = re.compile(r"(?<![\d.,])\d+\.\d+(?![\d.,])")
+# PDF text extraction sometimes splits a decimal: "$0. 14053".
+_SPLIT_DECIMAL_RE = re.compile(r"(\d)\. (\d+)")
 
 _COMMA_DECIMAL: ContextVar[bool] = ContextVar("quote_comma_decimal", default=False)
+
+_SCALE_TOKENS: dict[str, re.Pattern[str]] = {
+    "$": re.compile(r"\$|\bdollars?\b", re.I),
+    "¢": re.compile(r"¢|\bcents?\b|\bc/kwh\b", re.I),
+    "%": re.compile(r"%|\bper\s?cent\b", re.I),
+    "mills": re.compile(r"\bmills?\b", re.I),
+}
+_DENOM_TOKENS: dict[str, re.Pattern[str]] = {
+    "kwh": re.compile(r"kwh|kw\s*h\b|kilowatt[\s-]?hours?|kilowattheures?", re.I),
+    "kw": re.compile(r"\bkw\b(?!\s*h)|kilowatts?\b(?![\s-]?h)|\bdemand\b", re.I),
+    "month": re.compile(r"month|\bmo\b|\bmois\b|billing\s+(?:period|cycle)|30\s+days", re.I),
+    "day": re.compile(r"\bdays?\b|daily|\bjours?\b", re.I),
+    "year": re.compile(r"\byears?\b|annual|\byr\b", re.I),
+}
+
+
+@dataclass(frozen=True)
+class UnitSpec:
+    """A stored unit as currency scale + denominator."""
+
+    scale: str | None  # "$" | "¢" | "%" | "mills" | "factor" | None
+    denom: str | None  # "kwh" | "kw" | "day" | "month" | "year" | None
+    ambiguous: bool = False  # "per kWh" with no currency (¢ or $?)
+
+
+def parse_unit(unit: str | None) -> UnitSpec | None:
+    """Read any model unit spelling; None when it names neither scale nor denominator."""
+    u = re.sub(r"[_\s]+", " ", (unit or "").lower()).strip()
+    if not u:
+        return None
+    if re.search(r"factor|multiplier|dimensionless|ratio", u) or u in {"x", "×"}:
+        return UnitSpec("factor", None)
+    if re.search(r"%|percent|\bpct\b", u):
+        return UnitSpec("%", None)
+    if "mill" in u:
+        scale: str | None = "mills"
+    elif re.search(r"¢|cent|^c ?(?:/|per)", u):
+        scale = "¢"
+    elif re.search(r"\$|dollar|\busd\b|\bcad\b", u):
+        scale = "$"
+    else:
+        scale = None
+    if re.search(r"kwh|kilowatt[\s-]?hour", u):
+        denom: str | None = "kwh"
+    elif re.search(r"\bkw\b|kilowatt", u):
+        denom = "kw"
+    elif re.search(r"30 ?days?|month|\bmo\b|billing", u):
+        denom = "month"
+    elif re.search(r"\bdays?\b|daily", u):
+        denom = "day"
+    elif re.search(r"year|annual|\byr\b", u):
+        denom = "year"
+    else:
+        denom = None
+    if scale is None and denom is None:
+        return None
+    if scale is None and denom == "kwh":
+        return UnitSpec(None, "kwh", ambiguous=bool(re.search(r"(?:per|/) ?kwh", u)))
+    if scale is None:
+        scale = "$"  # fixed / demand charges with no currency word are dollars
+    return UnitSpec(scale, denom)
 
 
 def is_decimal_comma_document(text: str) -> bool:
@@ -121,13 +139,10 @@ def _is_decimal_figure(tok: str) -> bool:
         _COMMA_DECIMAL.get() and tok.count(",") == 1
     )
 
+
 # Normalize common PDF / HTML artifacts before verbatim search.
 _DASHES = re.compile(r"[\u2010-\u2015\u2212\ufe58\ufe63\uff0d]")
 _SPACES = re.compile(r"[\u00a0\u2000-\u200b\u202f\u205f\u3000]+")
-
-
-def _normalize_unit(unit: str | None) -> str:
-    return _normalize_unit_table(unit)
 
 
 def _normalize_text(text: str) -> str:
@@ -152,7 +167,11 @@ def _line_spans(document_text: str) -> list[tuple[int, int, str]]:
     start = 0
     for line in document_text.splitlines(keepends=True):
         end = start + len(line)
-        spans.append((start, end, line.rstrip("\n\r")))
+        # Same-length repair keeps column offsets valid.
+        text = _SPLIT_DECIMAL_RE.sub(
+            lambda m: f"{m[1]}.{m[2]} ", line.rstrip("\n\r"),
+        )
+        spans.append((start, end, text))
         start = end
     if not spans and document_text:
         spans.append((0, len(document_text), document_text))
@@ -160,520 +179,14 @@ def _line_spans(document_text: str) -> list[tuple[int, int, str]]:
 
 
 def _line_index_at(spans: list[tuple[int, int, str]], offset: int) -> int:
-    for i, (s, e, _t) in enumerate(spans):
-        if s <= offset < e or (offset == e and i == len(spans) - 1):
-            return i
-        if offset < s:
-            return max(0, i - 1)
-    return max(0, len(spans) - 1)
-
-
-def _unit_in_headers(
-    spans: list[tuple[int, int, str]],
-    line_idx: int,
-    quote_col: int,
-    unit_pat: re.Pattern[str],
-) -> bool:
-    if line_idx < 0 or line_idx >= len(spans):
-        return False
-    same = spans[line_idx][2]
-    left = same[: max(0, quote_col)]
-    if unit_pat.search(left):
-        return True
-
-    for back in range(1, _HEADER_LINE_LOOKBACK + 1):
-        j = line_idx - back
-        if j < 0:
-            break
-        header = spans[j][2]
-        if not header.strip():
-            continue
-        for m in unit_pat.finditer(header):
-            if abs(m.start() - quote_col) <= 24 or len(header.strip()) <= 60:
-                return True
-            if re.search(r"kwh|charge|rate|¢|cent|\$|price", header, re.I):
-                return True
-    return False
-
-
-def _context_unit_family(
-    document_text: str,
-    spans: list[tuple[int, int, str]],
-    idx: int,
-    qlen: int,
-) -> set[str]:
-    """Which unit families appear near the quote (window + headers)."""
-    start = max(0, idx - _UNIT_WINDOW)
-    end = min(len(document_text), idx + qlen + _UNIT_WINDOW)
-    window = document_text[start:end]
-    found: set[str] = set()
-    for family, pat in _UNIT_PATTERNS.items():
-        if family in {"percent", "dimensionless", "mills/kwh"}:
-            continue
-        if pat.search(window):
-            found.add(family)
-    line_idx = _line_index_at(spans, idx)
-    quote_col = idx - spans[line_idx][0]
-    for family, pat in _UNIT_PATTERNS.items():
-        if family in {"percent", "dimensionless", "mills/kwh"}:
-            continue
-        if _unit_in_headers(spans, line_idx, quote_col, pat):
-            found.add(family)
-    return found
-
-
-def _amount_candidates(
-    amount: str | Decimal,
-    stored_unit: str | None,
-    context_units: set[str],
-    *,
-    quote: str | None = None,
-) -> list[Decimal]:
-    """Exact amount plus unit-aware ¢↔$ forms when the other unit is in context.
-
-    Does **not** blindly accept 100× (that was the R27 SDG&E false pass)
-    unless the quote itself shows the sibling unit marker ($ vs ¢).
-    """
-    try:
-        want = amount if isinstance(amount, Decimal) else Decimal(str(amount))
-    except (InvalidOperation, ValueError):
-        return []
-    out = [want]
-    norm = _normalize_unit(stored_unit)
-    q = (quote or "").lower()
-    quote_has_dollar = bool(re.search(r"\$\s*\d", q))
-    quote_has_cent = bool(re.search(r"¢|\bcents?\b", q))
-    # Stored $/kWh, document shows cents → accept cents form.
-    if norm == "$/kwh" and ("cents/kwh" in context_units or quote_has_cent):
-        out.append(want * Decimal("100"))
-    # Stored ¢/kWh, document shows dollars → accept dollars form.
-    if norm == "cents/kwh" and ("$/kwh" in context_units or quote_has_dollar):
-        out.append(want / Decimal("100"))
-    return out
-
-
-def _amount_in_quote(
-    quote: str,
-    amount: str | Decimal | None,
-    *,
-    unit: str | None = None,
-    context_units: set[str] | None = None,
-) -> bool:
-    if amount is None or amount == "":
-        return True
-    nums = list(_NUMBER_RE.finditer(quote))
-    if not nums:
-        return False
-    wants = _amount_candidates(
-        amount, unit, context_units or set(), quote=quote,
-    )
-    if not wants:
-        return False
-    for m in nums:
-        got = _figure_value(m.group(0))
-        if got is not None and any(got == w for w in wants):
-            return True
-    return False
-
-
-def _label_aliases(kind: str, value: str | None) -> tuple[str, ...]:
-    if not value or value == "all":
-        return ()
-    v = value.strip().lower().replace(" ", "_").replace("-", "_")
-    table = {
-        "season": _SEASON_ALIASES,
-        "period": _PERIOD_ALIASES,
-        "day_type": _DAY_ALIASES,
-    }.get(kind, {})
-    aliases = table.get(v, ())
-    for canon in sorted(_wanted_values(kind, value) or ()) if table else ():
-        if canon != v:
-            aliases = aliases + table.get(canon, ())
-    raw = value.strip().lower()
-    extras = (
-        raw,
-        raw.replace("_", "-"),
-        raw.replace("_", " "),
-        raw.replace("_", "–"),
-        v,
-        v.replace("_", "-"),
-        v.replace("_", " "),
-    )
-    return tuple(dict.fromkeys([a for a in aliases + extras if a]))
-
-
-def _tier_aliases(tier: str) -> tuple[str, ...]:
-    """Synonyms for tier / block / step labels (R28 FPL, HQ, BCH, GA)."""
-    t = tier.strip().lower()
-    out: list[str] = [t, t.replace("_", " "), t.replace("_", "-")]
-
-    # step1 / step 1 / tier 1
-    m = re.match(r"(?:step|tier|block|level)\s*[_-]?\s*(\d+)", t)
-    if m:
-        n = m.group(1)
-        out.extend([
-            f"step {n}", f"step{n}", f"tier {n}", f"tier{n}",
-            f"block {n}", f"level {n}", f"step {n} energy",
-        ])
-
-    # 0-1000 / 1000+ / 0-650
-    m = re.match(r"(\d+)\s*[-–to]+\s*(\d+)(\+)?", t.replace(" ", ""))
-    if m:
-        a, b, plus = m.group(1), m.group(2), m.group(3) or ""
-        out.extend([
-            f"{a}-{b}", f"{a} – {b}", f"{a} to {b}",
-            f"first {b}", f"first {b} kwh", f"0-{b}",
-            f"{a} through {b}",
-        ])
-        if plus or t.endswith("+"):
-            out.extend([f"over {b}", f"above {b}", f">{b}+", f"more than {b}"])
-
-    # 1000+
-    m = re.match(r"(\d+)\s*\+", t)
-    if m:
-        n = m.group(1)
-        out.extend([f"{n}+", f"over {n}", f"above {n}", f"more than {n}",
-                    f"over {n} kwh", f"above {n} kwh"])
-
-    # 0-40kwh_day / 40kwh_day+
-    m = re.match(r"(\d+)\s*kwh[_\s-]*day", t)
-    if m:
-        n = m.group(1)
-        out.extend([
-            f"{n} kwh", f"{n} kwh per day", f"first {n}",
-            f"first {n} kwh", f"first {n} kwh/day", f"0-{n}",
-        ])
-    m = re.match(r"(\d+)\s*kwh[_\s-]*day\+", t)
-    if m:
-        n = m.group(1)
-        out.extend([f"over {n}", f"above {n}", f"remaining", f"balance",
-                    f"additional", f"{n}+"])
-
-    return tuple(dict.fromkeys(a for a in out if a))
-
-
-def _alias_regex(aliases: tuple[str, ...] | list[str]) -> re.Pattern[str]:
-    """Whole-word alternation, longest alias first (leftmost-longest wins)."""
-    parts = []
-    for a in sorted({a.lower() for a in aliases if a}, key=len, reverse=True):
-        pre = r"(?<![a-z0-9])" if a[0].isalnum() else ""
-        post = r"(?![a-z0-9])" if a[-1].isalnum() else ""
-        parts.append(f"{pre}{re.escape(a)}{post}")
-    return re.compile("|".join(parts) or r"(?!x)x", re.I)
-
-
-def _context_has_label(hay: str, aliases: tuple[str, ...]) -> bool:
-    if not aliases:
-        return True
-    return bool(_alias_regex(aliases).search(hay))
-
-
-# Label words that decide which value a number belongs to when several sit
-# on one line or in one header row. Months, "high"/"low" and other loose
-# hints are presence evidence only, never governing.
-_GOVERNING: dict[str, dict[str, frozenset[str]]] = {
-    "season": {
-        "summer": frozenset({"summer", "non_winter"}),
-        "winter": frozenset({"winter"}),
-        "non-winter": frozenset({"non_winter"}),
-        "non winter": frozenset({"non_winter"}),
-        "nonwinter": frozenset({"non_winter"}),
-    },
-    "period": {
-        **{a: frozenset({"on_peak"}) for a in
-           ("on-peak", "on peak", "onpeak", "on–peak", "peak")},
-        **{a: frozenset({"off_peak"}) for a in
-           ("off-peak", "off peak", "offpeak", "off–peak")},
-        **{a: frozenset({"mid_peak"}) for a in
-           ("mid-peak", "mid peak", "midpeak", "mid–peak", "shoulder",
-            "partial-peak", "partial peak")},
-        **{a: frozenset({"super_off_peak", "ulo"}) for a in
-           ("super off-peak", "super off peak", "super-off-peak", "ulo",
-            "ultra-low", "ultra low", "overnight")},
-        **{a: frozenset({"weekend_off"}) for a in
-           ("weekend off-peak", "weekend off peak", "weekend off")},
-    },
-    "day_type": {
-        **{a: frozenset({"weekday"}) for a in
-           ("weekday", "weekdays", "week day", "monday", "business day")},
-        **{a: frozenset({"weekend"}) for a in
-           ("weekend", "weekends", "saturday", "sunday")},
-        "holiday": frozenset({"weekend", "holiday"}),
-        "holidays": frozenset({"weekend", "holiday"}),
-    },
-}
-_GOVERNING_RE = {dim: _alias_regex(list(t)) for dim, t in _GOVERNING.items()}
-
-def _wanted_values(dim: str, value: str | None) -> frozenset[str] | None:
-    """Canonical values a cell label stands for (``None`` = no constraint)."""
-    v = normalize_cell_label(value)
-    if v == "all":
-        return None
-    out = {v}
-    table = {"season": _SEASON_ALIASES, "period": _PERIOD_ALIASES,
-             "day_type": _DAY_ALIASES}[dim]
-    forms = {v, v.replace("_", "-"), v.replace("_", " ")}
-    for canon, aliases in table.items():
-        if forms & set(aliases):
-            out.add(canon)
-    for word, vals in _GOVERNING[dim].items():
-        if word in forms:
-            out |= vals
-    # Sub-periods name their family: mid_peak_a is a mid_peak.
-    for vals in _GOVERNING[dim].values():
-        out |= {c for c in vals if v.startswith(c + "_")}
-    return frozenset(out)
-
-
-_MONTHS = {
-    "jan": 1, "feb": 2, "mar": 3, "apr": 4, "may": 5, "jun": 6, "jul": 7,
-    "aug": 8, "sep": 9, "sept": 9, "oct": 10, "nov": 11, "dec": 12,
-}
-_MONTH_WORD = (
-    r"(january|february|march|april|may|june|july|august|september|october|"
-    r"november|december|jan|feb|mar|apr|jun|jul|aug|sept|sep|oct|nov|dec)\.?"
-)
-_MONTH_RANGE_RE = re.compile(
-    rf"(?<![a-z]){_MONTH_WORD}(?:\s+\d{{1,2}})?\s*(?:-|–|through|thru|to)\s*"
-    rf"{_MONTH_WORD}(?![a-z])",
-    re.I,
-)
-
-
-def _month(word: str) -> int:
-    w = word.lower().rstrip(".")
-    return _MONTHS.get(w[:4] if w.startswith("sept") else w[:3], 0)
-
-
-def _range_seasons(first: str, last: str) -> frozenset[str]:
-    """Seasons a month range stands for ("June - September" → summer)."""
-    a, b = _month(first), _month(last)
-    if not a or not b:
-        return frozenset()
-    months = {((a - 1 + i) % 12) + 1 for i in range((b - a) % 12 + 1)}
-    out: set[str] = set()
-    if months & {12, 1, 2}:
-        out.add("winter")
-    else:
-        out.add("non_winter")
-    if months & {6, 7, 8}:
-        out.add("summer")
-    return frozenset(out)
-
-
-def _month_range_tokens(text: str) -> list[tuple[int, int, frozenset[str]]]:
-    out = []
-    for m in _MONTH_RANGE_RE.finditer(text):
-        seasons = _range_seasons(m.group(1), m.group(2))
-        if seasons:
-            out.append((m.start(), m.end(), seasons))
-    return out
-
-
-def _tokens(dim: str, text: str) -> list[tuple[int, int, frozenset[str]]]:
-    toks = [
-        (m.start(), m.end(), _GOVERNING[dim][m.group(0).lower()])
-        for m in _GOVERNING_RE[dim].finditer(text)
-    ]
-    if dim == "season":
-        ranges = _month_range_tokens(text)
-        toks = [
-            t for t in toks
-            if not any(r[0] <= t[0] < r[1] for r in ranges)
-        ] + ranges
-        toks.sort()
-    return toks
-
-
-def _governing_on_line(
-    dim: str, line: str, num_start: int, num_end: int,
-) -> frozenset[str] | None:
-    """Label governing the number at ``line[num_start:num_end]``.
-
-    The line's layout decides direction: if its first label comes before its
-    first number, labels lead their numbers ("Off-peak 9.8; On-peak 20.3");
-    otherwise they trail them ("9.8 off-peak; 20.3 on-peak").
-    """
-    toks = _tokens(dim, line)
-    if not toks:
-        return None
-    nums = [(m.start(), m.end()) for m in _NUMBER_RE.finditer(line)]
-    if not nums or toks[0][0] < nums[0][0]:
-        prev_end = max((e for s, e in nums if e <= num_start), default=0)
-        seg = [t for t in toks if t[0] >= prev_end and t[1] <= num_start]
-        if seg:
-            return seg[-1][2]
-        before = [t for t in toks if t[1] <= num_start]
-        return before[-1][2] if before else None
-    next_start = min((s for s, e in nums if s >= num_end), default=len(line))
-    seg = [t for t in toks if t[0] >= num_end and t[1] <= next_start]
-    if seg:
-        return seg[0][2]
-    after = [t for t in toks if t[0] >= num_end]
-    return after[0][2] if after else None
-
-
-def _governing_above(
-    dim: str,
-    spans: list[tuple[int, int, str]],
-    line_idx: int,
-    num_start: int,
-) -> frozenset[str] | None:
-    """Nearest header / heading above that names a ``dim`` label.
-
-    Data rows (lines with a decimal rate) are skipped. A header naming
-    several values is a column header: the number's ordinal on its row picks
-    the column when counts line up, else the nearest column.
-    """
-    row = spans[line_idx][2]
-    row_nums = [m for m in _NUMBER_RE.finditer(row) if _is_decimal_figure(m.group(0))]
-    for back in range(1, _LABEL_LINE_LOOKBACK + 1):
-        j = line_idx - back
-        if j < 0:
-            break
-        line = spans[j][2]
-        if any(_is_decimal_figure(t) for t in _NUMBER_RE.findall(line)):
-            continue
-        toks = _tokens(dim, line)
-        if not toks:
-            continue
-        common = frozenset.intersection(*(t[2] for t in toks))
-        if common:
-            # One heading, e.g. "Non-Winter (May–November)".
-            return common
-        ordinal = next(
-            (i for i, m in enumerate(row_nums) if m.start() == num_start), None,
-        )
-        if ordinal is not None and len(row_nums) == len(toks):
-            return toks[ordinal][2]
-        return min(toks, key=lambda t: abs(t[0] - num_start))[2]
-    return None
-
-
-def _label_conflict(
-    spans: list[tuple[int, int, str]],
-    line_idx: int,
-    num_start: int,
-    num_end: int,
-    labels: dict[str, str | None],
-) -> str | None:
-    """First dimension whose governing label contradicts the cell, if any."""
-    line = spans[line_idx][2]
-    for dim in ("period", "day_type", "season"):
-        wanted = _wanted_values(dim, labels.get(dim))
-        if wanted is None:
-            continue
-        gov = _governing_on_line(dim, line, num_start, num_end)
-        if gov is None:
-            gov = _governing_above(dim, spans, line_idx, num_start)
-        if gov is not None and not (gov & wanted):
-            return dim
-    return None
-
-
-def _header_band(header: str, quote_col: int) -> str:
-    """Slice around the quote column; keep the full line when short/merged."""
-    if len(header) <= 80:
-        return header
-    lo = max(0, quote_col - 30)
-    hi = min(len(header), quote_col + 40)
-    # Also keep leading row-header tokens (merged-cell leftovers).
-    lead = header[: min(40, len(header))]
-    return f"{lead} {header[lo:hi]}"
-
-
-def _row_col_labels_ok(
-    spans: list[tuple[int, int, str]],
-    line_idx: int,
-    quote_col: int,
-    *,
-    season: str | None,
-    period: str | None,
-    day_type: str | None,
-    tier: str | None,
-    component_name: str | None,
-) -> tuple[bool, str]:
-    same_line = spans[line_idx][2] if 0 <= line_idx < len(spans) else ""
-
-    col_bits: list[str] = []
-    for back in range(1, _HEADER_LINE_LOOKBACK + 1):
-        j = line_idx - back
-        if j < 0:
-            break
-        header = spans[j][2]
-        if not header.strip():
-            continue
-        looks_header = bool(re.search(
-            r"¢\s*/\s*kwh|cents?\s*/?\s*kwh|\$\s*/\s*kwh|\bperiod\b|\bcharge\b|"
-            r"\brate\b|\benergy charge\b|\bprice\b|\btier\b|\bstep\b|\bblock\b|"
-            r"\bseason\b|\bsummer\b|\bwinter\b",
-            header,
-            re.I,
-        ))
-        is_data_row = (
-            len(_NUMBER_RE.findall(header)) >= 1
-            and re.search(
-                r"peak|off|weekend|weekday|tier|block|summer|winter|step",
-                header,
-                re.I,
-            )
-        )
-        if is_data_row and not looks_header:
-            continue
-        if not looks_header:
-            continue
-        col_bits.append(_header_band(header, quote_col))
-        # Keep collecting a second header row (multi-row / merged headers).
-        if len(col_bits) >= 2:
-            break
-    col_hay = " ".join(col_bits)
-
-    # Section headings: season banners, merged cells above the table.
-    sections: list[str] = []
-    for back in range(1, _LABEL_LINE_LOOKBACK + 1):
-        j = line_idx - back
-        if j < 0:
-            break
-        line = spans[j][2].strip()
-        if not line:
-            continue
-        if len(_NUMBER_RE.findall(line)) >= 1 and re.search(
-            r"peak|off|weekend|weekday|tier|block|step", line, re.I
-        ):
-            continue
-        if len(line) <= 100 and len(_NUMBER_RE.findall(line)) <= 1:
-            sections.append(line)
-            if len(sections) >= 3:
-                break
-    section = " ".join(sections)
-
-    row_or_col = f"{same_line} {col_hay}"
-    broad = f"{row_or_col} {section}"
-
-    period_aliases = _label_aliases("period", period)
-    if period_aliases and not _context_has_label(row_or_col, period_aliases):
-        # Period may also sit in a merged header span above the row.
-        if not _context_has_label(broad, period_aliases):
-            return False, "label_not_in_row_col:period"
-
-    day_aliases = _label_aliases("day_type", day_type)
-    if day_aliases and not _context_has_label(row_or_col, day_aliases):
-        if not _context_has_label(broad, day_aliases):
-            return False, "label_not_in_row_col:day_type"
-
-    season_aliases = _label_aliases("season", season)
-    if season_aliases and not _context_has_label(broad, season_aliases):
-        in_ranges = frozenset().union(*(t[2] for t in _month_range_tokens(broad)))
-        if not (in_ranges & (_wanted_values("season", season) or frozenset())):
-            return False, "label_not_in_row_col:season"
-
-    if tier and tier not in {"all", "1"}:
-        tier_aliases = _tier_aliases(tier)
-        if not _context_has_label(broad, tier_aliases):
-            return False, "label_not_in_row_col:tier"
-
-    _ = component_name
-    return True, "ok"
+    lo, hi = 0, len(spans) - 1
+    while lo < hi:
+        mid = (lo + hi + 1) // 2
+        if spans[mid][0] <= offset:
+            lo = mid
+        else:
+            hi = mid - 1
+    return max(0, lo)
 
 
 def _all_indices(hay: str, needle: str) -> list[int]:
@@ -709,10 +222,10 @@ def _find_quote_all(document_text: str, quote: str) -> tuple[str, list[tuple[int
     """Every (start, end) span of the quote in a line-preserving document.
 
     Tries verbatim, then dash/space-normalized, then whitespace-collapsed
-    (mapped back to real line offsets so row / column checks still see
-    lines). PDF reflows often break a model quote across lines or reorder a
-    header around the number; as a last resort an amount-anchored window
-    that still contains most quote tokens is used.
+    (mapped back to real line offsets). PDF reflows often break a model
+    quote across lines or reorder a header around the number; as a last
+    resort an amount-anchored window that still contains most quote tokens
+    is used.
     """
     q = str(quote)
     hits = _all_indices(document_text, q)
@@ -754,59 +267,156 @@ def _find_quote_all(document_text: str, quote: str) -> tuple[str, list[tuple[int
     return norm_doc, list(dict.fromkeys(spans))
 
 
-def _amount_anchors(
-    document_text: str,
-    spans: list[tuple[int, int, str]],
-    start: int,
-    end: int,
-    amount: str | Decimal,
-    unit: str | None,
-    context_units: set[str],
-    reflow_lines: int = 2,
-) -> list[tuple[int, int, int]] | None:
-    """(line, col_start, col_end) of each printed figure matching ``amount``.
+@dataclass(frozen=True)
+class _Figure:
+    line: int
+    start: int
+    end: int
+    value: Decimal
+    signed: bool  # the document prints the sign ("-1.41", "(1.297)")
 
-    Figures inside the quote win; otherwise the figure may sit within
-    ``reflow_lines`` of the quote (PDF reflow, or another row of the cited
-    table). ``None`` means the amount itself is unparseable.
+
+def _figures_on_line(spans: list[tuple[int, int, str]], li: int) -> list[_Figure]:
+    text = spans[li][2]
+    out: list[_Figure] = []
+    for m in _NUMBER_RE.finditer(text):
+        v = _figure_value(m.group(0))
+        if v is None:
+            continue
+        before = text[max(0, m.start() - 4):m.start()]
+        after = text[m.end():m.end() + 10]
+        signed = v < 0
+        if not signed:
+            lead = before.replace("$", "").rstrip()
+            if lead.endswith(("-", "−", "–")):
+                signed, v = True, -v
+            elif lead.endswith("(") and re.match(r"\s*(?:¢|\$|%|cents?)?\s*\)", after, re.I):
+                signed, v = True, -v
+        out.append(_Figure(li, m.start(), m.end(), v, signed))
+    return out
+
+
+def _adjacent_scale(text: str, start: int, end: int) -> str | None:
+    before = text[max(0, start - 4):start]
+    after = text[end:end + 8]
+    if re.search(r"\$\s*\(?\s*[-−–]?\s*$", before) or re.match(r"\s*\$", after):
+        return "$"
+    if re.match(r"\s*(?:¢|cents?\b)", after, re.I):
+        return "¢"
+    if re.match(r"\s*%", after):
+        return "%"
+    if re.match(r"\s*mills?\b", after, re.I):
+        return "mills"
+    return None
+
+
+def _lines_outward(li: int, n_lines: int, lookback: int = _HEADER_LINE_LOOKBACK) -> list[int]:
+    """The figure's line, the next line, then the lines above (headings)."""
+    order = [li]
+    if li + 1 < n_lines:
+        order.append(li + 1)
+    order.extend(j for j in range(li - 1, max(-1, li - 1 - lookback), -1))
+    return order
+
+
+def _printed_scale(spans: list[tuple[int, int, str]], fig: _Figure) -> str | None:
+    """The currency scale that governs a printed figure.
+
+    A marker touching the figure wins; otherwise the nearest scale token on
+    the figure's row, the next line, or the headings above.
     """
-    q = document_text[start:end]
-    wants = _amount_candidates(amount, unit, context_units, quote=q)
-    if not wants:
-        return None
+    text = spans[fig.line][2]
+    adj = _adjacent_scale(text, fig.start, fig.end)
+    if adj:
+        return adj
+    for j in _lines_outward(fig.line, len(spans)):
+        line = spans[j][2]
+        hits = [
+            (abs(m.start() - fig.start), scale)
+            for scale, pat in _SCALE_TOKENS.items()
+            for m in pat.finditer(line)
+            if not _marks_another_figure(line, m.start(), m.end(), fig if j == fig.line else None)
+        ]
+        if hits:
+            return min(hits)[1]
+    return None
 
-    def _matches(text: str, wanted: list[Decimal]) -> list[re.Match[str]]:
-        out = []
-        for m in _NUMBER_RE.finditer(text):
-            if _figure_value(m.group(0)) in wanted:
-                out.append(m)
-        return out
 
-    # In-quote figures first; nearby rows follow, so a figure the quote
-    # shows under another label (same price, other season) can still be
-    # grounded on its own row.
-    anchors: list[tuple[int, int, int]] = []
-    for m in _matches(q, wants):
-        li = _line_index_at(spans, start + m.start())
-        col = start + m.start() - spans[li][0]
-        anchors.append((li, col, col + len(m.group(0))))
+def _marks_another_figure(line: str, start: int, end: int, own: _Figure | None) -> bool:
+    """A "$" / "¢" touching some other figure is that figure's unit, not a header."""
+    for m in _NUMBER_RE.finditer(line):
+        if own is not None and m.start() == own.start:
+            continue
+        if 0 <= m.start() - end <= 2 or 0 <= start - m.end() <= 1:
+            return True
+    return False
 
-    # A single-row quote that prints its own (different) price cites that
-    # price; borrowing a neighbouring row's figure would ground the wrong cell.
-    if not anchors and reflow_lines <= 2 and any(
-        _is_decimal_figure(m.group(0)) for m in _NUMBER_RE.finditer(q)
-    ):
-        return []
 
-    first = _line_index_at(spans, start)
-    last = _line_index_at(spans, max(start, end - 1))
-    lo, hi = max(0, first - reflow_lines), min(len(spans), last + reflow_lines + 1)
-    band = "\n".join(spans[i][2] for i in range(lo, hi))
-    wants_band = _amount_candidates(amount, unit, context_units, quote=band)
-    for li in range(lo, hi):
-        for m in _matches(spans[li][2], wants_band):
-            anchors.append((li, m.start(), m.end()))
-    return list(dict.fromkeys(anchors))
+def _denominator_printed(
+    spans: list[tuple[int, int, str]], li: int, denom: str, quote: str,
+) -> bool:
+    pat = _DENOM_TOKENS[denom]
+    if pat.search(quote):
+        return True
+    # A table's unit row can sit well above its last data row.
+    return any(
+        pat.search(spans[j][2])
+        for j in _lines_outward(li, len(spans), lookback=_TABLE_LINES)
+    )
+
+
+def _in_stored_scale(value: Decimal, printed: str | None, spec: UnitSpec) -> Decimal | None:
+    """The printed figure expressed in the stored unit's scale, or None if it cannot be."""
+    stored = spec.scale
+    if stored in (None, "factor"):
+        return value
+    if printed == stored:
+        return value
+    if stored == "$" and printed == "¢":
+        return value / Decimal("100")
+    if stored == "¢" and printed == "$":
+        return value * Decimal("100")
+    return None
+
+
+def _related(value: Decimal, want: Decimal) -> bool:
+    """Same magnitude in some scale — used only to name the failure."""
+    a, w = abs(value), abs(want)
+    return a == w or a == w * 100 or a * 100 == w
+
+
+def _ground_figures(
+    spans: list[tuple[int, int, str]],
+    figures: list[_Figure],
+    *,
+    want: Decimal,
+    spec: UnitSpec | None,
+    require_unit: bool,
+    quote: str,
+) -> str | None:
+    """'ok' when a figure grounds amount + unit, else a failure reason, None if unrelated."""
+    reason: str | None = None
+    for fig in figures:
+        if not _related(fig.value, want):
+            continue
+        if not require_unit or spec is None:
+            if fig.value == want or (not fig.signed and fig.value == -want):
+                return "ok"
+            reason = reason or "amount_not_in_quote"
+            continue
+        printed = _printed_scale(spans, fig)
+        got = _in_stored_scale(fig.value, printed, spec)
+        if got is None:
+            reason = "unit_not_in_context"
+            continue
+        if got != want and not (not fig.signed and got == -want):
+            reason = reason or ("unit_not_in_context" if abs(got) != abs(want) else "sign_mismatch")
+            continue
+        if spec.denom and not _denominator_printed(spans, fig.line, spec.denom, quote):
+            reason = "unit_not_in_context"
+            continue
+        return "ok"
+    return reason
 
 
 def verify_quote(
@@ -816,12 +426,6 @@ def verify_quote(
     unit: str | None = None,
     require_unit: bool = True,
     amount: str | Decimal | None = None,
-    season: str | None = None,
-    period: str | None = None,
-    day_type: str | None = None,
-    tier: str | None = None,
-    component_name: str | None = None,
-    require_row_col: bool = False,
     reflow_lines: int = 2,
 ) -> QuoteVerifyResult:
     if not quote or not str(quote).strip():
@@ -833,9 +437,7 @@ def verify_quote(
     try:
         return _verify_quote(
             document_text, quote, unit=unit, require_unit=require_unit,
-            amount=amount, season=season, period=period, day_type=day_type,
-            tier=tier, component_name=component_name,
-            require_row_col=require_row_col, reflow_lines=reflow_lines,
+            amount=amount, reflow_lines=reflow_lines,
         )
     finally:
         _COMMA_DECIMAL.reset(token)
@@ -848,30 +450,27 @@ def _verify_quote(
     unit: str | None,
     require_unit: bool,
     amount: str | Decimal | None,
-    season: str | None,
-    period: str | None,
-    day_type: str | None,
-    tier: str | None,
-    component_name: str | None,
-    require_row_col: bool,
     reflow_lines: int,
 ) -> QuoteVerifyResult:
+    spec = parse_unit(unit) if unit else None
+    if require_unit and unit:
+        if spec is None:
+            return QuoteVerifyResult(False, f"unsupported_unit:{unit}")
+        if spec.ambiguous:
+            return QuoteVerifyResult(False, f"ambiguous_unit:{unit}")
+
     doc, found = _find_quote_all(document_text, quote)
     if not found:
         return QuoteVerifyResult(False, "quote_not_found")
 
     # A quote can occur more than once (the same price in two seasons); any
-    # occurrence that grounds amount, unit and labels is enough.
+    # occurrence that grounds amount and unit is enough.
     first_failure: QuoteVerifyResult | None = None
     spans = _line_spans(doc)
     for start, end in found:
         result = _verify_at(
-            doc, spans, start, end,
-            unit=unit, require_unit=require_unit, amount=amount,
-            labels={"season": season, "period": period, "day_type": day_type,
-                    "tier": tier},
-            component_name=component_name, require_row_col=require_row_col,
-            reflow_lines=reflow_lines,
+            doc, spans, start, end, spec=spec, require_unit=require_unit,
+            amount=amount, reflow_lines=reflow_lines,
         )
         if result.ok:
             return result
@@ -883,113 +482,60 @@ def _verify_quote(
 def _verify_at(
     document_text: str,
     spans: list[tuple[int, int, str]],
-    idx: int,
+    start: int,
     end: int,
     *,
-    unit: str | None,
+    spec: UnitSpec | None,
     require_unit: bool,
     amount: str | Decimal | None,
-    labels: dict[str, str | None],
-    component_name: str | None,
-    require_row_col: bool,
     reflow_lines: int,
 ) -> QuoteVerifyResult:
-    q = document_text[idx:end]
-    line_idx = _line_index_at(spans, idx)
-    quote_col = idx - spans[line_idx][0]
-    context_units = _context_unit_family(document_text, spans, idx, len(q))
+    q = document_text[start:end]
+    first = _line_index_at(spans, start)
+    last = _line_index_at(spans, max(start, end - 1))
 
-    anchors: list[tuple[int, int, int]] = [(line_idx, quote_col, quote_col)]
-    if amount is not None and str(amount).strip() != "":
-        found = _amount_anchors(
-            document_text, spans, idx, end, amount, unit, context_units,
-            reflow_lines=reflow_lines,
+    if amount is None or str(amount).strip() == "":
+        if require_unit and spec is not None:
+            region = " ".join(spans[j][2] for j in _lines_outward(first, len(spans)))
+            scale_pat = _SCALE_TOKENS.get(spec.scale or "")
+            if scale_pat is not None and not scale_pat.search(region):
+                return QuoteVerifyResult(False, "unit_not_in_context", start)
+            if spec.denom and not _denominator_printed(spans, first, spec.denom, q):
+                return QuoteVerifyResult(False, "unit_not_in_context", start)
+        return QuoteVerifyResult(True, "ok", start)
+
+    try:
+        want = amount if isinstance(amount, Decimal) else Decimal(str(amount).strip())
+    except (InvalidOperation, ValueError):
+        return QuoteVerifyResult(False, "amount_unparseable", start)
+
+    in_quote = [
+        f for li in range(first, last + 1) for f in _figures_on_line(spans, li)
+        if start <= spans[li][0] + f.start < end
+    ]
+    reason = _ground_figures(
+        spans, in_quote, want=want, spec=spec, require_unit=require_unit, quote=q,
+    )
+    if reason == "ok":
+        return QuoteVerifyResult(True, "ok", start)
+
+    # A single-row quote that prints its own (different) price cites that
+    # price; borrowing a neighbouring row's figure would ground the wrong cell.
+    owns_figure = any(
+        _is_decimal_figure(spans[f.line][2][f.start:f.end]) for f in in_quote
+    )
+    if reason is None and not (reflow_lines <= 2 and owns_figure):
+        lo, hi = max(0, first - reflow_lines), min(len(spans), last + reflow_lines + 1)
+        band = [
+            f for li in range(lo, hi) for f in _figures_on_line(spans, li)
+            if not (start <= spans[li][0] + f.start < end)
+        ]
+        reason = _ground_figures(
+            spans, band, want=want, spec=spec, require_unit=require_unit, quote=q,
         )
-        if found is None:
-            return QuoteVerifyResult(False, "amount_unparseable", idx)
-        if not found:
-            return QuoteVerifyResult(False, "amount_not_in_quote", idx)
-        anchors = found
-
-    if require_unit and unit:
-        norm = _normalize_unit(unit)
-        pat = _UNIT_PATTERNS.get(norm)
-        if pat is None:
-            return QuoteVerifyResult(False, f"unsupported_unit:{unit}", idx)
-        start = max(0, idx - _UNIT_WINDOW)
-        end = min(len(document_text), idx + len(q) + _UNIT_WINDOW)
-        window = document_text[start:end]
-        unit_ok = bool(pat.search(window)) or _unit_in_headers(
-            spans, line_idx, quote_col, pat,
-        )
-        # Ontario RPP / similar: stored $/kWh, page prints ¢/kWh (or reverse).
-        # Accept the sibling energy unit only when an amount was supplied and
-        # the quote already matched via the 100× conversion (keeps bare
-        # "18.324" + $/kWh in a cents-only doc as a hold).
-        if not unit_ok and norm in {"$/kwh", "cents/kwh"} and amount is not None:
-            sibling = "cents/kwh" if norm == "$/kwh" else "$/kwh"
-            spat = _UNIT_PATTERNS[sibling]
-            sibling_grounded = bool(spat.search(window)) or _unit_in_headers(
-                spans, line_idx, quote_col, spat,
-            )
-            if sibling_grounded:
-                try:
-                    want = (
-                        amount if isinstance(amount, Decimal)
-                        else Decimal(str(amount))
-                    )
-                except (InvalidOperation, ValueError):
-                    want = None
-                converted = [
-                    c for c in _amount_candidates(
-                        amount, unit, context_units | {sibling},
-                    )
-                    if want is not None and c != want
-                ]
-                # The printed figure must be the converted one (9.8 for
-                # 0.098), not the stored dollars amount in a cents column.
-                printed = [
-                    _figure_value(spans[li][2][c0:c1]) for li, c0, c1 in anchors
-                    if c1 > c0
-                ]
-                if converted and any(p in converted for p in printed):
-                    unit_ok = True
-                    context_units.add(sibling)
-                    anchors = [
-                        a for a, p in zip(
-                            [a for a in anchors if a[2] > a[1]], printed,
-                        )
-                        if p in converted
-                    ]
-        if not unit_ok:
-            return QuoteVerifyResult(False, "unit_not_in_context", idx)
-
-    need_row_col = require_row_col or any(
-        v and v != "all" for v in labels.values()
-    ) or bool(component_name)
-    if not need_row_col:
-        return QuoteVerifyResult(True, "ok", idx)
-
-    # Labels are checked where the figure is printed, not where the quote
-    # starts, and the label governing that figure must not contradict them.
-    reason = "ok"
-    for li, col, col_end in anchors:
-        if amount is not None and col_end > col:
-            dim = _label_conflict(spans, li, col, col_end, labels)
-            if dim:
-                reason = f"label_conflict:{dim}"
-                continue
-        ok, reason = _row_col_labels_ok(
-            spans, li, col,
-            season=labels.get("season"),
-            period=labels.get("period"),
-            day_type=labels.get("day_type"),
-            tier=labels.get("tier"),
-            component_name=component_name,
-        )
-        if ok:
-            return QuoteVerifyResult(True, "ok", idx)
-    return QuoteVerifyResult(False, reason, idx)
+        if reason == "ok":
+            return QuoteVerifyResult(True, "ok", start)
+    return QuoteVerifyResult(False, reason or "amount_not_in_quote", start)
 
 
 def verify_component_quote(
@@ -998,53 +544,33 @@ def verify_component_quote(
     quote: str | None,
     unit: str | None,
     amount: str | Decimal | None = None,
-    cell: dict[str, Any] | None = None,
-    component_name: str | None = None,
-    require_row_col: bool = False,
     reflow_lines: int = 2,
 ) -> QuoteVerifyResult:
     if not quote:
         return QuoteVerifyResult(False, "missing_quote")
-    cell = cell or {}
     return verify_quote(
         document_text,
         quote,
         unit=unit,
         require_unit=True,
         amount=amount,
-        season=cell.get("season"),
-        period=cell.get("period"),
-        day_type=cell.get("day_type"),
-        tier=cell.get("tier"),
-        component_name=component_name,
-        require_row_col=require_row_col,
         reflow_lines=reflow_lines,
     )
 
 
-def verify_component_cells(
-    document_text: str,
-    component: Any,
-    *,
-    require_row_col: bool = True,
-) -> QuoteVerifyResult:
+def verify_component_cells(document_text: str, component: Any) -> QuoteVerifyResult:
     """Ground **every** cell of a component, not just one.
 
-    Each cell's amount must be printed under labels that fit that cell: in
-    the quote, or — for a multi-cell component whose single quote cites one
-    row — elsewhere in the cited table (``_TABLE_LINES`` of the quote). A
-    cell may carry its own ``source_quote``; otherwise the component quote
-    is used.
+    Each cell's amount must be printed in its quote, or — for a multi-cell
+    component whose single quote cites one row — elsewhere in the cited
+    table (``_TABLE_LINES`` of the quote). A cell may carry its own
+    ``source_quote``; otherwise the component quote is used.
     """
     cells = list(getattr(component, "cells", None) or [])
-    name = getattr(component, "name", None) or getattr(component, "code", None)
     quote = getattr(component, "source_quote", None)
     unit = getattr(component, "unit", None)
     if not cells:
-        return verify_component_quote(
-            document_text, quote=quote, unit=unit,
-            component_name=name, require_row_col=False,
-        )
+        return verify_component_quote(document_text, quote=quote, unit=unit)
     for i, cell in enumerate(cells):
         own_quote = cell.get("source_quote")
         result = verify_component_quote(
@@ -1052,9 +578,6 @@ def verify_component_cells(
             quote=own_quote or quote,
             unit=unit,
             amount=cell.get("amount"),
-            cell=cell,
-            component_name=name,
-            require_row_col=require_row_col,
             reflow_lines=2 if own_quote or len(cells) == 1 else _TABLE_LINES,
         )
         if not result.ok:
@@ -1068,6 +591,9 @@ def verify_component_cells(
 
 __all__ = [
     "QuoteVerifyResult",
+    "UnitSpec",
+    "is_decimal_comma_document",
+    "parse_unit",
     "verify_component_cells",
     "verify_component_quote",
     "verify_quote",
