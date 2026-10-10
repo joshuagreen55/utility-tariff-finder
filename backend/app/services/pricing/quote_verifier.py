@@ -791,6 +791,13 @@ def _amount_anchors(
         col = start + m.start() - spans[li][0]
         anchors.append((li, col, col + len(m.group(0))))
 
+    # A single-row quote that prints its own (different) price cites that
+    # price; borrowing a neighbouring row's figure would ground the wrong cell.
+    if not anchors and reflow_lines <= 2 and any(
+        _is_decimal_figure(m.group(0)) for m in _NUMBER_RE.finditer(q)
+    ):
+        return []
+
     first = _line_index_at(spans, start)
     last = _line_index_at(spans, max(start, end - 1))
     lo, hi = max(0, first - reflow_lines), min(len(spans), last + reflow_lines + 1)

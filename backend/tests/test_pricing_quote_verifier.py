@@ -50,6 +50,24 @@ class TestDecimalComma(unittest.TestCase):
         )
         self.assertFalse(r.ok)
 
+    def test_quote_with_own_figure_does_not_borrow_neighbour_row(self):
+        r = verify_quote(
+            HQ_FR_DOC, "10,652 ¢ le kWh pour le reste", unit="¢/kWh", amount="6.905",
+        )
+        self.assertFalse(r.ok)
+        self.assertEqual(r.reason, "amount_not_in_quote")
+        r = verify_quote(
+            EN_DOC, "Over 1,000 kWh per month 11.430 ¢/kWh",
+            unit="¢/kWh", amount="9.120",
+        )
+        self.assertFalse(r.ok)
+        self.assertEqual(r.reason, "amount_not_in_quote")
+
+    def test_label_only_quote_still_reads_reflowed_figure(self):
+        doc = "Residential Service\nEnergy charge\n9.120 ¢/kWh\n"
+        r = verify_quote(doc, "Energy charge", unit="¢/kWh", amount="9.120")
+        self.assertTrue(r.ok, r.reason)
+
     def test_short_comma_decimal_in_any_document(self):
         doc = "Residential\nEnergy 9,8 ¢/kWh\nDelivery 3.100 ¢/kWh\nFuel 0.400 ¢/kWh\n"
         self.assertFalse(is_decimal_comma_document(doc))
