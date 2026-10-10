@@ -13,13 +13,12 @@ from dataclasses import dataclass, field
 from decimal import Decimal
 from pathlib import Path
 from typing import Any, Iterable
-from urllib.parse import urlparse
-
 from app.services.pricing.extraction import (
     ExtractionAccept,
     ExtractionHold,
     dual_extract_components,
 )
+from app.services.pricing.official_sites import official_context
 from app.services.pricing.types import money
 
 DEFAULT_FIXTURE_DIR = (
@@ -221,18 +220,6 @@ def _cents_match(official: list[Decimal], compiled: list[Decimal]) -> bool:
     return a == b
 
 
-def _hosts_for_row(row: dict[str, Any]) -> list[str]:
-    hosts: list[str] = []
-    for u in (row.get("documents") or {}).get("urls") or []:
-        try:
-            h = (urlparse(u).hostname or "").lower().removeprefix("www.")
-        except Exception:
-            h = ""
-        if h and h not in hosts:
-            hosts.append(h)
-    return hosts or ["golden.example"]
-
-
 def replay_plan(
     row: dict[str, Any],
     *,
@@ -262,7 +249,7 @@ def replay_plan(
 
     urls = (row.get("documents") or {}).get("urls") or []
     source_url = urls[0] if urls else None
-    hosts = _hosts_for_row(row)
+    source_ctx = official_context(base.utility)
 
     def extract_fn(_document: str, model: str, _ctx: dict) -> list[dict]:
         m = (model or "").lower()
@@ -282,7 +269,7 @@ def replay_plan(
             "source_url": source_url,
         },
         extract_fn=extract_fn,
-        official_hosts=hosts,
+        source_ctx=source_ctx,
         source_url=source_url,
         inventory=None,
         dispositions=None,
