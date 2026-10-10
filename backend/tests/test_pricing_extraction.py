@@ -42,6 +42,15 @@ def _good_payload():
             "source_page": "p.1",
             "source_quote": "Fuel 2.000 ¢/kWh",
         },
+        {
+            "code": "green",
+            "kind": "rider_per_kwh",
+            "unit": "¢/kWh",
+            "name": "Green power option",
+            "disposition": "optional",
+            "cells": [],
+            "source_page": "p.1",
+        },
     ]
 
 
@@ -126,7 +135,7 @@ class TestDualExtract(unittest.TestCase):
             force=True,
         )
         self.assertIsInstance(result, ExtractionHold)
-        self.assertIn("G2:extractors_disagree", result.detail)
+        self.assertIn("G2:compiled_disagree", result.detail)
 
     def test_rider_applies_with_blank_amount_holds(self):
         """Never accept a possibly understated all-in: base alone is 8¢."""

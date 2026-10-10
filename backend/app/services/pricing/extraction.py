@@ -96,6 +96,7 @@ def _raw_to_component(raw: dict[str, Any]) -> ComponentInput:
         loss_sensitive=bool(raw.get("loss_sensitive") or False),
         source_page=raw.get("source_page") or raw.get("page"),
         source_quote=raw.get("source_quote") or raw.get("quote"),
+        disposition=disposition_of(raw) or None,
     )
 
 
@@ -368,6 +369,7 @@ def dual_extract_components(
         source_ctx=source_ctx,
         extract_a=applying_a,
         extract_b=applying_b,
+        full_extracts=[comps_a, comps_b],
         inventory=inventory,
         dispositions=disps,
         edition_label=edition_label or plan_meta.get("edition_label"),

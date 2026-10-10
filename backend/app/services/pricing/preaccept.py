@@ -5,6 +5,7 @@ all-in tables are checks, never stored values.
 """
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass, field
 from decimal import Decimal
 from typing import Any, Iterable
@@ -177,34 +178,33 @@ def gate_agreement(
     *,
     recipe_code: str | None = None,
 ) -> list[GateFailure]:
-    """G2: the two blind extractions' **applying** components agree.
+    """G2: the two blind extractions price the plan identically.
 
-    Every priced kind (including loss-factor multipliers) must match by
-    code, kind, cell labels and amount (¢ ↔ $ normalized). With a
-    ``recipe_code``, both sides are also compiled and must price every cell
-    identically — that catches disagreements on ``loss_sensitive``, percent
-    bases, multiplier targets and charge categories. Metadata-only
-    differences (TOU clocks, season calendars, fixed monthly charges,
-    display names) do not hold the plan (R29-4).
+    With a ``recipe_code`` both sides are compiled and must produce the same
+    multiset of all-in $/kWh prices. Codes, kinds, names and cell labels are
+    each model's own words and are not compared — only what they price.
+    That still catches a disagreement on any amount, rider, percent base,
+    multiplier, ``loss_sensitive`` or charge side, and ignores metadata
+    (clocks, calendars, fixed monthly charges) (R29-4).
+
+    Without a recipe, the priced components must match by kind, cell labels
+    and amount.
     """
-    a, b = _agreement_canon(extract_a), _agreement_canon(extract_b)
-    if a != b:
-        only_a = sorted(set(a) - set(b))
-        only_b = sorted(set(b) - set(a))
-        disagree = sorted(k for k in set(a) & set(b) if a[k] != b[k])
-        return [GateFailure(
-            "G2",
-            "extractors_disagree",
-            f"only_a={only_a}; only_b={only_b}; disagree={disagree}",
-        )]
     if not recipe_code:
+        a = sorted(_agreement_canon(extract_a).values())
+        b = sorted(_agreement_canon(extract_b).values())
+        if a != b:
+            return [GateFailure("G2", "extractors_disagree", f"a={a}; b={b}")]
         return []
 
-    def _compiled(comps: list[ComponentInput]) -> dict:
+    def _compiled(comps: list[ComponentInput]) -> list[Decimal]:
         plan = PlanInput(
             plan_key="g2", name="g2", recipe_code=recipe_code, components=comps,
         )
-        return {c.key: c.dollars_per_kwh for c in compile_plan(plan).cells}
+        return sorted(
+            c.dollars_per_kwh.quantize(Decimal("0.000001"))
+            for c in compile_plan(plan).cells
+        )
 
     try:
         priced_a = _compiled(extract_a)
@@ -215,11 +215,10 @@ def gate_agreement(
     except Exception as e:
         return [GateFailure("G2", "extract_b_not_compilable", str(e))]
     if priced_a != priced_b:
-        diff = sorted(
-            k.as_dict().__repr__() for k in set(priced_a) | set(priced_b)
-            if priced_a.get(k) != priced_b.get(k)
-        )
-        return [GateFailure("G2", "compiled_disagree", "; ".join(diff))]
+        return [GateFailure(
+            "G2", "compiled_disagree",
+            f"a={[str(v) for v in priced_a]}; b={[str(v) for v in priced_b]}",
+        )]
     return []
 
 
@@ -280,6 +279,67 @@ def gate_census(
     if census.complete:
         return [], census
     return [GateFailure("G5", "census_incomplete", ";".join(census.reasons))], census
+
+
+_PER_KWH_PRICED = frozenset({
+    "base_energy", "rider_per_kwh", "rider_percent", "credit",
+    "delivery_per_kwh", "default_supply", "regulated_commodity",
+})
+
+
+def _named_in(document_norm: str, c: ComponentInput) -> bool:
+    for label in (c.name, c.code):
+        words = re.sub(r"[^a-z0-9]+", " ", (label or "").lower()).strip()
+        if len(words) >= 3 and f" {words} " in document_norm:
+            return True
+    return False
+
+
+_RIDER_KINDS = frozenset({"rider_per_kwh", "rider_percent", "credit"})
+
+
+def gate_completeness(
+    document_text: str,
+    extracts: Iterable[list[ComponentInput]],
+    *,
+    recipe_code: str | None = None,
+    inventory_closed: bool = False,
+) -> list[GateFailure]:
+    """G5: the all-in leaves out nothing the models themselves know about.
+
+    Checked on each model's full extract (every disposition):
+
+    * a per-kWh charge marked ``not_found`` whose name or code is printed in
+      the document — the model knows the charge exists but could not read
+      its value, so any all-in would be understated;
+    * a full-bill recipe where neither model dispositioned any rider,
+      adjustment or credit as anything but ``applies`` — it priced what it
+      happened to see but never enumerated the rider list (no
+      not_applicable / optional / not_found decisions) and no non-empty
+      document-derived rider inventory was closed, so the all-in cannot be
+      shown complete.
+    """
+    failures: list[GateFailure] = []
+    extracts = list(extracts)
+    doc_norm = " " + re.sub(r"[^a-z0-9]+", " ", (document_text or "").lower()) + " "
+    for i, comps in enumerate(extracts):
+        side = "ab"[i] if i < 2 else str(i)
+        for c in comps:
+            disp = (c.disposition or "applies").strip().lower()
+            if disp == "not_found" and c.kind in _PER_KWH_PRICED and _named_in(doc_norm, c):
+                failures.append(GateFailure(
+                    "G5", "charge_value_not_found", f"model_{side}:{c.code}",
+                ))
+    if recipe_code in _FULL_BILL_RECIPES and not inventory_closed and not any(
+        c.kind in _RIDER_KINDS
+        and (c.disposition or "applies").strip().lower() != "applies"
+        for comps in extracts for c in comps
+    ):
+        failures.append(GateFailure("G5", "no_rider_census"))
+    return failures
+
+
+_FULL_BILL_RECIPES = frozenset({"bundled", "deregulated", "provincial_alberta"})
 
 
 def gate_oracle(
@@ -343,6 +403,7 @@ def run_preaccept(
     typical_bill_cents_per_kwh: Decimal | None = None,
     typical_bill_oracles: list | None = None,
     source_ctx: UtilitySourceContext | None = None,
+    full_extracts: list[list[ComponentInput]] | None = None,
 ) -> PreAcceptResult:
     """Run G0–G6. Accepted only when every gate passes.
 
@@ -383,6 +444,12 @@ def run_preaccept(
     if inventory is not None:
         f, census = gate_census(inventory, dispositions or [])
         failures.extend(f)
+
+    if full_extracts is not None:
+        failures.extend(gate_completeness(
+            document_text, full_extracts, recipe_code=plan.recipe_code,
+            inventory_closed=bool(inventory) and census is not None and census.complete,
+        ))
 
     return PreAcceptResult(
         accepted=not failures,
