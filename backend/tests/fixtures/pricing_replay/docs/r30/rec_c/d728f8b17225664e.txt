@@ -1,0 +1,2522 @@
+[DOC 0] https://www.hydro.mb.ca/articles/2026/07/manitobans-pay-the-second-lowest-electricity-rates-in-canada-report/
+News release
+July 22, 2026
+Manitobans pay the second lowest electricity rates in Canada: report
+Manitobans benefit from some of the lowest electricity costs in the country, with the second lowest rates for residential customers, according to a recent independent study.
+Powering Ahead: Comparing Electricity Prices Across Canada
+by the C.D. Howe Institute, highlights significant differences in electricity pricing across Canada. Provinces powered primarily by hydroelectricity — including Manitoba — consistently report the lowest costs.
+According to the findings, Manitoba ranks just behind Quebec, offering the second most affordable electricity rates for households nationwide.
+The results echo the Canada Energy Regulator, which
+reported earlier this year
+that Manitobans pay an average of 10.95 cents per kilowatt hour for residential electricity, slightly more than Quebecers (8.54 cents) and considerably less than Albertans (18.71 cents).
+“This report reinforces what Manitobans already experience — Manitoba Hydro’s safe, reliable, affordable electricity helps keep household costs down,” said Manitoba Hydro President and CEO Allan Danroth.
+“The C.D. Howe Institute study also underlines that Manitoba’s small commercial and industrial sectors benefit from this hydroelectric energy advantage, consistently maintaining some of the lowest power costs across North America,” Danroth said.
+Electricity prices vary widely across the country depending on how power is generated, transmitted, and delivered.
+Hydroelectric generation forms the backbone of Manitoba’s power supply. This enables Manitoba Hydro rates that remain consistently below the national average while supporting economic growth and affordability for families and businesses.
+But the report notes there are challenges ahead as demand rises and the energy landscape evolves. Increased electrification, population growth, and industrial development are expected to put additional pressure on the province’s hydroelectric system, particularly during periods of low water conditions.
+“Maintaining our safe, reliable system will require significant investment in new generation, transmission infrastructure, and grid modernization — all while keeping rates affordable for customers,” Danroth said.
+For more information, please contact:
+Peter Chura, Media Relations Officer
+431‑323‑4511
+pchura@hydro.mb.ca
+Categories
+Keeping you safe
+News releases
+Our community
+Our environment
+Services and accounts
+The energy future
+Working for you
+To view older articles,
+visit the archives
+.
+Do it all with our app
+Our app helps you access your account at home or on the go. Stay up to date with push notifications about bills, meter readings, outages, and more.
+[DOC 1] https://www.hydro.mb.ca/service/generate-your-own-electricity/
+Generate your own electricity
+Skip to content
+Français
+Login
+Menu
+Close
+Your account
+Start, stop, move or add an account
+Meters
+Billing & payment
+Loans & financing
+Rates & charges
+Your online account
+Most requested
+Equal Payment Plan
+Get help paying your bill
+Start, stop or move service
+Outages
+Power outage map
+Report a power outage
+Report a street light outage
+Reliability
+Planned outages
+Prepare for a power outage
+Permits & service
+Permits & inspections
+Service connections
+Generate your own electricity
+Most requested
+Request a tree safety assessment
+Apply for a line locate
+Request temporary service disconnection
+Safety
+Emergencies
+Indoor safety
+Outdoor safety
+Tree safety
+Storms
+Hydro infrastructure
+Education and youth safety
+Most requested
+Click Before You Dig
+Emergencies
+Tree trimming
+News & stories
+Customer support
+Help centre
+Contact us
+Most requested
+How to submit a damage claim
+Request a credit reference letter
+Login
+Français
+Home
+Permits & service
+Generate your own electricity
+Generate your own electricity
+On this page
+On this page
+Excess energy price
+Payback estimates
+Calculate your payback period
+Grid-connected solar photovoltaic systems
+Also in
+Permits & service
+Also in
+Permits & service
+Permits & inspections
+Service connections
+Generate your own electricity
+You can generate or store electricity for your home or business using alternative energy technologies such as:
+Solar
+Wind
+Biomass
+Small scale hydro
+Battery storage
+This is called customer generation or distributed energy resources.
+You can use the electricity that your system produces and reduce the amount of electricity you buy from us, but in most situations, you will need to remain
+connected to our grid
+. This is because your system may not be able to produce electricity 24 hours a day, such as when the sun is down or the wind isn’t blowing.
+Excess energy price
+If you are generating more energy than you are using, and your generator is less than 100
+kW
+in size, your
+excess energy can be sold back
+to us at the excess energy price using
+net billing
+.
+The excess energy price is $0.07173/
+kWh
+until March 31, 2027.
+This price is updated yearly and reflects the current market value. It is not equal to our electricity rates because our rates must recover service costs, such as:
+transmission
+distribution
+customer service
+safety
+emergency restoration
+The excess energy price will change from year to year and can vary significantly depending on the market value of excess energy.
+The table below contains historical excess energy prices over the last 6 years.
+Historical prices
+Effective date
+Excess energy price ($/kWh)
+2025 April 1
+$0.04390
+2024 April 1
+$0.05607
+2023 April 1
+$0.06546
+2022 April 1
+$0.05079
+2021 April 1
+$0.02403
+2020 April 1
+$0.02949
+Historical average since 2018
+$0.04272
+The current excess energy price is $0.07173/kWh. There is potential that future excess energy prices will be lower or higher than the price posted today.
+Large generators
+If your generator is 100
+kW
+or greater
+[DOC 1] https://www.hydro.mb.ca/service/generate-your-own-electricity/
+ in size your purchase price will be determined on a case-by-case basis. Learn more about
+selling excess electricity for generators 100 kW or greater
+.
+Payback estimates
+The payback period of a customer generating system can depend on:
+the total install cost including any financing costs;
+ongoing operating and maintenance expenses;
+your site’s annual energy needs relative to the size and type of system you are installing;
+the quantity of energy used to offset load versus excess sold to us;
+system performance;
+future electricity rates in Manitoba and the excess energy price.
+A properly sized system that uses most of the energy generated, rather than selling excess to us, will typically provide a better payback.
+Before you invest in a generating system, consider reducing your electricity use by adding insulation, buying energy-efficient appliances, or upgrading your lighting. It is more cost effective to reduce your electricity costs by improving your energy efficiency than by generating your own electricity.
+Calculate your payback period
+Step 1: Determine your costs
+Once you have a quote from your contractor, subtract the value of any federal/provincial grants and rebates from the total cost of your system and add any financing costs. We recommend getting at least 2 or 3 quotes and to be wary of estimates that promise quick paybacks.
+Step 2: Determine your annual cost savings
+Calculate your annual financial benefits, including your avoided electricity usage at your current electricity rate, and add any additional benefits, including any excess energy sold to us.
+Annual cost savings formula:
+(energy produced x percent of energy used x current electricity rate) + (energy produced x percent of energy sold to us x excess energy purchase price)
+Step 3: Calculate the payback period
+Divide the total cost of your system from Step 1 by your annual financial benefits from Step 2 to calculate the number of years it will take for you to achieve your payback.
+Contact us
+For more information about customer generation,
+email us
+.
+Grid-connected solar photovoltaic systems
+Solar photovoltaic (PV) panels installed on roof-tops or mounted on the ground convert the sun’s rays into electricity. Your home or business will use the electricity produced by your solar PV system, and when more energy is generated than you are using, it can be sold to us through
+net billing
+.
+What to consider before installing solar
+To eliminate the need for grid connection you would need to invest in a very efficient home, a larger PV system, a large battery storage capacity and/or a large backup generator (usually fuel-fired) which would be very costly. Retaining grid connection provides the lowest cost method of installing a solar PV system today.
+Connection to the Manitoba Hydro grid ensures a reliable supply of electricity when your solar PV system does not generate enough for your needs. Grid-connected solar PV systems can significantly reduce the amount of electricity you buy during d
+[DOC 1] https://www.hydro.mb.ca/service/generate-your-own-electricity/
+aylight hours. How much electricity you buy and sell will depend on several factors including:
+PV system
+kW
+size and panel orientation;
+season, time of day, and cloud cover and shading;
+electrical loads currently operating.
+Before installing a solar PV system, you should be aware of the time it takes to recover all costs of installation. Learn more on
+how to calculate a payback period for distributed energy resources like solar
+.
+To understand how various types of solar installations perform and the overall effects of solar capacity on the Manitoba Hydro grid, read our
+solar PV research study
+(PDF, 1.8 MB)
+.
+Solar capacity and usage change throughout the day, a surplus of electricity only occurs when the sun is at its peak, and usage is relatively low.
+Enlarge image
+: Illustration shows how solar capacity usage changes throughout the day, showing that a surplus of electricity only occurs when the sun is at its peak
+.
+For example, on a sunny day a home with a 5-
+kW
+system would likely be selling electricity to us when only the lights and refrigerator are operating. However, on a sunny day when a 20-
+kW
+electric furnace or a 5-
+kW
+electric dryer are operating you would begin purchasing power until the furnace or dryer shuts off. Cloudy, rainy, or snowy days would also require you to purchase power from the grid.
+Solar output in January versus June which shows solar generation capacity is dramatically reduced in winter months.
+Enlarge image
+: Bar chart compares the daily kWh output in January versus June and shows solar output is greatly reduced during winter months
+.
+Solar PV electricity production changes throughout the day and reduces dramatically from summer to winter. Electric heat customers need most of their energy in winter when solar PV production is at its lowest due to the short days and the low angle of the winter sun. When solar production is at its highest during long summer days your energy requirements are much lower, resulting in more excess energy being sold to Manitoba Hydro at the
+excess energy price
+.
+Panel system options
+Fixed panel systems facing due south at 40° to 50° inclination achieve better energy output. This is easier to do by using a ground system. A rooftop system is often limited to the direction the roof faces, which is not often due south, and the roof slope, which is generally lower than the ideal inclination. Most ground systems installed in Manitoba to date have been lower cost fixed rack systems.
+Solar tracker racks are automated systems that move to track the sun. They can produce up to 25% more energy but cost much more to install and may have ongoing maintenance expenses due to the moving parts. Snow and ice getting into the drive mechanisms could be a challenge in Manitoba.
+If you are thinking about installing a grid-connected solar PV system in Manitoba, remember:
+generating your own electricity generally does not mean you will eliminate your electric bill;
+the direction the solar panels face and their an
+[DOC 1] https://www.hydro.mb.ca/service/generate-your-own-electricity/
+gle of inclination will impact performance;
+shade from trees or buildings, snow cover, and dirt will reduce energy production;
+fixed ground systems are generally easier to keep clean/clear of snow and maintain compared to rooftop systems due to better accessibility;
+your system is required to shut down during power outages to ensure the safety of our crews working on power lines;
+solar PV has a greater
+lifecycle carbon footprint
+(per unit of energy) than Manitoba’s hydroelectricity, which makes up 98% of Manitoba’s generation.
+All solar panel installations need an electrical permit and usually a building permit from your municipality. All electrical work must be done by a licensed electrical contractor and meet the
+Manitoba Electrical Code
+.
+Questions to ask your contractor
+Does the estimate include taxes, permit costs, a bi-directional meter, electrical service upgrades, and ongoing maintenance?
+What kinds of warranties are provided on labour and product?
+What projected
+electricity rates
+are being assumed to calculate any potential payback, including the price paid for excess electricity?
+Follow our tips for
+hiring a contractor
+to ensure you feel confident in finding a supplier that best fits your project’s needs.
+Financing & rebates
+Qualifying homeowners may be eligible for financing to assist with the cost of installation through our
+Home Energy Efficiency Loan
+.
+Learn about Efficiency Manitoba’s solar PV rebate
+Homeowners and businesses may qualify for an
+Efficiency Manitoba rebate
+(efficiencymb.ca)
+when installing a solar PV system.
+For more information about grid-connected solar PV systems,
+email us
+.
+About us
+Media
+Careers
+Engage with us
+Community
+Environment
+For landlords
+For business
+For suppliers
+Facebook
+X
+YouTube
+LinkedIn
+Instagram
+Bluesky
+Manitoba Hydro operates throughout Manitoba, on the original territories of the Anishinaabe, Anishininew, Cree, Dakota, and Dene peoples and the National Homeland of the Red River Métis. We also acknowledge the ancestral lands of the Inuit in northern Manitoba. The legacy of the past remains a strong influence on Manitoba Hydro’s relationships with Indigenous communities today, and we remain committed to establishing and maintaining strong, mutually beneficial relationships as we move forward in the spirit of reconciliation.
+Site map
+Terms of use
+Accessibility
+© Manitoba Hydro. All rights reserved.
+[DOC 2] https://www.hydro.mb.ca/account/rates/
+Rates & charges
+Skip to content
+Français
+Login
+Menu
+Close
+Your account
+Start, stop, move or add an account
+Meters
+Billing & payment
+Loans & financing
+Rates & charges
+Your online account
+Most requested
+Equal Payment Plan
+Get help paying your bill
+Start, stop or move service
+Outages
+Power outage map
+Report a power outage
+Report a street light outage
+Reliability
+Planned outages
+Prepare for a power outage
+Permits & service
+Permits & inspections
+Service connections
+Generate your own electricity
+Most requested
+Request a tree safety assessment
+Apply for a line locate
+Request temporary service disconnection
+Safety
+Emergencies
+Indoor safety
+Outdoor safety
+Tree safety
+Storms
+Hydro infrastructure
+Education and youth safety
+Most requested
+Click Before You Dig
+Emergencies
+Tree trimming
+News & stories
+Customer support
+Help centre
+Contact us
+Most requested
+How to submit a damage claim
+Request a credit reference letter
+Login
+Français
+Home
+Your account
+Rates & charges
+Rates & charges
+On this page
+On this page
+Current and past charges and fees
+Natural gas and electric rates news
+Also in
+Your account
+Also in
+Your account
+Start, stop, move or add an account
+Meters
+Billing & payment
+Loans & financing
+Rates & charges
+Your online account
+Our electricity and natural gas rates are regulated by the
+Public Utilities Board of Manitoba (PUB)
+(pubmanitoba.ca)
+. Natural gas rates are reviewed quarterly in February, May, August, and November.
+Current and past charges and fees
+Get more information on our home electricity and natural gas rates.
+Residential rates
+Explore our small and large business electricity and natural gas rates.
+Commercial rates
+Understand your natural gas purchase options, including independent suppliers.
+Gas supply
+View a five-year historical record of electricity and natural gas rate changes.
+Historical energy rates
+Natural gas and electric rates news
+Quarterly natural gas commodity rate change
+The Public Utilities Board has approved revised natural gas rates effective August 1, 2026. The new rates reflect a decrease in the gas commodity rate from 7.00¢ to 6.60¢ per cubic metre, and the delivery rate is decreasing from 15.88¢ to 15.83¢ per cubic metre. If you’re a typical residential customer, your annual natural gas bill will decrease by approximately 1.4% or $9 per year. If you’re a larger volume customers, your annualized bill will range from decreases of 1.6% to 3.8% depending on your rate class and consumption. These decreases are the result of changes in the price that we pay for natural gas.
+Gas commodity and delivery rates may be adjusted each gas quarter (February, May, August and November) for increases or decreases to the forecast costs of natural gas supply. We earn no profit on the sale of gas commodity. The price that we pay is passed directly on to you with no markup; you pay what we pay.
+To help with the impact of quarterly fluctuations caused by market prices, we offer the option of paying natural gas bills in equal monthly payments throug
+[DOC 2] https://www.hydro.mb.ca/account/rates/
+h our
+Equal Payment Plan
+.
+Schedule of Sales and Transportation Services and Rates
+(PDF, 1.7 MB)
+Electricity rates
+Effective January 1, 2026, electricity rates increased 4.0%. Customers in the Residential class without electric heat using an average of 1,000 kilowatt hours per month will see an increase of approximately $4.20 in their monthly bill. Residential customers with electric space heat using an average of 2,000 kilowatt hours per month will see an increase of approximately $8.05 in their monthly bill.
+Read more about
+Manitoba Hydro’s application to the PUB
+and the reasons for the rate increase.
+Read more about
+how to get help
+if you can’t pay your bill
+Electric Rate Schedule – January 1, 2026
+(PDF, 334 KB)
+Bill insert – Electricity rates change on January 1, 2026
+(PDF, 159 KB)
+About us
+Media
+Careers
+Engage with us
+Community
+Environment
+For landlords
+For business
+For suppliers
+Facebook
+X
+YouTube
+LinkedIn
+Instagram
+Bluesky
+Manitoba Hydro operates throughout Manitoba, on the original territories of the Anishinaabe, Anishininew, Cree, Dakota, and Dene peoples and the National Homeland of the Red River Métis. We also acknowledge the ancestral lands of the Inuit in northern Manitoba. The legacy of the past remains a strong influence on Manitoba Hydro’s relationships with Indigenous communities today, and we remain committed to establishing and maintaining strong, mutually beneficial relationships as we move forward in the spirit of reconciliation.
+Site map
+Terms of use
+Accessibility
+© Manitoba Hydro. All rights reserved.
+[DOC 3] https://www.hydro.mb.ca/corporate/
+About us
+Skip to content
+Français
+Login
+Menu
+Close
+Your account
+Start, stop, move or add an account
+Meters
+Billing & payment
+Loans & financing
+Rates & charges
+Your online account
+Most requested
+Equal Payment Plan
+Get help paying your bill
+Start, stop or move service
+Outages
+Power outage map
+Report a power outage
+Report a street light outage
+Reliability
+Planned outages
+Prepare for a power outage
+Permits & service
+Permits & inspections
+Service connections
+Generate your own electricity
+Most requested
+Request a tree safety assessment
+Apply for a line locate
+Request temporary service disconnection
+Safety
+Emergencies
+Indoor safety
+Outdoor safety
+Tree safety
+Storms
+Hydro infrastructure
+Education and youth safety
+Most requested
+Click Before You Dig
+Emergencies
+Tree trimming
+News & stories
+Customer support
+Help centre
+Contact us
+Most requested
+How to submit a damage claim
+Request a credit reference letter
+Login
+Français
+Home
+About us
+About us
+Also in
+About us
+Also in
+About us
+Our leadership team
+History
+Operations & exports
+Integrated Resource Plan
+Reports & publications
+Purchasing & tenders
+Regulatory affairs
+Information memorandum
+Manitoba HydroBonds
+Wind: call for power
+Service levels
+We are a provincial Crown Corporation and one of the largest integrated electricity and natural gas distribution utilities in Canada.
+We also trade electricity within four wholesale markets
+in the Midwestern United States and Canada.
+We serve 640,248 electric customers, and 303,196 natural gas customers.
+The governance of our corporation is through the Manitoba Hydro-Electric Board.
+Learn more about our leadership team.
+Our vision
+Empower Manitoba’s future with affordable and reliable energy.
+Our mission
+Meet the energy needs of our customers.
+Our foundational values
+Reconciliation:
+We are committed to Indigenous reconciliation in all aspects of our business.
+Environmental Stewardship:
+We are committed to protect and preserve the health of land, air and water.
+Safety:
+We ensure everyone gets home safe.
+Security:
+We are dedicated to protecting the security of our assets, information and people.
+Collaboration:
+We work together across Manitoba Hydro, and with our customers and communities, to cultivate trust, respect and agility.
+Alignment:
+We connect all we do to creating value for our customers, and supporting the well-being of our people, communities and environment.
+Reimagination:
+We continually challenge ourselves to improve through evaluation and innovation for a stronger tomorrow.
+Empowerment:
+We empower our people so they can fully contribute with their hearts, hands, and minds to a thriving Manitoba Hydro of the future.
+Where we work
+We have a presence right across Manitoba — on Treaty 1, Treaty 2, Treaty 3, Treaty 4 and Treaty 5 lands, the original territories of the Anishinaabe, Anishininew, Cree, Oji-Cree, Dakota, and Dene peoples and the homeland of the Red River Métis. We acknowledge these lands and pay our respects to the ancestors of these territories.
+We ack
+[DOC 3] https://www.hydro.mb.ca/corporate/
+nowledge these lands and pay our respects to the ancestors of these territories. The legacy of the past remains a strong influence on Manitoba Hydro’s relationships with Indigenous communities today, and we remain committed to establishing and maintaining strong, mutually beneficial relationships with Indigenous communities.
+How we do business
+The nature of our business and location of our operations impacts people, communities and the environment every day. Respect and care for each is our responsibility now and into the future.
+With foundational values of safety, security, environmental stewardship and reconciliation we conduct our activities lawfully, responsibly and ethically, securing and enhancing Manitoba Hydro’s established reputation for honesty, integrity and good faith operations.
+Safety
+remains our top priority in everything we do.
+For more about how we do business, please refer to our
+2024-25 Sustainability Report
+.
+Investing in our future:
+Delivering Energy for Life in Manitoba
+2025–2026 Annual Report
+Delivering the energy that brings us together:
+2024–2025
+Sustainability Report
+About us
+Media
+Careers
+Engage with us
+Community
+Environment
+For landlords
+For business
+For suppliers
+Facebook
+X
+YouTube
+LinkedIn
+Instagram
+Bluesky
+Manitoba Hydro operates throughout Manitoba, on the original territories of the Anishinaabe, Anishininew, Cree, Dakota, and Dene peoples and the National Homeland of the Red River Métis. We also acknowledge the ancestral lands of the Inuit in northern Manitoba. The legacy of the past remains a strong influence on Manitoba Hydro’s relationships with Indigenous communities today, and we remain committed to establishing and maintaining strong, mutually beneficial relationships as we move forward in the spirit of reconciliation.
+Site map
+Terms of use
+Accessibility
+© Manitoba Hydro. All rights reserved.
+[DOC 4] https://www.hydro.mb.ca/docs/billing/electricity-rate-schedule.pdf
+ELECTRICITY RATES
+EFFECTIVE
+JANUARY 1, 2026
+APPROVED IN
+ORDER 1/26
+Available in accessible formats upon request
+
+TABLE OF CONTENTS
+Page
+DEFINITIONS .................................................................................................................... 1
+RESIDENTIAL RATES ......................................................................................................... 2
+Residential ........................................................................................................................... 2
+Seasonal .............................................................................................................................. 3
+Diesel ................................................................................................................................... 3
+Flat Rate Water Heating...................................................................................................... 4
+GENERAL SERVICE ............................................................................................................ 5
+Small .................................................................................................................................... 5
+Seasonal .............................................................................................................................. 7
+Diesel ................................................................................................................................... 8
+Government and First Nation Education ............................................................................ 8
+Medium ............................................................................................................................... 9
+Large .................................................................................................................................. 10
+Limited Use of Billing Demand .......................................................................................... 12
+Flat Rate Water Heating.................................................................................................... 15
+Short-Term Power Rate .................................................................................................... 16
+Unmetered Services .......................................................................................................... 16
+Short-Duration, Intermittent Rate .................................................................................... 17
+AREA AND ROADWAY LIGHTING .................................................................................... 18
+Available in accessible formats upon request
+
+Page 1 of 25
+DEFINITIONS
+All Rates Schedules in the publication are applied on a MONTHLY basis except as noted.
+The following expressions shall have the following meanings:
+a) “Basic Charge”: a fixed charge that that does not change with the amount of electricity
+used. This includes the direct costs of metering, portions of the dis
+[DOC 4] https://www.hydro.mb.ca/docs/billing/electricity-rate-schedule.pdf
+tribution system,
+as well as billing administration.
+b) “Billing Month”: the period of time, generally 30 days, in which Energy and/or
+Demand is consumed and thereafter billed to the Customer.
+c) “Demand”: the maximum use of power within a specified period of time.
+d) “Demand Charge”: that portion of the charge for electric service based upon the
+electric capacity (kVA) consumed and billed on the basis of the billing demand under
+an applicable rate schedule.
+e) “Energy”: power integrated over time and measured or expressed in kilowatt-hours
+(kWh).
+f) “Energy Charge”: that portion of the charge for electric service based upon the
+electric energy (kWh) consumed or billed.
+g) “Kilo-Volt Amperes (kVA)”: also referred to as apparent power, is the product of the
+volts times current of a circuit divided by 1000. It is composed of both real and reactive
+power.
+h) “Kilowatt Hour (kWh)”: the basic unit of electric energy equal to one kilowatt of
+power supplied to or taken from an electric circuit steadily for one hour.
+i) “Measured Demand”: the highest demand recorded in the Billing Month.
+j) “Power Factor”: is the ratio of real power (kW) to apparent power (kVA) for any given
+load and time. Generally it is expressed as a percentage ratio.
+k) “Watt (W)”: the electrical unit of power or rate of doing work; the rate of energy
+transfer equivalent to one ampere flowing under a pressure of one volt at unity power
+factor.
+
+Page 2 of 24
+RESIDENTIAL RATES
+RESIDENTIAL - TARIFF NO. 2026-01
+Basic Charge: $ 9.84
+PLUS
+Energy Charge:
+All kWh @ 9.970 ¢ / kWh
+Minimum Bill: $ 9.84
+Services over 200 amps will have $9.84 added to the Basic Charge.
+Applicability:
+The Residential rate is applicable for all residential purposes as follows:
+a) individually metered single family dwellings including those in multiple residential
+projects and single or three phase farm operations served through the same meter if:
+i. the connected business load does NOT exceed 3 kW; or
+ii. the combined agricultural and residential load does NOT exceed a demand of
+50 kW.
+b) services for personal use outside the home, such as residential water wells, private
+garages, boat houses and swimming pools (use can be for household, recreational and
+hobby activities).
+c) single metered multiple residential projects meeting all the following criteria:
+i. monthly demand does not exceed 50 kVA;
+ii. the meter serves four or less individual suites or dwelling units;
+iii. none of the units are used for business purposes;
+iv. individual dwelling units are:
+- self-contained rental apartments with common facilities; or
+- row housing with self-contained rental dwelling units and common
+facilities; or
+- buildings with condominium type dwellings incorporated under the
+Condominium Act; or individual residential services within a trailer park
+established prior to May 1, 1969.
+
+Page 3 of 24
+RESIDENTIAL RATES
+SEASONAL - TARIFF NO. 2026-02
+Annual Basic Charge: $ 118.08
+PLUS
+Energy Charge:
+All kWh @ 9.970 ¢ / kWh
+Minimum Annual
+[DOC 4] https://www.hydro.mb.ca/docs/billing/electricity-rate-schedule.pdf
+ Bill: $ 118.08
+The account is billed twice a year, April and October, each for a six-month period. The April
+billing is for the Annual Basic Charge plus past winter season’s consumption. The October
+billing is for the summer season’s consumption only.
+Applicability:
+The Seasonal rate is applicable to customers outside of the Winnipeg area using less than
+7,500 kWh per season and is for residential purposes on an individually metered service when
+usage is of a casual or intermittent nature.
+DIESEL - TARIFF NO. 2026-03
+Basic Charge: $ 8.08
+PLUS
+Energy Charge:
+All kWh @ 8.196 ¢ / kWh
+Minimum Bill: $ 8.08
+Applicability:
+The Residential rate applies to all residential services in the Diesel Communities, provided the
+service capacity does not exceed 60 A, 120/240 V, single phase.
+
+Page 4 of 24
+RESIDENTIAL
+FLAT RATE WATER HEATING RATES
+(NOT available for new services)
+TARIFF NO. 2026-09 TARIFF NO. 2026-10
+Element Size Controlled Uncontrolled
+500 W $ 15.34 $ 20.29
+600 W $ 18.20 $ 24.15
+750 W $ 22.34 $ 29.80
+900 W $ 26.56 $ 35.39
+1,000 W $ 29.28 $ 39.18
+1,200 W $ 33.25 $ 43.97
+1,250 W $ 34.23 $ 45.24
+1,500 W $ 39.18 $ 51.02
+2,000 W $ 47.16 $ 61.52
+2,500 W $ 53.07 $ 68.91
+3,000 W $ 58.09 $ 76.41
+3,500 W $ 65.30 $ 85.11
+4,000 W $ 72.42 $ 93.82
+4,500 W $ 80.87 $ 104.17
+6,000 W - $ 135.10
+1,500 / 1,000 W $ 30.46 $ 40.74
+2,000 / 1,000 W $ 31.27 $ 41.77
+3,000 / 1,000 W $ 31.93 $ 43.24
+2,000 / 1,500 W $ 42.43 $ 56.71
+3,000 / 1,500 W $ 43.42 $ 57.77
+4,500 / 1,500 W $ 44.91 $ 60.09
+3,000 / 2,000 W $ 52.12 $ 69.90
+Applicability:
+Available only for services continuously energized since November 11, 1969.
+
+Page 5 of 24
+GENERAL SERVICE
+0 TO NOT EXCEEDING 200 kVA
+(Utility-Owned Transformation)
+SMALL SINGLE PHASE - TARIFF NO. 2026-20
+Basic Charge: $ 21.57
+PLUS
+Energy Charge:
+First 11,000 kWh @ 9.864 ¢ / kWh
+Next 8,500 kWh @ 7.568 ¢ / kWh
+Balance of kWh @ 4.858 ¢ / kWh
+PLUS
+Demand Charge:
+First 50 kVA of Monthly Measured Demand No Charge
+Balance of Measured Demand @ $ 12.82 / kVA
+Minimum Bill:
+Demand Charge PLUS Basic Charge
+SMALL THREE PHASE - TARIFF NO. 2026-21
+Basic Charge: $ 35.04
+PLUS
+Energy Charge:
+First 11,000 kWh @ 9.864 ¢ / kWh
+Next 8,500 kWh @ 7.568 ¢ / kWh
+Balance of kWh @ 4.858 ¢ / kWh
+PLUS
+Demand Charge:
+First 50 kVA of Monthly Measured Demand No Charge
+Balance of Measured Demand @ $ 12.82 / kVA
+Minimum Bill:
+Demand Charge PLUS Basic Charge
+Accounts where the Monthly Measured Demand is 50 kVA or less within the past 12-month
+period, ALL energy in excess of 11,000 kWh will be charged @ 7.568 ¢ / kWh.
+Primary metering of multiple Utility-Owned transformation services has an additional 2%
+added to the kVA for each transformation greater than one. There is also a 1% reduction on
+recorded demand and energy to account for transformer losses.
+
+Page 6 of 24
+Applicability:
+The General Service Small Rate is applicable to:
+a) service with Utility-Owned transformation for all non-residential purposes including
+churches, community clubs and other community service and r
+[DOC 4] https://www.hydro.mb.ca/docs/billing/electricity-rate-schedule.pdf
+ecreation facilities and
+all commercial and general purposes wherein the conduct of business activities or
+operation is associated with the distribution of goods and/or services.
+b) occupied dwellings where the connected business load exceeds 3 kW to not exceeding
+200 kW.
+c) single metered multiple residential projects meeting any of the following criteria:
+i. monthly demand exceeds 50 kVA to not exceeding 200 kVA ; or
+ii. the meter serves five or more individual suites or dwelling units; or
+iii. any of the units are used for business purposes.
+d) farm services:
+i. without an occupied dwelling being used for agricultural or commercial
+purposes; or
+ii. where the connected business load exceeds 3 kW to not exceeding 200 kW; or
+iii. where the combined agricultural and residential load exceeds a demand of
+50 kVA to not exceeding 200 kVA.
+
+Page 7 of 24
+GENERAL SERVICE
+0 TO NOT EXCEEDING 50 kVA
+(Utility-Owned Transformation)
+SEASONAL - TARIFF NO. 2026-22
+Annual Basic Charge: $ 258.84
+PLUS
+First 66,000 kWh @ 9.864 ¢ / kWh
+Balance of kWh @ 7.568 ¢ / kWh
+Minimum Annual Bill: $ 258.84
+SEASONAL THREE PHASE - TARIFF NO. 2026-27
+Annual Basic Charge: $ 420.48
+PLUS
+First 66,000 kWh @ 9.864 ¢ / kWh
+Balance of kWh @ 7.568 ¢ / kWh
+Minimum Annual Bill: $ 420.48
+The account is billed twice a year, April and October, each for a six-month period. The April
+billing is for the Annual Basic Charge plus past winter season’s consumption. The October
+billing is for the summer season’s consumption only.
+Applicability:
+The General Service Seasonal rate is applicable for businesses outside of the Winnipeg area
+whose:
+a) demand does NOT exceed 50 kVA;
+b) usage is of an intermittent or casual nature;
+c) consumption is primarily summer time and usage is limited in the winter; and
+d) business load is greater than 3 kW in a residence.
+
+Page 8 of 24
+GENERAL SERVICE
+DIESEL - TARIFF NO. 2026-40
+Basic Charge: $ 20.74
+PLUS
+Energy Charge:
+First 2,000 kWh @ 9.485 ¢ / kWh
+Balance of kWh @ 42.617 ¢ / kWh
+Minimum Bill: $ 20.74
+The General Service rate applies to all commercial accounts excluding those classed as
+Government and /or First Nation Education.
+GOVERNMENT AND FIRST NATION EDUCATION - TARIFF NO. 2026-41
+Basic Charge: $ 20.74
+PLUS
+Energy Charge: @ $2.59382 / kWh
+Minimum Bill: $ 20.74
+The First Nation Education rate is applicable to all Diesel First Nation facilities providing
+instructional services for members of the Diesel First Nations, including schools, teacherages
+and student residences.
+
+Page 9 of 24
+GENERAL SERVICE
+EXCEEDING 200 kVA
+(Utility-Owned transformation)
+MEDIUM - TARIFF NO. 2026-30
+Basic Charge: $ 35.81
+PLUS
+Energy Charge:
+First 19,500 kWh @ 9.120 ¢ / kWh
+Balance of kWh @ 4.728 ¢ / kWh
+PLUS
+* Demand Charge:
+First 50 kVA of Monthly Billing Demand No Charge
+Balance of Billing Demand @ $ 12.39 / kVA
+Minimum Bill:
+Demand Charge PLUS Basic Charge
+*Monthly Billing Demand
+The greatest of the following (expressed in kVA):
+a) measured demand; or
+b) 25 % of contract demand; or
+
+[DOC 4] https://www.hydro.mb.ca/docs/billing/electricity-rate-schedule.pdf
+c) 25% of the highest measured demand in the previous 12 months.
+Primary metering of multiple Utility-Owned transformation services has an additional 2%
+added to the kVA for each transformation greater than one. There is also a 1% reduction on
+recorded demand and energy to account for transformer losses.
+Applicability:
+The General Service Medium rate is applicable to services where the registered demand
+exceeds 200 kVA and where the transformation is provided by the Corporation.
+Customers who, by nature of their business, do not require service during the months of
+December, January, and February may qualify for the General Service Short-Term Power rate.
+For further details see page 16.
+
+Page 10 of 24
+GENERAL SERVICE
+(Customer-Owned Transformation)
+LARGE 750 V TO NOT EXCEEDING 30 KV - TARIFF NO. 2026-60
+Energy Charge: @ 4.388 ¢ / kWh
+PLUS
+* Demand Charge: @ $ 10.76 / kVA
+Minimum Bill: Demand Charge
+LARGE 30 KV TO NOT EXCEEDING 100 KV - TARIFF NO. 2026-61
+Energy Charge: @ 4.037 ¢ / kWh
+PLUS
+** Demand Charge: @ $ 8.98 / kVA
+Minimum Bill: Demand Charge
+LARGE EXCEEDING 100 KV - TARIFF NO. 2026-62
+Energy Charge: @ 3.917 ¢ / kWh
+PLUS
+** Demand Charge: @ $ 8.03 / kVA
+Minimum Bill: Demand Charge
+* Monthly Billing Demand
+The greatest of the following (expressed in kVA):
+a) measured demand; or
+b) 25 % of contract demand; or
+c) 25% of the highest measured demand in the previous 12 months.
+** Monthly Billing Demand
+The greatest of the following (expressed in kVA):
+a) measured demand during Peak Hours; or
+b) 90% of measured demand during Non-Peak Hours; or
+c) 25 % of contract demand; or
+d) 25% of the highest measured demand in the previous 12 months.
+
+Page 11 of 24
+Where,
+“Peak Hours” are defined as all hours from 7:01 to 11:00 and 17:01 to 21:00 (Central Time
+Zone) in the months of January, February, March, April, May, September, October,
+November, and December; and all hours from 12:01 to 20:00 (Central Time Zone) in the
+months of June, July and August.
+“Non-Peak Hours” are defined as all hours from 0:01 to 24:00 (Central Time Zone) in the
+months of January to December, excluding Peak Hours.
+Applicability:
+The General Service Large rate is applicable to services where the transformation is provided
+by the customer and connected directly to the Corporation’s distribution, subtransmission or
+transmission lines.
+Customers who, by nature of their business, do not require service during the months of
+December, January and February may qualify for the General Service Short-Term Power rate.
+
+Page 12 of 24
+GENERAL SERVICE
+LIMITED USE OF BILLING DEMAND RATE OPTION
+0 TO NOT EXCEEDING 200 kVA
+(Utility-Owned Transformation)
+LUBD SMALL SINGLE PHASE - TARIFF NO. 2026-50
+Basic Charge: $ 21.57
+PLUS
+Energy Charge: @ 11.831 ¢ / kWh
+PLUS
+Demand Charge:
+First 50 kVA of Monthly Recorded Demand No Charge
+Balance of Recorded Demand @ $ 3.06 / kVA
+Minimum Bill:
+Demand Charge PLUS Basic Charge:
+LUBD SMALL THREE PHASE - TARIFF NO. 2026-51
+Basic Charge: $ 35.04
+PLUS
+Energy Charge: @ 
+[DOC 4] https://www.hydro.mb.ca/docs/billing/electricity-rate-schedule.pdf
+11.831 ¢ / kWh
+PLUS
+Demand Charge:
+First 50 kVA of Monthly Recorded Demand No Charge
+Balance of Recorded Demand @ $ 3.06 / kVA
+Minimum Bill:
+Demand Charge PLUS Basic Charge:
+Primary metering of multiple Utility-Owned transformation services has an additional 2%
+added to the kVA for each transformation greater than one. There is also a 1% reduction on
+recorded demand and energy to account for transformer losses.
+Eligibility:
+Any customer eligible for service on the General Service Small rate can request billing on this
+option, except customers who have been billed on this option during the 12 months prior to
+their request, but subsequently reverted to billing at regular General Service Small rates.
+
+Page 13 of 24
+GENERAL SERVICE
+LIMITED USE OF BILLING DEMAND RATE OPTION
+EXCEEDING 200 kVA
+(Utility-Owned Transformation)
+LUBD MEDIUM - TARIFF NO. 2026-52
+Basic Charge: $ 35.81
+PLUS
+Energy Charge: @ 11.831 ¢ / kWh
+PLUS
+* Demand Charge:
+First 50 kVA of Monthly Recorded Demand No Charge
+Balance of Recorded Demand @ $ 3.06 / kVA
+Minimum Bill:
+Demand Charge PLUS Basic Charge
+*Monthly Billing Demand
+The greatest of the following (expressed in kVA):
+a) measured demand; or
+b) 25% of contract demand; or
+c) 25% of the highest measured demand in the previous 12 months.
+Primary metering of multiple Utility-Owned transformation services has an additional 2%
+added to the kVA for each transformation greater than one. There is also a 1% reduction on
+recorded demand and energy to account for transformer losses.
+Eligibility:
+Any customer eligible for service on the General Service Medium rate can request billing on
+this option, except customers who have been billed on this option during the 12 months prior
+to their request, but subsequently reverted to billing at regular General Service Medium
+rates.
+
+Page 14 of 24
+GENERAL SERVICE
+LIMITED USE OF BILLING DEMAND RATE OPTION
+(Customer-Owned Transformation)
+LUBD LARGE 750 V TO NOT EXCEEDING 30 KV - TARIFF NO. 2026-53
+Energy Charge: @ 10.466 ¢ / kWh
+PLUS
+* Demand Charge: @ $ 2.60 / kVA
+Minimum Bill: Demand Charge
+LUBD LARGE 30 KV TO NOT EXCEEDING 100 KV - TARIFF NO. 2026-54
+Energy Charge: @ 9.083 ¢ / kWh
+PLUS
+* Demand Charge: @ $ 2.17 / kVA
+Minimum Bill: Demand Charge
+LUBD LARGE EXCEEDING 100 KV - TARIFF NO. 2026-55
+Energy Charge: @ 8.418 ¢ / kWh
+PLUS
+* Demand Charge: @ $ 1.93 / kVA
+Minimum Bill: Demand Charge
+*Monthly Billing Demand
+The greatest of the following (expressed in kVA):
+a) measured demand; or
+b) 25 % of contract demand; or
+c) 25% of the highest measured demand in the previous 12 months.
+Eligibility:
+Any customer eligible for service on the General Service Large rate can request billing on this
+option, except customers who have been billed on this option during the 12 months prior to
+their request, but subsequently reverted to billing at regular General Service Large rates.
+
+Page 15 of 24
+GENERAL SERVICE
+FLAT RATE WATER HEATING RATES
+(NOT available for new services)
+TARIFF NO. 2026-29
+Element Size Uncontrolled
+50
+[DOC 4] https://www.hydro.mb.ca/docs/billing/electricity-rate-schedule.pdf
+0 W $ 20.24
+600 W $ 24.20
+750 W $ 30.19
+1,000 W $ 40.60
+1,200 W $ 48.59
+1,500 W $ 60.43
+2,000 W $ 75.75
+2,500 W $ 91.09
+3,000 W $ 105.99
+3,500 W $ 120.92
+3,800 W $ 133.64
+4,000 W $ 135.81
+4,500 W $ 150.73
+5,000 W $ 165.62
+6,000 W $ 195.45
+6,500 W $ 216.38
+7,000 W $ 225.22
+7,500 W $ 247.27
+8,000 W $ 255.03
+9,000 W $ 284.79
+10,000 W $ 314.64
+10,500 W $ 329.62
+12,000 W $ 374.29
+12,500 W $ 389.20
+13,000 W $ 404.11
+13,500 W $ 418.85
+14,500 W $ 448.66
+15,000 W $ 463.72
+16,000 W $ 493.52
+16,500 W $ 522.98
+18,000 W $ 553.20
+19,000 W $ 599.54
+20,000 W $ 612.77
+23,000 W $ 722.22
+24,000 W $ 752.92
+25,000 W $ 761.73
+3,000 / 1,000 W $ 49.47
+2,000 / 1,500 W $ 62.63
+3,000 / 1,500 W $ 63.33
+4,500 / 1,500 W $ 64.86
+
+Page 16 of 24
+GENERAL SERVICE
+SHORT-TERM POWER RATE
+The General Service Short-Term application is available throughout the Province of Manitoba
+except in the Diesel Zone, for customers with services exceeding 200 kVA who, by the nature
+of their business, do not require service during the months of December, January, and
+February. Qualifying customers will be billed at, and subject to the conditions of, the
+appropriate General Service Medium or Large rate.
+Services must be disconnected from 00:00 hours, December 1 to 24:00 hours,
+February 28/29. Customers may use up to a maximum of 1,000 kWh during these months
+for security purposes only (i.e. alarm system, security lighting) but must notify Manitoba
+Hydro each year in advance of their operation shutdown.
+Service must be taken for a minimum of four months, normally consecutively, during the
+period March 1 to November 30. Customers will be subject to the same 25% ratchet
+provisions as applicable to General Service Medium and Large customers, with the exception
+that no ratchets will apply for the months of December, January or February unless the
+customer exceeds the 1,000 kWh per month allowable use during those months.
+General Service Short-Term is NOT available in conjunction with other services at the same
+point of delivery.
+UNMETERED SERVICES
+Billed on the General Service Small Rate Tariff No. 2026-20 or 2026-21:
+The Unmetered Service rate is applicable:
+a) for non-residential customers where the load is constant and the consumption is
+consistent and metering is unnecessary or undesirable, specifically including traffic
+signals, pedestrian walkway lighting, directional traffic signs, hazard flashers, cable
+television power amplifiers, telephone booths, transit shelters (both heated and
+unheated), cathodic protection rectifiers (for oil and natural gas pipelines), water
+gauge wells, highway traffic counters, governmental navigational lights (both nautical
+and aerial), municipal sirens and Canadian Emergency Measures Organization
+emergency siren alarms.
+b) for existing railway crossings, sign lighting and window lighting. Customers will be
+required to provide metering facilities if additional load is connected.
+c) for services such as fairs, summer midways, television production and welding schools
+wh
+[DOC 4] https://www.hydro.mb.ca/docs/billing/electricity-rate-schedule.pdf
+ere service is required for less than 30 days.
+d) for oil field pumping services connected prior to April 1, 1980 with oil pumping motors
+of the counter balanced (nodding or piston) type.
+
+Page 17 of 24
+GENERAL SERVICE
+SHORT-DURATION, INTERMITTENT RATE
+TERMS AND CONDITIONS
+General
+Manitoba Hydro will supply short-duration, intermittent power and energy to customers
+whose operation requires short periods of high demand combined with overall, very low
+energy consumption.
+The Corporation may regulate timing of the customer’s demand requirements so that they
+do not coincide with other system peak demands.
+The Corporation may interrupt the supply at any time, for any length of time and for any
+reason.
+Conditions of Service
+Qualifying customers will be billed at, and subject to the conditions of, the appropriate
+General Service Large or Medium rate with the following provisions:
+a) Measured demand will be reduced by 50% for billing purposes.
+b) Customers will be assessed a monthly energy entitlement based on a 1% load factor
+(monthly demand x 0.01 x 730) to be billed at the applicable General Service rate.
+c) Energy consumption in excess of the monthly energy entitlement will be billed at a
+rate equal to 10 times the usual applicable General Service rate.
+Customers will be required to enter into a formal contract with Manitoba Hydro. The contract
+will document the above conditions as well as any others considered necessary due to the
+nature of a specific service.
+Rate Application
+The General Service Short-Term, Intermittent rate is available to all customers, except those
+in the Diesel Rate Zone, to customers qualifying for the General Service Large and General
+Service Medium rates.
+
+Page 18 of 24
+AREA AND ROADWAY LIGHTING
+OUTDOOR LIGHTING
+LEGEND
+I Incandescent
+F Fluorescent
+CF Compact Fluorescent
+LED Light Emitting Diode
+MH Metal Halide
+MV Mercury Vapour
+HPS High Pressure Sodium Vapour
+Q Quartz
+Exclusive Pole: A corporate-owned pole for the primary purpose of supporting
+outdoor lighting devices.
+Shared Pole: A pole of the primary purpose of supporting electrical circuits other
+than outdoor lighting.
+
+Page 19 of 24
+AREA AND ROADWAY LIGHTING
+(Incandescent and Mercury Vapour are NOT available for new installations)
+OUTDOOR LIGHTING RATE - TARIFF NO. 2026-80:
+Rate Per Month
+Watts
+Shared Exclusive
+Pole/Luminaire Pole/Luminaire
+200 F - $ 12.98
+20 CF - $ 2.78
+100 I $ 5.86 $ 12.98
+150 I - $ 12.98
+300 I - $ 18.52
+500 I $ 15.33 $ 25.50
+400 MH - $ 31.10
+175 MV $ 11.34 $ 18.52
+250 MV $ 12.98 $ 20.97
+400 MV $ 17.78 $ 25.07
+70 HPS $ 9.74 $ 16.32
+70 HPS 24 hours - $ 18.34
+100 HPS $ 10.11 $ 17.20
+150 HPS $ 12.40 $ 19.45
+250 HPS $ 15.80 $ 22.40
+400 HPS $ 18.14 $ 31.10
+400 HPS 1/100' $ 79.53
+400 HPS 2/100' - $ 51.95
+400 HPS 3/100' $ 42.74
+400 HPS 4/100' - $ 38.15
+750 HPS $ 28.09 $ 45.44
+1 000 HPS - $ 52.72
+1 000 HPS 1/60' - $ 53.96
+1 000 HPS 1/100' $ 89.80
+1 000 HPS 2/100' - $ 69.88
+1 000 HPS 3/100' $ 63.24
+1 000 HPS 4/100' - $ 59.90
+Applicability:
+The Area and Roadway
+[DOC 4] https://www.hydro.mb.ca/docs/billing/electricity-rate-schedule.pdf
+ rate is available throughout the Province of Manitoba and applies to
+area and roadway lighting installed by agreement for public authorities
+Watts |  |  | Rate Per Month |  |  |  |  | 
+ |  |  |  | Shared |  |  | Exclusive | 
+ |  |  |  | Pole/Luminaire |  |  | Pole/Luminaire | 
+200 F |  |  | - |  |  | $ 12.98 |  | 
+20 CF |  |  | - |  |  | $ 2.78 |  | 
+100 I |  |  | $ 5.86 |  |  | $ 12.98 |  | 
+150 I |  |  | - |  |  | $ 12.98 |  | 
+300 I |  |  | - |  |  | $ 18.52 |  | 
+500 I |  |  | $ 15.33 |  |  | $ 25.50 |  | 
+ | 400 MH |  |  | - |  |  | $ 31.10 | 
+175 MV |  |  | $ 11.34 |  |  | $ 18.52 |  | 
+250 MV |  |  | $ 12.98 |  |  | $ 20.97 |  | 
+400 MV |  |  | $ 17.78 |  |  | $ 25.07 |  | 
+70 HPS |  |  | $ 9.74 |  |  | $ 16.32 |  | 
+70 HPS 24 hours |  |  | - |  |  | $ 18.34 |  | 
+100 HPS |  |  | $ 10.11 |  |  | $ 17.20 |  | 
+150 HPS |  |  | $ 12.40 |  |  | $ 19.45 |  | 
+250 HPS |  |  | $ 15.80 |  |  | $ 22.40 |  | 
+400 HPS |  |  | $ 18.14 |  |  | $ 31.10 |  | 
+400 HPS 1/100' |  |  |  |  |  | $ 79.53 |  | 
+400 HPS 2/100' |  |  | - |  |  | $ 51.95 |  | 
+400 HPS 3/100' |  |  |  |  |  | $ 42.74 |  | 
+400 HPS 4/100' |  |  | - |  |  | $ 38.15 |  | 
+750 HPS |  |  | $ 28.09 |  |  | $ 45.44 |  | 
+1 000 HPS |  |  | - |  |  | $ 52.72 |  | 
+1 000 HPS 1/60' |  |  | - |  |  | $ 53.96 |  | 
+1 000 HPS 1/100' |  |  |  |  |  | $ 89.80 |  | 
+1 000 HPS 2/100' |  |  | - |  |  | $ 69.88 |  | 
+1 000 HPS 3/100' |  |  |  |  |  | $ 63.24 |  | 
+1 000 HPS 4/100' |  |  | - |  |  | $ 59.90 |  | 
+
+Page 20 of 24
+AREA AND ROADWAY LIGHTING
+OUTDOOR LIGHTING RATE - TARIFF NO. 2026-80:
+Rate Per Month
+Watts
+Shared Exclusive
+Pole/Luminaire Pole/Luminaire
+10 LED (1 – 20 W) - $ 2.49
+40 LED (> 20 – 50 W) $ 8.54 $ 14.63
+40 LED 24 hr (> 20 – 50 W) - $ 16.62
+60 LED (> 50 – 80 W) $ 8.72 $ 15.30
+90 LED (> 80 – 120 W) $ 10.44 $ 16.89
+150 LED (> 120 – 180 W) $ 12.44 $ 18.36
+150 LED 1/100' (> 120 – 180 W) $ 52.64
+150 LED 2/100' (> 120 – 180 W) - $ 32.78
+150 LED 3/100' (> 120 – 180 W) $ 26.17
+150 LED 4/100' (> 120 – 180 W) - $ 22.86
+250 LED (> 180 – 280 W) $ 12.62 $ 24.72
+250 LED 1/100' (> 180 – 280 W) $ 73.14
+250 LED 2/100' (> 180 – 280 W) - $ 45.58
+250 LED 3/100' (> 180 – 280 W) $ 36.40
+250 LED 4/100' (> 180 – 280 W) - $ 31.80
+300 LED (> 280 – 370 W) - $ 32.84
+300 LED 1/100' (> 280 – 370 W) $ 67.69
+300 LED 2/100' (> 280 – 370 W) - $ 47.77
+300 LED 3/100' (> 280 – 370 W) $ 41.12
+300 LED 4/100' (> 280 – 370 W) - $ 37.80
+400 LED (> 370 – 460 W) - $ 34.15
+500 LED (> 460 - 550 W) - $ 36.43
+400 LED (> 550 – 640 W) - $ 38.23
+Applicability:
+The Area and Roadway rate is available throughout the Province of Manitoba and applies to
+area and roadway lighting installed by agreement for public authorities.
+Watts | Rate Per Month |  |  |  |  | 
+ |  | Shared |  |  | Exclusive | 
+ |  | Pole/Luminaire |  |  | Pole/Luminaire | 
+10 LED (1 – 20 W) | - |  |  | $ 2.49 |  | 
+40 LED (> 20 – 50 W) | $ 8.54 |  |  | $ 14.63 |  | 
+40 LED 24 hr (> 20 – 50 W) | - |  |  | $ 16.62 |  | 
+60 LED (> 50 – 80 W) | $ 8.72 |  |  | $ 15.30 |  
+[DOC 4] https://www.hydro.mb.ca/docs/billing/electricity-rate-schedule.pdf
+| 
+90 LED (> 80 – 120 W) | $ 10.44 |  |  | $ 16.89 |  | 
+150 LED (> 120 – 180 W) | $ 12.44 |  |  | $ 18.36 |  | 
+150 LED 1/100' (> 120 – 180 W) |  |  |  | $ 52.64 |  | 
+150 LED 2/100' (> 120 – 180 W) | - |  |  | $ 32.78 |  | 
+150 LED 3/100' (> 120 – 180 W) |  |  |  | $ 26.17 |  | 
+150 LED 4/100' (> 120 – 180 W) | - |  |  | $ 22.86 |  | 
+250 LED (> 180 – 280 W) | $ 12.62 |  |  | $ 24.72 |  | 
+250 LED 1/100' (> 180 – 280 W) |  |  |  | $ 73.14 |  | 
+250 LED 2/100' (> 180 – 280 W) | - |  |  | $ 45.58 |  | 
+250 LED 3/100' (> 180 – 280 W) |  |  |  | $ 36.40 |  | 
+250 LED 4/100' (> 180 – 280 W) | - |  |  | $ 31.80 |  | 
+300 LED (> 280 – 370 W) | - |  |  | $ 32.84 |  | 
+300 LED 1/100' (> 280 – 370 W) |  |  |  | $ 67.69 |  | 
+300 LED 2/100' (> 280 – 370 W) | - |  |  | $ 47.77 |  | 
+300 LED 3/100' (> 280 – 370 W) |  |  |  | $ 41.12 |  | 
+300 LED 4/100' (> 280 – 370 W) | - |  |  | $ 37.80 |  | 
+400 LED (> 370 – 460 W) | - |  |  | $ 34.15 |  | 
+500 LED (> 460 - 550 W) | - |  |  | $ 36.43 |  | 
+400 LED (> 550 – 640 W) | - |  |  | $ 38.23 |  | 
+
+Page 21 of 24
+AREA AND ROADWAY LIGHTING
+(NOT available for new installations)
+FLOOD LIGHTING RATE - TARIFF NO. 2026-81:
+Rate Per Month
+Watts
+Shared Exclusive
+Pole/Luminaire Pole/Luminaire
+100 I $ 6.65 -
+150 I $ 6.65 $ 14.04
+300 I $ 12.10 -
+500 I $ 16.30 $ 27.21
+250 MV $ 15.00 $ 22.38
+400 MV $ 18.32 $ 25.12
+500 Q $ 25.20 $ 32.56
+Applicability:
+The Floodlighting rate is applicable for floodlighting services existing prior to April 1, 1976 for
+lighting of public buildings, structures, monuments, parks, grounds and Department of
+Highways overhead signs served from the Corporation distribution system where the
+Corporation owns and maintains the luminaires.
+Watts |  |  | Rate Per Month |  |  |  |  | 
+ |  |  |  | Shared |  |  | Exclusive | 
+ |  |  |  | Pole/Luminaire |  |  | Pole/Luminaire | 
+100 I |  |  | $ 6.65 |  |  | - |  | 
+150 I |  |  | $ 6.65 |  |  | $ 14.04 |  | 
+300 I |  |  | $ 12.10 |  |  | - |  | 
+500 I |  |  | $ 16.30 |  |  | $ 27.21 |  | 
+ |  |  |  |  |  |  |  | 
+250 MV |  |  | $ 15.00 |  |  | $ 22.38 |  | 
+400 MV |  |  | $ 18.32 |  |  | $ 25.12 |  | 
+ |  |  |  |  |  |  |  | 
+500 Q |  |  | $ 25.20 |  |  | $ 32.56 |  | 
+
+Page 22 of 24
+AREA AND ROADWAY LIGHTING
+SEASONAL RATE - TARIFF NO. 2026-82:
+Rate Per Month
+Watts
+Shared Exclusive
+Pole/Luminaire Pole/Luminaire
+70 HPS $ 9.74 $ 16.32
+100 HPS $ 10.11 $ 17.20
+150 HPS $ 12.40 $ 19.45
+250 HPS $ 15.80 $ 22.40
+40 LED (> 20 – 50 W) $ 8.54 $ 14.63
+60 LED (> 50 – 80 W) $ 8.72 $ 15.30
+90 LED (> 80 – 120 W) $ 10.44 $ 16.89
+150 LED (> 120 – 180 W) $ 12.44 $ 18.36
+250 LED (> 180 – 280 W) $ 12.62 $ 24.72
+Applicability:
+The Seasonal Area and Roadway Lighting rate is available only outside the City of Winnipeg
+and is applicable for area and roadway lighting installed by agreement for Municipal
+Corporation, local government districts, Provincial and Federal Governments.
+Lighting will be energized from May 1 to October 31 of each year and will be disconnected
+from November 1 to Apr
+[DOC 4] https://www.hydro.mb.ca/docs/billing/electricity-rate-schedule.pdf
+il 30.
+Watts |  |  | Rate Per Month |  |  |  |  | 
+ |  |  |  | Shared |  |  | Exclusive | 
+ |  |  |  | Pole/Luminaire |  |  | Pole/Luminaire | 
+70 HPS |  |  | $ 9.74 |  |  | $ 16.32 |  | 
+100 HPS |  |  | $ 10.11 |  |  | $ 17.20 |  | 
+150 HPS |  |  | $ 12.40 |  |  | $ 19.45 |  | 
+250 HPS |  |  | $ 15.80 |  |  | $ 22.40 |  | 
+ |  |  |  |  |  |  |  | 
+40 LED (> 20 – 50 W) |  |  | $ 8.54 |  |  | $ 14.63 |  | 
+60 LED (> 50 – 80 W) |  |  | $ 8.72 |  |  | $ 15.30 |  | 
+90 LED (> 80 – 120 W) |  |  | $ 10.44 |  |  | $ 16.89 |  | 
+150 LED (> 120 – 180 W) |  |  | $ 12.44 |  |  | $ 18.36 |  | 
+250 LED (> 180 – 280 W) |  |  | $ 12.62 |  |  | $ 24.72 |  | 
+
+Page 23 of 24
+AREA AND ROADWAY LIGHTING
+SENTINEL LIGHTING RATE - TARIFF NO. 2026-84:
+Rate Per Month
+Watts
+Flat Rate Metered
+(Energy and Rental) (Rental Only)
+100 HPS $ 12.29 $ 8.47
+150 HPS $ 16.27 $ 11.58
+175 MV $ 12.70 $ 8.47
+400 MV $ 20.99 $ 11.58
+60 LED (1 – 80 W) $ 9.90 $ 7.80
+90 LED (> 80 W) $ 13.05 $ 10.65
+Applicability:
+Sentinel lighting is available for security lighting of private or public areas on a dusk-to-dawn
+basis throughout the Province of Manitoba. Rental units are intended for continuous year-
+round service and are not provided on a temporary basis.
+Sentinel lighting is available for rental as follows:
+a) on a flat rate basis when connected directly to the Manitoba Hydro distribution
+system; or
+b) exclusive of electricity if connected to the customer’s metered circuits.
+Watts |  |  | Rate Per Month |  |  |  |  | 
+ |  |  |  | Flat Rate |  |  | Metered | 
+ |  |  |  | (Energy and Rental) |  |  | (Rental Only) | 
+100 HPS |  |  | $ 12.29 |  |  | $ 8.47 |  | 
+150 HPS |  |  | $ 16.27 |  |  | $ 11.58 |  | 
+ |  |  |  |  |  |  |  | 
+175 MV |  |  | $ 12.70 |  |  | $ 8.47 |  | 
+400 MV |  |  | $ 20.99 |  |  | $ 11.58 |  | 
+ |  |  |  |  |  |  |  | 
+60 LED (1 – 80 W) |  |  | $ 9.90 |  |  | $ 7.80 |  | 
+90 LED (> 80 W) |  |  | $ 13.05 |  |  | $ 10.65 |  | 
+
+Page 24 of 24
+AREA AND ROADWAY LIGHTING
+DECORATIVE LIGHTING - TARIFF NO. 2026-85
+Connected load @ $1.110/kW per night of scheduled use:
+Minimum Monthly Bill: $ 22.80
+Applicability:
+The Decorative Lighting rate is applicable for new and existing unmetered municipally-owned
+decorative lights on frames or modules mounted on roadway lighting poles or ornamental
+standards and/or Christmas trees. The customer is required to advise the Corporation prior
+to any change in the nights contracted for operation and\or the connected lighting kilowatts.
+[DOC 5] https://www.hydro.mb.ca/docs/billing/schedule-of-sales-and-transportation-services-and-rates-v0826.pdf
+Schedule of Sales and Transportation Services and Rates
+• Appendix A - Approved Rates
+• Appendix B - Company Labour Rates
+• Appendix C - Transportation Service Balancing Fees
+Available in accessible formats upon request. CENTRA GAS MANITOBA INC.
+
+Centra Gas Manitoba Inc. November 1, 2025
+Schedule of Sales and Transportation Service and Rates Page 1 of 77
+Centra Gas Manitoba Inc.
+Schedule of Sales and Transportation
+Services and Rates
+Index
+Schedule of Sales and Transportation Services and Rates .................................. 1
+I. Territory Served ............................................................................................ 4
+II. Definition of Terms ........................................................................................ 6
+III. Description of Available Rates and Services ............................................... 14
+A) Optional Service Offerings: ...................................................................... 14
+1) Western Transportation Service ........................................................... 14
+2) Alternate Supply Service ....................................................................... 15
+3) Backstopping Service ........................................................................... 15
+4) Short Term Interruptible Transportation Service ................................... 15
+B) Service Offerings by Service Classification: ............................................... 16
+1) Small General Class (“SGC”) ................................................................ 16
+2) Large General Class (“LGC”) ................................................................ 16
+3) High Volume Firm (“HVF”) Class ........................................................... 17
+4) Interruptible Class (“IC”) ........................................................................ 17
+5) Mainline Class (“MLC”).......................................................................... 18
+6) Special Contract Class .......................................................................... 19
+7) Power Station Class .............................................................................. 19
+IV. General Terms and Conditions ................................................................... 20
+A) Contract For Service................................................................................. 20
+1) General ................................................................................................. 20
+2) Application for Service........................................................................... 20
+3) Termination ........................................................................................... 21
+4) Easements and Rights-of-Way .............................................................. 21
+5) Assignment ........................................................................................... 21
+6) Representation ............................................................
+[DOC 5] https://www.hydro.mb.ca/docs/billing/schedule-of-sales-and-transportation-services-and-rates-v0826.pdf
+.......................... 21
+7) Resale of Gas ....................................................................................... 22
+8) Rates and Charges ............................................................................... 22
+9) The Public Utilities Board Act to Prevail ................................................ 22
+B) Service Connection and Charges ............................................................. 22
+1) Authority for Work ................................................................................. 22
+To request accessible formats visit hydro.mb.ca/accessibility.
+Pour demander des documents en format accessible veuillez
+consulter hydro.mb.ca/fr/accessibility.
+Approved by Manitoba Public Utilities Board Order 138/25
+To request accessible formats visit hydro.mb.ca/accessibility.
+Pour demander des documents en format accessible veuillez
+consulter hydro.mb.ca/fr/accessibility.
+Approved by Manitoba Publ | 
+ | Approved by Manitoba Publ
+
+Centra Gas Manitoba Inc. November 1, 2025
+Schedule of Sales and Transportation of Rates Page 2 of 77
+2) Installation Policy .................................................................................. 22
+3) Right of Refusal to Install ...................................................................... 23
+4) Location of Service and Meter ............................................................... 23
+5) Service Relocation and Alteration ......................................................... 23
+6) Meters Installed Within Premises .......................................................... 23
+7) Additional Meters Installed Within Premises .......................................... 24
+8) Access to Property ................................................................................ 24
+9) Commencement of Use of Gas ............................................................. 24
+10) Timing of Installation ............................................................................. 24
+11) Gratuities .............................................................................................. 25
+C) Consumer Contributions in Aid Of Construction ........................................ 25
+1) Refundable Contributions ...................................................................... 25
+2) Non-Refundable Contributions .............................................................. 25
+D) Measurement Billing and Payment ........................................................... 26
+1) Meters and Regulators .......................................................................... 26
+2) Testing Measurement Equipment.......................................................... 26
+3) Meter Reading....................................................................................... 27
+4) Failure of Measurement Equipment to Register Properly ...................... 27
+5) Billing .................................................................................................... 2
+[DOC 5] https://www.hydro.mb.ca/docs/billing/schedule-of-sales-and-transportation-services-and-rates-v0826.pdf
+8
+6) Authorization to Disconnect Other Service and/or Install Load Limiting
+Devices ................................................................................................. 29
+7) Guarantee Deposit ................................................................................ 29
+8) Budget Billing Plan ................................................................................ 30
+9) Returned Cheques ................................................................................ 31
+10) Taxes .................................................................................................... 31
+11) Late Payment Charge ........................................................................... 31
+12) Measurements ...................................................................................... 31
+13) Determination of Monthly Billing Demand .............................................. 33
+E) Other Services ......................................................................................... 34
+F) Equipment ................................................................................................ 35
+1) Ownership of Equipment ....................................................................... 35
+2) Measuring Station ................................................................................. 35
+3) Rights of Parties .................................................................................... 36
+4) Care Required....................................................................................... 36
+5) Preservation of Metering Records ......................................................... 36
+6) Protection of Company - Owned Equipment on Customer’s Premises .. 37
+7) Moving Meters ...................................................................................... 37
+Approved by Manitoba Public Utilities Board Order 138/25
+
+Centra Gas Manitoba Inc. November 1, 2025
+Schedule of Sales and Transportation of Rates Page 3 of 77
+8) Access to Premises .............................................................................. 37
+9) Termination of Service .......................................................................... 37
+10) Rental Equipment ................................................................................. 37
+G) Discontinuance of Service ........................................................................ 38
+1) Requirement of Notice .......................................................................... 38
+2) Reasons for Discontinuance ................................................................. 38
+3) Reconnect Fees .................................................................................... 39
+H) Rules For Transfer Of Customers Between Classes Or Services ............. 40
+1) Transfers Between Sales and Transportation Service ........................... 40
+2) Transfers Between Transportation and Sales Service ........................... 40
+3) Transfers Between I
+[DOC 5] https://www.hydro.mb.ca/docs/billing/schedule-of-sales-and-transportation-services-and-rates-v0826.pdf
+nterruptible Class and Firm Service Classes ......... 40
+I) Responsibility Of Parties........................................................................... 41
+1) Transfer of Risk, Title, and Possession ................................................. 41
+2) Damages to Equipment ......................................................................... 41
+3) Force Majeure ....................................................................................... 41
+4) Waste of Gas ........................................................................................ 42
+J) Consumer Equipment ............................................................................... 42
+1) Description of Installation ...................................................................... 42
+2) Customer’s Equipment .......................................................................... 42
+V. Special Terms and Conditions: Transportation Service (T-Service) ............ 43
+VI. Special Terms And Conditions: Interruptible Sales Service And Interruptible
+Delivery Service .......................................................................................... 49
+VII. Special Terms And Conditions: Western Transportation Service ............... 54
+VIII. Special Terms and Conditions: Agency Billing and Collection Service (ABC
+Service)……………………………………………………………………………69
+IX. Rate Schedules (Base Rates Only – No Riders) ........................................ 74
+X. Rate Schedules – Annual Rates (Base Rates Plus Riders) ........................ 74
+XI. Miscellaneous Charges for Service ............................................................. 74
+Approved by Manitoba Public Utilities Board Order 138/25
+
+Centra Gas Manitoba Inc. November 1, 2025
+Schedule of Sales and Transportation of Rates Page 4 of 77
+1 I. Territory Served
+2
+3 This Schedule of Sales and Transportation Services and Rates applies to the
+4 following territory:
+5
+Zone Area Definition
+1 Ste. Anne (Town), Ste. Anne, (R.M.), Niverville (Town),Steinbach (City),
+Hanover (R.M.), St. Pierre-Jolys (Village), Desalaberry (R.M.), La
+Broquerie (R.M.), Ritchot (R.M.), Altona (Town), Montcalm (R.M.),
+Emerson-Franklin Municipality, Dufferin (R.M.), Carman (Town), Stanley
+(R.M.), Morden (City), Winkler (City), Rhineland Municipality, Morris
+(Town), Grey (R.M.), Morris (R.M.), Beausejour (Town), Thompson (R.M.),
+Roland (R.M.), Piney (R.M.); Portage la Prairie (City), Portage la Prairie
+(R.M.), Long Plain Madison First Nation, North Norfolk Municipality,
+Cartier (R.M.), Dakota TIPI First Nation, Norfolk Treherne Municipality,
+Winnipeg (City), Headingley (R.M.), Stonewall (Town), Selkirk (City),
+Winnipeg Beach (Town), Gimli (R.M.), East St. Paul (R.M.), West St. Paul
+(R.M.), Brokenhead (R.M.), MacDonald (R.M.), Richot (R.M.), Rockwood
+(R.M.), Rosser (R.M.), Springfield (R.M.), St. Andrews (R.M.), St.
+Clements (R.M.), Tache (R.M.), Reynolds (R.M.), Teulon (Town),
+Dunnottar (Village), Bifrost-Riverton Municipality, Arborg (Tow
+[DOC 5] https://www.hydro.mb.ca/docs/billing/schedule-of-sales-and-transportation-services-and-rates-v0826.pdf
+n),
+Woodlands (R.M.), Dauphin (City), Dauphin (R.M.), Roseau River
+Anishinabe First Nation, Armstrong (R.M.)
+2 WestLake-Gladstone Rural Municipality, Glenella-Lansdowne
+Municipality, North Norfolk Municipality, Swan Valley West Municipality,
+Swan River (Town), Minitonas-Bowsman Municipality, North Norfolk
+Municipality, Dauphin (R.M.), Gilbert Plains Municipality, Cornwallis (R.M.),
+Thompson (R.M.)
+3 Gilbert Plains Municipality, Grandview Municipality, Ellice-Archie (R.M.),
+Neepawa (Town), Prairie View Municipality, North Cypress-Langford
+Municipality, Virden (Town), Hartney (Town), Grassland Municipality, Melita
+(Town), Two Borders Municipality, Pipestone (R.M.), Souris-Glenwood
+Municipality, Minto-Odanah (R.M.), Brandon (City), Cornwallis (R.M.), Elton
+(R.M.), Carberry (Town), Swan Lake First Nation, North Norfolk Municipality,
+Dauphin (R.M.), Killarney-Turtle Mountain Municipality, Grassland
+Municipality, Deloraine-Winchester Municipality, Wallace-Woodworth
+(R.M.), Prairie View Municipality, Thompson (R.M.)
+4 Roblin Municipality, Riding Mountain West (R.M.), Russell-Binscarth
+Municipality, Minnedosa (Town), Ellice-Archie (R.M.), Yellowhead (R.M.),
+Rosedale (R.M.), Riverdale Municipality, Minto-Odanah (R.M.), Hamiota
+Municipality, Wallace-Woodworth (R.M.), Boissevain-Morton Municipality,
+Killarney-Turtle Mountain Municipality, Deloraine- Winchester Municipality,
+Hamiota Municipality, Grassland Municipality, Prairie View Municipality,
+Pipestone (R.M.), Minto-Odanah (R.M.), Thompson (R.M.)
+5 Minto-Odanah (R.M.)
+Approved by Manitoba Public Utilities Board Order 138/25
+Zone | Area Definition
+1 | Ste. Anne (Town), Ste. Anne, (R.M.), Niverville (Town),Steinbach (City),
+Hanover (R.M.), St. Pierre-Jolys (Village), Desalaberry (R.M.), La
+Broquerie (R.M.), Ritchot (R.M.), Altona (Town), Montcalm (R.M.),
+Emerson-Franklin Municipality, Dufferin (R.M.), Carman (Town), Stanley
+(R.M.), Morden (City), Winkler (City), Rhineland Municipality, Morris
+(Town), Grey (R.M.), Morris (R.M.), Beausejour (Town), Thompson (R.M.),
+Roland (R.M.), Piney (R.M.); Portage la Prairie (City), Portage la Prairie
+(R.M.), Long Plain Madison First Nation, North Norfolk Municipality,
+Cartier (R.M.), Dakota TIPI First Nation, Norfolk Treherne Municipality,
+Winnipeg (City), Headingley (R.M.), Stonewall (Town), Selkirk (City),
+Winnipeg Beach (Town), Gimli (R.M.), East St. Paul (R.M.), West St. Paul
+(R.M.), Brokenhead (R.M.), MacDonald (R.M.), Richot (R.M.), Rockwood
+(R.M.), Rosser (R.M.), Springfield (R.M.), St. Andrews (R.M.), St.
+Clements (R.M.), Tache (R.M.), Reynolds (R.M.), Teulon (Town),
+Dunnottar (Village), Bifrost-Riverton Municipality, Arborg (Town),
+Woodlands (R.M.), Dauphin (City), Dauphin (R.M.), Roseau River
+Anishinabe First Nation, Armstrong (R.M.)
+2 | WestLake-Gladstone Rural Municipality, Glenella-Lansdowne
+Municipality, North Norfolk Municipality, Swan Valley West Municipality,
+Swan River (Town), Minitonas-Bowsman Municipality, North Norfolk
+Municipality, Dauphin (R.M.), 
+[DOC 5] https://www.hydro.mb.ca/docs/billing/schedule-of-sales-and-transportation-services-and-rates-v0826.pdf
+Gilbert Plains Municipality, Cornwallis (R.M.),
+Thompson (R.M.)
+3 | Gilbert Plains Municipality, Grandview Municipality, Ellice-Archie (R.M.),
+Neepawa (Town), Prairie View Municipality, North Cypress-Langford
+Municipality, Virden (Town), Hartney (Town), Grassland Municipality, Melita
+(Town), Two Borders Municipality, Pipestone (R.M.), Souris-Glenwood
+Municipality, Minto-Odanah (R.M.), Brandon (City), Cornwallis (R.M.), Elton
+(R.M.), Carberry (Town), Swan Lake First Nation, North Norfolk Municipality,
+Dauphin (R.M.), Killarney-Turtle Mountain Municipality, Grassland
+Municipality, Deloraine-Winchester Municipality, Wallace-Woodworth
+(R.M.), Prairie View Municipality, Thompson (R.M.)
+4 | Roblin Municipality, Riding Mountain West (R.M.), Russell-Binscarth
+Municipality, Minnedosa (Town), Ellice-Archie (R.M.), Yellowhead (R.M.),
+Rosedale (R.M.), Riverdale Municipality, Minto-Odanah (R.M.), Hamiota
+Municipality, Wallace-Woodworth (R.M.), Boissevain-Morton Municipality,
+Killarney-Turtle Mountain Municipality, Deloraine- Winchester Municipality,
+Hamiota Municipality, Grassland Municipality, Prairie View Municipality,
+Pipestone (R.M.), Minto-Odanah (R.M.), Thompson (R.M.)
+5 | Minto-Odanah (R.M.)
+
+Centra Gas Manitoba Inc. November 1, 2025
+Schedule of Sales and Transportation of Rates Page 5 of 77
+1
+2 Note: See Section IV General Terms and Conditions D) 12) b) for further details
+3 on Zones.
+Approved by Manitoba Public Utilities Board Order 138/25
+
+Centra Gas Manitoba Inc. November 1, 2025
+Schedule of Sales and Transportation of Rates Page 6 of 77
+1 II. Definition of Terms
+2
+3 Except where the context expressly states another meaning, the following terms,
+4 when used in this Schedule of Sales and Transportation Services and Rates,
+5 shall have the following meanings:
+6
+7 A) “103m3” means 1,000 Cubic Meters of gas.
+8
+9 B) “AECO” means the notional market point situated between the receipt
+10 and delivery marketplaces on the NOVA Gas Transmission Limited
+11 pipeline system. Also known commonly as NIT and AECO/NIT.
+12
+13 C) “AECO Supply” means gas procured by the Company at AECO.
+14
+15 D) “Agency Agreement” means an agreement between a Customer and
+16 Broker, which at a minimum, authorizes and requires the Broker to act on
+17 the Customer’s behalf with respect to natural gas service.
+18
+19 E) “Agency Billing and Collection Service” (or “ABC Service”) means as a
+20 service wherein the Company bills the Customer for gas sold by the Broker
+21 to the Customer.
+22
+23 F) “Agent” means a gas supply Broker acting on behalf of a Customer.
+24
+25 G) “Alternate Supply Service” means any supply or source of gas that the
+26 Company may offer from time to time, in lieu of curtailment, to Interruptible
+27 Sales Service Customers.
+28
+29 H) “Annual Quantity Difference” means, for purposes of Western
+30 Transportation Service, the sum of the monthly Quantity Differences for
+31 the twelve months of the Gas Year.
+32
+33 I) “Authorized Sales Volume” means the volume of gas which the 
+[DOC 5] https://www.hydro.mb.ca/docs/billing/schedule-of-sales-and-transportation-services-and-rates-v0826.pdf
+Company
+34 agrees to sell to the Customer on a given day as specified in the Contract.
+35
+36 J) “Backstop Gas” means that quantity of gas agreed upon by the
+37 Company and the Broker and/or Customer which is to supplement, in
+Approved by Manitoba Public Utilities Board Order 138/25
+
+Centra Gas Manitoba Inc. November 1, 2025
+Schedule of Sales and Transportation of Rates Page 7 of 77
+1 whole or in part, an impairment to gas deliveries to the Company by or for
+2 the Broker and/or Customer.
+3
+4 K) “Base Rate” means the rate charged for a Service, not including any rate
+5 riders or other adjustment factors.
+6
+7 L) “Basic Monthly Charge” means a fixed monthly charge that reflects a
+8 portion of the costs of being connected to the gas distribution system and is
+9 not related to the volume of gas consumed.
+10
+11 M) “Board” means the Public Utilities Board of Manitoba.
+12
+13 N) “Broker” also known as “Marketer” means an entity authorized by the
+14 Public Utilities Board of Manitoba to sell natural gas commodity.
+15
+16 O) “Broker’s Gas Commodity Price” means the retail price charged by a
+17 Broker to a Customer for sales of Gas Commodity which is used by the
+18 Company to bill the Customer under ABC Service.
+19
+20 P) “Business Day” means any calendar day exclusive of Saturdays and
+21 Sundays and exclusive of days which are statutory or legal holidays under
+22 the laws of Manitoba.
+23
+24 Q) “Company” means Centra Gas Manitoba Inc. and its successors and
+25 assigns.
+26
+27 R) “Contract Year” means a period of 12 or fewer consecutive months ending
+28 on October 31.
+29
+30 S) “Contract” means, for the purposes of these Terms and Conditions of
+31 Service and the Rate Schedules into which they are incorporated, an
+32 agreement to provide service either implied, written, or oral.
+33
+34 T) “Cubic Meter-Day” (“m3/day”) means the maximum volume of gas
+35 consumed in a single 24 hour period.
+36
+37 U) “Cubic Meter” (“m3”) means the volume of gas which occupies one cubic
+Approved by Manitoba Public Utilities Board Order 138/25
+
+Centra Gas Manitoba Inc. November 1, 2025
+Schedule of Sales and Transportation of Rates Page 8 of 77
+1 meter when such gas is at a temperature of 15.56 degrees Celsius, and at
+2 a pressure of 101.560 kilopascals absolute.
+3
+4 V) “Customer” (or “Consumer”) shall include any person, firm, or corporation
+5 to whom gas is delivered or any other goods or services, including
+6 attachment to the system, are provided by the Company. No person, firm
+7 or corporation is a Customer in relation to services provided under a
+8 “shared services agreement” or services received in the recipient’s
+9 capacity as a Broker.
+10
+11 W) “Day” means a period of 24 consecutive hours beginning and ending at
+12 9:00 a.m., in the time zone in which deliveries are made. The reference
+13 date for any day shall be the calendar date on which the 24 hour period
+14 shall commence.
+15
+16 X) “Delivery”, in relation to the Company’s Delivery rate, means the
+17 transportation of natural
+[DOC 5] https://www.hydro.mb.ca/docs/billing/schedule-of-sales-and-transportation-services-and-rates-v0826.pdf
+ gas to Manitoba (as applicable) and distribution of
+18 natural gas to the Customer.
+19
+20 Y) “Delivery Point” means the location at which the Company shall deliver
+21 gas to the Customer.
+22
+23 Z) “Delivered Service” means natural gas supply purchased by the Company
+24 under an arrangement which includes delivery of the natural gas to the
+25 Company’s transmission and distribution system.
+26
+27 AA) “Delivery Service” means the transmission and distribution of natural gas
+28 from the Receipt Point to the designated Delivery Point for the Customer.
+29
+30 BB) “Firm Daily Contract Demand” means the maximum volume of gas which
+31 the Company obligates itself to be ready to deliver and/or sell daily to the
+32 Customer’s Delivery Point on a Firm Service basis.
+33
+34 CC) “Firm Service” means gas service at one Delivery Point and separately
+35 metered where the service may not be curtailed except for Force Majeure.
+36
+37 DD) “Gas” means natural gas having a gross heating value of not less than 36
+Approved by Manitoba Public Utilities Board Order 138/25
+
+Centra Gas Manitoba Inc. November 1, 2025
+Schedule of Sales and Transportation of Rates Page 9 of 77
+1 megajoules per Cubic Meter (950 Btu per cubic foot).
+2
+3 EE) “Gas Commodity” means gas that is offered to Sales Service
+4 customers by the Company or Brokers, at an AECO-based commodity
+5 rate that is applied to their total consumption.
+6
+7 FF) “Gas Commodity Billed” means the quantity of gas calculated to
+8 have been consumed, as rendered by the Company on bills to
+9 Customers, in accordance with the Company’s practices.
+10
+11 GG) “Gas Commodity Delivered” means the quantity of gas delivered by the
+12 Broker to the Company as part of the Western Transportation Service
+13 Agreement.
+14
+15 HH) “Gas Loan” means the quantity of gas that must be exchanged between
+16 each individual Broker on behalf of that Broker’s Customer(s) and the
+17 Company for purposes of reconciling differences between Gas
+18 Commodity Billed and Gas Commodity Delivered under Western
+19 Transportation Service.
+20
+21 II) “Gas Loan Mechanism” means a mechanism for the exchange of Gas
+22 Commodity and financial payments between each individual Broker on
+23 behalf of that Broker’s Customer(s) and the Company under Western
+24 Transportation Service.
+25
+26 JJ) “Gas Year” means a period of 365 consecutive days beginning on the
+27 first day of November; provided however, that any such year which
+28 contains a date of February 29 shall consist of 366 days.
+29
+30 KK) “Gross Heating Value” means the total joules expressed in megajoules
+3
+31 per Cubic Meter (MJ/m ) produced by the complete combustion at
+32 constant pressure of one (1) Cubic Meter of gas with air, with the gas
+33 free of water vapor and the temperature of the gas, air and products of
+34 combustion to be at standard temperature and all water formed by
+35 combustion reaction to be condensed to the liquid state.
+36
+37 LL) “Group” means a group of Customers designated by a Broker in a
+[DOC 5] https://www.hydro.mb.ca/docs/billing/schedule-of-sales-and-transportation-services-and-rates-v0826.pdf
+ single
+Approved by Manitoba Public Utilities Board Order 138/25
+
+Centra Gas Manitoba Inc. November 1, 2025
+Schedule of Sales and Transportation of Rates Page 10 of 77
+1 agreement under Western Transportation Service or ABC Service.
+2
+3 MM) “Interruptible Daily Contract Demand” means the maximum volume of gas
+4 which the Company obligates itself to be ready to deliver and/or sell
+5 daily to the Customer’s Delivery Point on an Interruptible Service basis.
+6
+7 NN) “Interruptible Service” means gas service at one point of delivery and
+8 separately metered where, at any time, the service may be interrupted at
+9 the sold discretion of the Company.
+10
+11 OO) “Interconnect Point” means the point on the TransCanada PipeLine system
+12 or any other pipeline designated by such pipelines as their point of receipt.
+13
+14 PP) “Joule” (“J”) is the unit of energy measured as the work done when
+15 the point of application of force of one newton is displaced a distance of
+16 one meter in the direction of the force. The terms megajoule and
+17 gigajoule means 1 x 106 and 1 x 109 joules, respectively.
+18
+19 QQ) “Loan Price” means the unit price used in determining the Value of the
+20 Gas Loan included under Western Transportation Service.
+21
+22 RR) “Maximum Daily Quantity” means the maximum quantity of gas that the
+23 Company will nominate on behalf of a Customer from the Customer’s
+24 supplier for Gas Commodity supply on a given day. The Maximum Daily
+25 Quantity may be more than the Customer’s Firm Daily Contract Demand.
+26
+27 SS) “Medium Pressure” means the pressure that the Company utilizes in its
+28 distribution system that is no greater than 60 pounds per square inch.
+29
+30 TT) “Month” means the period beginning at 9:00 a.m. on the first Day of the
+31 calendar month and ending at the same hour on the first Day of the next
+32 succeeding calendar month.
+33
+34 UU) “Monthly Billing Demand” means the highest daily consumption measured
+35 in Cubic Meters on any given day of the month, provided the month is a
+36 Winter Month, or in any Winter Month of the preceding eleven months.
+37 For Customers without twelve months of demand billing data, the Monthly
+Approved by Manitoba Public Utilities Board Order 138/25
+
+Centra Gas Manitoba Inc. November 1, 2025
+Schedule of Sales and Transportation of Rates Page 11 of 77
+1 Billing Demand may be estimated or otherwise specified by the Company.
+2
+3 VV) “Monthly Demand Change” means a monthly charge that reflects the
+4 Customer’s use of the capacity of the system. The Monthly Demand
+5 Charge is calculated as the Monthly Billing Demand for the month
+6 multiplied by the applicable unit demand rate.
+7
+8 WW) “Nominated Volume” means the quantity of gas expressed in gigajoules
+9 which the Customer has arranged to deliver to the Receipt Point, and the
+10 Company has agreed to receive, in a given day.
+11
+12 XX) “Non-AECO Supply” means gas procured by the Company at non-AECO
+13 locations, exclusive of Alternate Supply provided to Interrupt
+[DOC 5] https://www.hydro.mb.ca/docs/billing/schedule-of-sales-and-transportation-services-and-rates-v0826.pdf
+ible
+14 Customers, to meet aggregate Sales Service demand. The cost
+15 differential between the Company’s AECO Supply costs and Non-AECO
+16 Supply costs is recovered from (or refunded to) all Sales Service
+17 customers in a rate rider embedded in the Delivery billed rate.
+18
+19 YY) “Normal Year Gas Requirements” means the annual gas requirements that
+20 would be required under weather conditions determined from a 25-year
+21 rolling average as calculated from time to time by the Company.
+22
+23 ZZ) “Premises” means the location specified in an application for service, or
+24 such other location to which the Company delivers gas.
+25
+26 AAA) “Quantity Difference” means the difference between the Gas Commodity
+27 Delivered and the Gas Commodity Billed under Western Transportation
+28 Service expressed in either Cubic Meters or Gigajoules.
+29
+30 BBB) “Receipt Point” means the interconnection between the Company’s
+31 transmission and distribution system and TransCanada PipeLines
+32 transmission system.
+33
+34 CCC) “Sales Service” means gas service in which the Company procures gas
+35 quantities to satisfy the Customer’s gas requirements.
+36
+37 DDD) “Service Line” means that portion of the Company’s distribution system
+Approved by Manitoba Public Utilities Board Order 138/25
+
+Centra Gas Manitoba Inc. November 1, 2025
+Schedule of Sales and Transportation of Rates Page 12 of 77
+1 used for the delivery of gas from the main to the inlet side of the meter
+2 assigned to the Customer.
+3
+4 EEE) “Standard Pressure” means an absolute pressure equal to 101.560 kPa at
+5 15.56 degrees Celsius.
+6
+7 FFF)
+8
+9 GGG) “TransCanada” means TransCanada PipeLines Limited.
+10
+11 HHH) “Transportation Service (T-Service)” means transmission and/or
+12 distribution of Customer-owned gas on the Company’s system as defined
+13 in the Contract between Customer and the Company.
+14
+15 III) “Unauthorized Over-Run Gas” means:
+16 a) any and all quantities of natural gas consumed by an Interruptible
+17 Class Customer during a period of time that the Company has curtailed
+18 service to that customer, and during which that Customer is not receiving
+19 Alternate Supply Service, and/or;
+20 b) any and all quantities of natural gas consumed by a Customer of a
+21 Broker that has failed to supply their requirements, during a period of time
+22 that the Company has curtailed service to that Customer because the
+23 Company is unable to acquire Backstop Gas.
+24
+25 JJJ) “Unauthorized Over-Run Gas Charge” means a volumetric charge per
+26 cubic metre for the procurement and supply of Unauthorized Over-run Gas
+27 consumed by a Customer.
+28
+29 KKK) “Unauthorized Over-Run Gas Delivery Charge” means a delivery charge
+30 per cubic metre for Unauthorized Over-run Gas consumed by a Customer.
+31
+32 LLL) “Value of the Gas Loan” means the amount of money equal to the quantity
+33 of the Gas Loan multiplied by the Loan Price as part of Western
+34 Transportation Service.
+35
+36 MMM) “Volumetric Charge” means a charge based 
+[DOC 5] https://www.hydro.mb.ca/docs/billing/schedule-of-sales-and-transportation-services-and-rates-v0826.pdf
+on the volume of natural gas
+37 measured over an extended period of time, such as a monthly billing
+Approved by Manitoba Public Utilities Board Order 138/25
+
+Centra Gas Manitoba Inc. November 1, 2025
+Schedule of Sales and Transportation of Rates Page 13 of 77
+1 period.
+2
+3 NNN) “Winter Month” means the months of November, December, January,
+4 February, and March.
+5
+6 OOO) “Year” means a period of 365 consecutive days; provided however, that
+7 any such year which contains a date of February 29 shall consist of 366
+8 days.
+Approved by Manitoba Public Utilities Board Order 138/25
+
+Centra Gas Manitoba Inc. November 1, 2025
+Schedule of Sales and Transportation of Rates Page 14 of 77
+1 III. Description of Available Rates and Services
+2
+3 This section provides general descriptions of the rates and services offered by the
+4 Company and other related matters. The descriptions provided in this section are
+5 not comprehensive and may be changed by the Company at any time. The
+6 characteristics and charges associated with any of the following services may be
+7 changed at any time subject to Board Approval.
+8
+9 The Company offers two basic services. These are Sales Service, where the
+10 Company provides some of the Customer’s gas requirements, and Transportation
+11 Service, where the Company does not provide any of the Customer’s gas
+12 requirements.
+13
+14 Sales Service is a service in which the Company procures and manages gas
+15 supplies, and arranges the delivery of those supplies to the Customer. Sales
+16 Service consists of three distinct parts: Gas Commodity; Transportation to Centra;
+17 and Distribution to Customer. Sales Customers may choose to purchase Gas
+18 Commodity from either the Company or an alternative supplier. The Company
+19 procures Non-AECO Supply to meet the aggregate demand of all Sales
+20 Customers. Transportation to Centra include the management of all
+21 gas, including transportation to Manitoba, and Distribution to Customer
+22 includes the management of all gas on Centra’s system and delivery of that
+23 gas to Customers. Transportation to Centra and Distribution to Customer
+24 components are combined in a single Delivery rate on customers’ bills.
+25
+26 Transportation Service (“T-Service”) allows a Customer to procure and deliver
+27 its own natural gas supplies to the Company’s Receipt Point. The Company’s T-
+28 Service is the agreement under which the Company delivers that natural gas
+29 from the Receipt Point to the Customer’s facility. Special Terms and Conditions
+30 of Transportation Service are covered in Section V.
+31
+32 Sections IX and X set out the specific rates for both Sales Service and T Service.
+33
+34 A) Optional Service Offerings:
+35
+36 1) Western Transportation Service
+37 The Company manages and delivers Broker-provided Gas Commodity
+Approved by Manitoba Public Utilities Board Order 138/25
+
+Centra Gas Manitoba Inc. November 1, 2025
+Schedule of Sales and Transportation of Rates Page 15 of 77
+1 from AECO to the Customer’
+[DOC 5] https://www.hydro.mb.ca/docs/billing/schedule-of-sales-and-transportation-services-and-rates-v0826.pdf
+s facility. The Company then delivers this gas
+2 to the Customer or otherwise as appropriate. An Agency Agreement
+3 between the Customer and the Broker, and a separate Western
+4 Transportation Service Agreement between the Customer, the Broker and
+5 the Company are required to take this service, which may be executed on
+6 behalf of the Customer by the Broker as the Customer’s agent. Western
+7 Transportation Service is subject to the Special Terms and Conditions as
+8 set forth in Section VII hereof. Western Transportation Service Customers
+9 are eligible for Alternate Supply Service and Backstopping Service as
+10 described in the Optional Service Offerings provided herein.
+11
+12 Agency Billing and Collection (“ABC”) Service is offered in conjunction
+13 with Western Transportation Service. ABC Service allows the Company to
+14 bill the Customer for Gas Commodity on behalf of the Broker, using the
+15 Broker’s Gas Commodity Price. The Customer makes a single payment to
+16 the Company.
+17
+18 2) Alternate Supply Service
+19 The Company may provide, on a best efforts basis, Alternate Supply
+20 Service on an interruptible basis to Interruptible Customers requesting
+21 such service, who otherwise would be interrupted by the Company for
+22 supply reasons. Alternate Supply Service may be arranged by the
+23 Company at prices in accordance with the provisions of Section VI hereof.
+24
+25 3) Backstopping Service
+26 The Company may provide Backstopping Service, if requested, on a best
+27 effort basis to T- Service and Western Transportation Service Customers
+28 whose gas supply fails or cannot be delivered to the Company’s
+29 distribution system.
+30
+31 4) Short Term Interruptible Transportation Service
+32 During periods where curtailment would otherwise be implemented, the
+33 Customer may elect to provide its own gas supply delivered to the
+34 Company’s Receipt Point in lieu of Company provided gas supply. The
+35 Customer’s gas supply will be transported to the Delivery Point under the
+36 Short Term Interruptible Transportation Service.
+37
+Approved by Manitoba Public Utilities Board Order 138/25
+
+Centra Gas Manitoba Inc. November 1, 2025
+Schedule of Sales and Transportation of Rates Page 16 of 77
+1 B) Service Offerings by Service Classification:
+2
+3 Customers are classified as either Small General Class, Large General Class,
+4 High Volume Firm Class, Interruptible Class, Mainline Class, Special Contract
+5 Class or Power Station Class.
+6
+7 1) Small General Class (“SGC”)
+8 While meter size does not determine which class a Customer is in, SGC
+9 Customers, as general guide, receive gas through one meter of the type
+10 and capacity typically installed for individual residences. Sales Service
+11 and the Optional Service offerings associated therewith are the only
+12 services available to these Customers. T- Service is not available. Service
+13 is on a firm basis and the charges include a Basic Monthly Charge, a Gas
+14 Commodity charge, and a Delivery charge as described
+[DOC 5] https://www.hydro.mb.ca/docs/billing/schedule-of-sales-and-transportation-services-and-rates-v0826.pdf
+ in Sections IX and
+15 X of this Schedule of Sales and Transportation Services and Rates. All
+16 Customers with annual consumption of less than 680,000 m3 are eligible
+17 for this rate.
+18
+19 Customers that are eligible for this class may elect to be reclassified as
+20 Large General Class instead, however, that election will remain in effect
+21 until a subsequent election is made and each election must remain
+22 effective for a minimum of one year.
+23
+24 Customers in this class are eligible for Western Transportation Service as
+25 described in the Optional Service Offerings as provided herein.
+26
+27 2) Large General Class (“LGC”)
+28 While meter size does not determine which class a Customer is in, LGC
+29 Customers, as a general guide, receive gas through one meter of the type
+30 and capacity not commonly installed for individual residences. These
+31 Customers receive Firm Sales Service; T- Service is not available. The
+32 charges include a Basic Monthly Charge, a Gas Commodity charge, and a
+33 Delivery charge as described in Sections IX and X of this Schedule of
+34 Sales and Transportation Services and Rates. All Customers with annual
+35 consumption of less than 680,000 m3 are eligible for this class. Customers
+36 who are eligible for this class may elect to be reclassified as SGC. That
+37 election, however, will remain in effect until a subsequent election is made
+Approved by Manitoba Public Utilities Board Order 138/25
+
+Centra Gas Manitoba Inc. November 1, 2025
+Schedule of Sales and Transportation of Rates Page 17 of 77
+1 and each election must remain effective for a minimum of one year.
+2
+3 Sales Customers in this class are eligible for Western Transportation
+4 Service as described in the Optional Service Offerings provided herein.
+5
+6 At the discretion of the Company in order to facilitate connections of new
+7 customers on capacity-constrained areas of Centra's system, it may
+8 require an LGC Customer to enter into a Modified LGC Contract
+9 (“Modified LGC”) for a new service. The modified contract allows the
+10 company to physically turn off the supply of gas to the LGC Customer
+11 during the winter peak period of December 1st through to March 31st. To
+12 be eligible to enter into Modified LGC Contract, the LGC Customer is
+13 required to have a dedicated meter facility separate from other customer
+14 gas loads that require year-round consumption. Customers entering into a
+15 Modified LGC Contract will continue to be charged the Basic Monthly
+16 Charge during the shut-off period.
+17
+18 3) High Volume Firm (“HVF”) Class
+19 HVF Customers receive gas on a firm basis through one meter,
+20 where annual consumption equals or exceeds 680,000 m3. These
+21 Customers may elect to receive either Firm Sales Service or Firm
+22 Transportation Service. The charge include a Basic Monthly Charge, a
+23 Monthly Demand Charge, a Gas Commodity charge, and a Delivery
+24 charge as described in Sections IX and X of this Schedule of Sales and
+25 Transportation Service
+[DOC 5] https://www.hydro.mb.ca/docs/billing/schedule-of-sales-and-transportation-services-and-rates-v0826.pdf
+s and Rates. Customers desiring this service must
+26 execute a binding agreement with the Company with a minimum term of
+27 one year. Any change in classification from HVF Class to Interruptible
+28 Class shall be at the consent of the Company. Sales Customers in this
+29 class are eligible for Western Transportation Service as described in the
+30 Optional Service Offerings provided herein. Transportation Service
+31 Customers in this class are eligible for Backstopping Service as
+32 described in the Optional Service Offerings provided herein.
+33
+34 4) Interruptible Class (“IC”)
+35 Interruptible Customers receive gas through one meter where the service
+36 may be interrupted by the Company from time to time upon notice to the
+37 Customer. Interruptible Service is available only in situations where, in the
+Approved by Manitoba Public Utilities Board Order 138/25
+
+Centra Gas Manitoba Inc. November 1, 2025
+Schedule of Sales and Transportation of Rates Page 18 of 77
+1 sole opinion of the Company, a benefit exists for the Company or other
+2 Customers. Interruptible Service is available to Customers whose annual
+3 gas requirements equal or exceed 680,000 m3 and who contract for such
+4 service for a minimum of one year, or to Customers that have received
+5 Interruptible Service continuously since December 31, 1996. Sales
+6 Service or Transportation Service are available. The charges include a
+7 Basic Monthly Charge, a Monthly Demand Charge, a Gas Commodity
+8 charge, and a Delivery charge as described in Sections IX and X of this
+9 Schedule of Sales and Transportation Services and Rates. Interruptible
+10 Service is subject to Special Terms and Conditions of Service as set out in
+11 Sections V and VI, which also includes charges for failure to comply with
+12 the Terms and Conditions of the service.
+13
+14 Sales Customers in this class are eligible for Short Term Interruptible
+15 Transportation Service, Western Transportation Service, and/or Alternate
+16 Supply Service as described in the Optional Service Offerings provided
+17 herein. T-Service Customers in this class are eligible for Backstopping
+18 Service as described in the Optional Service Offerings provided herein.
+19
+20 5) Mainline Class (“MLC”)
+21 Mainline Customers receive gas through one meter where the Customer is
+22 served directly from the Company’s transmission system or through
+23 dedicated distribution facilities at pressures in excess of medium
+24 pressure and whose annual gas requirements equal or exceed 680,000
+3
+25 m and who contract for such service for a minimum of one year. Mainline
+26 Customers may elect Firm Sales Service, Interruptible Sales Service (in
+27 conjunction with Firm Delivery Service), or Firm Transportation Service.
+28 The charges include a Basic Monthly Charge, a Monthly Demand
+29 Charge, a Gas Commodity charge, and a Delivery charge as described in
+30 Sections IX and X of this Schedule of Sales and Transportation Services
+31 and Rates. This service may be subject to Speci
+[DOC 5] https://www.hydro.mb.ca/docs/billing/schedule-of-sales-and-transportation-services-and-rates-v0826.pdf
+al Terms and
+32 Conditions as specified in sections V and VI.
+33
+34 Sales Customers in this class are eligible for Alternate Supply
+35 Service, Short Term Interruptible Transportation Service and/or Western
+36 Transportation Service as described in the Optional Service Offerings
+37 provided herein. T-Service Customers in this class are eligible for
+Approved by Manitoba Public Utilities Board Order 138/25
+
+Centra Gas Manitoba Inc. November 1, 2025
+Schedule of Sales and Transportation of Rates Page 19 of 77
+1 Backstopping Service as described in the Optional Service Offerings
+2 provided herein.
+3
+4 6) Special Contract Class
+5 The Company provides Special Contract service through a written
+6 agreement between the Company and a Customer which governs the
+7 gas service to the Customer. Special Contract Service may include Sales
+8 Service and/or a Transportation Service. This service will be governed by
+9 the terms of the individual contract. 15
+10
+11 7) Power Station Class
+12 The Company provides service to electrical generating stations which use
+13 natural gas in the production of electricity through a written agreement
+14 between the Company and the Customer which governs the gas service
+15 to the Customer. Power Station Service may include Sales Service and/or
+16 Transportation Service. This service will be governed by the terms of the
+17 individual contract.
+Approved by Manitoba Public Utilities Board Order 138/25
+
+Centra Gas Manitoba Inc. November 1, 2025
+Schedule of Sales and Transportation of Rates Page 20 of 77
+1 IV. General Terms and Conditions
+2
+3 This Section IV deals with sales, delivery, and transportation services provided by
+4 the Company.
+5
+6 A) Contract For Service
+7
+8 1) General
+9 a) These General Terms and Conditions shall apply to all contracts
+10 (howsoever created) for gas service under any of the Company’s rate
+11 schedules or service classifications, including Special Contracts;
+12 provided that, if the provisions of any explicit Contract conflict with
+13 these Terms and Conditions, the provisions contained in the explicit
+14 Contract shall prevail.
+15
+16 b) These General Terms and Conditions may, subject to approval by the
+17 Board, added to, altered, or amended by the Company from time to
+18 time and any such addition, alteration, or amendment shall become
+19 effective upon Order of the Board.
+20
+21 2) Application for Service
+22 a) Application for a service line shall be made on a form provided by the
+23 Company. The application, when signed by the Customer and
+24 accepted by the Company, shall become a contract for gas service.
+25
+26 b) Verbal application for gas service to premises having existing
+27 facilities may be accepted by the Company. In such cases, a contract
+28 is deemed to be made between the Company and the Customer.
+29
+30 c) When two or more rates and/or services are available to a Customer,
+31 the Customer may elect the rates and/or services to be provided to the
+32 Customer. In the event that an election is 
+[DOC 5] https://www.hydro.mb.ca/docs/billing/schedule-of-sales-and-transportation-services-and-rates-v0826.pdf
+r correction for deviation from Boyle’s Law shall be
+15 the square of the factor determined by following the above described
+16 method for use with orifice meters.
+17
+18 13) Determination of Monthly Billing Demand
+19 The Monthly Billing Demand that will be used to calculate the Customer’s
+20 Monthly Demand Charge shall be determined as follows:
+21
+22 a) Monthly Billing Demand will be the highest daily consumption,
+23 subject to sections V G) 3), V H) 7), VI D) 4), and VI E) 7), measured
+24 in Cubic Meters on any given day of the month, provided the
+25 month is a Winter Month, or in any Winter Month of the
+26 preceding eleven months. For Customers without twelve months
+27 of demand billing data, the Monthly Billing Demand may be
+28 estimated or otherwise specified by the Company.
+29
+30 b) Exception: During the months of November and March, the
+31 Company may (at its sole discretion) authorize certain Customers to
+32 use gas without invoking a higher Monthly Billing Demand. This
+33 flexibility will be available only to those Customers who do not
+34 regularly require significant volumes of gas in the Winter season, but
+35 whose non-winter requirements may extend into the Winter season
+36 for a short duration either at the start or at the end of the Winter
+37 season. Such flexibility may be provided at the sole discretion of
+Approved by Manitoba Public Utilities Board Order 138/25
+
+Centra Gas Manitoba Inc. November 1, 2025
+Schedule of Sales and Transportation of Rates Page 34 of 77
+1 the Company.
+2
+3 E) Other Services
+4 The Company may provide the following services:
+5
+6 a) Locate and mark at no direct charge, all Company owned
+7 underground plants on request to facilitate excavation or other
+8 construction.
+9
+10 b) Respond, at no charge, on a 24-hour emergency basis to reports
+11 of, explosion, fire, gas odour, leaks, fumes, over-pressure,
+12 overheating of natural gas space heating equipment or damaged
+13 plant, or any other service which, in the Company’s opinion, is
+14 required for the maintenance and security of Company equipment.
+15
+16 c) Provide safety inspections, safety related adjustments and/or repairs
+17 to the natural gas burning portion of stoves, ranges, and all primary
+18 space and water heating residential and commercial appliances
+19 under 400,000 Btu/h (422 MJ/h). This includes, but is not limited to,
+20 repair of minor gas leaks, and the adjustment and replacement of
+21 controls and control parts performed by the Company where
+22 reasonably possible. The Small General Class Customer will be
+23 responsible for the cost of parts. All other Customers will be
+24 responsible for the cost of parts and labour.
+25
+26 d) Service to commercial or industrial equipment over 400,000 Btu/h
+27 (422 MJ/h) will not normally be undertaken. The Company will
+28 respond, however, to commercial emergencies where business
+29 might be adversely affected by prolonged interruption of service. The
+30 Customer will be responsible for the cost of parts and la
+[DOC 5] https://www.hydro.mb.ca/docs/billing/schedule-of-sales-and-transportation-services-and-rates-v0826.pdf
+y amount accrued or accruing due by such party to
+3 the other at the time of termination, regardless of when such amount becomes
+4 payable.
+5
+Approved by Manitoba Public Utilities Board Order 138/25
+
+Centra Gas Manitoba Inc. November 1, 2025
+Schedule of Sales and Transportation of Rates Page 74 of 77
+1 IX. Rate Schedules (Base Rates Only – No Riders)
+2
+3 Please see pages 1 and 2 of Appendix A as attached.
+4
+5 X. Rate Schedules – Annual Rates (Base Rates Plus Riders)
+6
+7 Please see pages 3 and 4 of Appendix A as attached.
+8
+9 XI. Miscellaneous Charges for Service
+10
+11 ABC Service Fee
+12 $0.25 per customer per month
+13
+14 Company Labour Rates:
+15 Please see Appendix B as attached.
+16
+17 Damage to Company Equipment:
+18 Materials, labour, equipment and cost of gas, including Damage
+19 Investigation and Damage Repair and the cost of all Appliance Relights
+20 necessitated by the damage or the repair thereof, as set out in Appendix B,
+21 Attached.
+22
+23 Equipment Rental Rate:
+24 Various rates depending on equipment and customer class.
+25
+26 Furnace Safety Check:
+27 The charge for a safety check and tune-up of a natural gas furnace will be $50.
+28 There is no charge for the Company to investigate a situation involving the
+29 potential leakage of gas.
+30
+31 Inspection/Reinspection Fees:
+32 Inspection or reinspection of a single replacement or additional residential
+33 appliance will be $35.00. All other inspections or reinspections (minimum
+34 charge of 1 hour) will be $55.00 per hour.
+35
+36 Late Payment Charge:
+37 A late payment charge of 1 ¼% per month shall be charged on the dollar amount
+38 owing after each billing due date. The due date will be at least 14 days after the
+Approved by Manitoba Public Utilities Board Order 138/25
+
+Centra Gas Manitoba Inc. November 1, 2025
+Schedule of Sales and Transportation of Rates Page 75 of 77
+1 mailing of the bills.
+2
+3 Materials:
+4 Manufacturer’s listed price plus freight and taxes.
+5
+6 Meter Relocations:
+7 Various rates depending on size of meter.
+8
+9 Meter Test:
+10 When a Customer requests a test for the meter, the charge will be $110 for a
+11 Residential Meter or $220 for a Commercial Meter. This charge includes the cost of
+12 the test performed, and the removal and replacement of the natural gas meter.
+13
+14 Unauthorized Over-Run Delivery Charge:
+15 For delivery service taken in contravention of the Company’s notice of
+16 curtailment, the applicable Unauthorized Over-Run Delivery Charge shall be
+17 equal to the greater of: firm LGS volumetric rate for Transportation to Centra and
+18 Distribution to Customer Service, or; a pro rata share with any other Customers
+19 in contravention of the Company’s notice of curtailment of any incremental
+20 costs incurred directly or indirectly as a result of such contravention.
+21
+22 Unauthorized Over-Run Gas Charge:
+23 For Unauthorized Over-Run Gas taken in contravention of any conditions set forth
+24 in these terms and conditions of service, the Company may charge the appl
+[DOC 5] https://www.hydro.mb.ca/docs/billing/schedule-of-sales-and-transportation-services-and-rates-v0826.pdf
+es Board Order 138/25
+
+Centra Gas Manitoba Inc. November 1, 2025
+Schedule of Sales and Transportation of Rates Page 77 of 77
+1 the material, labour, and equipment required to perform the alteration or
+2 relocation.
+3
+4 Yard Services:
+5 Materials plus 40% plus labour.
+Approved by Manitoba Public Utilities Board Order 138/25
+
+CENTRA GAS MANITOBA INC. ATTACHMENT 1
+Appendix A - Schedule of Sales and Transportation Services and Rates August 1, 2026
+Approved Rates Effective August 1, 2026 Page 1 of 4
+Approved by Board Order: 111/26 Supersedes Board Order: 60/26
+Effective from: August 1, 2026 Supersedes: May 1, 2026 Rates
+Date Implemented: August 1, 2026
+
+CENTRA GAS MANITOBA INC. ATTACHMENT 1
+Appendix A - Schedule of Sales and Transportation Services and Rates August 1, 2026
+Approved Rates Effective August 1, 2026 Page 2 of 4
+Approved by Board Order: 111/26 Supersedes Board Order: 60/26
+Effective from: August 1, 2026 Supersedes: May 1, 2026 Rates
+Date Implemented: August 1, 2026
+
+CENTRA GAS MANITOBA INC. ATTACHMENT 1
+Appendix A - Schedule of Sales and Transportation Services and Rates August 1, 2026
+Approved Rates Effective August 1, 2026 Page 3 of 4
+Approved by Board Order: 111/26 Supersedes Board Order: 60/26
+Effective from: August 1, 2026 Supersedes: May 1, 2026 Rates
+Date Implemented: August 1, 2026
+
+CENTRA GAS MANITOBA INC. ATTACHMENT 1
+Appendix A - Schedule of Sales and Transportation Services and Rates August 1, 2026
+Approved Rates Effective August 1, 2026 Page 4 of 4
+Approved by Board Order: 111/26 Supersedes Board Order: 60/26
+Effective from: August 1, 2026 Supersedes: May 1, 2026 Rates
+Date Implemented: August 1, 2026
+
+Appendix B - Schedule of Sales and Transportation Services and Rates
+Company Labour Rates Effective November 1, 2025 Page 1 of 1
+Service Type Location Regular Hourly Rate Overtime Hourly Rate
+Service Line Alterations All Areas $152.00 $212.00
+Damage Repairs All Areas $152.00 $212.00
+Damage Investigation All Areas $171.00 $240.00
+Appliance Relights All Areas $152.00 $212.00
+Metering Services All Areas $160.00 $225.00
+"As Built" Plans All Areas $144.00 $202.00
+Approved by PUB Order No.: 138/25
+Date of Board Order: October 30, 2025
+Service Type | Location | Regular Hourly Rate | Overtime Hourly Rate
+Service Line Alterations | All Areas | $152.00 | $212.00
+Damage Repairs | All Areas | $152.00 | $212.00
+Damage Investigation | All Areas | $171.00 | $240.00
+Appliance Relights | All Areas | $152.00 | $212.00
+Metering Services | All Areas | $160.00 | $225.00
+"As Built" Plans | All Areas | $144.00 | $202.00
+
+Appendix C - Schedule of Sales and Transportation Services and Rates
+Transportation Service Balancing Fees Effective November 1,
+2025 Page 1 of 1
+Transportation Service Balancing Fee Structure
+Level of Imbalance Balancing Fee
+Daily Fee Less than 2% 0
+Tier 1 2% up to 4% 0.2 times FTD, times 50%
+Tier 2 4% up to 8% 0.5 times FTD, times 50%
+Tier 3 8% up to 10% 0.75 times FTD, times 50%
+Tier 4 10% or Greater 1.0 times FTD, times 50%
+Cumula
+[DOC 7] https://www.hydro.mb.ca/service/generate-your-own-electricity/grid-connection/
+Connect to the grid
+Skip to content
+Français
+Login
+Menu
+Close
+Your account
+Start, stop, move or add an account
+Meters
+Billing & payment
+Loans & financing
+Rates & charges
+Your online account
+Most requested
+Equal Payment Plan
+Get help paying your bill
+Start, stop or move service
+Outages
+Power outage map
+Report a power outage
+Report a street light outage
+Reliability
+Planned outages
+Prepare for a power outage
+Permits & service
+Permits & inspections
+Service connections
+Generate your own electricity
+Most requested
+Request a tree safety assessment
+Apply for a line locate
+Request temporary service disconnection
+Safety
+Emergencies
+Indoor safety
+Outdoor safety
+Tree safety
+Storms
+Hydro infrastructure
+Education and youth safety
+Most requested
+Click Before You Dig
+Emergencies
+Tree trimming
+News & stories
+Customer support
+Help centre
+Contact us
+Most requested
+How to submit a damage claim
+Request a credit reference letter
+Login
+Français
+Home
+Permits & service
+Generate your own electricity
+Connect to the grid
+Connect to the grid
+On this page
+On this page
+Customer generation interconnections
+Interconnection guidelines
+Transmission level interconnection
+Also in
+Generate your own electricity
+Also in
+Generate your own electricity
+Connect to the grid
+Net billing
+Sell excess electricity
+Tariffs
+Our electrical grid is a network that delivers electricity from our generating stations to homes and businesses.
+We'll determine if your interconnection is feasible and how it may affect our grid. If your interconnection request is approved, we'll outline any work to be done and any costs.
+Customer generation interconnections
+There are three classifications of interconnection to our system:
+distribution level interconnection
+transmission level interconnection
+standby generation (no excess energy purchase agreement required)
+Before the installation of a new service can be approved, you must:
+Submit a signed
+Excess Energy Purchase Agreement
+(PDF, 305 KB)
+(if applicable) and an
+Interconnection Request
+(PDF, 175 KB)
+to both
+Independent Power
+and
+Energy Services Advisors
+.
+Apply for an
+electrical permit
+and any other applicable permits and licenses.
+Submit a
+commercial service request
+to install a bi-directional meter (if applicable) for all customer types including residential.
+Our
+interconnection guidelines
+outline additional requirements of each interconnection type.
+Distribution level interconnection
+There are three distribution level interconnection types for customer generation.
+Load displacement only
+Any electricity your system generates will reduce the amount of energy you need to buy at that time. If you use more energy than your system generates, you'll purchase that energy from us at the current electricity rate, just like you did before you installed your system.
+Load displacement plus excess to grid
+Similar to load displacement only, you can reduce the volume of energy you purchase by using your own generation. When your system generates more energy than you use, you ca
+[DOC 7] https://www.hydro.mb.ca/service/generate-your-own-electricity/grid-connection/
+n sell the excess generation back to us. This type of interconnection is typically used for residential and small commercial
+solar installations
+.
+Independent power with full generation to grid
+This type of interconnection is typically used for larger independent power projects with intent to sell their full generation to the grid rather than displace load. This interconnection type is limited by the available hosting capacity on our system, which is presently less than 1
+MW
+. Hosting capacity is the amount of electricity generated at your site without causing unacceptable reliability or voltage quality for you or other local customers. Hosting capacity can also be affected by system fault levels, conductor ampacity limits, protection schemes and feeder loading. Customer generation that exceeds available hosting capacity will be required to apply for a transmission level interconnection.
+Transmission level interconnection
+For proposed customer generation connecting to our grid at 33 kV or higher, you'll need to apply for interconnection through our
+Open Access Interconnection Tariff.
+Standby generation
+Standby generation creates electricity as a backup for your own use. There are two types of standby generation:
+Open transition switching
+A manual or automatic transfer switch breaks the connection from our grid before connecting the generation output to your residence or business.
+Momentary closed transition switching
+To assist monthly load testing of backup generation without outages to your service, your electricity output is in parallel with our grid for 100 milliseconds or less before contact is broken. Your generator then powers your facility.
+Contact us
+For more information about customer generation interconnections,
+email our Energy Services Advisors
+.
+Back to top
+Interconnection guidelines
+Understand the requirements specific to your type of interconnection to our grid.
+Interconnection requirements
+For distribution level and momentary-closed transition switching interconnections, your interconnection request should:
+meet our
+Technical Requirements
+(PDF, 2.4 MB)
+include your customer generator system’s major components data sheets
+include a single line diagram with:
+Solar Photovoltaic Electrical Permit, Plan Review and Equipment Specification Requirements
+(PDF, 94 KB)
+SLD String Configuration template
+(PDF, 224 KB)
+SLD Micro-inverter Configuration template
+(PDF, 222 KB)
+Technical requirement resources for interconnection to our electrical system:
+Power Quality Interconnection Requirements
+(PDF, 1.2 MB)
+Distribution System Customer Load Interconnection Requirements (750–100,000V)
+(PDF, 136 KB)
+Distribution level interconnection
+Generation connected to our distribution system is limited by the available hosting capacity on our system, which is presently less than 1 MW.
+Load displacement only
+For approval of your load displacement only interconnection, you must:
+meet all interconnection requirements listed above
+use a CSA-approved closed-trans

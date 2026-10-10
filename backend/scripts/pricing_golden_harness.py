@@ -43,8 +43,6 @@ from dataclasses import asdict, dataclass, field
 from decimal import Decimal
 from pathlib import Path
 from typing import Any, Callable
-from urllib.parse import urlparse
-
 # Allow `python -m scripts.pricing_golden_harness` from backend/
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
@@ -62,6 +60,7 @@ from app.services.pricing.extraction import (  # noqa: E402
     component_extraction_enabled,
     dual_extract_components,
 )
+from app.services.pricing.official_sites import official_context  # noqa: E402
 from app.services.pricing.inventory_from_docs import (  # noqa: E402
     build_inventory_from_document_set,
     comparable_oracles,
@@ -430,19 +429,6 @@ def _document_urls(raw_plan: dict[str, Any]) -> list[str]:
     return urls
 
 
-def _official_hosts(urls: list[str], raw_plan: dict[str, Any]) -> list[str]:
-    hosts: list[str] = []
-    for u in urls:
-        h = urlparse(u).hostname
-        if h:
-            hosts.append(h.removeprefix("www."))
-    for d in (raw_plan.get("document_set") or {}).get("documents") or []:
-        ph = (d.get("publisher_host") or "").strip()
-        if ph and ph not in hosts:
-            hosts.append(ph)
-    return hosts or ["golden.example"]
-
-
 def _build_dry_document(plan: PlanInput, payload: list[dict]) -> str:
     lines = []
     for c in plan.components:
@@ -573,7 +559,7 @@ def _score_live(
     meter: _LlmSpendMeter | None,
 ) -> PlanScore:
     urls = _document_urls(raw_plan)
-    hosts = _official_hosts(urls, raw_plan)
+    source_ctx = official_context(raw_plan.get("utility_name"))
     source_url = urls[0] if urls else (raw_plan.get("source_url") or "https://golden.example/tariff.pdf")
 
     if real_llm:
@@ -645,7 +631,7 @@ def _score_live(
             "source_url": source_url,
         },
         extract_fn=extract_fn,
-        official_hosts=hosts,
+        source_ctx=source_ctx,
         inventory=inventory,
         dispositions=dispositions,
         typical_bill_cents_per_kwh=typical,

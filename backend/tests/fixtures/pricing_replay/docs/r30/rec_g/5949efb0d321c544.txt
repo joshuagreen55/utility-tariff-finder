@@ -1,0 +1,2390 @@
+[DOC 1] https://www.pplelectric.com/site/-/media/PPLElectric/At-Your-Service/Docs/Current-Electric-Tariff/2026/October/402master4_posted-10-2-26.pdf
+Supplement No. 4
+Electric Pa. P.U.C. No. 202
+PPL Electric Utilities Corporation
+GENERAL TARIFF
+RULES AND RATE SCHEDULES
+FOR ELECTRIC SERVICE
+In the territory listed on pages 4, 4A and 4B
+and in the adjacent territory served.
+ISSUED: September 18, 2026 EFFECTIVE: October 1, 2026
+CHRISTINE M. MARTIN, PRESIDENT
+827 Hausman Road
+Allentown, PA 18104
+NOTICE
+
+Supplement No. 4 to Electric Pa. P.U.C. No. 202
+PPL Electric Utilities Corporation
+Third Revised Page No. 2
+Canceling Second Revised Page No. 2
+LIST OF CHANGES MADE BY THIS SUPPLEMENT
+CHANGES:
+Distribution System Improvement Charge The DSIC charge will remain at 0.00% for the
+(DSIC) period of October 1, 2026 through December 31,
+2026.
+Page No. 28
+(C) Indicates Change (D) Indicates Decrease (I) Indicates Increase
+Issued: September 18, 2026 Effective: October 1, 2026
+
+Supplement No. 2 toElectric Pa. P.U.C. No. 202
+PPL Electric Utilities Corporation
+First Revised Page No. 3
+Canceling Original Page No. 3
+TABLE OF CONTENTS
+Page Revision
+TABLE OF CONTENTS 3 First Revised
+TERRITORY COVERED BY THIS TARIFF 4 First Revised
+DEFINITIONS 5 First Revised
+RULES FOR ELECTRIC SERVICE 6 First Revised
+1 – Electric Service Tariff 6 First Revised
+2 – Requirements for Service 7 First Revised
+3 – Extension of Service 8 First Revised
+4 – Supply of Service 9 First Revised
+5 – Use of Service 10 First Revised
+6 – Stand-by Service for Non-Utility Generating Facilities 11 First Revised
+7 – Temporary Service 12 First Revised
+8 – Measurement of Service 13 First Revised
+9 – Billing and Payment for Service 14 First Revised
+10 – Disconnection and Reconnection of Service 15 First Revised
+11 – Net Service for Generation Facilities 16 First Revised
+12 – Distributed Energy Resource Interconnection Service 17 First Revised
+RIDERS, SURCHARGE, OPTIONS, AND CHARGES 18 First Revised
+Rider Matrix 18 First Revised
+State Tax Adjustment Surcharge 19 First Revised
+Universal Service Rider 20 First Revised
+Net Metering for Renewable Customer-Generators 21 First Revised
+Metering and Billing Credit Rider 22 First Revised
+Transmission Service Charge 23 First Revised
+Generation Supply Charge-1 24 First Revised
+Generation Supply Charge-2 25 First Revised
+Act 129 Compliance Rider-Phase 4 26 First Revised
+Act 129 Compliance Rider-Phase 5 26D Original
+Merchant Function Charge Rider 27 First Revised
+(C) Indicates Change (D) Indicates Decrease (I) Indicates Increase
+Issued:June 30, 2026 Effective:July 1, 2026
+
+Supplement No. 4 to Electric Pa. P.U.C. No. 202
+PPL Electric Utilities Corporation
+Second Revised Page No. 3A
+Canceling First Revised Page No. 3A
+TABLE OF CONTENTS (CONTINUED)
+Page Revision
+Distribution System Improvement Charge 28 Second Revised
+Storm Damage Expense Rider 29 First Revised
+Residential Electric Vehicle Time of Use Charging Rebate Program 30 First Revised
+RATE SCHEDULES – GENERAL 31 Second Revised
+RS – Residential Service 31 Second Revised
+RTS(R) – Residential Service – Thermal Storage 31C First Revised
+GS-1 – Single Phase General Servi
+[DOC 1] https://www.pplelectric.com/site/-/media/PPLElectric/At-Your-Service/Docs/Current-Electric-Tariff/2026/October/402master4_posted-10-2-26.pdf
+ recognized by the Pennsylvania Department of Aging as an operator of a senior
+citizen center. The use of electric service by the customer of record at this location shall be to
+support the activities of the non-profit senior citizen center.
+Non-Residential Customer – A customer receiving service under a Small C&I or Large C&I rate
+schedule.
+On-Peak Months – For purposes of Rule 6, the months of December through February and June
+through September.
+Off-Peak Months – For purposes of Rule 6, the months of March, April, May, October, and
+November.
+Pennsylvania Public Utility Commission – The state agency that provides oversight, policy
+guidance, and direction to public utilities in Pennsylvania.
+PJM Reliability Pricing Model - PJM's capacity market design that includes a series of auctions to
+satisfy the reliability requirements of the region PJM serves for a delivery year.
+Point of Delivery – The point designated by the Company where Company’s service conductors
+are connected to customer’s service entrance conductors, terminals, or bus.
+PPL Electric – PPL Electric Utilities Corporation
+(C) Indicates Change (D) Indicates Decrease (I) Indicates Increase
+Issued:June 30, 2026 Effective:July 1, 2026
+
+Supplement No. 2 to Electric Pa. P.U.C. No. 202
+PPL Electric Utilities Corporation First Revised Page No. 5E
+Canceling Original Page No. 5E
+DEFINITIONS (CONTINUED)
+Price-to-Compare - A line item that appears on a retail customer’s monthly bill for default service.
+The PTC is equal to the sum of all unbundled generation and transmission related charges to a
+default service customer for that month of service.
+Primary Voltage – Voltage greater than 600 volts.
+Prime Rate of Interest – The prime rate for commercial borrowing.
+PTC – Price-to-Compare
+PUC – Pennsylvania Public Utility Commission
+QF – Qualifying Facility
+Qualifying Facility - A cogeneration facility or a small power production facility which meets the
+criteria contained in 18 CFR Part 292 (relating to regulations under sections 201 and 210 of the
+Public Utility Regulatory Policies Act of 1978 with regard to small power producers and
+cogenerators).
+Residential – Customers served under Rate Schedules RS and RTS (R).
+REMSI – Rules for Electric Metering and Service Installations
+RPM – Reliability Pricing Model
+Secondary Voltage – Voltage of 600 volts or less.
+Service extension - The extension of the Company’s service line and associated facilities
+downstream from the distribution line to provide service to the customer.
+Service Extension Facilities – Company-owned facilities that are located downstream of the
+distribution line, including the service line, and meter.
+Small C&I – Small Commercial and Industrial. Except as may be further defined in this tariff,
+Small C&I consists of Rate Schedules GS-1, GS-3, BL,SA, SM (R), SHS (R), SLE, and SE.
+Speculative - When, in the Company's opinion, there is doubt as to the initial or continued use of
+the new facilities by the customer. This may include, but is not
+[DOC 1] https://www.pplelectric.com/site/-/media/PPLElectric/At-Your-Service/Docs/Current-Electric-Tariff/2026/October/402master4_posted-10-2-26.pdf
+ limited to separate points of
+delivery, and service at locations which are relatively inaccessible or remote, or where the
+customer has less investment than is required by the Company to supply service.
+Standby Service Contract - Signed agreement between the customer and the Company that
+specifies the contractual demand levels for Supplementary Service, Back-Up Service, and
+Maintenance Service.
+(C) Indicates Change (D) Indicates Decrease (I) Indicates Increase
+Issued:June 30, 2026 Effective:July 1, 2026
+
+Supplement No. 2 to Electric Pa. P.U.C. No. 202
+PPL Electric Utilities Corporation
+First Revised Page No. 5F
+Canceling Original Page No. 5F
+DEFINITIONS (CONTINUED)
+Station Power - Energy used for operating the electric equipment on the site of a Wholesale
+Generation Facility located in the PJM control area or for the heating, lighting, air-conditioning
+and office equipment needs of buildings on the site of such a Wholesale Generation Facility, which
+are used solely in the operation, maintenance, or repair of the facility. Station Power does not
+include any energy used to power synchronous condensers, used for pumping at a pumped
+storage facility, for restoration-related or black start service or to facilities unrelated to the
+operation of the Wholesale Generation Facility including, but not limited to buildings or structures
+on the site of such a Wholesale Generation Facility that are metered separately and served
+directly from the Company’s distribution system.
+Supplementary Contract Demand - Maximum amount of Supplementary Power to be supplied by
+the Company specified in the Stand-by Service Contract.
+Supplementary Power - Electric energy and capacity supplied by the Company and regularly used
+in addition to the energy and capacity supplied by the Customer’s on-site generation.
+Total Contract Demand – The sum of Supplementary Contract Demand and Back-up Contract
+Demand.
+Tenant - Any person or group of persons who occupies or is entitled to occupy a residential
+property, a commercial unit within a multitenancy building, parcel, or a unit in mobile home park
+and who is contractually obligated to make rental payments to a landlord or landlord ratepayer
+pursuant to a written or oral lease or rental arrangement. The term includes occupants of
+residential or commercial units where electric service is provided as an included service under
+the rental agreement and where the occupant is not the ratepayer of the utility providing such
+service. For purposes of this definition, a multitenancy building shall include any structure
+containing three (3) or more separate and distinct residential or commercial units.
+Transmission System - The portion of the electric system that is dedicated to transmitting electric
+energy. For purposes of this tariff, the transmission system includes all service extensions and
+lines energized at voltages of nominal 69,000 or higher and excludes all lines energized at
+voltages less than the nominal 69,000 volts. However, this de
+[DOC 1] https://www.pplelectric.com/site/-/media/PPLElectric/At-Your-Service/Docs/Current-Electric-Tariff/2026/October/402master4_posted-10-2-26.pdf
+ contract, Company will, after
+receiving notice of change in service conditions from the customer, recommend a new
+contract under the more advantageous rate schedule for an initial term consistent with the
+provisions of that rate schedule.
+(C) Indicates Change (D) Indicates Decrease (I) Indicates Increase
+Issued:June 30, 2026 Effective:July 1, 2026
+
+Supplement No. 2 to Electric Pa. P.U.C. No. 202
+PPL Electric Utilities Corporation
+First Revised Page No. 7A
+Canceling Original Page No. 7A
+RULE 2 – REQUIREMENTS FOR SERVICE (CONTINUED)
+(3) When, for any reason, a contract is entered into with a customer on a rate schedule not
+applicable to the service, Company will transfer the service to the rate schedule applicable
+for the relevant billing periods, and notify the customer of the adjusted charges for service
+already supplied.
+D. SECURITY DEPOSITS
+(1) The Company may require deposits or guarantees satisfactory to the Company
+as security for the payment of bills for service to be provided by the Company before it
+commences or continues to supply service. The need for a deposit or guarantee is based
+on the credit and other risks of the applicant or customer. For residential service, a
+guarantee may be provided by a third-party guarantor consistent with the Commission’s
+regulations.
+(2) The amount of deposit shall not exceed Company's estimate of the average bill
+for service provided by the Company for one-sixth of the estimated annual bill, with a
+minimum of $5.00. For residential customers, the interest rate on security deposits will be
+computed at the simple annual interest rate determined by the Secretary of Revenue for
+interest on the underpayment of tax under Section 806 of the Act of April 19, 1929 (P.L.
+343, No. 176), known as The Fiscal Code. For all other customers, the interest rate will be
+the average of 1-year Treasury Bills for September, October, and November of the previous
+calendar year. Interest ceases upon refund of deposit or upon discontinuance or termination
+of service, whichever occurs first.
+(3) Deposits, plus accrued interest, may be held until a timely payment history is
+established, and will be refunded to a residential customer under the following conditions:
+(a) When a customer establishes credit;
+(b) When a customer substitutes third-party guarantor (up to the limits of the
+guarantee);
+(c) When a customer is not currently delinquent and has made on time and in full
+payments for service provided by the Company for 12 consecutive months; or
+(d) When a customer is confirmed to be eligible for a customer assistance program.
+(4) Deposits, plus accrued interest, will be applied to the outstanding balance on the
+customer’s account for service provided by the Company upon termination or
+discontinuance of service with any remaining deposit refunded to the customer; provided,
+however, that beginning July 1, 2027, if a customer has previously paid a security deposit
+and subsequently demonstrates that they are income-eligible for PPL E
+[DOC 1] https://www.pplelectric.com/site/-/media/PPLElectric/At-Your-Service/Docs/Current-Electric-Tariff/2026/October/402master4_posted-10-2-26.pdf
+lities in residential
+developments of five or more adjoining lots for the construction of single-family residences,
+detached or otherwise, mobile homes, or apartment houses intended for year-round
+occupancy, when service requires the extension of primary voltage lines. It does not apply
+to tracts of land which are subdivided, as defined by the Municipalities Planning Code, but
+not developed into utility-ready lots by a bona fide developer.
+(C) Indicates Change (D) Indicates Decrease (I) Indicates Increase
+Issued:June 30, 2026 Effective:July 1, 2026
+
+Supplement No. 2 to Electric Pa. P.U.C. No. 202
+PPL Electric Utilities Corporation First Revised Page No. 9B
+Canceling Original Page No. 9B
+RULE 4 – SUPPLY OF SERVICE (CONTINUED)
+The developer requesting electric service to a residential development shall conform
+with the following:
+(a) At the developer’s cost, provide the Company with a copy of the recorded
+development plot plan identifying property boundaries, and with easements
+satisfactory to the Company for occupancy by distribution, service and street-light
+lines and related facilities.
+(b) At the developer’s cost, clear the ground in which the lines and related facilities
+are to be laid of trees, stumps and other obstructions, provide the excavating and
+backfilling subject to the inspection and approval of the Company, and rough grade
+it to within six inches of final grade, so that the Company's part of the installation
+shall consist only of laying of the lines and installing other service-related facilities.
+Excavating and backfilling performed or provided by the developer shall follow the
+Company's underground construction standards and specifications set forth by the
+Company and presented to the developer at the time of application for service and
+presentation of the recorded plot plan to the Company. If the Company's
+specifications have not been met by the developer's excavating and backfilling,
+such excavating and backfilling shall be corrected or redone by the developer or
+its authorized agent. Failure to comply with the Company's construction standards
+and specifications permits the Company to refuse service until such standards and
+specifications are met.
+(c) Request electric service at such time that the lines may be installed before curbs,
+pavements, and sidewalks are laid; carefully coordinate scheduling of the
+Company's line and facility installation with the general project construction
+schedule, including coordination with any other utility sharing the same trench;
+keep the route of lines clear of machinery and other obstructions when the line
+installation crew is scheduled to appear; and otherwise cooperate with the
+Company to avoid unnecessary cost and delay.
+(d) Pay to the Company any necessary and estimated additional costs incurred by the
+Company as a result of the following:
+1. Installation of underground facilities that deviate from the Company's
+underground construction standards and specifications if such deviation is
+req
+[DOC 1] https://www.pplelectric.com/site/-/media/PPLElectric/At-Your-Service/Docs/Current-Electric-Tariff/2026/October/402master4_posted-10-2-26.pdf
+nstitution or authority, the due date is not less than 30 days
+from the date bill is mailed via the U.S. Postal Service or sent electronically.
+(C) Indicates Change (D) Indicates Decrease (I) Indicates Increase
+Issued:June 30, 2026 Effective:July 1, 2026
+
+Supplement No. 2 to Electric Pa. P.U.C. No. 202
+PPL Electric Utilities Corporation
+First Revised Page No. 14A
+Canceling Original Page No. 14A
+RULE 9 – BILLING AND PAYMENT FOR SERVICE (CONTINUED)
+D. PAYMENT
+(1) Bills are considered as received by customer when delivered via the U.S. Postal
+Service or rendered electronically to the premises where the service is supplied or an address
+mutually agreed upon. Delay in the receipt of or failure to receive bill does not extend the due
+date.
+(2) Bills may be paid during business hours at any commercial office or collection
+agency of the Company authorized to receive payments.
+(3) Payment of bills will be accepted as paid on the date of the actual receipt of
+payment.
+(4) Payment of bills after the due date specified on the bill is subject to a late payment
+charge, as provided for in the applicable rate schedule.
+(5) The customer is responsible for payment for use up to discontinuance or
+termination of service.
+(6) In the event of discontinuance or termination of service at a residence or dwelling,
+the Company may transfer any unpaid balance to any other residential account of the same
+customer, or in the event of termination, to a third-party guarantor's account.
+(7) Payments which are insufficient to pay for both a balance due for prior use and
+billing for current use are first applied to the balance due for prior use, except when an unpaid
+bill is a disputed bill.
+E. BUDGET BILLING
+Budget billing is available upon request for service under residential and general service rate
+applications except for temporary, seasonal, and speculative service. Budget billing may start in
+any month, for new or existing customers, and may be discontinued upon request at which time
+any difference between budget billing and billing based on actual use becomes due and payable.
+In any month when the amount billed for the previous billing period is overdue, budget billing may
+be terminated; any difference owed the Company is immediately due, and bills thereafter are
+rendered based on metered use.
+When a residential customer elects budget billing, the Company estimates the bills over a 10-
+month, 11- month or 12-month period to limit seasonal fluctuations in utility bills. The Company
+shall review accounts at least three times during the optional billing period. At the conclusion of
+the budget billing year, a resulting reconciliation amount exceeding $100, but less than $300, shall
+be, at the request of the customer, amortized over a 6-month period. Reconciliation amounts
+exceeding $300 shall be amortized over at least a 12-month period, at the request of the
+customer. Shorter amortization periods are permissible at the request of the customer.
+(C) Indicates Change (D) Indicat
+[DOC 1] https://www.pplelectric.com/site/-/media/PPLElectric/At-Your-Service/Docs/Current-Electric-Tariff/2026/October/402master4_posted-10-2-26.pdf
+lectric Pa. P.U.C. No. 202
+PPL Electric Utilities Corporation
+First Revised Page No. 22
+Canceling Original Page No. 22
+METERING AND BILLING CREDIT RIDER
+PURPOSE
+This rider provides for Distribution Charge credits when an EGS licensed by the Commission provides
+metering, meter reading, and/or billing and collection service to a customer in lieu of the Company.
+APPLICATION
+This rider applies to the Distribution Charges included in each Rate Schedule included in this Tariff.
+NET MONTHLY DISTRIBUTION CHARGE CREDIT
+Rate Schedule Metering Meter Reading Billing and Collection
+RS and RTS (R) $ 1.97 $ 0.17 $ 2.34
+Separate Water Heating Service 1.97 0.17 2.34
+GS-1 4.08 0.17 2.34
+Space Conditioning and Water Heating 4.08 0.17 2.34
+Volunteer Fire Co./Sr. Citizen Centers 1.97 0.17 2.34
+GS-3 4.08 0.17 2.34
+Space Conditioning and Water Heating 4.08 0.17 2.34
+Volunteer Fire Co./Sr. Citizen Centers 1.97 0.17 2.34
+LP-4 55.57 0.17 2.34
+Space Conditioning and Water Heating 4.08 0.17 2.34
+LP-5 and LP-6 272.54 0.17 2.34
+BL 4.08 0.17 2.34
+SA -- -- 2.34
+SM(R) -- -- 2.34
+SHS(R) -- -- 2.34
+SLE -- -- 2.34
+SE -- -- 2.34
+Standby Service - 480 Volts or Less 4.08 0.17 2.34
+Standby Service - 12,470 Volts 55.57 0.17 2.34
+Standby Service - 69,000 Volts or Higher 272.54 0.17 2.34
+(C) Indicates Change (D) Indicates Decrease (I) Indicates Increase
+Issued:June 30, 2026 Effective:July 1, 2026
+
+Supplement No. 2 to Electric Pa. P.U.C. No. 202
+PPL Electric Utilities Corporation
+First Revised Page No. 23
+Canceling Original Page No. 23
+TRANSMISSION SERVICE CHARGE
+The Transmission Service Charge (TSC) shall be applied to charges for electricity supplied to
+customers who receive default service, as defined in Rule 1B(1), from the Company under this Tariff.
+The TSC shall be computed separately for each of the following four customer classes:
+(1) Residential: Consisting of Rate Schedules RS and RTS (R),
+(2) Small Commercial and Industrial: Consisting of Rate Schedules GS-1, GS-3, BL, SA,
+SM (R), SHS (R), SLE, and SE (Small C&I),
+(3) Large Commercial and Industrial – Primary: Consisting of Rate Schedule LP-4 (Large C&I –
+Primary), and
+(4) Large Commercial and Industrial – Transmission: Consisting of Rate Schedules LP-
+5 and LP-6 (Large C&I – Transmission).
+The TSC, computed using the formulae described below, shall be applied to the monthly bill of
+each customer receiving default service from the Company and shall be reconciled on an annual
+basis for undercollections and overcollections experienced during the previous year.
+The TSC for the Residential class and the Small C&I class shall be computed using the following
+formula:
+TSC = [TCe/S + TCd/S - E/S] X 1/(1-T)
+The TSC for the Large C&I – Primary class and the Large C&I – Transmission class shall be
+computed using the following formulae:
+TSC = TSCd + TSCe
+The demand – related portion of the TSC (TSCd) for the Large C&I – Primary class and the Large
+C&I – Transmission class shall be computed using the following formula:
+TSCd = [TCd/D] X 1/(1-
+[DOC 1] https://www.pplelectric.com/site/-/media/PPLElectric/At-Your-Service/Docs/Current-Electric-Tariff/2026/October/402master4_posted-10-2-26.pdf
+ 2.074 5,000 0.686 0.03303 0.02413
+20,000 5.608 25,500 3.742 4,750 0.857
+34,000 9.562 50,000 5.873 8,000 1.094
+LED 0.509
+4,300 $/Fixture 51,000 13.215 12,750 2.041
+20,000 3.165
+(C) Indicates Change (D) Indicates Decrease (I) Indicates Increase
+Issued:June 30, 2026 Effective:July 1, 2026
+Customer Class | Large C&I -
+Transmission | Large C&I -
+Primary | Small C&I | Residential
+Rate Schedule /
+Charge | LP-5 and LP-6 | LP-4 | GS-1, GS-3,
+and BL | RS and RTS (R)
+Energy Rate
+($/kWh) |  |  | 0.03303 | 0.03326
+Demand Rate
+($/kW) | 18.663 | 21.647 |  | 
+Small C&I – Street Lights |  |  |  |  |  |  |  |  |  | 
+Rate
+Schedule/
+Charge | SA |  | SM (R) |  | SHS
+(R) |  | SLE |  | SE | TS (R)
+ | Nominal
+Lumens | Charge | Nominal
+Lumens | $/Lamp | Nominal
+Lumens | $/Lamp | Nominal
+Lumens | $/Fixture | $/KWH | $/Watt
+ | HPS
+9,500 | 2.167
+$/Lamp | 3,350 | 1.622 | 5,800 | 0.984 | 3,000 | 0.473 | 0.03303 | 0.02413
+ |  |  | 6,650 | 2.533 | 9,500 | 1.410 | 2,900 | 0.621 |  | 
+ |  |  | 10,500 | 3.541 | 16,000 | 2.074 | 5,000 | 0.686 |  | 
+ | LED
+4,300 | 0.509
+$/Fixture | 20,000 | 5.608 | 25,500 | 3.742 | 4,750 | 0.857 |  | 
+ |  |  | 34,000 | 9.562 | 50,000 | 5.873 | 8,000 | 1.094 |  | 
+ |  |  | 51,000 | 13.215 |  |  | 12,750 | 2.041 |  | 
+ |  |  |  |  |  |  | 20,000 | 3.165 |  | 
+
+Supplement No. 2 to Electric Pa. P.U.C. No. 202
+PPL Electric Utilities Corporation
+First Revised Page No. 24
+Canceling Original Page No. 24
+GENERATION SUPPLY CHARGE-1
+The Generation Supply Charge-1 (GSC-1) shall be applied to each kilowatt-hour supplied
+to residential customers who take default service from the Company under Rate Schedules RS
+and RTS (R), small commercial and industrial customers who take Default Service under Rate
+Schedules GS-1, GS-3, BL, SA, SM (R), SHS (R), SLE, and SE and standby service for the
+foregoing rate schedules. Subject to the grandfathering provisions set forth herein, the GSC-1 will
+not apply to those Rate Schedule GS-3 customers who have a Maximum Registered Peak Load
+of 100 kW or greater, but the GSC-1 will apply to those Rate Schedule LP-4 customers who have
+a Maximum Registered Peak Load of less than 100 kW. The GSC-1 shall have the options listed
+below.
+FIXED PRICE OPTION – RESIDENTIAL & SMALL COMMERCIAL/INDUSTRIAL
+PURPOSE
+The Fixed Price Option provides eligible customers in the Residential and Small
+Commercial & Industrial Customer Class with default service for those customers who have not
+selected a retail electric generation supplier (EGS) or the Time of Use Program.
+PRICING PROVISIONS
+The Fixed Price GSC-1, determined in accordance with the formula set forth below, shall
+be applied to all kilowatt-hours billed for service provided during the billing period:
+Where:
+GSC-1 = The Generation Supply Charge-1, stated in cents per kilowatt hour, shall be
+calculated separately for each of the following two Customer Classes: (1)
+residential, and (2) small commercial and industrial as designated above.
+GS fp = The total estimated direct and indirect costs incurr
+[DOC 1] https://www.pplelectric.com/site/-/media/PPLElectric/At-Your-Service/Docs/Current-Electric-Tariff/2026/October/402master4_posted-10-2-26.pdf
+Customer Class Small C&I Residential
+GS-1, GS-3 (< 100 kW MRPL), LP-4
+(< 100 kW MRPL), and BL RS and RTS (R)
+Rate Schedule / Charge
+$0.09445/KWH $0.09753/KWH
+Small C&I – Street Lights
+SA SM (R) SHS SLE SE TS (R)
+(R)
+Nominal Nominal Nominal Nominal
+Lumens Charge Lumens $/Lamp Lumens $/Lamp Lumens $/Fixture $/KWH $/Watt
+Rate
+Sched ule/
+3,350 4.637 5,800 2.815 3,000 1.354
+Charge
+HPS 6.196
+6,650 7.244 9,500 4.033 2,900 1.775
+9,500 $/Lamp
+10,500 10.125 16,000 5.931 5,000 1.963 0.09445 0.06900
+20,000 16.038 25,500 10.701 4,750 2.452
+LED 1.455
+34,000 27.343 50,000 16.793 8,000 3.129
+4,300 $/Fixture
+51,000 37.789 12,750 5.836
+20,000 9.051
+GSC – 1 RECONCILIATION PROVISIONS
+For the Fixed Price Option, the Company will file with the Commission thirty (30) days prior
+to each annual period (June 1 through May 31), a reconciliation of GSC-1 actual billed revenues
+and actual incurred costs for a twelve-month period ending March 31 of each year, pursuant to 66
+Pa. C.S. §1307. The reconciliation shall become effective for service rendered during the 2 six-
+month computation periods.
+The reconciliation will be calculated separately for each of the two Customer Classes. The
+reconciliation will include a calculation of any over/under collection that will be reflected in the GSC-
+1 charges for the subsequent 2 six-month computation periods. The GSC-1 will be reconciled every
+twelve months, using over/under collection balance for the twelve-month period ending two months
+prior to each annual period.
+Application of the GSC-1 shall be subject to continuous review and audit by the
+Commission at intervals it shall determine. The Commission shall review the reasonableness and
+lawfulness of the level of charges produced by the GSC-1 and the costs included therein.
+(C) Indicates Change (D) Indicates Decrease (I) Indicates Increase
+Issued:June 30, 2026 Effective:July 1, 2026
+Customer Class | Small C&I | Residential
+Rate Schedule / Charge | GS-1, GS-3 (< 100 kW MRPL), LP-4
+(< 100 kW MRPL), and BL
+$0.09445/KWH | RS and RTS (R)
+$0.09753/KWH
+Small C&I – Street Lights |  |  |  |  |  |  |  |  |  | 
+Rate
+Sched ule/
+Charge | SA |  | SM (R) |  | SHS
+(R) |  | SLE |  | SE | TS (R)
+ | Nominal
+Lumens | Charge | Nominal
+Lumens | $/Lamp | Nominal
+Lumens | $/Lamp | Nominal
+Lumens | $/Fixture | $/KWH | $/Watt
+ | HPS
+9,500 | 6.196
+$/Lamp | 3,350 | 4.637 | 5,800 | 2.815 | 3,000 | 1.354 | 0.09445 | 0.06900
+ |  |  | 6,650 | 7.244 | 9,500 | 4.033 | 2,900 | 1.775 |  | 
+ |  |  | 10,500 | 10.125 | 16,000 | 5.931 | 5,000 | 1.963 |  | 
+ | LED
+4,300 | 1.455
+$/Fixture | 20,000 | 16.038 | 25,500 | 10.701 | 4,750 | 2.452 |  | 
+ |  |  | 34,000 | 27.343 | 50,000 | 16.793 | 8,000 | 3.129 |  | 
+ |  |  | 51,000 | 37.789 |  |  | 12,750 | 5.836 |  | 
+ |  |  |  |  |  |  | 20,000 | 9.051 |  | 
+
+Supplement No. 2 to Electric Pa. P.U.C. No. 202
+PPL Electric Utilities Corporation
+First Revised Page No. 24C
+Canceling Original Page No. 24C
+GENERATION SUPPLY CHARGE-1 (CONTINUED)
+TIME OF USE PROGRAM PURPOSE
+The Time-of-Use
+[DOC 1] https://www.pplelectric.com/site/-/media/PPLElectric/At-Your-Service/Docs/Current-Electric-Tariff/2026/October/402master4_posted-10-2-26.pdf
+ (TOU) Program provides for the voluntary participation of eligible existing
+and new residential and small commercial & industrial customers in a year-round TOU Program.
+Eligible customers must meet the application provisions of this TOU Program. The objective of this
+TOU Program is to provide eligible residential and small commercial & industrial customers with
+an opportunity to pay a rate lower than the fixed price for usage during off-peak periods and a rate
+higher than the fixed price for usage during on-peak periods.
+APPLICATION PROVISIONS
+This TOU Program is available to existing and new residential and small
+commercial/industrial customers who are served, or qualify to be served, under Rate Schedules
+RS, RTS (R), GS-1, GS-3 (customers with maximum registered peak loads less than 100 KW),
+LP-4 (customers with maximum registered peak loads less than 100KW), and BL. This includes
+Volunteer/Non-Profit organizations (Volunteer Fire Companies, Non-Profit Senior Citizen Centers,
+Non-Profit Rescue Squads, and Non-Profit Ambulance Services) served under Rate Schedules
+GS-1 and GS-3 but does not include customers in the Company’s OnTrack program. Customers
+taking service under the above-referenced rate schedules, who also participate in the Company's
+Net Metering for Renewable Customer Generator programs, are eligible for the TOU Program.
+PRICING PROVISIONS
+The following Generation Supply Charges apply for service under the TOU Program during
+the period July 1, 2026 through November 30, 2026. On-Peak hours will be set based on schedule
+below Monday through Friday, excluding weekends and holidays.
+Winter On-Peak Hours Summer On-Peak Hours
+Rate Schedules RS and RTS (R) (4:00 PM to 8:00 PM) (2:00 PM to 6:00 PM)
+December 1 to May 31 June 1 to November 30
+On-Peak Hours 10.643 cts per kWh 14.216 cts per kWh
+Off Peak Hours 8.644 cts per kWh 8.814 cts per kWh
+Rate Schedules Winter On-PeakHours Summer On-Peak Hours
+GS-1, GS-3 (< 100 kW), LP-4 (4:00 PM to 8:00 PM) (2:00 PM to 6:00 PM)
+(<100kW), and BL December 1 to May 31 June 1 to November 30
+On-Peak Hours 10.339 cts per kWh 13.633 cts per kWh
+Off Peak Hours 8.484 cts per kWh 8.563 cts per kWh
+(C) Indicates Change (D) Indicates Decrease (I) Indicates Increase
+Issued:June 30, 2026 Effective:July 1, 2026
+Rate Schedules RS and RTS (R) | Winter On-Peak Hours
+(4:00 PM to 8:00 PM)
+December 1 to May 31 | Summer On-Peak Hours
+(2:00 PM to 6:00 PM)
+June 1 to November 30
+On-Peak Hours | 10.643 cts per kWh | 14.216 cts per kWh
+Off Peak Hours | 8.644 cts per kWh | 8.814 cts per kWh
+Rate Schedules
+GS-1, GS-3 (< 100 kW), LP-4
+(<100kW), and BL | Winter On-PeakHours
+(4:00 PM to 8:00 PM)
+December 1 to May 31 | Summer On-Peak Hours
+(2:00 PM to 6:00 PM)
+June 1 to November 30
+On-Peak Hours | 10.339 cts per kWh | 13.633 cts per kWh
+Off Peak Hours | 8.484 cts per kWh | 8.563 cts per kWh
+
+Supplement No. 2 to Electric Pa. P.U.C. No. 202
+PPL Electric Utilities Corporation
+First Revised Page No. 24D
+Canceling Original Page No. 24D
+GEN
+[DOC 1] https://www.pplelectric.com/site/-/media/PPLElectric/At-Your-Service/Docs/Current-Electric-Tariff/2026/October/402master4_posted-10-2-26.pdf
+ibed below. For residential customers, the ACR 4 charge shall be
+included in the distribution charges on a kWh basis of the monthly bill. For all other customers, the
+ACR charge shall be listed as a separate charge on the monthly bill. All charges shall be reconciled
+on an annual basis for undercollections and overcollections experienced during the previous year.
+Charges set forth in the residential rate schedules in this tariff have been adjusted to reflect
+application of the currently effective ACR 4.
+The costs of each EE&C program available to only one customer class will be directly
+assigned to that customer class. Costs of EE&C programs which cannot be directly assigned to one
+customer class will be allocated to the customer classes benefiting from those programs using an
+allocation factor determined by dividing the EE&C costs directly assigned to each customer class by
+the total of the Company's EE&C Plan costs directly assigned to all customer classes.
+The ACR 4 for the Residential class and the Small C&I class shall be computed using the
+following formula:
+ACR 4 = [ACc/S - E/S] X 1 / (1-T)
+The ACR 3 for the Large C&I class shall be computed using the following formula:
+ACR 4 = [ACc/D - E/D] X 1 / (1-T)
+(C) Indicates Change (D) Indicates Decrease (I) Indicates Increase
+Issued:June 30, 2026 Effective:July 1, 2026
+
+Supplement No. 2 to Electric Pa. P.U.C. No. 202
+PPL Electric Utilities Corporation
+First Revised Page No. 26A
+Canceling Original Page No. 26A
+ACT 129 COMPLIANCE RIDER – PHASE 4 (CONTINUED)
+Where:
+ACc = An annual budget of all costs required for the Company to implement its Commission
+approved Phase 4 Energy Efficiency and Conservation (EE&C) Plan during a compliance
+year, which is the 12-month period beginning June 1 of each calendar year and ending May
+31 of the following calendar year. The annual project program cost is the sum of all direct
+and indirect costs (including all deferred design and development costs, general
+administrative costs, and applicable statewide evaluator costs) required to implement the
+Company's EE&C Plan divided by the number of months in the Company's EE&C Plan for
+the given application year. All deferred design and development cost, general administrative
+costs, and applicable statewide evaluator costs will be amortized over a 60-month period.
+D = For the Large C&I customer class, the total of the monthly billing demands for all customers
+in the class, projected for the computation year. The peak demand will be based on the
+customer’s peak load contribution to the PJM peak load during the prior PJM Planning
+Year.
+E = Net over or undercollection of the ACR 4 charges as of the end of the 12-month period
+ending March 31 immediately preceding the next compliance year. Reconciliation of the
+ACR 4 will be conducted separately for each of the three customer classes based upon
+the actual expenses incurred and actual revenues received for each customer class. No
+interest shall be computed monthly on over or und
+[DOC 1] https://www.pplelectric.com/site/-/media/PPLElectric/At-Your-Service/Docs/Current-Electric-Tariff/2026/October/402master4_posted-10-2-26.pdf
+ACT 129 COMPLIANCE RIDER – PHASE 4 CHARGE
+Charges under the ACR 4 for the period June 1, 2025 through May 31, 2026, as set forth in
+the applicable Rate Schedules.
+Customer Class Large I&C - Small I&C Residential
+Rate Schedule / Charge LP4, and LP-5 GS-1, GS-3, and BL RS
+$1.057 /KW (I) $0.00166 /KWH (D) $0.00220 /KWH (I)
+(C) Indicates Change (D) Indicates Decrease (I) Indicates Increase
+Issued:June 30, 2026 Effective:July 1, 2026
+Customer Class | Large I&C - | Small I&C | Residential
+Rate Schedule / Charge | LP4, and LP-5
+$1.057 /KW (I) | GS-1, GS-3, and BL
+$0.00166 /KWH (D) | RS
+$0.00220 /KWH (I)
+
+Supplement No. 2 to Electric Pa. P.U.C. No. 202
+PPL Electric Utilities Corporation
+First Revised Page No. 26C
+Canceling Original Page No. 26C
+ACT 129 COMPLIANCE RIDER – PHASE 4 (CONTINUED)
+Small C&I – Street Lights
+SA SM (R) SHS SLE SE TS (R)
+(R)
+Nominal Nominal Nominal Nominal
+Lumens Charge Lumens $/Lamp Lumens $/Lamp Lumens $/Fixture $/KWH $/Watt
+Rate
+Schedule/
+Charge 3,350 0.082 5,800 0.049 2,600 0.021
+HPS 0.109
+6,650 9,500 3,300
+9,500 $/Lamp 0.127 0.071 0.031
+10,500 16,000 3,800
+0.178 0.104 0.032 0.00166 0.00121
+20,000 25,500 4,900
+0.282 0.188 0.043
+0.026 34,000 50,000 7,500
+LED 0.481 0.295 0.055
+4,300
+$/Fixture 51,000 15,000
+0.664 0.103
+20,000
+0.159
+(C) Indicates Change (D) Indicates Decrease (I) Indicates Increase
+Issued:June 30, 2026 Effective:July 1, 2026
+Small C&I – Street Lights |  |  |  |  |  |  |  |  |  | 
+Rate
+Schedule/
+Charge | SA |  | SM (R) |  | SHS
+(R) |  | SLE |  | SE | TS (R)
+ | Nominal
+Lumens | Charge | Nominal
+Lumens | $/Lamp | Nominal
+Lumens | $/Lamp | Nominal
+Lumens | $/Fixture | $/KWH | $/Watt
+ | HPS
+9,500 | 0.109
+$/Lamp | 3,350 | 0.082 | 5,800 | 0.049 | 2,600 | 0.021 | 0.00166 | 0.00121
+ |  |  | 6,650 | 0.127 | 9,500 | 0.071 | 3,300 | 0.031 |  | 
+ |  |  | 10,500 | 0.178 | 16,000 | 0.104 | 3,800 | 0.032 |  | 
+ | LED
+4,300 | 0.026
+$/Fixture | 20,000 | 0.282 | 25,500 | 0.188 | 4,900 | 0.043 |  | 
+ |  |  | 34,000 | 0.481 | 50,000 | 0.295 | 7,500 | 0.055 |  | 
+ |  |  | 51,000 | 0.664 |  |  | 15,000 | 0.103 |  | 
+ |  |  |  |  |  |  | 20,000 | 0.159 |  | 
+
+Supplement No. 2 to Electric Pa. P.U.C. No. 202
+PPL Electric Utilities Corporation
+First Revised Page No. 26D
+Canceling Original Page No. 26D
+ACT 129 COMPLIANCE RIDER – PHASE 5
+A Phase 5 Act 129 Compliance Rider (ACR 5) shall be applied, on a non-bypassable basis,
+to charges for electricity supplied to customers who receive distribution service from the Company
+under this Tariff. The ACR 5 will be implemented beginning June 1, 2026.
+The ACR 5 shall be computed separately for each of the following three customer classes:
+(1) Residential: Consisting of Rate Schedules RS and RTS (R),
+(2) Small Commercial and Industrial (Small C&I): Consisting of Rate Schedules GS-1, GS-3,
+BL, SA, SM (R), SHS (R), SLE, and SE, and
+(3) Large Commercial and Industrial (Large C&I): Consisting of Rate Schedules LP-4, LP-5,
+and LP-6.
+The ACR 5 will be computed for each customer receiving distribution service 
+[DOC 1] https://www.pplelectric.com/site/-/media/PPLElectric/At-Your-Service/Docs/Current-Electric-Tariff/2026/October/402master4_posted-10-2-26.pdf
+from the
+Company using the formulae described below. For residential customers, the ACR 5 charge shall be
+included in the distribution charges on a kWh basis of the monthly bill. For all other customers, the
+ACR charge shall be listed as a separate charge on the monthly bill. All charges shall be reconciled
+on an annual basis for undercollections and overcollections experienced during the previous year.
+Charges set forth in the residential rate schedules in this tariff have been adjusted to reflect
+application of the currently effective ACR 5.
+The ACR 5 for the Residential class and the Small C&I class shall be computed using the
+following formula:
+ACR 5 = [ACc/S - E/S] X 1 / (1-T)
+The ACR 5 for the Large C&I class shall be computed using the following formula:
+ACR 5 = [ACc/D - E/D] X 1 / (1-T)
+Where:
+ACc = An annual budget of all costs required for the Company to implement its proposed Phase 5
+Energy Efficiency and Conservation (EE&C) Plan during a compliance year. A compliance
+year is the 12-month period beginning June 1 of each calendar year and ending May 31 of
+the following calendar year. The annual project program cost is the sum of all direct and
+indirect costs (including all deferred design and development costs, general administrative
+costs, and applicable statewide evaluator costs) required to implement the Company's
+EE&C Plan divided by the number of months in the Company's EE&C Plan for the given
+application year. All deferred design and development cost, general administrative costs,
+and applicable statewide evaluator costs will be amortized over a 60-month period.
+The costs of each EE&C program available to only one customer class will be directly
+assigned to that customer class. Costs of EE&C programs which cannot be directly
+assigned to one customer class will be allocated to the customer classes benefiting from
+those programs using an allocation factor determined by dividing the EE&C costs directly
+assigned to each customer class by the total of the Company's EE&C Plan costs directly
+assigned to all customer classes.
+(C) Indicates Change (D) Indicates Decrease (I) Indicates Increase
+Issued:June 30, 2026 Effective:July 1, 2026
+
+Supplement No. 2 to Electric Pa. P.U.C. No. 202
+PPL Electric Utilities Corporation
+First Revised Page No. 26E
+Canceling Original Page No. 26E
+ACT 129 COMPLIANCE RIDER – PHASE 5 (CONTINUED)
+D = For the Large C&I customer class, the total of the monthly billing demands for all customers
+in the class, projected for the computation year. The peak demand will be based on the
+customer’s peak load contribution to the PJM peak load during the prior PJM Planning
+Year.
+E = Net over or undercollection of the ACR 5 charges as of the end of the 12-month period
+ending March 31 immediately preceding the next compliance year. Reconciliation of the
+ACR 5 will be conducted separately for each of the three customer classes based upon
+the actual expenses incurred and actual revenues received for each customer class. No
+interes
+[DOC 1] https://www.pplelectric.com/site/-/media/PPLElectric/At-Your-Service/Docs/Current-Electric-Tariff/2026/October/402master4_posted-10-2-26.pdf
+age No. 26F
+ACT 129 COMPLIANCE RIDER – PHASE 5 (CONTINUED)
+ACT 129 COMPLIANCE RIDER – PHASE 5 CHARGE
+Charges under the ACR 5 for the period June 1, 2026 through May 31, 2027, as set forth in
+the applicable Rate Schedules.
+Customer Class Large I&C - Small I&C Residential
+Rate Schedule / Charge LP4, LP-5, and LP-6 GS-1, GS-3, and BL RS and RTS (R)
+$0.219 /KW $0.00071 /KWH $0.00179 /KWH
+Small C&I – Street Lights
+SA SM (R) SHS SLE SE TS (R)
+(R)
+Nominal Nominal Nominal Nominal
+Lumens Charge Lumens $/Lamp Lumens $/Lamp Lumens $/Fixture $/KWH $/Watt
+Rate
+Schedule/
+Charge 3,350 0.035 5,800 0.021 3,000 0.010
+HPS 0.047
+6,650 9,500 2,900
+9,500 $/Lamp 0.054 0.030 0.013
+10,500 16,000 5,000
+0.076 0.045 0.015 0.00071 0.00052
+20,000 25,500 4,750
+0.121 0.080 0.018
+0.011 34,000 50,000 8,000
+LED 0.206 0.126 0.024
+$/Fixture
+4,300
+51,000 12,750
+0.284 0.044
+20,000
+0.068
+(C) Indicates Change (D) Indicates Decrease (I) Indicates Increase
+Issued:June 30, 2026 Effective:July 1, 2026
+Customer Class | Large I&C - | Small I&C | Residential
+Rate Schedule / Charge | LP4, LP-5, and LP-6
+$0.219 /KW | GS-1, GS-3, and BL
+$0.00071 /KWH | RS and RTS (R)
+$0.00179 /KWH
+Small C&I – Street Lights |  |  |  |  |  |  |  |  |  | 
+Rate
+Schedule/
+Charge | SA |  | SM (R) |  | SHS
+(R) |  | SLE |  | SE | TS (R)
+ | Nominal
+Lumens | Charge | Nominal
+Lumens | $/Lamp | Nominal
+Lumens | $/Lamp | Nominal
+Lumens | $/Fixture | $/KWH | $/Watt
+ | HPS
+9,500 | 0.047
+$/Lamp | 3,350 | 0.035 | 5,800 | 0.021 | 3,000 | 0.010 | 0.00071 | 0.00052
+ |  |  | 6,650 | 0.054 | 9,500 | 0.030 | 2,900 | 0.013 |  | 
+ |  |  | 10,500 | 0.076 | 16,000 | 0.045 | 5,000 | 0.015 |  | 
+ | LED
+4,300 | 0.011
+$/Fixture | 20,000 | 0.121 | 25,500 | 0.080 | 4,750 | 0.018 |  | 
+ |  |  | 34,000 | 0.206 | 50,000 | 0.126 | 8,000 | 0.024 |  | 
+ |  |  | 51,000 | 0.284 |  |  | 12,750 | 0.044 |  | 
+ |  |  |  |  |  |  | 20,000 | 0.068 |  | 
+
+Supplement No. 2 to Electric Pa. P.U.C. No. 202
+PPL Electric Utilities Corporation
+First Revised Page No. 27
+Canceling Original Page No. 27
+MERCHANT FUNCTION CHARGE RIDER
+The Merchant Function Charge (MFC) Rider, stated as a percentage, shall be applied to the
+generation supply and transmission services charges billed, under the GSC-1 and TSC, respectively,
+as set forth in this Tariff, to each residential and small commercial & industrial (Small C&I) customer
+taking default service under these Rate Schedules: RS, RTS (R), GS-1, GS-3, BL, SA, SM (R), SHS
+(R), SLE, and SE and stand-by service for the foregoing rate schedules. The MFC will be reflected in
+the Company’s Price To Compare.
+The MFC, which will not be subject to reconciliation, is designed to make the Company’s Price
+To Compare (PTC) more comparable to electric supply service prices offered by EGSs by reflecting
+anticipated generation supply-related uncollectible accounts expense in default service rates. In
+addition, the MFC will be applied to the TSC to reflect the applicable transmission service-related
+uncollectible accounts expense previously re
+[DOC 1] https://www.pplelectric.com/site/-/media/PPLElectric/At-Your-Service/Docs/Current-Electric-Tariff/2026/October/402master4_posted-10-2-26.pdf
+s at least 10% of the
+Company’s customers during the course of the event for a duration of 5 minutes each or greater (see
+52 Pa. Code §57.192), will be recovered over three years and reflected in SDER rates commencing
+in the application year after the storm occurred.
+The C factor will include interest for major storm events that are subject to amortization, as
+provided above. Such interest shall be computed monthly at the average rate of interest specified for
+residential mortgage lending by the Secretary of Banking in accordance with the Act of January 30,
+1974 ( P.L. 13, No. 6 referred to as the Loan Interest and Protection law, 41 P .S. §§ 101 et seq.),
+from the month the amortization begins to the effective month that the full amount of the amortization
+is recovered.
+The R Factor = The R factor is the amount of applicable storm damage expense reflected in the
+Company’s base rates. The R factor for July 1, 2026 and thereafter, unless
+modified by the Commission in a subsequent base rate case, shall equal
+$32,000,000, which for purposes of this SDER constitutes the amount of expense
+from reportable storms currently recovered through base rates, excluding
+previously approved amortization allowances for expenses for extraordinary
+storms, defined by the Uniform System of Accounts General Instruction 7 as an
+item that exceeds five percent (5%) of a utility’s annual net income, that currently
+are reflected in the Company’s base rates. The Company will consider storm
+damage expenses exceeding 5% of its annual distribution net income as
+extraordinary for SDER recovery purposes.
+The E Factor = The E factor is the amount of any under or over collections during the year prior to
+the application year resulting from differences between actual and projected billing
+units. Interest shall be computed monthly at the average rate of interest specified
+for residential mortgage lending by the Secretary of Banking in accordance with
+the Act of January 30, 1974 (P.L. 13, No. 6 referred to as the Loan Interest and
+Protection law, 41 P ,S, §§ 101 et seq.), from the month the over or under collection
+occurs to the effective month that the over or under collection is recouped or
+refunded.
+(C) Indicates Change (D) Indicates Decrease (I) Indicates Increase
+Issued:June 30, 2026 Effective:July 1, 2026
+
+Supplement No. 2 to Electric Pa. P.U.C. No. 202
+PPL Electric Utilities Corporation
+First Revised Page No. 29B
+Canceling Original Page No. 29B
+STORM DAMAGE EXPENSE RIDER (CONTINUED)
+PRICING PROVISION
+The SDER shall be computed separately for each of the following four customer classes:
+(1) Residential: Consisting of Rate Schedules RS and RTS (R),
+(2) Small Commercial and Industrial (Small C&I): Consisting Rate Schedules GS-1, GS-3, BL,
+SA, SM (R), SHS (R), SLE, and SE,
+(3) Large Commercial and Industrial - Primary (Large C&I - Primary): Consisting of Rate
+Schedule LP-4, and
+(4) Large Commercial and Industrial – Transmission (Large C&I – Transmission): Consisting of
+Rate Schedu
+[DOC 1] https://www.pplelectric.com/site/-/media/PPLElectric/At-Your-Service/Docs/Current-Electric-Tariff/2026/October/402master4_posted-10-2-26.pdf
+les LP-5 and LP-6.
+Net storm damage expenses to be recovered in each application year (C-R+E) will be allocated
+among these four customer classes using the method in the cost allocation study approved by the
+Commission in the Company’s most recent base rate proceeding.
+The following Allocation Schedule percentages apply for the following four customer classes.
+Large
+Large Primary
+Customer Class Residential Small C&I Transmission
+C&I
+C&I
+Allocation 72.15% 23.56% 4.13% 0.16%
+Schedule
+The SDER, as computed using the formula described below, shall be included in the
+distribution charges of the monthly bill for each customer receiving distribution service from the
+Company and shall be reconciled on an annual basis for undercollections and overcollections
+experienced during the previous year. Charges set forth in the applicable rate schedules in this tariff
+have been adjusted to reflect application of the currently effective SDER.
+The SDER for the Residential class shall be computed using the following formula:
+SDER = [RASDE / D ] X 1 / (1-T)
+The SDER for the Small C&I class shall be computed using the following formula:
+SDER = [SASDE / D ] X 1 / (1-T)
+The SDER for the Large C&I - Primary class shall be computed using the following formula:
+SDER = [LASDEP / N ] X 1 / (1-T)
+(C) Indicates Change (D) Indicates Decrease (I) Indicates Increase
+Issued:June 30, 2026 Effective:July 1, 2026
+Customer Class | Residential | Small C&I | Large Primary
+C&I | Large
+Transmission
+C&I
+Allocation
+Schedule | 72.15% | 23.56% | 4.13% | 0.16%
+
+Supplement No. 2 to Electric Pa. P.U.C. No. 202
+PPL Electric Utilities Corporation
+First Revised Page No. 29C
+Canceling Original Page No. 29C
+STORM DAMAGE EXPENSE RIDER (CONTINUED)
+The SDER for the Large C&I – Transmission class shall be computed using the following
+formula:
+SDER = [LASDET / N ] X 1 / (1-T)
+Where:
+RASDE = Net storm damage expenses allocated to Residential customers
+SASDE = Net storm damage expenses allocated to Small C&I customers
+LASDEP = Net storm damage expenses allocated to Large C&I - Primary customers LASDET =
+Net storm damage expenses allocated to Large C&I – Transmission customers.
+D = The Company’s total billed kWh sales in each customer class that receives distribution
+service under this Tariff (including distribution losses), projected for the computation year.
+N = Number of Customers per Year
+T = The total Pennsylvania gross receipts tax rate in effect during the billing period, expressed
+in decimal form.
+RECOVERY PERIOD
+The SDER charges together with supporting data will be filed with the Commission no later
+than December 1 of the preceding year. The SDER charges shall become effective for service
+rendered on and after the following January 1.
+Upon a determination that an SDER charge, if left unchanged, would result in a material over
+or under-collection of all SDER expenses incurred or expected to be incurred during the current 12-
+month application period, the Company may file with the Commission a reques
+[DOC 1] https://www.pplelectric.com/site/-/media/PPLElectric/At-Your-Service/Docs/Current-Electric-Tariff/2026/October/402master4_posted-10-2-26.pdf
+ $/KWH $/Watt
+3,350 0.046 5,800 0.028 3,000 0.013
+HPS 0.062
+6,650 0.072 9,500 0.040 2,900 0.018
+9,500 $/Lamp
+10,500 0.101 16,000 0.059 5,000 0.02 0.00094 0.00069
+20,000 0.160 25,500 0.107 4,750 0.024
+34,000 0.272 50,000 0.167 8,000 0.031
+LED 0.014
+4,300 $/Fixture 51,000 0.376 12,750 0.058
+25,000 0.090
+(C) Indicates Change (D) Indicates Decrease (I) Indicates Increase
+Issued: September 1, 2026 Effective: October 1, 2026
+Small C&I – Street Lights |  |  |  |  |  |  |  |  |  | 
+Rate
+Schedule/
+Charge | SA |  | SM (R) |  | SHS
+(R) |  | SLE |  | SE | TS (R)
+ | Nominal
+Lumens | Charge | Nominal
+Lumens | $/Lamp | Nominal
+Lumens | $/Lamp | Nominal
+Lumens | $/Fixture | $/KWH | $/Watt
+ | HPS
+9,500 | 0.062
+$/Lamp | 3,350 | 0.046 | 5,800 | 0.028 | 3,000 | 0.013 | 0.00094 | 0.00069
+ |  |  | 6,650 | 0.072 | 9,500 | 0.040 | 2,900 | 0.018 |  | 
+ |  |  | 10,500 | 0.101 | 16,000 | 0.059 | 5,000 | 0.02 |  | 
+ | LED
+4,300 | 0.014
+$/Fixture | 20,000 | 0.160 | 25,500 | 0.107 | 4,750 | 0.024 |  | 
+ |  |  | 34,000 | 0.272 | 50,000 | 0.167 | 8,000 | 0.031 |  | 
+ |  |  | 51,000 | 0.376 |  |  | 12,750 | 0.058 |  | 
+ |  |  |  |  |  |  | 25,000 | 0.090 |  | 
+
+Supplement No. 2 to Electric Pa. P.U.C. No. 202
+PPL Electric Utilities Corporation
+First Revised Page No. 29E
+Canceling Original Page No. 29E
+STORM DAMAGE EXPENSE RIDER (CONTINUED)
+Small C&I – Street Lights
+SA SM (R) SHS SLE SE TS (R)
+Rate (R)
+Schedule/
+Nominal Nominal Nominal Nominal
+Charge
+Lumens Charge Lumens $/Lamp Lumens $/Lamp Lumens $/Fixture $/KWH $/Watt
+3,350 0.039 5,800 0.024 3,000 0.011
+HPS 0.052
+6,650 0.061 9,500 0.034 2,900 0.015
+9,500 $/Lamp
+10,500 0.086 16,000 0.050 5,000 0.017 0.00080 0.00058
+20,000 0.136 25,500 0.091 4,750 0.021
+34,000 0.232 50,000 0.142 8,000 0.027
+LED 0.012
+4,300 $/Fixture 51,000 0.320 12,750 0.049
+25,000 0.077
+(C) Indicates Change (D) Indicates Decrease (I) Indicates Increase
+Issued:June 30, 2026 Effective:July 1, 2026
+Small C&I – Street Lights |  |  |  |  |  |  |  |  |  | 
+Rate
+Schedule/
+Charge | SA |  | SM (R) |  | SHS
+(R) |  | SLE |  | SE | TS (R)
+ | Nominal
+Lumens | Charge | Nominal
+Lumens | $/Lamp | Nominal
+Lumens | $/Lamp | Nominal
+Lumens | $/Fixture | $/KWH | $/Watt
+ | HPS
+9,500 | 0.052
+$/Lamp | 3,350 | 0.039 | 5,800 | 0.024 | 3,000 | 0.011 | 0.00080 | 0.00058
+ |  |  | 6,650 | 0.061 | 9,500 | 0.034 | 2,900 | 0.015 |  | 
+ |  |  | 10,500 | 0.086 | 16,000 | 0.050 | 5,000 | 0.017 |  | 
+ | LED
+4,300 | 0.012
+$/Fixture | 20,000 | 0.136 | 25,500 | 0.091 | 4,750 | 0.021 |  | 
+ |  |  | 34,000 | 0.232 | 50,000 | 0.142 | 8,000 | 0.027 |  | 
+ |  |  | 51,000 | 0.320 |  |  | 12,750 | 0.049 |  | 
+ |  |  |  |  |  |  | 25,000 | 0.077 |  | 
+
+Supplement No. 2 to Electric Pa. P.U.C. No. 202
+PPL Electric Utilities Corporation
+First Revised Page No. 30A
+Canceling Original Page No. 30A
+RESIDENTIAL ELECTRIC VEHICLE (EV) TIME OF USE (TOU) CHARGING
+REBATE PROGRAM (CONTINUED)
+E. MARKETING
+The Company may conduct targeted marketing to customers in areas where EV growth is
+forecasted to start causing system 
+[DOC 1] https://www.pplelectric.com/site/-/media/PPLElectric/At-Your-Service/Docs/Current-Electric-Tariff/2026/October/402master4_posted-10-2-26.pdf
+constraints in the next 5-7 years. The Company will share with
+interested stakeholders the proposed application form, customer communications with the
+requirements and program rules, and marketing materials as well as the proposed areas where the
+marketing will be conducted. PPL Electric will provide a collaborative for discussion of the proposed
+materials and offer the opportunity for interested stakeholders to provide feedback to the Company
+on the materials and proposed marketing targets.
+F. EVALUATION
+The Company will develop an evaluation plan with detailed objectives that will be utilized in the
+evaluation of the Residential EV TOU Charging Rebate Program during the duration of the program
+and at the end of its initial term. The evaluation plan will clearly identify all relevant evaluation metrics
+and key performance indicators (“KPIs”) along with their respective targets and the data used to
+measure each metric of KPI. This full evaluation plan will include milestones tied to the distinct start
+and end dates. PPL Electric shall be authorized to use internal personnel to conduct the evaluation of
+the Residential EV TOU Charging Rebate Program and shall not be required to contract with a third
+party to perform such evaluation.
+The evaluation plan will also describe how the Company will compare the data derived from the
+Residential EV TOU Charging Rebate Program with the data obtained from the Phase V Act 129 Energy
+Efficiency and Conservation (“EE&C”) Plan’s EV Program customers and customers not participating
+in either program, as well as how the Company intends to collect the data from customers not
+participating in either program.
+G. REPORTING
+Each “Program Year” under the EV TOU Charging Rebate Program shall run from June 1 of one
+year to May 30 of the following year (e.g., Program Year 1 would be July 1, 2026, to May 30, 2027).
+Within 60 calendar days following the end of each Program Year, PPL Electric shall file and serve a
+report at Docket No. R-2025-3057164 providing the following information: (a) number of customers who
+participated; (b) total rebates awarded to participating customers; (c) customers’ charging behavior
+metrics; and (d) customer satisfaction. Any individualized customer information provided in the report
+will be anonymized.
+(C) Indicates Change (D) Indicates Decrease (I) Indicates Increase
+Issued:June 30, 2026 Effective:July 1, 2026
+
+Supplement No. 3 to Electric Pa. P.U.C. No. 202
+PPL Electric Utilities Corporation
+Second Revised Page No. 31
+Canceling First Revised Page No. 31
+RATE SCHEDULE RS (C)
+RESIDENTIAL SERVICE
+APPLICATION RATE SCHEDULE RS
+This Rate Schedule is for single phase residential service in accordance with the provisions
+hereof. The Multiple Dwelling Unit Application is restricted to eight or fewer dwelling units for
+applications after August 26, 1976, and further to buildings converted to multiple dwelling units for
+applications after June 28, 1980.
+NET MONTHLY RATE
+Distribution Charge
+Effective: Oc
+[DOC 1] https://www.pplelectric.com/site/-/media/PPLElectric/At-Your-Service/Docs/Current-Electric-Tariff/2026/October/402master4_posted-10-2-26.pdf
+tober 1, 2026 (C)
+$15.00 per month (Customer Charge) plus
+6.175 cents per KWH (Includes ACR 5, USR, and SDER) (I)
+Transmission Service Charge
+The Transmission Service Charge included in this Tariff applies to all KW and KWH billed under
+this Rate Schedule.
+Generation Supply Charge -1
+The Generation Supply Charge -1 included in this tariff applies to all KWH billed under this Rate
+Schedule.
+MINIMUM CHARGE
+The Minimum Distribution Charge is the Customer Charge.
+BUDGET BILLING
+Budget Billing is available at the option of the customer for charges under this Rate Schedule.
+MULTIPLE DWELLING UNIT APPLICATION
+When multiple dwelling units are supplied through one meter, the per day charge and the KWH
+block charges of the Distribution Charge rate, plus for customers who receive Default Service from
+the Company, Generation Supply Charge-1 rates are multiplied by the number of dwelling units in the
+determination of the net monthly bill under this Rate Schedule. Demand billing does not apply under
+this provision.
+RIDERS
+The Riders included in that Tariff apply to this Rate Schedule are listed in the Rider Matrix on
+Page 18.
+(C) Indicates Change (D) Indicates Decrease (I) Indicates Increase
+Issued: September 1, 2026 Effective: October 1, 2026
+
+Supplement No. 2 to Electric Pa. P.U.C. No. 202
+PPL Electric Utilities Corporation
+First Revised Page No. 31A
+Canceling Original Page No. 31A
+RATE SCHEDULE RS (CONTINUED)
+STATE TAX ADJUSTMENT SURCHARGE
+The State Tax Adjustment Surcharge included in this Tariff is applied to charges under this Rate
+Schedule.
+PAYMENT
+The above net rate applies when bills are paid on or before the due date specified on the bill,
+which is not less than 20 days from the date bill is mailed via the U.S. Postal Service or mailed
+electronically. After the due date, the Company may initiate collection procedures and a late payment
+charge of 1.25% per month on the then unpaid and overdue balance is applicable.
+APPLICATION PROVISIONS
+For the purposes of the application of this Rate Schedule, a dwelling is defined as a living space
+consisting of at least permanent provisions for shelter, dining, sleeping, and cooking, with provisions
+for permanent electric, water, and sanitation services.
+(1) This Rate Schedule is for single phase electric service for:
+(a) A single-family dwelling and detached buildings when the detached buildings are served
+at the customer’s expense through the same meter as the single family dwelling.
+(b) A separate dwelling unit in an apartment house.
+(c) A single farm dwelling and general farm uses when general farm uses are served at the
+customer’s expense through the same meter as the single farm dwelling.
+(d) A building previously wired for single meter service which is converted to not more than
+8 separate dwelling units served through one meter.
+(2) This Rate Schedule does not apply to:
+(a) Residential service that includes more than 2,000 watts of connected load attributable to
+commercial or professional use exclusive of 
+[DOC 1] https://www.pplelectric.com/site/-/media/PPLElectric/At-Your-Service/Docs/Current-Electric-Tariff/2026/October/402master4_posted-10-2-26.pdf
+space heating and air conditioning in common
+with the residence.
+(b) Residential service combined with any commercial or professional use outside the
+residence or in a section of a multi-use building that is separate from the dwelling unit.
+(c) Service which includes common use in excess of 5,500 watts of connected load for halls,
+basement, or other portions of an apartment building.
+(d) Single meter service to multiple dwelling units in buildings constructed after June 28, 1980.
+(e) Establishments recognized by name, notice or advertisement, such as hotels, clubs,
+fraternities, sororities, boarding houses, institutions, orphanages, rest homes, tourist
+homes and rooming houses with more than 3 rooms available for such use and rectories
+and convents with accommodations for more than 5 adults.
+(C) Indicates Change (D) Indicates Decrease (I) Indicates Increase
+Issued:June 30, 2026 Effective:July 1, 2026
+
+Supplement No. 2 to Electric Pa. P.U.C. No. 202
+PPL Electric Utilities Corporation
+First Revised Page No. 31B
+Canceling Original Page No. 31B
+RATE SCHEDULE RS (CONTINUED)
+(f) Residential service locations connected on or after September 28, 1995, which include
+more than 2,000 watts of general farm load.
+(g) Residential service locations with an installed generating system that has a nameplate
+capacity greater than 50 kilowatts.
+(h) Campers, Recreational Vehicles (RV), and construction trailers that are mobile in nature
+and are not permitted dwellings.
+(3) Where any use of service at a residence or on a farm is not eligible for the application of this
+Rate Schedule, customer has the option to provide separate circuits so that the portion that is
+applicable can be metered and billed separately hereunder and the remaining portion can be billed
+under the applicable general service rate schedule. When separate circuits are not provided, the
+entire service is billed under the applicable general service rate schedule.
+(4) Electric water heaters served hereunder must be equipped with thermostatically controlled
+noninductive heating elements so connected that not more than 5500 watts can be operated at one
+time. The Company reserves the right to install necessary devices to control the operation of electric
+water heaters at its option.
+(C) Indicates Change (D) Indicates Decrease (I) Indicates Increase
+Issued:June 30, 2026 Effective:July 1, 2026
+
+Supplement No. 3 to Electric Pa. P.U.C. No. 202
+PPL Electric Utilities Corporation
+First Revised Page No. 31C
+Canceling Original Page No. 31C
+RATE SCHEDULE RTS (R) (C)
+RESIDENTIAL SERVICE – THERMAL STORAGE
+Applications for service under this Rate Schedule for new service locations will be accepted only until
+December 31, 1995. Service will be provided to existing service locations supplied hereunder
+through the life of the existing thermal storage units.
+APPLICATION RATE SCHEDULE RTS
+This Rate Schedule is for single phase residential service in accordance with load management
+capabilities in accordance with the APPLI
+[DOC 1] https://www.pplelectric.com/site/-/media/PPLElectric/At-Your-Service/Docs/Current-Electric-Tariff/2026/October/402master4_posted-10-2-26.pdf
+CATION PROVISIONS hereof.
+NET MONTHLY RATE
+Distribution Charge
+Effective: October 1, 2026 (C)
+$18.06 per month (Customer Charge) plus
+4.992 cents per KWH (Includes ACR 5, USR, and SDER) (I)
+Transmission Service Charge
+The Transmission Service Charge included in this Tariff applies to all KW and KWH billed under
+this Rate Schedule.
+Generation Supply Charge -1
+The Generation Supply Charge -1 included in this tariff applies to all KWH billed under this Rate
+Schedule.
+MINIMUM CHARGE
+The Minimum Distribution Charge is the Customer Charge.
+BUDGET BILLING
+Budget Billing is available at the option of the customer for charges under this Rate Schedule.
+RIDERS
+The Riders included in that Tariff apply to this Rate Schedule are listed in the Rider Matrix on
+Page 18.
+(C) Indicates Change (D) Indicates Decrease (I) Indicates Increase
+Issued: September 1, 2026 Effective: October 1, 2026
+
+Supplement No. 2 to Electric Pa. P.U.C. No. 202
+PPL Electric Utilities Corporation
+First Revised Page No. 31D
+Canceling Original Page No. 31D
+RATE SCHEDULE RTS (R) (CONTINUED)
+STATE TAX ADJUSTMENT SURCHARGE
+The State Tax Adjustment Surcharge included in this Tariff is applied to charges under this Rate
+Schedule.
+PAYMENT
+The above net rate applies when bills are paid on or before the due date specified on the bill,
+which is not less than 20 days from the date bill is mailed via the U.S. Postal Service or mailed
+electronically. After the due date, the Company may initiate collection procedures and a late payment
+charge of 1.25% per month on the then unpaid and overdue balance is applicable.
+APPLICATION PROVISIONS
+1. This Rate Schedule is applicable to service which would otherwise qualify under Rate
+Schedule RS except for the following:
+(a) Service to two or more separate dwelling units supplied through a single meter.
+(b) Seasonal service and seasonal use customers.
+(c) Service with separate meter controlled water heater service.
+(d) Residential service with general farm use which includes more than 2,000 watts.
+2. Any changes in service entrance equipment to accommodate metering under this Rate
+Schedule are made by the customer at his own expense.
+3. Load management capability is the positive automatic control of the operation of any thermal
+storage system for space heating which is acceptable to the Company as being effective in limiting
+on-peak use of electric service. The Company reserves the right to inspect such systems at
+reasonable times and may discontinue billing under this Rate Schedule whenever, in the Company’s
+sole judgment, the system no longer qualifies.
+4. The maximum electric thermal unit that may be connected under this Rate Schedule is 75 KW.
+Heating elements must be switched in stages not in excess of 7.5 KW per stage.
+5. The Company reserves the right to install necessary devices to control the operation of the
+electric components of the thermal storage system at its option.
+6. Customers who elect to take service under this Rate Schedule agree to allow the C
+[DOC 1] https://www.pplelectric.com/site/-/media/PPLElectric/At-Your-Service/Docs/Current-Electric-Tariff/2026/October/402master4_posted-10-2-26.pdf
+ompany to
+install load survey meters.
+(C) Indicates Change (D) Indicates Decrease (I) Indicates Increase
+Issued:June 30, 2026 Effective:July 1, 2026
+
+Supplement No. 2 to Electric Pa. P.U.C. No. 202
+PPL Electric Utilities Corporation
+First Revised Page No. 32
+Canceling Original Page No. 32
+RATE SCHEDULE GS-1
+SINGLE PHASE GENERAL SERVICE
+AT SECONDARY VOLTAGE
+APPLICATION RATE SCHEDULE GS-1
+This Rate Schedule is for single phase non-residential service at secondary voltage and other
+applications outside the scope of the Residential Rate Schedule, which would include residential
+service locations with an installed generating system that has a nameplate greater than 50 kilowatts.
+New applications with voltage levels higher than the secondary voltage will not be accepted.
+NET MONTHLY RATE
+Distribution Charge
+$27.22 per month (Customer Charge) plus
+$5.923 per kilowatt for all Billing KW
+Transmission Service Charge
+The customer is responsible for applicable charges under the TSC rate schedule.
+Generation Supply Charge -1
+The customer is responsible for applicable charges under the GSC-1 rate schedule.
+MINIMUM CHARGE
+The Monthly Minimum Distribution Charge is the Customer Charge.
+BILLING KW
+The Billing KW for the Distribution component is the average number of kilowatts supplied
+during the 15-minute period of maximum use during the current billing period.
+(C) Indicates Change (D) Indicates Decrease (I) Indicates Increase
+Issued:June 30, 2026 Effective:July 1, 2026
+
+Supplement No. 3 to Electric Pa. P.U.C. No. 202
+PPL Electric Utilities Corporation
+Second Revised Page No. 32A
+Canceling First Revised Page No. 32A
+RATE SCHEDULE GS-1 (CONTINUED) (C)
+SERVICE TO VOLUNTEER FIRE COMPANIES, NON-PROFIT SENIOR CITIZEN CENTERS,
+NON-PROFIT RESCUE SQUADS, AND NON-PROFIT AMBULANCE SERVICES
+Upon application and acceptance by the Company, Volunteer Fire Companies, Non-Profit Senior
+Citizen Centers, Non-Profit Rescue Squads, and Non-profit Ambulance Services may, for a minimum
+one-year period, elect to have electric service rendered pursuant to the following charges.
+Distribution Charge
+Effective: October 1, 2026 (C)
+$15.00 per month (Customer Charge) plus
+6.175 cents per KWH (Includes ACR 5, USR, and SDER) (I)
+BUDGET BILLING
+Budget Billing is available at the option of the customer for charges under this Rate Schedule.
+RIDERS
+The Riders included in this Tariff that apply to this Rate Schedule are listed in the Rider Matrix on
+Page 18.
+STATE TAX ADJUSTMENT SURCHARGE
+The State Tax Adjustment Surcharge included in this Tariff is applied to charges under this Rate
+Schedule.
+PAYMENT
+The above net rate applies when bills are paid on or before the due date specified on the bill, which
+is not less than 15 days from the date bill is mailed via the U.S. Postal Service or mailed electronically.
+When not so paid the gross rate applies which is the above net rate plus 5% on the first $200.00 of
+the then unpaid balance of the monthly bill and 2% on the remainder thereof.
+MINIMUM SERVICE 
+[DOC 1] https://www.pplelectric.com/site/-/media/PPLElectric/At-Your-Service/Docs/Current-Electric-Tariff/2026/October/402master4_posted-10-2-26.pdf
+PERIOD
+Service under this Rate Schedule is for no less than one (1) year from the date service is first
+rendered, unless the Company and the customer mutually agree to a different term in the contract for
+service.
+(C) Indicates Change (D) Indicates Decrease (I) Indicates Increase
+Issued: September 1, 2026 Effective: October 1, 2026
+
+Supplement No. 2 to Electric Pa. P.U.C. No. 202
+PPL Electric Utilities Corporation
+First Revised Page No. 33
+Canceling Original Page No. 33
+RATE SCHEDULE GS-3
+THREE PHASE GENERAL SERVICE
+AT SECONDARY VOLTAGE
+APPLICATION RATE SCHEDULE GS-3
+This Rate Schedule is for two phase and three-phase service at secondary voltage. Where
+necessary, the Company furnishes and maintains one transformation from line voltage to a lower
+Company standard service voltage. New applications with voltage levels higher than the secondary
+voltage will not be accepted after January 1, 2005.
+General Service customers receiving three-phase service will be served under Rate Schedule
+GS-3.
+NET MONTHLY RATE
+Distribution Charge
+$78.00 per month (Customer Charge) plus
+$5.156 per kilowatt for all kilowatts of the Billing KW
+Transmission Service Charge
+The customer is responsible for applicable charges under the TSC rate schedule.
+Generation Supply Charge
+The customer is responsible for applicable charges under the GSC-1 or GSC-2 rate schedule.
+MINIMUM CHARGE
+The Monthly Minimum Distribution Charge is the Customer Charge.
+BILLING KW
+The Billing KW for the Distribution component is the average number of kilowatts supplied
+during the 15-minute period of maximum use during the current billing period.
+(C) Indicates Change (D) Indicates Decrease (I) Indicates Increase
+Issued:June 30, 2026 Effective:July 1, 2026
+
+Supplement No. 3 to Electric Pa. P.U.C. No. 202
+PPL Electric Utilities Corporation
+Second Revised Page No. 33A
+Canceling First Revised Page No. 33A
+RATE SCHEDULE GS-3 (CONTINUED)
+(C)
+SERVICE TO VOLUNTEER FIRE COMPANIES NON-PROFIT SENIOR CITIZEN CENTERS
+NON-PROFIT RESCUE SQUADS, AND NON-PROFIT AMBULANCE SERVICES
+Upon application and acceptance by the Company, Volunteer Fire Companies, Non-Profit Senior
+Citizen Centers, Non-Profit Rescue Squads, and Non-Profit Ambulance Services may for a minimum
+one-year period, elect to have electric service rendered pursuant to the following charges.
+Distribution Charge
+Effective: October 1, 2026 (C)
+$15.00 per month (Customer Charge) plus
+6.175 cents per KWH (Includes ACR 5, USR, and SDER) (I)
+BUDGET BILLING
+Budget Billing is available at the option of the customer for charges under this Rate Schedule.
+RIDERS
+The Riders included in this Tariff that apply to this Rate Schedule are listed in the Rider Matrix
+on Page 18.
+STATE TAX ADJUSTMENT SURCHARGE
+The State Tax Adjustment Surcharge included in this Tariff is applied to charges under this
+Rate Schedule.
+PAYMENT
+The above net rate applies when bills are paid on or before the due date specified on the bill,
+which is not less than 15 days from the date bill is mailed 
+[DOC 1] https://www.pplelectric.com/site/-/media/PPLElectric/At-Your-Service/Docs/Current-Electric-Tariff/2026/October/402master4_posted-10-2-26.pdf
+age No. 35F
+Canceling Original Page No. 35F
+RATE SCHEDULE LP-6 (CONTINUED)
+LOAD FORECASTS
+The Company will submit annual load forecasts to the Commission, along with a breakdown
+of forecasted load based on requests of customers with ESAs, Letters of Authorization (“LOAs”),
+and inquiries and shall include such breakdown along with forecasts submitted to PJM
+Interconnection, LLC (“PJM”). PPL Electric’s requirements under this paragraph will be consistent
+with its obligations under Act 45 of 2025 regarding Electric Load Forecast Accountability, Sections
+1801-B through 1806-B, and any information not covered by this paragraph but required by the
+Act must still be submitted by PPL Electric to the Commission.
+(C) Indicates Change (D) Indicates Decrease (I) Indicates Increase
+Issued:June 30, 2026 Effective:July 1, 2026
+
+Supplement No. 2 to Electric Pa. P.U.C. No. 202
+PPL Electric Utilities Corporation
+First Revised Page No. 36
+Canceling Original Page No. 36
+RATE SCHEDULE BL
+BORDERLINE SERVICE - ELECTRIC SERVICE
+APPLICATION OF RATE SCHEDULE BL
+This Rate Schedule is for borderline distribution service to public utility companies for resale in
+adjacent territory under reciprocal agreements subject to the following conditions:
+1. Request is made for each point of supply where service is desired under said agreement.
+2. Service is supplied when Company has available capacity in lines, transformers, generating
+apparatus or other equipment over and above that required to meet the demands, present and
+prospective, for service in its own territory, of which fact Company's determination is final.
+3. When such service is supplied, the potential, phase, and period of service at the desired point
+of supply shall be mutually agreed upon.
+NET MONTHLY RATE
+Distribution Charge
+6.739 cents per KWH plus 1% on Company's investment in facilities necessary to
+deliver and meter the service.
+Transmission Service Charge
+The customer is responsible for applicable charges under the TSC rate schedule.
+Generation Supply Charge -1
+The customer is responsible for applicable charges under the GSC-1 rate schedule.
+RIDERS
+The Riders included in this Tariff that apply to this Rate Schedule are listed in the Rider Matrix on
+Page 18.
+STATE TAX ADJUSTMENT SURCHARGE
+The State Tax Adjustment Surcharge included in this Tariff is applied to charges under this Rate
+Schedule.
+PAYMENT
+Payment shall be made on or before the due date specified on the bill, which is not less than 15
+days from the date bill is mailed via the U.S. Postal Service or mailed electronically.
+(C) Indicates Change (D) Indicates Decrease (I) Indicates Increase
+Issued:June 30, 2026 Effective:July 1, 2026
+
+Supplement No. 2 to Electric Pa. P.U.C. No. 202
+PPL Electric Utilities Corporation
+First Revised Page No. 36A
+Canceling Original Page No. 36A
+RATE SCHEDULE BL (CONTINUED)
+MINIMUM SERVICE PEROD
+Service under this Rate Schedule is for no less than one (1) year from the date service is first
+rendered, unless the Company and the 
+[DOC 1] https://www.pplelectric.com/site/-/media/PPLElectric/At-Your-Service/Docs/Current-Electric-Tariff/2026/October/402master4_posted-10-2-26.pdf
+April 28, 1987, and additions at locations adjacent to or
+interspersed with such existing installations.
+(f) The mercury vapor (MV) lamps which fail will be transitioned to the Light Emitting Diode (LED)
+(Rate Schedule SLE) nominal lumens equivalent. A nominal lumen/wattage equivalent table
+is shown below. This is in accordance with the Energy Policy Act of 2005 – Section 135 H.R.
+6-39, which states that “Mercury Vapor Lamp ballasts shall not be manufactured or imported
+after January 1, 2008.”
+(C) Indicates Change (D) Indicates Decrease (I) Indicates Increase
+Issued:June 30, 2026 Effective:July 1, 2026
+
+Supplement No. 2 to Electric Pa. P.U.C. No. 202
+PPL Electric Utilities Corporation First Revised Page No. 38A
+Canceling Original Page No. 38A
+RATE SCHEDULE SM (R) (CONTINUED)
+Lamp Nominal Lamp Nominal Fixture Nominal
+Description Lumen Wattage Description Lumen Wattage Description Lumen Wattage
+MV 3,350 100 HPS 5,800 70 LED LM 3,000 40
+MV 6,650 175 HPS 9,500 100 LED LM 5,000 58
+MV 10,500 250 HPS 16,000 150 LED HM 2,900 32
+MV 20,000 400 HPS 25,500 250 LED HM 4,750 42
+MV 34,000 700 HPS 25,500 250 LED HM 8,000 69
+MV 51,000 1,100 LED HM 12,750 121
+LED HM 25000 211
+NET MONTHLY RATE
+(1) Lamp Prices
+Distribution Charge
+Nominal Low High Additional
+Type Lumens Wattage Wood Pole Metal Pole Wood Pole Mounting Mounting Luminaire/Pole
+(UG)
+Mercury Vapor 3,350 100 $13.933 ---- $21.094 $22.888 ---- ----
+Mercury Vapor 6,650 175 $16.689 $24.744 $24.272 $26.007 $28.770 $14.345
+Mercury Vapor 10,500 250 $20.799 $28.651 ---- ---- $32.435 $19.172
+Mercury Vapor 20,000 400 $25.982 $33.973 ---- ---- $38.039 $23.392
+Mercury Vapor 34,000 700 $41.090 $49.330 ---- ---- $54.602 $38.716
+Mercury Vapor 51,000 1,100 $51.608 $60.250 ---- ---- $65.494 $49.241
+Transmission Service Charge
+The customer is responsible for applicable charges under the TSC rate schedule.
+Generation Supply Charge -1
+The customer is responsible for applicable charges under the GSC-1 rate schedule.
+(1) The number of KWH supplied is based upon the average hours use and input wattage of each
+luminaire.
+(2) The Company, at its option, may offer appropriate overhead rates set forth above to customers
+in recognition of the customers installing, owning and/or paying for portions of a street lighting
+installation.
+(C) Indicates Change (D) Indicates Decrease (I) Indicates Increase
+Issued:June 30, 2026 Effective:July 1, 2026
+
+Supplement No. 2 to Electric Pa. P.U.C. No. 202
+PPL Electric Utilities Corporation
+First Revised Page No. 38B
+Canceling Original Page No. 38B
+RATE SCHEDULE SM (R) (CONTINUED)
+(3) The Company, at its option, may offer appropriate overhead rates set forth above to customers
+in recognition of the customers installing, owning and/or paying for portions of a street lighting
+installation.
+(4) Whenever customer requests an installation hereunder which requires an investment by the
+Company greater than five (5) times the estimated annual revenue, the Company, at its option,
+may install the lamps as reque
+[DOC 3] https://www.pplelectric.com/site/More/About-Us/Electric-Rates-and-Rules/Current-Electric-Tariff/Table-of-Contents
+Table of Contents
+PPL Electric Utilities
+General Tariff
+Title Page, List of Changes, and Table of Contents
+Definitions
+Territory Covered by This Tariff
+Rules for electric service
+Rule 1 - Electric Service Tariff
+Rule 2 - Requirements for Service
+Rule 3 - Extension of Service
+Rule 4 - Supply of Service
+Rule 5 - Use of Service
+Rule 6 - Standby Service for Non-utility Generating Facilities
+Rule 7 - Temporary Service
+Rule 8 - Measurement of Service
+Rule 9 - Billing and Payment for Service
+Rule 10 - Disconnection and Reconnection of Service
+Rule 11 - Net Service for Generation Facilities
+Rule 12 - Distributed Energy Resource (DER) Interconnection Service
+Rate schedules - General
+RS - Residential Service
+RTS(R) - Residential Service - Thermal Storage
+GS-1 - Small General Service - Secondary Voltage
+GS-3 - Large General Service - Secondary Voltage
+LP-4 - Large General Service - 12 KV
+LP-5 - Large General Service - 69 KV or Higher
+LP-6 - Large Load Interconnections
+BL - Borderline Service - Electric Utilities
+SA - Private Area Lighting
+SM(R) - Mercury Vapor Street Lighting
+SHS - High Pressure Sodium Street Lighting
+SLE - Light Emitting Diode (LED) Street Lighting Service
+SE - Energy Only Street Lighting Service
+TS(R) - Municipal Traffic Signal Lighting Service
+Riders, surcharge, option, and charges
+Rider Matrix
+State Tax Adjustment Surcharge
+(STAS)
+Universal Service Rider
+(USR)
+Net Metering For Renewable Customer-Generators
+(NM)
+Metering and Billing Credit Rider
+(MBC)
+Transmission Service Charge
+(TSC)
+Generation Supply Charge - 1
+(GSC-1)
+Generation Supply Charge - 2
+(GSC-2)
+Act 129 Compliance Rider - Phase 4
+(ACR 4)
+Act 129 Compliance Rider - Phase 5
+(ACR 5)
+Merchant Function Charge Rider
+(MFC)
+Distribution System Improvement Charge
+(DSIC)
+Storm Damage Expense Rider
+(SDER)
+Residential Electric Vehicle (EV) Time of Use (TOU) Charging Rebate Program
+[DOC 4] https://www.pplelectric.com/site/-/media/PPLElectric/At-Your-Service/Docs/Current-Electric-Tariff/2026/September/Pro-Forma-Retail-Tariff-Supplement---CPTR.pdf
+er-Phase 5 26D Original
+Merchant Function Charge Rider 27 Second Revised (C)
+(C) Indicates Change (D) Indicates Decrease (I) Indicates Increase
+Issued:XXXXXXXXXXXX Effective:XXXXXXXXXXXX
+(C)
+(C)
+(C)
+
+Supplement No. XXto Electric Pa. P.U.C. No. 202
+PPL Electric Utilities Corporation
+Second Revised Page No. 3A
+Canceling First Revised Page No. 3A
+TABLE OF CONTENTS (CONTINUED)
+Page Revision
+Distribution System Improvement Charge 28 First Revised
+Storm Damage Expense Rider 29 First Revised
+Residential Electric Vehicle Time of Use Charging Rebate Program 30 First Revised
+RATE SCHEDULES – GENERAL 31 First Revised
+RS – Residential Service 31 Third Revised (C)
+RTS(R) – Residential Service – Thermal Storage 31C Second Revised (C)
+(C)
+GS-1 – Single Phase General Service at Secondary Voltage 32 Second Revised
+GS-3 – Three Phase General Service at Secondary Voltage 33 Second Revised (C)
+LP-4 – Large General Service at 12,470 Volts 34 Second Revised (C)
+(C)
+LP-5 – Large General Service at 69,000 Volts or Higher 35 Second Revised
+(C)
+LP-6 – Large Load Interconnections 35C Second Revised
+BL – Borderline Service – Electric Service 36 Second Revised (C)
+(C)
+SA – Private Area Lighting Service 37 Second Revised
+SM(R) – Mercury Vapor Street Lighting Service 38 First Revised
+(C)
+SHS(R) – High Pressure Sodium Street Lighting Service 39 Second Revised
+SLE – Light Emitting Diode (LED) Street Lighting Service 40 Second Revised (C)
+SE – Energy Only Street Lighting Service 41 Second Revised (C)
+TS(R) – Municipal Traffic Signal Lighting Service 42 Second Revised (C)
+(C) Indicates Change (D) Indicates Decrease (I) Indicates Increase
+Issued:XXXXXXXXXXXX Effective:XXXXXXXXXXXX
+(C)
+(C)
+
+(C)
+(C)
+(C)
+
+(C)
+(C)
+(C)
+
+(C)
+(C)
+(C)
+(C)
+
+(C)
+
+Supplement No. XXto Electric Pa. P.U.C. No. 202
+PPL Electric Utilities Corporation Second Revised Page No. 5A
+Canceling First Revised Page No. 5A
+DEFINITIONS (CONTINUED)
+Contribution in Aid of Construction - A nonrefundable donation or contribution in cash or properties
+from an individual, governmental agency, or other entity for construction or property-addition
+purposes.
+Customer Charge - The basic service charge to partially cover costs for billing, meter reading,
+equipment, and service line maintenance.
+CPTR – Customer Protection Transmission Rider. (C)
+Customer-generator - A nonutility owner or operator of a net metered distributed generation
+system with a nameplate capacity of not greater than 50 kilowatts if installed at a residential
+service or not larger than 3,000 kilowatts at other customer service locations, except for
+customers whose systems are above three megawatts and up to five megawatts who make their
+systems available to operate in parallel with the electric utility during grid emergencies as defined
+by the regional transmission organization or where a microgrid is in place for the primary or
+secondary purpose of maintaining critical infrastructure ,such as homeland security assignments,
+emergency services facilities, hospitals, t
+[DOC 4] https://www.pplelectric.com/site/-/media/PPLElectric/At-Your-Service/Docs/Current-Electric-Tariff/2026/September/Pro-Forma-Retail-Tariff-Supplement---CPTR.pdf
+t.
+Supplementary Power - Electric energy and capacity supplied by the Company and regularly used
+in addition to the energy and capacity supplied by the Customer’s on-site generation.
+Total Contract Demand – The sum of Supplementary Contract Demand and Back-up Contract
+Demand.
+Tenant - Any person or group of persons who occupies or is entitled to occupy a residential
+property, a commercial unit within a multitenancy building, parcel, or a unit in mobile home park
+and who is contractually obligated to make rental payments to a landlord or landlord ratepayer
+pursuant to a written or oral lease or rental arrangement. The term includes occupants of
+residential or commercial units where electric service is provided as an included service under
+the rental agreement and where the occupant is not the ratepayer of the utility providing such
+service. For purposes of this definition, a multitenancy building shall include any structure
+containing three (3) or more separate and distinct residential or commercial units.
+Transmission System - The portion of the electric system that is dedicated to transmitting electric
+energy. For purposes of this tariff, the transmission system includes all service extensions and
+lines energized at voltages of nominal 69,000 or higher and excludes all lines energized at
+voltages less than the nominal 69,000 volts. However, this definition does not affect the
+Company’s obligations under the Federal Power Act and/or the Public Utility Code, as applicable,
+to: (1) provide safe, reliable, and adequate retail electric service to customers taking service at
+voltages of 69,000 volts and above; and (2) provide just and reasonable and non-discriminatory
+distribution and transmission rates, terms, and conditions of service to such customers.
+(C)
+(C) Indicates Change (D) Indicates Decrease (I) Indicates Increase
+Issued:XXXXXXXXXXXX Effective:XXXXXXXXXXXX
+
+Supplement No. XXto Electric Pa. P.U.C. No. 202
+PPL Electric Utilities Corporation
+Second Revised Page No. 11B
+Canceling First Revised Page No. 11B
+RULE 6 – STAND-BY SERVICE FOR NON-UTILITY GENERATING FACILITIES
+(CONTINUED)
+As Used Back-Up Power Demand Charges
+GS-3 LP-4 LP-5 LP-6
+Dec-Feb $10.31/kW $6.90/kW $0.00/kW $0.00/kW
+March-May $0.00/kW $0.00/kW $0.00/kW $0.00/kW
+June-Sept $10.31/kW $6.90/kW $0.00/kW $0.00/kW
+Oct-Nov $0.00/kW $0.00/kW $0.00/kW $0.00/kW
+E. MAINTENANCE SERVICE
+(1) Under this Rule, the Company will provide Maintenance Power to the customer during
+scheduled outages that occur during Off-Peak Months. Maintenance Power will be priced
+at $0/kW during Off-Peak Months.
+(2) Customer’s planned maintenance outages must be coordinated with the Company with at
+least 90 days’ prior notice to ensure sufficient capacity to replace the on-site generation.
+F. OTHER CHARGES
+(1) The customer is responsible for the CPTR charges under this tariff. The CPTR charges (C)
+will be based on the customers actual contribution to the Company’s five coincident peaks
+that are used by PJM for alloca
+[DOC 4] https://www.pplelectric.com/site/-/media/PPLElectric/At-Your-Service/Docs/Current-Electric-Tariff/2026/September/Pro-Forma-Retail-Tariff-Supplement---CPTR.pdf
+ng First Revised Page No. 23C
+CUSTOMER PROTECTION TRANSMISSION RIDER (CONTINUED) (C)
+Minimum bills shall not be reduced by reason of the CPTR, nor shall charges hereunder be a
+(C)
+part of the monthly rate schedule minimum. The CPTR shall not be subject to any credits or
+discounts, but Part 2 of the STAS shall apply.
+Application of the CPTR shall be subject to review and audit by the Commission at intervals it
+(C)
+shall determine. The Commission shall review the reasonableness and lawfulness of the level of
+charges produced by the CPTR and the costs included therein.
+Charges under the CPTR for the period XXXXX, through XXXXX, as set forth in the
+(C)
+applicable Rate Schedules.
+Customer Large C&I - Large C&I - Large C&I - Small C&I Residential
+Class
+LP-6 Transmission Primary
+Rate LP-6 LP-5 LP-4 GS-1, GS-3, RS and RTS
+Schedule / and BL (R)
+Charge
+Energy X.XXX X.XXX
+Rate
+($/kWh)
+Demand XX.XXX XX.XXX XX.XXX
+Rate
+($/kW)
+Small C&I – Street Lights
+(C)
+SA SM (R) SHS SLE SE TS (R)
+(R)
+Nominal Nominal Nominal Nominal
+Lumens Charge Lumens $/Lamp Lumens $/Lamp Lumens $/Fixture $/KWH $/Watt
+Rate
+3,350 X.XXX 5,800 X.XXX 3,000 X.XXX
+Schedule/
+HPS X.XXX
+Charge 6,650 X.XXX 9,500 X.XXX 2,900 X.XXX
+9,500 $/Lamp
+10,500 X.XXX 16,000 X.XXX 5,000 X.XXX X.XXX X.XXX
+20,000 X.XXX 25,500 X.XXX 4,750 X.XXX
+34,000 X.XXX 50,000 X.XXX 8,000 X.XXX
+LED X.XXX
+4,300 $/Fixture 51,000 X.XXX 12,750 X.XXX
+20,000 X.XXX
+(C) Indicates Change (D) Indicates Decrease (I) Indicates Increase
+Issued:XXXXXXXXXXXX Effective:XXXXXXXXXXXX
+Customer
+Class | Large C&I -
+LP-6 | Large C&I -
+Transmission | Large C&I -
+Primary | Small C&I | Residential
+Rate
+Schedule /
+Charge | LP-6 | LP-5 | LP-4 | GS-1, GS-3,
+and BL | RS and RTS
+(R)
+Energy
+Rate
+($/kWh) |  |  |  | X.XXX | X.XXX
+Demand
+Rate
+($/kW) | XX.XXX | XX.XXX | XX.XXX |  | 
+Small C&I – Street Lights |  |  |  |  |  |  |  |  |  |  |  | (C)
+Rate
+Schedule/
+Charge | SA |  | SM (R) |  | SHS
+(R) |  | SLE |  | SE | TS (R) |  | 
+ | Nominal
+Lumens | Charge | Nominal
+Lumens | $/Lamp | Nominal
+Lumens | $/Lamp | Nominal
+Lumens | $/Fixture | $/KWH | $/Watt |  | 
+ | HPS
+9,500 | X.XXX
+$/Lamp | 3,350 | X.XXX | 5,800 | X.XXX | 3,000 | X.XXX | X.XXX | X.XXX |  | 
+ |  |  | 6,650 | X.XXX | 9,500 | X.XXX | 2,900 | X.XXX |  |  |  | 
+ |  |  | 10,500 | X.XXX | 16,000 | X.XXX | 5,000 | X.XXX |  |  |  | 
+ | LED
+4,300 | X.XXX
+$/Fixture | 20,000 | X.XXX | 25,500 | X.XXX | 4,750 | X.XXX |  |  |  | 
+ |  |  | 34,000 | X.XXX | 50,000 | X.XXX | 8,000 | X.XXX |  |  |  | 
+ |  |  | 51,000 | X.XXX |  |  | 12,750 | X.XXX |  |  |  | 
+ |  |  |  |  |  |  | 20,000 | X.XXX |  |  |  | 
+
+Supplement No. XXto Electric Pa. P.U.C. No. 202
+PPL Electric Utilities Corporation
+Second Revised Page No. 24
+Canceling First Revised Page No. 24
+GENERATION SUPPLY CHARGE-1
+The Generation Supply Charge-1 (GSC-1) shall be applied to each kilowatt-hour supplied
+to residential customers who take default service from the Company under Rate Schedules RS
+and RTS (R), small commercial and industrial customers who take De
+[DOC 4] https://www.pplelectric.com/site/-/media/PPLElectric/At-Your-Service/Docs/Current-Electric-Tariff/2026/September/Pro-Forma-Retail-Tariff-Supplement---CPTR.pdf
+fault Service under Rate
+Schedules GS-1, GS-3, BL, SA, SM (R), SHS (R), SLE, and SE and standby service for the
+foregoing rate schedules. Subject to the grandfathering provisions set forth herein, the GSC-1 will
+not apply to those Rate Schedule GS-3 customers who have a Maximum Registered Peak Load
+of 100 kW or greater, but the GSC-1 will apply to those Rate Schedule LP-4 customers who have
+a Maximum Registered Peak Load of less than 100 kW. The GSC-1 shall have the options listed
+below.
+FIXED PRICE OPTION – RESIDENTIAL & SMALL COMMERCIAL/INDUSTRIAL
+PURPOSE
+The Fixed Price Option provides eligible customers in the Residential and Small
+Commercial & Industrial Customer Class with default service for those customers who have not
+selected a retail electric generation supplier (EGS) or the Time of Use Program.
+PRICING PROVISIONS
+The Fixed Price GSC-1, determined in accordance with the formula set forth below, shall
+be applied to all kilowatt-hours billed for service provided during the billing period:
+Where:
+GSC-1 = The Generation Supply Charge-1, stated in cents per kilowatt hour, shall be
+calculated separately for each of the following two Customer Classes: (1)
+residential, and (2) small commercial and industrial as designated above.
+GS fp = The total estimated direct and indirect costs incurred by the Company to acquire
+generation supply from any source on behalf of participating Default Service
+customers on the Fixed Price Option in the applicable Customer Class. These costs
+include CPTR net metering costs as well as certain transmission-related costs
+(C)
+previously recovered under the former Transmission Service Charge from default
+service customers that are not being recovered through the CPTR. These costs
+shall be reduced by any revenue received by the Company from the sale of AECs
+that otherwise would have expired.
+(C) Indicates Change (D) Indicates Decrease (I) Indicates Increase
+Issued:XXXXXXXXXXXX Effective:XXXXXXXXXXXX
+
+Supplement No. XXto Electric Pa. P.U.C. No. 202
+PPL Electric Utilities Corporation
+Second Revised Page No. 24A
+Canceling First Revised Page No. 24A
+GENERATION SUPPLY CHARGE-1 (CONTINUED)
+The computation period shall be the six calendar months over which the Fixed Price
+GSC-1, as computed, will apply. Projections of the Company’s costs to acquire
+generation supply, adjusted for losses and including AECs, for the computation
+quarter shall include all direct and indirect costs of generation supply to be acquired
+by the Company from any source plus any associated generation supply-related
+procurement and administration costs. Any costs incurred prior to June 1, 2025,
+shall be amortized ratably over the 48-month period June 1, 2025, through May 31,
+2029, and the 6-month amortization amount shall be included in the computation of
+the GSC-1.
+E = Experienced net over or undercollection of costs associated with the acquisition of
+generation supply for participating default service customers in the applicable
+Customer Class. These c
+[DOC 4] https://www.pplelectric.com/site/-/media/PPLElectric/At-Your-Service/Docs/Current-Electric-Tariff/2026/September/Pro-Forma-Retail-Tariff-Supplement---CPTR.pdf
+ation of any over/under collection that will be reflected in the GSC-
+1 charges for the subsequent 2 six-month computation periods. The GSC-1 will be reconciled every
+twelve months, using over/under collection balance for the twelve-month period ending two months
+prior to each annual period.
+Application of the GSC-1 shall be subject to continuous review and audit by the
+Commission at intervals it shall determine. The Commission shall review the reasonableness and
+lawfulness of the level of charges produced by the GSC-1 and the costs included therein.
+(C) Indicates Change (D) Indicates Decrease (I) Indicates Increase
+Issued:XXXXXXXXXXXX Effective:XXXXXXXXXXXX
+Customer Class | Small C&I | Residential
+Rate Schedule / Charge | GS-1, GS-3 (< 100 kW MRPL), LP-4
+(< 100 kW MRPL), and BL
+$X.XXXX/KWH | RS and RTS (R)
+$X.XXXX/KWH
+Small C&I – Street Lights |  |  |  |  |  |  |  |  |  | 
+Rate
+Sched ule/
+Charge | SA |  | SM (R) |  | SHS
+(R) |  | SLE |  | SE | TS (R)
+ | Nominal
+Lumens | Charge | Nominal
+Lumens | $/Lamp | Nominal
+Lumens | $/Lamp | Nominal
+Lumens | $/Fixture | $/KWH | $/Watt
+ | HPS
+9,500 | X.XXX
+$/Lamp | 3,350 | X.XXX | 5,800 | X.XXX | 3,000 | X.XXX | X.XXX | X.XXX
+ |  |  | 6,650 | X.XXX | 9,500 | X.XXX | 2,900 | X.XXX |  | 
+ |  |  | 10,500 | X.XXX | 16,000 | X.XXX | 5,000 | X.XXX |  | 
+ | LED
+4,300 | X.XXX$/
+Fixture | 20,000 | X.XXX | 25,500 | X.XXX | 4,750 | X.XXX |  | 
+ |  |  | 34,000 | X.XXX | 50,000 | X.XXX | 8,000 | X.XXX |  | 
+ |  |  | 51,000 | X.XXX |  |  | 12,750 | X.XXX |  | 
+ |  |  |  |  |  |  | 20,000 | X.XXX |  | 
+
+Supplement No. XXto Electric Pa. P.U.C. No. 202
+PPL Electric Utilities Corporation
+Second Revised Page No. 24C
+Canceling First Revised Page No. 24C
+GENERATION SUPPLY CHARGE-1 (CONTINUED)
+TIME OF USE PROGRAM PURPOSE
+The Time-of-Use (TOU) Program provides for the voluntary participation of eligible existing
+and new residential and small commercial & industrial customers in a year-round TOU Program.
+Eligible customers must meet the application provisions of this TOU Program. The objective of this
+TOU Program is to provide eligible residential and small commercial & industrial customers with
+an opportunity to pay a rate lower than the fixed price for usage during off-peak periods and a rate
+higher than the fixed price for usage during on-peak periods.
+APPLICATION PROVISIONS
+This TOU Program is available to existing and new residential and small
+commercial/industrial customers who are served, or qualify to be served, under Rate Schedules
+RS, RTS (R), GS-1, GS-3 (customers with maximum registered peak loads less than 100 KW),
+LP-4 (customers with maximum registered peak loads less than 100KW), and BL. This includes
+Volunteer/Non-Profit organizations (Volunteer Fire Companies, Non-Profit Senior Citizen Centers,
+Non-Profit Rescue Squads, and Non-Profit Ambulance Services) served under Rate Schedules
+GS-1 and GS-3 but does not include customers in the Company’s OnTrack program. Customers
+taking service under the above-referenced rat
+[DOC 4] https://www.pplelectric.com/site/-/media/PPLElectric/At-Your-Service/Docs/Current-Electric-Tariff/2026/September/Pro-Forma-Retail-Tariff-Supplement---CPTR.pdf
+different components being used
+for calculating the Rate GSC-2 rate paid by non-customer-generators and the Rate GSC-2 rate
+used to determine the net metering compensation for customer-generators.
+MRPL EXEMPTION FOR AGRICULTURAL CUSTOMER-GENERATORS
+Pursuant to the Commission’s Opinion and Order entered June 11, 2026, agricultural customer-
+generators shall not be subject to the MRPL classification adopted in Paragraphs 98 through 105 of the Joint
+Petition for Non-Unanimous Settlement of All Issues.
+(C) Indicates Change (D) Indicates Decrease (I) Indicates Increase
+Issued:XXXXXXXXXXXX Effective:XXXXXXXXXXXX
+
+Supplement No. XXto Electric Pa. P.U.C. No. 202
+PPL Electric Utilities Corporation
+Second Revised Page No. 27
+Canceling First Revised Page No. 27
+MERCHANT FUNCTION CHARGE RIDER
+The Merchant Function Charge (MFC) Rider, stated as a percentage, shall be applied to the
+generation supply and transmission services charges billed, under the GSC-1 and CPTR, (C)
+respectively, as set forth in this Tariff, to each residential and small commercial & industrial (Small
+C&I) customer taking default service under these Rate Schedules: RS, RTS (R), GS-1, GS-3, BL,
+SA, SM (R), SHS (R), SLE, and SE and stand-by service for the foregoing rate schedules. The MFC
+will be reflected in the Company’s Price To Compare.
+The MFC, which will not be subject to reconciliation, is designed to make the Company’s Price
+To Compare (PTC) more comparable to electric supply service prices offered by EGSs by reflecting
+anticipated generation supply-related uncollectible accounts expense in default service rates. In
+addition, the MFC will be applied to the CPTR to reflect the applicable transmission service-related (C)
+uncollectible accounts expense previously recovered though PPL Electric’s distribution rates. The
+MFC is calculated by multiplying the generation supply charges billed under the GSC-1, and
+transmission service charges billed under the CPTR, to each customer in the applicable class by the
+following uncollectible accounts expense percentages.
+Residential Customer Class: 1.80%
+Small C&I Customer Class: 0.26%
+The values provided in the MFC Rider will be in place until changed in a subsequent
+distribution rate case.
+(C) Indicates Change (D) Indicates Decrease (I) Indicates Increase
+Issued:XXXXXXXXXXXX Effective:XXXXXXXXXXXX
+
+Supplement No. XXto Electric Pa. P.U.C. No. 202
+PPL Electric Utilities Corporation
+Third Revised Page No. 31
+Canceling SecondRevised Page No. 31
+RATE SCHEDULE RS
+RESIDENTIAL SERVICE
+APPLICATION RATE SCHEDULE RS
+This Rate Schedule is for single phase residential service in accordance with the provisions
+hereof. The Multiple Dwelling Unit Application is restricted to eight or fewer dwelling units for
+applications after August 26, 1976, and further to buildings converted to multiple dwelling units for
+applications after June 28, 1980.
+NET MONTHLY RATE
+Distribution Charge
+Effective: October 1, 2026
+$15.00 per month (Customer Charge) plus
+6.175 cents per K
+[DOC 4] https://www.pplelectric.com/site/-/media/PPLElectric/At-Your-Service/Docs/Current-Electric-Tariff/2026/September/Pro-Forma-Retail-Tariff-Supplement---CPTR.pdf
+WH (Includes ACR 5, USR, and SDER)
+Customer Protection Transmission Rider (C)
+The CPTR included in this Tariff applies to all KW and KWH billed under this Rate Schedule.
+Generation Supply Charge -1
+The Generation Supply Charge -1 included in this tariff applies to all KWH billed under this Rate
+Schedule.
+MINIMUM CHARGE
+The Minimum Distribution Charge is the Customer Charge.
+BUDGET BILLING
+Budget Billing is available at the option of the customer for charges under this Rate Schedule.
+MULTIPLE DWELLING UNIT APPLICATION
+When multiple dwelling units are supplied through one meter, the per day charge and the KWH
+block charges of the Distribution Charge rate, plus for customers who receive Default Service from
+the Company, Generation Supply Charge-1 rates are multiplied by the number of dwelling units in the
+determination of the net monthly bill under this Rate Schedule. Demand billing does not apply under
+this provision.
+RIDERS
+The Riders included in that Tariff apply to this Rate Schedule are listed in the Rider Matrix on
+Page 18.
+(C) Indicates Change (D) Indicates Decrease (I) Indicates Increase
+Issued:XXXXXXXXXXXX Effective:XXXXXXXXXXXX
+
+Supplement No. XXto Electric Pa. P.U.C. No. 202
+PPL Electric Utilities Corporation
+Second Revised Page No. 31C
+Canceling First Revised Page No. 31C
+RATE SCHEDULE RTS (R)
+RESIDENTIAL SERVICE – THERMAL STORAGE
+Applications for service under this Rate Schedule for new service locations will be accepted only until
+December 31, 1995. Service will be provided to existing service locations supplied hereunder
+through the life of the existing thermal storage units.
+APPLICATION RATE SCHEDULE RTS
+This Rate Schedule is for single phase residential service in accordance with load management
+capabilities in accordance with the APPLICATION PROVISIONS hereof.
+NET MONTHLY RATE
+Distribution Charge
+Effective: October 1, 2026
+$18.06 per month (Customer Charge) plus
+4.992 cents per KWH (Includes ACR 5, USR, and SDER)
+Customer Protection Transmission Rider
+(C)
+The CPTR included in this Tariff applies to all KW and KWH billed under this Rate Schedule.
+Generation Supply Charge -1
+The Generation Supply Charge -1 included in this tariff applies to all KWH billed under this Rate
+Schedule.
+MINIMUM CHARGE
+The Minimum Distribution Charge is the Customer Charge.
+BUDGET BILLING
+Budget Billing is available at the option of the customer for charges under this Rate Schedule.
+RIDERS
+The Riders included in that Tariff apply to this Rate Schedule are listed in the Rider Matrix on
+Page 18.
+(C) Indicates Change (D) Indicates Decrease (I) Indicates Increase
+Issued:XXXXXXXXXXXX Effective:XXXXXXXXXXXX
+
+Supplement No. XXto Electric Pa. P.U.C. No. 202
+PPL Electric Utilities Corporation
+Second Revised Page No. 32
+Canceling First Revised Page No. 32
+RATE SCHEDULE GS-1
+SINGLE PHASE GENERAL SERVICE
+AT SECONDARY VOLTAGE
+APPLICATION RATE SCHEDULE GS-1
+This Rate Schedule is for single phase non-residential service at secondary voltage and other
+applications outside 
+[DOC 4] https://www.pplelectric.com/site/-/media/PPLElectric/At-Your-Service/Docs/Current-Electric-Tariff/2026/September/Pro-Forma-Retail-Tariff-Supplement---CPTR.pdf
+lied, the potential, phase, and period of service at the desired point
+of supply shall be mutually agreed upon.
+NET MONTHLY RATE
+Distribution Charge
+6.739 cents per KWH plus 1% on Company's investment in facilities necessary to
+deliver and meter the service.
+Customer Protection Transmission Rider
+(C)
+The customer is responsible for applicable charges under the CPTR rate schedule.
+Generation Supply Charge -1
+The customer is responsible for applicable charges under the GSC-1 rate schedule.
+RIDERS
+The Riders included in this Tariff that apply to this Rate Schedule are listed in the Rider Matrix on
+Page 18.
+STATE TAX ADJUSTMENT SURCHARGE
+The State Tax Adjustment Surcharge included in this Tariff is applied to charges under this Rate
+Schedule.
+PAYMENT
+Payment shall be made on or before the due date specified on the bill, which is not less than 15
+days from the date bill is mailed via the U.S. Postal Service or mailed electronically.
+(C) Indicates Change (D) Indicates Decrease (I) Indicates Increase
+Issued:XXXXXXXXXXXX Effective:XXXXXXXXXXXX
+
+Supplement No. XXto Electric Pa. P.U.C. No. 202
+PPL Electric Utilities Corporation
+Second Revised Page No. 37
+Canceling First Revised Page No. 37
+RATE SCHEDULE SA
+PRIVATE AREA LIGHTING SERVICE
+APPLICATION OF RATE SCHEDULE SA
+This Rate Schedule is for the lighting of yards, private roadways, alleys and other areas
+supplied from existing overhead secondary distribution.
+NET MONTHLY RATE
+Distribution Charge
+$15.273 per fixture for Light Emitting Diode (LED)
+Customer Protection Transmission Rider (C)
+The customer is responsible for applicable charges under the CPTR rate schedule.
+Generation Supply Charge - 1
+The customer is responsible for applicable charges under the GSC-1 rate schedule.
+The number of KWH supplied is based upon the average hours use and input wattage of each
+luminaire.
+EQUIPMENT AND SERVICE
+Company installs and maintains the bracket, luminaire, lamp and photoelectric control on a
+Company-owned wood pole. Lamp is lighted from dusk to dawn or for approximately 4,300 hours
+per annum.
+A Light Emitting Diode (LED) of a nominal 4,700 lumens is installed in a luminaire on a 30-inch
+bracket. Outage notifications will normally be assessed within 1 business week from the time of
+notification by the customer to the Company. There is no credit for outages. The Company reserves
+the right to make substitutions when identical materials are not available.
+Company installs up to one span of secondary not exceeding 150 feet from an existing secondary
+voltage supply and one pole for each lamp provided the location of the pole is accessible by a service
+truck for the installation and maintenance of the lamp and provided the Company is furnished a
+suitable ROW.
+Upon request and at the Company's discretion, the Company may install an area light fixture on
+a suitable customer-owned support.
+Where a secondary supply is not available at the desired lamp location and/or where the distance
+is more than one span, the Company ma
+[DOC 4] https://www.pplelectric.com/site/-/media/PPLElectric/At-Your-Service/Docs/Current-Electric-Tariff/2026/September/Pro-Forma-Retail-Tariff-Supplement---CPTR.pdf
+y furnish the service provided the customer reimburses
+Company for the Company's estimated added investment required to supply the service in each case.
+(C) Indicates Change (D) Indicates Decrease (I) Indicates Increase
+Issued:XXXXXXXXXXXX Effective:XXXXXXXXXXXX
+
+Supplement No. XXto Electric Pa. P.U.C. No. 202
+PPL Electric Utilities Corporation Second Revised Page No. 38A
+Canceling First Revised Page No. 38A
+RATE SCHEDULE SM (R) (CONTINUED)
+Lamp Nominal Lamp Nominal Fixture Nominal
+Description Lumen Wattage Description Lumen Wattage Description Lumen Wattage
+MV 3,350 100 HPS 5,800 70 LED LM 3,000 40
+MV 6,650 175 HPS 9,500 100 LED LM 5,000 58
+MV 10,500 250 HPS 16,000 150 LED HM 2,900 32
+MV 20,000 400 HPS 25,500 250 LED HM 4,750 42
+MV 34,000 700 HPS 25,500 250 LED HM 8,000 69
+MV 51,000 1,100 LED HM 12,750 121
+LED HM 25000 211
+NET MONTHLY RATE
+(1) Lamp Prices
+Distribution Charge
+Nominal Low High Additional
+Type Lumens Wattage Wood Pole Metal Pole Wood Pole Mounting Mounting Luminaire/Pole
+(UG)
+Mercury Vapor 3,350 100 $13.933 ---- $21.094 $22.888 ---- ----
+Mercury Vapor 6,650 175 $16.689 $24.744 $24.272 $26.007 $28.770 $14.345
+Mercury Vapor 10,500 250 $20.799 $28.651 ---- ---- $32.435 $19.172
+Mercury Vapor 20,000 400 $25.982 $33.973 ---- ---- $38.039 $23.392
+Mercury Vapor 34,000 700 $41.090 $49.330 ---- ---- $54.602 $38.716
+Mercury Vapor 51,000 1,100 $51.608 $60.250 ---- ---- $65.494 $49.241
+Customer Protection Transmission Rider
+(C)
+The customer is responsible for applicable charges under the CPTR rate schedule.
+Generation Supply Charge -1
+The customer is responsible for applicable charges under the GSC-1 rate schedule.
+(1) The number of KWH supplied is based upon the average hours use and input wattage of each
+luminaire.
+(2) The Company, at its option, may offer appropriate overhead rates set forth above to customers
+in recognition of the customers installing, owning and/or paying for portions of a street lighting
+installation.
+(C) Indicates Change (D) Indicates Decrease (I) Indicates Increase
+Issued:XXXXXXXXXXXX Effective:XXXXXXXXXXXX
+
+Supplement No. XXto Electric Pa. P.U.C. No. 202
+PPL Electric Utilities Corporation
+Second Revised Page No. 38B
+Canceling First Revised Page No. 38B
+RATE SCHEDULE SM (R) (CONTINUED)
+(3) The Company, at its option, may offer appropriate overhead rates set forth above to customers
+in recognition of the customers installing, owning and/or paying for portions of a street lighting
+installation.
+(4) Whenever customer requests an installation hereunder which requires an investment by the
+Company greater than five (5) times the estimated annual revenue, the Company, at its option,
+may install the lamps as requested upon payment by the customer of such estimated excess
+costs.
+CONTINUOUS OPERATION
+At customer request, individual lamps may be operated continuously 24 hours per day. The net
+monthly rate for continuous operation shall be 160% of the aforementioned applicable net monthly rates.
+CUSTOMER-OWNED EQUIPMENT
+Whenever th
+[DOC 4] https://www.pplelectric.com/site/-/media/PPLElectric/At-Your-Service/Docs/Current-Electric-Tariff/2026/September/Pro-Forma-Retail-Tariff-Supplement---CPTR.pdf
+e customer furnishes, installs and owns the entire lighting system using equipment
+approved by and installed in a manner acceptable to the Company, the Company may, at its discretion,
+operate and maintain the system at the following net monthly rates.
+Distribution Charge
+Wattage Minimum Initial Lumens Company Operates & Maintains
+100 3,350 $9.060
+175 6,650 $11.945
+250 10,500 $15.233
+400 20,000 $20.838
+Customer Protection Transmission Rider (C)
+The customer is responsible for applicable charges under the CPTR rate schedule.
+Generation Supply Charge -1
+The customer is responsible for applicable charges under the GSC-1 rate schedule.
+The number of KWH supplied is based upon the average hours use and input wattage of each
+luminaire.
+(C) Indicates Change (D) Indicates Decrease (I) Indicates Increase
+Issued:XXXXXXXXXXXX Effective:XXXXXXXXXXXX
+
+Supplement No. XXto Electric Pa. P.U.C. No. 202
+PPL Electric Utilities Corporation
+Second Revised Page No. 39
+Canceling First Revised Page No. 39
+RATE SCHEDULE SHS (R)
+HIGH PRESSURE SODIUM STREET LIGHTING SERVICE
+APPLICATION OF RATE SCHEDULE SHS (R)
+This Rate Schedule is for lighting service from overhead or underground facilities on public areas
+such as streets, highways, bridges and parks, to municipalities, other governmental agencies, or
+private property customers when all such service is supplied under Company's standard form of
+contract in accordance with the various laws applicable thereto. No new applicants are permitted on
+this Rate Schedule. This Rate Schedule is only available until such time prior to the Company
+transferring customers to Rate Schedule SLE. In the event that the Company cancels a contract
+under this Rate Schedule the customer’s only option to continue street light service is to take service
+under Rate Schedule SLE.
+The application of this Rate Schedule is limited as follows:
+(a) metal pole overhead-existing locations served under another of the Company's street lighting
+rate schedules and locations previously served under Hershey Electric Company Rate
+Schedule SMVO.
+NET MONTHLY RATE
+(1) Lamp Prices
+Distribution Charge
+Nominal Low High Additional
+Type Lumens Wattage Wood Pole Metal Pole Wood Pole Mounting Mounting Luminaire/
+(UG) Pole
+H.P.Sodium 5,800 70 $14.192 $18.855 $21.487 $21.660 ---- $12.999
+H.P.Sodium 9,500 100 $15.586 $19.921 $23.094 $23.213 $27.498 $14.337
+H.P.Sodium 16,000 150 $17.193 $21.326 ---- ---- $28.881 $14.905
+H.P.Sodium 25,500 250 $23.013 $26.614 ---- ---- $38.976 $19.472
+H.P.Sodium 50,000 400 $29.400 $32.516 ---- ---- $45.067 $23.283
+Customer Protection Transmission Rider
+(C)
+The customer is responsible for applicable charges under the CPTR rate schedule.
+Generation Supply Charge -1
+The customer is responsible for applicable charges under the GSC-1 rate schedule.
+(C) Indicates Change (D) Indicates Decrease (I) Indicates Increase
+Issued:XXXXXXXXXXXX Effective:XXXXXXXXXXXX
+
+Supplement No. XXto Electric Pa. P.U.C. No. 202
+PPL Electric Utilities Corporation
+Second Revis
+[DOC 4] https://www.pplelectric.com/site/-/media/PPLElectric/At-Your-Service/Docs/Current-Electric-Tariff/2026/September/Pro-Forma-Retail-Tariff-Supplement---CPTR.pdf
+ed Page No. 40
+Canceling First Revised Page No. 40
+RATE SCHEDULE SLE
+LIGHT EMITTING DIODE (LED) STREET LIGHTING SERVICE
+APPLICATION OF RATE SCHEDULE SLE
+This Rate Schedule is for lighting service from overhead or underground facilities on public areas
+such as streets, highways, bridges and parks, to municipalities, other governmental agencies, or
+private property customers when all such service is supplied under Company's standard form of
+contract in accordance with the various laws applicable thereto.
+The application of this Rate Schedule is limited as follows:
+(a) metal pole overhead - existing locations served under another of the Company's street
+lighting rate schedules.
+NET MONTHLY RATE
+(1) Fixture Prices
+Distribution Charge
+Nominal Nominal Fiberglass Low High Additional
+Type Lumens Wattage Wood Pole Metal Pole &Wood Pole Mounting Mounting Luminaire/Pole
+LM HM
+LED 3,000 40 ---- ---- $28.133 $28.292 ---- ----
+LM
+LED 5,000 58 $29.307 $29.394 ---- ----
+LM
+LED 2,900 32 $14.834 $18.410 ---- $5.111
+HM
+LED 4,750 42 $16.217 $19.533 ---- ---- $25.344 $5.379
+HM
+LED 8,000 69 $18.287 $21.665 ---- ---- $27.276 $6.258
+HM
+LED. 12,750 121 $25.731 $28.953 ---- ---- $37.946 $9.166
+HM
+LED 25,000 211 $32.967 $35.259 ---- ---- $45.397 $11.443
+HM
+Customer Protection Transmission Rider
+(C)
+The customer is responsible for applicable charges under the CPTR rate schedule.
+Generation Supply Charge -1
+The customer is responsible for applicable charges under the GSC-1 rate schedule.
+(C) Indicates Change (D) Indicates Decrease (I) Indicates Increase
+Issued:XXXXXXXXXXXX Effective:XXXXXXXXXXXX
+
+Supplement No. XXto Electric Pa. P.U.C. No. 202
+PPL Electric Utilities Corporation
+Second Revised Page No. 41
+Canceling First Revised Page No. 41
+RATE SCHEDULE SE
+ENERGY ONLY STREET LIGHTING SERVICE
+APPLICATION OF RATE SCHEDULE SE
+This Rate Schedule is available to municipalities, other governmental agencies, and non -
+municipal customers for the operation of mercury vapor, high pressure sodium, metal halide, induction
+or Light Emitting Diode (LED) street lighting systems on public areas such as streets, highways,
+bridges and parks where the municipality, other governmental agency and non-municipal customers
+provides for the installation, ownership, operation and maintenance of the street lighting equipment.
+NET MONTHLY RATE
+(1) Lamp Rates
+Distribution Charge
+Street Lighting Equipment on Company Pole .................................. 12.012 cts. per KWH
+Street Lighting Equipment on Customer Pole or Support .................. 6.980 cts. per KWH
+Customer Protection Transmission Rider (C)
+The customer is responsible for applicable charges under the CPTR rate schedule.
+Generation Supply Charge -1
+The customer is responsible for applicable charges under the GSC-1 rate schedule.
+(2) Service hereunder is unmetered with the number of KWH billed for each size lamp
+calculated based upon the estimated input wattage of the luminaire and 4,300 burning hours per
+year.
+MINIMUM SYSTEM
+Application 
+[DOC 4] https://www.pplelectric.com/site/-/media/PPLElectric/At-Your-Service/Docs/Current-Electric-Tariff/2026/September/Pro-Forma-Retail-Tariff-Supplement---CPTR.pdf
+is limited to mercury vapor, high pressure sodium, metal halide, induction, or Light
+Emitting Diode (LED) streetlights in systems of a minimum of 5 contiguous lamps of one customer.
+Customer-owned streetlights served hereunder may not be intermixed with street lights served
+under the Company's other street lighting rate schedules.
+The 5-lamp minimum may, at Company's option, be waived when a customer desires to take
+service for its entire street lighting requirements hereunder and said total requirement is less than
+the 5-lamp minimum.
+(C) Indicates Change (D) Indicates Decrease (I) Indicates Increase
+Issued:XXXXXXXXXXXX Effective:XXXXXXXXXXXX
+
+Supplement No. XXto Electric Pa. P.U.C. No. 202
+PPL Electric Utilities Corporation
+Second Revised Page No. 42
+Canceling First Revised Page No. 42
+RATE SCHEDULE TS (R)
+MUNICIPAL TRAFFIC SIGNAL LIGHTING SERVICE
+This Rate Schedule is in the process of elimination and service hereunder is available only to
+existing locations continuously supplied hereunder as of August 26, 1976.
+APPLICATION OF RATE SCHEDULE TS(R)
+This Rate Schedule is for traffic signal lighting service to cities, boroughs, and townships. The
+minimum under this rate schedule is 50 watts.
+NET MONTHLY RATE
+Distribution Charge
+8.628 cents per watt of connected load
+Customer Protection Transmission Rider (C)
+The CPTR included in this Tariff applies to all KW and/or KWH billed under this Rate Schedule.
+Customer is responsible for applicable charges under the CPTR rate schedule.
+Generation Supply Charge -1
+The Generation Supply Charge -1 included in this Tariff applies to all KWH billed under this
+Rate Schedule. Customer is responsible for applicable charges under the GSC-1 rate schedule.
+The number of KWH supplied is based upon the average hours use and size of lamps.
+MONTHLY MINIMUMS
+The Minimum Billing Demand is 50 KW. The Monthly Minimum Distribution Charge is 50 KW
+times the demand step of the effective Distribution Charge. The Monthly Minimum Capacity and
+Energy Charge is 50 Watts times the effective Generation Supply Charge - GSC-1.
+RIDERS
+The Riders included in this Tariff that apply to this Rate Schedule are listed in the Rider Matrix on
+Page 18.
+STATE TAX ADJUSTMENT SURCHARGE
+The State Tax Adjustment Surcharge included in this Tariff is applied to charges under this Rate
+Schedule.
+(C) Indicates Change (D) Indicates Decrease (I) Indicates Increase
+Issued:XXXXXXXXXXXX Effective:XXXXXXXXXXXX
+[DOC 6] https://www.pplelectric.com/site/-/media/PPLElectric/At-Your-Service/Docs/Current-Electric-Tariff/2026/October/RTS-10-2-26.pdf
+Supplement No. 3 to Electric Pa. P.U.C. No. 202
+PPL Electric Utilities Corporation
+First Revised Page No. 31C
+Canceling Original Page No. 31C
+RATE SCHEDULE RTS (R) (C)
+RESIDENTIAL SERVICE – THERMAL STORAGE
+Applications for service under this Rate Schedule for new service locations will be accepted only until
+December 31, 1995. Service will be provided to existing service locations supplied hereunder
+through the life of the existing thermal storage units.
+APPLICATION RATE SCHEDULE RTS
+This Rate Schedule is for single phase residential service in accordance with load management
+capabilities in accordance with the APPLICATION PROVISIONS hereof.
+NET MONTHLY RATE
+Distribution Charge
+Effective: October 1, 2026 (C)
+$18.06 per month (Customer Charge) plus
+4.992 cents per KWH (Includes ACR 5, USR, and SDER) (I)
+Transmission Service Charge
+The Transmission Service Charge included in this Tariff applies to all KW and KWH billed under
+this Rate Schedule.
+Generation Supply Charge -1
+The Generation Supply Charge -1 included in this tariff applies to all KWH billed under this Rate
+Schedule.
+MINIMUM CHARGE
+The Minimum Distribution Charge is the Customer Charge.
+BUDGET BILLING
+Budget Billing is available at the option of the customer for charges under this Rate Schedule.
+RIDERS
+The Riders included in that Tariff apply to this Rate Schedule are listed in the Rider Matrix on
+Page 18.
+(C) Indicates Change (D) Indicates Decrease (I) Indicates Increase
+Issued: September 1, 2026 Effective: October 1, 2026
+
+Supplement No. 2 to Electric Pa. P.U.C. No. 202
+PPL Electric Utilities Corporation
+First Revised Page No. 31D
+Canceling Original Page No. 31D
+RATE SCHEDULE RTS (R) (CONTINUED)
+STATE TAX ADJUSTMENT SURCHARGE
+The State Tax Adjustment Surcharge included in this Tariff is applied to charges under this Rate
+Schedule.
+PAYMENT
+The above net rate applies when bills are paid on or before the due date specified on the bill,
+which is not less than 20 days from the date bill is mailed via the U.S. Postal Service or mailed
+electronically. After the due date, the Company may initiate collection procedures and a late payment
+charge of 1.25% per month on the then unpaid and overdue balance is applicable.
+APPLICATION PROVISIONS
+1. This Rate Schedule is applicable to service which would otherwise qualify under Rate
+Schedule RS except for the following:
+(a) Service to two or more separate dwelling units supplied through a single meter.
+(b) Seasonal service and seasonal use customers.
+(c) Service with separate meter controlled water heater service.
+(d) Residential service with general farm use which includes more than 2,000 watts.
+2. Any changes in service entrance equipment to accommodate metering under this Rate
+Schedule are made by the customer at his own expense.
+3. Load management capability is the positive automatic control of the operation of any thermal
+storage system for space heating which is acceptable to the Company as being effective in limiting
+on-peak use of electric serv
+[DOC 7] https://www.pplelectric.com/site/-/media/PPLElectric/At-Your-Service/Docs/Current-Electric-Tariff/2026/October/Title-Page-List-of-Changes-TOC-10126.pdf
+Supplement No. 4
+Electric Pa. P.U.C. No. 202
+PPL Electric Utilities Corporation
+GENERAL TARIFF
+RULES AND RATE SCHEDULES
+FOR ELECTRIC SERVICE
+In the territory listed on pages 4, 4A and 4B
+and in the adjacent territory served.
+ISSUED: September 18, 2026 EFFECTIVE: October 1, 2026
+CHRISTINE M. MARTIN, PRESIDENT
+827 Hausman Road
+Allentown, PA 18104
+NOTICE
+
+Supplement No. 4 to Electric Pa. P.U.C. No. 202
+PPL Electric Utilities Corporation
+Third Revised Page No. 2
+Canceling Second Revised Page No. 2
+LIST OF CHANGES MADE BY THIS SUPPLEMENT
+CHANGES:
+Distribution System Improvement Charge The DSIC charge will remain at 0.00% for the
+(DSIC) period of October 1, 2026 through December 31,
+2026.
+Page No. 28
+(C) Indicates Change (D) Indicates Decrease (I) Indicates Increase
+Issued: September 18, 2026 Effective: October 1, 2026
+
+Supplement No. 2 toElectric Pa. P.U.C. No. 202
+PPL Electric Utilities Corporation
+First Revised Page No. 3
+Canceling Original Page No. 3
+TABLE OF CONTENTS
+Page Revision
+TABLE OF CONTENTS 3 First Revised
+TERRITORY COVERED BY THIS TARIFF 4 First Revised
+DEFINITIONS 5 First Revised
+RULES FOR ELECTRIC SERVICE 6 First Revised
+1 – Electric Service Tariff 6 First Revised
+2 – Requirements for Service 7 First Revised
+3 – Extension of Service 8 First Revised
+4 – Supply of Service 9 First Revised
+5 – Use of Service 10 First Revised
+6 – Stand-by Service for Non-Utility Generating Facilities 11 First Revised
+7 – Temporary Service 12 First Revised
+8 – Measurement of Service 13 First Revised
+9 – Billing and Payment for Service 14 First Revised
+10 – Disconnection and Reconnection of Service 15 First Revised
+11 – Net Service for Generation Facilities 16 First Revised
+12 – Distributed Energy Resource Interconnection Service 17 First Revised
+RIDERS, SURCHARGE, OPTIONS, AND CHARGES 18 First Revised
+Rider Matrix 18 First Revised
+State Tax Adjustment Surcharge 19 First Revised
+Universal Service Rider 20 First Revised
+Net Metering for Renewable Customer-Generators 21 First Revised
+Metering and Billing Credit Rider 22 First Revised
+Transmission Service Charge 23 First Revised
+Generation Supply Charge-1 24 First Revised
+Generation Supply Charge-2 25 First Revised
+Act 129 Compliance Rider-Phase 4 26 First Revised
+Act 129 Compliance Rider-Phase 5 26D Original
+Merchant Function Charge Rider 27 First Revised
+(C) Indicates Change (D) Indicates Decrease (I) Indicates Increase
+Issued:June 30, 2026 Effective:July 1, 2026
+
+Supplement No. 4 to Electric Pa. P.U.C. No. 202
+PPL Electric Utilities Corporation
+Second Revised Page No. 3A
+Canceling First Revised Page No. 3A
+TABLE OF CONTENTS (CONTINUED)
+Page Revision
+Distribution System Improvement Charge 28 Second Revised
+Storm Damage Expense Rider 29 First Revised
+Residential Electric Vehicle Time of Use Charging Rebate Program 30 First Revised
+RATE SCHEDULES – GENERAL 31 Second Revised
+RS – Residential Service 31 Second Revised
+RTS(R) – Residential Service – Thermal Storage 31C First Revised
+GS-1 – Single Phase General Servi

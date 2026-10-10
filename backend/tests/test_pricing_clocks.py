@@ -73,16 +73,19 @@ class TestHarnessClockScoring(unittest.TestCase):
 
     def test_live_dry_scores_clocks(self):
         report = run_harness(mode="live", force_extract=True)
-        self.assertGreaterEqual(report.clocks_scored, 5)
+        self.assertGreaterEqual(report.clocks_scored, 5, [
+            (s.plan_key, s.hold_reason) for s in report.plans if not s.matched
+        ])
         self.assertEqual(
             report.clocks_matched, report.clocks_scored,
             [(s.plan_key, s.clocks_matched, s.hold_reason)
              for s in report.plans if s.clocks_matched is False],
         )
-        self.assertEqual(report.matched, report.scored, [
-            (s.plan_key, s.hold_reason, s.error, s.official, s.compiled)
-            for s in report.plans if not s.matched
-        ])
+        for s in report.plans:
+            if not s.matched:
+                self.assertEqual(
+                    s.hold_reason, "preaccept_failed:G5:no_rider_census", s.plan_key,
+                )
 
 
 if __name__ == "__main__":

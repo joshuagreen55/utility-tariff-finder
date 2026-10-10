@@ -19,13 +19,16 @@ UNIT_PATTERNS: dict[str, re.Pattern[str]] = {
         # Require a $ figure nearby — bare "charge per kWh" alone is too
         # loose (PEC TOU quoted $ rates under a ¢ unit and would accept-wrong).
         r"per\s*kwh[^¢\n]{0,80}\$\s*\d|"
-        r"\$\s*\d[\d.,]*[^¢\n]{0,80}per\s*kwh",
+        r"\$\s*\d[\d.,]*[^¢\n]{0,80}per\s*kwh|"
+        # French order: "0,0982 $ le kWh" / "0,0982 $ par kWh".
+        r"\d[\d.,]*\s*\$\s*(?:le|par)\s+kwh",
         re.I,
     ),
     "cents/kwh": re.compile(
         r"¢\s*/\s*kwh|¢\s+per\s+kwh|c/\s*kwh|cents?\s*/\s*kwh|cents?\s+per\s+kwh|"
         r"¢/kwh|¢\s*per\s*kilowatt|\bcents?\b|"
-        r"\d[\d.,]*\s*¢\s*per\s*kwh|\d[\d.,]*\s*cents?\s*per\s*kwh",
+        r"\d[\d.,]*\s*¢\s*per\s*kwh|\d[\d.,]*\s*cents?\s*per\s*kwh|"
+        r"¢\s*(?:le|par)\s+kwh",
         re.I,
     ),
     "percent": re.compile(r"%|percent(?:age)?\s+of|per\s*cent", re.I),

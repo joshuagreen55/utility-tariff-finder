@@ -43,6 +43,7 @@ def main(argv: list[str] | None = None) -> int:
         f"accepted_correct={d['accepted_correct']} "
         f"accepted_wrong={d['accepted_wrong']} "
         f"held={d['held']} skipped={d['skipped']} "
+        f"accepted_unscored={d['accepted_unscored']} "
         f"scored={d['scored']} rate={d['accept_correct_rate']:.1%} "
         f"holds={d['hold_reasons']}"
     )

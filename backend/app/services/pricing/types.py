@@ -113,6 +113,7 @@ class ComponentInput:
     loss_sensitive: bool = False
     source_page: str | None = None
     source_quote: str | None = None
+    disposition: str | None = None
 
     def amounts_by_cell(self) -> dict[CellKey, Decimal]:
         out: dict[CellKey, Decimal] = {}

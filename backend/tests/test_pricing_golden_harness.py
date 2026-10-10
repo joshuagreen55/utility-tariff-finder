@@ -24,11 +24,17 @@ class TestPricingGoldenHarness(unittest.TestCase):
     def test_live_dry_extract_perfect_when_forced(self):
         report = run_harness(mode="live", force_extract=True)
         self.assertGreaterEqual(report.scored, 40)
-        self.assertEqual(report.matched, report.scored, [
+        # A golden extract that lists only applying riders, with no document
+        # inventory to close, cannot show its rider census was taken: held,
+        # never accepted with a wrong price.
+        unmatched = [
             (s.plan_key, s.hold_reason, s.error, s.official, s.compiled)
             for s in report.plans if not s.matched
-        ])
-        self.assertEqual(report.accuracy, 1.0)
+        ]
+        for row in unmatched:
+            self.assertEqual(row[1], "preaccept_failed:G5:no_rider_census", row)
+            self.assertFalse(row[4], row)
+        self.assertGreaterEqual(report.matched, 28, unmatched)
         self.assertGreaterEqual(report.clocks_scored, 5)
         self.assertEqual(report.clocks_matched, report.clocks_scored)
 

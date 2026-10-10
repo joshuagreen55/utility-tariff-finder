@@ -1,0 +1,2382 @@
+[DOC 0] https://mypec.com/residential-rates/
+Residential Rates
+Residential rates
+With a mission to provide safe, reliable power at a low cost, our goal is to ensure PEC members get the best value for their dollar. As a nonprofit cooperative, PEC sets our rates as close as possible to the cost of service and does not earn a profit.
+Cost Breakdown
+Rate
+Service Availability Charge
+$32.50
+Delivery Charge per kWh
+$0.022546
+Transmission Cost of Service per kWh
+$0.020688
+Flat Base Power Charge per kWh
+OR
+Time-of-Use Base Power Charge
+$0.065900
+OR
+Varies
+Auto Pay Credit*
+-$1.50
+Paperless Billing Credit
+-$1.00
+Your monthly bill will be the sum of the above charges plus any applicable fees. If you’re interested in the Time-of-Use Rate,
+learn more here to determine if it’s right for you
+.
+* Bank draft only
+Rate calculator
+Use this helpful tool to estimate your monthly bill. This calculator only provides an estimate; actual bills may vary.
+Estimated Usage
+Sample Bill
+Account #: 12345678
+Valued Member
+XX/XX/20XX
+$XXX.XX
+Your estimated monthly cost.
+Power Used
+500 kWh
+750 kWh
+1000 kWh
+1250 kWh
+1500 kWh
+1750 kWh
+2000 kWh
+2250 kWh
+2500 kWh
+2750 kWh
+3000 kWh
+3500 kWh
+4000 kWh
+4500 kWh
+5000 kWh
+6000 kWh
+7000 kWh
+8000 kWh
+9000 kWh
+10000 kWh
+15000 kWh
+20000 kWh
+25000 kWh
+30000 kWh
+Enroll in Auto Pay and save $
+per month?
+Enroll in Paperless Billing and save $
+per month?
+Round up for charity with Power of Change?
+Activity
+Rate
+Estimated Cost
+Service Availability Charge
+Delivery Charge
+Flat Base Power Charge
+TCOS Pass-Through Charge
+Auto Pay Credit
+Paperless Billing
+Power of Change
+Your estimated monthly cost
+You may live in a city that charges a franchise fee or city tax to utilities. Franchise fees are negotiated between each city and utility and are passed through to PEC members on their bills. If you live in a city that charges a franchise fee, you will see this as an additional line item on your bill.
+Ready to connect service?
+GET STARTED
+View our tariff for information about our rates and fees
+.
+Learn about what’s on your bill.
+Member assistance
+DIY energy-saving tips
+Time-of-Use Rate
+Our Time-of-Use Rate can help you save money if you’re able to reduce your energy use during peak times when electricity prices are highest or shift energy use to off-peak periods when electricity prices are lowest.
+Learn more
+.
+Payment plans
+Take control of your electric bill with our payment plans, available to residential and farm/ranch members who have no balance due and have at least 12 months of satisfactory billing history at the same location. You may enroll through
+your account
+, and payments under either plan begin with the first bill rendered after enrollment.
+Fixed payment plan
+You’ll pay a fixed amount each month based on the average electric use at your location during the 12 months before the plan starts. We will review your account periodically to determine if the plan should be reset to help prevent an excessive annual correction.
+View a sample bill here
+.
+Average payment plan
+Your payment is calculated based
+[DOC 0] https://mypec.com/residential-rates/
+ on the rolling 12-month use average at your location. Unlike the Fixed Payment Plan, your bills will not be the same amount every month, nor will an annual correction be applied.
+View a sample bill here
+.
+Prepaid payment option
+Pay as you go. This option allows you to pay for service before charges are incurred, eliminating late payment and reconnection fees. You can refill your account balance on SmartHub, by phone, by mail, or at a PEC Secure Pay Station. Eligibility requirements apply — contact us to learn more.
+Looking for power from renewable sources?
+Renewable Energy Rider
+Would you like to power your home or business with 100% renewable energy? Our Renewable Energy Rider Rate lets you go green with the check of a box.
+Distributed Generation Interconnection (Residential Solar)
+If you are considering a distributed generation (DG) installation, such as residential solar, we can help you make the best decision for yourself and walk you through the requirements.
+Community Solar Program
+This rate gives members the opportunity to purchase solar power generated in the PEC service territory.
+[DOC 1] https://mypec.com/wp-content/uploads/tariff/Tariff_and_Business_Rules.pdf
+TARIFF AND BUSINESS RULES
+FOR ELECTRIC SERVICE
+Pedernales Electric Cooperative, Inc.
+201 South Avenue F
+P.O. Box 1
+Johnson City, Texas 78636-0001
+
+Tariff and Business Rules for Electric Service
+Pedernales Electric Cooperative, Inc.
+Table of Contents
+Applicable: Entire Certified Service Area
+Effective Date: October 1, 2026 Page 2 of 115
+TABLE OF CONTENTS
+100 DEFINITIONS................................................................................................................................ 7
+200 DESCRIPTION OF THE COOPERATIVE’S SERVICE AREA .................................................. 11
+200.1 COUNTIES SERVED ...................................................................................................... 11
+200.2 FRANCHISE CITIES SERVED ....................................................................................... 11
+300 GENERAL SERVICE RULES AND REGULATIONS ................................................................ 12
+300.1 GENERAL ....................................................................................................................... 12
+300.2 AVAILABILITY OF TARIFF ............................................................................................. 12
+300.3 ALTERNATE LANGUAGE REQUIREMENTS ................................................................ 12
+300.4 ACCESS TO COOPERATIVE RECORDS ..................................................................... 12
+300.4.1 OPEN RECORDS REQUEST ......................................................................................... 12
+300.4.2 SUBPOENA RESPONSE SERVICES ............................................................................ 12
+300.4.3 GEOGRAPHIC INFORMATION SYSTEM (GIS) MAPPING RECORDS ....................... 13
+300.5 WAIVERS ........................................................................................................................ 13
+300.6 NON-DISCRIMINATION ................................................................................................. 13
+300.7 CREDIT WORTHINESS AND SECURITY DEPOSITS .................................................. 13
+300.7.1 CREDIT REQUIREMENTS FOR RESIDENTIAL APPLICANTS .................................... 13
+300.7.2 CREDIT REQUIREMENTS FOR NON-RESIDENTIAL APPLICANTS ........................... 14
+300.7.3 DEPOSITS AND GUARANTEE AGREEMENTS ............................................................ 14
+300.7.3.1 NEW APPLICANT ..................................................................................................... 14
+300.7.3.2 EXISTING MEMBER ................................................................................................. 14
+300.7.3.3 ADDITIONAL DEPOSIT ............................................................................................ 15
+300.7.3.4 DEPOSIT WAIVER DUE TO FAMILY VIOLENCE ................................................... 15
+300.7.3.5 REFUSAL OF SERVICE .................................................................
+[DOC 1] https://mypec.com/wp-content/uploads/tariff/Tariff_and_Business_Rules.pdf
+...................................................... 35
+300.15.2 EASEMENT OBSTRUCTION REVIEW .......................................................................... 35
+300.15.3 EASEMENT AMENDMENT FEE .................................................................................... 35
+300.16 COOPERATIVE TRIP FEE ............................................................................................. 35
+400 FACILITIES EXTENSIONS POLICY .......................................................................................... 36
+400.1 OVERVIEW ..................................................................................................................... 36
+400.2 RESIDENTIAL SERVICE ................................................................................................ 36
+400.3 RESIDENTIAL DEVELOPMENTS .................................................................................. 37
+400.4 NON-RESIDENTIAL SERVICE ....................................................................................... 38
+400.5 NON-RESIDENTIAL DEVELOPMENTS ......................................................................... 39
+
+Tariff and Business Rules for Electric Service
+Pedernales Electric Cooperative, Inc.
+Table of Contents
+Applicable: Entire Certified Service Area
+Effective Date: October 1, 2026 Page 4 of 115
+400.6 PRIMARY LEVEL SERVICE ........................................................................................... 40
+400.7 UNDERGROUND SERVICE ........................................................................................... 41
+400.8 STANDARD DELIVERY SERVICE AND FACILITIES .................................................... 42
+400.9 NON-STANDARD DELIVERY SERVICE AND FACILITIES ........................................... 42
+400.10 ROUTING ........................................................................................................................ 42
+400.11 AREA LIGHTING ............................................................................................................. 43
+400.12 UNMETERED NON-RESIDENTIAL SERVICE ............................................................... 43
+400.13 NON-PERMANENT SERVICE ........................................................................................ 43
+400.14 SERVICE UPGRADES TO EXISTING COOPERATIVE FACILITIES ............................ 43
+400.15 SYSTEM IMPACT FEE ................................................................................................... 43
+400.16 PLANNING DESIGN AND REDESIGN FEES ................................................................ 43
+400.17 AFTER-HOURS SERVICE .............................................................................................. 44
+400.18 MISCELLANEOUS TRIP FEE ......................................................................................... 44
+400.19 NO REFUND OF CONTRIBUTION IN AID OF CONSTRUCTION ................................. 44
+400.20 DE-ENERGIZATION AND LINE CLE
+[DOC 1] https://mypec.com/wp-content/uploads/tariff/Tariff_and_Business_Rules.pdf
+ 51
+500.1.13 TIME-OF-USE BASE POWER CREDIT ......................................................................... 51
+500.1.14 WHOLESALE ENERGY CREDIT ................................................................................... 52
+500.1.15 FRANCHISE FEE ............................................................................................................ 52
+500.1.16 SALES TAX ..................................................................................................................... 52
+500.1.17 COOPERATIVE OWNED LAMP CHARGE .................................................................... 52
+500.1.18 POWER OF CHANGE .................................................................................................... 54
+500.1.19 CAPITAL CREDITS ......................................................................................................... 54
+500.1.20 MISCELLANEOUS PASS-THROUGH CHARGE ........................................................... 54
+500.1.21 DUAL FEED RIDER ........................................................................................................ 55
+500.1.22 NON-STANDARD CAPACITY CHARGE ........................................................................ 55
+500.2 RESIDENTIAL RATE SCHEDULES ............................................................................... 56
+500.2.1 RESIDENTIAL, FARM AND RANCH SERVICE, FLAT BASE POWER CHARGE ........ 56
+
+Tariff and Business Rules for Electric Service
+Pedernales Electric Cooperative, Inc.
+Table of Contents
+Applicable: Entire Certified Service Area
+Effective Date: October 1, 2026 Page 5 of 115
+500.2.2 RESIDENTIAL, FARM AND RANCH SERVICE, FLAT BASE POWER CHARGE, WITH
+RENEWABLE ENERGY RIDER ..................................................................................... 57
+500.2.3 RESIDENTIAL, FARM AND RANCH SERVICE, FLAT BASE POWER CHARGE,
+COMMUNITY SOLAR RATE .......................................................................................... 58
+500.2.4 RESIDENTIAL, FARM AND RANCH SERVICE, FLAT BASE POWER CHARGE,
+COMMUNITY SOLAR RATE, WITH RENEWABLE ENERGY RIDER ........................... 60
+500.2.5 RESIDENTIAL, FARM AND RANCH SERVICE, TIME OF USE (TOU) BASE POWER
+CHARGE ......................................................................................................................... 62
+500.2.6 RESIDENTIAL, FARM AND RANCH SERVICE, TIME OF USE (TOU) BASE POWER
+CHARGE, WITH RENEWABLE ENERGY RIDER .......................................................... 64
+500.2.7 RESIDENTIAL, FARM AND RANCH SERVICE, INTERCONNECT RATE .................... 66
+500.2.8 RESIDENTIAL, FARM AND RANCH SERVICE, INTERCONNECT TOU RATE ........... 67
+500.2.9 RESIDENTIAL, FARM AND RANCH SERVICE, INTERCONNECT RATE, WITH
+RENEWABLE ENERGY RIDER ..................................................................................... 68
+500.2.10 RESIDENTIAL, FARM AND RANCH SERVICE, INTERCONNECT TOU RATE, WITH
+RENEWABLE ENERGY RIDER .........................
+[DOC 1] https://mypec.com/wp-content/uploads/tariff/Tariff_and_Business_Rules.pdf
+ual monthly Non-Coincident Peak (NCP) demand in kilowatts (kW), annual NCP
+demand in kilowatts (kW), Four (4) Coincident Peak Demand in kilowatts (kW), billing demand in kilowatts
+(kW), Power Factor, Community Solar Energy Units, Unit Energy Allocation, Solar Energy, Net Energy, and
+number of lamps.
+Business Day – All days the Cooperative business offices are open, which includes all weekdays not
+including Cooperative Holidays.
+Capacity Demand – The maximum demand (kW) of power delivered or received, measured on a fifteen
+(15) minute interval basis within the billing period as applicable.
+Commission – The Public Utility Commission of Texas.
+Contribution in Aid of Construction (CIAC) – Payment by Applicant to the Cooperative for line
+extensions, upgrades, or expansions in excess of allowable investments by the Cooperative, or for
+nonstandard service facilities, removals, or relocations.
+Cooperative – Pedernales Electric Cooperative, Inc., a Texas electric cooperative corporation organized
+and operating under the Electric Cooperative Corporation Act, Texas Utilities Code Annotated, Chapter
+161, or a predecessor statute to Chapter 161, and operating under that chapter.
+Cooperative Facilities – All the plant and equipment of the Cooperative, including all tangible and
+intangible real and personal property without limitation, and any and all means and instrumentalities in any
+manner owned, operated, leased, licensed, used, controlled, furnished, or supplied for, by, or in connection
+with the business of the Cooperative, including any construction work in progress.
+Cost Calculation – A calculation of the cost to extend electric service for Residential Service or Non-
+Residential Service. The Cost Calculation will include labor and materials used in constructing the facilities
+extensions, as well as engineering, right-of-way acquisition and clearing to the extent undertaken by the
+Cooperative or its agents, and all other costs directly attributable to the extension.
+Delivered Energy – The total energy (kWh) delivered to a Member during a billing cycle through the
+Cooperative’s Delivery System.
+Delivery System – The electric lines and other equipment, including transformers, owned by Cooperative,
+and the meters, including non-Cooperative owned meters, used in the delivery of electric power and energy.
+Development Cost Calculation – A calculation of the cost to extend electric service to a residential
+subdivision or development, or non-residential development. The Development Cost Calculation will
+include labor and materials used in constructing the facilities extensions, as well as engineering, right-of-
+
+Tariff and Business Rules for Electric Service
+Pedernales Electric Cooperative, Inc.
+Section 100: Definitions
+Applicable: Entire Certified Service Area
+Effective Date: October 1, 2026 Page 8 of 115
+way acquisition and clearing to the extent undertaken by the Cooperative or its agents, and all other costs
+directly attributable to the extension.
+Distribut
+[DOC 1] https://mypec.com/wp-content/uploads/tariff/Tariff_and_Business_Rules.pdf
+ed Generation (DG) – An electrical generating facility located at a Member's service location,
+which may be connected in parallel to the Delivery System.
+Encroachment – Obstructions, landscaping, vegetation, improvements, or other personal property,
+structures, or obstacles that interfere with the Cooperative’s use and enjoyment of any Cooperative private
+easements, public utility easements, or a public right-of-way or other designated land or property in which
+PEC facilities are located.
+Four (4) Coincident Peak (4CP) – The average of the monthly 15-minute demand for each of the months
+of June, July, August and September at the same time as the greatest Electric Reliability of Texas (ERCOT)
+system 15-minute demand for the months of June, July, August and September.
+Four (4) Coincident Peak (4CP) Demand – The demand (kW) measured during the 4CP.
+Good Utility Practice – The meaning as assigned to this term in the Commission’s Substantive Rule 25.5,
+Definitions.
+Guarantor – A Member of the Cooperative who takes on a financial responsibility for an Applicant applying
+for service.
+Holiday – Days the Cooperative does not consider a Business Day or days the Cooperative observes as
+holidays by not having hours of operation.
+Individual Private Dwelling – A fixed, permanent residential structure. This term includes a mobile home
+that has been affixed in its permanent location. This term does not include self-propelled and non-self-
+propelled recreational vehicles that have no foundation other than wheels, jacks, or skirting.
+Interconnection – The physical connection of a facility or system to the Delivery System in accordance
+with the requirements of the Interconnection Policy of the Cooperative.
+Interconnection Agreement – The agreement which sets forth the contractual conditions under which the
+Cooperative and a Member agree that one (1) or more facilities will interconnect with the Delivery System.
+Installment Plan – An agreement between the Cooperative and a Residential Service Member that allows
+the Member to pay an outstanding bill on installments extending beyond the bill’s due date.
+Landlord - An owner of a property that is rented or leased to another person, or a property manager
+delegated authority by the property owner to manage a property rented or leased to another person.
+Landlord Provision – A provision that permits a Landlord to apply for service and pay all applicable
+fees one time. Upon a tenant’s disconnection, the Landlord is automatically reconnected without being
+held liable for a tenant’s bill nor charged additional establishment fees.
+Load Zone – A group of electrical buses assigned to the same geographic region as designated by ERCOT.
+Member – Any Person or governmental entity that has applied for electric service and has paid the
+Cooperative’s membership fee and agrees to be bound by the Cooperative’s governing documents.
+Member Class – A group of Members with similar electric usage and service characteristics (i.e. residential,
+
+[DOC 1] https://mypec.com/wp-content/uploads/tariff/Tariff_and_Business_Rules.pdf
+small power, large power) taking service under one (1) or more rate schedules.
+
+Tariff and Business Rules for Electric Service
+Pedernales Electric Cooperative, Inc.
+Section 100: Definitions
+Applicable: Entire Certified Service Area
+Effective Date: October 1, 2026 Page 9 of 115
+Multi-Family Dwelling – Building(s) containing two (2) or more dwelling units, rented primarily for non-
+transient use, and with rent paid at intervals of one (1) week or longer. Multi-Family Dwelling includes
+residential condominiums, whether rented or owner occupied.
+Municipality – A city, incorporated village, or town, existing, created, or organized under the general, home
+rule, or special laws of the State of Texas.
+Net Operating Margins – The excess revenue remaining after all operating expenses, including but not
+limited to, cost of power, depreciation, interest, and taxes have been deducted from the Cooperative’s total
+operating revenue.
+Non-Residential Service – Service provided to Members who do not meet the qualifications for service in
+Section 500.2 Residential Rate Schedules.
+Parallel Operation – The operation of on-site DG while the customer connects to the Cooperative’s
+Delivery System.
+Payment Plan – Any agreement between the Cooperative and a Member that allows a Member to pay the
+outstanding bill after its due date.
+Peak Demand – The maximum demand (kW) of power delivered or received, and measured on a fifteen
+(15) minute interval within the billing period, as applicable.
+Person – Any natural person, organization, or legal entity.
+Point of Interconnection – The point, as determined by the Cooperative, at which electric power and
+energy leaves or enters the Delivery System. For residential installations, the Applicant will install and be
+solely responsible for the wiring of the installation and all service entrance wiring through the weather head
+and the meter base to the Applicant’s main disconnect switch or service center, except as otherwise
+determined by the Cooperative at its sole discretion. For non-residential installations, the Applicant will
+install and be solely responsible for the wiring of the installation on Applicant’s side of the Point of
+Interconnection regardless of the metering location provided that the voltage service level at the metering
+location is the same as that of the interconnection point.
+Premises – A tract of land or real estate including buildings and other appurtenances thereon.
+Primary Account – For a Member that has multiple accounts, the account to which the membership fee is
+assigned which also determines the Member’s voting district. A Primary Account may be transferred in
+accordance with Section 300.8.2 Transferring Primary Account.
+Primary Level Service – Service delivered at any one of the Cooperative's available service voltages
+delivered after one (1) Cooperative transformation (other than by use of autotransformers) from a
+transmission voltage.
+Qualifying Cogenerator – The meaning as assigned to this term by 16 U.S
+[DOC 1] https://mypec.com/wp-content/uploads/tariff/Tariff_and_Business_Rules.pdf
+.C. §796 (18) (C).
+Qualifying Cogeneration Facility – The meaning as assigned to this term by 16 U.S.C. §796 (18) (B).
+Qualifying Facility – Either a Qualifying Small Power Producer or Qualifying Cogeneration Facility.
+Qualifying Small Power Producer – The meaning as assigned to this term by 16 U.S.C. §796 (17) (D).
+
+Tariff and Business Rules for Electric Service
+Pedernales Electric Cooperative, Inc.
+Section 100: Definitions
+Applicable: Entire Certified Service Area
+Effective Date: October 1, 2026 Page 10 of 115
+Rate – Includes:
+1. Any compensation, tariff, charge, adjustment, credit, rider, fare, toll, rental, or classification that is
+directly or indirectly demanded, observed, charged, or collected by the Cooperative for a service,
+product, or commodity; and
+2. A rule, practice, or contract affecting the compensation, tariff, charge, fare, toll, rental, or classification.
+Real Time Market – Energy transactions occurring within the current instant in time in the ERCOT market.
+Received Energy – The surplus energy generated by a DG system with an Interconnection Agreement
+received by the Cooperative’s Delivery System during a billing cycle.
+Residential Service – Service provided to Members who meet the qualifications for service in Section
+500.2 Residential Rate Schedules.
+Secondary Level Service – Service delivered at any one of the Cooperative’s standard service voltages
+delivered after two (2) or more Cooperative transformations (other than by use of autotransformers) from a
+transmission voltage.
+Service – The term includes any act performed, anything supplied, and any Cooperative Facilities used or
+supplied by the Cooperative in the performance of its duties.
+Settlement Point Price – The price calculated for the Load Zone for each 15-minute settlement interval in
+Real-Time Market operations.
+Tenant – A Person who is entitled to occupy a dwelling unit to the exclusion of others and who is obligated
+to pay for the occupancy under a written or oral rental agreement.
+Transmission Level Service – Service delivered at the Cooperative’s standard transmission service
+voltage.
+
+Tariff and Business Rules for Electric Service
+Pedernales Electric Cooperative, Inc.
+Section 200: Description of the Cooperative Service Area
+Applicable: Entire Certified Service Area
+Effective Date: October 1, 2026 Page 11 of 115
+200 DESCRIPTION OF THE COOPERATIVE’S SERVICE AREA
+PEC may serve all or a portion of the counties and cities listed below.
+200.1 COUNTIES SERVED
+Bell County Guadalupe County Mason County
+Bexar County Hays County Menard County
+Blanco County Kendall County Real County
+Burnet County Kerr County San Saba County
+Caldwell County Kimble County Schleicher County
+Comal County Kinney County Sutton County
+Edwards County Lampasas County Travis County
+Gillespie County Llano County Williamson County
+200.2 FRANCHISE CITIES SERVED
+Austin Granite Shoals Mountain City
+Bear Creek Hays Mustang Ridge
+Bertram Highland Haven Niederwald
+Blanco Horseshoe Bay Point Venture
+Boern
+[DOC 1] https://mypec.com/wp-content/uploads/tariff/Tariff_and_Business_Rules.pdf
+Cooperative may charge the requester an hourly fee to
+answer the request. All fee amounts are per Section 500.8, Fee Schedule.
+
+Tariff and Business Rules for Electric Service
+Pedernales Electric Cooperative, Inc.
+Section 300: General Service Rules and Regulations
+Applicable: Entire Certified Service Area
+Effective Date: October 1, 2026 Page 13 of 115
+300.4.3 GEOGRAPHIC INFORMATION SYSTEM (GIS) MAPPING RECORDS
+The Cooperative, at its discretion, may provide GIS mapping records if requested by an agent of a
+governmental entity or utility. The Cooperative may charge the requester a fee amount to provide the
+records, per Section 500.8, Fee Schedule.
+300.5 WAIVERS
+The Cooperative's credit and deposit requirements are subject to change at any time by the Board of
+Directors. For good cause, including for natural disasters or other declared emergencies, the Chief
+Executive Officer, or their designee, may waive, suspend, or modify any credit or deposit requirement,
+the establishment fee, same day service fee, reconnection fee, or other fee, for a limited duration, to
+address the circumstances. The Chief Executive Officer must inform the Board of Directors at its next
+regular meeting of all actions taken.
+300.6 NON-DISCRIMINATION
+The Cooperative will not discriminate based on race, color, nationality, religion, sex, marital status,
+disability, income level, or source of income, and will not unreasonably discriminate based on geographic
+location.
+300.7 CREDIT WORTHINESS AND SECURITY DEPOSITS
+300.7.1 CREDIT REQUIREMENTS FOR RESIDENTIAL APPLICANTS
+The Cooperative will require an Applicant for Residential Service or an existing residential Member
+to establish and maintain satisfactory credit as a condition of providing service.
+Establishment of credit will not relieve any Member from complying with the Cooperative's
+requirements for prompt payment of bills.
+The Cooperative will equally apply credit worthiness to both spouses for twelve (12) months
+immediately after a divorce.
+An Applicant for Residential Service or an existing Residential Service Member can establish
+satisfactory credit by clearing any unpaid or delinquent balances prior to re-establishing service with
+the Cooperative and any of the following:
+1. Meeting and adhering to the Cooperative’s payment policies and/or Payment Plan such that:
+a. During the most recent twelve (12) consecutive months of service the Member is not late
+in paying a bill more than once;
+b. The Member does not have service disconnected for nonpayment; and
+c. The Member does not have more than one (1) returned check.
+2. Having had a credit risk assessment conducted by the Cooperative or on its behalf and receiving
+a satisfactory credit risk assessment; or
+3. Providing customer history from any electric service provider for the same kind of service within
+the last two (2) years; was not delinquent more than once in payment of any such electric service
+account in the most recent twelve (12) consecutive months of service and pro
+[DOC 1] https://mypec.com/wp-content/uploads/tariff/Tariff_and_Business_Rules.pdf
+vides a satisfactory
+letter of credit history from the Applicant's previous electric service provider.
+
+Tariff and Business Rules for Electric Service
+Pedernales Electric Cooperative, Inc.
+Section 300: General Service Rules and Regulations
+Applicable: Entire Certified Service Area
+Effective Date: October 1, 2026 Page 14 of 115
+300.7.2 CREDIT REQUIREMENTS FOR NON-RESIDENTIAL APPLICANTS
+For Non-Residential service, if an Applicant's or existing Member’s credit has not been demonstrated
+satisfactorily to the Cooperative, the Applicant may be required to pay a deposit or provide other
+security at the Cooperative’s discretion.
+An Applicant for Non-Residential Service or an existing non-residential Member may establish
+satisfactory credit by clearing any unpaid or delinquent balances prior to re-establishing service with
+the Cooperative and any of the following:
+1. Meeting and adhering to the Cooperative’s payment policies and/or Payment Plan such that:
+a. During the most recent twenty-four (24) consecutive months of service the Member is not
+late in paying a bill more than once;
+b. The Member does not have service disconnected for nonpayment; and
+c. The Member does not have more than one (1) returned check.
+2. Providing customer history from any electric service provider for the same kind of service within
+the last two (2) years; was not delinquent more than once in payment of any such electric service
+account in the twenty-four (24) consecutive months of service, and provides a satisfactory letter
+of credit history from the Applicant's previous electric service provider; or
+3. Having had a credit risk assessment conducted by the Cooperative or on its behalf and receiving
+a satisfactory credit risk assessment.
+300.7.3 DEPOSITS AND GUARANTEE AGREEMENTS
+300.7.3.1 NEW APPLICANT
+Upon application, if an Applicant is not credit worthy per Sections 300.7.3.1, new Applicant or
+Section 300.7.3.2, Existing Member, they will be required to pay the following deposits, unless
+they qualify and choose the residential Pre-paid Payment Plan or Bank Draft Payment Plan
+option:
+1. A fixed deposit in the amount of one hundred fifty dollars ($150.00) for Residential Service
+or three hundred dollars ($300.00) for Non-Residential service in the event the Applicant fails
+to provide complete, accurate, and verifiable identification information when requested by the
+Cooperative when applying for electric service; or
+2. A fixed deposit in the amount of either seventy-five dollars ($75.00) or one hundred fifty
+dollars ($150.00) for Residential Service or three hundred dollars ($300.00) for Non-
+Residential Service in the event the Applicant fails to either:
+a. Provide a satisfactory letter of credit history from its previous electric service provider; or
+b. Receive a satisfactory credit risk assessment conducted by the Cooperative or on its
+behalf. The amount of the deposit due will be based on a credit risk assessment.
+300.7.3.2 EXISTING MEMBER
+An existing Member applying for ad
+[DOC 1] https://mypec.com/wp-content/uploads/tariff/Tariff_and_Business_Rules.pdf
+ditional electric service is required to pay the following
+charges, unless they qualify and choose the residential Pre-paid Payment Plan or Bank Draft
+Payment Plan option:
+
+Tariff and Business Rules for Electric Service
+Pedernales Electric Cooperative, Inc.
+Section 300: General Service Rules and Regulations
+Applicable: Entire Certified Service Area
+Effective Date: October 1, 2026 Page 15 of 115
+1. A fixed deposit in the amount of one hundred fifty dollars ($150.00) for Residential Service
+or three hundred dollars ($300.00) for Non-Residential Service in the event the Member fails
+to provide complete, accurate and verifiable identification information when requested by the
+Cooperative when applying for additional electric service; or
+2. A fixed deposit in the amount of either seventy-five dollars ($75.00) or one hundred fifty
+dollars ($150.00) for Residential Service or three hundred dollars ($300.00) for a Non-
+Residential Service in the event the Member failed to satisfactorily demonstrate to the
+Cooperative the Member's credit worthiness or otherwise demonstrated a previous history of
+neglect to fulfill membership obligations. Examples include, but not limited to, paying a bill
+late more than once during the most recent twelve (12) consecutive months of service for
+Residential or twenty-four (24) consecutive months for Non-Residential Service,
+disconnection for nonpayment, failure to meet obligations under an installment plan, return
+of a check for insufficient funds, theft of service, meter tampering, safety code violations or
+fraud. The Cooperative bases the amount of the deposit due on a credit risk assessment.
+If the Member applying for additional electric service has less than twelve (12) consecutive
+months of service, the Member may provide a satisfactory letter of credit history from its previous
+electric service provider or have a credit risk assessment conducted by the Cooperative on its
+behalf and receive a satisfactory credit risk assessment.
+300.7.3.3 ADDITIONAL DEPOSIT
+If the Applicant or existing Member has already paid a fixed deposit, the Applicant may be
+required to pay an additional deposit up to a total deposit or provide other security at the
+Cooperative’s discretion.
+300.7.3.4 DEPOSIT WAIVER DUE TO FAMILY VIOLENCE
+If the Applicant or existing Member has been determined to be a victim of family violence as
+defined in the Texas Family Code §71.004, such Person will not be required to pay either an
+initial or additional deposit when establishing new service. This determination will be evidenced
+by submission to the Cooperative of a certification letter developed by the Texas Council on
+Family Violence within ten (10) Business Days of the application for service. This waiver will only
+be applied toward an initial or additional deposit for a single location for the Applicant or existing
+Member unless another certification letter is later provided. Any reconnections after nonpayment
+will be subject to payment of the past due bala
+[DOC 1] https://mypec.com/wp-content/uploads/tariff/Tariff_and_Business_Rules.pdf
+nce, reconnection fee, deposits, and any other
+fees required. All fee amounts are per Section 500.8, Fee Schedule.
+300.7.3.5 REFUSAL OF SERVICE
+The Cooperative may refuse to provide service to an Applicant if the requested deposit is not
+paid at the initiation of service. The Cooperative may also refuse to reconnect service to an
+Applicant or existing Member if the requested deposit is not paid upon request.
+300.7.4 GUARANTEES OF RESIDENTIAL MEMBER ACCOUNTS
+The Cooperative will allow an Applicant that cannot meet the credit requirements as defined in
+Section 300.7, Credit Worthiness and Security Deposits, to have a Guarantor sign an agreement that
+fulfills the credit requirements on their behalf. A guarantee agreement between the Cooperative and
+a Guarantor with satisfactory credit must be in writing and will be for no more than the amount of the
+initial deposit the Cooperative would require on the Applicant's account pursuant to Section 300.7.3.1,
+New Applicant.
+1. A Guarantor can establish satisfactory credit by meeting and adhering to the Cooperative's
+payment policies and/or Payment Plans such that:
+
+Tariff and Business Rules for Electric Service
+Pedernales Electric Cooperative, Inc.
+Section 300: General Service Rules and Regulations
+Applicable: Entire Certified Service Area
+Effective Date: October 1, 2026 Page 16 of 115
+a. During the most recent twelve (12) consecutive months of service the Guarantor is not late in
+paying a bill more than once;
+b. During the most recent twelve (12) consecutive months of service the Guarantor has not had
+service disconnected for nonpayment; and
+c. During the most recent twelve (12) consecutive months of service the Guarantor has not had
+more than one (1) returned check.
+2. The Cooperative will void and return the guarantee to the Guarantor according to the provisions
+of Section 300.7.8, Refunding Deposits and Voiding Letters of Guarantee.
+3. Upon default by a residential Member, the Guarantor of that Member's account will be responsible
+for the unpaid balance of the account only up to the amount agreed to in the written agreement.
+4. The Cooperative will provide written notification to the Guarantor of the Member's default, the
+amount owed by the Guarantor, and the due date for the amount owed.
+5. The Cooperative will provide the Guarantor a bill which will include the payment due date which
+will not be less than sixteen (16) calendar days after issuance.
+6. The Cooperative may transfer the amount owed on the defaulted account to the Guarantor's own
+service bill, provided it separately identifies the guaranteed amount owed on the Guarantor's bill.
+7. The Cooperative may disconnect service to the Guarantor for nonpayment of the guaranteed
+amount.
+300.7.5 AMOUNT OF DEPOSIT
+The total deposit(s) from an Applicant or Member will not exceed one-sixth (1/6th) of the estimated
+annual billing for the account unless the Member or Applicant is subject to the fixed deposit amount
+described in Section 300.7.3, Deposits an
+[DOC 1] https://mypec.com/wp-content/uploads/tariff/Tariff_and_Business_Rules.pdf
+d Guarantee Agreements, in which case the amount of the
+deposit will not be less than the amount of those fixed deposit(s) or unless the Member or Applicant
+is subject to Section 300.7.2 Credit Requirements for Non-Residential Applicants.
+300.7.6 INTEREST ON DEPOSITS
+The Cooperative will pay interest on any required deposits at an annual rate at least equal to that set
+by the Commission on December first (1st) of the preceding year, pursuant to Texas Utilities Code
+§183.003. If a deposit is refunded, payment of interest will be made retroactive to the date of the
+deposit.
+Payment of the interest will be made to the Member annually or at the time the deposit is returned or
+credited to the Member's account.
+The deposit will cease to draw interest on the date it is returned or credited to the Member's account.
+300.7.7 RECORDS OF DEPOSITS
+The Cooperative will keep the following records:
+1. The name and address of each depositor;
+2. The amount and date of the deposit; and
+3. Each transaction concerning the deposit.
+
+Tariff and Business Rules for Electric Service
+Pedernales Electric Cooperative, Inc.
+Section 300: General Service Rules and Regulations
+Applicable: Entire Certified Service Area
+Effective Date: October 1, 2026 Page 17 of 115
+The Cooperative will issue a receipt of deposit to each Applicant paying a deposit and will provide
+means for a depositor to establish a claim if the receipt is lost.
+The Cooperative will maintain a record of each unclaimed deposit for at least four (4) years.
+The Cooperative will make a reasonable effort to return unclaimed deposits.
+300.7.8 REFUNDING DEPOSITS AND VOIDING LETTERS OF GUARANTEE
+If service is not connected or is disconnected, the Cooperative will promptly refund the Applicant’s
+deposit, plus accrued interest on the balance, if any, in excess of the unpaid bills for service furnished
+and void and return to the guarantor all letters of guarantee on the account or provide written
+documentation that the contract has been voided.
+The Cooperative will promptly refund the deposit plus accrued interest to the Member or credit the
+amount of the deposit and accrued interest to the Member’s account or void and return the guarantee
+or provide written documentation that the contract has been voided when the following conditions are
+all met.
+1. Member has paid bills for Residential Service for twelve (12) consecutive billing months or
+when the Member has paid bills for Non-Residential Service for twenty-four
+(24) consecutive billing months;
+2. During that time service was not disconnected for nonpayment of a bill; and
+3. During that time Member was not delinquent in the payment of bills more than once.
+The deposit may be retained if the Member:
+1. Does not meet the foregoing refund criteria; or
+2. Failed to provide complete, accurate, and verifiable identification information when requested by
+the Cooperative.
+The letter of guarantee may be retained if the Member does not meet the foregoing refund criteria.
+300.7.9 RE
+[DOC 1] https://mypec.com/wp-content/uploads/tariff/Tariff_and_Business_Rules.pdf
+a check returned to the Cooperative for
+insufficient funds.
+300.9.7.2.2 DISCONNECTION WITHOUT PRIOR NOTICE
+The Cooperative may disconnect electric service without prior notice for any of the following
+reasons:
+1. Where a known dangerous condition or imminent threat to persons or property exists.
+Where reasonable, and depending on the nature of the condition, the Cooperative will post
+a notice of disconnection and the reason for the disconnection at the place of common
+
+Tariff and Business Rules for Electric Service
+Pedernales Electric Cooperative, Inc.
+Section 300: General Service Rules and Regulations
+Applicable: Entire Certified Service Area
+Effective Date: October 1, 2026 Page 22 of 115
+entry or upon the front door of each affected residential unit as soon as possible after
+service has been disconnected;
+2. Where the Cooperative discovers that service is being obtained in any unlawful manner;
+3. If required by any official having authority to order such disconnection in the event of a
+natural disaster, fire, flooding and the like (where possible, prior notice to be provided);
+4. Where service is connected without authority by a Person who has not made application
+for service;
+5. Where service was reconnected without authority after termination for nonpayment; or
+6. Where there has been tampering with the Cooperative's equipment or evidence of theft of
+service.
+300.9.7.2.3 DISCONNECTION PROHIBITED
+The Cooperative may not disconnect electric service for any of the following reasons:
+1. Delinquency in payment for the Cooperative’s service by a previous occupant of the
+premises;
+2. Failure to pay disputed charges, except for the required average billing payment, until a
+determination as to the accuracy of the charges has been made by the Cooperative and
+the Member has been notified of this determination; or
+3. Failure to pay charges arising from an under-billing due to any faulty metering, unless the
+under-billing arises from a theft of service by a Member.
+4. A Landlord requesting disconnection of a tenant will not be disconnected for eviction
+purposes if tenant is in compliance with Section 300.11.2 Payment.
+300.9.7.2.4 DISCONNECTION DUE TO COOPERATIVE ABANDONMENT
+The Cooperative will not abandon a Member or a certified service area without written notice
+to its Members and all similar neighboring utilities, and approval from the Commission.
+300.9.7.2.5 DISCONNECTION OF PAYMENT ASSISTANCE MEMBERS
+The Cooperative cannot terminate electric service to a delinquent residential Member for a
+billing period in which the Cooperative receives a pledge, letter of intent, purchase order, or
+other notification that an energy assistance provider is forwarding sufficient payment to
+continue service.
+300.9.7.2.6 DISCONNECTION DURING EXTREME WEATHER
+The Cooperative will not disconnect a residential Member on a day when:
+1. The previous day’s highest temperature did not exceed thirty-two (32) degrees Fahrenheit,
+or the temperature is predicted to be at or below 
+[DOC 1] https://mypec.com/wp-content/uploads/tariff/Tariff_and_Business_Rules.pdf
+ting utility.
+The connecting electric utility may not provide service to Member until such connecting utility has
+evidence that the Member has paid all charges provided for under this tariff.
+
+Tariff and Business Rules for Electric Service
+Pedernales Electric Cooperative, Inc.
+Section 300: General Service Rules and Regulations
+Applicable: Entire Certified Service Area
+Effective Date: October 1, 2026 Page 24 of 115
+All fee amounts are per Section 500.8, Fee Schedule.
+300.9.9 AFTER-HOURS RECONNECTION
+It is at the Cooperative’s discretion to reconnect service after business hours. In the event a Member
+has been disconnected and the Cooperative performs any service reconnection after business hours
+on Monday through Sunday, the Member may pay a non-refundable same day service fee prior to
+reconnect. These fees are in addition to the past due balance, reconnection fee, deposits and any
+other fees required. All fee amounts are per Section 500.8, Fee Schedule.
+300.9.10 MEDICAL NECESSITY PROGRAM
+The Cooperative will maintain a registry of Residential Service locations where people rely on life-
+sustaining electrical equipment. To be considered for this program a Member must complete, submit
+and have approved by the Cooperative a Medical Necessity Program Application.
+To qualify, the location must house someone diagnosed by a physician in one of the following
+categories:
+1. Chronic – Having been diagnosed by a physician as requiring an electric-powered device to
+prevent the impairment of major life function. To maintain chronic designation, Members must
+reapply once a year;
+2. Chronic, lifelong – Same as chronic, but does not require annual application;
+3. Critical care – Having been diagnosed by a physician as requiring an electric-powered device to
+sustain life. To maintain critical care designation, Members must reapply once every two (2)
+years; or
+4. Critical care, lifelong – Same as critical care, but does not require biennial application.
+When planned outages or service interruptions for nonpayment are scheduled, the Cooperative will
+attempt advance notice so preparations can be made. This Program does not guarantee priority
+electric service restoration, and locations registered in the program are not exempt from planned
+service interruptions, nor are registered Members exempt from their financial responsibilities or from
+the termination of service.
+300.9.11 CRITICAL LOAD PROGRAM
+The Cooperative will maintain a registry of non-residential service locations which will be managed
+and reviewed on a recurring basis. To be considered for this program, a Member must complete and
+submit a Critical Load Program application through PEC’s website and have it approved by the
+Cooperative. Qualification requirements for PEC’s Critical Load Program are found on PEC’s website.
+When planned outages or service interruptions for nonpayment are scheduled, the Cooperative will
+attempt to provide advance notice so preparations can be made. This Program does not guarante
+[DOC 1] https://mypec.com/wp-content/uploads/tariff/Tariff_and_Business_Rules.pdf
+ than ten dollars ($10.00).
+Members are responsible for setting up their own Member-controlled notices via the Cooperative’s
+online account management system.
+Disconnections – Section 300.9.7, Discontinuation of Service, other than Section 300.9.7.2.7
+Disconnection During Weekend Or Holiday, will not apply to Members on this option. Disconnections
+take place when the Cooperative sends the depleted balance notice, which is the last notice provided.
+Rates and Fees – Membership and establishment fees apply to Members enrolled in this option.
+Members on this option will not be subject to same day service fees, late, or reconnection fees. All
+fee amounts are per Section 500.8, Fee Schedule. Rates apply as per Section 500, Rates, with the
+exceptions listed below.
+1. The service availability charge will be converted to a daily rate; and
+2. Service availability charges will continue to accrue daily on connected meter, even if energy
+consumption does not occur.
+Reconnection – Once the required payment posts to the account, reconnection takes place. The
+payment must cover:
+1. All balances owed for services provided;
+2. Amounts agreed upon in Payment Plan if applicable; and
+
+Tariff and Business Rules for Electric Service
+Pedernales Electric Cooperative, Inc.
+Section 300: General Service Rules and Regulations
+Applicable: Entire Certified Service Area
+Effective Date: October 1, 2026 Page 27 of 115
+3. The required minimum credit balance of twenty-five dollars ($25.00). Pre-paid accounts may not
+enter into an outstanding balance Payment Plan to achieve reconnection. All acceptable forms
+of payment that cover the amounts listed above will result in reconnection.
+If a Member terminates service or the account disconnects for nonpayment and remains
+disconnected for three (3) Business Days, the Cooperative will settle and final bill the account.
+Billing; Late Payment Processing Fees; Transfers of Delinquent Balances and Record Retention –
+Sections 300.9.12 Record of Interruption through 300.11.1 Billing Records Retention do not apply to
+Members on this option except for Section 300.11.10 Transfers of Delinquent Balances.
+Cancellation – A Member may choose to convert the account to another payment option at any time.
+The Member or the Cooperative may cancel enrollment on this option upon notification to the other
+party. Upon cancellation, the accumulated balance of the Member’s account will become due and
+payable.
+300.11.3.2 INSTALLMENT PLAN
+This plan is an agreement between the Cooperative and a residential Member that allows the
+Member to pay installments that extend beyond the due date of the next bill. The Cooperative
+may offer this plan to any residential Member who has expressed an inability to pay and meets
+the criteria specified in the Cooperative's Tariff and has not been delinquent more than once in
+the last twelve (12) months.
+The Member will pay the current bill each month, plus the agreed upon portion of the amount
+deferred. Failure to fulfill the terms 
+[DOC 1] https://mypec.com/wp-content/uploads/tariff/Tariff_and_Business_Rules.pdf
+r satisfactory
+history to warrant payment plans or if the Member has failed to provide complete, accurate, and
+verifiable identification information when requested by the Cooperative.
+300.11.3.4 AVERAGE PAYMENT PLAN
+This plan allows a Member to pay a rolling twelve (12) month average. This plan applies to
+Residential Service only. Members may enroll in this plan anytime their account has a zero
+balance with participation beginning with the first bill rendered after enrollment. Either the
+Member or the Cooperative may cancel the plan upon notification to the other party. Upon
+cancellation, any accumulated balance of the Member’s account will become due and payable,
+or if a credit will be applied to the Member’s account. The Cooperative may decline to offer this
+plan if, in the Cooperative’s judgment, the Member is lacking sufficient credit or satisfactory
+history to warrant payment plans or if the Member has failed to provide complete, accurate, and
+verifiable identification information when requested by the Cooperative.
+300.11.3.5 CREDIT CARD PAYMENT PLAN
+This plan allows Members to authorize the Cooperative to process a monthly payment through
+their payment card. The amount processed will be for the full balance due each month and will
+be processed automatically on the bill due date.
+300.11.3.6 BANK DRAFT PAYMENT PLAN
+This plan allows Members to authorize the Cooperative to process a monthly payment by drafting
+a checking account. The amount drafted will be for the full balance due each month and will be
+drafted automatically on the bill due date.
+300.11.4 LATE PAYMENT PROCESSING FEES
+Until the Cooperative receives the payment, bills are considered unpaid; a payment is delinquent if
+not received at the Cooperative by the due date shown on the bill.
+Residential accounts not paid by the due date may be assessed a fee to cover the cost of processing
+late payments. All fee amounts are per Section 500.8, Fee Schedule.
+
+Tariff and Business Rules for Electric Service
+Pedernales Electric Cooperative, Inc.
+Section 300: General Service Rules and Regulations
+Applicable: Entire Certified Service Area
+Effective Date: October 1, 2026 Page 29 of 115
+All Non-Residential accounts, other than state agencies or other governmental entities that the
+Cooperative has approved as being subject to Texas Government Code Chapter 2251, not paid by
+the due date may be assessed a fee to cover the cost of processing late payments. All fee amounts
+are per Section 500.8, Fee Schedule.
+Any governmental entity asserting eligibility to receive bills under Texas Government Code Chapter
+2251 may file a written notice asserting their eligibility, and the Cooperative will determine whether
+the entity is subject to that statute. All bills rendered to state agencies or other governmental entities
+that the Cooperative approves subject to Texas Government Code Chapter 2251, will be in
+accordance with that statute.
+300.11.5 LOAN LATE FEES
+Payment for a consumer loan to a Member with the Co
+[DOC 1] https://mypec.com/wp-content/uploads/tariff/Tariff_and_Business_Rules.pdf
+operative not paid by the due date may be
+assessed a late payment fee after ten (10) calendar days of nonpayment. All fee amounts are per
+Section 500.8, Fee Schedule.
+300.11.6 RETURNED CHECK / DENIED BANK DRAFT / DENIED CREDIT CARD
+If a check for payment is returned, the Cooperative will debit a Member’s account for the amount on
+each returned check, plus a returned check fee. If a payment is denied through an account setup for
+automatic payment bank draft, the Cooperative will debit the Member’s account for the denied
+amount, plus a non-sufficient funds fee. If a payment is denied through an account setup for automatic
+credit card draft, the Cooperative will not post payment and an alternate form of payment must be
+arranged by the Member. If the Member pays a delinquent account balance and the check returns to
+the Cooperative for insufficient funds, the Cooperative will proceed to disconnect the Member’s
+account. All fee amounts are per Section 500.8, Fee Schedule.
+300.11.7 PAYMENT DEADLINE EXTENSION
+Upon request of a Residential Member, and at the Cooperative’s discretion, the Cooperative may
+extend without penalty the payment date until the twenty fifth (25th) calendar day after the bill is
+issued.
+300.11.8 PAYMENT DEADLINE EXTENSION FOR ELDERLY RESIDENTIAL
+MEMBERS
+Upon request of a Residential Member sixty (60) years of age or older, the Cooperative will extend
+without penalty the payment date until the twenty fifth (25th) calendar day after the date the bill is
+issued. The Cooperative may require the Member requesting the extension to present reasonable
+proof of age.
+300.11.9 DISCONNECTION FOR NONPAYMENT AND SUBSEQUENT
+RECONNECTION FEES
+If the Member’s service is disconnected for nonpayment, the Cooperative will not reconnect service
+until the following are paid in full: all of the Member’s outstanding bills, a reconnection fee, any
+required deposit, and, when required, a same day service fee.
+The Cooperative is not liable for any losses a Member incurs resulting from the disconnection of
+service for any reason identified in this tariff.
+All fee amounts are per Section 500.8, Fee Schedule.
+300.11.10 TRANSFERS OF DELINQUENT BALANCES
+If the Member has an outstanding balance due from another account in the same Member Class,
+then the Cooperative may transfer that balance to the Member’s current account. Notwithstanding
+the foregoing, if the Member has an outstanding balance due from an account in a different Member
+
+Tariff and Business Rules for Electric Service
+Pedernales Electric Cooperative, Inc.
+Section 300: General Service Rules and Regulations
+Applicable: Entire Certified Service Area
+Effective Date: October 1, 2026 Page 30 of 115
+Class that is a sole proprietorship, then the Cooperative may transfer that balance to the Member's
+current account and identify the delinquent balance and specific account as such on the bill.
+300.12 VOLTAGE DESIGNATIONS
+The Cooperative will deliver electric power and energy at one of the Cooperative’s standard
+[DOC 1] https://mypec.com/wp-content/uploads/tariff/Tariff_and_Business_Rules.pdf
+d such adjustments completed before any approval will be granted. If
+the application is approved, additional fees may apply.
+300.16 COOPERATIVE TRIP FEE
+A non-refundable Cooperative Trip Fee may be collected for a trip to an Applicant’s or Member’s
+property to address the safe, reliable or efficient operation of the Cooperative’s Facilities. All fee
+amounts are per Section 500.8, Fee Schedule.
+
+Tariff and Business Rules for Electric Service
+Pedernales Electric Cooperative, Inc.
+Section 400: Facilities Extensions Policy
+Applicable: Entire Certified Service Area
+Effective Date: October 1, 2026 Page 36 of 115
+400 FACILITIES EXTENSIONS POLICY
+400.1 OVERVIEW
+The Cooperative will extend electric service to an Applicant in accordance with the following facilities
+extensions provisions. Each provision in this Tariff classifies the predominant type of electric service or
+use anticipated on the Applicant's premises and specifies conditions under which facilities extensions
+may be made. For each location where electric service is desired, the Applicant's classification for electric
+service will be determined by the Cooperative.
+Electric service will not be provided and no work to extend electric service will be performed until the
+Applicant has met all requirements within this Tariff for extension of service including, without limitation,
+routing, underground service requirements, if applicable, and paid any and all fees or charges associated
+with the provision of electric service or any outstanding balance due from another account or related
+account. This may include, but is not limited to, membership fees, establishment fees, deposits, system
+impact fees, CIAC, and/or planning design fees.
+If facilities must be constructed, the Cooperative will provide an estimated completion date and a Cost
+Calculation or Development Cost Calculation for all charges to extend electric service. The requests for
+new electric service requiring construction should be completed within ninety (90) calendar days of
+fulfilling all applicable requirements, unless delayed by a cause beyond the reasonable control of the
+Cooperative, or unless a different time period is agreed to by the Applicant and the Cooperative.
+The Applicant must comply with all requirements in Section 300.9.1 Conditions of Service. All applicable
+provisions of the Tariff, and standards and specifications of the Cooperative for construction, to receive
+electric service.
+The Facilities Extensions Policy provisions are subject to change by the Board of Directors.
+400.2 RESIDENTIAL SERVICE
+APPLICABILITY
+To qualify for an extension under this section, the Applicant and the location where the Applicant is
+requesting electric service must comply with the following provisions:
+1. The location must be an Individual Private Dwelling, Multi-Family Dwelling, personal recreational
+vehicle, hunting cabin, barn, shop, water well, gate opener, Member-owned lighting system, or other
+residential installations.
+2. If the Applic
+[DOC 1] https://mypec.com/wp-content/uploads/tariff/Tariff_and_Business_Rules.pdf
+ant is developing a residential subdivision or mixed-use development with Individual
+Private Dwelling(s) or Multi-Family Dwelling(s), the Applicant must comply with all requirements under
+Section 400.3 Residential Developments, and have paid the CIAC required under that section.
+All other applicable provisions of this Policy apply to an extension of service under this section.
+CONTRIBUTION IN AID OF CONSTRUCTION (CIAC) BY APPLICANT
+The Cooperative will determine the Cost Calculation to the Point of Interconnection based on its then
+current unit material and labor costs, and in accordance with the Cooperative’s current standards and
+specifications.
+The Applicant will be required to pay all costs per meter that qualifies under this section for the cost to
+extend electric service to the Point of Interconnection as a CIAC prior to construction. The electric facilities
+may include, but are not limited to, all applicable primary and secondary infrastructure including, without
+limitation, primary conductors, transformers, poles, risers, appurtenances, terminations, and any other
+electric equipment and devices required for electric service. The Cost Calculation may expire or be re-
+
+Tariff and Business Rules for Electric Service
+Pedernales Electric Cooperative, Inc.
+Section 400: Facilities Extensions Policy
+Applicable: Entire Certified Service Area
+Effective Date: October 1, 2026 Page 37 of 115
+calculated at the sole discretion of the Cooperative. Any additional cost incurred by the Cooperative in
+excess of the Cost Calculation will be at the sole expense of the Applicant, and a final bill for all costs to
+complete the facilities extensions will be presented to Applicant upon completion of the facilities
+extensions if required.
+400.3 RESIDENTIAL DEVELOPMENTS
+APPLICABILITY
+To qualify for an extension pursuant to this section, the Applicant and the residential development for
+which the Applicant is requesting electric service must comply with the following provisions:
+1. The development is platted and recorded in the appropriate county with sites or lots for multiple
+prospective Applicants to be primarily used or developed for permanent Individual Private Dwelling(s)
+or Multi-Family Dwelling(s) or a preliminary plat plan approved by a municipality or county or other
+authority having jurisdiction for the purposes of sale, transfer, or residential development;
+2. The development has been approved by all relevant governing agencies; and
+3. Unless otherwise directed by the Cooperative, the Applicant will provide at no cost to the Cooperative:
+a. Easements granted on the Cooperative’s standard form; for the Cooperative’s construction,
+installation, maintenance, operation, replacement and/or repair of Cooperative Facilities in a form
+satisfactory to the Cooperative;
+b. Site plans (streets, wet utilities, mechanical, electrical [including, but not limited to, any planned
+DG interconnections, other interconnected generation, or electric vehicle charging], plumbing
+[DOC 1] https://mypec.com/wp-content/uploads/tariff/Tariff_and_Business_Rules.pdf
+,
+and landscaping plans, etc.) and notice of construction start dates and construction schedules
+that are reasonable and industry standard for the type of work to be performed;
+c. Survey points for grades, lot corners, street right-of-way, and other locations reasonably
+necessary for installation of the electric system; and
+d. An “Approved-for-Construction” Plan by a Municipality or county or other authority having
+jurisdiction.
+4. The Cooperative is not and will not be obligated to provide designs or Development Cost Calculations
+to an Applicant for a preliminary plan that has not been reviewed and approved by the applicable
+authority.
+All other applicable provisions of this Policy apply to an extension of service under this section.
+CONTRIBUTION IN AID OF CONSTRUCTION (CIAC) BY APPLICANT
+The Cooperative will determine the Development Cost Calculation for the electric facilities adequate to
+serve all prospective Individual Private Dwelling(s) or Multi-Family Dwelling(s) in the residential
+development. The Cooperative will determine the Development Cost Calculation based on its then current
+unit material and labor costs and in accordance with the Cooperative’s then current standards and
+specifications.
+The electric facilities may include, but are not limited to, all applicable primary and secondary
+infrastructure including, without limitation, primary conductors, transformers, poles, risers,
+appurtenances, terminations, and any other electric equipment and devices required for electric service.
+The Applicant will bear the cost of the facilities, identified in this section, required for the Delivery System
+within the residential subdivision or development as determined in the Development Cost Calculation and
+will pay such costs in advance of construction.
+
+Tariff and Business Rules for Electric Service
+Pedernales Electric Cooperative, Inc.
+Section 400: Facilities Extensions Policy
+Applicable: Entire Certified Service Area
+Effective Date: October 1, 2026 Page 38 of 115
+The Development Cost Calculation may expire or be re-calculated at the sole discretion of the
+Cooperative. Any additional cost incurred by the Cooperative in excess of the Development Cost
+Calculation will be at the sole expense of the Applicant, and a final bill for all costs to complete the facilities
+extensions will be presented to the Applicant upon completion of the facilities extensions if required.
+To the extent that an individual Applicant requests electric service within a residential subdivision, such
+Applicant must request electric service pursuant to the requirements of Section 400.2, Residential
+Service, and will be responsible for any CIAC and any system impact fees required by the provision of
+such electric service.
+To the extent that any commercial facilities associated with a residential development are required, an
+Applicant must request electric service pursuant to the requirements of Section 400.4 Non-Residential
+Service, for those commercial facilities and will b
+[DOC 1] https://mypec.com/wp-content/uploads/tariff/Tariff_and_Business_Rules.pdf
+e responsible for any CIAC and any system impact fees
+required by the provision of such electric service.
+The Cooperative will install all Cooperative Facilities required within the limits of the residential subdivision
+or development based on its necessary load requirements on its schedule but prior to the provision of
+electric service to any individual Applicants.
+400.4 NON-RESIDENTIAL SERVICE
+APPLICABILITY
+To qualify as an extension under this section, the Applicant and the location where an Applicant is
+requesting electric service must comply with the following provisions:
+1. The location must be a commercial or industrial installation not classified under Section 400.2,
+Residential Service, or 400.3 Residential Developments.
+2. If the Applicant is developing a non-residential development or mixed-use development, the Applicant
+must comply with all requirements under Section 400.5 Non-Residential Developments, and have
+paid the CIAC required under that section.
+All other applicable provisions of this Policy apply to an extension of service under this section.
+APPLICATION AND STUDY FEES
+At the discretion of the Cooperative, an Applicant requesting service under this section that requires
+particularized engineering, facilities or other studies may be required to remit upfront payments of fees
+for such costs to PEC in order to proceed with their project. Such fees, which will be invoiced by PEC to
+the Applicant, may vary based on the size and location of each service request and will be discussed on
+an individual basis with the Applicant following submission of the service request. PEC may require such
+Applicants to enter into agreements to memorialize, among other things, cost responsibility and
+interconnection requirements.
+CONTRIBUTION IN AID OF CONSTRUCTION (CIAC) BY APPLICANT
+The Cooperative will determine the Cost Calculation to the Point of Interconnection based on its then
+current unit material and labor costs and in accordance with the Cooperative’s then current standards
+and specifications.
+The Applicant will be required to pay, as a CIAC prior to construction, all costs per meter that qualify
+under this section for the cost to extend electric service to the Point of Interconnection and maintain the
+Delivery System service standards based on the Applicant’s necessary load requirements. The electric
+facilities may include, but are not limited to, all applicable infrastructure including, without limitation,
+substation upgrades, primary conductors, secondary facilities, transformers, poles, risers,
+appurtenances, terminations, and any other electric equipment and devices required for electric service.
+
+Tariff and Business Rules for Electric Service
+Pedernales Electric Cooperative, Inc.
+Section 400: Facilities Extensions Policy
+Applicable: Entire Certified Service Area
+Effective Date: October 1, 2026 Page 39 of 115
+The Cost Calculation may expire or be re-calculated at the sole discretion of the Cooperative. Any
+additional cost incurred by
+[DOC 1] https://mypec.com/wp-content/uploads/tariff/Tariff_and_Business_Rules.pdf
+ the Cooperative in excess of the Cost Calculation will be at the sole expense
+of the Applicant, and a final bill for all costs to complete the construction of all Cooperative Facilities will
+be presented to Applicant if required.
+The Cooperative will exercise prudent judgment in determining the conditions under which service will be
+provided for an Applicant with a load greater than one thousand (1,000) kW. This may include, but is not
+limited to, service availability delays, non-standard costs, CIAC, contract minimums, load limits, service
+specifications, and/or other contract terms, arrangements, or conditions deemed reasonable by the
+Cooperative.
+400.5 NON-RESIDENTIAL DEVELOPMENTS
+APPLICABILITY
+To qualify for an extension pursuant to this section, the Applicant and the non-residential development
+for which the Applicant is requesting electric service must comply with the following provisions:
+1. The development is platted and recorded in the appropriate county with sites or lots for multiple
+prospective Applicants to be primarily used or developed for permanent commercial, industrial, retail,
+and/or office use or a preliminary plat plan approved by a Municipality or county or other authority
+having jurisdiction for the purposes of sale, transfer, or non-residential development;
+2. The development has been approved by all relevant governing agencies; and
+3. Unless otherwise directed by the Cooperative, the Applicant will provide at no cost to the Cooperative:
+a. Easements granted on the Cooperative’s standard form that meet the Cooperative’s applicable
+easement width; for the Cooperative’s construction, installation, maintenance, operation,
+replacement and/or repair of Cooperative Facilities in a form satisfactory to the Cooperative;
+b. Site plans (streets, wet utilities, mechanical, electrical, plumbing, and landscaping plans, etc.)
+and notice of construction start dates and construction schedules that are reasonable and
+industry standard for the type of work to be performed;
+c. Survey points for grades, lot corners, street right-of-way, and other locations reasonably
+necessary for installation of the electric system; and
+d. An “Approved-for-Construction Plan” from a Municipality or county or other authority having
+jurisdiction.
+4. The Cooperative is and will be not obligated to provide designs or Development Cost Calculations to
+an Applicant for a preliminary plan that has not been reviewed and approved by the applicable
+authority.
+All other applicable provisions of this Policy apply to an extension of service under this section.
+APPLICATION AND STUDY FEES
+At the discretion of the Cooperative, an Applicant requesting service under this section that requires
+particularized engineering, facilities or other studies may be required to remit upfront payments of fees
+for such costs to PEC in order to proceed with their project. Such fees, which will be invoiced by PEC to
+the Applicant, may vary based on the size and location of each service reques
+[DOC 1] https://mypec.com/wp-content/uploads/tariff/Tariff_and_Business_Rules.pdf
+t and will be discussed on
+an individual basis with the Applicant following submission of the service request. PEC may require such
+
+Tariff and Business Rules for Electric Service
+Pedernales Electric Cooperative, Inc.
+Section 400: Facilities Extensions Policy
+Applicable: Entire Certified Service Area
+Effective Date: October 1, 2026 Page 40 of 115
+Applicants to enter into agreements to memorialize, among other things, cost responsibility and
+interconnection requirements.
+CONTRIBUTION IN AID OF CONSTRUCTION (CIAC) BY APPLICANT
+The Cooperative will determine the Development Cost Calculation to serve all prospective units in the
+non-residential development. The Cooperative will determine the Development Cost Calculation based
+on its then current unit material and labor costs and in accordance with the Cooperative’s then current
+standards and specifications.
+The electric facilities may include, but are not limited to, all applicable infrastructure including, without
+limitation, substation upgrades, primary conductors, secondary facilities, transformers, poles, risers,
+appurtenances, terminations, and any other electric equipment and devices required for electric service.
+The Applicant will bear the cost of the electric facilities required to extend electric service to the Point of
+Interconnection, and required to maintain the Cooperative’s system service standards based on the
+Applicant’s necessary load requirements, as calculated in the Development Cost Calculation, and will
+pay such costs in advance of construction.
+The Development Cost Calculation may expire or be re-calculated at the sole discretion of the
+Cooperative. Any additional cost incurred by the Cooperative in excess of the Development Cost
+Calculation will be at the sole expense of the Applicant, and a final bill for all costs to complete the facilities
+extension will be presented to Applicant upon completion of the facilities extension if required.
+To the extent that an individual Applicant requests electric service within a non-residential development,
+such Applicant must request electric service pursuant to the requirements of Section 400.4 Non-
+Residential Service, and will be responsible for any CIAC and any system impact fees required by the
+provision of such electric service.
+The Cooperative will install all Cooperative Facilities required within the limits of the non-residential
+development based on its necessary load requirements on its schedule but prior to the provision of
+electric service to any individual Applicants.
+400.6 PRIMARY LEVEL SERVICE
+APPLICABILITY
+For this section, an Applicant also includes a Member already receiving Primary Level Service. By
+receiving Primary Level Service, the Applicant agrees to the following:
+1. The Cooperative is delivering service to the service location at primary level voltage at the Applicant’s
+request;
+2. The Applicant will procure, at the sole expense of the Applicant, all facilities and equipment, including
+but not limited to transfor
+[DOC 1] https://mypec.com/wp-content/uploads/tariff/Tariff_and_Business_Rules.pdf
+mers, poles, and conductors required to take electric service at primary level
+voltage as required by Cooperative’s most current design standards and specifications;
+3. At the request of the Cooperative, the Applicant will remit payment of fees for application processing
+by PEC staff and any engineering or facilities studies required by PEC. PEC may require the Applicant
+to enter into agreements to memorialize, among other things, cost responsibility and interconnection
+requirements.
+4. The Applicant owns all facilities located beyond the Point of Interconnection and PEC will not perform
+work at any point past the Point of Interconnection;
+
+Tariff and Business Rules for Electric Service
+Pedernales Electric Cooperative, Inc.
+Section 400: Facilities Extensions Policy
+Applicable: Entire Certified Service Area
+Effective Date: October 1, 2026 Page 41 of 115
+5. The Applicant will assume all responsibility for furnishing, installing, constructing, owning,
+maintaining, and operating all facilities beyond the Point of Interconnection;
+6. The costs for any upgrade, addition, or change in configuration to existing Member-owned or
+Cooperative Facilities will be at the sole expense of the Applicant and in accordance with the
+Cooperative’s Tariff and Business Rules. This includes upgrades, additions, or changes required by
+PEC to maintain PEC’s Delivery System and to continue to provide service at primary level voltage;
+7. All Member-owned facilities must be tagged and visually identified as property of the Member;
+8. The Applicant must agree to provide an as-built facilities sheet to the Cooperative within thirty (30)
+days of completed construction;
+9. The Applicant must agree to notify the Cooperative in writing of any new load and/or facilities
+additions for the Cooperative to assess existing facilities capacity and conduct any engineering
+studies required to serve the new load; and
+10. All Member-owned installations must be in accordance with the latest version of National Electrical
+Safety Code (NESC), NEC standards, and applicable Cooperative requirements.
+The Cooperative reserves the right to deny Primary Level Service to an Applicant if the Cooperative
+determines such service may have an adverse impact on the Cooperative’s Delivery System or service
+provided to another Member.
+POINT OF INTERCONNECTION
+The Point of Interconnection will be at the primary meter on an overhead primary pole or an underground
+metering enclosure.
+400.7 UNDERGROUND SERVICE
+The following provisions for the extension of underground electric service are in addition to the standard
+provisions established in the prior sections.
+UNDERGROUND FACILITIES FOR SERVICES – RESIDENTIAL OR NON-RESIDENTIAL
+Underground electric primary and secondary lines to serve any Applicant may, by agreement with the
+Cooperative, be provided subject to the other requirements in this Policy.
+In addition, when receiving underground electric service, an Applicant will be responsible for providing
+and installi
+[DOC 1] https://mypec.com/wp-content/uploads/tariff/Tariff_and_Business_Rules.pdf
+ng, in locations and easements deemed appropriate by the Cooperative, all trenches and
+backfill, sectionalizing cabinets, concrete work associated with pad-mounted facilities, secondary
+services as determined by the Cooperative, all conduit, vaults, and any and all other facilities deemed
+necessary by the Cooperative.
+In all cases, any underground secondary service lines from a meter to the Applicant’s main disconnect
+switch or service center will be installed and maintained by the Applicant, and the Cooperative will have
+no responsibility or liability in connection therewith.
+UNDERGROUND FACILITIES FOR DEVELOPMENTS – RESIDENTIAL OR NON-RESIDENTIAL
+Where an Applicant requests the construction of underground electric facilities within a platted residential
+subdivision or non-residential development, the Applicant will bear the cost of the underground electric
+system adequate to serve all prospective units in the subdivision or development as determined by the
+Cooperative. The Applicant will be responsible for providing and installing all trenches and backfill,
+sectionalizing cabinets, concrete work associated with pad-mounted facilities, all conduit, vaults, and any
+and all other facilities deemed necessary by the Cooperative, adequate to serve all prospective units in
+
+Tariff and Business Rules for Electric Service
+Pedernales Electric Cooperative, Inc.
+Section 400: Facilities Extensions Policy
+Applicable: Entire Certified Service Area
+Effective Date: October 1, 2026 Page 42 of 115
+the subdivision or development and all other prospective members who may require electric service from
+said underground system.
+400.8 STANDARD DELIVERY SERVICE AND FACILITIES
+The Cooperative’s standard Delivery System facilities are determined in accordance with the
+Cooperative’s standards and consist of the overhead or underground distribution facilities necessary to
+provide adequate capacity for electric service as determined by the Cooperative through a single-phase
+or three-phase source to the Point of Interconnection, at one of the Cooperative’s available standard
+voltages.
+The Cooperative permits 7.2/12.47 kV (12.5 kV) and 14.4/24.9 kV (25 kV), three-phase or single-phase,
+grounded-neutral Primary Level Service on its Delivery System and secondary service is provided
+through transformers connected in a wye-wye configuration.
+All standard Delivery System facilities extensions requests and associated costs will be in accordance with
+this Policy.
+400.9 NON-STANDARD DELIVERY SERVICE AND FACILITIES
+Non-standard delivery service and facilities include, but are not limited to, facilities necessary to provide
+service at a non-standard voltage, excess capacity, dual feed, automatic and manual transfer switches,
+service through more than one Point of Interconnection, redundant facilities, non-standard metering and
+facilities in excess of those normally required for service under the Cooperative’s standard Delivery
+System. The Cooperative will determine what equipment is cla
+[DOC 1] https://mypec.com/wp-content/uploads/tariff/Tariff_and_Business_Rules.pdf
+but not limited to trench and associated backfill, lighting post, concrete work, secondary service
+conductors, and conduit.
+In overhead installations, the Cooperative will provide secondary service conductor to serve overhead
+area lighting fixtures owned by the Cooperative under Section 500.7.4.1 Unmetered Lighting Device
+Service, without charge to the Applicant.
+In either type of installation, for any additional Cooperative Facilities needed for area lighting, the
+Applicant will be required to pay any costs as a CIAC prior to construction.
+400.12 UNMETERED NON-RESIDENTIAL SERVICE
+The Cooperative at its sole discretion will determine if an Applicant may be served under this section.
+In underground installations, the Applicant requesting facilities to provide electric service to unmetered
+non-residential installations, as determined by the Cooperative, will be responsible for providing and
+installing all trenches and backfill, sectionalizing cabinets, concrete work associated with pad-mounted
+facilities, secondary services as determined by the Cooperative, all conduit, vaults, and any and all other
+facilities deemed necessary by the Cooperative.
+In overhead installations, the Cooperative will provide secondary service conductor for the unmetered
+non-residential installation, and the Applicant will be responsible for providing and installing all other
+infrastructure.
+In either type of installation, for any additional Cooperative Facilities needed for unmetered non-
+residential, the Applicant will be required to pay any costs as a CIAC prior to construction.
+400.13 NON-PERMANENT SERVICE
+In any circumstance where the need for electric service is not permanent, the Applicant will pay one
+hundred percent (100%) of the cost of installation and removal of all necessary electric service facilities
+and equipment before any construction begins.
+400.14 SERVICE UPGRADES TO EXISTING COOPERATIVE FACILITIES
+The cost for any upgrade, addition, or change in configuration of existing Cooperative Facilities will be at
+the sole expense of the Applicant. Service upgrades to existing Cooperative Facilities include, but are not
+limited to, any upgrades related to interconnecting a Member’s Distributed Generation resource that
+operates in parallel to the Cooperative’s Delivery System.
+400.15 SYSTEM IMPACT FEE
+A non-refundable charge will be collected for extending electric service to a new service location. This
+amount represents a contribution to the Cooperative’s system cost associated with substation and electric
+distribution backbone facilities and is in addition to any amount due for the facilities extensions. All fee
+amounts are per Section 500.8, Fee Schedule.
+400.16 PLANNING DESIGN AND REDESIGN FEES
+An Applicant’s facilities extensions Cost Calculation or Development Cost Calculation includes delivery of
+one (1) design and project cost quotation to the Applicant. At the Cooperative’s discretion, the Cooperative
+may require a deposit equivalent to the Planning Des
+[DOC 1] https://mypec.com/wp-content/uploads/tariff/Tariff_and_Business_Rules.pdf
+ign or Redesign Fee from an Applicant in advance
+for delivery of such design, study, and project Cost Calculation to the Applicant for any facilities
+
+Tariff and Business Rules for Electric Service
+Pedernales Electric Cooperative, Inc.
+Section 400: Facilities Extensions Policy
+Applicable: Entire Certified Service Area
+Effective Date: October 1, 2026 Page 44 of 115
+extensions categorized as a residential or non-residential development, defined in Sections 400.3 and
+400.5 respectively. The deposit shall be credited to the facilities extensions Cost Calculation or
+Development Cost Calculation when the Applicant pays for the facilities extensions. If the Applicant
+desires to make changes to the design, that requires a redesign, the Cooperative may charge the
+Applicant in advance for the redesign, including, but not limited to, labor and applicable overhead for
+design, engineering, staking, inspections, administrative, and any other related expenses incurred. All
+fee amounts are per Section 500.8, Fee Schedule.
+400.17 AFTER-HOURS SERVICE
+If an Applicant requests after-hours service, the Applicant will pay the additional cost incurred by the
+Cooperative to provide after-hours service to the Applicant.
+400.18 MISCELLANEOUS TRIP FEE
+A non-refundable Miscellaneous Trip Fee may be collected for additional trips to the Applicant’s property
+at the request of Applicant. All fee amounts are per Section 500.8, Fee Schedule.
+400.19 NO REFUND OF CONTRIBUTION IN AID OF CONSTRUCTION
+Payments necessary for construction of facilities, which will be used to deliver electric service to the
+Applicant, are CIAC and are not refundable after construction.
+400.20 DE-ENERGIZATION AND LINE CLEARANCES
+The Cooperative, in its sole discretion, may temporarily de-energize Cooperative Facilities or temporarily
+relocate or raise Cooperative Facilities at the request of an Applicant to assist in the transportation of
+oversized objects through the Cooperative’s service territory or in the construction of pipelines or other
+objects within or otherwise affecting the Cooperative’s right-of-way provided that the Applicant pays for
+all costs incurred by the Cooperative.
+Costs incurred may include labor and materials, engineering design, right of way acquisition and clearing
+to the extent necessary, and vehicles or equipment used, including mileage, if applicable.
+400.21 OWNERSHIP OF COOPERATIVE FACILITIES
+The Cooperative will accept ownership of any facilities installed by the Applicant at the time the service
+location is successfully energized. The Cooperative will retain the ownership of all material and facilities
+installed by the Cooperative or Applicant for the distribution of electric service whether the same have
+been paid for by the Applicant except for those facilities installed by the Applicant past the Point of
+Interconnection.
+400.22 REMOVAL AND/OR RELOCATION OF COOPERATIVE FACILITIES
+400.22.1 REMOVAL
+At the Cooperative’s sole discretion, the Cooperative may remove existing Co
+[DOC 1] https://mypec.com/wp-content/uploads/tariff/Tariff_and_Business_Rules.pdf
+emoval of Cooperative
+Facilities or other work required to address the violation(s).
+
+Tariff and Business Rules for Electric Service
+Pedernales Electric Cooperative, Inc.
+Section 500: Rates
+Applicable: Entire Certified Service Area
+Effective Date: October 1, 2026 Page 46 of 115
+500 RATES
+500.1 MEMBER CHARGES, CREDITS AND ADJUSTMENTS
+500.1.1 SERVICE AVAILABILITY CHARGE
+APPLICABILITY
+This charge may be applicable according to the Member’s rate schedule.
+PURPOSE
+This charge recovers the fixed portion of costs associated with providing services to the membership
+including, but not limited to, billing, metering, collections, customer service, maintenance and
+operations of distribution infrastructure, and other related costs.
+RATE
+This charge, per meter, will be applicable according to the Member’s rate schedule.
+500.1.2 EBILLING BILLING CREDIT
+APPLICABILITY
+This credit will be applicable to Residential, Farm and Ranch Service Members that choose to receive
+a paperless bill.
+PURPOSE
+This credit reimburses a Member for the cost not incurred to the Cooperative involved in mailing a
+paper bill each month.
+RATE
+This credit is:
+– $ 1.00 per meter
+500.1.3 EDRAFT BILLING CREDIT
+APPLICABILITY
+This credit will be applicable to Residential, Farm and Ranch Service Members that choose to pay
+as per Section 300.11.3.6, Bank Draft Payment Plan.
+PURPOSE
+This credit reimburses a Member for the cost not incurred to the Cooperative involved in processing
+a payment each month.
+RATE
+This credit is:
+– $ 1.50 per meter
+500.1.4 DELIVERY CHARGE
+APPLICABILITY
+This charge may be applicable according to the Member’s rate schedule.
+PURPOSE
+This charge recovers the variable portion of costs associated with providing services to the
+membership including, but not limited to, billing, metering, collections, customer service, maintenance
+and operations of distribution infrastructure, and other related costs.
+
+Tariff and Business Rules for Electric Service
+Pedernales Electric Cooperative, Inc.
+Section 500: Rates
+Applicable: Entire Certified Service Area
+Effective Date: October 1, 2026 Page 47 of 115
+RATE
+This charge, per kWh, will be applicable according to the Member’s rate schedule.
+500.1.5 CAPACITY DEMAND CHARGE
+APPLICABILITY
+This charge may be applicable according to the Member’s rate schedule.
+PURPOSE
+This charge recovers the cost associated with the maintenance and operations of the distribution
+infrastructure and other related costs.
+RATE
+This charge, per maximum demand of power delivered or received, measured as the maximum
+demand during a fifteen (15) minute interval within the billing period, will be applicable according to
+the Member’s rate schedule.
+500.1.6 PEAK CAPACITY CHARGE
+APPLICABILITY
+This charge may be applicable according to the Member’s rate schedule.
+PURPOSE
+This charge recovers the cost associated with the maintenance and operations of the distribution
+infrastructure and other related costs.
+RATE
+This charge, per maximum amount of power delivered or received dur
+[DOC 1] https://mypec.com/wp-content/uploads/tariff/Tariff_and_Business_Rules.pdf
+ONDITIONS
+A member requesting dual feed service through an automatic transfer will be billed the Reserve
+Capacity Charge. Per Section 400.9, Non-Standard Delivery Service and Facilities, Members
+requesting non-standard facilities will be responsible for all costs associated with the engineering,
+installation, maintenance, and material costs required to provide and maintain the non-standard
+facilities.
+RATE
+This monthly charge will be billed per kilowatt (kW) and determined using the highest annual non-
+coincidental peak demand measured on an hourly interval basis. The demand will remain unchanged
+for a 12-month period and adjusted upon review annually.
+The monthly charge is:
+$5.20 per kW
+500.1.22 NON-STANDARD CAPACITY CHARGE
+APPLICABILITY
+This charge is applicable to a Member requesting service with a reservation of capacity at a level
+above their projected annual non-coincident peak demand. Charge is not applicable to Members
+subject to Section 500.1.21, Dual Feed Rider.
+PURPOSE
+This charge recovers costs associated with the Cooperative’s maintenance and operations of the
+electric system infrastructure and other related costs for the reserved system and/or substation
+capacity.
+CONDITIONS
+Available, at the sole discretion of the Cooperative, to Members that request service with a
+reservation of capacity at a level above their projected annual non-coincident peak demand.
+RATE
+Determined by agreement.
+
+Tariff and Business Rules for Electric Service
+Pedernales Electric Cooperative, Inc.
+Section 500: Rates
+Applicable: Entire Certified Service Area
+Effective Date: October 1, 2026 Page 56 of 115
+500.2 RESIDENTIAL RATE SCHEDULES
+500.2.1 RESIDENTIAL, FARM AND RANCH SERVICE, FLAT BASE POWER CHARGE
+APPLICABILITY
+This schedule applies to Members receiving distribution service in locations built to serve as and are
+currently serving as an Individual Private Dwelling or Multi-Family Dwelling and their facilities, or facilities
+used for small-scale agricultural purposes such as water wells. If the location is being used for commercial
+purposes, such as for short-term vacation rentals or recreational vehicle (RV) short-term rentals, PEC may
+change the member’s rate to the appropriate non-residential service rate.
+RATE
+Monthly charges will apply:
+Billing
+Charges: Amount: Unit:
+Determinant:
+Service Availability Charge $ 32.50 meter month
+Delivery Charge $ 0.022546 kWh Delivered Energy
+Flat Base Power Charge $ 0.065900 kWh Delivered Energy
+TCOS Pass Through Charge $ 0.020688 kWh Delivered Energy
+MEMBER CHARGES, CREDITS AND ADJUSTMENTS
+SERVICE AVAILABILITY CHARGE
+This charge recovers the cost associated with providing services to the membership including billing,
+metering, collections, customer service, and other enterprise costs.
+DELIVERY CHARGE
+This charge recovers the cost associated with the maintenance and operations of the distribution
+infrastructure and other related costs.
+FLAT BASE POWER CHARGE
+This option allows Members to have the same cost of power rega
+[DOC 1] https://mypec.com/wp-content/uploads/tariff/Tariff_and_Business_Rules.pdf
+rdless of the season or time of day during
+which the energy is consumed.
+TCOS PASS THROUGH CHARGE
+This charge recovers the cost incurred to receive access to transmission service in the ERCOT region of
+Texas as established by the Commission.
+THE MONTHLY BILL WILL BE THE SUM OF THE ABOVE CHARGES PLUS ANY APPLICABLE FEES,
+TAXES, DISCOUNTS, CREDITS, OR ADJUSTMENTS, AND SUBJECT TO CONDITIONS OF THE
+TARIFF.
+Charges: | Amount: | Unit: |  | Billing | 
+ |  |  |  | Determinant: | 
+Service Availability Charge | $ 32.50 | meter | month |  | 
+Delivery Charge | $ 0.022546 | kWh | Delivered Energy |  | 
+Flat Base Power Charge | $ 0.065900 | kWh | Delivered Energy |  | 
+TCOS Pass Through Charge | $ 0.020688 | kWh | Delivered Energy |  | 
+
+Tariff and Business Rules for Electric Service
+Pedernales Electric Cooperative, Inc.
+Section 500: Rates
+Applicable: Entire Certified Service Area
+Effective Date: October 1, 2026 Page 57 of 115
+500.2.2 RESIDENTIAL, FARM AND RANCH SERVICE, FLAT BASE POWER
+CHARGE, WITH RENEWABLE ENERGY RIDER
+APPLICABILITY
+This schedule applies to Members receiving distribution service in locations built to serve as and are
+currently serving as an Individual Private Dwelling or Multi-Family Dwelling and their facilities, or
+facilities used for small-scale agricultural purposes such as water wells. If the location is being used for
+commercial purposes, PEC may change the member’s rate to the appropriate non-residential service
+rate.
+RATE
+Monthly charges will apply:
+Billing
+Charges: Amount: Unit:
+Determinant:
+Service Availability Charge $ 32.50 meter month
+Delivery Charge $ 0.022546 kWh Delivered Energy
+Flat Base Power Charge $ 0.065900 kWh Delivered Energy
+TCOS Pass Through Charge $ 0.020688 kWh Delivered Energy
+Renewable Energy Rider Charge $ 0.000430 kWh Delivered Energy
+MEMBER CHARGES, CREDITS AND ADJUSTMENTS
+SERVICE AVAILABILITY CHARGE
+This charge recovers the cost associated with providing services to the membership including billing,
+metering, collections, customer service, and other enterprise costs.
+DELIVERY CHARGE
+This charge recovers the cost associated with the maintenance and operations of the distribution
+infrastructure and other related costs.
+FLAT BASE POWER CHARGE
+This option allows Members to have the same cost of power regardless of the season or time of day
+during which the energy is consumed.
+TCOS PASS THROUGH CHARGE
+This charge recovers the cost incurred to receive access to transmission service in the ERCOT region
+of Texas as established by the Commission.
+RENEWABLE ENERGY RIDER CHARGE
+This charge provides Member’s the ability to purchase electricity generated by renewable energy
+sources.
+THE MONTHLY BILL WILL BE THE SUM OF THE ABOVE CHARGES PLUS ANY APPLICABLE
+FEES, TAXES, DISCOUNTS, CREDITS, OR ADJUSTMENTS, AND SUBJECT TO CONDITIONS OF
+THE TARIFF.
+Charges: | Amount: | Unit: |  | Billing | 
+ |  |  |  | Determinant: | 
+Service Availability Charge | $ 32.50 | meter | month |  | 
+Delivery Charge | $ 0.022546 | kWh | Delivered En
+[DOC 1] https://mypec.com/wp-content/uploads/tariff/Tariff_and_Business_Rules.pdf
+Inc.
+Section 500: Rates
+Applicable: Entire Certified Service Area
+Effective Date: October 1, 2026 Page 111 of 115
+500.8 FEE SCHEDULE
+FEE AMOUNT SECTION
+Open Records Fee – Staff research time $ 70.00 per hour 300.4.1
+$ 0.25 cents per page for any pages in
+Open Records Fee – Copies 300.4.1
+excess of 10 pages
+Open Records Fee – Other materials
+and services not included in research Actual cost 300.4.1
+time and copies.
+Subpoena Response Service Fee $ 70.00 / hour 300.4.2
+GIS Mapping Records Fee – Staff
+$ 250.00 300.4.3
+research and document preparation
+Membership Fee $ 50.00 300.8.1
+Establishment/Transfer Fee $ 50.00 300.8.3
+$ 125.00 – 8 AM to 5 PM on Business Days 300.9.3,
+Same Day Service Fee
+$ 175.00 – All other times 300.9.9
+Non-Compliant Payment Processing Fee $ 35.00 per account 300.11.2
+Late Payment Processing Fee 10 percent of unpaid amount 300.11.4
+Loan Late Fee The greater of $ 7.50 or 7 percent 300.11.5
+Return Check/Denied Bank Draft Fee $ 35.00 300.11.6
+Reconnection Fee after Disconnection
+for Nonpayment or Temporary Voluntary $ 75.00 300.11.9
+Disconnect
+Meter Test Fee $ 100.00 per occurrence 300.13.4
+Advanced Metering Opt-Out Program –
+$ 200.00 per meter 300.13.6
+Nonpayment Disconnect/Reconnect Fee
+Advanced Metering Opt-Out Program –
+$ 200.00 per meter 300.13.6.1
+Meter Exchange Fee
+$ 30.00 monthly processing fee per meter
+Advanced Metering Opt-Out Program –
+and $3.50/mile meter reading trip charge per 300.13.6.2
+Meter Reading and Processing Fees
+premises
+Meter Tampering Fee $ 500.00 per occurrence 300.13.7
+FEE | AMOUNT | SECTION
+Open Records Fee – Staff research time | $ 70.00 per hour | 300.4.1
+Open Records Fee – Copies | $ 0.25 cents per page for any pages in
+excess of 10 pages | 300.4.1
+Open Records Fee – Other materials
+and services not included in research
+time and copies. | Actual cost | 300.4.1
+Subpoena Response Service Fee | $ 70.00 / hour | 300.4.2
+GIS Mapping Records Fee – Staff
+research and document preparation | $ 250.00 | 300.4.3
+Membership Fee | $ 50.00 | 300.8.1
+Establishment/Transfer Fee | $ 50.00 | 300.8.3
+Same Day Service Fee | $ 125.00 – 8 AM to 5 PM on Business Days
+$ 175.00 – All other times | 300.9.3,
+300.9.9
+Non-Compliant Payment Processing Fee | $ 35.00 per account | 300.11.2
+Late Payment Processing Fee | 10 percent of unpaid amount | 300.11.4
+Loan Late Fee | The greater of $ 7.50 or 7 percent | 300.11.5
+Return Check/Denied Bank Draft Fee | $ 35.00 | 300.11.6
+Reconnection Fee after Disconnection
+for Nonpayment or Temporary Voluntary
+Disconnect | $ 75.00 | 300.11.9
+Meter Test Fee | $ 100.00 per occurrence | 300.13.4
+Advanced Metering Opt-Out Program –
+Nonpayment Disconnect/Reconnect Fee | $ 200.00 per meter | 300.13.6
+Advanced Metering Opt-Out Program –
+Meter Exchange Fee | $ 200.00 per meter | 300.13.6.1
+Advanced Metering Opt-Out Program –
+Meter Reading and Processing Fees | $ 30.00 monthly processing fee per meter
+and $3.50/mile meter reading trip charge per
+premises | 300.13.6.2
+Meter Tampering Fee | $ 500.00 per
+[DOC 3] https://mypec.com/residential-rates/understanding-your-bill/
+Understanding Your Bill - PEC
+Skip to content
+Rates & Services
+Start or Stop Service
+Ways to Pay
+Manage Your Account
+Member Assistance Program
+Residential Rates
+Time-of-Use Rate
+DG Interconnection Rates
+Understanding Your Bill
+Commercial Rates and Pricing
+Solar and Distributed Generation (DG)
+Guide to Decide
+Interconnection Process
+Renewable Options
+Medical Necessity Program
+Unclaimed Funds
+Text Notifications
+Ways to Save
+Energy-Saving Tips
+Transmission Costs
+Safety
+PEC Outage Center
+Vegetation Maintenance
+Planting Guidelines
+Standards
+Identification and Scams
+Safety at Home
+Downed Power Lines
+Generator Safety
+Crew Safety
+Community
+Power of Change
+Youth Programs
+EmpowerU Youth Program
+Camp Save-a-Watt
+Scholarship Program
+Youth Tour
+Monarch Butterfly Education
+Safety for Kids
+LED
+Community Grants
+PEC Gives
+Community Relations
+Events
+About
+News
+PEC Holiday Lights
+The Cooperative Difference
+Board of Directors
+Board Meetings
+Become a Board Director
+Elections & Voting
+Voting Methods & Instructions
+Executive Team
+Powering the Future
+Careers
+Commercial Service
+Connect Commercial Service
+Ways to Pay – Commercial Services
+Commercial Rates and Pricing
+Large Load Connection Process and Fees
+Disconnect Commercial Service
+Critical Load Program
+MY ACCOUNT
+OUTAGES
+CONTACT US
+Search
+Search
+MY ACCOUNT
+Outages
+Contact us
+Rates & Services
+Start or Stop Service
+Ways to Pay
+Manage Your Account
+Member Assistance Program
+Residential Rates
+Time-of-Use Rate
+DG Interconnection Rates
+Understanding Your Bill
+Commercial Rates and Pricing
+Solar and Distributed Generation (DG)
+Guide to Decide
+Interconnection Process
+Renewable Options
+Medical Necessity Program
+Unclaimed Funds
+Text Notifications
+Ways to Save
+Energy-Saving Tips
+Transmission Costs
+Safety
+PEC Outage Center
+Vegetation Maintenance
+Planting Guidelines
+Standards
+Identification and Scams
+Safety at Home
+Downed Power Lines
+Generator Safety
+Crew Safety
+Community
+Power of Change
+Youth Programs
+EmpowerU Youth Program
+Camp Save-a-Watt
+Scholarship Program
+Youth Tour
+Monarch Butterfly Education
+Safety for Kids
+LED
+Community Grants
+PEC Gives
+Community Relations
+Events
+About
+News
+PEC Holiday Lights
+The Cooperative Difference
+Board of Directors
+Board Meetings
+Become a Board Director
+Elections & Voting
+Voting Methods & Instructions
+Executive Team
+Powering the Future
+Careers
+Commercial Service
+Connect Commercial Service
+Ways to Pay – Commercial Services
+Commercial Rates and Pricing
+Large Load Connection Process and Fees
+Disconnect Commercial Service
+Critical Load Program
+Rates & Services
+Start or Stop Service
+Ways to Pay
+Manage Your Account
+Member Assistance Program
+Residential Rates
+Time-of-Use Rate
+DG Interconnection Rates
+Understanding Your Bill
+Commercial Rates and Pricing
+Solar and Distributed Generation (DG)
+Guide to Decide
+Interconnection Process
+Renewable Options
+Medical Necessity Program
+Unclaimed Funds
+Text Notifications
+Ways to Save
+Energy-Saving Tips
+Transmission Costs
+Safety
+PEC Outage Center
+Vegetation Maintenance
+Plan
+[DOC 4] https://mypec.com/commercial-rates-and-pricing/
+Commercial Rates and Pricing
+PEC’s commercial accounts are divided into two rate classes, based on rolling 12-month average demand. Select the option that applies to you below to learn more.
+Small power member
+I’m powering a commercial or industrial operation with a rolling 12-month average demand of less than 50 kilowatts (kW), or I’m powering street lighting.
+View Rates
+Large power member
+I’m powering a commercial or industrial operation with a rolling 12-month average demand of 50 kW or more.
+View Rates
+Sign up to receive the large power summer 4CP forecast
+Sign up now
+Learn about our programs
+Renewable Energy Rider
+System Interconnect
+Time-of-Use Rate
+More information on commercial accounts
+Critical Load Program
+Our Critical Load Program is a registry of nonresidential service locations that can be classified as public safety, industrial, natural gas infrastructure, or communications.
+Learn more about the Critical Load Program
+.
+Large Power Interconnection (Distributed Generation)
+Applicable to Large power members with a distributed generation (DG) system or any member with a DG system that is
+50 kW AC or greater
+capacity.
+Disconnect Commercial Service
+To disconnect electric service that is in your name, please call us at 888-554-4732, Monday through Friday, between 8 a.m. and 5 p.m., or visit your account online and submit a “Disconnect Service” request. Scheduled service disconnections are completed Monday through Friday, between 8 a.m. and 5 p.m., except on holidays. We will need one business day to process all requests. An additional fee may be required for same-day disconnects.
+Small Power Interconnection (Distributed Generation)
+Applicable to Residential and Small Power Service members with a distributed generation system that is less than fifty (50) kW AC of capacity.
+Learn more about Residential and Small Power Interconnection Metering
+.
+[DOC 5] https://mypec.com/commercial-rates-and-pricing/large-load-connection-process-and-fees/
+Large Load Connection Process and Fees - PEC
+Skip to content
+Rates & Services
+Start or Stop Service
+Ways to Pay
+Manage Your Account
+Member Assistance Program
+Residential Rates
+Time-of-Use Rate
+DG Interconnection Rates
+Understanding Your Bill
+Commercial Rates and Pricing
+Solar and Distributed Generation (DG)
+Guide to Decide
+Interconnection Process
+Renewable Options
+Medical Necessity Program
+Unclaimed Funds
+Text Notifications
+Ways to Save
+Energy-Saving Tips
+Transmission Costs
+Safety
+PEC Outage Center
+Vegetation Maintenance
+Planting Guidelines
+Standards
+Identification and Scams
+Safety at Home
+Downed Power Lines
+Generator Safety
+Crew Safety
+Community
+Power of Change
+Youth Programs
+EmpowerU Youth Program
+Camp Save-a-Watt
+Scholarship Program
+Youth Tour
+Monarch Butterfly Education
+Safety for Kids
+LED
+Community Grants
+PEC Gives
+Community Relations
+Events
+About
+News
+PEC Holiday Lights
+The Cooperative Difference
+Board of Directors
+Board Meetings
+Become a Board Director
+Elections & Voting
+Voting Methods & Instructions
+Executive Team
+Powering the Future
+Careers
+Commercial Service
+Connect Commercial Service
+Ways to Pay – Commercial Services
+Commercial Rates and Pricing
+Large Load Connection Process and Fees
+Disconnect Commercial Service
+Critical Load Program
+MY ACCOUNT
+OUTAGES
+CONTACT US
+Search
+Search
+MY ACCOUNT
+Outages
+Contact us
+Rates & Services
+Start or Stop Service
+Ways to Pay
+Manage Your Account
+Member Assistance Program
+Residential Rates
+Time-of-Use Rate
+DG Interconnection Rates
+Understanding Your Bill
+Commercial Rates and Pricing
+Solar and Distributed Generation (DG)
+Guide to Decide
+Interconnection Process
+Renewable Options
+Medical Necessity Program
+Unclaimed Funds
+Text Notifications
+Ways to Save
+Energy-Saving Tips
+Transmission Costs
+Safety
+PEC Outage Center
+Vegetation Maintenance
+Planting Guidelines
+Standards
+Identification and Scams
+Safety at Home
+Downed Power Lines
+Generator Safety
+Crew Safety
+Community
+Power of Change
+Youth Programs
+EmpowerU Youth Program
+Camp Save-a-Watt
+Scholarship Program
+Youth Tour
+Monarch Butterfly Education
+Safety for Kids
+LED
+Community Grants
+PEC Gives
+Community Relations
+Events
+About
+News
+PEC Holiday Lights
+The Cooperative Difference
+Board of Directors
+Board Meetings
+Become a Board Director
+Elections & Voting
+Voting Methods & Instructions
+Executive Team
+Powering the Future
+Careers
+Commercial Service
+Connect Commercial Service
+Ways to Pay – Commercial Services
+Commercial Rates and Pricing
+Large Load Connection Process and Fees
+Disconnect Commercial Service
+Critical Load Program
+Rates & Services
+Start or Stop Service
+Ways to Pay
+Manage Your Account
+Member Assistance Program
+Residential Rates
+Time-of-Use Rate
+DG Interconnection Rates
+Understanding Your Bill
+Commercial Rates and Pricing
+Solar and Distributed Generation (DG)
+Guide to Decide
+Interconnection Process
+Renewable Options
+Medical Necessity Program
+Unclaimed Funds
+Text Notifications
+Ways to Save
+Energy-Saving Tips
+Transmission Costs
+Safety
+PEC Outage Center
+Vegetation M
+[DOC 6] https://mypec.com/rates-services/connect-or-transfer-service-residential/
+Connect or Stop Service — Pedernales Electric Cooperative, Inc.
+Skip to content
+Rates & Services
+Start or Stop Service
+Ways to Pay
+Manage Your Account
+Member Assistance Program
+Residential Rates
+Time-of-Use Rate
+DG Interconnection Rates
+Understanding Your Bill
+Commercial Rates and Pricing
+Solar and Distributed Generation (DG)
+Guide to Decide
+Interconnection Process
+Renewable Options
+Medical Necessity Program
+Unclaimed Funds
+Text Notifications
+Ways to Save
+Energy-Saving Tips
+Transmission Costs
+Safety
+PEC Outage Center
+Vegetation Maintenance
+Planting Guidelines
+Standards
+Identification and Scams
+Safety at Home
+Downed Power Lines
+Generator Safety
+Crew Safety
+Community
+Power of Change
+Youth Programs
+EmpowerU Youth Program
+Camp Save-a-Watt
+Scholarship Program
+Youth Tour
+Monarch Butterfly Education
+Safety for Kids
+LED
+Community Grants
+PEC Gives
+Community Relations
+Events
+About
+News
+PEC Holiday Lights
+The Cooperative Difference
+Board of Directors
+Board Meetings
+Become a Board Director
+Elections & Voting
+Voting Methods & Instructions
+Executive Team
+Powering the Future
+Careers
+Commercial Service
+Connect Commercial Service
+Ways to Pay – Commercial Services
+Commercial Rates and Pricing
+Large Load Connection Process and Fees
+Disconnect Commercial Service
+Critical Load Program
+MY ACCOUNT
+OUTAGES
+CONTACT US
+Search
+Search
+MY ACCOUNT
+Outages
+Contact us
+Rates & Services
+Start or Stop Service
+Ways to Pay
+Manage Your Account
+Member Assistance Program
+Residential Rates
+Time-of-Use Rate
+DG Interconnection Rates
+Understanding Your Bill
+Commercial Rates and Pricing
+Solar and Distributed Generation (DG)
+Guide to Decide
+Interconnection Process
+Renewable Options
+Medical Necessity Program
+Unclaimed Funds
+Text Notifications
+Ways to Save
+Energy-Saving Tips
+Transmission Costs
+Safety
+PEC Outage Center
+Vegetation Maintenance
+Planting Guidelines
+Standards
+Identification and Scams
+Safety at Home
+Downed Power Lines
+Generator Safety
+Crew Safety
+Community
+Power of Change
+Youth Programs
+EmpowerU Youth Program
+Camp Save-a-Watt
+Scholarship Program
+Youth Tour
+Monarch Butterfly Education
+Safety for Kids
+LED
+Community Grants
+PEC Gives
+Community Relations
+Events
+About
+News
+PEC Holiday Lights
+The Cooperative Difference
+Board of Directors
+Board Meetings
+Become a Board Director
+Elections & Voting
+Voting Methods & Instructions
+Executive Team
+Powering the Future
+Careers
+Commercial Service
+Connect Commercial Service
+Ways to Pay – Commercial Services
+Commercial Rates and Pricing
+Large Load Connection Process and Fees
+Disconnect Commercial Service
+Critical Load Program
+Rates & Services
+Start or Stop Service
+Ways to Pay
+Manage Your Account
+Member Assistance Program
+Residential Rates
+Time-of-Use Rate
+DG Interconnection Rates
+Understanding Your Bill
+Commercial Rates and Pricing
+Solar and Distributed Generation (DG)
+Guide to Decide
+Interconnection Process
+Renewable Options
+Medical Necessity Program
+Unclaimed Funds
+Text Notifications
+Ways to Save
+Energy-Saving Tips
+Transmission Costs
+Safety
+PEC Outage 
+[DOC 6] https://mypec.com/rates-services/connect-or-transfer-service-residential/
+lectric utility by providing a letter of credit
+Enroll in automatic bank draft payments (residential members only)
+Submit a
+letter of guarantee
+.
+Ask for a
+credit assessment
+(new members only)
+Will not affect your credit score
+Quick – can take place over the phone
+May eliminate the need for a deposit (contingent upon satisfactory credit assessment results)
+Paperless billing + auto pay
+$2.50
+Save $2.50 per month
+Auto pay
+$1.50
+Save $1.50 per month (bank draft only)
+Paperless billing
+$1.00
+Save $1.00 per month
+Ready to go?
+Start service
+Due to our crew schedules, we cannot set up same-day connections without posting a $125 fee during business hours (8 a.m-5 p.m.) and $175 outside of business hours. You don’t need to be on-site when we connect your power, so feel free to focus on your move.
+If you require connection within the next two days, please call us directly at 888-554-4732. Additional fees may apply. We are available Monday through Friday between 8 a.m. and 5 p.m.
+Need to stop service?
+visit your account
+Call to stop service
+Not sure what to do? Click here to watch a quick tutorial.
+Do more with your account
+PEC’s SmartHub is an easy, convenient app that helps you manage your account preferences. Download the app today to pay your bills, report outages, and monitor your energy use.
+Learn more about PEC’s SmartHub
+.
+Enroll in Power of Change
+PEC’s Power of Change program empowers your community by rounding your electric bill to the nearest dollar. The program supports area nonprofits through community grants, scholarships for local students, and more. The average monthly contribution is just $0.50, or $6 per year.
+Enroll online today
+Text alerts
+Add your mobile number to your account to join PEC’s emergency SMS (text) alert service, and we will text you during an emergency, including prolonged power interruptions and peak energy demand situations. Plus, you’ll be able to text OUTAGE to 25022 to report an outage. Add your number to your account or call
+888-554-4732
+to add multiple numbers.
+Text Alerts
+Add your mobile number
+Power outage line:
+888-883-3379
+Call Us Toll-free:
+888-554-4732
+Residential
+Start & Stop Service
+Billing & Payments
+Rates & Pricing
+Service Request
+Outage
+Commercial
+Start & Stop Service
+Billing & Payments
+Rates & Pricing
+Service Request
+Outage
+Member Resources
+My Account
+Outage Center & Map
+Payment Options
+Pay Now
+Connect to New Service
+Transmission Projects
+Business Resources
+Vendor Information
+Construction & Development
+Commercial Development
+Pole Attachment Services
+About PEC
+Our Service Area
+Board of Directors
+Board Meetings
+Document Center
+Financial Reports
+Contact Us
+Contact Details
+Careers
+Media Resources
+Join Power of Change
+Connect with PEC
+Power outage line:
+888-883-3379
+Call us toll-free:
+888-554-4732
+Residential
+Start & Stop Service
+Billing & Payments
+Rates & Pricing
+Service Request
+Outages
+Commercial
+Start & Stop Service
+Billing & Payments
+Rates & Pricing
+Service Request
+Outages
+Member Resources
+My Account
+Out
+[DOC 7] https://mypec.com/rates-services/connect-or-stop-service-residential/
+Connect or Stop Service — Pedernales Electric Cooperative, Inc.
+Skip to content
+Rates & Services
+Start or Stop Service
+Ways to Pay
+Manage Your Account
+Member Assistance Program
+Residential Rates
+Time-of-Use Rate
+DG Interconnection Rates
+Understanding Your Bill
+Commercial Rates and Pricing
+Solar and Distributed Generation (DG)
+Guide to Decide
+Interconnection Process
+Renewable Options
+Medical Necessity Program
+Unclaimed Funds
+Text Notifications
+Ways to Save
+Energy-Saving Tips
+Transmission Costs
+Safety
+PEC Outage Center
+Vegetation Maintenance
+Planting Guidelines
+Standards
+Identification and Scams
+Safety at Home
+Downed Power Lines
+Generator Safety
+Crew Safety
+Community
+Power of Change
+Youth Programs
+EmpowerU Youth Program
+Camp Save-a-Watt
+Scholarship Program
+Youth Tour
+Monarch Butterfly Education
+Safety for Kids
+LED
+Community Grants
+PEC Gives
+Community Relations
+Events
+About
+News
+PEC Holiday Lights
+The Cooperative Difference
+Board of Directors
+Board Meetings
+Become a Board Director
+Elections & Voting
+Voting Methods & Instructions
+Executive Team
+Powering the Future
+Careers
+Commercial Service
+Connect Commercial Service
+Ways to Pay – Commercial Services
+Commercial Rates and Pricing
+Large Load Connection Process and Fees
+Disconnect Commercial Service
+Critical Load Program
+MY ACCOUNT
+OUTAGES
+CONTACT US
+Search
+Search
+MY ACCOUNT
+Outages
+Contact us
+Rates & Services
+Start or Stop Service
+Ways to Pay
+Manage Your Account
+Member Assistance Program
+Residential Rates
+Time-of-Use Rate
+DG Interconnection Rates
+Understanding Your Bill
+Commercial Rates and Pricing
+Solar and Distributed Generation (DG)
+Guide to Decide
+Interconnection Process
+Renewable Options
+Medical Necessity Program
+Unclaimed Funds
+Text Notifications
+Ways to Save
+Energy-Saving Tips
+Transmission Costs
+Safety
+PEC Outage Center
+Vegetation Maintenance
+Planting Guidelines
+Standards
+Identification and Scams
+Safety at Home
+Downed Power Lines
+Generator Safety
+Crew Safety
+Community
+Power of Change
+Youth Programs
+EmpowerU Youth Program
+Camp Save-a-Watt
+Scholarship Program
+Youth Tour
+Monarch Butterfly Education
+Safety for Kids
+LED
+Community Grants
+PEC Gives
+Community Relations
+Events
+About
+News
+PEC Holiday Lights
+The Cooperative Difference
+Board of Directors
+Board Meetings
+Become a Board Director
+Elections & Voting
+Voting Methods & Instructions
+Executive Team
+Powering the Future
+Careers
+Commercial Service
+Connect Commercial Service
+Ways to Pay – Commercial Services
+Commercial Rates and Pricing
+Large Load Connection Process and Fees
+Disconnect Commercial Service
+Critical Load Program
+Rates & Services
+Start or Stop Service
+Ways to Pay
+Manage Your Account
+Member Assistance Program
+Residential Rates
+Time-of-Use Rate
+DG Interconnection Rates
+Understanding Your Bill
+Commercial Rates and Pricing
+Solar and Distributed Generation (DG)
+Guide to Decide
+Interconnection Process
+Renewable Options
+Medical Necessity Program
+Unclaimed Funds
+Text Notifications
+Ways to Save
+Energy-Saving Tips
+Transmission Costs
+Safety
+PEC Outage 
+[DOC 7] https://mypec.com/rates-services/connect-or-stop-service-residential/
+lectric utility by providing a letter of credit
+Enroll in automatic bank draft payments (residential members only)
+Submit a
+letter of guarantee
+.
+Ask for a
+credit assessment
+(new members only)
+Will not affect your credit score
+Quick – can take place over the phone
+May eliminate the need for a deposit (contingent upon satisfactory credit assessment results)
+Paperless billing + auto pay
+$2.50
+Save $2.50 per month
+Auto pay
+$1.50
+Save $1.50 per month (bank draft only)
+Paperless billing
+$1.00
+Save $1.00 per month
+Ready to go?
+Start service
+Due to our crew schedules, we cannot set up same-day connections without posting a $125 fee during business hours (8 a.m-5 p.m.) and $175 outside of business hours. You don’t need to be on-site when we connect your power, so feel free to focus on your move.
+If you require connection within the next two days, please call us directly at 888-554-4732. Additional fees may apply. We are available Monday through Friday between 8 a.m. and 5 p.m.
+Need to stop service?
+visit your account
+Call to stop service
+Not sure what to do? Click here to watch a quick tutorial.
+Do more with your account
+PEC’s SmartHub is an easy, convenient app that helps you manage your account preferences. Download the app today to pay your bills, report outages, and monitor your energy use.
+Learn more about PEC’s SmartHub
+.
+Enroll in Power of Change
+PEC’s Power of Change program empowers your community by rounding your electric bill to the nearest dollar. The program supports area nonprofits through community grants, scholarships for local students, and more. The average monthly contribution is just $0.50, or $6 per year.
+Enroll online today
+Text alerts
+Add your mobile number to your account to join PEC’s emergency SMS (text) alert service, and we will text you during an emergency, including prolonged power interruptions and peak energy demand situations. Plus, you’ll be able to text OUTAGE to 25022 to report an outage. Add your number to your account or call
+888-554-4732
+to add multiple numbers.
+Text Alerts
+Add your mobile number
+Power outage line:
+888-883-3379
+Call Us Toll-free:
+888-554-4732
+Residential
+Start & Stop Service
+Billing & Payments
+Rates & Pricing
+Service Request
+Outage
+Commercial
+Start & Stop Service
+Billing & Payments
+Rates & Pricing
+Service Request
+Outage
+Member Resources
+My Account
+Outage Center & Map
+Payment Options
+Pay Now
+Connect to New Service
+Transmission Projects
+Business Resources
+Vendor Information
+Construction & Development
+Commercial Development
+Pole Attachment Services
+About PEC
+Our Service Area
+Board of Directors
+Board Meetings
+Document Center
+Financial Reports
+Contact Us
+Contact Details
+Careers
+Media Resources
+Join Power of Change
+Connect with PEC
+Power outage line:
+888-883-3379
+Call us toll-free:
+888-554-4732
+Residential
+Start & Stop Service
+Billing & Payments
+Rates & Pricing
+Service Request
+Outages
+Commercial
+Start & Stop Service
+Billing & Payments
+Rates & Pricing
+Service Request
+Outages
+Member Resources
+My Account
+Out

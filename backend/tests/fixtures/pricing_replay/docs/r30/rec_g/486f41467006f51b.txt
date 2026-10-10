@@ -1,0 +1,3058 @@
+[DOC 0] https://portlandgeneral.com/about/info/pricing-plans
+Residential or Business Electric Pricing Plans | PGE
+We value your privacy
+We use cookies to enhance your browsing experience, serve personalized content and analyze our site traffic. By clicking "Accept all," you consent to our use of cookies.
+Reject all
+Accept all
+Customize Consent Preferences
+We use cookies to help you navigate efficiently and perform certain functions. You will find detailed information about all cookies under each consent category below.
+The cookies that are categorized as "Necessary" are stored on your browser as they are essential for enabling the basic functionalities of the site....
+Show more
+For more information on how Google's third-party cookies operate and handle your data, see:
+Google Privacy Policy
+Necessary
+Always Active
+Necessary cookies are required to enable the basic features of this site, such as providing secure log-in or adjusting your consent preferences. These cookies do not store any personally identifiable data.
+Cookie
+_GRECAPTCHA
+Duration
+6 months
+Description
+Google Recaptcha service sets this cookie to identify bots to protect the website against malicious spam attacks.
+Cookie
+rc::a
+Duration
+Never Expires
+Description
+This cookie is set by the Google recaptcha service to identify bots to protect the website against malicious spam attacks.
+Cookie
+rc::f
+Duration
+Never Expires
+Description
+This cookie is set by the Google recaptcha service to identify bots to protect the website against malicious spam attacks.
+Cookie
+rc::b
+Duration
+session
+Description
+This cookie is set by the Google recaptcha service to identify bots to protect the website against malicious spam attacks.
+Cookie
+rc::c
+Duration
+session
+Description
+This cookie is set by the Google recaptcha service to identify bots to protect the website against malicious spam attacks.
+Cookie
+__Secure-ROLLOUT_TOKEN
+Duration
+6 months
+Description
+Description is currently not available.
+Cookie
+VISITOR_PRIVACY_METADATA
+Duration
+6 months
+Description
+YouTube sets this cookie to store the user's cookie consent state for the current domain.
+Cookie
+__cf_bm
+Duration
+1 hour
+Description
+This cookie, set by Cloudflare, is used to support Cloudflare Bot Management.
+Cookie
+_cfuvid
+Duration
+session
+Description
+Cloudflare sets this cookie to track users across sessions to optimize user experience by maintaining session consistency and providing personalized services
+Cookie
+cookietest
+Duration
+session
+Description
+The cookietest cookie is typically used to determine whether the user's browser accepts cookies, essential for website functionality and user experience.
+Cookie
+yt.innertube::nextId
+Duration
+Never Expires
+Description
+YouTube sets this cookie to register a unique ID to store data on what videos from YouTube the user has seen.
+Cookie
+yt.innertube::requests
+Duration
+Never Expires
+Description
+YouTube sets this cookie to register a unique ID to store data on what videos from YouTube the user has seen.
+Cookie
+NID
+Duration
+6 months
+Description
+Google sets the cookie for adv
+[DOC 0] https://portlandgeneral.com/about/info/pricing-plans
+ertising purposes; to limit the number of times the user sees an ad, to unwanted mute ads, and to measure the effectiveness of ads.
+Cookie
+YSC
+Duration
+session
+Description
+YSC cookie is set by Youtube and is used to track the views of embedded videos on Youtube pages.
+Cookie
+VISITOR_INFO1_LIVE
+Duration
+6 months
+Description
+A cookie set by YouTube to measure bandwidth that determines whether the user gets the new or old player interface.
+Cookie
+yt-remote-connected-devices
+Duration
+Never Expires
+Description
+YouTube sets this cookie to store the user's video preferences using embedded YouTube videos.
+Cookie
+ytidb::LAST_RESULT_ENTRY_KEY
+Duration
+Never Expires
+Description
+The cookie ytidb::LAST_RESULT_ENTRY_KEY is used by YouTube to store the last search result entry that was clicked by the user. This information is used to improve the user experience by providing more relevant search results in the future.
+Cookie
+yt-remote-device-id
+Duration
+Never Expires
+Description
+YouTube sets this cookie to store the user's video preferences using embedded YouTube videos.
+Cookie
+yt-remote-session-name
+Duration
+session
+Description
+The yt-remote-session-name cookie is used by YouTube to store the user's video player preferences using embedded YouTube video.
+Cookie
+yt-remote-fast-check-period
+Duration
+session
+Description
+The yt-remote-fast-check-period cookie is used by YouTube to store the user's video player preferences for embedded YouTube videos.
+Cookie
+yt-remote-session-app
+Duration
+session
+Description
+The yt-remote-session-app cookie is used by YouTube to store user preferences and information about the interface of the embedded YouTube video player.
+Cookie
+yt-remote-cast-available
+Duration
+session
+Description
+The yt-remote-cast-available cookie is used to store the user's preferences regarding whether casting is available on their YouTube video player.
+Cookie
+yt-remote-cast-installed
+Duration
+session
+Description
+The yt-remote-cast-installed cookie is used to store the user's video player preferences using embedded YouTube video.
+Cookie
+cookieyes-consent
+Duration
+1 year
+Description
+CookieYes sets this cookie to remember users' consent preferences so that their preferences are respected on subsequent visits to this site. It does not collect or store any personal information about the site visitors.
+Functional
+Functional cookies help perform certain functionalities like sharing the content of the website on social media platforms, collecting feedback, and other third-party features.
+Cookie
+_dc_gtm_UA-*
+Duration
+1 minute
+Description
+Google Analytics sets this cookie to load the Google Analytics script tag.
+Cookie
+locale
+Duration
+Never Expires
+Description
+Facebook sets this cookie to enhance the user's browsing experience on the website, and to provide the user with relevant advertising while using Facebook’s social media platforms.
+Cookie
+BrowserId
+Duration
+1 year
+Description
+Sale Force sets this cookie to log browser sessions and visits for internal-only product
+[DOC 0] https://portlandgeneral.com/about/info/pricing-plans
+ analytics.
+Cookie
+sc_anonymous_id
+Duration
+Never Expires
+Description
+Soundcloud sets this cookie to enable visitors to embed content or files on the website.
+Analytics
+Analytical cookies are used to understand how visitors interact with the website. These cookies help provide information on metrics such as the number of visitors, bounce rate, traffic source, etc.
+Cookie
+QuantumMetricSessionID
+Duration
+1 hour
+Description
+No description available.
+Cookie
+QuantumMetricUserID
+Duration
+1 year
+Description
+No description available.
+Cookie
+_ga
+Duration
+1 year 1 month 4 days
+Description
+Google Analytics sets this cookie to calculate visitor, session and campaign data and track site usage for the site's analytics report. The cookie stores information anonymously and assigns a randomly generated number to recognise unique visitors.
+Cookie
+_gid
+Duration
+1 day
+Description
+Google Analytics sets this cookie to store information on how visitors use a website while also creating an analytics report of the website's performance. Some of the collected data includes the number of visitors, their source, and the pages they visit anonymously.
+Cookie
+_gat_UA-*
+Duration
+1 minute
+Description
+Google Analytics sets this cookie for user behaviour tracking.
+Cookie
+_ga_*
+Duration
+1 year 1 month 4 days
+Description
+Google Analytics sets this cookie to store and count page views.
+Cookie
+kampyle_userid
+Duration
+1 year
+Description
+This cookie is set by the provider Medallia. This cookie is used for storing a user ID.
+Cookie
+kampyleUserSession
+Duration
+1 year
+Description
+This cookie is set by the provider Medallia. This cookie is used for setting an unique ID for the specific session.
+Cookie
+kampyleUserSessionsCount
+Duration
+1 year
+Description
+This cookie is set by the provider Medallia. This cookie is used for counting the number of sessions per user.
+Cookie
+kampyleSessionPageCounter
+Duration
+1 year
+Description
+This cookie is set by the provider Medallia. This cookie is used for counting the number of pages a user views within a single sessions.
+Cookie
+vuid
+Duration
+1 year 1 month 4 days 1 minute
+Description
+Vimeo installs this cookie to collect tracking information by setting a unique ID to embed videos on the website.
+Uncategorized
+Other uncategorized cookies are those that are being analyzed and have not been classified into a category as yet.
+Cookie
+kampyleUserPercentile
+Duration
+1 year
+Description
+No description available.
+Cookie
+kampylePageLoadedTimestamp
+Duration
+1 year
+Description
+No description available.
+Cookie
+__Secure-YEC
+Duration
+past
+Description
+Description is currently not available.
+Cookie
+__Secure-YNID
+Duration
+6 months
+Description
+Description is currently not available.
+Cookie
+kampyleInvitePresented
+Duration
+1 year
+Description
+Description is currently not available.
+Cookie
+LAST_INVITATION_VIEW
+Duration
+1 year
+Description
+Description is currently not available.
+Cookie
+CookieConsentPolicy
+Duration
+1 year
+Description
+Description is currently not available.
+Cookie
+L
+[DOC 0] https://portlandgeneral.com/about/info/pricing-plans
+SKey-c$CookieConsentPolicy
+Duration
+1 year
+Description
+Description is currently not available.
+Cookie
+renderCtx
+Duration
+session
+Description
+This cookie is used for tracking community context state.
+Cookie
+aws-waf-token
+Duration
+4 days
+Description
+Description is currently not available.
+Cookie
+Newsletter
+Duration
+past
+Description
+Description is currently not available.
+Cookie
+sEc.portlandgeneral
+Duration
+6 months
+Description
+Description is currently not available.
+Cookie
+NSC_tvswfz3.nfebmmjb.dpn
+Duration
+session
+Description
+Description is currently not available.
+Reject all
+Save my preferences
+Accept all
+Site Search
+Español
+My Account
+Outages & Safety
+Clean Energy Choices
+Save Money
+About Us
+Help
+Working With PGE
+Once signed in, your language preference will only be available on your My Account page and the account-related pages you access from it.
+PGE Pricing Plans
+We're working to make customer prices more predictable and as low as possible. Here's what we're doing to manage costs and our current pricing plans.
+En Español
+About
+Company Info
+Quick Facts
+PGE Service Area
+Pricing Plans
+Time of Day Pricing
+Time of Use
+Market-Based Pricing
+Understanding Our Pricing
+Rates & Regulatory Documents
+PGE Projects
+Investor Relations
+Home
+About
+Company Info
+IMPORTANT NOTICE:
+We've filed a request with the Oregon Public Utility Commission to review customer prices. We're actively working to meet the increased energy demand of growing communities to help ensure everyone has safe and reliable power.
+Learn more.
+Committed to your energy
+While PGE does purchase some energy from the wholesale market, most of your power comes from our diverse mix of hydro, thermal, renewables and battery storage. This balanced supply portfolio reduces exposure to sharp market swings, so when we do see volatility, our regulated rates help keep your costs more predictable throughout the year.
+⠀
+Navigate this page:
+Residential power choices
+Business power options
+Business pricing schedules
+What makes up PGE prices?
+Base rates
+Most notably, base rates cover the cost of maintaining the electric grid. This includes fixing and replacing old power lines, poles and equipment to help deliver energy to communities safely and reliably.
+Power costs
+While PGE generates some of the power we serve customers, we also purchase power from across the west and manage our purchased power portfolio to balance customer costs and grid reliability. Each year, we compare what we expected power to cost with what it actually cost. If costs were lower, customers receive a refund. If they were higher, we may need to recover the difference.
+Supplemental charges
+Customers may see adjustments on their bills that collect or refund money for new and existing PGE customer programs and safety efforts that support our community, tariffs, state-mandated fees and pass-through costs we’re required to collect. The OPUC regularly reviews these charges when we update our filings.
+Residential power choices
+Check out our
+Power 
+[DOC 0] https://portlandgeneral.com/about/info/pricing-plans
+Choices Brochure
+for residential customers to see a side-by-side comparison of the prices, fuel sources and environmental impacts of all your options. Learn more to better
+understand your home's electric bill.
+Basic Service
+This is the plan most customers are on. You’ll continue Basic Service automatically unless you select another option. Pricing is based directly on the costs PGE incurs in providing electric service.
+Time of Day Pricing
+Save more when you use less electricity between 5-9 p.m. This unique pricing plan offers lower energy prices for using less energy during high demand hours.
+Green Future options
+Green Future Choice and Green Future Block are renewable power options that PGE customers can enroll in to support renewable energy in the way that works for you — up to 100%.
+Common business pricing schedules
+Pricing is based directly on the cost to provide electric service and is regulated by the Oregon Public Utility Commission. The following pricing schedules are the most typical for business customers. Your monthly statement shows your schedule or schedules (some businesses may have more than one).
+For medium and large businesses (your bill says Schedule 83, 85 or 89), your Basic Service plan already includes a lower rate for electricity used when demand is typically lower (nights and weekends). Your bill also includes a basic charge, transmission costs, distribution costs and required adjustments.
+Schedule 32, small non-residential business customers
+This schedule applies to business customers who have not exceeded 30 kW more than twice in the previous 13 months (or once with seven months or less of service). The price you pay for electricity is determined by the amount you use.
+Schedule 83, commercial customers
+Customers in this schedule have not exceeded 200 kW more than six times in the preceding 13 months and have not exceeded 4,000 kW more than once within the prior 13 months (or once with seven months or less of service).
+The price you pay for electricity is determined by the amount you use and the rate at which you use it.
+Schedule 85, large commercial customers
+Customers in this schedule have exceeded 200 kW more than six times in the preceding 13 months but have not exceeded 4,000 kW more than once within the prior 13 months (or once with seven months or less of service).
+The price you pay for electricity is determined by the amount you use and the rate at which you use it.
+Schedule 89, industrial customers
+Customers in this schedule have a demand that exceeded 4,000 kW at least twice within the prior 13 months (or once with seven months or less of service).
+The price you pay for electricity is determined by the amount of electricity you use and the rate at which you use it.
+Additional business power options
+Check out our
+Power Choices Brochure
+for business customers to see a side-by-side comparison of the prices, fuel sources and environmental impacts of all your options. Learn more to better
+understand your business elec
+[DOC 1] https://portlandgeneral.com/about/info/rates-and-regulatory/tariff
+Tariffs - Regulatory Documents | PGE
+We value your privacy
+We use cookies to enhance your browsing experience, serve personalized content and analyze our site traffic. By clicking "Accept all," you consent to our use of cookies.
+Reject all
+Accept all
+Customize Consent Preferences
+We use cookies to help you navigate efficiently and perform certain functions. You will find detailed information about all cookies under each consent category below.
+The cookies that are categorized as "Necessary" are stored on your browser as they are essential for enabling the basic functionalities of the site....
+Show more
+For more information on how Google's third-party cookies operate and handle your data, see:
+Google Privacy Policy
+Necessary
+Always Active
+Necessary cookies are required to enable the basic features of this site, such as providing secure log-in or adjusting your consent preferences. These cookies do not store any personally identifiable data.
+Cookie
+_GRECAPTCHA
+Duration
+6 months
+Description
+Google Recaptcha service sets this cookie to identify bots to protect the website against malicious spam attacks.
+Cookie
+rc::a
+Duration
+Never Expires
+Description
+This cookie is set by the Google recaptcha service to identify bots to protect the website against malicious spam attacks.
+Cookie
+rc::f
+Duration
+Never Expires
+Description
+This cookie is set by the Google recaptcha service to identify bots to protect the website against malicious spam attacks.
+Cookie
+rc::b
+Duration
+session
+Description
+This cookie is set by the Google recaptcha service to identify bots to protect the website against malicious spam attacks.
+Cookie
+rc::c
+Duration
+session
+Description
+This cookie is set by the Google recaptcha service to identify bots to protect the website against malicious spam attacks.
+Cookie
+__Secure-ROLLOUT_TOKEN
+Duration
+6 months
+Description
+Description is currently not available.
+Cookie
+VISITOR_PRIVACY_METADATA
+Duration
+6 months
+Description
+YouTube sets this cookie to store the user's cookie consent state for the current domain.
+Cookie
+__cf_bm
+Duration
+1 hour
+Description
+This cookie, set by Cloudflare, is used to support Cloudflare Bot Management.
+Cookie
+_cfuvid
+Duration
+session
+Description
+Cloudflare sets this cookie to track users across sessions to optimize user experience by maintaining session consistency and providing personalized services
+Cookie
+cookietest
+Duration
+session
+Description
+The cookietest cookie is typically used to determine whether the user's browser accepts cookies, essential for website functionality and user experience.
+Cookie
+yt.innertube::nextId
+Duration
+Never Expires
+Description
+YouTube sets this cookie to register a unique ID to store data on what videos from YouTube the user has seen.
+Cookie
+yt.innertube::requests
+Duration
+Never Expires
+Description
+YouTube sets this cookie to register a unique ID to store data on what videos from YouTube the user has seen.
+Cookie
+NID
+Duration
+6 months
+Description
+Google sets the cookie for advertising purpose
+[DOC 1] https://portlandgeneral.com/about/info/rates-and-regulatory/tariff
+s; to limit the number of times the user sees an ad, to unwanted mute ads, and to measure the effectiveness of ads.
+Cookie
+YSC
+Duration
+session
+Description
+YSC cookie is set by Youtube and is used to track the views of embedded videos on Youtube pages.
+Cookie
+VISITOR_INFO1_LIVE
+Duration
+6 months
+Description
+A cookie set by YouTube to measure bandwidth that determines whether the user gets the new or old player interface.
+Cookie
+yt-remote-connected-devices
+Duration
+Never Expires
+Description
+YouTube sets this cookie to store the user's video preferences using embedded YouTube videos.
+Cookie
+ytidb::LAST_RESULT_ENTRY_KEY
+Duration
+Never Expires
+Description
+The cookie ytidb::LAST_RESULT_ENTRY_KEY is used by YouTube to store the last search result entry that was clicked by the user. This information is used to improve the user experience by providing more relevant search results in the future.
+Cookie
+yt-remote-device-id
+Duration
+Never Expires
+Description
+YouTube sets this cookie to store the user's video preferences using embedded YouTube videos.
+Cookie
+yt-remote-session-name
+Duration
+session
+Description
+The yt-remote-session-name cookie is used by YouTube to store the user's video player preferences using embedded YouTube video.
+Cookie
+yt-remote-fast-check-period
+Duration
+session
+Description
+The yt-remote-fast-check-period cookie is used by YouTube to store the user's video player preferences for embedded YouTube videos.
+Cookie
+yt-remote-session-app
+Duration
+session
+Description
+The yt-remote-session-app cookie is used by YouTube to store user preferences and information about the interface of the embedded YouTube video player.
+Cookie
+yt-remote-cast-available
+Duration
+session
+Description
+The yt-remote-cast-available cookie is used to store the user's preferences regarding whether casting is available on their YouTube video player.
+Cookie
+yt-remote-cast-installed
+Duration
+session
+Description
+The yt-remote-cast-installed cookie is used to store the user's video player preferences using embedded YouTube video.
+Cookie
+cookieyes-consent
+Duration
+1 year
+Description
+CookieYes sets this cookie to remember users' consent preferences so that their preferences are respected on subsequent visits to this site. It does not collect or store any personal information about the site visitors.
+Functional
+Functional cookies help perform certain functionalities like sharing the content of the website on social media platforms, collecting feedback, and other third-party features.
+Cookie
+_dc_gtm_UA-*
+Duration
+1 minute
+Description
+Google Analytics sets this cookie to load the Google Analytics script tag.
+Cookie
+locale
+Duration
+Never Expires
+Description
+Facebook sets this cookie to enhance the user's browsing experience on the website, and to provide the user with relevant advertising while using Facebook’s social media platforms.
+Cookie
+BrowserId
+Duration
+1 year
+Description
+Sale Force sets this cookie to log browser sessions and visits for internal-only product analytics.
+Cook
+[DOC 1] https://portlandgeneral.com/about/info/rates-and-regulatory/tariff
+ie
+sc_anonymous_id
+Duration
+Never Expires
+Description
+Soundcloud sets this cookie to enable visitors to embed content or files on the website.
+Analytics
+Analytical cookies are used to understand how visitors interact with the website. These cookies help provide information on metrics such as the number of visitors, bounce rate, traffic source, etc.
+Cookie
+QuantumMetricSessionID
+Duration
+1 hour
+Description
+No description available.
+Cookie
+QuantumMetricUserID
+Duration
+1 year
+Description
+No description available.
+Cookie
+_ga
+Duration
+1 year 1 month 4 days
+Description
+Google Analytics sets this cookie to calculate visitor, session and campaign data and track site usage for the site's analytics report. The cookie stores information anonymously and assigns a randomly generated number to recognise unique visitors.
+Cookie
+_gid
+Duration
+1 day
+Description
+Google Analytics sets this cookie to store information on how visitors use a website while also creating an analytics report of the website's performance. Some of the collected data includes the number of visitors, their source, and the pages they visit anonymously.
+Cookie
+_gat_UA-*
+Duration
+1 minute
+Description
+Google Analytics sets this cookie for user behaviour tracking.
+Cookie
+_ga_*
+Duration
+1 year 1 month 4 days
+Description
+Google Analytics sets this cookie to store and count page views.
+Cookie
+kampyle_userid
+Duration
+1 year
+Description
+This cookie is set by the provider Medallia. This cookie is used for storing a user ID.
+Cookie
+kampyleUserSession
+Duration
+1 year
+Description
+This cookie is set by the provider Medallia. This cookie is used for setting an unique ID for the specific session.
+Cookie
+kampyleUserSessionsCount
+Duration
+1 year
+Description
+This cookie is set by the provider Medallia. This cookie is used for counting the number of sessions per user.
+Cookie
+kampyleSessionPageCounter
+Duration
+1 year
+Description
+This cookie is set by the provider Medallia. This cookie is used for counting the number of pages a user views within a single sessions.
+Cookie
+vuid
+Duration
+1 year 1 month 4 days 1 minute
+Description
+Vimeo installs this cookie to collect tracking information by setting a unique ID to embed videos on the website.
+Uncategorized
+Other uncategorized cookies are those that are being analyzed and have not been classified into a category as yet.
+Cookie
+kampyleUserPercentile
+Duration
+1 year
+Description
+No description available.
+Cookie
+kampylePageLoadedTimestamp
+Duration
+1 year
+Description
+No description available.
+Cookie
+__Secure-YEC
+Duration
+past
+Description
+Description is currently not available.
+Cookie
+__Secure-YNID
+Duration
+6 months
+Description
+Description is currently not available.
+Cookie
+kampyleInvitePresented
+Duration
+1 year
+Description
+Description is currently not available.
+Cookie
+LAST_INVITATION_VIEW
+Duration
+1 year
+Description
+Description is currently not available.
+Cookie
+CookieConsentPolicy
+Duration
+1 year
+Description
+Description is currently not available.
+Cookie
+LSKey-c$CookieCon
+[DOC 1] https://portlandgeneral.com/about/info/rates-and-regulatory/tariff
+sentPolicy
+Duration
+1 year
+Description
+Description is currently not available.
+Cookie
+renderCtx
+Duration
+session
+Description
+This cookie is used for tracking community context state.
+Cookie
+aws-waf-token
+Duration
+4 days
+Description
+Description is currently not available.
+Cookie
+Newsletter
+Duration
+past
+Description
+Description is currently not available.
+Cookie
+sEc.portlandgeneral
+Duration
+6 months
+Description
+Description is currently not available.
+Cookie
+NSC_tvswfz3.nfebmmjb.dpn
+Duration
+session
+Description
+Description is currently not available.
+Reject all
+Save my preferences
+Accept all
+Site Search
+Español
+My Account
+Outages & Safety
+Clean Energy Choices
+Save Money
+About Us
+Help
+Working With PGE
+Once signed in, your language preference will only be available on your My Account page and the account-related pages you access from it.
+About
+Company Info
+Quick Facts
+PGE Service Area
+Pricing Plans
+Rates & Regulatory Documents
+Tariffs & Rate Schedules
+Filings
+OPUC UE 435 General Rate Revision 2025
+Archive: Price summaries
+PGE Projects
+Investor Relations
+Home
+Rates & Regulatory Documents
+Tariffs & Rate Schedules
+As a convenience for our customers and other interested parties, PGE provides an online directory of our retail Tariff approved by the Oregon Public Utility Commission.
+Rate schedules
+All Tariffs
+Rate Schedules - Table of Contents
+Schedule 4 - Multifamily Residential Demand Response Water Heater Pilot
+Schedule 5 - Direct Load Control Program
+Schedule 7 - Residential Service
+Schedule 8 - Residential Electric Vehicle Charging Pilot
+Schedule 13 - Smart Grid Testbed Technology Validation and Testing
+Schedule 14 - Residential Battery Energy Storage Pilot
+Schedule 15 - Outdoor Area Lighting Standard Service (Cost of Service)
+Schedule 17 - Community Solar - Optional
+Schedule 18 - Income-Qualified Bill Discount - Optional
+Schedule 25 - Nonresidential Direct Load Control Pilot
+Schedule 26 - Nonresidential Demand Response Program
+Schedule 32 - Small Nonresidential Standard Service
+Schedule 38 - Large Nonresidential Optional Time-of-Day Standard Service (Cost of Service)
+Schedule 47 - Small Nonresidential Irrigation and Drainage Pumping Standard Service (Cost of Service)
+Schedule 49 - Large Nonresidential Irrigation and Drainage Pumping Standard Service (Cost of Service)
+Schedule 50 - Retail Electric Vehicle Charging Rates
+Schedule 52 - Nonresidential Electric Vehicle Charging Rebate Pilot
+Schedule 53 - Nonresidential Heavy-Duty Electric Vehicle Charging
+Schedule 54 - Large Nonresidential Tradable Renewable Credits Rider
+Schedule 55 - Large Nonresidential Green Energy Affinity Rider (GEAR)
+Schedule 56 - Fleet Electrification Make-Ready Pilot
+Schedule 75 - Partial Requirements Service
+Schedule 76R - Partial Requirements Economic Replacement Power Rider
+Schedule 81 - Nonresidential Emergency Default Service
+Schedule 83 - Large Nonresidential Standard Service (31 - 200 kW)
+Schedule 85 - Large Nonresidential Standard Service (201 - 4,000 kW)
+Schedule 86 - Non
+[DOC 1] https://portlandgeneral.com/about/info/rates-and-regulatory/tariff
+residential Demand Buy Back Rider
+Schedule 88 - Load Reduction Program
+Schedule 89 - Large Nonresidential (>4,000 kW) Standard Service
+Schedule 90 - Large Nonresidential Standard Service (>4,000 kW and Aggregate to >30 MWa)
+Schedule 91 - Street and Highway Lighting Standard Service (Cost of Service)
+Schedule 92 - Traffic Signals (No New Service) Standard Service (Cost of Service)
+Schedule 95 - Street and Highway Lighting New Technology (Cost of Service)
+Schedule 96 - Data Center Standard Service (Facilities ≥ 20,000 kW)
+Schedule 99 - Special Contracts
+Schedule 100 - Summary of Applicable Adjustments
+Schedule 102 - Federal River Benefits supplied by Bonneville Power Administration (BPA)
+Schedule 103 - Metro Supportive Housing Services Business Income Tax
+Schedule 105 - Regulatory Adjustments
+Schedule 106 - Multnomah County Business Income Tax Recovery
+Schedule 108 - Public Purpose Charge
+Schedule 109 - Energy Efficiency Funding Adjustment
+Schedule 111 - Targeted Energy Support Program Surcharge
+Schedule 115 - Low-Income Assistance
+Schedule 118 - Bill Adjustment Cost Recovery Mechanism
+Schedule 120 - Seaside Battery Storge Resource Alternative Recovery
+Schedule 121 - Distribution System Plan Alternative Recovery Mechanism
+Schedule 122 - Renewable Resources Automatic Adjustment Clause
+Schedule 123 - Decoupling Adjustment
+Schedule 125 - Annual Power Cost Update
+Schedule 126 - Annual Power Cost Variance Mechanism
+Schedule 128 - Short-term Transition Adjustment
+Schedule 129 - Long-term Transition Cost Adjustment
+Schedule 135 - Demand Response Cost Recovery Mechanism
+Schedule 136 - Oregon Community Solar Program Start-Up Cost Recovery Mechanism
+Schedule 137 - Customer-Owned Solar Payment Option Cost Recovery Mechanism
+Schedule 138 - Energy Storage Cost Recovery Mechanism
+Schedule 139 - New Large Load Transition Cost Adjustment
+Schedule 142 - Underground Conversion Cost Recovery Adjustment
+Schedule 143 - Spent Fuel Adjustment
+Schedule 145 - Boardman Power Plant Decommissioning Adjustment
+Schedule 146 - Colstrip Power Plant Operating Life Adjustment
+Schedule 149 - Environmental Remediation Cost Recovery Adjustment, Automatic Adjustment Clause
+Schedule 150 - Transportation Electrification Cost Recovery
+Schedule 151 - Wildfire Mitigation Cost Recovery
+Schedule 152 - Major Event Cost Recovery
+Schedule 153 - Community Benefits and Impacts Advisory Group (CBAIG) Cost Recovery Mechanism
+Schedule 200 - Dispatchable Standby Generation
+Schedule 203 - Net Metering Service
+Schedule 204 - Community Solar Program Interconnection and Power Purchase Schedule
+Schedule 215 - Solar Payment Option Pilot Small Systems (10 kW or Less), formerly known as Schedule 205
+Schedule 216 - Solar Payment Option Pilot Medium Systems (Greater than 10 kW to 100 kW), formerly known as Schedule 205
+Schedule 217 - Solar Payment Option Pilot Large Systems (Greater than 100 kW to 500 kW), formerly known as 206
+Schedule 300 - Charges as defined by the Rules and Regulations and Miscellaneous Cha
+[DOC 2] https://portlandgeneral.com/about/info/rates-and-regulatory
+Rates & Regulatory Documents | PGE
+We value your privacy
+We use cookies to enhance your browsing experience, serve personalized content and analyze our site traffic. By clicking "Accept all," you consent to our use of cookies.
+Reject all
+Accept all
+Customize Consent Preferences
+We use cookies to help you navigate efficiently and perform certain functions. You will find detailed information about all cookies under each consent category below.
+The cookies that are categorized as "Necessary" are stored on your browser as they are essential for enabling the basic functionalities of the site....
+Show more
+For more information on how Google's third-party cookies operate and handle your data, see:
+Google Privacy Policy
+Necessary
+Always Active
+Necessary cookies are required to enable the basic features of this site, such as providing secure log-in or adjusting your consent preferences. These cookies do not store any personally identifiable data.
+Cookie
+_GRECAPTCHA
+Duration
+6 months
+Description
+Google Recaptcha service sets this cookie to identify bots to protect the website against malicious spam attacks.
+Cookie
+rc::a
+Duration
+Never Expires
+Description
+This cookie is set by the Google recaptcha service to identify bots to protect the website against malicious spam attacks.
+Cookie
+rc::f
+Duration
+Never Expires
+Description
+This cookie is set by the Google recaptcha service to identify bots to protect the website against malicious spam attacks.
+Cookie
+rc::b
+Duration
+session
+Description
+This cookie is set by the Google recaptcha service to identify bots to protect the website against malicious spam attacks.
+Cookie
+rc::c
+Duration
+session
+Description
+This cookie is set by the Google recaptcha service to identify bots to protect the website against malicious spam attacks.
+Cookie
+__Secure-ROLLOUT_TOKEN
+Duration
+6 months
+Description
+Description is currently not available.
+Cookie
+VISITOR_PRIVACY_METADATA
+Duration
+6 months
+Description
+YouTube sets this cookie to store the user's cookie consent state for the current domain.
+Cookie
+__cf_bm
+Duration
+1 hour
+Description
+This cookie, set by Cloudflare, is used to support Cloudflare Bot Management.
+Cookie
+_cfuvid
+Duration
+session
+Description
+Cloudflare sets this cookie to track users across sessions to optimize user experience by maintaining session consistency and providing personalized services
+Cookie
+cookietest
+Duration
+session
+Description
+The cookietest cookie is typically used to determine whether the user's browser accepts cookies, essential for website functionality and user experience.
+Cookie
+yt.innertube::nextId
+Duration
+Never Expires
+Description
+YouTube sets this cookie to register a unique ID to store data on what videos from YouTube the user has seen.
+Cookie
+yt.innertube::requests
+Duration
+Never Expires
+Description
+YouTube sets this cookie to register a unique ID to store data on what videos from YouTube the user has seen.
+Cookie
+NID
+Duration
+6 months
+Description
+Google sets the cookie for advertising purposes;
+[DOC 2] https://portlandgeneral.com/about/info/rates-and-regulatory
+ to limit the number of times the user sees an ad, to unwanted mute ads, and to measure the effectiveness of ads.
+Cookie
+YSC
+Duration
+session
+Description
+YSC cookie is set by Youtube and is used to track the views of embedded videos on Youtube pages.
+Cookie
+VISITOR_INFO1_LIVE
+Duration
+6 months
+Description
+A cookie set by YouTube to measure bandwidth that determines whether the user gets the new or old player interface.
+Cookie
+yt-remote-connected-devices
+Duration
+Never Expires
+Description
+YouTube sets this cookie to store the user's video preferences using embedded YouTube videos.
+Cookie
+ytidb::LAST_RESULT_ENTRY_KEY
+Duration
+Never Expires
+Description
+The cookie ytidb::LAST_RESULT_ENTRY_KEY is used by YouTube to store the last search result entry that was clicked by the user. This information is used to improve the user experience by providing more relevant search results in the future.
+Cookie
+yt-remote-device-id
+Duration
+Never Expires
+Description
+YouTube sets this cookie to store the user's video preferences using embedded YouTube videos.
+Cookie
+yt-remote-session-name
+Duration
+session
+Description
+The yt-remote-session-name cookie is used by YouTube to store the user's video player preferences using embedded YouTube video.
+Cookie
+yt-remote-fast-check-period
+Duration
+session
+Description
+The yt-remote-fast-check-period cookie is used by YouTube to store the user's video player preferences for embedded YouTube videos.
+Cookie
+yt-remote-session-app
+Duration
+session
+Description
+The yt-remote-session-app cookie is used by YouTube to store user preferences and information about the interface of the embedded YouTube video player.
+Cookie
+yt-remote-cast-available
+Duration
+session
+Description
+The yt-remote-cast-available cookie is used to store the user's preferences regarding whether casting is available on their YouTube video player.
+Cookie
+yt-remote-cast-installed
+Duration
+session
+Description
+The yt-remote-cast-installed cookie is used to store the user's video player preferences using embedded YouTube video.
+Cookie
+cookieyes-consent
+Duration
+1 year
+Description
+CookieYes sets this cookie to remember users' consent preferences so that their preferences are respected on subsequent visits to this site. It does not collect or store any personal information about the site visitors.
+Functional
+Functional cookies help perform certain functionalities like sharing the content of the website on social media platforms, collecting feedback, and other third-party features.
+Cookie
+_dc_gtm_UA-*
+Duration
+1 minute
+Description
+Google Analytics sets this cookie to load the Google Analytics script tag.
+Cookie
+locale
+Duration
+Never Expires
+Description
+Facebook sets this cookie to enhance the user's browsing experience on the website, and to provide the user with relevant advertising while using Facebook’s social media platforms.
+Cookie
+BrowserId
+Duration
+1 year
+Description
+Sale Force sets this cookie to log browser sessions and visits for internal-only product analytics.
+Cookie
+[DOC 2] https://portlandgeneral.com/about/info/rates-and-regulatory
+
+sc_anonymous_id
+Duration
+Never Expires
+Description
+Soundcloud sets this cookie to enable visitors to embed content or files on the website.
+Analytics
+Analytical cookies are used to understand how visitors interact with the website. These cookies help provide information on metrics such as the number of visitors, bounce rate, traffic source, etc.
+Cookie
+QuantumMetricSessionID
+Duration
+1 hour
+Description
+No description available.
+Cookie
+QuantumMetricUserID
+Duration
+1 year
+Description
+No description available.
+Cookie
+_ga
+Duration
+1 year 1 month 4 days
+Description
+Google Analytics sets this cookie to calculate visitor, session and campaign data and track site usage for the site's analytics report. The cookie stores information anonymously and assigns a randomly generated number to recognise unique visitors.
+Cookie
+_gid
+Duration
+1 day
+Description
+Google Analytics sets this cookie to store information on how visitors use a website while also creating an analytics report of the website's performance. Some of the collected data includes the number of visitors, their source, and the pages they visit anonymously.
+Cookie
+_gat_UA-*
+Duration
+1 minute
+Description
+Google Analytics sets this cookie for user behaviour tracking.
+Cookie
+_ga_*
+Duration
+1 year 1 month 4 days
+Description
+Google Analytics sets this cookie to store and count page views.
+Cookie
+kampyle_userid
+Duration
+1 year
+Description
+This cookie is set by the provider Medallia. This cookie is used for storing a user ID.
+Cookie
+kampyleUserSession
+Duration
+1 year
+Description
+This cookie is set by the provider Medallia. This cookie is used for setting an unique ID for the specific session.
+Cookie
+kampyleUserSessionsCount
+Duration
+1 year
+Description
+This cookie is set by the provider Medallia. This cookie is used for counting the number of sessions per user.
+Cookie
+kampyleSessionPageCounter
+Duration
+1 year
+Description
+This cookie is set by the provider Medallia. This cookie is used for counting the number of pages a user views within a single sessions.
+Cookie
+vuid
+Duration
+1 year 1 month 4 days 1 minute
+Description
+Vimeo installs this cookie to collect tracking information by setting a unique ID to embed videos on the website.
+Uncategorized
+Other uncategorized cookies are those that are being analyzed and have not been classified into a category as yet.
+Cookie
+kampyleUserPercentile
+Duration
+1 year
+Description
+No description available.
+Cookie
+kampylePageLoadedTimestamp
+Duration
+1 year
+Description
+No description available.
+Cookie
+__Secure-YEC
+Duration
+past
+Description
+Description is currently not available.
+Cookie
+__Secure-YNID
+Duration
+6 months
+Description
+Description is currently not available.
+Cookie
+kampyleInvitePresented
+Duration
+1 year
+Description
+Description is currently not available.
+Cookie
+LAST_INVITATION_VIEW
+Duration
+1 year
+Description
+Description is currently not available.
+Cookie
+CookieConsentPolicy
+Duration
+1 year
+Description
+Description is currently not available.
+Cookie
+LSKey-c$CookieConse
+[DOC 2] https://portlandgeneral.com/about/info/rates-and-regulatory
+ntPolicy
+Duration
+1 year
+Description
+Description is currently not available.
+Cookie
+renderCtx
+Duration
+session
+Description
+This cookie is used for tracking community context state.
+Cookie
+aws-waf-token
+Duration
+4 days
+Description
+Description is currently not available.
+Cookie
+Newsletter
+Duration
+past
+Description
+Description is currently not available.
+Cookie
+sEc.portlandgeneral
+Duration
+6 months
+Description
+Description is currently not available.
+Cookie
+NSC_tvswfz3.nfebmmjb.dpn
+Duration
+session
+Description
+Description is currently not available.
+Reject all
+Save my preferences
+Accept all
+Site Search
+Español
+My Account
+Outages & Safety
+Clean Energy Choices
+Save Money
+About Us
+Help
+Working With PGE
+Once signed in, your language preference will only be available on your My Account page and the account-related pages you access from it.
+About
+Company Info
+Quick Facts
+PGE Service Area
+Pricing Plans
+Rates & Regulatory Documents
+Tariffs & Rate Schedules
+Filings
+OPUC UE 435 General Rate Revision 2025
+Archive: Price summaries
+PGE Projects
+Investor Relations
+Home
+About
+Company Info
+Rates & Regulatory Documents
+See our online directory of regulatory documents.
+Tariffs & Rate Schedules
+Filings
+OPUC UE 435 General Rate Revision 2025
+COMPANY
+PGE at a Glance
+News Room
+Careers
+Sustainability
+Regulatory Documents
+New Businesses
+Construction
+Business Distribution Services
+Investors
+Suppliers
+Wholesale
+CUSTOMER SERVICE
+503-228-6322
+800-542-8818
+8 a.m. - 6 p.m., Monday – Friday
+Help Center
+En Español
+Connect with Us
+OUTAGES, EMERGENCIES
+& POWER PROBLEMS
+503-464-7777
+800-544-1795
+24 Hours
+PRIVACY POLICY/OCPA
+LEGAL NOTICES
+SECURITY DISCLOSURE
+facebook
+instagram
+linkedin
+Browser Settings
+To sign in to your PGE web account, your browser must be set to accept cookies and JavaScript must be enabled.
+A cookie is a small text file stored on your computer by a website to give you a unique numeric ID. PGE doesn’t use cookies to track personal information; they are used to enhance your web experience by:
+Protecting your privacy and security: We’ll sign you out automatically after 20 idle minutes.
+Activating the "Remember Me" feature so your email address is provided automatically the next time you sign in.
+PGE also works with third parties that use cookies on our site to conduct visitor surveys and to enable other features.
+Feedback
+[DOC 3] https://portlandgeneral.com/2027-general-rate-case
+Large energy users pay more
+As Oregon's energy needs grow, we're using new regulatory rules to ensure large energy users, such as data centers, pay for the infrastructure they need to grow.
+That’s why data centers saw a 29.7% rate increase in 2026; and this new rate case proposes an additional 7.7% increase to continue covering the cost of growth.
+These investments benefit all customers by helping to modernize the electric system.
+Get involved in a public meeting
+You have a voice in the rate review process. The OPUC will facilitate
+public meetings
+throughout the regulatory process. Customers are encouraged to attend these meetings and provide feedback.
+[DOC 4] https://portlandgeneral.com/about/info/pricing-plans/time-of-use
+Time of Use
+We value your privacy
+We use cookies to enhance your browsing experience, serve personalized content and analyze our site traffic. By clicking "Accept all," you consent to our use of cookies.
+Reject all
+Accept all
+Customize Consent Preferences
+We use cookies to help you navigate efficiently and perform certain functions. You will find detailed information about all cookies under each consent category below.
+The cookies that are categorized as "Necessary" are stored on your browser as they are essential for enabling the basic functionalities of the site....
+Show more
+For more information on how Google's third-party cookies operate and handle your data, see:
+Google Privacy Policy
+Necessary
+Always Active
+Necessary cookies are required to enable the basic features of this site, such as providing secure log-in or adjusting your consent preferences. These cookies do not store any personally identifiable data.
+Cookie
+_GRECAPTCHA
+Duration
+6 months
+Description
+Google Recaptcha service sets this cookie to identify bots to protect the website against malicious spam attacks.
+Cookie
+rc::a
+Duration
+Never Expires
+Description
+This cookie is set by the Google recaptcha service to identify bots to protect the website against malicious spam attacks.
+Cookie
+rc::f
+Duration
+Never Expires
+Description
+This cookie is set by the Google recaptcha service to identify bots to protect the website against malicious spam attacks.
+Cookie
+rc::b
+Duration
+session
+Description
+This cookie is set by the Google recaptcha service to identify bots to protect the website against malicious spam attacks.
+Cookie
+rc::c
+Duration
+session
+Description
+This cookie is set by the Google recaptcha service to identify bots to protect the website against malicious spam attacks.
+Cookie
+__Secure-ROLLOUT_TOKEN
+Duration
+6 months
+Description
+Description is currently not available.
+Cookie
+VISITOR_PRIVACY_METADATA
+Duration
+6 months
+Description
+YouTube sets this cookie to store the user's cookie consent state for the current domain.
+Cookie
+__cf_bm
+Duration
+1 hour
+Description
+This cookie, set by Cloudflare, is used to support Cloudflare Bot Management.
+Cookie
+_cfuvid
+Duration
+session
+Description
+Cloudflare sets this cookie to track users across sessions to optimize user experience by maintaining session consistency and providing personalized services
+Cookie
+cookietest
+Duration
+session
+Description
+The cookietest cookie is typically used to determine whether the user's browser accepts cookies, essential for website functionality and user experience.
+Cookie
+yt.innertube::nextId
+Duration
+Never Expires
+Description
+YouTube sets this cookie to register a unique ID to store data on what videos from YouTube the user has seen.
+Cookie
+yt.innertube::requests
+Duration
+Never Expires
+Description
+YouTube sets this cookie to register a unique ID to store data on what videos from YouTube the user has seen.
+Cookie
+NID
+Duration
+6 months
+Description
+Google sets the cookie for advertising purposes; to limit the number of
+[DOC 4] https://portlandgeneral.com/about/info/pricing-plans/time-of-use
+ times the user sees an ad, to unwanted mute ads, and to measure the effectiveness of ads.
+Cookie
+YSC
+Duration
+session
+Description
+YSC cookie is set by Youtube and is used to track the views of embedded videos on Youtube pages.
+Cookie
+VISITOR_INFO1_LIVE
+Duration
+6 months
+Description
+A cookie set by YouTube to measure bandwidth that determines whether the user gets the new or old player interface.
+Cookie
+yt-remote-connected-devices
+Duration
+Never Expires
+Description
+YouTube sets this cookie to store the user's video preferences using embedded YouTube videos.
+Cookie
+ytidb::LAST_RESULT_ENTRY_KEY
+Duration
+Never Expires
+Description
+The cookie ytidb::LAST_RESULT_ENTRY_KEY is used by YouTube to store the last search result entry that was clicked by the user. This information is used to improve the user experience by providing more relevant search results in the future.
+Cookie
+yt-remote-device-id
+Duration
+Never Expires
+Description
+YouTube sets this cookie to store the user's video preferences using embedded YouTube videos.
+Cookie
+yt-remote-session-name
+Duration
+session
+Description
+The yt-remote-session-name cookie is used by YouTube to store the user's video player preferences using embedded YouTube video.
+Cookie
+yt-remote-fast-check-period
+Duration
+session
+Description
+The yt-remote-fast-check-period cookie is used by YouTube to store the user's video player preferences for embedded YouTube videos.
+Cookie
+yt-remote-session-app
+Duration
+session
+Description
+The yt-remote-session-app cookie is used by YouTube to store user preferences and information about the interface of the embedded YouTube video player.
+Cookie
+yt-remote-cast-available
+Duration
+session
+Description
+The yt-remote-cast-available cookie is used to store the user's preferences regarding whether casting is available on their YouTube video player.
+Cookie
+yt-remote-cast-installed
+Duration
+session
+Description
+The yt-remote-cast-installed cookie is used to store the user's video player preferences using embedded YouTube video.
+Cookie
+cookieyes-consent
+Duration
+1 year
+Description
+CookieYes sets this cookie to remember users' consent preferences so that their preferences are respected on subsequent visits to this site. It does not collect or store any personal information about the site visitors.
+Functional
+Functional cookies help perform certain functionalities like sharing the content of the website on social media platforms, collecting feedback, and other third-party features.
+Cookie
+_dc_gtm_UA-*
+Duration
+1 minute
+Description
+Google Analytics sets this cookie to load the Google Analytics script tag.
+Cookie
+locale
+Duration
+Never Expires
+Description
+Facebook sets this cookie to enhance the user's browsing experience on the website, and to provide the user with relevant advertising while using Facebook’s social media platforms.
+Cookie
+BrowserId
+Duration
+1 year
+Description
+Sale Force sets this cookie to log browser sessions and visits for internal-only product analytics.
+Cookie
+sc_anonymous_id
+Durati
+[DOC 4] https://portlandgeneral.com/about/info/pricing-plans/time-of-use
+on
+Never Expires
+Description
+Soundcloud sets this cookie to enable visitors to embed content or files on the website.
+Analytics
+Analytical cookies are used to understand how visitors interact with the website. These cookies help provide information on metrics such as the number of visitors, bounce rate, traffic source, etc.
+Cookie
+QuantumMetricSessionID
+Duration
+1 hour
+Description
+No description available.
+Cookie
+QuantumMetricUserID
+Duration
+1 year
+Description
+No description available.
+Cookie
+_ga
+Duration
+1 year 1 month 4 days
+Description
+Google Analytics sets this cookie to calculate visitor, session and campaign data and track site usage for the site's analytics report. The cookie stores information anonymously and assigns a randomly generated number to recognise unique visitors.
+Cookie
+_gid
+Duration
+1 day
+Description
+Google Analytics sets this cookie to store information on how visitors use a website while also creating an analytics report of the website's performance. Some of the collected data includes the number of visitors, their source, and the pages they visit anonymously.
+Cookie
+_gat_UA-*
+Duration
+1 minute
+Description
+Google Analytics sets this cookie for user behaviour tracking.
+Cookie
+_ga_*
+Duration
+1 year 1 month 4 days
+Description
+Google Analytics sets this cookie to store and count page views.
+Cookie
+kampyle_userid
+Duration
+1 year
+Description
+This cookie is set by the provider Medallia. This cookie is used for storing a user ID.
+Cookie
+kampyleUserSession
+Duration
+1 year
+Description
+This cookie is set by the provider Medallia. This cookie is used for setting an unique ID for the specific session.
+Cookie
+kampyleUserSessionsCount
+Duration
+1 year
+Description
+This cookie is set by the provider Medallia. This cookie is used for counting the number of sessions per user.
+Cookie
+kampyleSessionPageCounter
+Duration
+1 year
+Description
+This cookie is set by the provider Medallia. This cookie is used for counting the number of pages a user views within a single sessions.
+Cookie
+vuid
+Duration
+1 year 1 month 4 days 1 minute
+Description
+Vimeo installs this cookie to collect tracking information by setting a unique ID to embed videos on the website.
+Uncategorized
+Other uncategorized cookies are those that are being analyzed and have not been classified into a category as yet.
+Cookie
+kampyleUserPercentile
+Duration
+1 year
+Description
+No description available.
+Cookie
+kampylePageLoadedTimestamp
+Duration
+1 year
+Description
+No description available.
+Cookie
+__Secure-YEC
+Duration
+past
+Description
+Description is currently not available.
+Cookie
+__Secure-YNID
+Duration
+6 months
+Description
+Description is currently not available.
+Cookie
+kampyleInvitePresented
+Duration
+1 year
+Description
+Description is currently not available.
+Cookie
+LAST_INVITATION_VIEW
+Duration
+1 year
+Description
+Description is currently not available.
+Cookie
+CookieConsentPolicy
+Duration
+1 year
+Description
+Description is currently not available.
+Cookie
+LSKey-c$CookieConsentPolicy
+Duration
+1 yea
+[DOC 4] https://portlandgeneral.com/about/info/pricing-plans/time-of-use
+r
+Description
+Description is currently not available.
+Cookie
+renderCtx
+Duration
+session
+Description
+This cookie is used for tracking community context state.
+Cookie
+aws-waf-token
+Duration
+4 days
+Description
+Description is currently not available.
+Cookie
+Newsletter
+Duration
+past
+Description
+Description is currently not available.
+Cookie
+sEc.portlandgeneral
+Duration
+6 months
+Description
+Description is currently not available.
+Cookie
+NSC_tvswfz3.nfebmmjb.dpn
+Duration
+session
+Description
+Description is currently not available.
+Reject all
+Save my preferences
+Accept all
+Site Search
+Español
+My Account
+Outages & Safety
+Clean Energy Choices
+Save Money
+About Us
+Help
+Working With PGE
+Once signed in, your language preference will only be available on your My Account page and the account-related pages you access from it.
+Time of Use
+Are you a small business customer and a night owl? You could save with Time of Use.
+About
+Company Info
+Quick Facts
+PGE Service Area
+Pricing Plans
+Time of Day Pricing
+Time of Use
+Home Pricing
+Business Pricing
+Market-Based Pricing
+Understanding Our Pricing
+Rates & Regulatory Documents
+PGE Projects
+Investor Relations
+Home
+Pricing Plans
+Small business customers
+Enrollment in Time of Use is closed to residential customers, but still open for small business customers. If you’re a small business that uses most of your electricity at night or on weekends, or you charge an electric vehicle overnight, this plan may lower your electricity costs.
+You pay different rates for electricity you use depending on the time of day, day of week and season. The rate is lower on nights and weekends and higher at high-demand times such as weekday mornings and evenings. If you don’t use electricity primarily on nights and weekends, you may pay more on Time of Use than on the
+Basic Service
+rate*.
+See small business TOU pricing
+Residential customers
+Residential enrollment in Time of Use closed to new participants on Jan. 1, 2024 and expired for all residential participants after Dec. 31, 2024, at which time remaining participants were placed on the basic service rate.
+If you are interested in controlling your energy bill by using less energy during peak times, consider Time of Day pricing. You don’t have to be a night owl to save with Time of Day.
+Residential customers
+Save with Time of Day
+Simply use less energy during the on-peak hours of 5-9 p.m. weekdays to save. All other hours (and all day weekends) are less expensive than Basic Service pricing.
+Check it out
+*Review the
+conditional guarantee
+and
+eligibility and limits
+.
+COMPANY
+PGE at a Glance
+News Room
+Careers
+Sustainability
+Regulatory Documents
+New Businesses
+Construction
+Business Distribution Services
+Investors
+Suppliers
+Wholesale
+CUSTOMER SERVICE
+503-228-6322
+800-542-8818
+8 a.m. - 6 p.m., Monday – Friday
+Help Center
+En Español
+Connect with Us
+OUTAGES, EMERGENCIES
+& POWER PROBLEMS
+503-464-7777
+800-544-1795
+24 Hours
+PRIVACY POLICY/OCPA
+LEGAL NOTICES
+SECURITY DISCLOSURE
+facebook
+instagram
+linkedin
+Bro
+[DOC 4] https://portlandgeneral.com/about/info/pricing-plans/time-of-use
+wser Settings
+To sign in to your PGE web account, your browser must be set to accept cookies and JavaScript must be enabled.
+A cookie is a small text file stored on your computer by a website to give you a unique numeric ID. PGE doesn’t use cookies to track personal information; they are used to enhance your web experience by:
+Protecting your privacy and security: We’ll sign you out automatically after 20 idle minutes.
+Activating the "Remember Me" feature so your email address is provided automatically the next time you sign in.
+PGE also works with third parties that use cookies on our site to conduct visitor surveys and to enable other features.
+Feedback
+[DOC 5] https://portlandgeneral.com/about/info/pricing-plans/market-based-pricing
+Market-Based Pricing - Power Choices & Pricing | PGE
+We value your privacy
+We use cookies to enhance your browsing experience, serve personalized content and analyze our site traffic. By clicking "Accept all," you consent to our use of cookies.
+Reject all
+Accept all
+Customize Consent Preferences
+We use cookies to help you navigate efficiently and perform certain functions. You will find detailed information about all cookies under each consent category below.
+The cookies that are categorized as "Necessary" are stored on your browser as they are essential for enabling the basic functionalities of the site....
+Show more
+For more information on how Google's third-party cookies operate and handle your data, see:
+Google Privacy Policy
+Necessary
+Always Active
+Necessary cookies are required to enable the basic features of this site, such as providing secure log-in or adjusting your consent preferences. These cookies do not store any personally identifiable data.
+Cookie
+_GRECAPTCHA
+Duration
+6 months
+Description
+Google Recaptcha service sets this cookie to identify bots to protect the website against malicious spam attacks.
+Cookie
+rc::a
+Duration
+Never Expires
+Description
+This cookie is set by the Google recaptcha service to identify bots to protect the website against malicious spam attacks.
+Cookie
+rc::f
+Duration
+Never Expires
+Description
+This cookie is set by the Google recaptcha service to identify bots to protect the website against malicious spam attacks.
+Cookie
+rc::b
+Duration
+session
+Description
+This cookie is set by the Google recaptcha service to identify bots to protect the website against malicious spam attacks.
+Cookie
+rc::c
+Duration
+session
+Description
+This cookie is set by the Google recaptcha service to identify bots to protect the website against malicious spam attacks.
+Cookie
+__Secure-ROLLOUT_TOKEN
+Duration
+6 months
+Description
+Description is currently not available.
+Cookie
+VISITOR_PRIVACY_METADATA
+Duration
+6 months
+Description
+YouTube sets this cookie to store the user's cookie consent state for the current domain.
+Cookie
+__cf_bm
+Duration
+1 hour
+Description
+This cookie, set by Cloudflare, is used to support Cloudflare Bot Management.
+Cookie
+_cfuvid
+Duration
+session
+Description
+Cloudflare sets this cookie to track users across sessions to optimize user experience by maintaining session consistency and providing personalized services
+Cookie
+cookietest
+Duration
+session
+Description
+The cookietest cookie is typically used to determine whether the user's browser accepts cookies, essential for website functionality and user experience.
+Cookie
+yt.innertube::nextId
+Duration
+Never Expires
+Description
+YouTube sets this cookie to register a unique ID to store data on what videos from YouTube the user has seen.
+Cookie
+yt.innertube::requests
+Duration
+Never Expires
+Description
+YouTube sets this cookie to register a unique ID to store data on what videos from YouTube the user has seen.
+Cookie
+NID
+Duration
+6 months
+Description
+Google sets the cookie for adv
+[DOC 5] https://portlandgeneral.com/about/info/pricing-plans/market-based-pricing
+ertising purposes; to limit the number of times the user sees an ad, to unwanted mute ads, and to measure the effectiveness of ads.
+Cookie
+YSC
+Duration
+session
+Description
+YSC cookie is set by Youtube and is used to track the views of embedded videos on Youtube pages.
+Cookie
+VISITOR_INFO1_LIVE
+Duration
+6 months
+Description
+A cookie set by YouTube to measure bandwidth that determines whether the user gets the new or old player interface.
+Cookie
+yt-remote-connected-devices
+Duration
+Never Expires
+Description
+YouTube sets this cookie to store the user's video preferences using embedded YouTube videos.
+Cookie
+ytidb::LAST_RESULT_ENTRY_KEY
+Duration
+Never Expires
+Description
+The cookie ytidb::LAST_RESULT_ENTRY_KEY is used by YouTube to store the last search result entry that was clicked by the user. This information is used to improve the user experience by providing more relevant search results in the future.
+Cookie
+yt-remote-device-id
+Duration
+Never Expires
+Description
+YouTube sets this cookie to store the user's video preferences using embedded YouTube videos.
+Cookie
+yt-remote-session-name
+Duration
+session
+Description
+The yt-remote-session-name cookie is used by YouTube to store the user's video player preferences using embedded YouTube video.
+Cookie
+yt-remote-fast-check-period
+Duration
+session
+Description
+The yt-remote-fast-check-period cookie is used by YouTube to store the user's video player preferences for embedded YouTube videos.
+Cookie
+yt-remote-session-app
+Duration
+session
+Description
+The yt-remote-session-app cookie is used by YouTube to store user preferences and information about the interface of the embedded YouTube video player.
+Cookie
+yt-remote-cast-available
+Duration
+session
+Description
+The yt-remote-cast-available cookie is used to store the user's preferences regarding whether casting is available on their YouTube video player.
+Cookie
+yt-remote-cast-installed
+Duration
+session
+Description
+The yt-remote-cast-installed cookie is used to store the user's video player preferences using embedded YouTube video.
+Cookie
+cookieyes-consent
+Duration
+1 year
+Description
+CookieYes sets this cookie to remember users' consent preferences so that their preferences are respected on subsequent visits to this site. It does not collect or store any personal information about the site visitors.
+Functional
+Functional cookies help perform certain functionalities like sharing the content of the website on social media platforms, collecting feedback, and other third-party features.
+Cookie
+_dc_gtm_UA-*
+Duration
+1 minute
+Description
+Google Analytics sets this cookie to load the Google Analytics script tag.
+Cookie
+locale
+Duration
+Never Expires
+Description
+Facebook sets this cookie to enhance the user's browsing experience on the website, and to provide the user with relevant advertising while using Facebook’s social media platforms.
+Cookie
+BrowserId
+Duration
+1 year
+Description
+Sale Force sets this cookie to log browser sessions and visits for internal-only product
+[DOC 5] https://portlandgeneral.com/about/info/pricing-plans/market-based-pricing
+ analytics.
+Cookie
+sc_anonymous_id
+Duration
+Never Expires
+Description
+Soundcloud sets this cookie to enable visitors to embed content or files on the website.
+Analytics
+Analytical cookies are used to understand how visitors interact with the website. These cookies help provide information on metrics such as the number of visitors, bounce rate, traffic source, etc.
+Cookie
+QuantumMetricSessionID
+Duration
+1 hour
+Description
+No description available.
+Cookie
+QuantumMetricUserID
+Duration
+1 year
+Description
+No description available.
+Cookie
+_ga
+Duration
+1 year 1 month 4 days
+Description
+Google Analytics sets this cookie to calculate visitor, session and campaign data and track site usage for the site's analytics report. The cookie stores information anonymously and assigns a randomly generated number to recognise unique visitors.
+Cookie
+_gid
+Duration
+1 day
+Description
+Google Analytics sets this cookie to store information on how visitors use a website while also creating an analytics report of the website's performance. Some of the collected data includes the number of visitors, their source, and the pages they visit anonymously.
+Cookie
+_gat_UA-*
+Duration
+1 minute
+Description
+Google Analytics sets this cookie for user behaviour tracking.
+Cookie
+_ga_*
+Duration
+1 year 1 month 4 days
+Description
+Google Analytics sets this cookie to store and count page views.
+Cookie
+kampyle_userid
+Duration
+1 year
+Description
+This cookie is set by the provider Medallia. This cookie is used for storing a user ID.
+Cookie
+kampyleUserSession
+Duration
+1 year
+Description
+This cookie is set by the provider Medallia. This cookie is used for setting an unique ID for the specific session.
+Cookie
+kampyleUserSessionsCount
+Duration
+1 year
+Description
+This cookie is set by the provider Medallia. This cookie is used for counting the number of sessions per user.
+Cookie
+kampyleSessionPageCounter
+Duration
+1 year
+Description
+This cookie is set by the provider Medallia. This cookie is used for counting the number of pages a user views within a single sessions.
+Cookie
+vuid
+Duration
+1 year 1 month 4 days 1 minute
+Description
+Vimeo installs this cookie to collect tracking information by setting a unique ID to embed videos on the website.
+Uncategorized
+Other uncategorized cookies are those that are being analyzed and have not been classified into a category as yet.
+Cookie
+kampyleUserPercentile
+Duration
+1 year
+Description
+No description available.
+Cookie
+kampylePageLoadedTimestamp
+Duration
+1 year
+Description
+No description available.
+Cookie
+__Secure-YEC
+Duration
+past
+Description
+Description is currently not available.
+Cookie
+__Secure-YNID
+Duration
+6 months
+Description
+Description is currently not available.
+Cookie
+kampyleInvitePresented
+Duration
+1 year
+Description
+Description is currently not available.
+Cookie
+LAST_INVITATION_VIEW
+Duration
+1 year
+Description
+Description is currently not available.
+Cookie
+CookieConsentPolicy
+Duration
+1 year
+Description
+Description is currently not available.
+Cookie
+L
+[DOC 5] https://portlandgeneral.com/about/info/pricing-plans/market-based-pricing
+SKey-c$CookieConsentPolicy
+Duration
+1 year
+Description
+Description is currently not available.
+Cookie
+renderCtx
+Duration
+session
+Description
+This cookie is used for tracking community context state.
+Cookie
+aws-waf-token
+Duration
+4 days
+Description
+Description is currently not available.
+Cookie
+Newsletter
+Duration
+past
+Description
+Description is currently not available.
+Cookie
+sEc.portlandgeneral
+Duration
+6 months
+Description
+Description is currently not available.
+Cookie
+NSC_tvswfz3.nfebmmjb.dpn
+Duration
+session
+Description
+Description is currently not available.
+Reject all
+Save my preferences
+Accept all
+Site Search
+Español
+My Account
+Outages & Safety
+Clean Energy Choices
+Save Money
+About Us
+Help
+Working With PGE
+Once signed in, your language preference will only be available on your My Account page and the account-related pages you access from it.
+About
+Company Info
+Quick Facts
+PGE Service Area
+Pricing Plans
+Time of Day Pricing
+Time of Use
+Market-Based Pricing
+Transition Adjustments
+Direct Access Operations
+Pricing Graphs
+Market-Based Pricing FAQ
+Pricing Archive
+Understanding Our Pricing
+Rates & Regulatory Documents
+PGE Projects
+Investor Relations
+Home
+Pricing Plans
+Market-Based Pricing
+Upcoming election window
+November annual election window
+The next opportunity to return to PGE’s standard service pricing is from
+Nov. 16 at 2p.m. through Nov. 23, 2026 at 5p.m.
+Changes would be effective Jan. 1, 2027. This window is the only time you can return to, or leave, PGE standard service pricing for service in 2026 if you are currently served by an Electricity Service Supplier or on PGE’s Daily Market Pricing.
+For more information on the November election window, see our
+FAQs.
+You can modify your plan by reaching out to
+business.outreach@pgn.com
+or by
+logging in to your business account
+— if you do not have an account and need assistance registering, please contact your account manager or the PGE Business Services team at 800-822-1077.
+What is it
+How do I sign up
+When do I sign up
+Depending on your organization’s management strategy, you may want to consider your options regarding your pricing plan. You can choose how long you want to be on a market-based plan and who you buy electricity from. These choices can have a significant and long-term impact on your company’s future energy costs, so it’s important to have the information you need to make the best decision for your business.
+Visit our
+fact sheet
+to review details and FAQs on selecting your electricity supplier.
+Your options
+Stay on PGE’s standard service
+. It’s open to all businesses within our service area and you don’t need to take any action or sign contracts to stay on it.
+Choose short-term market-based power.
+Choose long-term market-based power.
+PGE’s Daily Market Pricing
+If you choose PGE’s Daily Market pricing, your prices are based on the Intercontinental Exchange Mid-Columbia (Mid-C) Daily on- and off- peak Electricity Firm Price Index (ICE-Mid-C Firm Index). Prices will vary, as they re
+[DOC 5] https://portlandgeneral.com/about/info/pricing-plans/market-based-pricing
+flect the supply and demand in the energy market. Daily pricing information is available for a fee at
+theice.com
+and in other financial publications.
+Direct Access through an ESS
+With this option, you will be electing to purchase power from a third-party Electricity Service Supplier (ESS).*
+These ESSs are registered to work with PGE:
+Avangrid Renewables, LLC
+Calpine Energy Solutions, LLC
+Constellation NewEnergy
+Shell Energy North America
+Brookfield Renewable Energy Marketing US, LLC
+They may contact you to offer their services. Delivery charges, adjustments, taxes and other standard fees regulated by the Oregon Public Utility Commission will still apply and reflect on your PGE bill.
+*PGE cannot guarantee the accuracy of ESS claims and their ability to serve load now or in the future. If you have questions or would like to validate claims regarding PGE's standard service pricing, please contact
+business.outreach@pgn.com
+.
+We’re here to help
+Email your PGE representative at
+business.outreach@pgn.com
+or call PGE Business Services at
+800-822-1077
+if you have questions about any of your pricing choices.
+We’ve got your back
+No matter who you choose to buy electricity from, it will still be delivered over PGE’s system of power lines, poles and substations. We’ll still be here for you, delivering electricity safely and reliably, just like we always have.
+Transition adjustments
+If you opt for Daily Market Pricing or Direct Access, a
+transition adjustment
+will be added to your bill. Transition adjustments are different for each election window, and can be a charge or credit, depending on the market.
+COMPANY
+PGE at a Glance
+News Room
+Careers
+Sustainability
+Regulatory Documents
+New Businesses
+Construction
+Business Distribution Services
+Investors
+Suppliers
+Wholesale
+CUSTOMER SERVICE
+503-228-6322
+800-542-8818
+8 a.m. - 6 p.m., Monday – Friday
+Help Center
+En Español
+Connect with Us
+OUTAGES, EMERGENCIES
+& POWER PROBLEMS
+503-464-7777
+800-544-1795
+24 Hours
+PRIVACY POLICY/OCPA
+LEGAL NOTICES
+SECURITY DISCLOSURE
+facebook
+instagram
+linkedin
+Browser Settings
+To sign in to your PGE web account, your browser must be set to accept cookies and JavaScript must be enabled.
+A cookie is a small text file stored on your computer by a website to give you a unique numeric ID. PGE doesn’t use cookies to track personal information; they are used to enhance your web experience by:
+Protecting your privacy and security: We’ll sign you out automatically after 20 idle minutes.
+Activating the "Remember Me" feature so your email address is provided automatically the next time you sign in.
+PGE also works with third parties that use cookies on our site to conduct visitor surveys and to enable other features.
+Feedback
+[DOC 6] https://portlandgeneral.com/about/info/pricing-plans/understanding-our-pricing
+Understanding Our Pricing - PGE at a Glance | PGE
+We value your privacy
+We use cookies to enhance your browsing experience, serve personalized content and analyze our site traffic. By clicking "Accept all," you consent to our use of cookies.
+Reject all
+Accept all
+Customize Consent Preferences
+We use cookies to help you navigate efficiently and perform certain functions. You will find detailed information about all cookies under each consent category below.
+The cookies that are categorized as "Necessary" are stored on your browser as they are essential for enabling the basic functionalities of the site....
+Show more
+For more information on how Google's third-party cookies operate and handle your data, see:
+Google Privacy Policy
+Necessary
+Always Active
+Necessary cookies are required to enable the basic features of this site, such as providing secure log-in or adjusting your consent preferences. These cookies do not store any personally identifiable data.
+Cookie
+_GRECAPTCHA
+Duration
+6 months
+Description
+Google Recaptcha service sets this cookie to identify bots to protect the website against malicious spam attacks.
+Cookie
+rc::a
+Duration
+Never Expires
+Description
+This cookie is set by the Google recaptcha service to identify bots to protect the website against malicious spam attacks.
+Cookie
+rc::f
+Duration
+Never Expires
+Description
+This cookie is set by the Google recaptcha service to identify bots to protect the website against malicious spam attacks.
+Cookie
+rc::b
+Duration
+session
+Description
+This cookie is set by the Google recaptcha service to identify bots to protect the website against malicious spam attacks.
+Cookie
+rc::c
+Duration
+session
+Description
+This cookie is set by the Google recaptcha service to identify bots to protect the website against malicious spam attacks.
+Cookie
+__Secure-ROLLOUT_TOKEN
+Duration
+6 months
+Description
+Description is currently not available.
+Cookie
+VISITOR_PRIVACY_METADATA
+Duration
+6 months
+Description
+YouTube sets this cookie to store the user's cookie consent state for the current domain.
+Cookie
+__cf_bm
+Duration
+1 hour
+Description
+This cookie, set by Cloudflare, is used to support Cloudflare Bot Management.
+Cookie
+_cfuvid
+Duration
+session
+Description
+Cloudflare sets this cookie to track users across sessions to optimize user experience by maintaining session consistency and providing personalized services
+Cookie
+cookietest
+Duration
+session
+Description
+The cookietest cookie is typically used to determine whether the user's browser accepts cookies, essential for website functionality and user experience.
+Cookie
+yt.innertube::nextId
+Duration
+Never Expires
+Description
+YouTube sets this cookie to register a unique ID to store data on what videos from YouTube the user has seen.
+Cookie
+yt.innertube::requests
+Duration
+Never Expires
+Description
+YouTube sets this cookie to register a unique ID to store data on what videos from YouTube the user has seen.
+Cookie
+NID
+Duration
+6 months
+Description
+Google sets the cookie for advert
+[DOC 6] https://portlandgeneral.com/about/info/pricing-plans/understanding-our-pricing
+ising purposes; to limit the number of times the user sees an ad, to unwanted mute ads, and to measure the effectiveness of ads.
+Cookie
+YSC
+Duration
+session
+Description
+YSC cookie is set by Youtube and is used to track the views of embedded videos on Youtube pages.
+Cookie
+VISITOR_INFO1_LIVE
+Duration
+6 months
+Description
+A cookie set by YouTube to measure bandwidth that determines whether the user gets the new or old player interface.
+Cookie
+yt-remote-connected-devices
+Duration
+Never Expires
+Description
+YouTube sets this cookie to store the user's video preferences using embedded YouTube videos.
+Cookie
+ytidb::LAST_RESULT_ENTRY_KEY
+Duration
+Never Expires
+Description
+The cookie ytidb::LAST_RESULT_ENTRY_KEY is used by YouTube to store the last search result entry that was clicked by the user. This information is used to improve the user experience by providing more relevant search results in the future.
+Cookie
+yt-remote-device-id
+Duration
+Never Expires
+Description
+YouTube sets this cookie to store the user's video preferences using embedded YouTube videos.
+Cookie
+yt-remote-session-name
+Duration
+session
+Description
+The yt-remote-session-name cookie is used by YouTube to store the user's video player preferences using embedded YouTube video.
+Cookie
+yt-remote-fast-check-period
+Duration
+session
+Description
+The yt-remote-fast-check-period cookie is used by YouTube to store the user's video player preferences for embedded YouTube videos.
+Cookie
+yt-remote-session-app
+Duration
+session
+Description
+The yt-remote-session-app cookie is used by YouTube to store user preferences and information about the interface of the embedded YouTube video player.
+Cookie
+yt-remote-cast-available
+Duration
+session
+Description
+The yt-remote-cast-available cookie is used to store the user's preferences regarding whether casting is available on their YouTube video player.
+Cookie
+yt-remote-cast-installed
+Duration
+session
+Description
+The yt-remote-cast-installed cookie is used to store the user's video player preferences using embedded YouTube video.
+Cookie
+cookieyes-consent
+Duration
+1 year
+Description
+CookieYes sets this cookie to remember users' consent preferences so that their preferences are respected on subsequent visits to this site. It does not collect or store any personal information about the site visitors.
+Functional
+Functional cookies help perform certain functionalities like sharing the content of the website on social media platforms, collecting feedback, and other third-party features.
+Cookie
+_dc_gtm_UA-*
+Duration
+1 minute
+Description
+Google Analytics sets this cookie to load the Google Analytics script tag.
+Cookie
+locale
+Duration
+Never Expires
+Description
+Facebook sets this cookie to enhance the user's browsing experience on the website, and to provide the user with relevant advertising while using Facebook’s social media platforms.
+Cookie
+BrowserId
+Duration
+1 year
+Description
+Sale Force sets this cookie to log browser sessions and visits for internal-only product an
+[DOC 6] https://portlandgeneral.com/about/info/pricing-plans/understanding-our-pricing
+alytics.
+Cookie
+sc_anonymous_id
+Duration
+Never Expires
+Description
+Soundcloud sets this cookie to enable visitors to embed content or files on the website.
+Analytics
+Analytical cookies are used to understand how visitors interact with the website. These cookies help provide information on metrics such as the number of visitors, bounce rate, traffic source, etc.
+Cookie
+QuantumMetricSessionID
+Duration
+1 hour
+Description
+No description available.
+Cookie
+QuantumMetricUserID
+Duration
+1 year
+Description
+No description available.
+Cookie
+_ga
+Duration
+1 year 1 month 4 days
+Description
+Google Analytics sets this cookie to calculate visitor, session and campaign data and track site usage for the site's analytics report. The cookie stores information anonymously and assigns a randomly generated number to recognise unique visitors.
+Cookie
+_gid
+Duration
+1 day
+Description
+Google Analytics sets this cookie to store information on how visitors use a website while also creating an analytics report of the website's performance. Some of the collected data includes the number of visitors, their source, and the pages they visit anonymously.
+Cookie
+_gat_UA-*
+Duration
+1 minute
+Description
+Google Analytics sets this cookie for user behaviour tracking.
+Cookie
+_ga_*
+Duration
+1 year 1 month 4 days
+Description
+Google Analytics sets this cookie to store and count page views.
+Cookie
+kampyle_userid
+Duration
+1 year
+Description
+This cookie is set by the provider Medallia. This cookie is used for storing a user ID.
+Cookie
+kampyleUserSession
+Duration
+1 year
+Description
+This cookie is set by the provider Medallia. This cookie is used for setting an unique ID for the specific session.
+Cookie
+kampyleUserSessionsCount
+Duration
+1 year
+Description
+This cookie is set by the provider Medallia. This cookie is used for counting the number of sessions per user.
+Cookie
+kampyleSessionPageCounter
+Duration
+1 year
+Description
+This cookie is set by the provider Medallia. This cookie is used for counting the number of pages a user views within a single sessions.
+Cookie
+vuid
+Duration
+1 year 1 month 4 days 1 minute
+Description
+Vimeo installs this cookie to collect tracking information by setting a unique ID to embed videos on the website.
+Uncategorized
+Other uncategorized cookies are those that are being analyzed and have not been classified into a category as yet.
+Cookie
+kampyleUserPercentile
+Duration
+1 year
+Description
+No description available.
+Cookie
+kampylePageLoadedTimestamp
+Duration
+1 year
+Description
+No description available.
+Cookie
+__Secure-YEC
+Duration
+past
+Description
+Description is currently not available.
+Cookie
+__Secure-YNID
+Duration
+6 months
+Description
+Description is currently not available.
+Cookie
+kampyleInvitePresented
+Duration
+1 year
+Description
+Description is currently not available.
+Cookie
+LAST_INVITATION_VIEW
+Duration
+1 year
+Description
+Description is currently not available.
+Cookie
+CookieConsentPolicy
+Duration
+1 year
+Description
+Description is currently not available.
+Cookie
+LSKe
+[DOC 6] https://portlandgeneral.com/about/info/pricing-plans/understanding-our-pricing
+y-c$CookieConsentPolicy
+Duration
+1 year
+Description
+Description is currently not available.
+Cookie
+renderCtx
+Duration
+session
+Description
+This cookie is used for tracking community context state.
+Cookie
+aws-waf-token
+Duration
+4 days
+Description
+Description is currently not available.
+Cookie
+Newsletter
+Duration
+past
+Description
+Description is currently not available.
+Cookie
+sEc.portlandgeneral
+Duration
+6 months
+Description
+Description is currently not available.
+Cookie
+NSC_tvswfz3.nfebmmjb.dpn
+Duration
+session
+Description
+Description is currently not available.
+Reject all
+Save my preferences
+Accept all
+Site Search
+Español
+My Account
+Outages & Safety
+Clean Energy Choices
+Save Money
+About Us
+Help
+Working With PGE
+Once signed in, your language preference will only be available on your My Account page and the account-related pages you access from it.
+About
+Company Info
+Quick Facts
+PGE Service Area
+Pricing Plans
+Time of Day Pricing
+Time of Use
+Market-Based Pricing
+Understanding Our Pricing
+Rates & Regulatory Documents
+PGE Projects
+Investor Relations
+Home
+Pricing Plans
+Understanding Our Pricing
+How prices are determined
+Like all investor-owned utilities in Oregon, PGE undergoes a price-setting process with the Oregon Public Utility Commission, called a rate case, when it needs to ask the Commission to set or change the overall prices customers pay for electric service. PGE bases its proposed prices on forecasts of what it believes its future costs to provide service will be, plus a reasonable rate of return.
+PGE customers have a voice in the rate case process. With support from PGE, the
+OPUC
+holds open houses for the community on every rate case considered. Customers are encouraged to attend these open houses and provide feedback. The OPUC then sets prices for residential and business customers at levels it determines to be just and reasonable.
+Annually, in between rate cases, the OPUC also adjusts prices to reflect the projected net cost of the power needed to serve customers for the year ahead and make any other necessary changes. This includes the cost for PGE to generate its own energy — which is affected by prices for raw fuel like coal and natural gas — and how weather will affect the output of hydroelectric and wind generators. Price adjustments also include the predicted cost to buy supplemental energy from other suppliers on the wholesale power market.
+The Public Utility Commission of Oregon approved several Advice Filings which will be effective on January 1, 2025. In addition, PGE filed the UE 435 General Rate Revision Compliance Filing effective January 1, 2025. The approved changes to Supplemental Schedule and the results of UE 435 General Rate Revision effective January 1, 2025, result in an overall revenue increase of $188 million. Total rate increase for January 1, 2025, for residential customers is a 5.6% increase on average, commercial customers will experience a 7.6% on average increase, and industrial customers will experience a 6.0%
+[DOC 6] https://portlandgeneral.com/about/info/pricing-plans/understanding-our-pricing
+ on average increase.
+Common business pricing schedules
+Pricing is based directly on the cost to provide electric service and is regulated by the Oregon Public Utility Commission. The following pricing schedules are the most typical for business customers. Your monthly statement shows your schedule or schedules (some businesses may have more than one).
+For medium and large businesses (your bill says Schedule 83, 85 or 89), your Basic Service plan already includes a lower rate for electricity used when demand is typically lower (nights and weekends). Your bill also includes a basic charge, transmission costs, distribution costs and required adjustments.
+Schedule 32, small non-residential business customers
+This schedule applies to business customers who have not exceeded 30 kW more than twice in the previous 13 months (or once with seven months or less of service). The price you pay for electricity is determined by the amount you use.
+Schedule 83, commercial customers
+Customers in this schedule have not exceeded 200 kW more than six times in the preceding 13 months and have not exceeded 4,000 kW more than once within the prior 13 months (or once with seven months or less of service).
+The price you pay for electricity is determined by the amount you use and the rate at which you use it.
+Schedule 85, large commercial customers
+Customers in this schedule have exceeded 200 kW more than six times in the preceding 13 months but have not exceeded 4,000 kW more than once within the prior 13 months (or once with seven months or less of service).
+The price you pay for electricity is determined by the amount you use and the rate at which you use it.
+Schedule 89, industrial customers
+Customers in this schedule have a demand that exceeded 4,000 kW at least twice within the prior 13 months (or once with seven months or less of service).
+The price you pay for electricity is determined by the amount of electricity you use and the rate at which you use it.
+Related
+Understanding My Bill
+Understanding my business’s electric bill
+Tariffs & Rate Schedules
+Oregon Public Utility Commission
+PGE Projects - Powering Progress
+Pricing Graphs
+COMPANY
+PGE at a Glance
+News Room
+Careers
+Sustainability
+Regulatory Documents
+New Businesses
+Construction
+Business Distribution Services
+Investors
+Suppliers
+Wholesale
+CUSTOMER SERVICE
+503-228-6322
+800-542-8818
+8 a.m. - 6 p.m., Monday – Friday
+Help Center
+En Español
+Connect with Us
+OUTAGES, EMERGENCIES
+& POWER PROBLEMS
+503-464-7777
+800-544-1795
+24 Hours
+PRIVACY POLICY/OCPA
+LEGAL NOTICES
+SECURITY DISCLOSURE
+facebook
+instagram
+linkedin
+Browser Settings
+To sign in to your PGE web account, your browser must be set to accept cookies and JavaScript must be enabled.
+A cookie is a small text file stored on your computer by a website to give you a unique numeric ID. PGE doesn’t use cookies to track personal information; they are used to enhance your web experience by:
+Protecting your privacy and security: We’ll sign you out automatically after 20 
+[DOC 7] https://portlandgeneral.com/about/info/pricing-plans/market-based-pricing/pricing-graphs
+Pricing Graphs
+We value your privacy
+We use cookies to enhance your browsing experience, serve personalized content and analyze our site traffic. By clicking "Accept all," you consent to our use of cookies.
+Reject all
+Accept all
+Customize Consent Preferences
+We use cookies to help you navigate efficiently and perform certain functions. You will find detailed information about all cookies under each consent category below.
+The cookies that are categorized as "Necessary" are stored on your browser as they are essential for enabling the basic functionalities of the site....
+Show more
+For more information on how Google's third-party cookies operate and handle your data, see:
+Google Privacy Policy
+Necessary
+Always Active
+Necessary cookies are required to enable the basic features of this site, such as providing secure log-in or adjusting your consent preferences. These cookies do not store any personally identifiable data.
+Cookie
+_GRECAPTCHA
+Duration
+6 months
+Description
+Google Recaptcha service sets this cookie to identify bots to protect the website against malicious spam attacks.
+Cookie
+rc::a
+Duration
+Never Expires
+Description
+This cookie is set by the Google recaptcha service to identify bots to protect the website against malicious spam attacks.
+Cookie
+rc::f
+Duration
+Never Expires
+Description
+This cookie is set by the Google recaptcha service to identify bots to protect the website against malicious spam attacks.
+Cookie
+rc::b
+Duration
+session
+Description
+This cookie is set by the Google recaptcha service to identify bots to protect the website against malicious spam attacks.
+Cookie
+rc::c
+Duration
+session
+Description
+This cookie is set by the Google recaptcha service to identify bots to protect the website against malicious spam attacks.
+Cookie
+__Secure-ROLLOUT_TOKEN
+Duration
+6 months
+Description
+Description is currently not available.
+Cookie
+VISITOR_PRIVACY_METADATA
+Duration
+6 months
+Description
+YouTube sets this cookie to store the user's cookie consent state for the current domain.
+Cookie
+__cf_bm
+Duration
+1 hour
+Description
+This cookie, set by Cloudflare, is used to support Cloudflare Bot Management.
+Cookie
+_cfuvid
+Duration
+session
+Description
+Cloudflare sets this cookie to track users across sessions to optimize user experience by maintaining session consistency and providing personalized services
+Cookie
+cookietest
+Duration
+session
+Description
+The cookietest cookie is typically used to determine whether the user's browser accepts cookies, essential for website functionality and user experience.
+Cookie
+yt.innertube::nextId
+Duration
+Never Expires
+Description
+YouTube sets this cookie to register a unique ID to store data on what videos from YouTube the user has seen.
+Cookie
+yt.innertube::requests
+Duration
+Never Expires
+Description
+YouTube sets this cookie to register a unique ID to store data on what videos from YouTube the user has seen.
+Cookie
+NID
+Duration
+6 months
+Description
+Google sets the cookie for advertising purposes; to limit the number
+[DOC 7] https://portlandgeneral.com/about/info/pricing-plans/market-based-pricing/pricing-graphs
+ of times the user sees an ad, to unwanted mute ads, and to measure the effectiveness of ads.
+Cookie
+YSC
+Duration
+session
+Description
+YSC cookie is set by Youtube and is used to track the views of embedded videos on Youtube pages.
+Cookie
+VISITOR_INFO1_LIVE
+Duration
+6 months
+Description
+A cookie set by YouTube to measure bandwidth that determines whether the user gets the new or old player interface.
+Cookie
+yt-remote-connected-devices
+Duration
+Never Expires
+Description
+YouTube sets this cookie to store the user's video preferences using embedded YouTube videos.
+Cookie
+ytidb::LAST_RESULT_ENTRY_KEY
+Duration
+Never Expires
+Description
+The cookie ytidb::LAST_RESULT_ENTRY_KEY is used by YouTube to store the last search result entry that was clicked by the user. This information is used to improve the user experience by providing more relevant search results in the future.
+Cookie
+yt-remote-device-id
+Duration
+Never Expires
+Description
+YouTube sets this cookie to store the user's video preferences using embedded YouTube videos.
+Cookie
+yt-remote-session-name
+Duration
+session
+Description
+The yt-remote-session-name cookie is used by YouTube to store the user's video player preferences using embedded YouTube video.
+Cookie
+yt-remote-fast-check-period
+Duration
+session
+Description
+The yt-remote-fast-check-period cookie is used by YouTube to store the user's video player preferences for embedded YouTube videos.
+Cookie
+yt-remote-session-app
+Duration
+session
+Description
+The yt-remote-session-app cookie is used by YouTube to store user preferences and information about the interface of the embedded YouTube video player.
+Cookie
+yt-remote-cast-available
+Duration
+session
+Description
+The yt-remote-cast-available cookie is used to store the user's preferences regarding whether casting is available on their YouTube video player.
+Cookie
+yt-remote-cast-installed
+Duration
+session
+Description
+The yt-remote-cast-installed cookie is used to store the user's video player preferences using embedded YouTube video.
+Cookie
+cookieyes-consent
+Duration
+1 year
+Description
+CookieYes sets this cookie to remember users' consent preferences so that their preferences are respected on subsequent visits to this site. It does not collect or store any personal information about the site visitors.
+Functional
+Functional cookies help perform certain functionalities like sharing the content of the website on social media platforms, collecting feedback, and other third-party features.
+Cookie
+_dc_gtm_UA-*
+Duration
+1 minute
+Description
+Google Analytics sets this cookie to load the Google Analytics script tag.
+Cookie
+locale
+Duration
+Never Expires
+Description
+Facebook sets this cookie to enhance the user's browsing experience on the website, and to provide the user with relevant advertising while using Facebook’s social media platforms.
+Cookie
+BrowserId
+Duration
+1 year
+Description
+Sale Force sets this cookie to log browser sessions and visits for internal-only product analytics.
+Cookie
+sc_anonymous_id
+Dur
+[DOC 7] https://portlandgeneral.com/about/info/pricing-plans/market-based-pricing/pricing-graphs
+ation
+Never Expires
+Description
+Soundcloud sets this cookie to enable visitors to embed content or files on the website.
+Analytics
+Analytical cookies are used to understand how visitors interact with the website. These cookies help provide information on metrics such as the number of visitors, bounce rate, traffic source, etc.
+Cookie
+QuantumMetricSessionID
+Duration
+1 hour
+Description
+No description available.
+Cookie
+QuantumMetricUserID
+Duration
+1 year
+Description
+No description available.
+Cookie
+_ga
+Duration
+1 year 1 month 4 days
+Description
+Google Analytics sets this cookie to calculate visitor, session and campaign data and track site usage for the site's analytics report. The cookie stores information anonymously and assigns a randomly generated number to recognise unique visitors.
+Cookie
+_gid
+Duration
+1 day
+Description
+Google Analytics sets this cookie to store information on how visitors use a website while also creating an analytics report of the website's performance. Some of the collected data includes the number of visitors, their source, and the pages they visit anonymously.
+Cookie
+_gat_UA-*
+Duration
+1 minute
+Description
+Google Analytics sets this cookie for user behaviour tracking.
+Cookie
+_ga_*
+Duration
+1 year 1 month 4 days
+Description
+Google Analytics sets this cookie to store and count page views.
+Cookie
+kampyle_userid
+Duration
+1 year
+Description
+This cookie is set by the provider Medallia. This cookie is used for storing a user ID.
+Cookie
+kampyleUserSession
+Duration
+1 year
+Description
+This cookie is set by the provider Medallia. This cookie is used for setting an unique ID for the specific session.
+Cookie
+kampyleUserSessionsCount
+Duration
+1 year
+Description
+This cookie is set by the provider Medallia. This cookie is used for counting the number of sessions per user.
+Cookie
+kampyleSessionPageCounter
+Duration
+1 year
+Description
+This cookie is set by the provider Medallia. This cookie is used for counting the number of pages a user views within a single sessions.
+Cookie
+vuid
+Duration
+1 year 1 month 4 days 1 minute
+Description
+Vimeo installs this cookie to collect tracking information by setting a unique ID to embed videos on the website.
+Uncategorized
+Other uncategorized cookies are those that are being analyzed and have not been classified into a category as yet.
+Cookie
+kampyleUserPercentile
+Duration
+1 year
+Description
+No description available.
+Cookie
+kampylePageLoadedTimestamp
+Duration
+1 year
+Description
+No description available.
+Cookie
+__Secure-YEC
+Duration
+past
+Description
+Description is currently not available.
+Cookie
+__Secure-YNID
+Duration
+6 months
+Description
+Description is currently not available.
+Cookie
+kampyleInvitePresented
+Duration
+1 year
+Description
+Description is currently not available.
+Cookie
+LAST_INVITATION_VIEW
+Duration
+1 year
+Description
+Description is currently not available.
+Cookie
+CookieConsentPolicy
+Duration
+1 year
+Description
+Description is currently not available.
+Cookie
+LSKey-c$CookieConsentPolicy
+Duration
+1 
+[DOC 7] https://portlandgeneral.com/about/info/pricing-plans/market-based-pricing/pricing-graphs
+year
+Description
+Description is currently not available.
+Cookie
+renderCtx
+Duration
+session
+Description
+This cookie is used for tracking community context state.
+Cookie
+aws-waf-token
+Duration
+4 days
+Description
+Description is currently not available.
+Cookie
+Newsletter
+Duration
+past
+Description
+Description is currently not available.
+Cookie
+sEc.portlandgeneral
+Duration
+6 months
+Description
+Description is currently not available.
+Cookie
+NSC_tvswfz3.nfebmmjb.dpn
+Duration
+session
+Description
+Description is currently not available.
+Reject all
+Save my preferences
+Accept all
+Site Search
+Español
+My Account
+Outages & Safety
+Clean Energy Choices
+Save Money
+About Us
+Help
+Working With PGE
+Once signed in, your language preference will only be available on your My Account page and the account-related pages you access from it.
+About
+Company Info
+Quick Facts
+PGE Service Area
+Pricing Plans
+Time of Day Pricing
+Time of Use
+Market-Based Pricing
+Transition Adjustments
+Direct Access Operations
+Pricing Graphs
+Market-Based Pricing FAQ
+Pricing Archive
+Understanding Our Pricing
+Rates & Regulatory Documents
+PGE Projects
+Investor Relations
+Home
+Market-Based Pricing
+Pricing Graphs
+Compare Daily Market Pricing energy charges with PGE’s standard service (Annual Cost of Service)
+Review up to three years of energy charges under PGE’s Cost of Service pricing and Daily Market Pricing to see which option is right for you.
+Schedule 83
+Secondary Voltage
+Standard service (Annual Cost of Service) and Daily Market Pricing
+September 2023 - August 2026
+(Weighted for on- and off-peak prices)
+An estimated
+Schedule 128
+TRANSITION ADJUSTMENT has been added to the daily price. This is only for comparison purposes and your specific 128 charge may differ and be important in your evaluation decision.
+Includes ALL pricing adjustments applicable to Sch 83 based upon a cents/kWh charge, except Sch
+108
+,
+109
+and
+115
+.
+Includes prices for energy only, delivery charges are not included.
+Any representation of past performance is NOT a prediction of future prices.
+Schedule 85
+Primary Voltage
+Standard service (Annual Cost of Service) and Daily Market Pricing
+September 2023 - August 2026
+(Weighted for on- and off-peak prices)
+An estimated
+Schedule 128
+TRANSITION ADJUSTMENT has been added to the daily price. This is only for comparison purposes and your specific 128 charge may differ and be important in your evaluation decision.
+Includes ALL pricing adjustments applicable to
+Sch 85
+based upon a cents/kWh charge, except Sch
+108
+,
+109
+and
+115
+.
+Includes prices for energy only, delivery charges are not included.
+Any representation of past performance is NOT a prediction of future prices.
+Pricing archive
+You can also view standard service historical prices in our
+pricing archive
+.
+COMPANY
+PGE at a Glance
+News Room
+Careers
+Sustainability
+Regulatory Documents
+New Businesses
+Construction
+Business Distribution Services
+Investors
+Suppliers
+Wholesale
+CUSTOMER SERVICE
+503-228-6322
+800-542-8818
+8 a.m. - 6 p.m., Monday –
+[DOC 7] https://portlandgeneral.com/about/info/pricing-plans/market-based-pricing/pricing-graphs
+ Friday
+Help Center
+En Español
+Connect with Us
+OUTAGES, EMERGENCIES
+& POWER PROBLEMS
+503-464-7777
+800-544-1795
+24 Hours
+PRIVACY POLICY/OCPA
+LEGAL NOTICES
+SECURITY DISCLOSURE
+facebook
+instagram
+linkedin
+Browser Settings
+To sign in to your PGE web account, your browser must be set to accept cookies and JavaScript must be enabled.
+A cookie is a small text file stored on your computer by a website to give you a unique numeric ID. PGE doesn’t use cookies to track personal information; they are used to enhance your web experience by:
+Protecting your privacy and security: We’ll sign you out automatically after 20 idle minutes.
+Activating the "Remember Me" feature so your email address is provided automatically the next time you sign in.
+PGE also works with third parties that use cookies on our site to conduct visitor surveys and to enable other features.
+Feedback

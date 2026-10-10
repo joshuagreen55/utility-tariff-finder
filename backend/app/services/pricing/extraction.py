@@ -18,6 +18,7 @@ from typing import Any, Callable
 
 from app.services.pricing.amount_parse import (
     normalize_amount_string,
+    blank_applying_codes,
     sanitize_extract_amounts,
 )
 from app.services.pricing.extract_schema import (
@@ -25,10 +26,12 @@ from app.services.pricing.extract_schema import (
     disposition_of,
     validate_extract_schema,
 )
+from app.services.pricing.kind_canon import canonicalize_extract
 from app.services.pricing.preaccept import PreAcceptResult, run_preaccept
 from app.services.pricing.quote_verifier import verify_component_cells
 from app.services.pricing.rider_census import DispositionInput, InventoryRider
 from app.services.pricing.types import ComponentInput, PlanInput
+from app.services.source_type import UtilitySourceContext
 
 # Existing model ids only — do not add or rename.
 HAIKU_MODEL = os.environ.get("HAIKU_MODEL", "claude-haiku-5-5")
@@ -93,6 +96,7 @@ def _raw_to_component(raw: dict[str, Any]) -> ComponentInput:
         loss_sensitive=bool(raw.get("loss_sensitive") or False),
         source_page=raw.get("source_page") or raw.get("page"),
         source_quote=raw.get("source_quote") or raw.get("quote"),
+        disposition=disposition_of(raw) or None,
     )
 
 
@@ -156,6 +160,7 @@ def dual_extract_components(
     model_a: str | None = None,
     model_b: str | None = None,
     official_hosts: list[str] | None = None,
+    source_ctx: UtilitySourceContext | None = None,
     source_url: str | None = None,
     inventory: list[InventoryRider] | None = None,
     dispositions: list[DispositionInput] | None = None,
@@ -216,8 +221,12 @@ def dual_extract_components(
             # One-shot nudge only — still blind to prior numeric values.
             call_ctx["require_applying_energy"] = True
             call_ctx["retry_reason"] = "missing_energy_charge"
-        return sanitize_extract_amounts(
-            list(extract_fn(document_text, model, call_ctx) or [])
+        return canonicalize_extract(
+            sanitize_extract_amounts(
+                list(extract_fn(document_text, model, call_ctx) or [])
+            ),
+            plan_meta.get("recipe_code"),
+            document_text,
         )
 
     raw_a = _pull(m_a)
@@ -280,6 +289,15 @@ def dual_extract_components(
             return ExtractionHold(reason="malformed_extract", detail=str(e))
         retried_b = True
 
+    for label, raw in (("a", raw_a), ("b", raw_b)):
+        blank = blank_applying_codes(raw)
+        if blank:
+            return ExtractionHold(
+                reason="applies_amount_blank",
+                detail=f"model_{label}:" + ",".join(blank),
+                extract_a=comps_a, extract_b=comps_b,
+            )
+
     if not _has_energy(applying_a):
         return ExtractionHold(
             reason="missing_energy_charge",
@@ -318,7 +336,7 @@ def dual_extract_components(
                 "tier_structure", "excluded_item", "event_day",
             }:
                 continue
-            vr = verify_component_cells(document_text, c, require_row_col=True)
+            vr = verify_component_cells(document_text, c)
             if not vr.ok:
                 return ExtractionHold(
                     reason="quote_verify_failed",
@@ -348,8 +366,10 @@ def dual_extract_components(
         document_text=document_text,
         source_url=source_url or plan_meta.get("source_url"),
         official_hosts=official_hosts or [],
+        source_ctx=source_ctx,
         extract_a=applying_a,
         extract_b=applying_b,
+        full_extracts=[comps_a, comps_b],
         inventory=inventory,
         dispositions=disps,
         edition_label=edition_label or plan_meta.get("edition_label"),

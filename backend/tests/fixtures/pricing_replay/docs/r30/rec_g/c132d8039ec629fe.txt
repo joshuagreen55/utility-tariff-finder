@@ -1,0 +1,1842 @@
+[DOC 0] https://www.pge.com/assets/pge/docs/account/rate-plans/residential-electric-rate-plan-pricing.pdf
+Residential rate plan pricing
+Choose the plan that’s right for you
+Get a
+Prices for all rate plans on this page are effective March 1, 2026. personalized rate
+For the latest rate plan prices (cost kWh) visit our Tariffs page. comparison
+OFF-PEAK PEAK PARTIALPEAK
+Tiered Rate Plan (E-1)
+pge.com/tieredrateplan
+Tier 1 Tier 2
+Up to 100% of Baseline Allocation 33¢ > 100% of Baseline Allocation 41¢
+Time-of-Use Rate Plans
+pge.com/tourates
+Time-of-Use (E-TOU-C) Time-of-Use (E-TOU-D)
+Peak Pricing 4–9 p.m. Every Day Peak Pricing 5–8 p.m. Weekdays
+Summer Season Summer Season
+June 1–Sept 30 June 1–Sept 30
+52¢
+40¢ 40¢ Above
+baseline
+32¢ 44¢ 32¢ B ba e s lo e w lin e 34¢ 48¢ 34¢
+12 a.m. 4 p.m. 9 p.m. 12 a.m. 12 a.m. 5 p.m. 8 p.m. 12 a.m.
+Winter Season Winter Season
+Oct 1–May 31 Oct 1–May 31
+40¢ Above
+37¢ 37¢ baseline
+Below 35¢ 39¢ 35¢
+29¢ 32¢ 29¢ baseline
+12 a.m. 4 p.m. 9 p.m. 12 a.m. 12 a.m. 5 p.m. 8 p.m. 12 a.m.
+Electric Home Rate Plan (E-ELEC)*
+pge.com/electrichome
+Summer Season Winter Season
+June 1–Sept 30 Oct 1–May 31
+33¢ 55¢ 39¢ 28¢ 32¢ 30¢
+12 a.m. 3 p.m. 4 p.m. 9 p.m. 12 a.m. 12 a.m. 3 p.m. 4 p.m. 9 p.m. 12 a.m.
+Electric Vehicle (EV) Rate Plans
+pge.com/evrates
+Home Charging EV2-A Electric Vehicle Rate Plan EV-B
+Summer Season Summer Season
+June 1–Sept 30 June 1–Sept 30
+23¢ 54¢ 43¢ 26¢ 38¢ 62¢ 38¢
+12 a.m. 3 p.m. 4 p.m. 9 p.m. 12 a.m. 12 a.m. 7 a.m. 2 p.m. 9 p.m. 11 p.m.12 a.m.
+Winter Season Winter Season
+Oct 1–May 31 Oct 1–May 31
+23¢ 41¢ 39¢ 24¢ 31¢ 44¢ 31¢
+12 a.m. 3 p.m. 4 p.m. 9 p.m. 12 a.m. 12 a.m. 7 a.m. 2 p.m. 9 p.m. 11 p.m.12 a.m.
+ | 52¢ | 
+40¢ |  | 40¢
+ | 44¢ | 
+32¢ |  | 32¢
+37¢ |  | 37¢
+ | 32¢ | 
+29¢ |  | 29¢
+35¢ | 39¢ | 35¢
+Electric Home Rate Plan (E-ELEC)*
+pge.com/electrichome
+Summer Season Winter Season
+June 1–Sept 30 Oct 1–May 31
+33¢ 55¢ 39¢ 28¢ 32¢ 30¢
+12 a.m. 3 p.m. 4 p.m. 9 p.m. 12 a.m. 12 a.m. 3 p.m. 4 p.m. 9 p.m. 12 a.m.
+ | 
+33¢ | 
+28¢ |  | 32¢
+ | 
+23¢ | 
+ | 38¢
+26¢ | 
+ | 
+23¢ | 
+ | 31¢
+24¢ | 
+
+* The Electric Home Rate Plan includes a Base Services Charge and lowered kilowatt-hour (kWh) prices
+as of March 2026. Visit pge.com/baseservicescharge to learn more.
+Due to rounding, the displayed pricing may not exactly match the prices displayed on your bill. Pricing is
+estimated to the nearest one cent. Listed prices may not reflect recent changes to rate plan pricing.
+Baseline Allowance consists of an allotment of energy available at the lowest price, based on where you
+live, your heating source, and the season (summer or winter). Learn more about Baseline Allowance.
+These graphs and comparisons are provided for illustrative purposes only and do not constitute a
+representation or recommendation by PG&E as to what rate is best for you. PG&E cannot guarantee
+the accuracy, completeness or usefulness of the information. PG&E expressly disclaims any and all
+liability for any damages of any nature (including direct, indirect, incidental and consequential) arising in
+connection with the use of this information. This comparison depicts unit pricing in 
+[DOC 0] https://www.pge.com/assets/pge/docs/account/rate-plans/residential-electric-rate-plan-pricing.pdf
+effect on the date
+noted. It does not include all fees such as local taxes or surcharges.
+Message paid for by customers.
+"PG&E” refers to Pacific Gas and Electric Company, a subsidiary of PG&E Corporation. ©2026 Pacific Gas and Electric Company. All rights reserved. These offerings are funded by California
+utility customers and administered by PG&E under the auspices of the California Public Utilities Commission. CRR-0326-6313
+[DOC 1] https://www.pge.com/en/account/rate-plans.html
+IMPORTANT
+Outages
+Outages
+Sign In
+Log Out
+Sign In
+Hi, {name}
+Sign In
+Hi, {name}
+Rate plans
+Find the best rate plan for your home or business
+Rate Plans
+Rate Resources
+Find the residential rate plan that saves the most money.
+Compare rate plans based on your actual usage
+Looking to compare business rate plans?
+Log in here for business accounts
+.
+Electric Rates (PDF)
+Gas Rates
+Read updates about electric and gas rates
+.
+Note:
+To see pricing details for all PG&E electric and gas rates,
+visit PG&E tariffs
+. These tariffs are approved by the California Public Utilities Commission.
+Residential rate plans
+Time-of-Use electric rate plans
+Shift your habits to use more electricity when it costs less.
+Explore Time-of-Use rate plans
+Tiered electric rate plan
+Understand how the tiered electric rate plan works.
+Visit the tiered rate plan
+Solar rate plans
+PG&E offers two options to going solar.
+Explore solar rate plans
+Electric vehicle rate plans
+PG&E offers electric vehicle rate plans for both residential and business customers.
+Explore EV rate plans
+Electric Home rate plan
+Find out if a rate plan for an electric-powered home is right for you.
+Visit Electric Home
+SmartRate™ program
+Pay less by lowering your electricity usage up to 15 days a year.
+Learn about SmartRate
+Community renewable programs
+Explore Solar Choice and Regional Renewable Choice programs.
+Go to community renewable programs
+Residential rate resources
+Discover more rate tools, programs and information for your home.
+Go to rate resources
+Business rate plans
+Time-of-Use rate plans for business
+Save costs by reducing energy usage during the more expensive peak demand hours.
+Visit Time-of-Use rate plans
+Solar rate plans
+PG&E offers two options to going solar.
+Explore solar rate plans
+Electric vehicle rate plans
+PG&E offers electric vehicle rate plans for both residential and business customers.
+Explore EV rate plans
+Peak Day Pricing for business
+Peak Day Pricing (PDP) combines the Time-of-Use rate with surcharges on a handful of Event Days each year.
+Explore Peak Day Pricing
+Business rate resources
+Discover more rate tools, programs and information for your business.
+Go to rate resources
+Find and apply for business energy efficiency rebates and incentives.
+Explore business rebates
+More resources
+How do gas and electric rates work?
+Discover how PG&E's gas and electric rates are set, find regulatory information and more.
+Learn how rates work
+Understand your bill
+Answers to common questions about your bill.
+Learn about your bill
+Financial assistance
+Get help with utility bills and other types of bill assistance.
+Go to financial assistance
+This website and the messages contained in its webpages are funded by customers unless otherwise noted.
+About
+News
+Contact Us
+Connect
+Accessibility
+Terms & Conditions
+Regulation
+Privacy
+Security
+Sitemap
+Do Not Sell My Personal Information
+©2026 Pacific Gas and Electric Company
+About
+News
+Contact Us
+Connect
+Accessibility
+Terms & Conditions
+Regulation
+Privacy
+Security
+
+[DOC 1] https://www.pge.com/en/account/rate-plans.html
+Sitemap
+Do Not Sell My Personal Information
+©2026 Pacific Gas and Electric Company
+[DOC 2] https://www.pge.com/tariffs/en.html
+Tariffs
+Current gas and electric rate schedules, preliminary statements, rules and forms.
+Gas Rate Schedules
+Electric Rate Schedules
+Gas Preliminary Statements
+Electric Preliminary Statements
+Gas Rules
+Electric Rules
+Gas Maps
+Electric Maps
+Gas Contracts and Deviations
+Electric Contracts and Deviations
+Gas Forms
+Electric Forms
+Gas Title
+Electric Title
+Advice Letters
+Information on Advice Letters and the accompanying tariff sheets.
+Visit the Advice Letter Index
+Wholesale (FERC) Tariffs
+PG&E tariffs associated with wholesale transmission and distribution service.
+Go to Wholesale Tariffs
+Current and historical rate information
+Find gas tables, electric tables and commodity prices and more.
+Visit rate information
+If you need an ADA reasonable modification to view a document, please reach out to
+ADASupport@pge.com
+.
+GAS RATE SCHEDULES
+Tariff Name
+PDF
+Title
+G-1
+PDF
+Residential Service
+G-10
+PDF
+Service to Company Employees
+G1-NGV
+PDF
+Residential Natural Gas Service for Compression on Customers' Premises
+G-AA
+PDF
+As Available Transportation On-System
+G-AAOFF
+PDF
+As-Available Transportation Off-System
+G-AFT
+PDF
+Annual Firm Transportation On-System
+G-AFTOFF
+PDF
+Annual Firm Transportation Off-System
+G-AMDS
+PDF
+Experimental Access to Meter Data Services
+G-BAL
+PDF
+Gas Balancing Service for Intrastate Transportation Customers
+G-CARE
+PDF
+CARE Program Service For Qualified Facilities
+G-CFS
+PDF
+Core Firm Storage
+G-CP
+PDF
+Gas Procurement Service to Core End-Use Customers
+G-CPX
+PDF
+Crossover Gas Procurement Service to Core End-Use Customers
+G-CRED
+PDF
+Billing Credits for CTA-Consolidated Billing
+G-CT
+PDF
+Core Gas Aggregation Service
+G-EFLIC
+PDF
+Energy Financing Line Item Charge (EFLIC) Pilot
+G-EG
+PDF
+Gas Transportation Service to Electric Generation
+G-ESISP
+PDF
+Exchange Service Through ISP Facilities
+G-ESP
+PDF
+Consolidated PG&E Billing Services to Core Transport Agents
+GL-1
+PDF
+Residential CARE Program Service
+GL1-NGV
+PDF
+Residential CARE Program Natural Gas Service for Compression on Customers' Premises
+G-LEND
+PDF
+Market Center Lending Services
+G-LNG
+PDF
+Experimental Liquefied Natural Gas Service
+GM
+PDF
+Master-Metered Multifamily Service
+G-MHPS
+PDF
+Master-Metered Mobilehome Park Safety Surcharge
+GML
+PDF
+Master-Metered Multifamily CARE Program Service
+G-NAA
+PDF
+Negotiated As-Available Transportation On-System
+G-NAAOFF
+PDF
+Negotiated As-Available Transportation Off-System
+G-NAS
+PDF
+Negotiated As-Available Storage Service
+G-NFS
+PDF
+Negotiated Firm Storage Service
+G-NFT
+PDF
+Negotiated Firm Transportation On-System
+G-NFTOFF
+PDF
+Negotiated Firm Transportation Off-System
+G-NGV1
+PDF
+Core Gas Service to Gas Vehicle Fueling Stations
+G-NGV2
+PDF
+Core Compressed Natural Gas Service on PG&E's Premises
+G-NGV4
+PDF
+Noncore Gas Service to Gas Vehicle Fueling Stations
+G-NR1
+PDF
+Gas Service to Small Commercial Customers
+G-NR2
+PDF
+Gas Service to Large Commercial Customers
+G-NT
+PDF
+Gas Transportation Service to Noncore End-Use Customers
+G-OBF
+PDF
+On Bill Financing Loan Program
+G-OBR
+PDF
+[DOC 2] https://www.pge.com/tariffs/en.html
+
+On-Bill Repayment (OBR) Pilots
+G-OEC
+PDF
+Gas Delivery to Off-System End-Use Customers
+G-PARK
+PDF
+Market Center Parking Services
+G-PIPP
+PDF
+Percentage of Income Payment Plan (PIPP) Pilot
+G-PPPS
+PDF
+Gas Public Purpose Program Surcharge
+GS
+PDF
+Multifamily Service
+G-SFT
+PDF
+Seasonal Firm Transportation On-System Only
+GSL
+PDF
+Multifamily CARE Program Service
+G-SOP
+PDF
+Residential Gas SmartMeter(TM) Opt-Out Program
+G-SUR
+PDF
+Customer-Procured Gas Franchise Fee Surcharge
+GT
+PDF
+Mobilehome Park Service
+GTL
+PDF
+Mobilehome Park CARE Program Service
+G-WSL
+PDF
+Gas Transportation Service to Wholesale/Resale Customers
+G-XF
+PDF
+Pipeline Expansion Firm Intrastate Transportation Service
+ELECTRIC RATE SCHEDULES
+Tariff Name
+PDF
+Title
+A-1
+PDF
+Small General Service
+A-10
+PDF
+Medium General Demand-Metered Service
+A-15
+PDF
+Direct-Current General Service
+A-6
+PDF
+Small General Time-of-Use Service
+AG
+PDF
+Time-of-Use Agricultural Power
+AG-1
+PDF
+Agricultural Power
+AG-4
+PDF
+Time-of-Use Agricultural Power
+AG-5
+PDF
+Large Time-of-Use Agricultural Power
+AG-F
+PDF
+Flexible Off-Peak Time-Of-Use Agricultural Power
+AG-R
+PDF
+Split-Week Time-of-Use Agricultural Power
+AG-V
+PDF
+Short-Peak Time-of-Use Agricultural Power
+B-1
+PDF
+Small General Service
+B-10
+PDF
+Medium General Demand Metered Service
+B-19
+PDF
+Medium General Demand-Metered TOU Service
+B-20
+PDF
+Service to Customers with Maximum Demands of 1000 Kilowatts or More
+B-6
+PDF
+Small General Time-of-Use Service
+BEV
+PDF
+Business Electric Vehicle
+CCA-CRS
+PDF
+Community Choice Aggregation Cost Responsibility Surcharge
+DAC-GT
+PDF
+Disadvantaged Community Green Tariff Program
+DA-CRS
+PDF
+Direct Access Cost Responsibility Surcharge
+D-CARE
+PDF
+Line-Item Discount For California Alternate Rates For Energy (Care) Customers
+D-MEDICAL
+PDF
+Line-Item Discount for Medical Customers
+E-1
+PDF
+Residential Services
+E-19
+PDF
+Medium General Demand-Metered TOU Service
+E-20
+PDF
+Service to Customers with Maximum Demands of 1000 Kilowatts or More
+E-AMDS
+PDF
+Experimental Access to Meter Data Services
+E-ART
+PDF
+Automated Response Technology Program
+E-BioMAT
+PDF
+Bioenergy Market Adjusting Tariff
+E-BIP
+PDF
+Base Interruptible Program
+E-BTMM
+PDF
+Behind-the-Meter Microgrids
+E-CARE
+PDF
+Care Prog Serv For Qualif Nonprof Grp-Liv & Qualif Agri Empl Housing Facils
+E-CBP
+PDF
+Capacity Bidding Program
+E-CCA
+PDF
+Services to Community Choice Aggregators
+E-CCAINFO
+PDF
+Information Release To Community Choice Aggregators
+E-CHP
+PDF
+Combined Heat and Power PPA
+E-CHPS
+PDF
+Combined Heat and Power Simplified PPA
+E-CHPSA
+PDF
+Combined Heat and Power Simplified Under 500 kW PPA
+E-CMET
+PDF
+Community Microgrid Enablement Tariff
+E-CREDIT
+PDF
+Revenue Cycle Services Credits
+E-DASR
+PDF
+Direct Access Services Request Fees
+E-DCG
+PDF
+Departing Customer Generation
+E-DEPART
+PDF
+Departing Customers
+EDR
+PDF
+Economic Development Rate
+E-DRP
+PDF
+Demand Response Provider Services
+EE
+PDF
+Service to Company Employees
+E-EFLIC
+PDF
+Energy Financing Line Item Charge (EFLIC) Pilot
+E-ELEC
+PDF
+Residential Time-of-Use (
+[DOC 2] https://www.pge.com/tariffs/en.html
+Electric Home) Service for Customers with Qualifying Electric Technologies
+E-ERA
+PDF
+Energy Rate Adjustments
+E-ESP
+PDF
+Services to Electric Service Providers
+E-ESPNDSF
+PDF
+Electric Service Provider Non-Discretionary Service Fees
+E-EUS
+PDF
+End User Service
+E-FBD
+PDF
+Service for Qualified Food Banks
+E-FERA
+PDF
+Family Electric Rate Assistance
+E-FFS
+PDF
+Franchise Fee Surcharge
+E-GT
+PDF
+Green Tariff Program
+EITE
+PDF
+Emissions-Intensive and Trade-Exposed Customer Greenhouse Gas Allowance Revenue Provisions
+E-LORMS
+PDF
+Limited Optional Remote Metering Service
+EM (Sch)
+PDF
+Master-Metered Multifamily Service
+EM-TOU
+PDF
+Residential Time of Use Service
+E-NMDL
+PDF
+New Municipal Departing Load
+E-NWDL
+PDF
+New WAPA Departing Load
+E-OBF
+PDF
+On Bill Financing Loan Program
+E-OBMC
+PDF
+Optional Binding Mandatory Curtailment Plan
+E-OBR
+PDF
+On-Bill Repayment (OBR) Pilots
+E-PIPP
+PDF
+Percentage of Income Payment Plan (PIPP) Pilot
+E-PWF
+PDF
+Section 399.20 PPA
+E-ReMAT
+PDF
+Renewable Market Adjusting Tariff (ReMAT)
+E-RSAC
+PDF
+Residential Smart A/C Program
+E-RSMART
+PDF
+Residential Smartrate Program
+ES (Sch)
+PDF
+Multifamily Service
+E-SDL
+PDF
+Split-Wheeling Departing Load
+E-SLRP
+PDF
+Scheduled Load Reduction Program
+E-SOP
+PDF
+Residential Electric SmartMeter(TM) Opt-Out Program
+ESR
+PDF
+Residential RV Park and Residential Marina Service
+E-SRG
+PDF
+Small Renewable Generator PPA
+E-STORE
+PDF
+Station Service For Storage Devices
+ET (Sch)
+PDF
+Mobilehome Park Service
+E-TMDL
+PDF
+Transferred Municipal Departing Load
+E-TOU-C
+PDF
+Residential Time-Of-Use
+E-TOU-D
+PDF
+RESIDENTIAL TIME-OF-USE PEAK PRICING 5 - 8 p.m. NON-HOLIDAY WEEKDAYS
+EV (Sch)
+PDF
+Residential Time-Of-Use Service for Plug-In Electric Vehicle Customers
+EV2 (Sch)
+PDF
+Residential Time-Of-Use Service for Plug-In Electric Vehicle Customers
+LS-1
+PDF
+PG&E-Owned Street and Highway Lighting
+LS-2
+PDF
+Customer-Owned Street and Highway Lighting
+LS-3
+PDF
+Customer-Owned Street and Highway Lighting Electrolier Meter Rate
+NBT
+PDF
+Net Billing Tariff (NBT) (also known as Solar Billing Plan) Service
+NBTV
+PDF
+Virtual Net Billing Service
+NEM
+PDF
+Net Energy Metering Service
+NEM2
+PDF
+Net Energy Metering Service
+NEM2V
+PDF
+Virtual Net Energy Metering Service
+NEM2VMSH
+PDF
+Virtual Net Energy Metering For Multifamily Affordable Housing (MASH/NSHP) With Solar Generator(s)
+NEM2VSOM
+PDF
+Virtual Net Energy Metering Solar on Multifamily Affordable Housing (SOMAH) Properties
+NEMBIO
+PDF
+Net Energy Metering Service for Biogas Customer-Generator
+NEMCCSF
+PDF
+Net Energy Metering Service For City And County Of San Francisco Municipal Load Served By Hetch Hetchy At-Site Photovoltaic Generating Facilities
+NEMFC
+PDF
+Net Energy Metering Service for Fuel Cell Customer-Generators
+NEMV
+PDF
+Virtual Net Metering For A Multi-Tenant Or Multi-Meter Property Served At The Same Service Delivery Point
+NEMVMASH
+PDF
+Virtual Net Energy Metering For Multifamily Affordable Housing (MASH/NSHP) With Solar Generator(s)
+OL-1
+PDF
+Outdoor Area Lighting Service
+PURPA COMPLIANT
+PDF
+Public Utili
+[DOC 2] https://www.pge.com/tariffs/en.html
+ty Regulatory Policies Act (PURPA) Compliant Service
+RES-BCT
+PDF
+Schedule For Local Government Renewable Energy Self-Generation Bill Credit Transfer
+S (Sch)
+PDF
+Standby Service
+SB
+PDF
+Standby Electric
+TBCC
+PDF
+Transitional Bundled Commodity Cost
+TC-1
+PDF
+Traffic Control Service
+GAS PRELIMINARY STATEMENTS
+Tariff Name
+PDF
+Title
+A
+PDF
+Description of Service Area & General Requirements
+AC
+PDF
+Catastrophic Event Memorandum Account (CEMA)
+AE
+PDF
+Core Pipeline Demand Charge Account (CPDCA)
+AG
+PDF
+Core Firm Storage Account (CFSA)
+AN
+PDF
+Hazardous Substance Mechanism (HSM)
+AW
+PDF
+Self-Generation Program Memorandum Account (SGPMA)
+B
+PDF
+Default Tariff Rate Components
+BA
+PDF
+Public Purpose Program Surcharge-Energy Efficiency (PPP-EE)
+BB
+PDF
+Public Purpose Program Surcharge Memorandum Account (PPP-MA)
+BH
+PDF
+Public Purpose Program Surcharge-Low Income Energy Efficiency (PPP-LIEE)
+BI
+PDF
+Public Purpose Program Surcharge-Research Development and Demonstration (PPP-RDD)
+BQ
+PDF
+Pension Contribution Balancing Account (PCBA-G)
+BT
+PDF
+Non-Tariffed Products and Services Balancing Account (NTBA-G)
+C
+PDF
+Gas Accounting Terms & Definitions
+CA
+PDF
+California Solar Initiative Solar Thermal Program Memorandum Account (CSITPMA)
+CL
+PDF
+Transmission Integrity Management Program Balancing Account (TIMPBA)
+CO
+PDF
+Adjustment Mechanism For Costs Determined In Other Proceedings (AMCDOP)
+CP
+PDF
+Gas Transmission And Storage Revenue Sharing Mechanism (GTSRSM)
+CS
+PDF
+Tax Act Memorandum Account - Gas (TAMA-G)
+D
+PDF
+Purchased Gas Account (PGA)
+DA
+PDF
+Statewide Marketing, Education and Outreach Balancing Account (SWMEOBA-G)
+DB
+PDF
+Mobile Home Park Balancing Account - Gas (MHPBA-G)
+DD
+PDF
+General Rate Case Gas Transmission & Storage Memorandum Account (GRCGTSMA)
+DH
+PDF
+Gas Programs Balancing Account (GPBA)
+DJ
+PDF
+Energy Efficiency Financing Balancing Account - Gas (EEFBA-G)
+DK
+PDF
+Shareholder-Funded Gas Transmission Safety Account (SFGTSA)
+DN
+PDF
+Line 407 Memorandum Account (L407MA)
+DP
+PDF
+Transmission Integrity Management Program Memorandum Account (TIMPMA)
+DU
+PDF
+Z-Factor Memorandum Account (ZFMA-G)
+DX
+PDF
+Tax Memorandum Account (TMA-G)
+DZ
+PDF
+New Environmental Regulations Balancing Account (NERBA)
+EC
+PDF
+Emergency Consumer Protections Memorandum Account - Gas (ECPMA-G)
+EE
+PDF
+Wildfire Expense Memorandum Account (WEMA-G)
+EF
+PDF
+Statewide Energy Efficiency Balancing Account (SWEEBA-G)
+EG
+PDF
+Dairy Biomethane Pilots Balancing Account (DBPBA)
+EH
+PDF
+Dairy Biomethane Pilots Memorandum Account (DBPMA)
+EI
+PDF
+Officer Compensation Memorandum Account (OCMA-G)
+EJ
+PDF
+Gas Storage Balancing Account (GSBA)
+EL
+PDF
+Gas Statutes Regulations and Rules Memorandum Account (GSRRMA)
+ER
+PDF
+Internal Corrosion Balancing Account (ICBA)
+ET
+PDF
+Measurement and Control Over-Pressure Protection Memorandum Account (MCOPPMA)
+EU
+PDF
+In-line Inspection Memorandum Account (ILIMA)
+EV
+PDF
+Internal Corrosion Direct Assessment Memorandum Account (ICDAMA)
+F
+PDF
+Core Fixed Cost Account (CFCA)
+FA
+PDF
+In-Line Inspection Bala
+[DOC 2] https://www.pge.com/tariffs/en.html
+ncing Account (ILIBA)
+FD
+PDF
+California Consumer Privacy Act Memorandum Account - Gas (CCPMA-G)
+FE
+PDF
+General Rate Case Gas Distribution Memorandum Account (GRCGDMA)
+FF
+PDF
+COVID-19 Pandemic Protections Memorandum Account (CPPMA)
+FH
+PDF
+Disconnections Memorandum Account - Gas (DMA-G)
+FI
+PDF
+Climate Adaptation Vulnerability Assessment Memorandum Account - Gas (CAVAMA-G)
+FJ
+PDF
+Residential Uncollectibles Balancing Account - Gas (RUBA-G)
+FK
+PDF
+Risk Transfer Balancing Account - Gas (RTBA-G)
+FL
+PDF
+Wildfire Mitigation Balancing Account (WMBA-G)
+FM
+PDF
+AB841 School Energy Efficiency Stimulus Program Balancing Account - Gas
+FN
+PDF
+Regional Memorandum Account - Gas (RPMA-G)
+FP
+PDF
+Medium-Large Commercial and Industrial COVID-19 Disconnection Moratorium Memorandum Account - Gas (ML-CDMMA-G)
+FQ
+PDF
+General Office Sale Memorandum Account (GOSMA)
+FR
+PDF
+General Office Balancing Account (GOSBA)
+FT
+PDF
+Percentage of Income Payment Plan Balancing Account - Gas (PIPPBA-G)
+FU
+PDF
+Percentage of Income Payment Plan Memorandum Account - Gas (PIPPMA-G)
+FV
+PDF
+Biomethane Procurement Program Administrative Balancing Account (BPPABA)
+FX
+PDF
+Infrastructure Investment and Jobs Act Memorandum Account - Gas (IIJAMA - G)
+FY
+PDF
+Santa Nella Balancing Account - Gas (SNBA-G)
+FZ
+PDF
+Concurrent Application System Balancing Account - Gas (CASBA - G)
+GA
+PDF
+Gas Research and Development (R&D) and Deployment Balancing Account (GRDDBA)
+GB
+PDF
+Alternative Energy Program Balancing Account (AEPBA)
+GC
+PDF
+Gas Distribution New Business Balancing Account (GDNBBA)
+GD
+PDF
+Gas Transmission New Business Balancing Account (GTNBBA)
+GE
+PDF
+Hydrogen Compendium Report Memorandum Account (HCRMA)
+GG
+PDF
+Billing Modernization Memorandum Account (BMMA)
+GH
+PDF
+CPUC Reimbursement Memorandum Account - Gas (CPUC RMA - G)
+J
+PDF
+Noncore Customer Class Charge Account (NCA)
+L
+PDF
+Balancing Charge Account (BCA)
+O
+PDF
+CPUC Reimbursement Fee
+P
+PDF
+Income Tax Component of Contributions Provision
+S
+PDF
+Interest
+T
+PDF
+Tax Reform Act of 1986
+U
+PDF
+Core Brokerage Fee Balancing Account (CBFBA)
+V
+PDF
+Public Purpose Program Surcharge-California Alternate Rates for Energy Account (PPP-CARE)
+Y
+PDF
+Customer Energy Efficiency Adjustment (CEEA)
+ELECTRIC PRELIMINARY STATEMENTS
+Tariff Name
+PDF
+Title
+A
+PDF
+Description of Service Area & General Requirements
+BB
+PDF
+Competition Transition Charge Responsibility for All Customers and CTC Procedure for Departing Loads
+BK
+PDF
+Transmission Revenue Requirement Reclassification Memo Account (TRRRMA)
+BU
+PDF
+Vegetation Management Balancing Account (VMBA)
+BY
+PDF
+Self-Generation Program Memorandum Account (SGPMA)
+CP
+PDF
+Energy Resource Recovery Account (ERRA)
+CQ
+PDF
+Modified Transition Cost Balancing Account (MTCBA)
+CZ
+PDF
+Distribution Revenue Adjustment Mechanism (DRAM)
+DA
+PDF
+Public Purpose Programs Revenue Adjustment Mechanism (PPPRAM)
+DB
+PDF
+Nuclear Decommissioning Adjustment Mechanism (NDAM)
+DI
+PDF
+Procurement Energy Efficiency Balancing Account (PEEBA)
+DN
+PDF
+Municipal Surcharges on De
+[DOC 3] https://www.pge.com/en/account/billing-and-assistance/financial-assistance/california-alternate-rates-for-energy-program.html
+IMPORTANT
+Outages
+Outages
+Sign In
+Log Out
+Sign In
+Hi, {name}
+Sign In
+Hi, {name}
+California Alternate Rates for Energy (CARE)
+Long-term monthly discounts on your energy bills
+Are you looking for the CARE enrollment or renewal form?
+Apply or renew
+Check if you qualify for CARE or FERA by answering a few questions.
+Find out if you're eligible
+.
+On this page:
+About CARE
+Eligibility
+Enrollment
+Post-enrollment verification (PEV)
+Forms and guides
+Frequently asked questions (FAQ)
+About CARE
+Eligibility
+Enrollment
+Post-enrollment verification (PEV)
+Forms and guides
+Frequently asked questions (FAQ)
+About CARE
+The
+California Alternate Rates for Energy (CARE)
+program provides a monthly discount of 20% or more on gas and 35% or more on electricity (compared to non-CARE bundled customers).
+See if you qualify based on:
+Your income, or
+Your enrollment in one of the
+qualifying public assistance programs
+Note:
+CARE and FERA share one application. If you do not qualify for CARE, we will check to see if you qualify for FERA.
+Learn more about FERA
+. In addition, other
+financial assistance resources and support
+are available.
+Eligibility
+In this section:
+How your household can qualify for CARE
+How to qualify through other public assistance programs
+Household income guidelines
+CARE income guidelines table
+To qualify for CARE:
+The PG&E bill must be in your name.
+If you're a sub-metered tenant, you must have the landlord's energy bill in your name.
+You must live at the address to which the discount applies.
+Another person (besides your spouse) can't claim you as a dependent on an income tax return.
+You must not share an energy meter with another home.
+You must account for all sources of qualifying household income.
+This combined household income must meet the program income guidelines.
+You must enroll in qualifying public assistance programs.
+After you enroll, you may need to provide proof of qualifying household income.
+You may also be required to participate in the Energy Savings Assistance program.
+Your monthly electric usage must not exceed six times the Tier 1 allowance.
+Tier 1 is the lowest priced rate tier within PG&E's standard Tiered Base Plan.
+You must renew your eligibility every two years.
+If you're on a fixed income, you must renew your eligibility every four years.
+You must notify PG&E if your household no longer qualifies for the CARE discount.
+To qualify through other public assistance programs:
+You or someone in your household must take part in any of the following public assistance programs:
+Low Income Home Energy Assistance Program (LIHEAP)
+Women, Infants, and Children (WIC)
+CalFresh/SNAP (Food Stamps)
+CalWORKs (TANF) or Tribal TANF
+Head Start Income Eligible (Tribal Only)
+Supplemental Security Income (SSI)
+Medi-Cal for Families (Healthy Families A & B)
+National School Lunch Program (NSLP)
+Bureau of Indian Affairs General Assistance
+Medicaid/Medi-Cal (under age 65)
+Medicaid/Medi-Cal (age 65 and over)
+Household income guidelines
+Your eligibility is base
+[DOC 3] https://www.pge.com/en/account/billing-and-assistance/financial-assistance/california-alternate-rates-for-energy-program.html
+d on your household income. To calculate your household income:
+Add all household members' incomes from all eligible sources for your total gross annual household income.
+Compare your total combined gross annual household income against
+the income guidelines table
+.
+Note:
+Your household must be at or below the amounts shown in the income guidelines table.
+Household income includes all taxable and nontaxable revenues
+from all people living in the home.
+It includes, but is not limited to:
+Wages
+Salaries
+Interest and dividends
+Spousal and child support payments
+Public assistance payments
+Social Security and pensions
+Housing and military subsidies
+Rental income
+Self-employment income
+All employment-related, non-cash income
+*Income should be before taxes and based on current income sources. Valid through May 31, 2027.
+Enrollment
+In this section:
+New enrollment
+Renew enrollment
+Cancel enrollment
+Enrollment for sub-metered tenants (residential facilities)
+Enrollment for non-profits, agricultural housing and MFHCS
+How to submit a CARE application
+How to keep saving with CARE (currently enrolled)
+New enrollment
+The online form takes only a few minutes to fill out.
+No additional documentation is needed at the time of application.
+Your answers are confidential.
+If you are enrolled in one of our income-qualified programs or are living in an Affordable Housing (Deed Restricted) property, you may be eligible to receive a discounted Base Services Charge.
+Learn more
+.
+Apply for CARE online
+Online applications in English, Spanish and Chinese:
+English, Apply or renew now for CARE/FERA
+Español, Solicite ahora Programas CARE/FERA — Inscripción/Re-inscripción
+中文, 申請 CARE/FERA計劃-申請或從新申請 -第 1 步
+Mail-in applications in English, Spanish, Chinese and Vietnamese:
+English, CARE/FERA Application (PDF)
+Español, CARE/FERA Application (PDF)
+中文, CARE/FERA Application (PDF)
+Việt, CARE/FERA Application (PDF)
+Large-print, mail-in applications in English, Spanish, Chinese and Vietnamese:
+PG&E CARE/FERA Program Application Residential Customers (English) (PDF)
+Solicitud Para El Programa CARE/FERA Clientes Residenciales (Spanish) (PDF)
+PG&E CARE/FERA 計劃在中國的應用 (Chinese) (PDF)
+PG&E Mẫu Dơn Chương Trình CARE/FERA Khách Hàng Gia Cư (Vietnamese) (PDF)
+How do I submit a CARE application?
+First, complete and sign the application. Next, submit your application using one of the following ways:
+Show all
+Hide all
+Submit your application by mail or fax
+PG&E CARE/FERA program
+P.O. Box 29647
+Oakland, CA 94604-9647
+Fax: 1-877-302-7563
+Submit your application by email
+Email the completed application to
+CAREandFERA@pge.com
+.
+Write "CARE application" in the email's subject line. Remember to attach your application to the email.
+Renew enrollment
+You must renew your enrollment every two years—or four years if you are on a fixed income. We'll remind you when it's time to re-enroll. Here's how it works:
+PG&E sends a renewal application three months before your discount expires.
+If you still qualify under t
+[DOC 3] https://www.pge.com/en/account/billing-and-assistance/financial-assistance/california-alternate-rates-for-energy-program.html
+he current program guidelines, you reapply for CARE.
+Use the same enrollment methods as previously described.
+CARE enrolled customers also receive a discounted Base Services Charge of around $6.00 per month. If you still qualify for CARE, be sure to re-enroll to continue to receive both discounts.
+Learn more
+.
+Have you received a renewal request?
+If you've received a renewal request, renew now. You may also renew if you're within 90 days of the date your current enrollment expires.
+Renew your CARE enrollment
+Access the form in Spanish:
+Programas CARE - Inscripción/Re-inscripción
+Access the form in Chinese:
+CARE 計劃 - 申請或從新申請 - 第 1 步
+Cancel enrollment
+To cancel your enrollment and/or opt out of future CARE/FERA communications, email
+CAREandFERA@pge.com
+.
+Are you currently enrolled?
+Find the programs you're enrolled in and your total CARE savings on your PG&E bill:
+How to keep saving with CARE
+Turn on alerts
+to keep your monthly energy usage below 400 percent of your Baseline Allowance.
+What is Baseline Allowance
+?
+Renew your enrollment every two years. Renew every four years if you are on a fixed income.
+We'll remind you when it's time to re-enroll.
+Take a Home Energy Checkup
+Note:
+We may ask for proof of your eligibility in the future. This is to maximize the discounts available through CARE.
+Learn more about post-enrollment verification
+.
+Enrollment for sub-metered tenants
+Tenants of sub-metered residential facilities can apply for a monthly discount on their energy bill through CARE.
+To qualify, the energy bill from your landlord must be in your name. Standard eligibility requirements apply.
+Note:
+Tenants of sub-metered residential facilities CANNOT use the online CARE application. To apply for CARE, you must download and print an application sub-metered tenants.
+How do I download a CARE application for sub-metered tenants?
+Download and print any of the following files:
+CARE/FERA Sub-Metered Residential Program Application (PDF)
+Solicitud Para El Programa CARE/FERA (PDF)
+CARE/FERA 計劃申請表 (PDF)
+Mẫu Dơn Chương Trình CARE/FERA (PDF)
+How do I submit a CARE application for sub-metered tenants?
+First, complete and sign the application. Next, submit your application using one of the following ways:
+Show all
+Hide all
+Submit your application by mail or fax
+PG&E CARE/FERA program
+P.O. Box 29647
+Oakland, CA 94604-9647
+Fax: 1-877-302-7563
+Submit your application by email
+Email the completed application to
+CAREandFERA@pge.com
+.
+Write "Sub-metered tenant application" in the email's subject line. Remember to attach your application to the email.
+Renew enrollment for sub-metered tenants
+You must renew your enrollment every two years—or four years if you are on a fixed income. We'll remind you when it's time to re-enroll. Here's how it works:
+PG&E sends a renewal application three months before your discount expires.
+If you still qualify under the current program guidelines, you reapply for CARE.
+Use the same enrollment methods as previously described.
+Have you r
+[DOC 3] https://www.pge.com/en/account/billing-and-assistance/financial-assistance/california-alternate-rates-for-energy-program.html
+eceived a renewal request?
+If you've received a renewal request, renew now. You may also renew if you're within 90 days of the date your current enrollment expires.
+Tenants of sub-metered residential facilities CANNOT use the online CARE application. To apply for CARE, you must download and print an application:
+CARE/FERA Sub-Metered Residential Program Application (PDF)
+Solicitud Para El Programa CARE/FERA (PDF)
+CARE/FERA 計劃申請表 (PDF)
+Mẫu Dơn Chương Trình CARE/FERA (PDF)
+Cancel enrollment for sub-metered tenants
+To cancel your enrollment and/or opt out of future CARE communications, email
+CAREandFERA@pge.com
+.
+Note:
+Check your PG&E bill to see if you're already enrolled in CARE or another program.
+Learn how to read your bill
+.
+Enrollment for nonprofits, agricultural housing and MFHCs
+Show all
+Hide all
+Enrollment for nonprofits
+Eligible nonprofit group facilities
+Homeless shelters
+Hospices
+Women's shelters
+Group living facilities, including:
+Transitional housing, such as drug rehab centers or halfway houses
+Short- or long-term care facilities
+Group homes for the physically or mentally challenged
+Other nonprofit group living facilities
+Homekey Housing Facilities
+Nonprofit group facility requirements
+Group living facilities must provide special needs social services in addition to lodging. Examples include meals and rehabilitation.
+Group facilities may have satellite facilities in the name of one licensed entity.
+These satellite facilities must meet the same requirements as the main facility.
+Group facilities must notify PG&E if they no longer qualify for the CARE discount.
+Homeless shelters, hospices and women's shelters must:
+Provide lodging as their primary function
+Be open for operation
+Have facilities with at least six beds for a minimum of 180 days and/or nights per year
+Homekey Housing Facilities must provide a proof of the Homekey award (i.e., Standard Agreement and published list of the award from HCD's website).
+Nonprofit group facility income guidelines
+Total gross income for all residents or clients must meet current income guidelines.
+The income applies to individuals who occupy the facility at any time. This includes family units.
+On-site aid is excluded from this calculation.
+One licensed nonprofit, multiple facilities
+Separate applications must be filed for each type of facility. This rule applies even if the facilities are under one licensed organization.
+For example, an entity with a homeless shelter and a hospice facility must apply separately for each facility.
+Tax-exempt status
+The organization that operates the facility must provide a copy of the 501(c)(3) document. This document certifies tax-exempt status.
+All PG&E accounts must be listed in the name of the entity that holds the tax-exempt status.
+Nonprofit group facility energy usage requirements
+70 percent of the energy supplied to each PG&E account must be used for residential purposes. The purpose includes common-use areas.
+Which facilities are not eligible for CARE?
+Nonp
+[DOC 3] https://www.pge.com/en/account/billing-and-assistance/financial-assistance/california-alternate-rates-for-energy-program.html
+rofit facilities that provide only social services
+Group living facilities that provide no service other than a place to live
+Government-owned or operated facilities
+Government-subsidized facilities that only provide lodging
+How do I download a CARE application for my nonprofit?
+Download the
+CARE nonprofit group living facilities and HomeKey housing facilities program application (PDF)
+. Forms in languages other than English can be found in the "
+Forms and Guides
+" tab.
+How do I submit a CARE application for my nonprofit?
+First, complete and sign the application. Next, submit your application using one of the following ways:
+Submit your application by mail or fax
+PG&E CARE/FERA program
+P.O. Box 29647
+Oakland, CA 94604-9647
+Fax: 1-877-302-7563
+Submit your application by email
+Email the completed application to
+CAREandFERA@pge.com
+.
+Write "Nonprofit application" in the email's subject line. Remember to attach your application to the email.
+Renew CARE certification for a nonprofit
+Organizations must recertify every four years by completing a new application and attaching proof of the following items:
+A copy of your currently valid Federal 501(c)(3) tax exemption document with the same name as the PG&E account(s)
+A copy of your license to provide social service by the appropriate agency
+A complete list of your facility's PG&E accounts (See Section 5 of the application)
+PG&E sends a renewal application three months before the discount expires. Your organization can reapply for the CARE program if it still qualifies under the current CARE program eligibility program.
+To request an application by mail, email
+CAREandFERA@pge.com
+.
+Enrollment for agricultural housing
+Eligibility
+Housing facilities for agricultural employees may be eligible to get monthly CARE discounts on their energy bill. The housing facility must:
+Meet the definition in Subdivision (b) of Section 1140.4 of the Labor Code and have an exemption from local property taxes pursuant to subdivision (g) of Section 214 of the Revenue and Taxation Code
+Provide a copy of tax-exempt documentation
+Use 70 percent of the energy supplied to master-metered facilities for residential purposes, and 100 percent of the energy for individually metered units for residential purposes
+Meet the current income guidelines regarding total gross income for all households in the facility at any given time
+Have separate applications filed for each type of facility even if they are under one licensed organization.
+For example, employee housing and housing for agricultural employees
+Notify Pacific Gas and Electric Company if it no longer qualifies for the CARE discount.
+How do I download an application for my agricultural housing facility?
+Download the
+CARE for agricultural employee housing facilities application (PDF)
+. Forms in languages other than English can be found in the "
+Forms and Guides
+" tab.
+How do I submit a CARE application for my agricultural housing facility?
+First, complete and sign the application. Ne
+[DOC 4] https://www.pge.com/en/account/rate-plans/rate-resources.html
+IMPORTANT
+Outages
+Outages
+Sign In
+Log Out
+Sign In
+Hi, {name}
+Sign In
+Hi, {name}
+Rate resources
+Rate tools, programs, and information for home and business
+Rate Plans
+Rate Resources
+Residential rate resources
+Residential rate pricing guide
+Choose the electric rate plan that's right for you based on the information in this guide.
+View PG&E's residential rate plan pricing guide (XLSX)
+Residential EV rate calculator
+Identify the lowest cost electric rate for your personal electric vehicle.
+Use the residential EV rate calculator
+Baseline Allowance
+Electricity and gas used within the Baseline Allowance will be billed at the lowest price. The price will go up if you pass your allowance within the billing cycle.
+Learn more about Baseline Allowance
+Business rate resources
+Business EV rate calculator
+Identify the lowest cost electric rate for your commercial electric vehicle(s).
+Use the business EV rate calculator
+Baseline Allowance
+Electricity and gas used within the Baseline Allowance will be billed at the lowest price. The price will go up if you pass your allowance within the billing cycle.
+Learn more about Baseline Allowance
+Save on energy costs with our programs
+Help your business conserve energy and save money. PG&E offers:
+Free tips
+Assessments
+0% energy efficiency financing
+Visit electric savings tips
+Interest-free financing
+Replace old and worn-out equipment with more energy-efficient models. Get details about our 0% interest loans.
+Visit Energy Efficiency Financing
+Find and apply for business energy efficiency rebates and incentives.
+Explore business rebates
+More business resources
+Contact our business teams
+Still have questions about rates?
+Click here to connect with us
+PG&E's business newsletter
+PG&E Energy Advisor is a monthly newsletter containing resources and tips for energy savings information.
+See past editions
+This website and the messages contained in its webpages are funded by customers unless otherwise noted.
+About
+News
+Contact Us
+Connect
+Accessibility
+Terms & Conditions
+Regulation
+Privacy
+Security
+Sitemap
+Do Not Sell My Personal Information
+©2026 Pacific Gas and Electric Company
+About
+News
+Contact Us
+Connect
+Accessibility
+Terms & Conditions
+Regulation
+Privacy
+Security
+Sitemap
+Do Not Sell My Personal Information
+©2026 Pacific Gas and Electric Company
+[DOC 5] https://www.pge.com/en/account/rate-plans/time-of-use-rate-plans.html
+IMPORTANT
+Outages
+Outages
+Sign In
+Log Out
+Sign In
+Hi, {name}
+Sign In
+Hi, {name}
+Time-of-Use rate plans
+Shift electricity use to lower priced times of day
+Is a Time-of-Use rate plan right for you?
+Compare rate plans now
+Maximize savings with Time-of-Use plans
+Lower demand, lower rates
+Time-of-Use rate plans are based on:
+How much energy you use
+When you use it
+Get lower energy rates when energy demand is low.
+Shift energy use to partial- or off-peak times
+Rates and demand are lower during partial-peak or off-peak hours of the day
+By shifting your energy use to to these hours, you can:
+Lower your bill
+Support a healthier environment
+Ensure a sustainable future
+Support California's clean energy effort
+Time-of-Use rate plans help ensure a more responsible and sustainable energy future for generations to come.
+Receive safer, cleaner and more reliable energy
+Time-of-Use rate plans offer:
+Lower priced power when demand is less
+Greater use of renewable energy
+Time-of-Use for residential customers
+Time-of-Use for business customers
+Residential Time-of-Use rate plans
+Show all
+Hide all
+Time-of-Use Peak Pricing 4-9 p.m. Every Day (E-TOU-C)
+On this rate plan:
+4-9 p.m. are higher-priced (peak) times.
+All other times are lower-priced (off-peak).
+Every day (weekdays and weekends)
+Baseline Allowance and E-TOU-C
+Understanding Baseline Allowance
+The first and lowest-priced tier is called your Baseline Allowance. It consists of an allotment of energy based on:
+Where you live
+Your heating source
+The season (summer or winter)
+Eight months of winter (October 1 through May 31) have lower prices than the four months of summer (June 1 through September 30).*
+Energy used within your Baseline Allowance is billed at the lowest price.
+Energy used above the Baseline Allowance is billed at a higher price.
+*
+Learn more about Baseline Allowance and applicable rate plans
+.
+How the E-TOU-C plan works with Baseline Allowance
+The price for energy changes:
+When you exceed your Baseline Allowance
+When energy is used during peak hours
+Since the Baseline Allowance changes by season, the amount of energy billed at the lowest price also changes by season.
+You can save on your bill by:
+Shifting usage to off-peak hours
+Staying within Baseline Allowance as long as possible
+This plan works best for:
+Customers who can keep their usage close to Baseline Allowance
+Customers who can conserve energy from 4-9 p.m. every day
+Time-of-Use Peak Pricing 5-8 p.m. Weekdays (E-TOU-D)
+On this rate plan:
+5-8 p.m. are higher-priced (peak) times.
+All other times are lower-priced (off-peak).
+Weekdays
+Weekends and most holidays
+Small shifts can make a difference
+Follow these simple ideas to save money on your Time-of-Use rate plan.
+Show all
+Hide all
+Anytime tips
+Daily energy-saving habits
+Anytime: Turn it off
+What is one of the easiest ways to conserve energy? Turn off lights, appliances, TVs and computers off when they're not in use.
+Morning to midday: Pre-cool your home
+If you have air conditioning:
+Cool your h
+[DOC 5] https://www.pge.com/en/account/rate-plans/time-of-use-rate-plans.html
+ome during lower-priced times
+Nudge it up to 78°F or higher (health permitting) during peak times
+Late afternoon to evening: Load first, run later
+Load your dishes and ready your clothes to wash or dry during peak hours
+Wait to wash them during lower-priced off-peak times
+Late night: Press the start button
+Run your laundry or dishwasher overnight, during off-peak hours.
+Warm-weather tips
+Shift and save on warmer days
+When possible...
+...save chores that create heat for lower-priced off-peak times.
+Now and then...
+...find things to do in cool places during peak times.
+Leave the house to go swimming or visit the library,
+Set your air conditioner...
+...to 75-78°F when you're at home, health permitting.
+Pre-cool your home before peak hours.
+Turn it up to 85°F when you leave.
+Check your air conditioner's filters...
+...every 1-2 months.
+Dirty filters cause your system to work harder to keep you cool. This wastes energy.
+Cool-weather tips
+Save on heating costs
+Shut out the cold
+Keep warm air in and cold air out.
+Close curtains, shades and blinds when you sleep or leave the house.
+Bundle up
+Don't turn up the heat
+Add layers of clothing and blankets instead, especially during peak hours.
+String up savings
+Use energy-efficient LED lights for holiday decorations.
+Turn them off when you go to bed
+Use a timer to so you don't forget.
+Save while you're home
+Set your thermostat to 68°F or lower, health permitting.
+Your home uses 3-5% more energy for each degree it's raised.
+Save while you're away
+When you leave the house, set your thermostat to 56°F or shut it off.
+Keep your home at this temperature 8 hours per day.
+You can save 5-15% on your annual heating bill.
+Seal and save
+Weather-strip your windows and doors
+Keep your home comfortable
+Save up to $50 a year in heating costs
+Make the most of Time-of-Use rate plans
+Time-of-Use rate plans are based on how much energy you use and when you use it. Here's how to make the most of your plan.
+Audio description
+Transcript (PDF)
+Audio description
+Transcript (PDF)
+Customer success stories
+No sacrifice at all
+"I just shift my laundry in the morning on the weekend and set my dishwasher for its delay feature so it runs after 9 p.m. My electric car charges every night during off-peak hours. Really no sacrifice at all!"
+- Don, PG&E Time-of-Use Customer, Central Coast
+I'm making light adjustments
+"With the Time-of-Use rate plan, I'm making light adjustments to my schedule. Like doing laundry at night after the kids go to bed. Or starting the dishwasher right before I go to sleep. It's really not hard to learn these new habits."
+- Farin, PG&E Time-of-Use Customer, Central California
+A few simple changes
+"Did you know that making a few simple changes to when you do some everyday tasks can directly affect your PG&E bill as well as helping to ease the stress on the power grid? We tend to do our laundry at night rather than during the day, and last year I added an insulation blanket to our water heater."
+- Sheldon, PG&E Time-of-Us
+[DOC 5] https://www.pge.com/en/account/rate-plans/time-of-use-rate-plans.html
+e Customer, Northern California
+Choose the best rate plan for your business
+We have different types of rate plans for different types of businesses.
+Find more information about the
+different rate plan options
+.
+Business Time-of-Use rate plans
+Show all
+Hide all
+Commercial rate plans
+Peak hours:
+4-9 p.m. every day
+Summer rates, when peak prices are highest, are in effect for 4 months, from June through September
+Save during these periods:
+Super off-peak period, when prices are at their lowest, during spring months
+Off-peak periods, when summer and winter prices are at their lowest
+Partial-peak periods during summer months only
+Additionally, a Business Low Use Alternative rate plan is available for businesses who have some flexibility to adjust their energy use throughout the day. This rate option does not have a partial-peak period.
+To learn more, visit
+pge.com/ratecomparison
+.
+Agriculture rate plans
+Peak hours:
+5-8 p.m. 365 days a year
+Cost per kWh varies by season. Costs are higher in the summer than in the winter.
+Customers are billed on measured demand rather than self-reported connected load.
+Peak period applies for 365 days of the year.
+The max demand charge is now equal in summer and winter.
+Note:
+Only AG-C includes Summer Peak Demand Charge & Demand Charge Limiter (Protection from random spikes in demand, $0.50/kWh cap)
+Agriculture rate plans feature a June through September summer season, with no partial-peak period.
+There are also three pre-defined flex rate options available if you can limit your operating hours to certain days of the week.
+Option 1: Off-peak days are Wednesday and Thursday
+Option 2: Off-peak days are Saturday and Sunday
+Option 3: Off-peak days are Monday and Friday
+Find out if your business might benefit from a flex rate plan by logging into your
+online account
+. To enroll, call our Agricultural Customer Service Center at
+1-877-311-3276
+. Options may be limited due to system constraints; if your first choice option is not available, you will be offered your second choice option.
+Business EV rate plans
+Two EV rate plans for business customers
+PG&E offers two electric vehicle rate plans for business customers with on-site EV charging. These rates are specifically designed for customers with separately metered EV charging at locations such as workplaces, multi-unit dwellings, and retail as well as sites with fleets and fast charging stations.
+Business EV rate plans have a peak period designed to reduce usage on the electric grid when demand is highest.
+4 p.m. - 9 p.m. every day, year-round
+There are partial-peak periods for part of the afternoon and a large portion of the evening and morning hours.
+2 p.m. - 4 p.m. and 9 p.m. - 9 a.m. every day, year-round
+There is also an even more affordable super off-peak period when prices will be at their lowest.
+9 a.m. - 2 p.m. every day, year-round
+These time-of-use periods support California's renewable initiatives to promote energy usage when solar energy is most plentiful.
+To lear
+[DOC 5] https://www.pge.com/en/account/rate-plans/time-of-use-rate-plans.html
+n more, visit
+Business EV rate plans
+.
+Frequently asked questions about business Time-of-Use rate plans
+Show all
+Hide all
+Time-of-Use FAQs
+Why does my time-of-use rate vary?
+Time-of-use rate plans better align the price of energy with the cost of energy at the time it is produced. Lower rates during partial-peak and off-peak hours offer an incentive for customers to shift energy use away from more expensive peak hours, which can help you save money and reduce strain on the electric grid.
+How can I save money on a time-of-use rate plan?
+Shift when you use energy to partial-peak and off-peak hours. Rates during partial-peak and off-peak hours are lower than rates during on-peak hours.
+Rebates may be available to help you conserve energy by making energy efficiency upgrades.
+What are my rate plan options? Can I switch to a different rate plan?
+You can change to another time-of-use rate plan up to once a year. Learn more on PG&E's
+Tariffs webpage
+.
+PG&E also has two business storage rate options:
+B1-ST
+Option S
+Log into your PG&E online account to:
+Compare available rate options
+Select a different rate plan
+Who do I contact if I have a question about my bill?
+Call our Business Customer Service Center at
+1-800-468-4743
+. Our staff can:
+Help you understand your bill
+Walk you through an energy survey over the phone
+See if your business might qualify for potential rebates and other savings programs
+Schedule you a free, comprehensive facility assessment
+How is PG&E supporting California's clean energy policies?
+Time-of-use rate plans support California's clean energy policies. They are one of the best ways to:
+Create a cleaner and more reliable energy grid by encouraging energy usage when:
+Demand is lower
+Renewable energy is more plentiful
+Balancing the need to keep customer rates affordable
+Most business customers across California have already been on time-of-use rate plans for several years. They have been widely adopted by electricity providers.
+Note:
+PG&E does not make more money when our customers use more gas or electricity. The amount of money PG&E makes is subject to regulation by the California Public Utilities Commission (CPUC).
+Demand Charges FAQs
+What is the demand charge on my bill?
+Some time-of-use rate plans include a demand charge.
+This charge encourages businesses to spread their electricity use throughout the day.
+When businesses spread their electricity use throughout the day, California's supply of electricity is more reliable.
+This demand charge is calculated using the 15-minute interval in each billing month when your business uses the most electricity.
+If you can lower your highest usage 15-minute interval, you can save.
+Your regular electricity usage charges can be roughly 30% lower than for a comparable rate plan without a demand charge.
+Why does my demand charge vary from month to month?
+The demand charge reflects the most electricity you used during any 15-minute interval over the course of a billing period.
+It can vary dependi
+[DOC 5] https://www.pge.com/en/account/rate-plans/time-of-use-rate-plans.html
+ng on how and when you use your equipment from month to month.
+To minimize spikes in your electricity use, don't use all your equipment at the same time.
+More information to help you make smart energy decisions
+Battery Storage with Net Energy Metering (NEM2)
+Get the most out of your investment in renewable energy. Optimize energy by storing power to use later with PG&E's NEM2 program.
+Learn about battery storage
+For a limited period of years, qualifying solar customers will be eligible for delayed transition. This retains their legacy Time-of-Use hours and seasons.
+Learn about solar and NEM
+It's easy to go green with a community renewable program
+Without installing rooftop solar, residential customers can receive 100% of their electricity from California-made solar power.
+Learn about community renewable programs
+Steps to change business rate plans
+Sign into your account
+.
+Go to your account dashboard.
+Under "Your rate plan," select "Compare rate plans."
+Select "Manage Rate Plan."
+Select a rate plan.
+Once your change has been submitted, we'll send you an email.
+Rate changes usually go into effect within one or two bill cycles.
+Contact us
+Still have questions about new rate plans, energy assessments or our programs?
+Business customers
+, call
+1-800-468-4743
+, Monday through Friday, 7 a.m. to 6 p.m.
+Agricultural customers
+, call
+1-877-311-3276
+, Monday through Friday, 7 a.m. to 6 p.m.
+Solar customers
+, call
+1-877-743-4112
+, Monday through Friday, 7 a.m. to 6 p.m.
+Customers can also visit their online account to get details on rate plan options.
+Audio description
+Transcript (PDF)
+How Berkeley Repertory Theatre saves money
+"I recommend other businesses compare PG&E rate plans annually via their online account and make sure they are on the right rate structure in line with their operations."
+– Mark Morisette, Facilities Director, Berkeley Repertory Theatre in Berkeley, CA
+Audio description
+Transcript (PDF)
+Setton Pistachio reduces energy bills
+"We're able to save $31,000 on our energy bill annually at one location by ensuring our business is on the best electric rate plan in line with our operations. It did not cost us any time or money to do that."
+– Elizabeth Carranza, Grower Services, Setton Farms in Terra Bella, CA
+Audio description
+Transcript (PDF)
+Woods Family Farms saved $10,000 annually on energy costs
+"Just by updating our rate plan with a better option we were able to reduce our annual energy bill by 15%. That's a lot of savings."
+– Johna Calandra, Woods Family Farms in Kingsburg, CA
+PG&E Energy Action Guide
+Find energy-efficient products with high ratings. Get the best deals on your favorites.
+Explore the Energy Action Guide
+Tools for choosing rate plans
+Online rate analysis
+See what's available and how the different rate plans work.
+View your custom rate analysis.
+Decide what rate plan would be the best rate plan for you.
+Use our rate analysis tool:
+Residential customers
+Business customers
+Low-cost and no-cost energy-saving tips
+Find ways to
+[DOC 6] https://www.pge.com/en/account/rate-plans/tiered-rate-plan.html
+IMPORTANT
+Outages
+Outages
+Sign In
+Log Out
+Sign In
+Hi, {name}
+Sign In
+Hi, {name}
+PG&E's Tiered Rate Plan (E-1)
+Understand the Tiered Rate Plan
+Review a side-by-side comparison of all rate plans.
+Compare rate plans
+The two tiers explained
+This rate plan has two pricing levels, known as "tiers," which are based on how much energy you use.
+Energy used within your Baseline Allowance is Tier 1 and billed at the lowest price.
+Energy used above the Baseline Allowance is considered Tier 2 and is billed at a higher price.
+Understanding Baseline Allowance
+The first and lowest-priced tier is called your Baseline Allowance. It consists of an allotment of energy based on where you live, your heating source, and the season—summer or winter.
+Summer pricing runs from June 1 through September 30.
+Winter pricing runs from October 1 through May 31.
+Get details about the baseline allowance
+How the plan works
+The price for energy changes only when you exceed your Baseline Allowance and go into Tier 2 during the monthly billing cycle.
+Since the Baseline Allowance changes by season, the amount of energy billed at the lowest price also changes by season.
+You can save on your bill by conserving energy and staying within Baseline Allowance as long as possible.
+This plan works best for customers who are unable to decrease their energy use during certain times of day.
+Note:
+This chart represents an above-average usage customer. The length of time in each tier depends on monthly energy usage.
+PG&E residential rate plan pricing (PDF)
+Find current pricing on the tariffs page
+Sign in to use the electric rate plan comparison tool
+Other rate options
+Save with the SmartRate™ add-on
+The SmartRate program can help you save up to 20 percent on your summer energy bill. Receive a discount for reducing your energy use up to 15 days a year.
+Learn about SmartRate
+Take control with a Time-of-Use plan
+On Time-of-Use rate plans, pricing varies depending on when you use energy during the day, week and season.
+Learn about Time-of-Use
+Rate for electric-powered homes
+The Electric Home rate plan is ideal if you electrify your home with one or more of the following:
+electric vehicle (EV)
+battery storage
+electric heat pump for water heating or climate control (space heating or cooling)
+Explore the Electric Home Rate
+More ways to manage energy costs
+Energy usage tools
+Sign in to get a personalized rate analysis and learn how your home uses energy.
+Take the Home Energy Checkup
+Energy Alerts
+The Bill Forecast Alert sends a notification if your bill is expected to exceed an amount you specify.
+Enroll in Energy Alerts
+This website and the messages contained in its webpages are funded by customers unless otherwise noted.
+About
+News
+Contact Us
+Connect
+Accessibility
+Terms & Conditions
+Regulation
+Privacy
+Security
+Sitemap
+Do Not Sell My Personal Information
+©2026 Pacific Gas and Electric Company
+About
+News
+Contact Us
+Connect
+Accessibility
+Terms & Conditions
+Regulation
+Privacy
+Security
+Sitemap
+Do Not Sell My P
+[DOC 6] https://www.pge.com/en/account/rate-plans/tiered-rate-plan.html
+ersonal Information
+©2026 Pacific Gas and Electric Company
+[DOC 7] https://www.pge.com/en/account/rate-plans/solar-rates.html
+Outages
+Outages
+Sign In
+Log Out
+Sign In
+Hi, {name}
+Sign In
+Hi, {name}
+PG&E solar rate plans
+Going solar has never been so simple
+Solar rate options
+Solar can make sense for financial, environmental or other reasons.
+PG&E offers two solar options.
+Community Renewable programs
+Try PG&E's Community Renewable programs:
+Buy up to 100% of your electricity from solar power.
+No need to install solar panels.
+Learn about the Community Renewable programs
+Rooftop solar
+Installing rooftop solar? Read our guide to get the facts.
+Lower your monthly bill based on how much energy your rooftop solar system makes.
+Get started with rooftop solar
+Get to know your solar bill
+Learn how to read your solar bill, including Net Energy Metering (NEM).
+Understand your solar bill
+More about rates
+Tiered Rate Plan
+The Tiered Rate Plan (E-1) has two pricing levels, known as “tiers".
+Your tier is based on how much energy you use.
+Explore PG&E's Tiered Rate Plan
+What is the Baseline Allowance?
+Energy used within the Baseline Allowance will be billed at the lowest price.
+The price of the energy goes up if you use more energy than your Baseline Allowance in a given billing cycle.
+Learn more about the Baseline Allowance
+Energy-related glossary
+Speak fluent energy statement.
+Learn common energy-related terms.
+Go to the energy-related glossary
+This website and the messages contained in its webpages are funded by customers unless otherwise noted.
+About
+News
+Contact Us
+Connect
+Accessibility
+Terms & Conditions
+Regulation
+Privacy
+Security
+Sitemap
+Do Not Sell My Personal Information
+©2026 Pacific Gas and Electric Company
+About
+News
+Contact Us
+Connect
+Accessibility
+Terms & Conditions
+Regulation
+Privacy
+Security
+Sitemap
+Do Not Sell My Personal Information
+©2026 Pacific Gas and Electric Company

@@ -1,0 +1,2709 @@
+[DOC 0] https://www.nspower.ca/docs/default-source/regulatory/tariff-book-2026.pdf
+Tariffs
+May 2026
+Approved by the Nova Scotia Utility and Review Board pursuant to The Public
+Utilities Act, R.S.N.S., 189,c.380 as amended
+For more information, call Nova Scotia Power at 1-800-428-6230 (902-428-
+6230 in Metro Halifax) www.nspower.ca
+
+TABLE OF CONTENTS
+General
+Domestic Service Tariff 4
+Domestic Service Time-Of-Day Tariff (Optional) 6
+Domestic Service Critical Peak Pricing Tariff 8
+Domestic Service Time of Use Tariff 12
+Small General Tariff 16
+Small General Critical Peak Pricing Tariff 18
+Small General Time of Use Tariff 22
+General Tariff 25
+General Critical Peak Pricing Tariff 27
+General Time of Use Tariff 31
+Multi-Unit Residential Buildings (MURB) Time of Use Tariff 35
+Large General Tariff 38
+Small Industrial Tarff 40
+Medium Industrial Tariff 42
+Large Industrial Tariff 44
+Municipal Tariff 50
+Outdoor Recreational Lighting Tariff 52
+Unmetered Service Rates 53
+Riders
+Fuel Adjustment Mechanism (FAM) Tariff 65
+Solar Garden Rate Rider 69
+Demand Side Management Cost Recovery Rider (DCRR) 74
+Storm Cost Recovery Rider 78
+Community Solar energy Credit Rider (CSECR) 80
+Annually Adjusted Rates
+Generation Replacement and Load Following Tariff 84
+
+One Part Transmission Real Time Pricing Tariff 89
+One Part Distribution Voltage Real Time Pricing Tariff 92
+Shore Power Tariff 95
+Wholesale Market Back-up/Top-up Service Tariff 99
+Wholesale Market Non-Dispatchable Supplier Spill Tariff 105
+Renewable to Retail Energy Balancing Service Tariff 107
+Renewable to Retail Standby Service Tariff 110
+Renewable to Retail Market Transition Tariff 114
+Extra Large Industrial Active Demand Control Tariff 116
+Load Retention Tariff 124
+Distribution Tariff Rate Schedules 129
+Open Access Transmission Tariff Schedules 141
+View the complete Open Access Transmission Tariff on OASIS at:
+http://oasis.nspower.ca/en/home/oasis/default.aspx
+
+SCHEDULE A
+DOMESTIC SERVICE TARIFF Page 1 of 2
+Rate Codes 02, 03, 04
+CUSTOMER CHARGE
+per month
+Effective upon the date of the
+$20.08
+Board’s Order
+Effective January 1, 2027 $21.04
+ENERGY CHARGE
+cents per
+kilowatt-hour
+Effective upon the date of the
+18.324
+Board’s Order
+Effective January 1, 2027 19.067
+FUEL ADJUSTMENT MECHANISM (FAM)
+The FAM Actual Adjustment (AA) and Balance Adjustment (BA) charges or credits (in cents per
+kilowatt-hour) applicable to the Tariff for the current rate year, shown in the FAM Tariff, shall apply,
+in addition to the energy charge.
+DSM COST RECOVERY RIDER
+The Demand Side Management Cost Recovery Charge (in cents per kilowatt-hour) applicable to the
+Tariff for the current rate year, shown in the Demand Side Management Cost Recovery Rider, shall
+apply, in addition to the energy charge.
+STORM COST RECOVERY RIDER
+Storm Cost Recovery charges or credits (in cents per kilowatt-hour) applicable to the Tariff for the
+current rate year, shown in the Storm Cost Recovery Rider, shall apply, in addition to the energy charge.
+MINIMUM MONTHLY CHARGE
+The minimum monthly charge shall be as follows:
+per month
+Effective upon the d
+[DOC 0] https://www.nspower.ca/docs/default-source/regulatory/tariff-book-2026.pdf
+ate of the
+$20.08
+Board’s Order
+Effective January 1, 2027 $21.04
+Effective:
+.
+
+DOMESTIC SERVICE TARIFF Page 2 of 2
+Rate Codes 02, 03, 04
+AVAILABILITY
+This tariff is applicable to electric energy used by any customer in a private residence for the customer's
+own domestic or household use, including lighting, cooking, heating, or refrigeration purposes. Upon
+application to the Company, the Domestic tariff shall be available to any other customer within the
+provisions of Section 73 of the Public Utilities Act, R.S.N.S. 1989, c. 380, as amended.
+Any outbuilding located on residential property adjacent to a domestic dwelling and supplied
+electrically through a separate meter shall have rates applied in accordance with actual use of the
+building.
+If the building is used principally for the owner's personal pursuits and hobbies, the Domestic tariff
+shall be applied.
+If the building is used principally for commercial purposes the appropriate General or Industrial tariff
+shall be applied.
+Optional Green Power Rider
+Customers taking service under this rider may choose to support NSPI’s Green Power program by
+purchasing “blocks” of Green Power. For every block purchased, NSPI will provide 125 kWh per
+month from green energy sources, thereby displacing energy from fossil fuels. Blocks may be
+purchased at a cost of $5 per month. This charge shall be over and above the customer’s normal bill
+for service taken under the Domestic Service rate.
+Special Terms and Provisions
+(1) Green Power, as defined for the purposes of this rider includes energy produced from renewable
+resources that have minimal impact on the environment, and could be independently certified by
+third party environmental organizations.
+(2) Service under this rider may be limited at the discretion of the Company, based on the expected
+level of green energy available.
+Effective:
+.
+
+DOMESTIC SERVICE TIME-OF-DAY TARIFF (OPTIONAL) Page 1 of 2
+Rate Codes 05, 06
+CUSTOMER CHARGE
+per month
+Effective upon the date of the
+$20.08
+Board’s Order
+Effective January 1, 2027 $21.04
+ENERGY CHARGE
+cents per kilowatt-hour
+Applicable in December,
+7:00 AM to 12:00 PM to 4:00 PM to 11:00 PM to
+January, and February
+12:00 PM 4:00 PM 11:00 PM 7:00 AM
+Effective upon the date of the
+24.384 19.459 24.384 11.632
+Board’s Order
+Effective January 1, 2027 25.694 20.309 25.694 11.750
+The above rates apply weekdays (Monday through Friday, inclusive) excluding statutory holidays. For
+Saturdays, Sundays, and statutory holidays, all consumption will be billed at the rate for 11:00 PM to
+7:00 AM.
+cents per kilowatt-hour
+Applicable from March to
+7:00 AM to 11:00 PM to
+November
+11:00 PM 7:00 AM
+Effective upon the date of the
+19.459 11.632
+Board’s Order
+Effective January 1, 2027 20.309 11.750
+The above rates apply weekdays (Monday through Friday, inclusive) excluding statutory holidays. For
+Saturdays, Sundays, and statutory holidays, all consumption will be billed at the rate for 11:00 PM to
+7:00 AM.
+FUEL ADJUSTMENT MECHANISM (FAM)
+The F
+[DOC 0] https://www.nspower.ca/docs/default-source/regulatory/tariff-book-2026.pdf
+AM Actual Adjustment (AA) and Balance Adjustment (BA) charges or credits (in cents per
+kilowatt-hour) applicable to the Tariff for the current rate year, shown in the FAM Tariff, shall apply,
+in addition to the energy charge.
+Effective:
+.
+
+DOMESTIC SERVICE TIME-OF-DAY TARIFF (OPTIONAL) Page 2 of 2
+Rate Codes 05, 06
+DSM COST RECOVERY RIDER
+The Demand Side Management Cost Recovery Charge (in cents per kilowatt-hour) applicable to the
+Tariff for the current rate year, shown in the Demand Side Management Cost Recovery Rider, shall
+apply, in addition to the energy charge.
+STORM COST RECOVERY RIDER
+Storm Cost Recovery charges or credits (in cents per kilowatt-hour) applicable to the Tariff for the
+current rate year, shown in the Storm Cost Recovery Rider, shall apply, in addition to the energy charge.
+MINIMUM MONTHLY CHARGE
+The minimum monthly charge shall be as follows:
+per month
+Effective upon the date of the
+$20.08
+Board’s Order
+Effective January 1, 2027 $21.04
+AVAILABILITY
+This tariff is only available to customers employing electric-based heating systems utilizing Electric
+Thermal Storage (ETS) equipment, and electric in-floor radiant heating systems utilizing thermal
+storage, and appropriate timing and controls approved by the Company.
+This tariff is applicable to electric energy used by any customer in a private residence for the customer's
+own domestic or household use, including lighting, cooking, heating, or refrigeration purposes. Upon
+application to the Company, the Domestic Service Time-of-Day Tariff shall be available to any other
+customer within the provisions of Section 73 of the Public Utilities Act, R.S.N.S. 1989, c. 380, as
+amended.
+Any outbuilding located on residential property adjacent to a domestic dwelling and supplied
+electrically through a separate meter shall have rates applied in accordance with actual use of the
+building.
+If the building is used principally for the owner's personal pursuits and hobbies, the Domestic tariff
+shall be applied.
+If the building is used principally for commercial purposes the appropriate General or Industrial tariff
+shall be applied.
+Effective:
+.
+
+DOMESTIC SERVICE CRITICAL PEAK PRICING TARIFF Page 1 of 4
+Rate Code 70
+PURPOSE
+This is an optional tariff designed to promote the shifting of load from peak to off-peak periods. This
+tariff is available to customers who are eligible for service under the Domestic Service Tariff.
+CUSTOMER CHARGE
+per month
+Effective upon the date of the
+$20.08
+Board’s Order
+Effective January 1, 2027 $21.04
+INTERIM ENERGY CHARGE
+Effective December 1, 2025, in accordance with the Nova Scotia Energy Board (NSEB, Board)
+Decision1 on NS Power’s Application for 2025/26 Time-varying Pricing (TVP) Tariffs (M12499):
+• The Interim Energy Charge applies in all hours during both winter and non-winter periods and is
+amended to be the same as the standard offer rates (as may be amended by the Board from time
+to time) for the applicable class while system functionality is not available;
+[DOC 0] https://www.nspower.ca/docs/default-source/regulatory/tariff-book-2026.pdf
+
+• No Critical Peak Events will be scheduled while this Interim Energy Charge is in effect; and
+• NS Power shall provide notification to all TVP customers once system functionality is restored,
+subject to the notification requirements described below:
+If system functionality is restored on or before March 1, 2026, the approved CPP rates, as
+o
+provided in the Energy Charge section of this Tariff, will be restored and NS Power will
+provide Critical Peak Pricing Tariff customers with a 15-day grace period before the first
+Critical Peak Event is called; and
+If system functionality is restored after March 1, 2026, the rates set out in this Interim
+o
+Energy Charge section shall remain in effect until October 31, 2026. Effective November
+1, 2026, the rates outlined in the Energy Charge section of this Tariff will apply.
+cents per kilowatt-hour
+Interim Energy Charge
+During a Critical Non-critical
+Peak Event Peak Hours
+Effective upon the date of the
+n/a 18.324
+Board’s Order
+1 M12499 – Board Decision, 325286, page 5. October 28, 2025.
+Effective:
+.
+
+DOMESTIC SERVICE CRITICAL PEAK PRICING TARIFF Page 2 of 4
+Rate Code 70
+ENERGY CHARGE
+cents per kilowatt-hour
+During a Critical Non-critical
+Peak Event Peak Hours
+Effective November 1, 2026 182.067 15.411
+Effective January 1, 2027 191.990 15.956
+The Critical Peak Event is of a four-hour duration and can be called at any time between 6:00 AM and
+11:00 PM, Monday to Sunday, during the Winter Period November 1 through March 31.
+The Critical Peak Event pricing applies when a Critical Peak Event is called. In all other hours in the
+Winter Period, and for all hours in the Non-Winter Period, the rate shall be the Non-critical Peak Hours
+rate in the table above.
+CRITICAL PEAK EVENT PROCEDURE
+(1) In the Winter Period, Critical Peak Events exclude all hours on the following holidays: January
+1, Nova Scotia Heritage Day, Good Friday, Easter Monday, November 11, December 25 and
+December 26. If January 1, November 11, December 25 or 26 fall on a weekend, the Critical
+Peak Events also exclude the weekday the holiday is observed.
+(2) Critical Peak Events will be scheduled, at the sole discretion of NSPI, when NSPI is expecting
+conditions including, but not limited to, high energy (kWh) usage, high market energy costs, or
+generation or transmission outages.
+(3) When a Critical Peak Event is scheduled, subscribers to this tariff will be notified in advance and
+the Critical Peak Event Energy Charge (higher rate) will be in effect for all kWh consumed by
+the customer during the period. The notification is a signal to the customer to reduce the amount
+of electricity they are using.
+(4) Critical Peak Events will only be scheduled to occur during the Winter Period.
+(5) No more than 18 Critical Peak Events may be scheduled per Winter season (November through
+March inclusive). No more than three Critical Peak Events will be scheduled per week (Monday
+to Sunday). No more than three Critical Peak Events per Winter season may be scheduled 
+[DOC 0] https://www.nspower.ca/docs/default-source/regulatory/tariff-book-2026.pdf
+on a
+weekend.
+(6) Customers will be notified of a Critical Peak Event in advance. By 4:00 pm the day prior to the
+event, the Customer will receive a notification message. The Customer is responsible to watch
+for this message, and to notify NSPI in advance if their contact information changes.
+Effective:
+.
+
+DOMESTIC SERVICE CRITICAL PEAK PRICING TARIFF Page 3 of 4
+Rate Code 70
+FUEL ADJUSTMENT MECHANISM (FAM)
+The FAM Actual Adjustment (AA) and Balance Adjustment (BA) charges or credits (in cents per
+kilowatt-hour) applicable to the Tariff for the current rate year, shown in the FAM Tariff, shall apply,
+in addition to the energy charge.
+DSM COST RECOVERY RIDER
+The Demand Side Management Cost Recovery Charge (in cents per kilowatt-hour) applicable to the
+Tariff for the current rate year, shown in the Demand Side Management Cost Recovery Rider, shall
+apply, in addition to the energy charge.
+STORM COST RECOVERY RIDER
+Storm Cost Recovery charges or credits (in cents per kilowatt-hour) applicable to the Tariff for the
+current rate year, shown in the Storm Cost Recovery Rider, shall apply, in addition to the energy charge.
+MINIMUM MONTHLY CHARGE
+The minimum monthly charge shall be as follows:
+per month
+Effective upon the date of the
+$20.08
+Board’s Order
+Effective January 1, 2027 $21.04
+AVAILABILITY CONDITIONS
+(a) The customer must commence service under this tariff on November 1st, unless NSPI grants a
+waiver.
+(b) The customer must be equipped with a standard Smart Meter.
+(c) The customer must be on electronic billing and have a MyAccount profile.
+(d) NSPI may limit the number of customers who may subscribe to this tariff at a time, and/or close
+enrollment for any period of time.
+(e) The customer cannot be taking seasonal service from NSPI under Regulation 3.3.
+(f) The customer cannot be taking Net Metering service from NSPI under Regulation 3.6.
+Effective:
+.
+
+DOMESTIC SERVICE CRITICAL PEAK PRICING TARIFF Page 4 of 4
+Rate Code 70
+Optional Green Power Rider
+Customers taking service under this rider may choose to support NSPI’s Green Power program by
+purchasing “blocks” of Green Power. For every block purchased, NSPI will provide 125 kWh per
+month from green energy sources, thereby displacing energy from fossil fuels. Blocks may be
+purchased at a cost of $5 per month. This charge shall be over and above the customer's normal bill for
+service taken under the Domestic Service Critical Peak Pricing Tariff.
+Special Terms and Provisions
+(1) Green Power, as defined for the purposes of this rider includes energy produced from renewable
+resources that have minimal impact on the environment, and could be independently certified by
+third party environmental organizations.
+(2) Service under this rider may be limited at the discretion of the Company, based on the expected
+level of green energy available.
+Effective:
+.
+
+DOMESTIC SERVICE TIME OF USE TARIFF Page 1 of 4
+Rate Code 80
+PURPOSE
+This is an optional tariff designed to promote the shifting of load from peak to off
+[DOC 0] https://www.nspower.ca/docs/default-source/regulatory/tariff-book-2026.pdf
+-peak periods. This
+tariff is available to customers who are eligible for service under the Domestic Service Tariff.
+CUSTOMER CHARGE
+per month
+Effective upon the date of the
+$20.08
+Board’s Order
+Effective January 1, 2027 $21.04
+INTERIM ENERGY CHARGE
+Effective November 1, 2025, in accordance with the Nova Scotia Energy Board (NSEB, Board)
+Decision1 on NS Power’s Application for 2025/26 Time-varying Pricing (TVP) Tariffs (M12499):
+• The Interim Energy Charge applies in all hours during both winter and non-winter periods and is
+amended to be the same as the standard offer rates (as may be amended by the Board from time
+to time) for the applicable class while system functionality is not available; and
+• NS Power shall provide notification to all TVP customers once system functionality is restored,
+at which point all approved TVP rates, as provided in the Energy Charge section of this Tariff,
+will be restored subject to the notification requirements described below:
+If system functionality is restored on, or before, February 15, 2026, NS Power will provide
+o
+fifteen (15) days’ notice to Time-of-Use Tariff customers before resuming on-peak and off-
+peak rates effective March 1, 2026; and
+If system functionality is restored after February 15, 2026, the rates outlined in this Interim
+o
+Energy Charge section shall remain in effect until October 31, 2026. Effective November
+1, 2026, the rates outlined in the Energy Charge section of this Tariff will apply.
+Interim Energy Charge (Non- cents per
+winter Period) kilowatt-hour
+April 1 through October 31 (all hours)
+Effective upon the date of the
+18.324
+Board’s Order
+1 M12499 – Board Decision, 325286, page 5. October 28, 2025.
+Effective:
+.
+
+DOMESTIC SERVICE TIME OF USE TARIFF Page 2 of 4
+Rate Code 80
+cents per kilowatt-hour
+Interim Energy Charge On-peak On-peak
+Off-peak Off-peak
+(Winter Period) (morning) (evening)
+November 1 through March 31
+7:00 AM to 11:00 AM to 5:00 PM to 9:00 PM to
+11:00 AM 5:00 PM 9:00 PM 7:00 AM
+Effective November 1, 2025 16.931 16.931 16.931 16.931
+ENERGY CHARGE
+cents per
+Non-winter Period
+kilowatt-hour
+April 1 through October 31
+(all hours)
+Effective April 1, 2027 12.860
+cents per kilowatt-hour
+On-peak On-peak
+Winter Period Off-peak Off-peak
+(morning) (evening)
+November 1 through March 31
+7:00 AM to 11:00 AM to 5:00 PM to 9:00 PM to
+11:00 AM 5:00 PM 9:00 PM 7:00 AM
+Effective November 1, 2026 36.517 18.324 36.517 18.324
+Effective January 1, 2027 38.281 19.067 38.281 19.067
+Note 1: In the Winter Period, the off-peak price also applies to all hours on Saturdays, Sundays, and
+the following holidays: January 1, Nova Scotia Heritage Day, Good Friday, Easter Monday, November
+11, December 25 and December 26. If January 1, November 11, December 25 or 26 fall on a weekend,
+the off-peak price shall apply on the weekday the holiday is observed.
+FUEL ADJUSTMENT MECHANISM (FAM)
+The FAM Actual Adjustment (AA) and Balance Adjustment (BA) charges or credits (in cents per
+kilowatt-hour) applicable to the 
+[DOC 0] https://www.nspower.ca/docs/default-source/regulatory/tariff-book-2026.pdf
+Tariff for the current rate year, shown in the FAM Tariff, shall apply,
+in addition to the energy charge.
+DSM COST RECOVERY RIDER
+The Demand Side Management Cost Recovery Charge (in cents per kilowatt-hour) applicable to the
+Tariff for the current rate year, shown in the Demand Side Management Cost Recovery Rider, shall
+apply, in addition to the energy charge.
+Effective:
+.
+
+DOMESTIC SERVICE TIME OF USE TARIFF Page 3 of 4
+Rate Code 80
+STORM COST RECOVERY RIDER
+Storm Cost Recovery charges or credits (in cents per kilowatt-hour) applicable to the Tariff for the
+current rate year, shown in the Storm Cost Recovery Rider, shall apply, in addition to the energy charge.
+MINIMUM MONTHLY CHARGE
+The minimum monthly charge shall be as follows:
+per month
+Effective upon the date of the
+$20.08
+Board’s Order
+Effective January 1, 2027 $21.04
+AVAILABILITY CONDITIONS
+(a) The customer must commence service under this tariff on November 1st, unless NSPI grants a
+waiver.
+(b) The customer must be equipped with a standard Smart Meter.
+(c) NSPI may limit the number of customers who may subscribe to this tariff at a time, and/or close
+enrollment for any period of time.
+(d) The customer cannot be taking seasonal service from NSPI under Regulation 3.3.
+(e) The customer cannot be taking Net Metering service from NSPI under Regulation 3.6.
+Optional Green Power Rider
+Customers taking service under this rider may choose to support NSPI’s Green Power program by
+purchasing “blocks” of Green Power. For every block purchased, NSPI will provide 125 kWh per
+month from green energy sources, thereby displacing energy from fossil fuels. Blocks may be
+purchased at a cost of $5 per month. This charge shall be over and above the customer's normal bill for
+service taken under the Domestic Service Critical Peak Pricing Tariff.
+Special Terms and Provisions
+(1) Green Power, as defined for the purposes of this rider includes energy produced from renewable
+resources that have minimal impact on the environment, and could be independently certified by
+third party environmental organizations.
+Effective:
+.
+
+DOMESTIC SERVICE TIME OF USE TARIFF Page 4 of 4
+Rate Code 80
+(2) Service under this rider may be limited at the discretion of the Company, based on the expected
+level of green energy available.
+Effective:
+.
+
+SMALL GENERAL TARIFF Page 1 of 2
+Rate Code 10
+CUSTOMER CHARGE
+per month
+Effective upon the date of the
+$22.00
+Board’s Order
+Effective January 1, 2027 $22.73
+ENERGY CHARGE
+cents per kilowatt-hour
+for the first 200 for all
+kilowatt-hours additional
+per month kilowatt-hours
+Effective upon the date of the
+18.919 17.112
+Board’s Order
+Effective January 1, 2027 19.796 17.794
+FUEL ADJUSTMENT MECHANISM (FAM)
+The FAM Actual Adjustment (AA) and Balance Adjustment (BA) charges or credits (in cents per
+kilowatt-hour) applicable to the Tariff for the current rate year, shown in the FAM Tariff, shall apply,
+in addition to the energy charge.
+DSM COST RECOVERY RIDER
+The Demand Side Management Cost Recovery Ch
+[DOC 0] https://www.nspower.ca/docs/default-source/regulatory/tariff-book-2026.pdf
+arge (in cents per kilowatt-hour) applicable to the
+Tariff for the current rate year, shown in the Demand Side Management Cost Recovery Rider, shall
+apply, in addition to the energy charge.
+STORM COST RECOVERY RIDER
+Storm Cost Recovery charges or credits (in cents per kilowatt-hour) applicable to the Tariff for the
+current rate year, shown in the Storm Cost Recovery Rider, shall apply, in addition to the energy charge.
+MINIMUM MONTHLY CHARGE
+The minimum monthly charge shall be as follows:
+per month
+Effective upon the date of the
+$22.00
+Board’s Order
+Effective:
+.
+
+SMALL GENERAL TARIFF Page 2 of 2
+Rate Code 10
+per month
+Effective January 1, 2027 $22.73
+AVAILABILITY
+This tariff is applicable to electric energy for use where the annual consumption is less than 32,000
+kWh per year and for which no other rates are applicable, and is available to customers on the General
+tariff where the annual consumption is less than 45,000 kWh per year.
+For customers that elect to take service under the Small General tariff, where the General tariff is
+otherwise applicable, the following conditions apply:
+• Customers must make a written request to take service under the Small General tariff.
+• Customers can switch rate classes twice in a 24-month period.
+• After switching, customers shall take service under this tariff for a minimum of six months
+subject to meeting the load threshold criteria.
+Effective:
+.
+
+SMALL GENERAL CRITICAL PEAK PRICING TARIFF Page 1 of 4
+Rate Code 72
+PURPOSE
+This is an optional tariff designed to promote the shifting of load from peak to off-peak periods. This
+tariff is available to customers who are eligible for service under the Small General Tariff.
+CUSTOMER CHARGE
+per month
+Effective upon the date of the
+$22.00
+Board’s Order
+Effective January 1, 2027 $22.73
+INTERIM ENERGY CHARGE
+Effective December 1, 2025, in accordance with the Nova Scotia Energy Board (NSEB, Board)
+Decision1 on NS Power’s Application for 2025/26 Time-varying Pricing (TVP) Tariffs (M12499):
+• The Interim Energy Charge applies in all hours during both winter and non-winter periods and is
+amended to be the same as the standard offer rates (as may be amended by the Board from time
+to time) for the applicable class while system functionality is not available;
+• No Critical Peak Events will be scheduled while this Interim Energy Charge is in effect; and
+• NS Power shall provide notification to all TVP customers once system functionality is restored,
+subject to the notification requirements described below:
+If system functionality is restored on or before March 1, 2026, the approved CPP rates, as
+o
+provided in the Energy Charge section of this Tariff, will be restored and NS Power will
+provide Critical Peak Pricing Tariff customers with a 15-day grace period before the first
+Critical Peak Event is called; and
+If system functionality is restored after March 1, 2026, the rates set out in this Interim
+o
+Energy Charge section shall remain in effect until October 31, 2026. Effective
+[DOC 0] https://www.nspower.ca/docs/default-source/regulatory/tariff-book-2026.pdf
+ November
+1, 2026, the rates outlined in the Energy Charge section of this Tariff will apply.
+cents per kilowatt-hour
+During a For the first 200 For all
+Interim Energy Charge
+Critical Peak kilowatt-hours per additional
+Event month kilowatt-hours
+Effective upon the date of the
+n/a 18.919 17.112
+Board’s Order
+1 M12499 – Board Decision, 325286, page 5. October 28, 2025.
+Effective:
+.
+
+SMALL GENERAL CRITICAL PEAK PRICING TARIFF Page 2 of 4
+Rate Code 72
+ENERGY CHARGE
+cents per kilowatt-hour
+For the first 200
+During a For all
+kilowatt-hours per
+Critical Peak additional
+month after Critical
+Event kilowatt-hours
+Peak Event usage
+Effective November 1, 2026 151.941 16.739 15.331
+Effective January 1, 2027 167.157 17.381 15.821
+The Critical Peak Event is of a four-hour duration and can be called at any time between 6:00 AM and
+11:00 PM, Monday to Sunday, during the Winter Period November 1 through March 31.
+The Critical Peak Event pricing applies when a Critical Peak Event is called. In all other hours in the
+Winter Period, and for all hours in the Non-Winter Period, the rate shall be the Non-critical Peak Hours
+rate in the table above.
+CRITICAL PEAK EVENT PROCEDURE
+(1) In the Winter Period, Critical Peak Events exclude all hours on the following holidays: January
+1, Nova Scotia Heritage Day, Good Friday, Easter Monday, November 11, December 25 and
+December 26. If January 1, November 11, December 25 or 26 fall on a weekend, the Critical
+Peak Events also exclude the weekday the holiday is observed.
+(2) Critical Peak Events will be scheduled, at the sole discretion of NSPI, when NSPI is expecting
+conditions including, but not limited to, high energy (kWh) usage, high market energy costs, or
+generation or transmission outages.
+(3) When a Critical Peak Event is scheduled, subscribers to this tariff will be notified in advance and
+the Critical Peak Event Energy Charge (higher rate) will be in effect for all kWh consumed by
+the customer during the period. The notification is a signal to the customer to reduce the amount
+of electricity they are using.
+(4) Critical Peak Events will only be scheduled to occur during the Winter Period.
+(5) No more than 18 Critical Peak Events may be scheduled per Winter season (November through
+March inclusive). No more than three Critical Peak Events will be scheduled per week (Monday
+to Sunday). No more than three Critical Peak Events per Winter season may be scheduled on a
+weekend.
+Effective:
+.
+
+SMALL GENERAL CRITICAL PEAK PRICING TARIFF Page 3 of 4
+Rate Code 72
+(6) Customers will be notified of a Critical Peak Event in advance. By 4:00 pm the day prior to the
+event, the Customer will receive a notification message. The Customer is responsible to watch
+for this message, and to notify NSPI in advance if their contact information changes.
+FUEL ADJUSTMENT MECHANISM (FAM)
+The FAM Actual Adjustment (AA) and Balance Adjustment (BA) charges or credits (in cents per
+kilowatt-hour) applicable to the Tariff for the current rate year, shown in
+[DOC 0] https://www.nspower.ca/docs/default-source/regulatory/tariff-book-2026.pdf
+ the FAM Tariff, shall apply,
+in addition to the energy charge.
+DSM COST RECOVERY RIDER
+The Demand Side Management Cost Recovery Charge (in cents per kilowatt-hour) applicable to the
+Tariff for the current rate year, shown in the Demand Side Management Cost Recovery Rider, shall
+apply, in addition to the energy charge.
+STORM COST RECOVERY RIDER
+Storm Cost Recovery charges or credits (in cents per kilowatt-hour) applicable to the Tariff for the
+current rate year, shown in the Storm Cost Recovery Rider, shall apply, in addition to the energy charge.
+MINIMUM MONTHLY CHARGE
+The minimum monthly charge shall be as follows:
+per month
+Effective upon the date of the
+$22.00
+Board’s Order
+Effective January 1, 2027 $22.73
+AVAILABILITY CONDITIONS
+(a) The customer must commence service under this tariff on November 1st, unless NSPI grants a
+waiver.
+(b) The customer must be equipped with a standard Smart Meter.
+(c) The customer must be on electronic billing and have a MyAccount profile.
+(d) NSPI may limit the number of customers who may subscribe to this tariff at a time, and/or close
+enrollment for any period of time.
+Effective:
+.
+
+SMALL GENERAL CRITICAL PEAK PRICING TARIFF Page 4 of 4
+Rate Code 72
+(e) The customer cannot be taking seasonal service from NSPI under Regulation 3.3.
+(f) The customer cannot be taking Net Metering service from NSPI under Regulation 3.6.
+Effective:
+.
+
+SMALL GENERAL TIME OF USE TARIFF Page 1 of 3
+Rate Code 82
+PURPOSE
+This is an optional tariff designed to promote the shifting of load from peak to off-peak periods. This
+tariff is available to customers who are eligible for service under the Small General Tariff.
+CUSTOMER CHARGE
+per month
+Effective upon the date of the
+$22.00
+Board’s Order
+Effective January 1, 2027 $22.73
+INTERIM ENERGY CHARGE
+Effective November 1, 2025, in accordance with the Nova Scotia Energy Board (NSEB, Board)
+Decision1 on NS Power’s Application for 2025/26 Time-varying Pricing (TVP) Tariffs (M12499):
+• The Interim Energy Charge applies in all hours during both winter and non-winter periods and is
+amended to be the same as the standard offer rates (as may be amended by the Board from time
+to time) for the applicable class while system functionality is not available;
+• For billing purposes, Small General Time of Use Tariff customers are billed under Rate Code 10;
+and
+• NS Power shall provide notification to all TVP customers once system functionality is restored,
+at which point all approved TVP rates, as provided in the Energy Charge section of this Tariff,
+will be restored subject to the notification requirements described below:
+If system functionality is restored on, or before, February 15, 2026, NS Power will provide
+o
+fifteen (15) days’ notice to Time-of-Use Tariff customers before resuming on-peak and off-
+peak rates effective March 1, 2026; and
+If system functionality is restored after February 15, 2026, the rates outlined in this Interim
+o
+Energy Charge section shall remain in effect until October 31, 2026.
+[DOC 0] https://www.nspower.ca/docs/default-source/regulatory/tariff-book-2026.pdf
+ Effective November
+1, 2026, the rates outlined in the Energy Charge section of this Tariff will apply.
+1 M12499 – Board Decision, 325286, page 5. October 28, 2025.
+Effective:
+.
+
+SMALL GENERAL TIME OF USE TARIFF Page 2 of 3
+Rate Code 82
+cents per kilowatt-hour
+Interim Energy Charge
+for the first 200 for all
+(Winter and Non-winter
+kilowatt-hours additional
+Periods)
+per month kilowatt-hours
+Effective upon the date of the
+18.919 17.112
+Board’s Order
+ENERGY CHARGE
+cents per
+Non-winter Period
+kilowatt-hour
+April 1 through October 31
+(all hours)
+Effective April 1, 2027 12.723
+cents per kilowatt-hour
+On-peak On-peak
+Winter Period Off-peak Off-peak
+(morning) (evening)
+November 1 through March 31
+7:00 AM to 11:00 AM to 5:00 PM to 9:00 PM to
+11:00 AM 5:00 PM 9:00 PM 7:00 AM
+Effective November 1, 2026 37.674 18.902 37.674 18.902
+Effective January 1, 2027 39.698 19.777 39.698 19.777
+Note 1: In the Winter Period, the off-peak price also applies to all hours on Saturdays, Sundays, and
+the following holidays: January 1, Nova Scotia Heritage Day, Good Friday, Easter Monday, November
+11, December 25 and December 26. If January 1, November 11, December 25 or 26 fall on a weekend,
+the off-peak price shall apply on the weekday the holiday is observed.
+FUEL ADJUSTMENT MECHANISM (FAM)
+The FAM Actual Adjustment (AA) and Balance Adjustment (BA) charges or credits (in cents per
+kilowatt-hour) applicable to the Tariff for the current rate year, shown in the FAM Tariff, shall apply,
+in addition to the energy charge.
+DSM COST RECOVERY RIDER
+The Demand Side Management Cost Recovery Charge (in cents per kilowatt-hour) applicable to the
+Tariff for the current rate year, shown in the Demand Side Management Cost Recovery Rider, shall
+apply, in addition to the energy charge.
+Effective:
+.
+
+SMALL GENERAL TIME OF USE TARIFF Page 3 of 3
+Rate Code 82
+STORM COST RECOVERY RIDER
+Storm Cost Recovery charges or credits (in cents per kilowatt-hour) applicable to the Tariff for the
+current rate year, shown in the Storm Cost Recovery Rider, shall apply, in addition to the energy charge.
+MINIMUM MONTHLY CHARGE
+The minimum monthly charge shall be as follows:
+per month
+Effective upon the date of the
+$22.00
+Board’s Order
+Effective January 1, 2027 $22.73
+AVAILABILITY CONDITIONS
+(a) The customer must commence service under this tariff on November 1st, unless NSPI grants a
+waiver.
+(b) The customer must be equipped with a standard Smart Meter.
+(c) NSPI may limit the number of customers who may subscribe to this tariff at a time, and/or close
+enrollment for any period of time.
+(d) The customer cannot be taking seasonal service from NSPI under Regulation 3.3.
+(e) The customer cannot be taking Net Metering service from NSPI under Regulation 3.6.
+Effective:
+.
+
+GENERAL TARIFF Page 1 of 2
+Rate Code 11
+DEMAND CHARGE
+per month per kilowatt
+of maximum demand
+Effective upon the date of the
+$9.809
+Board’s Order
+Effective January 1, 2027 $10.697
+32 cents per kilowatt reduction in demand charge where the transfor
+[DOC 0] https://www.nspower.ca/docs/default-source/regulatory/tariff-book-2026.pdf
+mer was owned by the customer
+prior to February 1, 1974, or under Special Condition (2) as set out below.
+ENERGY CHARGE
+cents per kilowatt-hour
+for the first 200 kilowatt-
+for all additional
+hours per month per kilowatt
+kilowatt-hours
+of maximum demand
+Effective upon the date of the
+14.782 11.718
+Board’s Order
+Effective January 1, 2027 14.832 11.491
+FUEL ADJUSTMENT MECHANISM (FAM)
+The FAM Actual Adjustment (AA) and Balance Adjustment (BA) charges or credits (in cents per
+kilowatt-hour) applicable to the Tariff for the current rate year, shown in the FAM Tariff, shall apply,
+in addition to the energy charge.
+DSM COST RECOVERY RIDER
+The Demand Side Management Cost Recovery Charge (in cents per kilowatt-hour) applicable to the
+Tariff for the current rate year, shown in the Demand Side Management Cost Recovery Rider, shall
+apply, in addition to the energy charge.
+STORM COST RECOVERY RIDER
+Storm Cost Recovery charges or credits (in cents per kilowatt-hour) applicable to the Tariff for the
+current rate year, shown in the Storm Cost Recovery Rider, shall apply, in addition to the energy charge.
+MAXIMUM PER KWH CHARGE/MINIMUM BILL
+The maximum charge per kWh will be that for a billing load factor of 10% except that the minimum
+monthly bill shall not be less than the rates in the table below.
+Effective:
+.
+
+GENERAL TARIFF Page 2 of 2
+Rate Code 11
+per month
+Effective upon the date of the
+$22.00
+Board’s Order
+Effective January 1, 2027 $22.73
+AVAILABILITY
+This tariff is applicable to electric power and energy where the annual consumption is 32,000 kWh, or
+greater and for which no other rates are applicable.
+For General tariff customers eligible for the Small General tariff the following conditions apply:
+• Customers must make a written request to take service under the Small General tariff.
+• Customers can switch rate classes twice in a 24-month period.
+• After switching, customers shall take service under this tariff for a minimum of six months
+subject to meeting the load threshold criteria.
+SPECIAL CONDITIONS
+(1) Metering will normally be at the low voltage side of the transformer. Should the customer's
+requirements make it necessary for the Company to provide primary metering, then the customer
+will be required to make a capital contribution equal to the additional capital cost of primary
+metering as opposed to the cost of secondary metering. Adjustment to the metered kWh usage
+will be made when metering is on the high voltage side. Meter readings shall then be reduced by
+1.9%.
+(2) When the customer requires non-standard service provisions, the Company may require the
+customer to own any transformer normally provided by the Company.
+(3) The customer will make all necessary arrangements to ensure that its load does not unduly
+deteriorate the integrity of the power supply system, either by its design and/or operation.
+(4) In assessing issues which might unduly affect the integrity of the power supply system the
+following would be considered: reliability, harm
+[DOC 0] https://www.nspower.ca/docs/default-source/regulatory/tariff-book-2026.pdf
+onic voltage and current levels, voltage flicker,
+unbalance, rate of change in load levels, stability, fault levels and other related conditions.
+Effective:
+.
+
+GENERAL CRITICAL PEAK PRICING TARIFF Page 1 of 4
+Rate Code 73
+PURPOSE
+This is an optional tariff designed to promote the shifting of load from peak to off-peak periods. This
+tariff is available to customers who are eligible for service under the General Tariff.
+DEMAND CHARGE
+per month per kilowatt
+of maximum demand
+Effective upon the date of the
+$9.809
+Board’s Order
+Effective January 1, 2027 $10.697
+32 cents per kilowatt reduction in demand charge where the transformer was owned by the customer
+prior to February 1, 1974, or under Special Condition (2) as set out below.
+INTERIM ENERGY CHARGE
+Effective December 1, 2025, in accordance with the Nova Scotia Energy Board (NSEB, Board)
+Decision1 on NS Power’s Application for 2025/26 Time-varying Pricing (TVP) Tariffs (M12499):
+• The Interim Energy Charge applies in all hours during both winter and non-winter periods and is
+amended to be the same as the standard offer rates (as may be amended by the Board from time
+to time) for the applicable class while system functionality is not available;
+• No Critical Peak Events will be scheduled while this Interim Energy Charge is in effect; and
+• NS Power shall provide notification to all TVP customers once system functionality is restored,
+subject to the notification requirements described below:
+If system functionality is restored on or before March 1, 2026, the approved CPP rates, as
+o
+provided in the Energy Charge section of this Tariff, will be restored and NS Power will
+provide Critical Peak Pricing Tariff customers with a 15-day grace period before the first
+Critical Peak Event is called; and
+If system functionality is restored after March 1, 2026, the rates set out in this Interim
+o
+Energy Charge section shall remain in effect until October 31, 2026. Effective November
+1, 2026, the rates outlined in the Energy Charge section of this Tariff will apply.
+1 M12499 – Board Decision, 325286, page 5. October 28, 2025.
+Effective:
+.
+
+GENERAL CRITICAL PEAK PRICING TARIFF Page 2 of 4
+Rate Code 73
+cents per kilowatt-hour
+During a For the first 200 kilowatt- For all
+Interim Energy Charge
+Critical hours per month per additional
+Peak Event maximum demand kilowatt-hours
+Effective upon the date of the
+n/a 14.782 11.718
+Board’s Order
+ENERGY CHARGE
+cents per kilowatt-hour
+For the first 200 kilowatt-
+During a For all
+hours per month per
+Critical Peak additional
+maximum demand after
+Event kilowatt-hours
+Critical Peak Event usage
+Effective November 1, 2026 142.972 12.209 10.498
+Effective January 1, 2027 154.627 12.026 10.161
+The Critical Peak Event is of a four-hour duration and can be called at any time between 6:00 AM and
+11:00 PM, Monday to Sunday, during the Winter Period November 1 through March 31.
+The Critical Peak Event pricing applies when a Critical Peak Event is called. In all other hours in the
+Winter Period
+[DOC 0] https://www.nspower.ca/docs/default-source/regulatory/tariff-book-2026.pdf
+, and for all hours in the Non-Winter Period, the rate shall be the Non-critical Peak Hours
+rate in the table above.
+CRITICAL PEAK EVENT PROCEDURE
+(1) In the Winter Period, Critical Peak Events exclude all hours on the following holidays: January
+1, Nova Scotia Heritage Day, Good Friday, Easter Monday, November 11, December 25 and
+December 26. If January 1, November 11, December 25 or 26 fall on a weekend, the Critical
+Peak Events also exclude the weekday the holiday is observed.
+(2) Critical Peak Events will be scheduled, at the sole discretion of NSPI, when NSPI is expecting
+conditions including, but not limited to, high energy (kWh) usage, high market energy costs, or
+generation or transmission outages.
+(3) When a Critical Peak Event is scheduled, subscribers to this tariff will be notified in advance and
+the Critical Peak Event Energy Charge (higher rate) will be in effect for all kWh consumed by
+the customer during the period. The notification is a signal to the customer to reduce the amount
+of electricity they are using.
+(4) Critical Peak Events will only be scheduled to occur during the Winter Period.
+Effective:
+.
+
+GENERAL CRITICAL PEAK PRICING TARIFF Page 3 of 4
+Rate Code 73
+(5) No more than 18 Critical Peak Events may be scheduled per Winter season (November through
+March inclusive). No more than three Critical Peak Events will be scheduled per week (Monday
+to Sunday). No more than three Critical Peak Events per Winter season may be scheduled on a
+weekend.
+(6) Customers will be notified of a Critical Peak Event in advance. By 4:00 pm the day prior to the
+event, the Customer will receive a notification message. The Customer is responsible to watch
+for this message, and to notify NSPI in advance if their contact information changes.
+FUEL ADJUSTMENT MECHANISM (FAM)
+The FAM Actual Adjustment (AA) and Balance Adjustment (BA) charges or credits (in cents per
+kilowatt-hour) applicable to the Tariff for the current rate year, shown in the FAM Tariff, shall apply,
+in addition to the energy charge.
+DSM COST RECOVERY RIDER
+The Demand Side Management Cost Recovery Charge (in cents per kilowatt-hour) applicable to the
+Tariff for the current rate year, shown in the Demand Side Management Cost Recovery Rider, shall
+apply, in addition to the energy charge.
+STORM COST RECOVERY RIDER
+Storm Cost Recovery charges or credits (in cents per kilowatt-hour) applicable to the Tariff for the
+current rate year, shown in the Storm Cost Recovery Rider, shall apply, in addition to the energy charge.
+MAXIMUM PER KWH CHARGE/MINIMUM BILL
+The maximum charge per kWh, applying to that portion of the bill which is not concerned with
+determination of the cost of the Critical Peak Events, will be that for a billing load factor of 10% except
+that the minimum monthly bill shall not be less than the following.
+per month
+Effective upon the date of the
+$22.00
+Board’s Order
+Effective January 1, 2027 $22.73
+AVAILABILITY CONDITIONS
+(a) The customer must commence service under this tar
+[DOC 0] https://www.nspower.ca/docs/default-source/regulatory/tariff-book-2026.pdf
+iff on November 1st, unless NSPI grants a
+waiver.
+Effective:
+.
+
+GENERAL CRITICAL PEAK PRICING TARIFF Page 4 of 4
+Rate Code 73
+(b) The customer must be equipped with a standard Smart Meter.
+(c) The customer must be on electronic billing and have a MyAccount profile.
+(d) NSPI may limit the number of customers who may subscribe to this tariff at a time, and/or close
+enrollment for any period of time.
+(e) The customer cannot be taking Net Metering service from NSPI under Regulation 3.6.
+SPECIAL CONDITIONS
+(1) Metering will normally be at the low voltage side of the transformer. Should the customer's
+requirements make it necessary for the Company to provide primary metering, then the customer
+will be required to make a capital contribution equal to the additional capital cost of primary
+metering as opposed to the cost of secondary metering. Adjustment to the metered kWh usage
+will be made when metering is on the high voltage side. Meter readings shall then be reduced by
+1.9%.
+(2) When the customer requires non-standard service provisions, the Company may require the
+customer to own any transformer normally provided by the Company.
+(3) The customer will make all necessary arrangements to ensure that its load does not unduly
+deteriorate the integrity of the power supply system, either by its design and/or operation.
+(4) In assessing issues which might unduly affect the integrity of the power supply system the
+following would be considered: reliability, harmonic voltage and current levels, voltage flicker,
+unbalance, rate of change in load levels, stability, fault levels and other related conditions.
+Effective:
+.
+
+GENERAL TIME OF USE TARIFF Page 1 of 4
+Rate Code 83
+PURPOSE
+This is an optional tariff designed to promote the shifting of load from peak to off-peak periods. This
+tariff is available to customers who are eligible for service under the General Tariff.
+DEMAND CHARGE
+per month per kilowatt
+of maximum demand
+Effective upon the date of the
+$9.809
+Board’s Order
+Effective January 1, 2027 $10.697
+32 cents per kilowatt reduction in demand charge where the transformer was owned by the customer
+prior to February 1, 1974, or under Special Condition (2) as set out below.
+INTERIM ENERGY CHARGE
+Effective November 1, 2025, in accordance with the Nova Scotia Energy Board (NSEB, Board)
+Decision1 on NS Power’s Application for 2025/26 Time-varying Pricing (TVP) Tariffs (M12499):
+• The Interim Energy Charge applies in all hours during both winter and non-winter periods and is
+amended to be the same as the standard offer rates (as may be amended by the Board from time
+to time) for the applicable class while system functionality is not available;
+• For billing purposes, General Time of Use Tariff customers are billed under Rate Code 11; and
+• NS Power shall provide notification to all TVP customers once system functionality is restored,
+at which point all approved TVP rates, as provided in the Energy Charge section of this Tariff,
+will be restored subject to the not
+[DOC 0] https://www.nspower.ca/docs/default-source/regulatory/tariff-book-2026.pdf
+ification requirements described below:
+If system functionality is restored on, or before, February 15, 2026, NS Power will provide
+o
+fifteen (15) days’ notice to Time-of-Use Tariff customers before resuming on-peak and off-
+peak rates effective March 1, 2026; and
+If system functionality is restored after February 15, 2026, the rates outlined in this Interim
+o
+Energy Charge section shall remain in effect until October 31, 2026. Effective November
+1, 2026, the rates outlined in the Energy Charge section of this Tariff will apply.
+1 M12499 – Board Decision, 325286, page 5. October 28, 2025.
+Effective:
+.
+
+GENERAL TIME OF USE TARIFF Page 2 of 4
+Rate Code 83
+cents per kilowatt-hour
+Interim Energy Charge
+for the first 200 kilowatt-
+(Winter and Non-winter for all additional
+hours per month per kilowatt
+Periods) kilowatt-hours
+of maximum demand
+Effective upon the date of the
+14.782 11.718
+Board’s Order
+ENERGY CHARGE
+cents per
+Non-winter Period
+kilowatt-hour
+April 1 through October 31
+(all hours)
+Effective April 1, 2027 9.117
+cents per kilowatt-hour
+On-peak On-peak
+Winter Period Off-peak Off-peak
+(morning) (evening)
+November 1 through March 31
+7:00 AM to 11:00 AM to 5:00 PM to 9:00 PM to
+11:00 AM 5:00 PM 9:00 PM 7:00 AM
+Effective November 1, 2026 28.505 14.348 28.505 14.348
+Effective January 1, 2027 28.938 14.359 28.938 14.359
+Note 1: In the Winter Period, the off-peak price also applies to all hours on Saturdays, Sundays, and
+the following holidays: January 1, Nova Scotia Heritage Day, Good Friday, Easter Monday, November
+11, December 25 and December 26. If January 1, November 11, December 25 or 26 fall on a weekend,
+the off-peak price shall apply on the weekday the holiday is observed.
+FUEL ADJUSTMENT MECHANISM (FAM)
+The FAM Actual Adjustment (AA) and Balance Adjustment (BA) charges or credits (in cents per
+kilowatt-hour) applicable to the Tariff for the current rate year, shown in the FAM Tariff, shall apply,
+in addition to the energy charge.
+DSM COST RECOVERY RIDER
+The Demand Side Management Cost Recovery Charge (in cents per kilowatt-hour) applicable to the
+Tariff for the current rate year, shown in the Demand Side Management Cost Recovery Rider, shall
+apply, in addition to the energy charge.
+Effective:
+.
+
+GENERAL TIME OF USE TARIFF Page 3 of 4
+Rate Code 83
+STORM COST RECOVERY RIDER
+Storm Cost Recovery charges or credits (in cents per kilowatt-hour) applicable to the Tariff for the
+current rate year, shown in the Storm Cost Recovery Rider, shall apply, in addition to the energy charge.
+MAXIMUM PER KWH CHARGE/MINIMUM BILL
+The maximum charge per kWh will be that for a billing load factor of 10% except that the minimum
+monthly bill shall not be less than the following.
+per month
+Effective upon the date of the
+$22.00
+Board’s Order
+Effective January 1, 2027 $22.73
+AVAILABILITY CONDITIONS
+(a) The customer must commence service under this tariff on November 1st, unless NSPI grants a
+waiver.
+(b) The customer must be equipped with a standard Smart Meter.
+(c) 
+[DOC 0] https://www.nspower.ca/docs/default-source/regulatory/tariff-book-2026.pdf
+NSPI may limit the number of customers who may subscribe to this tariff at a time, and/or close
+enrollment for any period of time.
+(d) The customer cannot be taking Net Metering service from NSPI under Regulation 3.6.
+SPECIAL CONDITIONS
+(1) Metering will normally be at the low voltage side of the transformer. Should the customer's
+requirements make it necessary for the Company to provide primary metering, then the customer
+will be required to make a capital contribution equal to the additional capital cost of primary
+metering as opposed to the cost of secondary metering. Adjustment to the metered kWh usage
+will be made when metering is on the high voltage side. Meter readings shall then be reduced by
+1.9%.
+(2) When the customer requires non-standard service provisions, the Company may require the
+customer to own any transformer normally provided by the Company.
+(3) The customer will make all necessary arrangements to ensure that its load does not unduly
+deteriorate the integrity of the power supply system, either by its design and/or operation.
+Effective:
+.
+
+GENERAL TIME OF USE TARIFF Page 4 of 4
+Rate Code 83
+(4) In assessing issues which might unduly affect the integrity of the power supply system the
+following would be considered: reliability, harmonic voltage and current levels, voltage flicker,
+unbalance, rate of change in load levels, stability, fault levels and other related conditions.
+Effective:
+.
+
+MULTI-UNIT RESIDENTIAL BUILDINGS TIME OF USE TARIFF Page 1 of 3
+Rate Code 89
+PURPOSE
+This is an optional tariff designed to promote the shifting of load from peak to off-peak periods. This
+tariff is available to customers who are eligible for service under the General Tariff.
+ENERGY CHARGE
+cents per kilowatt-hour
+Non-winter Period Off-peak On-peak
+April 1 through October 31
+9:00 PM to 7:00 AM to
+7:00 AM 9:00 PM
+Effective upon the date of the
+11.826 14.043
+Board’s Order
+Effective January 1, 2027 11.866 14.091
+cents per kilowatt-hour
+On-peak On-peak
+Winter Period Mid-peak Off-peak
+(morning) (evening)
+November 1 through March 31
+7:00 AM to 11:00 AM to 5:00 PM to 9:00 PM to
+11:00 AM 5:00 PM 9:00 PM 7:00 AM
+Effective upon the date of the
+29.565 14.782 29.565 12.565
+Board’s Order
+Effective January 1, 2027 29.665 14.832 29.665 12.608
+Note 1: in both the Winter and Non-winter Periods, the applicable peak price also applies to all hours
+on Saturdays, Sundays, and the following holidays: January 1, Nova Scotia Heritage Day, Good Friday,
+Easter Monday, November 11, December 25 and December 26, including on the weekdays the holiday
+may be observed.
+FUEL ADJUSTMENT MECHANISM (FAM)
+The FAM Actual Adjustment (AA) and Balance Adjustment (BA) charges or credits (in cents per
+kilowatt-hour) applicable to the Tariff for the current rate year, shown in the FAM Tariff, shall apply,
+in addition to the energy charge.
+DSM COST RECOVERY RIDER
+The Demand Side Management Cost Recovery Charge (in cents per kilowatt-hour) applicable to the
+Tariff for the current rate year,
+[DOC 0] https://www.nspower.ca/docs/default-source/regulatory/tariff-book-2026.pdf
+ shown in the Demand Side Management Cost Recovery Rider, shall
+apply, in addition to the energy charge.
+Effective:
+.
+
+MULTI-UNIT RESIDENTIAL BUILDINGS TIME OF USE TARIFF Page 2 of 3
+Rate Code 89
+STORM COST RECOVERY RIDER
+Storm Cost Recovery charges or credits (in cents per kilowatt-hour) applicable to the Tariff for the
+current rate year, shown in the Storm Cost Recovery Rider, shall apply, in addition to the energy charge.
+MINIMUM MONTHLY CHARGE
+The minimum monthly charge shall not be less than the rates in the table below.
+per month
+Effective upon the date of the
+$22.00
+Board’s Order
+Effective January 1, 2027 $22.73
+AVAILABILITY CONDITIONS
+(a) The tariff is available to Multi-unit Residential Buildings with a house meter and a minimum of
+10 units.
+(b) The customer must commence service under this tariff on November 1st, unless NSPI grants a
+waiver.
+(c) The customer must be equipped with a standard Smart Meter.
+(d) NSPI may limit the number of customers who may subscribe to this tariff at a time, and/or close
+enrollment for any period of time.
+(e) The customer cannot be taking seasonal service from NSPI under Regulation 3.3.
+(f) The customer cannot be taking Net Metering service from NSPI under Regulation 3.6.
+SPECIAL CONDITIONS
+(1) Metering will normally be at the low voltage side of the transformer. Should the customer's
+requirements make it necessary for the Company to provide primary metering, then the customer
+will be required to make a capital contribution equal to the additional capital cost of primary
+metering as opposed to the cost of secondary metering. Adjustment to the metered kWh usage
+will be made when metering is on the high voltage side. Meter readings shall then be reduced by
+1.9%.
+(2) When the customer requires non-standard service provisions, the Company may require the
+customer to own any transformer normally provided by the Company.
+Effective:
+.
+
+MULTI-UNIT RESIDENTIAL BUILDINGS TIME OF USE TARIFF Page 3 of 3
+Rate Code 89
+(3) The customer will make all necessary arrangements to ensure that its load does not unduly
+deteriorate the integrity of the power supply system, either by its design and/or operation.
+(4) In assessing issues which might unduly affect the integrity of the power supply system the
+following would be considered: reliability, harmonic voltage and current levels, voltage flicker,
+unbalance, rate of change in load levels, stability, fault levels and other related conditions.
+Effective:
+.
+
+LARGE GENERAL TARIFF Page 1 of 2
+(2,000 kVA or 1,800 kW and over)
+Rate Code 12
+DEMAND CHARGE
+As follows, per month per kilovolt ampere of maximum demand of the current month or the maximum
+actual demand of the previous December, January, or February occurring in the previous eleven (11)
+months.
+per month
+Effective upon the date of the
+$11.174
+Board’s Order
+Effective January 1, 2027 $11.989
+32 cents per kilovolt ampere reduction in demand charge where the transformer is owned by the
+customer.
+ENERGY CHARGE
+cents per
+kilowatt-h
+[DOC 0] https://www.nspower.ca/docs/default-source/regulatory/tariff-book-2026.pdf
+our
+Effective upon the date of the
+11.164
+Board’s Order
+Effective January 1, 2027 10.623
+FUEL ADJUSTMENT MECHANISM (FAM)
+The FAM Actual Adjustment (AA) and Balance Adjustment (BA) charges or credits (in cents per
+kilowatt-hour) applicable to the Tariff for the current rate year, shown in the FAM Tariff, shall apply,
+in addition to the energy charge.
+DSM COST RECOVERY RIDER
+The Demand Side Management Cost Recovery Charge (in cents per kilowatt-hour) applicable to the
+Tariff for the current rate year, shown in the Demand Side Management Cost Recovery Rider, shall
+apply, in addition to the energy charge.
+STORM COST RECOVERY RIDER
+Storm Cost Recovery charges or credits (in cents per kilowatt-hour) applicable to the Tariff for the
+current rate year, shown in the Storm Cost Recovery Rider, shall apply, in addition to the energy charge.
+Effective:
+.
+
+LARGE GENERAL TARIFF Page 2 of 2
+(2,000 kVA or 1,800 kW and over)
+Rate Code 12
+MINIMUM MONTHLY CHARGE
+The minimum monthly charge shall be as follows.
+per month
+Effective upon the date of the
+$22.00
+Board’s Order
+Effective January 1, 2027 $22.73
+AVAILABILITY
+This tariff is applicable to electric power and energy for any use except industrial, where the regular
+billing demand is 2,000 kVA or 1,800 kW and over.
+SPECIAL CONDITIONS
+(1) Metering will normally be at the low voltage side of the bulk power transformer. Should the
+customer's requirements make it necessary for the Company to provide primary metering, then
+the customer will be required to make a capital contribution equal to the additional capital cost
+of primary metering as opposed to the cost of secondary metering. Adjustments to the metered
+kWh usage will be made under the following conditions:
+(a) If the substation high voltage side is 69 kV or higher, and metering is on the high voltage
+side, meter readings shall be reduced by 1.1%.
+(b) If the substation high voltage side is lower than 69 kV, and metering is on the low voltage
+side, meter readings shall be increased by 1.1%.
+(2) The Company will withdraw the availability of this tariff to any specific customer, if, on a
+consistent basis, the customer is not maintaining a billing demand of 2,000 kVA or 1,800 kW.
+(3) The Company reserves the right to have a separate service and/or operating agreement, if in the
+opinion of the Company issues not specifically set out herein, must be addressed for the ongoing
+benefit of the Company and its customers.
+Effective:
+.
+
+SMALL INDUSTRIAL TARIFF Page 1 of 2
+(up to 249 kVA or 224 kW)
+Rate Code 21
+DEMAND CHARGE
+per month per kilovolt
+ampere of maximum demand
+Effective upon the date of the
+$7.496
+Board’s Order
+Effective January 1, 2027 $8.143
+32 cents per kilovolt ampere reduction in demand charge where the transformer was owned by the
+customer prior to February 1, 1974, or under Special Condition (2) as set out below.
+ENERGY CHARGE
+cents per kilowatt-hour
+for the first 200 kilowatt-hours
+for all additional
+per month per kilovolt ampere
+kilowatt-hours
+of maximum 
+[DOC 0] https://www.nspower.ca/docs/default-source/regulatory/tariff-book-2026.pdf
+demand
+Effective upon the date of the
+13.832 11.516
+Board’s Order
+Effective January 1, 2027 13.795 11.280
+FUEL ADJUSTMENT MECHANISM (FAM)
+The FAM Actual Adjustment (AA) and Balance Adjustment (BA) charges or credits (in cents per
+kilowatt-hour) applicable to the Tariff for the current rate year, shown in the FAM Tariff, shall apply,
+in addition to the energy charge.
+DSM COST RECOVERY RIDER
+The Demand Side Management Cost Recovery Charge (in cents per kilowatt-hour) applicable to the
+Tariff for the current rate year, shown in the Demand Side Management Cost Recovery Rider, shall
+apply, in addition to the energy charge.
+STORM COST RECOVERY RIDER
+Storm Cost Recovery charges or credits (in cents per kilowatt-hour) applicable to the Tariff for the
+current rate year, shown in the Storm Cost Recovery Rider, shall apply, in addition to the energy charge.
+Effective:
+.
+
+SMALL INDUSTRIAL TARIFF Page 2 of 2
+(up to 249 kVA or 224 kW)
+Rate Code 21
+MAXIMUM PER KWH CHARGE/MINIMUM BILL
+The maximum charge per kWh will be that for a billing load factor of 10% except that the minimum
+monthly bill shall not be less than as follows.
+per month
+Effective upon the date of the
+$22.00
+Board’s Order
+Effective January 1, 2027 $22.73
+AVAILABILITY
+This tariff is applicable to electric power and energy supplied to any customer, for industrial use,
+including farming and processing, where the regular billing demand is less than 250 kVA or 225 kW.
+SPECIAL CONDITIONS
+(1) Metering will normally be at the low voltage side of the transformer. Should the customer's
+requirements make it necessary for the Company to provide primary metering, then the customer
+will be required to make a capital contribution equal to the additional cost of primary metering
+as opposed to the cost of secondary metering. Adjustment to the metered kWh usage will be made
+when metering is on the high voltage side. Meter readings shall then be reduced by 1.9%.
+(2) When the customer requires non-standard service provisions, the Company may require the
+customer to own any transformer normally provided by the Company.
+Effective:
+.
+
+MEDIUM INDUSTRIAL TARIFF Page 1 of 2
+(250 kVA or 225 kW to 1,999 kVA or 1,799 kW)
+Rate Code 22
+DEMAND CHARGE
+per month per
+kilovolt ampere of
+maximum demand
+Effective upon the date of the
+$10.710
+Board’s Order
+Effective January 1, 2027 $11.269
+32 cents per kilovolt ampere reduction in demand charge where the transformer is owned by the
+customer.
+ENERGY CHARGE
+cents per kilowatt-
+hour
+Effective upon the date of the
+10.682
+Board’s Order
+Effective January 1, 2027 9.941
+FUEL ADJUSTMENT MECHANISM (FAM)
+The FAM Actual Adjustment (AA) and Balance Adjustment (BA) charges or credits (in cents per
+kilowatt-hour) applicable to the Tariff for the current rate year, shown in the FAM Tariff, shall apply,
+in addition to the energy charge.
+DSM COST RECOVERY RIDER
+The Demand Side Management Cost Recovery Charge (in cents per kilowatt-hour) applicable to the
+Tariff for the current rate year, shown in the D
+[DOC 0] https://www.nspower.ca/docs/default-source/regulatory/tariff-book-2026.pdf
+emand Side Management Cost Recovery Rider, shall
+apply, in addition to the energy charge.
+STORM COST RECOVERY RIDER
+Storm Cost Recovery charges or credits (in cents per kilowatt-hour) applicable to the Tariff for the
+current rate year, shown in the Storm Cost Recovery Rider, shall apply, in addition to the energy charge.
+MINIMUM MONTHLY CHARGE
+The minimum monthly charge shall be as follows.
+Effective:
+.
+
+MEDIUM INDUSTRIAL TARIFF Page 2 of 2
+(250 kVA or 225 kW to 1,999 kVA or 1,799 kW)
+Rate Code 22
+per month
+Effective upon the date of the
+$22.00
+Board’s Order
+Effective January 1, 2027 $22.73
+AVAILABILITY
+This tariff is applicable to electric power and energy supplied to any industrial customer having a
+regular billing demand of 250 kVA (225 kW) and over, and for which no other rates are applicable.
+SPECIAL CONDITIONS
+(1) Metering will normally be at the low voltage side of the transformer. Should the customer's
+requirements make it necessary for the Company to provide primary metering, then the customer
+will be required to make a capital contribution equal to the additional capital cost of primary
+metering as opposed to the cost of secondary metering. Adjustment to the metered kWh usage
+will be made when metering is on the high voltage side. Meter readings shall then be reduced by
+1.1%.
+(2) The Company may withdraw the availability of this tariff to any specific customer, if, in the
+opinion of the Company, the customer is not maintaining a billing demand of 250 kVA (225 kW).
+(3) The customer will make all necessary arrangements to ensure that its load does not unduly
+deteriorate the integrity of the power supply system, either by its design and/or operation.
+(4) In assessing issues which might unduly affect the integrity of the power supply system the
+following would be considered: reliability, harmonic voltage and current levels, voltage flicker,
+unbalance, rate of change in load levels, stability, fault levels and other related conditions.
+Effective:
+.
+
+LARGE INDUSTRIAL TARIFF Page 1 of 6
+(2,000 kVA or 1,800 kW and over)
+Rate Code 23
+DEMAND CHARGE
+As follows, per kilovolt ampere of maximum demand of the current month or the maximum actual
+demand of the previous December, January, or February occurring in the previous eleven (11) months.
+per month
+Effective upon the date of the
+$9.268
+Board’s Order
+Effective January 1, 2027 $10.006
+DISTRIBUTION COST ADDER
+For customers connected at distribution level, the following charge also applies, subject to the same
+provisions as the Demand Charge section above.
+per month
+Effective upon the date of the
+$2.161
+Board’s Order
+Effective January 1, 2027 $2.327
+32 cents per kilovolt ampere reduction in demand charge where the transformer is owned by the
+customer.
+ENERGY CHARGE
+cents per kilowatt-hour
+Firm Interruptible
+Customers Customers
+Effective upon the date of the
+10.295 10.334
+Board’s Order
+Effective January 1, 2027 9.709 9.688
+FUEL ADJUSTMENT MECHANISM (FAM)
+The FAM Actual Adjustment (AA) and Balance Adjus
+[DOC 0] https://www.nspower.ca/docs/default-source/regulatory/tariff-book-2026.pdf
+tment (BA) charges or credits (in cents per
+kilowatt-hour) applicable to the Tariff for the current rate year, shown in the FAM Tariff, shall apply,
+in addition to the energy charge.
+Effective:
+
+LARGE INDUSTRIAL TARIFF Page 2 of 6
+(2,000 kVA or 1,800 kW and over)
+Rate Code 23
+DSM COST RECOVERY RIDER
+The Demand Side Management Cost Recovery Charge (in cents per kilowatt-hour) applicable to the
+Tariff for the current rate year, shown in the Demand Side Management Cost Recovery Rider, shall
+apply, in addition to the energy charge.
+STORM COST RECOVERY RIDER
+Storm Cost Recovery charges or credits (in cents per kilowatt-hour) applicable to the Tariff for the
+current rate year, shown in the Storm Cost Recovery Rider, shall apply, in addition to the energy charge.
+MINIMUM MONTHLY CHARGE
+The minimum monthly charge shall be the greater of the demand charge or the amounts in the table
+below.
+per month
+Effective upon the date of the
+$22.00
+Board’s Order
+Effective January 1, 2027 $22.73
+AVAILABILITY
+This tariff is applicable to three phase electric power and energy supplied at the low voltage side of the
+bulk power transformer to any industrial customer having a regular billing demand of 2,000 kVA or
+1,800 kW and over.
+SPECIAL CONDITIONS
+(1) Metering will normally be at the low voltage side of the bulk power transformer. At the option
+of the Company, supply may be at distribution voltage. Meter readings shall be increased by
+1.1% for each transformation between the meter and the low voltage side of the bulk power
+supply transformer to adjust for transformer losses. Also, meter readings shall be reduced when
+metering is at transmission voltage.
+(2) Metering will normally be at the low voltage side of the transformer. Should the customer's
+requirements make it necessary for the Company to provide primary metering, then the customer
+will be required to make a capital contribution equal to the additional capital cost of primary
+metering as opposed to the cost of secondary metering.
+Effective:
+
+LARGE INDUSTRIAL TARIFF Page 3 of 6
+(2,000 kVA or 1,800 kW and over)
+Rate Code 23
+(3) The Company will withdraw the availability of this tariff to any specific firm load only customer,
+if, on a consistent basis, the customer is not maintaining a regular demand of 2,000 kVA or 1,800
+kW or, as a result of transferring to this tariff from the Medium Industrial category, the customer
+would not see a reduction in their electric cost for the energy supplied. Any customer whose total
+or partial load is billed under the interruptible rider to this tariff and whose total demand fell, on
+a consistent basis, below 2,000 kVA or 1,800 kW after subscription to the interruptible service
+will be exempted from the minimum load requirement of this tariff.
+(4) The Company reserves the right to have a separate service agreement, if in the opinion of the
+Company issues not specifically set out herein, must be addressed for the ongoing benefit of the
+Company and its customers.
+(5) The customer w
+[DOC 0] https://www.nspower.ca/docs/default-source/regulatory/tariff-book-2026.pdf
+ill make all necessary arrangements to ensure that its load does not unduly
+deteriorate the integrity of the power supply system, either by its design and/or operation. These
+specific requirements shall be stipulated by way of a written operating agreement.
+(6) In assessing issues which might unduly affect the integrity of the power supply system the
+following would be considered: reliability, harmonic voltage and current levels, voltage flicker,
+unbalance, rate of change in load levels, stability, fault levels and other related conditions.
+Effective:
+
+LARGE INDUSTRIAL TARIFF Page 4 of 6
+(2,000 kVA or 1,800 kW and over)
+Rate Code 23
+INTERRUPTIBLE RIDER TO THE LARGE INDUSTRIAL TARIFF (RATE CODE 25)
+Customers who qualify for interruptible service will receive a per month per kilovolt ampere reduction
+in demand charge for billed interruptible demand, as shown in the table below. The billed interruptible
+demand is defined as the difference between any contracted firm demand requirements and the total
+billing demand. Where the billing demand is less than the contracted firm demand, no interruptible
+credit shall apply. The billed interruptible demand will be the maximum interruptible demand of the
+current month or the maximum actual interruptible demand of the previous December, January, or
+February occurring in the previous eleven (11) months.
+reduction per kilovolt
+ampere reduction in
+demand charge
+Effective upon the date of the
+$7.638
+Board’s Order
+Effective January 1, 2027 $7.667
+AVAILABILITY
+This rider will be applicable to an agreed upon, between the Company and the customer, interruptible
+billing demand at 90% Power Factor, under the following terms and conditions:
+(1) The customer has provided written notice of their desire to take service under this option,
+identifying that portion of the load that is to be firm and that portion that is to be interruptible.
+(2) The customers will reduce their available interruptible system load by the amount required by
+NSPI within ten (10) minutes of NSPI initiating and sending notice to the customer’s dedicated
+telephone number (as confirmed by the automated dialing system) requiring such reduction. The
+customer must maintain a dedicated telephone number and dedicated telephone system in
+working order at all times and must have a designated staff person to answer the dedicated
+telephone at all times. The failure of the customer to answer the telephone, shall not excuse the
+customer from its responsibilities under this rider.
+Where the customer has provided NS Power with the ability to monitor and interrupt its load
+under terms and conditions determined by the Company, the Company may hold this load as
+Operating Reserve as required by system conditions. When interruptions are required, the
+Company will exercise the automated control of the customer’s load to interrupt the customer
+load.
+(3) Following interruption, service may only be restored by the customer with approval of the
+Company.
+Effective:
+
+LARGE IND
+[DOC 0] https://www.nspower.ca/docs/default-source/regulatory/tariff-book-2026.pdf
+USTRIAL TARIFF Page 5 of 6
+(2,000 kVA or 1,800 kW and over)
+Rate Code 23
+(4) Failure to comply in whole or in part with a requirement to interrupt load will result in penalty
+charges. The penalty will be comprised of two parts, a Threshold Penalty and a Performance
+Penalty.
+The Threshold Penalty charge shall be the cost of the appropriate firm billing effective at that
+time for the consumption used in that billing period.
+The Performance Penalty which is based on the customer’s performance during the interruption
+event is calculated as per the formula below:
+Performance Penalty = ($15/kVA x A) + ($30/kVA x B)
+Where:
+“A” is any residual customer demand (above that required by the interruption notice) remaining
+in the third interval directly following two complete 5-minute intervals after the interruption call
+is initiated and sent by NSPI.
+“B” is the customer’s average demand based on 5-minute interval data during the entire
+interruption event excluding the interval used to determine “A.”
+The total penalty will not exceed two times the cost of the appropriate firm billing effective at
+that time for the consumption used in that billing period.
+(5) Should any customer under this rider desire to be served under any appropriate firm service rate,
+a five (5) year advance written notice must be given to the Company so as to ensure adequate
+capacity availability. Requests for conversion to firm service will be treated in the same manner
+as all other requests for firm service received by the Company. The Company may, however,
+permit an earlier conversion. In the event that the Customer desires to return to interruptible
+service in the future, the Customer may convert to interruptible service following two (2) years
+of service under the firm rate schedule. The Company may permit an earlier conversion from
+firm to interruptible service.
+(6) Interruption is limited to 16 hours per day and 5 days per week to a maximum of 30% of the
+hours per month and 15% of the hours in a year.
+SPECIAL CONDITIONS
+(1) The Company reserves the right to have a separate service agreement if in the opinion of the
+Company, issues not specifically set out herein must be addressed for the ongoing benefit of the
+Company and its customers.
+Effective:
+
+LARGE INDUSTRIAL TARIFF Page 6 of 6
+(2,000 kVA or 1,800 kW and over)
+Rate Code 23
+(2) The customer will make all necessary arrangements to ensure that its load does not unduly
+deteriorate the integrity of the power supply system, either by its design and/or operation.
+Specific requirements shall be stipulated by way of a written operating agreement.
+(3) In assessing issues which might unduly affect the integrity of the power supply system the
+following would be considered: reliability, harmonic voltage and current levels, voltage flicker,
+unbalance, rate of change in load levels, stability, fault levels and other related conditions.
+(4) At the option of the Company, supply may be at distribution voltage. Meter readings shall be
+increased
+[DOC 0] https://www.nspower.ca/docs/default-source/regulatory/tariff-book-2026.pdf
+ by 1.1% for each transformation between the meter and the low voltage side of the
+bulk power supply transformer to adjust for transformer losses. Also, meter readings shall be
+reduced when metering is at transmission voltage.
+Effective:
+
+MUNICIPAL TARIFF Page 1 of 2
+DEMAND CHARGE
+As follows, per month per kilovolt ampere of the higher of:
+(a) maximum actual demand of the current month; or
+(b) the maximum actual demand of the previous December, January, or February occurring in the
+previous eleven (11) months but excluding the actual monthly peak demands recorded during the
+first two hours following restoration of any outage of at least one hour in duration. In this
+circumstance, the next highest monthly peak demand, registered outside of the restoration period,
+will be used. Customers will make reasonable efforts to manage post-restoration demand peaks.
+per month
+Effective upon the date of the
+$11.248
+Board’s Order
+Effective January 1, 2027 $12.226
+32 cents per kilowatt reduction in demand charge where the transformer is owned by the customer.
+ENERGY CHARGE
+cents per
+kilowatt-hour
+Effective upon the date of the
+11.600
+Board’s Order
+Effective January 1, 2027 11.744
+FUEL ADJUSTMENT MECHANISM (FAM)
+The FAM Actual Adjustment (AA) and Balance Adjustment (BA) charges or credits (in cents per
+kilowatt-hour) applicable to the Tariff for the current rate year, shown in the FAM Tariff, shall apply,
+in addition to the energy charge.
+DSM COST RECOVERY RIDER
+The Demand Side Management Cost Recovery Charge (in cents per kilowatt-hour) applicable to the
+Tariff for the current rate year, shown in the Demand Side Management Cost Recovery Rider, shall
+apply, in addition to the energy charge.
+Effective:
+.
+
+MUNICIPAL TARIFF Page 2 of 2
+STORM COST RECOVERY RIDER
+Storm Cost Recovery charges or credits (in cents per kilowatt-hour) applicable to the Tariff for the
+current rate year, shown in the Storm Cost Recovery Rider, shall apply, in addition to the energy charge.
+AVAILABILITY
+This tariff is applicable to three phase electric power and energy, supplied at the low voltage side of
+the bulk power transformer, to municipal electric utilities. Meter readings shall be increased by 1.1%
+for each transformation between the meter and the low voltage side of the bulk power supply
+transformer to adjust for transformation losses. Also, meter readings shall be reduced when metering
+is at transmission voltage.
+Effective:
+.
+
+OUTDOOR RECREATIONAL LIGHTING TARIFF Page 1 of 1
+Rate Code 41
+ENERGY CHARGE
+cents per
+kilowatt-hour
+Effective upon the date of the
+11.043
+Board’s Order
+Effective January 1, 2027 11.917
+FUEL ADJUSTMENT MECHANISM (FAM)
+The FAM Actual Adjustment (AA) and Balance Adjustment (BA) charges or credits (in cents per
+kilowatt-hour) applicable to the Tariff for the current rate year, shown in the FAM Tariff, shall apply,
+in addition to the energy charge.
+DSM COST RECOVERY RIDER
+The Demand Side Management Cost Recovery Charge (in cents per kilowatt-hour) applicable to th
+[DOC 0] https://www.nspower.ca/docs/default-source/regulatory/tariff-book-2026.pdf
+e
+Tariff for the current rate year, shown in the Demand Side Management Cost Recovery Rider, shall
+apply, in addition to the energy charge.
+STORM COST RECOVERY RIDER
+Storm Cost Recovery charges or credits (in cents per kilowatt-hour) applicable to the Tariff for the
+current rate year, shown in the Storm Cost Recovery Rider, shall apply, in addition to the energy charge.
+AVAILABILITY
+This rate is available to all outdoor recreational lighting for the period May through October only.
+Effective:
+.
+
+UNMETERED SERVICE RATES Page 1 of 12
+Rate Code 41
+Note: rates listed under 2026 shall be effective upon the date of the Board’s Order and rates listed under
+2027 shall be effective January 1, 2027.
+FUEL ADJUSTMENT MECHANISM (FAM)
+The FAM Actual Adjustment (AA) and Balance Adjustment (BA) charges or credits (in cents per
+kilowatt-hour) applicable to the Tariff for the current rate year, shown in the FAM Tariff, shall apply,
+in addition to the energy charge.
+DSM COST RECOVERY RIDER
+The Demand Side Management Cost Recovery Charge (in cents per kilowatt-hour) applicable to the
+Tariff for the current rate year, shown in the Demand Side Management Cost Recovery Rider, shall
+apply, in addition to the energy charge.
+STORM COST RECOVERY RIDER
+Storm Cost Recovery charges or credits (in cents per kilowatt-hour) applicable to the Tariff for the
+current rate year, shown in the Storm Cost Recovery Rider, shall apply, in addition to the energy charge.
+(A)STREET AND AREA LIGHTING
+Availability
+These rates shall be applicable to the supply, operation, and maintenance, or where indicated, operation
+and maintenance only, of street and area lighting. Except where otherwise indicated, the rates apply to
+fixtures operating for approximately 4,000 hours per year. Maintenance does not include globe
+washing, cleaning, repair, or replacement of parts or bulbs necessitated by vandalism. Such costs will
+be charged to the customer.
+Rates
+(1)Incandescent
+(a)Operating, Maintenance, and Capital (full charge)
+per month ($)
+kWh per
+Rate Code Watts Other
+month
+2026 2027
+001 300 and less 97 25.03 26.72
+002 Greater than 300 154 36.10 38.46
+Effective:
+
+UNMETERED SERVICE RATES Page 2 of 12
+Rate Code 41
+(b)Operating Only
+per month ($)
+kWh per
+Rate Code Watts Other
+month
+2026 2027
+003 300 and less 97 18.62 19.77
+(2)Mercury Vapour
+(a)Operating, Maintenance, and Capital (full charge)
+per month ($)
+kWh per
+Rate Code Watts Other
+month
+2026 2027
+100 100 43 15.69 16.79
+101 125 52 17.66 18.87
+102 175 69 20.49 21.89
+103 250 97 26.47 28.24
+104 400 154 37.48 39.92
+105 700 260 58.82 62.57
+106 1,000 363 79.46 84.48
+107 250 212 41.57 44.21 continuous operation
+(b)Operating and Maintenance Only
+per month ($)
+kWh per
+Rate Code Watts Other
+month
+2026 2027
+201 125 52 11.62 12.28
+202 175 69 14.47 15.32
+203 250 97 19.85 21.03
+204 400 154 30.79 32.64
+205 700 260 51.13 54.24
+206 1,000 363 70.90 75.23
+Effective:
+
+UNMETERED SERVICE RATES Page 3 of 12
+Rate Code 41
+(c)Operating Only
+per month ($)
+kWh per
+Rate Code Watts 
+[DOC 0] https://www.nspower.ca/docs/default-source/regulatory/tariff-book-2026.pdf
+Other
+month
+2026 2027
+301 125 52 9.98 10.60
+302 175 69 13.24 14.06
+303 250 97 18.62 19.77
+304 400 154 29.56 31.38
+305 700 260 49.90 52.98
+306 1,000 363 69.67 73.97
+(3)Fluorescent
+(a)Operating, Maintenance, and Capital (full charge)
+per month ($)
+Number of kWh per
+Rate Code Bulb Length Other
+Bulbs per Unit month
+2026 2027
+110 24 2 30 13.97 14.91
+111 48 2 85 24.77 26.39
+112 72 2 116 31.20 33.21
+113 72 4 222 52.72 56.04
+114 96 1 47 17.77 18.95
+115 72 1 60 19.88 21.19
+116 48 4 166 40.90 43.51
+(b)Operating and Maintenance Only
+per month ($)
+Number of kWh per
+Rate Code Bulb Length Other
+Bulbs per Unit month
+2026 2027
+213 72 4 222 45.07 47.76
+214 96 1 47 11.48 12.10
+215 72 1 60 13.98 14.75
+216 48 4 166 34.32 36.35
+217 48 1 49 11.86 12.51
+Effective:
+
+UNMETERED SERVICE RATES Page 4 of 12
+Rate Code 41
+per month ($)
+Number of kWh per
+Rate Code Bulb Length Other
+Bulbs per Unit month
+2026 2027
+218 48 2 85 18.77 19.84
+(c)Operating Only
+per month ($)
+Number of kWh per
+Rate Code Bulb Length Other
+Bulbs per Unit month
+2026 2027
+330 35 4 47 9.02 9.58
+(4)Fluorescent Crosswalk
+(a)Continuous Burning – Operating Only
+per month ($)
+Number of kWh per
+Rate Code Bulb Length Other
+Bulbs per Unit month
+2026 2027
+117 72 4 486 74.47 79.07
+118 24 2 66 10.11 10.74
+119 48 4 364 55.78 59.22
+120 96 2 254 38.92 41.33
+150 96 4 613 93.93 99.74
+(b)Photocell Operation – Operating Only
+per month ($)
+Number of kWh per
+Rate Code Bulb Length Other
+Bulbs per Unit month
+2026 2027
+310 24 2 30 5.76 6.11
+311 48 4 166 31.86 33.83
+312 72 2 116 22.26 23.64
+313 72 4 222 42.61 45.24
+314 96 1 47 9.02 9.58
+315 72 1 60 11.52 12.23
+350 96 4 280 53.74 57.06
+Effective:
+
+UNMETERED SERVICE RATES Page 5 of 12
+Rate Code 41
+(5)Low Pressure Sodium
+(a)Operating, Maintenance, and Capital (full charge)
+per month ($)
+kWh per
+Rate Code Watts Other
+month
+2026 2027
+130 135 60 23.61 25.08
+131 180 80 29.63 31.46
+132 90 45 20.73 22.02
+(b)Operating and Maintenance Only
+per month ($)
+kWh per
+Rate Code Watts Other
+month
+2026 2027
+231 180 80 19.05 20.07
+(c)Operating Only
+per month ($)
+kWh per
+Rate Code Watts Other
+month
+2026 2027
+331 180 80 15.35 16.30
+(6)High Pressure Sodium
+(a)Operating, Maintenance, and Capital (full charge)
+per month ($)
+kWh per
+Rate Code Watts Other
+month
+2026 2027
+121 250 100 26.64 28.42
+122 400 150 36.34 38.72
+123 70 32 13.43 14.39
+124 100 45 15.95 17.06
+125 150 65 19.94 21.30
+126 100 99 23.71 25.26 continuous operation
+Effective:
+
+UNMETERED SERVICE RATES Page 6 of 12
+Rate Code 41
+(b)Operating and Maintenance Only
+per month ($)
+kWh per
+Rate Code Watts Other
+month
+2026 2027
+221 250 100 20.42 21.64
+222 70 32 7.37 7.78
+223 100 45 9.87 10.43
+224 150 65 13.71 14.51
+(c)Operating Only
+per month ($)
+kWh per
+Rate Code Watts Other
+month
+2026 2027
+321 250 100 19.19 20.38
+322 70 32 6.14 6.52
+323 100 45 8.64 9.17
+324 150 65 12.48 13.25
+326 400 150 28.79 30.57
+327 500 183 35.12 37.29
+328 1,000 363 69.67 73.97
+329 1,500 500 95.96 101.89
+(7)Metallic Additive
+(a)Operating, Maintenance, and Capital (full charge)
+per mo
+[DOC 0] https://www.nspower.ca/docs/default-source/regulatory/tariff-book-2026.pdf
+nth ($)
+kWh per
+Rate Code Watts Other
+month
+2026 2027
+140 400 150 37.48 39.89
+141 1,000 360 80.25 85.25
+142 250 100 28.81 30.66
+143 150 67 22.48 23.93
+144 100 50 19.22 20.47
+Effective:
+
+UNMETERED SERVICE RATES Page 7 of 12
+Rate Code 41
+(b)Operating Only
+per month ($)
+kWh per
+Rate Code Watts Other
+month
+2026 2027
+341 1,000 360 69.09 73.36
+342 400 150 28.79 30.57
+343 250 100 19.19 20.38
+344 175 75 14.39 15.28
+345 150 67 12.86 13.65
+346 100 50 9.60 10.19
+(8)Light Emitting Diode (LED) less than 30 Watts for Traffic Control Signals Only
+per month ($)
+kWh per
+Rate Code Watts Other
+month
+2026 2027
+530 4.6 3 0.58 0.61 non-continuous
+531 7.5 5 0.96 1.02 continuous
+(9)Light Emitting Diode (LED) – Operating Only
+per month ($)
+kWh per
+Rate Code Watts Other
+month
+2026 2027
+532 44 15 2.88 3.06
+533 66 22 4.22 4.48
+534 88 29 5.57 5.91
+535 92 31 5.95 6.32
+536 105 35 6.72 7.13
+537 173 57 10.94 11.62
+538 44 15 2.88 3.06
+539 110 37 7.10 7.54
+540 65 22 4.22 4.48
+541 55 18 3.45 3.67
+542 83 28 5.37 5.71
+543 48 16 3.07 3.26
+Effective:
+
+UNMETERED SERVICE RATES Page 8 of 12
+Rate Code 41
+per month ($)
+kWh per
+Rate Code Watts Other
+month
+2026 2027
+544 72 24 4.61 4.89
+546 43 14 2.69 2.85
+547 50 17 3.26 3.46
+548 53 18 3.45 3.67
+549 80 27 5.18 5.50
+550 200 67 12.86 13.65
+551 60 20 3.84 4.08
+552 70 23 4.41 4.69
+553 87 29 5.57 5.91
+554 173 58 11.13 11.82
+555 35 12 2.30 2.45
+556 51 17 3.26 3.46
+557 172 57 10.94 11.62
+558 91 30 5.76 6.11
+559 42 14 2.69 2.85
+560 13 4 0.77 0.82
+561 8 3 0.58 0.61
+562 150 50 9.60 10.19
+563 60 20 3.84 4.08
+564 28 9 1.73 1.83
+565 86 29 5.57 5.91
+567 100 33 6.33 6.72
+569 143 48 9.21 9.78
+570 200 67 12.86 13.65
+572 250 83 15.93 16.91
+573 52 17 3.26 3.46
+574 140 47 9.02 9.58
+575 185 62 11.90 12.63
+576 95 32 6.14 6.52
+578 75 25 4.80 5.09
+Effective:
+
+UNMETERED SERVICE RATES Page 9 of 12
+Rate Code 41
+per month ($)
+kWh per
+Rate Code Watts Other
+month
+2026 2027
+579 138 46 8.83 9.37
+582 54 18 3.45 3.67
+583 175 58 11.13 11.82
+584 46 15 2.88 3.06
+585 69 23 4.41 4.69
+586 108 36 6.91 7.34
+587 158 53 10.17 10.80
+589 48 16 3.07 3.26
+590 90 30 5.76 6.11
+591 240 80 15.35 16.30
+592 135 45 8.64 9.17
+593 30 10 1.92 2.04
+594 133 44 8.44 8.97
+595 55 18 3.45 3.67
+596 52 17 3.26 3.46
+597 41 14 2.69 2.85
+598 68 23 4.41 4.69
+599 117 39 7.49 7.95
+(10)Light Emitting Diode (LED) – Operating, Maintenance, and Capital (full charge)
+per month ($)
+kWh per
+Rate Code Watts Other
+month
+2026 2027
+615 44 15 11.78 12.50
+616 55 18 12.35 13.11
+623 28 9 10.63 11.27
+624 50 17 12.16 12.90
+625 72 24 13.51 14.33
+626 100 33 15.23 16.16
+627 200 67 21.76 23.09
+Effective:
+
+UNMETERED SERVICE RATES Page 10 of 12
+Rate Code 41
+(11)Light Emitting Diode (LED) – Operating, Maintenance, and Capital (full charge)
+per month ($)
+kWh per
+Rate Code Watts Other
+month
+2026 2027
+724 55 18 9.82 10.50
+740 190 63 26.01 27.45
+741 261 87 32.19 33.96
+742 124 41 19.19 20.29
+743 84 28 16.08 17.01
+(B)MISCELLANEOUS LIGHTING
+Demand Charge
+per month per kilowatt
+of connected load
+Effective upon the date of the
+$13.420
+Board’s Ord
+[DOC 0] https://www.nspower.ca/docs/default-source/regulatory/tariff-book-2026.pdf
+er
+Effective January 1, 2027 $14.250
+Energy Charge
+cents per kilowatt-hour
+for the first 200 kilowatt-hours
+for all additional kilowatt
+per month per kilowatt of
+hours
+maximum demand
+Effective upon the date of the
+17.229 12.072
+Board’s Order
+Effective January 1, 2027 18.294 12.818
+Maximum per kWh Charge/Minimum Bill
+The maximum charge per kWh will be that for a billing load factor of 10% except that the minimum
+monthly bill for the electric power and energy portion of the Miscellaneous Lighting Rate shall be $ as
+follows per month if such unmetered service is billed separately from any metered account.
+per month
+Effective upon the date of the
+$22.00
+Board’s Order
+Effective:
+
+UNMETERED SERVICE RATES Page 11 of 12
+Rate Code 41
+per month
+Effective January 1, 2027 $22.73
+Capital Charge (if applicable)
+Depreciation based on a 25-year life, and interest at the Company's long-term rate shall be used to
+determine the monthly capital charge.
+Maintenance Charge (if applicable)
+Cost of normal fixture maintenance and bulb replacement on the basis of current cost levels shall be
+used to calculate the monthly maintenance charge.
+This portion of the rate does not include any provision for globe washing or cleaning. Repair or
+replacement of parts or bulbs necessitated by vandalism will be charged to the customer.
+Availability
+This rate shall be applicable to the supply, operation and maintenance of lighting units not provided
+for under the Street and Area Lighting rate.
+(C)MISCELLANEOUS SMALL LOADS
+per month per kilowatt
+of connected load
+Effective upon the date of the
+$13.420
+Board’s Order
+Effective January 1, 2027 $14.250
+Energy Charge
+cents per kilowatt-hour
+for the first 200 kilowatt-hours
+for all additional kilowatt
+per month per kilowatt of
+hours
+maximum demand
+Effective upon the date of the
+17.229 12.072
+Board’s Order
+Effective January 1, 2027 18.294 12.818
+Effective:
+
+UNMETERED SERVICE RATES Page 12 of 12
+Rate Code 41
+The flat rate calculation (using a 30-day month) will be based on the specific information of each
+service using the above rate. The charge will be expressed in cents per kWh per month and will be
+rounded to hundredths of a cent in its application.
+Maximum per kWh Charge/Minimum Bill
+The maximum charge per kWh will be that for a billing load factor of 10% except that the minimum
+monthly bill shall be as follows per month if such unmetered service is billed separately from any
+metered account.
+Per month
+Effective upon the date of the
+$22.00
+Board’s Order
+Effective January 1, 2027 $22.73
+Availability
+A flat rate shall be calculated for any service requiring the supply of power and energy only, with a
+predeterminable usage, and where metering is considered to be impractical, such as: Telephone Booths,
+Cable Vision Power Supplies, Traffic Control Lights, Police Telephones, Railway Signals, etc.
+Effective:
+
+FUEL ADJUSTMENT MECHANISM (FAM) TARIFF Page 1 of 4
+APPLICABILITY
+This schedule is a mandatory rider to all electric rate schedules, except t
+[DOC 0] https://www.nspower.ca/docs/default-source/regulatory/tariff-book-2026.pdf
+he following tariffs: Generation
+Replacement and Load Following, Extra High Voltage Time-of-Use Real Time Pricing, High Voltage
+Time-of-Use Real Time Pricing, and Distribution Voltage Time-of-Use Real Time Pricing. FAM
+adjustments will apply to the Standard Energy Charge of the Extra Large Industrial 2P-RTP tariff. FAM
+adjustments will apply to Additional Energy supplied under the Mersey System Agreement when
+Additional Energy is priced at a tariff to which FAM adjustments apply.
+FUEL ADJUSTMENT
+The applicable charges for electric service to the Company’s retail and municipal customers shall be
+increased or decreased to the nearest 0.001 cents per kWh to recover or credit the difference in actual
+fuel cost from the costs in base rates in accordance with the following rate class-specific formula:
+Fuel Adjustment Rider = AA + BA
+Where:
+“AA” is a rate class-specific Actual Adjustment which is the difference between fuel-related costs
+recovered from a rate class through the application of the base rates during the previous calendar
+year and the actual Fuel Costs incurred and allocated to the rate class for the same time period.
+The actual fuel costs will include the same cost items as base fuel costs.
+“BA” is a rate class-specific Balance Adjustment which accounts for any over- or under-
+collections which have occurred as a result of prior adjustments.
+SPECIAL CONDITIONS
+(1) Base Cost of Fuel
+The Base Cost of Fuel can be re-set in a General Rate Application or, absent a General Rate
+Application, every second year as part of the FAM adjustment process. Changes in the Base Cost
+of Fuel will be reflected in customers’ rates going forward and will be applied to each customer
+class in a manner consistent with the then-current Board-approved Cost of Service Methodology.
+(2) Incentive
+For a total fuel cost variance of up to $50 million dollars (Actual Fuel Costs - [(Actual Sales) x
+(Base Fuel Cost $/MWh)]), 90% of any savings or increase in cost will be credited or charged to
+customers. The portion of any variance that is in excess of $50 million dollars will be fully applied
+Effective:
+.
+
+FUEL ADJUSTMENT MECHANISM (FAM) TARIFF Page 2 of 4
+in the calculation of the “AA.” Credits or charges will be applied to the energy component of rates
+on a cents per kWh basis.
+(3) Load Migrations between FAM/Non-FAM Classes
+(a) To non-FAM classes
+When a customer transitions its load, whether in whole or in part, from a FAM class to a non-
+FAM class, NS Power shall determine the outstanding fuel cost imbalance of the customer at
+the time of transition. This determined imbalance will be adjusted as necessary in future FAM
+proceedings concerned with apportionment of fuel costs incurred in the period in question.
+The adjustments will be subject to Nova Scotia Energy Board (NSEB) approval. The
+outstanding imbalance and subsequent adjustments will be paid (or reimbursed) in full on
+reasonable terms acceptable to the customer and NS Power, or if the parties are unable to
+agree,
+[DOC 0] https://www.nspower.ca/docs/default-source/regulatory/tariff-book-2026.pdf
+ as determined by the NSEB.
+(b) From non-FAM classes
+When a customer transitions its load, whether in whole or in part, to a FAM class from a non-
+FAM class, the customer will pay (or be reimbursed) outstanding FAM balances outside of
+the Fuel Adjustment Rider, on reasonable terms acceptable to the customer and NS Power,
+until such time that it is appropriate to return the customer to the Fuel Adjustment Rider. The
+customer’s outstanding FAM balance will be subject to NSEB approval.
+The applicable charges by rate class are as follows.
+2026
+Effective upon the date of the Board’s Order
+Actual Balance Balance FAM
+Adjustment Adjustment Adjustment AA/BA
+Rate Class
+(AA) in (BA 1) in (BA-2) in Combined
+cents per cents per cents per in cents
+kWh kWh kWh per kWh
+Domestic Service, Domestic Service
+Time-of-Day, Domestic Service Time
+0.156 0.156
+of Use, Domestic Service Critical
+Peak Pricing
+Small General, Small General Time
+of Use, Small General Critical Peak 0.156 0.156
+Pricing
+General, General Time of Use,
+0.207 0.207
+General Critical Peak, Multi-Unit
+Effective:
+.
+
+FUEL ADJUSTMENT MECHANISM (FAM) TARIFF Page 3 of 4
+Effective upon the date of the Board’s Order
+Actual Balance Balance FAM
+Adjustment Adjustment Adjustment AA/BA
+Rate Class
+(AA) in (BA 1) in (BA-2) in Combined
+cents per cents per cents per in cents
+kWh kWh kWh per kWh
+Residential Building (MURB) Time
+of Use
+Large General 0.158 0.158
+Small Industrial 0.144 0.144
+Medium Industrial 0.206 0.206
+Large Industrial Firm 0.247 0.247
+Large Industrial Interruptible 0.224 0.224
+Municipal 0.105 0.105
+Outdoor Recreational Lighting 0.156 0.156
+Unmetered 0.156 0.156
+2027
+Effective January 1, 2027
+Balance Balance FAM
+Actual
+Adjustment Adjustment AA/BA
+Rate Class
+Adjustment
+(BA 1) in (BA-2) in Combined
+(AA) in cents
+cents per cents per in cents
+per kWh
+kWh kWh per kWh
+Domestic Service, Domestic
+Service Time-of-Day, Domestic
+0.156 0.156
+Service Time of Use, Domestic
+Service Critical Peak Pricing
+Small General, Small General
+Time of Use, Small General 0.156 0.156
+Critical Peak Pricing
+General, General Time of Use,
+General Critical Peak, Multi-Unit
+0.207 0.207
+Residential Building (MURB)
+Time of Use
+Large General 0.158 0.158
+Small Industrial 0.144 0.144
+Medium Industrial 0.206 0.206
+Effective:
+.
+
+FUEL ADJUSTMENT MECHANISM (FAM) TARIFF Page 4 of 4
+Effective January 1, 2027
+Balance Balance FAM
+Actual
+Adjustment Adjustment AA/BA
+Rate Class
+Adjustment
+(BA 1) in (BA-2) in Combined
+(AA) in cents
+cents per cents per in cents
+per kWh
+kWh kWh per kWh
+Large Industrial Firm 0.247 0.247
+Large Industrial Interruptible 0.224 0.224
+Municipal 0.105 0.105
+Outdoor Recreational Lighting 0.156 0.156
+Unmetered 0.156 0.156
+Effective:
+.
+
+SCHEDULE A
+SOLAR GARDEN RATE RIDER Page 1 of 5
+PURPOSE
+The Solar Garden Rate Rider is an optional tariff rider that will provide eligible NSPI customers
+in good standing the opportunity to subscribe up to 100% of their annual energy consumption from
+the net generation output of the 2,002 kW 1 Solar Garde
+[DOC 0] https://www.nspower.ca/docs/default-source/regulatory/tariff-book-2026.pdf
+n in the Town of Amherst, Nova Scotia.2
+dc
+Customers taking this service will be referred to as “Solar Garden Subscribers.”
+AVAILABILITY
+The Solar Garden Rate Rider is available on a first-come, first-served basis. Customers served in
+Amherst where the Solar Garden is located have subscription priority over other customers.
+Subscription is limited to the total nameplate capacity of the facility (i.e. 2,002 kW ). There must
+dc
+be a minimum of two subscribers at all times.
+All metered customer classes may be a Solar Garden Subscriber, with the following exceptions,
+which are not eligible for the Solar Garden Rate Rider:
+• Customers on a seasonal rate;
+• Customers who take Net Metering Service under Regulation 3.6;
+• Customers participating in a net-metering program under Section 3A or 3AA of the Electricity
+Act; and
+• Subscribers to the Community Solar Energy Credit Rider.
+APPLICABILITY
+A customer agrees to a subscription to solar energy capacity, in 0.25 kW increments, that is
+dc
+calculated to produce an amount of energy equal to the customer’s chosen percentage of their
+premises’ average annual electricity consumption to be offset by solar generation, and based on
+the nameplate capacity and capacity factor of the facility. The maximum kW of the customer's
+dc
+subscription will be sized to meet the customer’s expected annual consumption. No individual
+customer will be allowed to subscribe to more solar energy capacity than would be expected to
+generate 100% of their average annual consumption. Subscription capacity is calculated as
+follows:
+𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆 𝐶𝐶𝐶𝐶𝑆𝑆𝐶𝐶𝑆𝑆𝑆𝑆𝑆𝑆𝐶𝐶 (𝑘𝑘𝑘𝑘𝑑𝑑𝑑𝑑) = 𝑘𝑘𝑘𝑘ℎ
+𝐶𝐶𝐶𝐶𝐶𝐶𝐶𝐶𝐶𝐶𝐶𝐶𝐶𝐶𝐶𝐶 𝐴𝐴𝐴𝐴𝐶𝐶𝐶𝐶𝐴𝐴𝐴𝐴𝐶𝐶 𝐴𝐴𝐴𝐴𝐴𝐴𝐶𝐶𝐴𝐴𝐴𝐴 𝐸𝐸𝐴𝐴𝐶𝐶𝑑𝑑𝐶𝐶𝐶𝐶𝐸𝐸𝑑𝑑𝐸𝐸𝐶𝐶𝐸𝐸 𝐶𝐶𝐶𝐶𝐴𝐴𝐶𝐶𝐶𝐶𝐶𝐶𝐶𝐶𝐶𝐶𝐸𝐸𝐶𝐶𝐴𝐴 �𝑦𝑦𝑦𝑦𝑦𝑦𝑦𝑦� × 𝐶𝐶𝐶𝐶𝐶𝐶𝐶𝐶𝐶𝐶𝐶𝐶𝐶𝐶𝐶𝐶 𝑆𝑆𝐶𝐶𝐴𝐴𝐴𝐴𝐶𝐶 𝑂𝑂𝑂𝑂𝑂𝑂𝐶𝐶𝐶𝐶𝐶𝐶 (%)
+8760 ℎ𝐶𝐶𝐶𝐶𝐶𝐶𝐶𝐶 𝐶𝐶𝐶𝐶𝐶𝐶 𝐸𝐸𝐶𝐶𝐴𝐴𝐶𝐶 × 𝐷𝐷𝐶𝐶 𝑑𝑑𝐴𝐴𝐶𝐶𝐴𝐴𝑑𝑑𝐸𝐸𝐶𝐶𝐸𝐸 𝑂𝑂𝐴𝐴𝑑𝑑𝐶𝐶𝐶𝐶𝐶𝐶
+Where:
+• Customer Average Annual Electricity Consumption is calculated as a three-year average, when
+1 A kilowatt direct current (kW ) refers to the electric power, in kilowatts, associated with the direct current output
+dc
+of a system. In this context, kW is used to denote the nameplate capacity of the Amherst Solar Garden before the
+dc
+power is converted to alternating current (ac).
+2 The solar garden was originally approved by the Nova Scotia Utility and Review Board (NSUARB) on May 7,
+2020 as part of the scope of NS Power’s Smart Grid Nova Scotia Project.
+Effective: January 1, 2026
+
+SOLAR GARDEN RATE RIDER Page 2 of 5
+possible, or is estimated using other available data at the sole discretion of NS Power; and
+• Customer Solar Offset (%) is chosen by the customer.
+The subscription entitles the customer to a Solar Energy Credit for the applicable net generation
+output from their subscription. This is calculated as:
+𝑆𝑆𝑆𝑆𝑆𝑆𝐶𝐶𝑆𝑆 𝐸𝐸𝑆𝑆𝐸𝐸𝑆𝑆𝐸𝐸𝐶𝐶 𝐶𝐶𝑆𝑆𝐸𝐸𝐶𝐶𝑆𝑆𝑆𝑆
+= 𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝐸𝐸𝑆𝑆 𝐴𝐴𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝐶𝐶𝑆𝑆𝑆𝑆𝐸𝐸 𝑆𝑆ℎ𝐶𝐶𝑆𝑆𝐸𝐸 (%)
+×𝐷𝐷𝐶𝐶𝑆𝑆𝑆𝑆𝐶𝐶 𝑇𝑇𝑆𝑆𝑆𝑆𝐶𝐶𝑆𝑆 𝑁𝑁𝐸𝐸𝑆𝑆 𝑃𝑃𝑆𝑆𝑆𝑆𝐶𝐶𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆 𝑆𝑆𝑜𝑜 𝑆𝑆𝑆𝑆𝑆𝑆𝐶𝐶𝑆𝑆 𝐸𝐸 𝑆𝑆𝐸𝐸𝑆𝑆𝐸𝐸𝐶𝐶 (𝑘𝑘𝑘𝑘ℎ)
+$
+Where: ×𝑉𝑉𝐶𝐶𝑆𝑆𝑆𝑆𝐸𝐸 𝑆𝑆𝑜𝑜 𝑆𝑆𝑆𝑆𝑆𝑆𝐶𝐶𝑆𝑆 𝐸
+[DOC 0] https://www.nspower.ca/docs/default-source/regulatory/tariff-book-2026.pdf
+𝐸𝑆𝑆𝐸𝐸𝑆𝑆𝐸𝐸𝐶𝐶 𝐶𝐶𝑆𝑆𝐸𝐸𝐶𝐶𝑆𝑆𝑆𝑆 � �
+𝑘𝑘𝑘𝑘ℎ
+• The daily total net production of solar energy is measured as the solar energy sent to the grid,
+net of any consumed at the Solar Garden.
+• A subscriber’s attributable share is calculated as:
+𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆 𝐶𝐶𝐶𝐶𝑆𝑆𝐶𝐶𝑆𝑆𝑆𝑆𝑆𝑆𝐶𝐶 (𝑘𝑘𝑘𝑘𝑑𝑑𝑑𝑑)
+𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝐸𝐸𝑆𝑆 𝐴𝐴𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝐶𝐶𝑆𝑆 𝑆𝑆ℎ𝐶𝐶𝑆𝑆𝐸𝐸 (%) =
+MONTHLY SOLAR CAPACITY CHARGE 2002 𝑘𝑘𝑘𝑘𝑑𝑑𝑑𝑑 𝑆𝑆𝐶𝐶𝑛𝑛𝐸𝐸𝑆𝑆𝑆𝑆𝐶𝐶𝑆𝑆𝐸𝐸 𝑆𝑆𝐶𝐶𝑆𝑆𝐶𝐶𝑆𝑆𝑆𝑆𝑆𝑆𝐶𝐶
+A customer may subscribe to capacity of the Solar Garden by paying a Monthly Solar Capacity
+Charge for each 0.25 kW increment subscribed.3 The subscription fee is paid monthly for all days
+dc
+in the month to which the subscription is applicable and accounts for the costs to build, operate
+and maintain the facility, and the administration costs to operate the Solar Garden Program.
+The Customer shall continue to pay the fee, even if solar garden generation is temporarily
+interrupted for any reason at the sole discretion of NS Power. Subscribers will be notified by email
+of any interruptions lasting longer than three days and involving more than 25% of the solar garden
+capacity. Subscribers can cancel their subscription at any time.
+Monthly Solar Capacity Charge
+$7.83 per kW subscribed.
+dc
+The same charge will apply regardless of the customer’s rate class.
+SOLAR ENERGY CREDIT
+Customers under the Solar Garden Rate Rider will receive a credit on their NS Power bill for the
+value of solar energy generated from their subscription.
+3 For instance, a customer subscribed to 1.25 kW will pay a Monthly Solar Capacity Charge of $9.79 (i.e. 1.25
+dc
+kW * $7.83 per kW subscribed)
+dc dc
+Effective: January 1, 2026
+
+SOLAR GARDEN RATE RIDER Page 3 of 5
+The monthly Solar Energy Credit will be equal to the product of:
+• The Solar Energy Credit rate as set forth below; and
+• The sum of the Subscriber Attributable Share of measured net production in kWh of the total
+daily generation output from the Solar Garden for all days in the month to which the
+subscription is applicable.
+The month in which the Solar Energy Credit is applied to the customer’s bill may not match the
+month in which the energy was generated due to the timing of the billing cycle.
+The Solar Energy Credit will be applied to the customer’s bill. The Solar Energy Credit will reflect
+the value of the energy provided by the Solar Garden. Credits will be paid out every billing period.
+For accounts billed under time-of-day or time-varying pricing tariffs, the value of the Solar Energy
+Credit does not change per distinct time-of-use, time-of-day, or critical peak period.
+The Solar Energy Credit is calculated and applied based on the actual generation of the Solar
+Garden.
+The solar energy credit will be 7.295 c/kWh in 2025, and will be automatically adjusted with a
+two percent increase on an annual basis per the schedule below.
+Solar Energy Credit
+Year
+(cents per kWh)
+2025 7.295
+2026 7.441
+2027 7.589
+2028 7.741
+2029 7.896
+2030 8.054
+2031 8.215
+2032 8.379
+2033 8.547
+2034 8.718
+2035 8.892
+2036 9.070
+2
+[DOC 0] https://www.nspower.ca/docs/default-source/regulatory/tariff-book-2026.pdf
+tive: January 1, 2026
+.
+
+DEMAND SIDE MANAGEMENT COST RECOVERY RIDER (DCRR) Page 3 of 4
+PCR BA DCRR
+Applicable Tariff (cents per (cents per (cents per
+kWh) kWh) kWh)
+General, General Time of Use, General Critical Peak
+0.735 0.015 0.749
+Pricing, Multi-unit Residential Building Time-of-Use
+Large General 0.428 0.029 0.458
+Small Industrial 0.536 0.020 0.555
+Medium Industrial 0.483 (0.004) 0.479
+Large Industrial including Interruptible Rider 0.612 0.051 0.663
+Municipal 0.280 (0.015) 0.265
+Unmetered Services 0.046 0.003 0.049
+Gen. Replacement & Load Following 0.000 (0.027) (0.027)
+One Part Real Time Pricing 0.000 0.010 0.010
+Shore Power 0.000 0.102 0.102
+SCHEDULE B
+DSM Cost Allocation Method
+• Step 1 – Allocate the class and participation benefits by directly assigning 100% of the DSM
+investment identified for each participating customer class.
+• Step 2 – For NS Power bundled service customers, divide the total amount to be recovered from
+each class by the anticipated electricity sales for the class to derive the required program cost
+recovery for each class for the upcoming year.
+• Step 3 – For customers taking service in the Wholesale or Renewable to Retail markets, recovery
+of DSM costs will be direct billed in accordance with the customer’s class energy bill if served
+by NS Power under its bundled service offerings.
+• Step 4 – Annually, true up the class and participation benefits by customer class, as described in
+BA .
+1
+• Step 5 – At the end of each Approved DSM Term, true up the class and participation benefits by
+customer class, as described in BA .
+2
+Effective: January 1, 2026
+.
+
+DEMAND SIDE MANAGEMENT COST RECOVERY RIDER (DCRR) Page 4 of 4
+Conditions
+• For bundled service customers, other than those who take service in the Wholesale Market
+(whether in whole or in part), this approach applies to classes as a whole (not to individual
+customers).
+• For customers who take service in the Wholesale Market (whether in whole or in part), this
+approach applies to individual customers.
+• This approach applies to total Approved DSM costs.
+Effective: January 1, 2026
+.
+
+STORM COST RECOVERY RIDER Page 1 of 2
+APPLICABILITY
+This schedule is a mandatory rider to all electric rate schedules, except the following tariffs: Wholesale
+Market Non-Dispatchable Supplier Spill Tariff, the Load Retention Tariff, and the Extra Large
+Industrial Active Demand Control Tariff.
+ADJUSTMENTS
+Subject to NS Power making application for recovery of costs through the Storm Cost Recovery Rider
+(SCRR), this Rider will provide for recovery of actual Level 3 and Level 4 storm costs as defined in
+the Company’s Emergency Services Restoration Plan (ESRP), in excess of the amount of Level 3 and
+Level 4 storm costs included in NS Power’s revenue requirement as approved by the Nova Scotia
+Energy Board (NSEB).
+However, if the actual Level 3 and Level 4 storm costs are below the amount of Level 3 and Level 4
+storm costs included in NS Power’s revenue requirement as approved by the NSEB, the Co
+[DOC 0] https://www.nspower.ca/docs/default-source/regulatory/tariff-book-2026.pdf
+mpany will
+track any underspend in a SCRR Customer Account where it will be accumulated until a threshold
+amount of $2.5 million is reached or a balance has been held for three consecutive years, upon which
+time NS Power will make an application to return the underspend amount to customers.
+The Storm Cost Recovery Rider costs include non-capital preparation, response, and restoration related
+costs including but not limited to: (1) storm preparedness including crew staging and related logistical
+expenses; (2) incremental NSPI wages, benefits, and overtime pay related to storm recovery; (3) costs
+of external service providers and mutual aid utilities hired by the Company during restoration efforts;
+(4) materials and supplies used to repair damaged assets and any associated expenses; and (5) other
+recoverable expenses, including extra costs for temporary repairs and to expedite the permanent repair
+of damaged property, and expenses incurred for providing services to customers whose electric service
+has been interrupted.
+The Rider will include a rate class-specific charge that accounts for:
+(1) Actual annual Level 3 and Level 4 storm costs in excess of or below the amount approved by the
+Board for inclusion in the Company’s revenue requirement inclusive of the cost of financing.
+Subject to the requirements set out herein to return over-recovered amounts to customers, it
+remains at the Company’s discretion to make an application for recovery of these costs. If
+initiated, the application will be based on actual results and filed in the following year to be made
+effective on January 1st of the subsequent year.
+Eligible storm costs to be included in the Storm Cost Recovery Rider in any given year cannot exceed
+2 percent of that year’s forecast retail revenues of the Company. Eligible storm costs in excess of the
+2 percent cap will be deferred to the subsequent year’s SCRR.
+Effective:
+.
+
+STORM COST RECOVERY RIDER Page 2 of 2
+SCRR costs will be allocated to classes and recovered in accordance with the Company’s Cost of
+Service Study. For bundled service customers these will be charged on a per kWh basis. For customers
+taking service in the competitive Wholesale or Renewable to Retail markets, recovery of storm costs
+will be direct billed in accordance with the customer’s class energy bill if served by NS Power under
+its bundled service offerings.
+SCRR RATES FOR 2026
+Storm Riders in
+Tariff
+cents per kWh1
+Domestic Service, Domestic Service Time-of-Day, Domestic Service
+0.000
+Time-of-Use, Domestic Service Critical Peak Pricing
+Small General, Small General Time-of-Use, Small General Critical Peak
+0.000
+Pricing
+General, General Time-of-Use, General Critical Peak Pricing, Multi-unit 0.000
+Residential Building Time-of-Use
+Large General 0.000
+Small Industrial 0.000
+Medium Industrial 0.000
+Large Industrial including Interruptible Rider 0.000
+Municipal 0.000
+Outdoor Recreational Lighting 0.000
+Unmetered Services 0.000
+Generation Replacement & Load Following 0.000
+On
+[DOC 0] https://www.nspower.ca/docs/default-source/regulatory/tariff-book-2026.pdf
+actor. In this context, kWac is used to denote the maximum output
+capacity of a CSP Solar Garden.
+Effective: February 12, 2025 Nova Scotia
+POWER
+An Emera Company
+
+COMMUNITY SOLAR ENERGY CREDIT RIDER Page 2 of4
+Where:
+• Customer Average Annual Electricity Consumption is calculated as a three-year average, when
+possible, or is estimated using other available data at the sole discretion of NS Power.
+• Customer Solar Offset (%) is chosen by the customer.
+• CSP Solar Garden Capacity Factor2 is reported by the Project Owner for each individual
+Project.
+The subscription entitles the customer to a Solar Energy Credit for the applicable generation output
+from their subscription. This is calculated as:
+Solar Energy Credit = Subscriber Attributable Share (%) *
+Monthly Total Net Production of Solar Energy (kWh) *
+Value of Solar Energy Credit($ / kWh)
+Where:
+• The monthly total net production of solar energy is measured as the solar energy sent to the
+grid, net of any consumed at the CSP Solar Garden.
+• A subscriber’s attributable share is calculated, as per Section 30 of the Community Solar
+Program Regulations, as:
+Subscription Capacity (kWac)
+Subscriber Attributal Share (%) = ----------------------------—7—3—..... ,
+Installed Capacity of the CSP Solar Garden (kWac)
+SOLAR ENERGY CREDIT
+Customers under the Community Solar Energy Credit Rider will receive a credit on their NS Power
+bill for the value of solar energy generated from their subscription in accordance with Section 5 of
+the Community Solar Program Regulations.
+In accordance with Section 3(h) of the Community Solar Program Regulations, the Value of Solar
+Energy Credit is 2.000 cents per kWh for the duration of the subscription, subject to amendments
+per Section 39 of the Community Solar Program Regulations. The same credit will apply
+regardless of the customer’s current applicable tariff.
+The Solar Energy Credit is calculated and applied based on the actual generation of the CSP Solar
+Garden.
+The Solar Energy Credit is calculated as the attributable share of measured net production in kWh
+of the total monthly generation output from the CSP Solar Garden for that month to which the
+subscription is applicable.
+2 The capacity factor of a solar garden is the ratio of the actual energy produced by the garden over a specific period
+to the maximum possible energy it could have produced at full capacity during that same period. For the purposes of
+the calculation, it will use the reported estimated annual AC capacity factor prior to the project’s operation.
+A Nova Scotia
+Effective: February 12, 2025
+• POWER
+An Emera Company
+
+COMMUNITY SOLAR ENERGY CREDIT RIDER Page 3 of 4
+Credits will be applied to a subscriber’s bill every billing period. The month in which the Solar
+Energy Credit is applied to the customer’s bill may not match the month in which the energy was
+generated due to the timing of the billing cycle. For accounts billed under time-of-day or time­
+varying pricing tariffs, the value of the Solar Ener
+[DOC 0] https://www.nspower.ca/docs/default-source/regulatory/tariff-book-2026.pdf
+gy Credit does not change per distinct time-of-
+use, time-of-day, or critical peak period.
+NO ADDITIONAL FEES
+A customer may subscribe to a CSP Solar Garden with no additional fees related to their
+subscription, in accordance with Section 4 of the Community Solar Program Regulations.
+BILLING & METERING
+Customers under the Community Solar Energy Credit Rider will also be billed in accordance with
+the otherwise applicable Tariffs.
+Solar Energy Credits will be measured based on the total metered production of the CSP Solar
+Garden to the grid, as measured by the billing meter on the CSP Solar Garden site. This will be
+the generation net of any consumption for operation of the CSP Solar Garden.
+NS Power reserves the right to modify the Customer’s current billing cycle if it contributes to
+operating the CSP Solar Garden and Community Solar Energy Credit Rider more efficiently. In
+such a circumstance, NS Power would notify the Customer at the time of subscription or, where
+the modification occurs following subscription, with 30 days’ notice.
+RENEWABLE ENERGY CERTIFICATES
+In accordance with Section 38 of the Community Solar Program Regulations, upon request by a
+non-residential Community Solar Program subscriber, NS Power will register and retire renewable
+energy certificates (RECs) on behalf of the subscribing customer and will provide to that customer,
+no later than March 31 of each year, the following information:
+• the annual volume of the customer’s RECs;
+• the customer’s REC serial or identification numbers; and
+• the vintage3 ofthe customer’s RECs.
+All costs of registering and retiring RECs are paid by the Project Owner. When requesting RECs,
+the Subscriber agrees that the total electrical energy output of Community Solar Gardens under
+the Community Solar Program shall be counted by NS Power toward its compliance with the
+renewable electricity standard requirements set forth in the Renewable Electricity Regulations
+(N.S. Reg 338/2022), as per Section 38(3) of the Community Solar Program Regulations, and the
+Subscriber shall take no actions to utilize or take credit for environmental attributes related to their
+3 The vintage of a REC refers to the year in which the renewable energy and environmental attributes associated
+with the REC was generated.
+Nova Scotia
+Effective: February 12, 2025
+POWER
+An Emera Company
+
+COMMUNITY SOLAR ENERGY CREDIT RIDER Page 4 of4
+subscription in a manner that could hinder NS Power from doing so.
+SPECIAL PROVISIONS
+1) NS Power reserves the right to deny or terminate subscriptions under this tariff to customers
+in arrears with the Company. Customers who are denied or terminated may subscribe for
+service to the Community Solar Energy Credit Rider upon their reinstatement of good standing
+with the Company and will be accommodated on a first come, first served basis. For clarity,
+reinstated customers will not resume their original subscription in the Community Solar
+Energy Credit Rider but will be treated as a new subscriber
+[DOC 0] https://www.nspower.ca/docs/default-source/regulatory/tariff-book-2026.pdf
+.
+Spill Service – hourly generation in excess of the customer’s load absorbed by the Company.
+This excess energy is defined as spilled energy.
+Power supplied by the Company to the customer in any given hour above the customer generation, if
+not below the established net operating capability, is defined as supplementary power and will be billed
+under applicable full requirement tariff. Customers taking this service will be referred to as “customer-
+generators.”
+Rate
+Backup Service
+The actual or estimated average time coincident incremental cost of generation including transmission
+losses for the period service is provided plus 0.500 cents per kWh for additional Operating and
+Maintenance costs, service charges and Administration & General compensation.
+Optional Generation Load Following
+Average incremental cost of generation expressed in cents per kWh as determined by the generation
+forecast for the rate year plus add on charges as defined for back-up service. This price will be 7.236
+cents per kWh.
+ENERGY CREDIT
+The Energy Credit is equal to the average incremental cost of generation as defined under Optional
+Generation Load Following.
+Effective: April 1, 2026
+
+GENERATION REPLACEMENT AND LOAD FOLLOWING TARIFF Page 2 of 5
+AVAILABILITY
+This tariff is available to:
+(a) Customers who have their own qualifying generating facility of not less than 2,000 kW of
+aggregate capacity, as defined under Special Condition 8, normally used to support their own
+load;
+(b) Energy supplied to Non-Utility Owned Generation sites for purposes of startup and replacement
+of energy normally supplied from their own generation, where the customer has signed an
+operating agreement under this tariff schedule.
+The following general terms and conditions will apply to the applications.
+(1) Energy under the Generation Replacement Service provision will be supplied upon request by
+the customer. In cases where advance written notification can be given by the customer, such as
+planned maintenance, the Company will advise the customer in writing of the quoted price which
+will be based on estimated costs during the period. In an emergency situation where time does
+not permit advance notification the price will be based upon actual costs until the customer
+provides written notification of the duration of the taking following which the Company will
+advise the customer in writing of the quoted price for the remainder of the period.
+Energy under the load following section will be supplied either through on-going communication
+provision such as telemetering (when load fluctuations are involved) or written requests (where
+application is to a specific level of load).
+(2) In the event there is an interruption required by NS Power in order to avoid shortfalls in electric
+supply, customers taking energy under the Generation Replacement Service or Load Following
+Service will be the first to be called upon to interrupt energy usage from NS Power.
+(3) The customers will reduce their available inter
+[DOC 0] https://www.nspower.ca/docs/default-source/regulatory/tariff-book-2026.pdf
+SPI and the wholesale customer are unable to agree on an adjustment to the CCF,
+the matter may be submitted to the Board by either party on an expedited basis for adjudication.
+Effective: April 1, 2026
+Nova Scotia
+POWER
+An Emera Company
+
+Schedule F
+WHOLESALE MARKET NON-DISPATCHABLE SUPPLIER SPILL TARIFF Page 1 of 2
+ADMINISTRATION CHARGE
+The monthly administration charge under this tariff is calculated according to the following formula:
+forecast annual administration costs
+Monthly customer charge =
+forecast number of suppliers supplying wholesale customers * 12
+This charge will be $2,487.77 per month.
+ENERGY CREDIT
+Compensation for spill energy delivered to NSPI will be at the Company’s forecast average annual
+marginal energy costs of 6.736 cents per kilowatt hour as approved for use with the GRLF rate.
+MINIMUM MONTHLY CHARGE
+The minimum monthly charge shall be the administration charge.
+AVAILABILITY
+This tariff is available for use by, independent non-dispatchable electric generators serving the
+Wholesale Market. The tariff is applicable to scheduled “spill energy,” under the following terms and
+conditions:
+(1) “Spill energy” is defined as the scheduled hourly energy forecast to be produced by the supplier
+above the scheduled hourly energy requirement of their wholesale customer(s). Unscheduled
+energy produced will be compensated according to the Open Access Transmission Tariff (OATT)
+imbalance guidelines. Spill compensation under this tariff is limited to the supplier’s Maximum
+Spill Capacity (kW). Maximum Spill Capacity must be approved by NSPI prior to
+commencement of service. Spill capacity will be reviewed periodically and adjusted as required.
+(2) Suppliers must install metering equipment to monitor the output of their generation. Consistent
+with the Generation Interconnection Agreement, the equipment and installation must be
+approved by the Company and the costs will be the responsibility of the supplier.
+SPECIAL CONDITIONS
+(1) Suppliers must meet all conditions set forth in the Generation Interconnection Procedures and
+Generation Interconnection Agreement.
+Effective: April 1, 2026
+
+WHOLESALE MARKET NON-DISPATCHABLE SUPPLIER SPILL TARIFF Page 2 of 2
+(2) The Company reserves the right to have a separate service agreement, if in the opinion of the
+Company issues not specifically set out herein, must be addressed for the ongoing benefit of the
+Company and its customers.
+(3) The supplier will make all necessary arrangements to ensure that its generation output does not
+unduly deteriorate the integrity of the power supply system, either by its design and/or operation.
+These specific requirements shall be stipulated in the Generation Interconnection Agreement.
+In assessing issues which might unduly affect the integrity of the power supply system the following
+would be considered: reliability, harmonic voltage and current levels, voltage flicker, unbalance, rate
+of change in load levels, stability, fault levels and other related conditions.
+Effe
+[DOC 0] https://www.nspower.ca/docs/default-source/regulatory/tariff-book-2026.pdf
+te hourly load quantities are determined in
+accordance with the applicable provisions in the LRS Terms and Conditions.
+(4) To qualify for this service, the LRS must ensure that the imbalance between low impact
+renewable generation and energy consumption over the established compliance period conforms
+to Section 10 of the Board Electricity Retailers Regulations (Nova Scotia) enacted under the Act.
+(5) Maximum Spill Capacity must be approved by NS Power prior to commencement of service and
+will be limited to a level agreed as being required to provide the contracted annual amount of
+participating LRS energy. Spill capacity will be reviewed annually and will include the LRS'
+proposal to mitigate it on a going forward basis. If NS Power is not satisfied with the LRS'
+proposal, it may impose a limit on hourly production of the LRS' generation portfolio.
+ADMINISTRATION CHARGE
+The monthly administration charge is applicable to each LRS and is set annually according to the
+following formula:
+forecast annual administration costs
+Monthly charge = ---------------------------------------------------------
+forecast number of LRS' subscribed * 12
+This charge will be $414.63 per month.
+ENERGY CHARGE
+Energy charge for top-up service is made up of the following two components:
+(1) Annually adjusted fuel cost component based on NS Power's incremental cost of serving the
+LRS' forecasted incremental top-up load.
+(2) Fixed cost adder reflective of fixed cost energy-related generation costs.
+Energy Charge Components cents per kWh
+Fuel Cost 6.736
+Fixed Cost Adder 2.155
+Total 8.891
+The charge is applicable to top-up energy consumed in each hour.
+Effective: April 1, 2026
+POWER
+An Emera Company
+
+Schedule G
+ENERGY BALANCING SERVICE TARIFF Page3 of3
+Renewable to Retail
+ENERGY CREDIT
+6.736 cents per kilowatt-hour.
+The Energy Credit for spill service is set annually and is applicable to spilled energy in each hour.
+MINIMUM MONTHLY CHARGE
+The minimum monthly charge will be the administration charge.
+SPECIAL CONDITIONS
+(1) NS Power reserves the right to have a separate service agreement, if in the opinion of NS Power
+issues not specifically set out herein, must be addressed for the ongoing benefit of NS Power and
+its customers.
+(2) The LRS' RtR Customers and generators will make all necessary arrangements to ensure that
+their generation and load do not unduly deteriorate the integrity of the power supply system,
+either by its design and/or operation. These specific requirements shall be stipulated by way of a
+written operating agreement.
+(3) In assessing issues which might unduly affect the integrity of the power supply system the
+following would be considered: reliability, harmonic voltage and current levels, voltage flicker,
+unbalance, rate of change in load levels, stability, fault levels and other related conditions.
+(4) Nothing contained in this Energy Balancing Service Tariff or any service agreement shall be
+construed as affecting or in any way limiting the right of NS P

@@ -1,0 +1,1367 @@
+[DOC 0] https://www.ameren.com/-/media/rates/missouri/residential/electric-rates/rates/uecsheet54rate1mres.ashx
+UNION ELECTRIC COMPANY ELECTRIC SERVICE
+MO.P.S.C. SCHEDULE NO. 6 8th Revised SHEET NO. 54
+CANCELLING MO.P.S.C. SCHEDULE NO. 6 7th Revised SHEET NO. 54
+APPLYING TO MISSOURI SERVICE AREA
+SERVICE CLASSIFICATION NO. 1(M)
+RESIDENTIAL ANYTIME SERVICE
+AVAILABILITY
+This rate is applicable to all residential customers that are not receiving service
+either through an advanced meter or under an optional residential rate, and that are
+supplied by the Company to individually metered residences or apartments consisting
+of one or more rooms for the use of one or more persons as a housekeeping unit with
+space for eating, living and sleeping, and permanent provisions for cooking and
+sanitation. For such customers being served through an advanced meter, this rate is
+applicable until such time that the Evening/Morning Saver rate becomes applicable by
+its terms, or at any time as an optional rate at the customer's election.
+Additional service which may be provided under the provisions of this rate include
+any metered combination of residential and general farm service, or separately
+metered service related or incidental thereto, and individually metered mobile homes
+or boat slips intended for normal use by a single family.
+DESCRIPTION
+This rate has two parts: a basic service charge and an energy charge. Energy charges
+are based on how much energy (kWh) is used during the month. This rate does not vary
+by time-of-use or demand (how much energy is used at one time).
+* RATES
+The monthly bill will consist of the following charges, plus adjustments:
+Summer Rate (June through September)(1)
+Customer Charge - per month $9.00
+Low-Income Pilot Program Charge – per month $0.19
+Energy Charge - per kWh 15.60¢
+Winter Rate (October through May)(1)
+Customer Charge - per month $9.00
+Low-Income Pilot Program Charge – per month $0.19
+Energy Charge - per kWh
+First 750 kWh 10.62¢
+Over 750 kWh 7.14¢
+(1) Refer to General Rules and Regulations, V. Billing Practices, Section A.
+Monthly Billing Periods, for specific applicability.
+*Indicates Change.
+Issued pursuant to the Order of the Mo.P.S.C. in Case No. ER-2024-0319.
+DATE OF ISSUE May 2, 2025 DATE EFFECTIVE June 1, 2025
+ISSUED BY Mark C. Birk Chairman & President St. Louis, Missouri
+NAME OF OFFICER TITLE ADDRESS
+
+UNION ELECTRIC COMPANY ELECTRIC SERVICE
+MO.P.S.C. SCHEDULE NO. 6 6th Revised SHEET NO. 54.1
+CANCELLING MO.P.S.C. SCHEDULE NO. 6 5th Revised SHEET NO. 54.1
+APPLYING TO MISSOURI SERVICE AREA
+*SERVICE CLASSIFICATION NO. 1(M)
+RESIDENTIAL ANYTIME SERVICE (Cont'd.)
+ADJUSTMENTS
+The bill will include the followings adjustments:
+Fuel and Purchased Power Adjustment (Rider FAC). Applicable to all metered
+kilowatt-hours (kWh) of energy.
+Energy Efficiency Investment Charge (Rider EEIC). Applicable to all metered
+kilowatt-hours (kWh) of energy excluding kWh of energy supplied to customers that
+have satisfied the opt-out provisions or the low-income exemption provisions of
+Section 393.1075, RSMo.
+Renewable Energy Standard Rate Adjustment Mechan
+[DOC 0] https://www.ameren.com/-/media/rates/missouri/residential/electric-rates/rates/uecsheet54rate1mres.ashx
+ism (Rider RESRAM). Applicable to
+all metered kilowatt-hours (kWh) of energy.
+Tax Adjustment. Any license, franchise, gross receipts, occupation or similar
+charge or tax levied by any taxing authority on the amounts billed hereunder will
+be so designated and added as a separate item to bills rendered to customers under
+the jurisdiction of the taxing authority.
+SERVICE DETAILS
+Payments. Bills are due and payable within twenty-one (21) days from date of
+bill and become delinquent thereafter.
+Term of Use. Initial residential service period one (1) year, terminable
+thereafter on three (3) days' notice, however, customers may switch their
+residential service to a different residential rate subject to the terms of
+use and provisions of those rates.
+Character of Service Supplied. Company will specify and supply one standard
+single-phase and, for additional residential requirements, one three-phase
+secondary service voltage under this Service Classification, which service
+will be cumulated for billing purposes. Unless otherwise required for
+Company's engineering or other reasons, any additional service requested by
+customer will be provided, subject to the Company's approval, under the
+provisions of Section III - Special Facilities. Such additional service, if
+any, supplied through facilities installed on and after May 5, 1990, will not
+be cumulated or otherwise combined for billing purposes with any other
+service supplied to customer.
+Temporary Service. Temporary service requested for residential use will be
+supplied under the terms and conditions set forth under Rider D.
+Residential Service Rate Not Applicable To:
+a. Service supplied through one meter (or more than one meter if the
+readings thereof are cumulated for billing purposes) to:
+(1) Premises which consist of one or more dwelling units and a
+commercial unit or
+(2) A residence or dwelling unit when any portion of such service is
+used in a commercial venture.
+*Indicates Change.
+Issued pursuant to the Order of the Mo.P.S.C. in Case No. ER-2021-0240.
+DATE OF ISSUE February 14, 2022 DATE EFFECTIVE February 28, 2022
+ISSUED BY Mark C. Birk Chairman & President St. Louis, Missouri
+NAME OF OFFICER TITLE ADDRESS
+
+UNION ELECTRIC COMPANY ELECTRIC SERVICE
+MO.P.S.C. SCHEDULE NO. 6 4th Revised SHEET NO. 54.2
+CANCELLING MO.P.S.C. SCHEDULE NO. 6 3rd Revised SHEET NO. 54.2
+APPLYING TO MISSOURI SERVICE AREA
+SERVICE CLASSIFICATION NO. 1(M)
+RESIDENTIAL ANYTIME SERVICE (Cont'd.)
+SERVICE DETAILS (Cont'd.)
+5. Residential Service Rate Not Applicable To: (Cont'd.)
+As used herein, the term "dwelling unit" shall mean that portion of a
+building which by appearance, design or arrangement is normally used for
+residential purposes by a single family, whether or not actually occupied,
+and the term "commercial unit" shall mean that portion of a building or
+premises which by appearance, design or arrangement is normally used for
+commercial purposes, whether or not actually so used.
+b. Establishments in farming areas processing, 
+[DOC 0] https://www.ameren.com/-/media/rates/missouri/residential/electric-rates/rates/uecsheet54rate1mres.ashx
+distributing or selling farm
+or other products which do not originate through production on the
+premises served.
+c. Separate buildings or other structures intended and/or used for
+recreational or group activities.
+d. Nursing homes and/or retirement facilities licensed by the State of
+Missouri Department of Social Services Division of Aging.
+e. Single-metered service supplied to multiple occupancy buildings for which
+a Commission variance, from the separate metering requirement contained
+in Section V.L. Rent Inclusion of the Company's rules and regulations,
+has been granted.
+* 6. Generation Eligible for Net Metering. The description of billing applicable
+to generation that qualifies is contained in the Electric Power Purchases
+from Qualified Net Metering Facilities tariff sheets.
+General Rules and Regulations. In addition to the above specific rules and
+regulations, all of Company's General Rules and Regulations shall apply to
+the supply of service under this rate.
+*Indicates Addition.
+DATE OF ISSUE April 24, 2026 DATE EFFECTIVE June 1, 2026
+ISSUED BY Michael Moehn Interim Chairman & President St. Louis, Missouri
+NAME OF OFFICER TITLE ADDRESS
+
+UNION ELECTRIC COMPANY ELECTRIC SERVICE
+MO.P.S.C. SCHEDULE NO. 6 5th Revised SHEET NO. 54.3
+CANCELLING MO.P.S.C. SCHEDULE NO. 6 4th Revised SHEET NO. 54.3
+APPLYING TO MISSOURI SERVICE AREA
+SERVICE CLASSIFICATION NO. 1(M)
+RESIDENTIAL ANYTIME SERVICE (Cont'd.)
+*GRANDFATHERED OPTIONAL TOD (TIME-OF-DAY) RATE PILOT
+Service under the TOD pilot is no longer offered for new enrollees. Existing
+residential customers who are currently receiving service under the TOD pilot will
+continue to be eligible to receive TOD service until the installation of an advanced
+meter. Upon installation of an advanced meter, the customer's service will transfer
+to the Residential Smart Saver rate schedule with the next applicable billing
+period, unless the customer opts for an alternative residential rate option.
+Customer Charge - per month $9.00
+Low-Income Pilot Program Charge – per month $0.19
+Energy Charge - per kWh (1)(2)
+Summer (June-September billing periods)
+All On Peak kWh 40.15¢
+All Off Peak kWh 9.42¢
+Winter (October-May billing periods)
+First 750 kWh 10.62¢
+Over 750 kWh 7.14¢
+(1) Refer to General Rules and Regulations, V. Billing Practices,
+Section A. Monthly Billing Periods, for specific applicability.
+(2) On-peak and Off-peak hours applicable herein are:
+Peak hours - 2:00 P.M. to 7:00 P.M., Monday through Friday.
+Off-peak hours – 7:00 P.M. of Monday through Thursday to
+2:00 P.M. of the following day, and from
+7:00 P.M. Friday to 2:00 P.M. Monday.
+The Grandfathered Optional TOD (Time-Of-Day) Rate Pilot is subject to the following
+provisions:
+a. Customer will be transferred from this TOD rate option to the applicable non-
+TOD rate after the meter is removed.
+b. Any customer canceling this TOD option cannot thereafter resume billing under
+said option.
+c. Participation shall exclude customers with a net metering agreement.
+*Indi
+[DOC 0] https://www.ameren.com/-/media/rates/missouri/residential/electric-rates/rates/uecsheet54rate1mres.ashx
+cates Change.
+Issued pursuant to the Order of the Mo.P.S.C. in Case No. ER-2024-0319.
+DATE OF ISSUE May 2, 2025 DATE EFFECTIVE June 1, 2025
+ISSUED BY Mark C. Birk Chairman & President St. Louis, Missouri
+NAME OF OFFICER TITLE ADDRESS
+
+UNION ELECTRIC COMPANY ELECTRIC SERVICE
+MO.P.S.C. SCHEDULE NO. 6 7th Revised SHEET NO. 54.4
+CANCELLING MO.P.S.C. SCHEDULE NO. 6 6th Revised SHEET NO. 54.4
+APPLYING TO MISSOURI SERVICE AREA
+SERVICE CLASSIFICATION NO. 1(M)
+RESIDENTIAL EVENING/MORNING SAVER SERVICE
+* AVAILABILITY
+This rate is available to all residential customers being served through an advanced
+meter and supplied by the Company to individually metered residences and apartments
+consisting of one or more rooms for the use of one or more persons as a housekeeping
+unit with space for eating, living and sleeping, and permanent provisions for
+cooking and sanitation.
+New customers or new accounts with an advanced meter, or existing accounts that have
+had an advanced meter for six months, shall be placed directly on the
+Evening/Morning Saver rate at the beginning of their next bill cycle.
+Customers are allowed to change plans up to three times a year. Customers may not
+change between optional TOU plans more than once in a billing cycle. However,
+customers may switch to the default Evening/Morning Saver plan and the Anytime plan
+without limitation or restriction.
+DESCRIPTION
+This rate has two parts: a basic service charge and an energy charge. The energy
+charge will vary by the time of day that the energy is used (On-Peak or Off-Peak).
+This rate does not include a demand charge.
+RATES
+The monthly bill will consist of the following charges, plus adjustments:
+Customer Charge - per month $9.00
+Low-Income Pilot Program Charge – per month $0.19
+Energy Charge - per kWh (1)
+Summer (June-September)
+All kWh 15.24¢
+Energy Adjustment per On Peak kWh +0.57¢
+Winter (October-May)
+First 750 kWh 10.45¢
+Over 750 kWh 7.01¢
+Energy Adjustment per On Peak kWh +0.28¢
+(1)Refer to General Rules and Regulations, V. Billing Practices, Section A.
+Monthly Billing Periods, for specific applicability.
+TIME PERIODS
+On-peak and Off-peak hours applicable herein are:
+Summer (June-September)
+Peak hours - 9:00 A.M. to 9:00 P.M., All days
+Winter (October-May)
+Peak hours - 9:00 A.M. to 9:00 P.M., All days
+*
+Indicates Change.
+DATE OF ISSUE April 24, 2026 DATE EFFECTIVE June 1, 2026
+ISSUED BY Michael Moehn Interim Chairman & President St. Louis, Missouri
+NAME OF OFFICER TITLE ADDRESS
+
+UNION ELECTRIC COMPANY ELECTRIC SERVICE
+MO.P.S.C. SCHEDULE NO. 6 2nd Revised SHEET NO. 54.5
+CANCELLING MO.P.S.C. SCHEDULE NO. 6 1st Revised SHEET NO. 54.5
+APPLYING TO MISSOURI SERVICE AREA
+*SERVICE CLASSIFICATION NO. 1(M)
+RESIDENTIAL EVENING/MORNING SAVER SERVICE (Cont'd.)
+ADJUSTMENTS
+The bill will include the followings adjustments:
+Fuel and Purchased Power Adjustment (Rider FAC). Applicable to all metered
+kilowatt-hours (kWh) of energy.
+Energy Efficiency Investment Charge (Rider EEIC). Applicable to all metered
+kilo
+[DOC 0] https://www.ameren.com/-/media/rates/missouri/residential/electric-rates/rates/uecsheet54rate1mres.ashx
+watt-hours (kWh) of energy excluding kWh of energy supplied to customers that
+have satisfied the opt-out provisions or the low-income exemption provisions of
+Section 393.1075, RSMo.
+Renewable Energy Standard Rate Adjustment Mechanism (Rider RESRAM). Applicable to
+all metered kilowatt-hours (kWh) of energy.
+Tax Adjustment. Any license, franchise, gross receipts, occupation or similar
+charge or tax levied by any taxing authority on the amounts billed hereunder will
+be so designated and added as a separate item to bills rendered to customers under
+the jurisdiction of the taxing authority.
+SERVICE DETAILS
+Payments. Bills are due and payable within twenty-one (21) days from date of
+bill and become delinquent thereafter.
+Term of Use. Initial residential service period one (1) year, terminable
+thereafter on three (3) days' notice, however, customers may switch their
+residential service to a different residential rate subject to the terms of
+use and provisions of those rates.
+Character of Service Supplied. Company will specify and supply one standard
+single-phase and, for additional residential requirements, one three-phase
+secondary service voltage under this Service Classification, which service
+will be cumulated for billing purposes. Unless otherwise required for
+Company's engineering or other reasons, any additional service requested by
+customer will be provided, subject to the Company's approval, under the
+provisions of Section III - Special Facilities. Such additional service, if
+any, supplied through facilities installed on and after May 5, 1990, will not
+be cumulated or otherwise combined for billing purposes with any other
+service supplied to customer.
+Residential Service Rate Not Applicable To:
+a. Service supplied through one meter (or more than one meter if the
+readings thereof are cumulated for billing purposes) to:
+(1) Premises which consist of one or more dwelling units and a
+commercial unit or
+(2) A residence or dwelling unit when any portion of such service is
+used in a commercial venture.
+*Indicates Change.
+Issued pursuant to the Order of the Mo.P.S.C. in Case No. ER-2021-0240.
+DATE OF ISSUE February 14, 2022 DATE EFFECTIVE February 28, 2022
+ISSUED BY Mark C. Birk Chairman & President St. Louis, Missouri
+NAME OF OFFICER TITLE ADDRESS
+
+UNION ELECTRIC COMPANY ELECTRIC SERVICE
+MO.P.S.C. SCHEDULE NO. 6 2nd Revised SHEET NO. 54.6
+CANCELLING MO.P.S.C. SCHEDULE NO. 6 1st Revised SHEET NO. 54.6
+APPLYING TO MISSOURI SERVICE AREA
+*SERVICE CLASSIFICATION NO. 1(M)
+RESIDENTIAL EVENING/MORNING SAVER SERVICE (Cont'd.)
+SERVICE DETAILS (Cont'd.)
+4. Residential Service Rate Not Applicable To: (Cont'd.)
+As used herein, the term "dwelling unit" shall mean that portion of a
+building which by appearance, design or arrangement is normally used for
+residential purposes by a single family, whether or not actually occupied,
+and the term "commercial unit" shall mean that portion of a building or
+premises which by appearance, design or arrangement is normally used 
+[DOC 0] https://www.ameren.com/-/media/rates/missouri/residential/electric-rates/rates/uecsheet54rate1mres.ashx
+for
+commercial purposes, whether or not actually so used.
+b. Establishments in farming areas processing, distributing or selling farm
+or other products which do not originate through production on the
+premises served.
+c. Separate buildings or other structures intended and/or used for
+recreational or group activities.
+d. Nursing homes and/or retirement facilities licensed by the State of
+Missouri Department of Social Services Division of Aging.
+e. Single-metered service supplied to multiple occupancy buildings for which
+a Commission variance, from the separate metering requirement contained
+in Section V.L. Rent Inclusion of the Company's rules and regulations,
+has been granted.
+* 5. Generation Eligible for Net Metering. The description of billing applicable
+to generation that qualifies is contained in the Electric Power Purchases
+from Qualified Net Metering Facilities tariff sheets.
+General Rules and Regulations. In addition to the above specific rules and
+regulations, all of Company's General Rules and Regulations shall apply to
+the supply of service under this rate.
+*
+Indicates Addition.
+DATE OF ISSUE April 24, 2026 DATE EFFECTIVE June 1, 2026
+ISSUED BY Michael Moehn Interim Chairman & President St. Louis, Missouri
+NAME OF OFFICER TITLE ADDRESS
+
+UNION ELECTRIC COMPANY ELECTRIC SERVICE
+MO.P.S.C. SCHEDULE NO. 6 5th Revised SHEET NO. 54.7
+CANCELLING MO.P.S.C. SCHEDULE NO. 6 4th Revised SHEET NO. 54.7
+APPLYING TO MISSOURI SERVICE AREA
+SERVICE CLASSIFICATION NO. 1(M)
+RESIDENTIAL SMART SAVER SERVICE
+* AVAILABILITY
+This optional rate is available at customer's election to all residential customers,
+except described in 4.f. below, being served through an advanced meter and supplied
+by the Company to individually metered residences and apartments consisting of one
+or more rooms for the use of one or more persons as a housekeeping unit with space
+for eating, living and sleeping, and permanent provisions for cooking and
+sanitation.
+Customers are allowed to change plans up to three times a year. Customers may not
+change between optional TOU plans more than once in a billing cycle. However,
+customers may switch to the default Evening/Morning Saver plan and the Anytime plan
+without limitation or restriction.
+DESCRIPTION
+This rate has two parts: a basic service charge and an energy charge. The energy
+charge will vary by the time of day that the energy is used (On-Peak, Intermediate,
+Off-Peak), and the season (Summer or Winter). This rate does not have a demand charge.
+This rate has two options: year round service (Option A) and a summer seasonal service
+(Option B). Under Option B, energy charges will be billed under the Residential Smart
+Saver for the Summer period. The energy charges for the Winter season will be billed
+under the Residential Anytime rate schedule.
+RATES
+The monthly bill will consist of the following charges, plus adjustments:
+Customer Charge - per month
+Summer (June-September; Option A & B) $9.00
+Winter (October-May; Option A & B) $9.00
+Low-I
+[DOC 0] https://www.ameren.com/-/media/rates/missouri/residential/electric-rates/rates/uecsheet54rate1mres.ashx
+ncome Pilot Program Charge – per month $0.19
+Energy Charge - per kWh(1)
+Summer(June-September; Option A & B)
+On Peak kWh 40.51¢
+Intermediate kWh 12.16¢
+Off Peak kWh 7.67¢
+Winter(October-May; Option A)
+On Peak kWh 21.69¢
+Intermediate kWh 7.78¢
+Off Peak kWh 6.35¢
+Winter(October-May; Option B) (2)
+(1)Refer to General Rules and Regulations, V. Billing Practices, Section A.
+Monthly Billing Periods, for specific applicability.
+(2)Residential Anytime Service energy rates apply
+*
+Indicates Change.
+DATE OF ISSUE April 24, 2026 DATE EFFECTIVE June 1, 2026
+ISSUED BY Michael Moehn Interim Chairman & President St. Louis, Missouri
+NAME OF OFFICER TITLE ADDRESS
+
+UNION ELECTRIC COMPANY ELECTRIC SERVICE
+MO.P.S.C. SCHEDULE NO. 6 2nd Revised SHEET NO. 54.8
+CANCELLING MO.P.S.C. SCHEDULE NO. 6 1st Revised SHEET NO. 54.8
+APPLYING TO MISSOURI SERVICE AREA
+SERVICE CLASSIFICATION NO. 1(M)
+RESIDENTIAL SMART SAVER SERVICE (Cont'd.)
+* TIME PERIODS (Cont'd.)
+On-peak and Off-peak hours applicable herein are:
+Summer (June-September)
+Peak hours - 3:00 P.M. to 7:00 P.M., Monday through Friday, excluding
+holidays(3)
+Intermediate hours - 6:00 A.M. to 10:00 P.M., All days, excluding Peak hours
+Off-Peak hours - 10:00 P.M. to 6:00 A.M., All days
+Winter (October-May)
+Peak hours - 6:00 A.M. to 8:00 A.M. and 6:00 P.M. to 8:00 P.M.
+Monday through Friday, excluding holidays(3)
+Intermediate hours - 6:00 A.M. to 10:00 P.M., All days, excluding Peak hours
+Off-Peak hours - 10:00 P.M. to 6:00 A.M., All days
+(3) Holidays of New Year's Day, Good Friday, Memorial Day, Independence
+Day, Labor Day, Thanksgiving Day, Thanksgiving Friday, Christmas Eve
+Day, and Christmas Day.
+ADJUSTMENTS
+The bill will include the followings adjustments:
+Fuel and Purchased Power Adjustment (Rider FAC). Applicable to all metered
+kilowatt-hours (kWh) of energy.
+Energy Efficiency Investment Charge (Rider EEIC). Applicable to all metered
+kilowatt-hours (kWh) of energy excluding kWh of energy supplied to customers that
+have satisfied the opt-out provisions or the low-income exemption provisions of
+Section 393.1075, RSMo.
+Renewable Energy Standard Rate Adjustment Mechanism (Rider RESRAM). Applicable to
+all metered kilowatt-hours (kWh) of energy.
+Tax Adjustment. Any license, franchise, gross receipts, occupation or similar
+charge or tax levied by any taxing authority on the amounts billed hereunder will
+be so designated and added as a separate item to bills rendered to customers under
+the jurisdiction of the taxing authority.
+** SERVICE DETAILS
+Payments. Bills are due and payable within twenty-one (21) days from date of
+bill and become delinquent thereafter.
+Term of Use. Initial residential service period one (1) year, terminable
+thereafter on three (3) days' notice, however, customers may switch their
+residential service to a different residential rate subject to the terms of
+use and provisions of those rates..
+*Indicates Reissue. **Indicates Change.
+Issued pursuant to the Order of the Mo.P.S.C. in Case No. ER-2022-0337.
+DA
+[DOC 0] https://www.ameren.com/-/media/rates/missouri/residential/electric-rates/rates/uecsheet54rate1mres.ashx
+TE OF ISSUE June 22, 2023 DATE EFFECTIVE July 9, 2023
+ISSUED BY Mark C. Birk Chairman & President St. Louis, Missouri
+NAME OF OFFICER TITLE ADDRESS
+
+UNION ELECTRIC COMPANY ELECTRIC SERVICE
+MO.P.S.C. SCHEDULE NO. 6 3rd Revised SHEET NO. 54.9
+CANCELLING MO.P.S.C. SCHEDULE NO. 6 2nd Revised SHEET NO. 54.9
+APPLYING TO MISSOURI SERVICE AREA
+SERVICE CLASSIFICATION NO. 1(M)
+RESIDENTIAL SMART SAVER SERVICE (Cont'd.)
+SERVICE DETAILS (Cont'd.)
+3. Character of Service Supplied. (Cont'd.)
+Company will specify and supply one standard single-phase and, for additional
+residential requirements, one three-phase secondary service voltage under this
+Service Classification, which service will be cumulated for billing purposes.
+Unless otherwise required for Company's engineering or other reasons, any
+additional service requested by customer will be provided, subject to the
+Company's approval, under the provisions of Section III - Special Facilities.
+Such additional service, if any, supplied through facilities installed on and
+after May 5, 1990, will not be cumulated or otherwise combined for billing
+purposes with any other service supplied to customer.
+Residential Service Rate Not Applicable To:
+a. Service supplied through one meter (or more than one meter if the readings
+thereof are cumulated for billing purposes) to:
+(1) Premises which consist of one or more dwelling units and a
+commercial unit or
+(2) A residence or dwelling unit when any portion of such service is
+used in a commercial venture.
+As used herein, the term "dwelling unit" shall mean that portion of a building
+which by appearance, design or arrangement is normally used for residential
+purposes by a single family, whether or not actually occupied, and the term
+"commercial unit" shall mean that portion of a building or premises which by
+appearance, design or arrangement is normally used for commercial purposes,
+whether or not actually so used.
+b. Establishments in farming areas processing, distributing or selling farm or
+other products which do not originate through production on the premises
+served.
+c. Separate buildings or other structures intended and/or used for recreational
+or group activities.
+d. Nursing homes and/or retirement facilities licensed by the State of Missouri
+Department of Social Services Division of Aging.
+e. Single-metered service supplied to multiple occupancy buildings for which a
+Commission variance, from the separate metering requirement contained in
+Section V.L. Rent Inclusion of the Company's rules and regulations, has been
+granted.
+f. Participation shall exclude customers participating in the Community Solar
+Pilot Program.
+* 5. Generation Eligible for Net Metering. The description of billing applicable to
+generation that qualifies is contained in the Electric Power Purchases from
+Qualified Net Metering Facilities tariff sheets.
+General Rules and Regulations. In addition to the above specific rules and
+regulations, all of Company's General Rules and Regulations shall apply to th
+[DOC 0] https://www.ameren.com/-/media/rates/missouri/residential/electric-rates/rates/uecsheet54rate1mres.ashx
+e
+supply of service under this rate.
+*
+Indicates Change.
+DATE OF ISSUE April 24, 2026 DATE EFFECTIVE June 1, 2026
+ISSUED BY Michael Moehn Interim Chairman & President St. Louis, Missouri
+NAME OF OFFICER TITLE ADDRESS
+
+UNION ELECTRIC COMPANY ELECTRIC SERVICE
+MO.P.S.C. SCHEDULE NO. 6 3rd Revised SHEET NO. 54.10
+CANCELLING MO.P.S.C. SCHEDULE NO. 6 2nd Revised SHEET NO. 54.10
+APPLYING TO MISSOURI SERVICE AREA
+SERVICE CLASSIFICATION NO. 1(M)
+RESIDENTIAL OVERNIGHT SAVER SERVICE
+AVAILABILITY
+This rate is available at customer's election to all residential customers supplied
+by the Company to individually metered residences and apartments consisting of one
+or more rooms for the use of one or more persons as a housekeeping unit with space
+for eating, living and sleeping, and permanent provisions for cooking and
+sanitation. Where customers are not served through an advanced meter, an additional
+monthly service charge will apply.
+DESCRIPTION
+This rate has two parts: a basic service charge and an energy charge. The energy
+charge will vary by the time of day that the energy is used (On-Peak or Off-Peak).
+This rate does not include a demand charge.
+This rate has two options: a year round service (Option A) and a summer seasonal
+service (Option B). Under Option B, energy charges will be billed to the Customer
+under Residential Overnight Saver Service for the Summer billing period. The energy
+charges for the Winter season will be billed under Residential Anytime Service.
+*RATES
+The monthly bill will consist of the following charges, plus adjustments:
+Customer Charge - per month $9.00
+Non-AMI Meter Charge – per month $1.50
+Low-Income Pilot Program Charge – per month $0.19
+Energy Charge - per kWh(1)
+Summer(June-September; option A & B)
+On Peak kWh 18.39¢
+Off Peak kWh 7.32¢
+Winter(October-May; option A)
+On Peak kWh 10.34¢
+Off Peak kWh 6.31¢
+Winter(October-May; option B) (2)
+(1) Refer to General Rules and Regulations, V. Billing Practices, Section A.
+Monthly Billing Periods, for specific applicability.
+(2) Residential Anytime Service energy rates apply.
+TIME PERIODS
+On-peak and Off-peak hours applicable herein are:
+Summer (June-September)
+Peak hours - 6:00 A.M. to 10:00 P.M., All days
+Off-Peak hours - 10:00 P.M. to 6:00 A.M., All days
+Winter (October-May)
+Peak hours - 6:00 A.M. to 10:00 P.M., All days
+Off-Peak hours - 10:00 P.M. to 6:00 A.M., All days
+*Indicates Change.
+Issued pursuant to the Order of the Mo.P.S.C. in Case No. ER-2024-0319.
+DATE OF ISSUE May 2, 2025 DATE EFFECTIVE June 1, 2025
+ISSUED BY Mark C. Birk Chairman & President St. Louis, Missouri
+NAME OF OFFICER TITLE ADDRESS
+
+UNION ELECTRIC COMPANY ELECTRIC SERVICE
+MO.P.S.C. SCHEDULE NO. 6 2nd Revised SHEET NO. 54.11
+CANCELLING MO.P.S.C. SCHEDULE NO. 6 1st Revised SHEET NO. 54.11
+APPLYING TO MISSOURI SERVICE AREA
+SERVICE CLASSIFICATION NO. 1(M)
+RESIDENTIAL OVERNIGHT SAVER SERVICE (Cont'd.)
+ADJUSTMENTS
+The bill will include the followings adjustments:
+Fuel and Purchased Power Adjustment (Rider FAC). Applic
+[DOC 0] https://www.ameren.com/-/media/rates/missouri/residential/electric-rates/rates/uecsheet54rate1mres.ashx
+able to all metered
+kilowatt-hours (kWh) of energy.
+Energy Efficiency Investment Charge (Rider EEIC). Applicable to all metered
+kilowatt-hours (kWh) of energy excluding kWh of energy supplied to customers that
+have satisfied the opt-out provisions or the low-income exemption provisions of
+Section 393.1075, RSMo.
+Renewable Energy Standard Rate Adjustment Mechanism (Rider RESRAM). Applicable to
+all metered kilowatt-hours (kWh) of energy.
+Tax Adjustment. Any license, franchise, gross receipts, occupation or similar
+charge or tax levied by any taxing authority on the amounts billed hereunder will
+be so designated and added as a separate item to bills rendered to customers under
+the jurisdiction of the taxing authority.
+*SERVICE DETAILS
+Payments. Bills are due and payable within twenty-one (21) days from date of
+bill and become delinquent thereafter.
+Term of Use. Initial residential service period one (1) year, terminable
+thereafter on three (3) days' notice, however, customers may switch their
+residential service to a different residential rate subject to the terms of
+use and provisions of those rates.
+Character of Service Supplied. Company will specify and supply one standard
+single-phase and, for additional residential requirements, one three-phase
+secondary service voltage under this Service Classification, which service
+will be cumulated for billing purposes. Unless otherwise required for
+Company's engineering or other reasons, any additional service requested by
+customer will be provided, subject to the Company's approval, under the
+provisions of Section III - Special Facilities. Such additional service, if
+any, supplied through facilities installed on and after May 5, 1990, will not
+be cumulated or otherwise combined for billing purposes with any other
+service supplied to customer. Customers receiving additional service at a
+residential premise for the sole purpose of charging an electric vehicle may
+select this rate in lieu of the Small General Service rate.
+Residential Service Rate Not Applicable To:
+a. Service supplied through one meter (or more than one meter if the
+readings thereof are cumulated for billing purposes) to:
+(1) Premises which consist of one or more dwelling units and a
+commercial unit or
+(2) A residence or dwelling unit when any portion of such service is
+used in a commercial venture.
+*Indicates Change.
+Issued pursuant to the Order of the Mo.P.S.C. in Case No. ER-2022-0337.
+DATE OF ISSUE June 22, 2023 DATE EFFECTIVE July 9, 2023
+ISSUED BY Mark C. Birk Chairman & President St. Louis, Missouri
+NAME OF OFFICER TITLE ADDRESS
+
+UNION ELECTRIC COMPANY ELECTRIC SERVICE
+MO.P.S.C. SCHEDULE NO. 6 2nd Revised SHEET NO. 54.12
+CANCELLING MO.P.S.C. SCHEDULE NO. 6 1st Revised SHEET NO. 54.12
+APPLYING TO MISSOURI SERVICE AREA
+*SERVICE CLASSIFICATION NO. 1(M)
+RESIDENTIAL OVERNIGHT SAVER SERVICE (Cont'd.)
+SERVICE DETAILS (Cont'd.)
+Residential Service Rate Not Applicable To: (Cont'd.)
+As used herein, the term "dwelling unit" shall mean that port
+[DOC 0] https://www.ameren.com/-/media/rates/missouri/residential/electric-rates/rates/uecsheet54rate1mres.ashx
+ion of a
+building which by appearance, design or arrangement is normally used for
+residential purposes by a single family, whether or not actually occupied,
+and the term "commercial unit" shall mean that portion of a building or
+premises which by appearance, design or arrangement is normally used for
+commercial purposes, whether or not actually so used.
+b. Establishments in farming areas processing, distributing or selling farm
+or other products which do not originate through production on the
+premises served.
+c. Separate buildings or other structures intended and/or used for
+recreational or group activities.
+d. Nursing homes and/or retirement facilities licensed by the State of
+Missouri Department of Social Services Division of Aging.
+e. Single-metered service supplied to multiple occupancy buildings for which
+a Commission variance, from the separate metering requirement contained
+in Section V.L. Rent Inclusion of the Company's rules and regulations,
+has been granted.
+* 5. Generation Eligible for Net Metering. The description of billing applicable
+to generation that qualifies is contained in the Electric Power Purchases
+from Qualified Net Metering Facilities tariff sheets.
+General Rules and Regulations. In addition to the above specific rules and
+regulations, all of Company's General Rules and Regulations shall apply to
+the supply of service under this rate.
+*Indicates Addition.
+DATE OF ISSUE April 24, 2026 DATE EFFECTIVE June 1, 2026
+ISSUED BY Michael Moehn Interim Chairman & President St. Louis, Missouri
+NAME OF OFFICER TITLE ADDRESS
+
+UNION ELECTRIC COMPANY ELECTRIC SERVICE
+MO.P.S.C. SCHEDULE NO. 6 3rd Revised SHEET NO. 54.13
+CANCELLING MO.P.S.C. SCHEDULE NO. 6 2nd Revised SHEET NO. 54.13
+APPLYING TO MISSOURI SERVICE AREA
+SERVICE CLASSIFICATION NO. 1(M)
+RESIDENTIAL ULTIMATE SAVER SERVICE
+AVAILABILITY
+This optional rate is available as of January 1, 2021 at customer's election to all
+residential customers being served through an advanced meter and supplied by the
+Company to individually metered residences and apartments consisting of one or more
+rooms for the use of one or more persons as a housekeeping unit with space for
+eating, living and sleeping, and permanent provisions for cooking and sanitation.
+DESCRIPTION
+This rate has three parts: a basic service charge, an energy charge, and a demand
+charge. The energy charge will vary by the time of day that the energy is used (On-
+Peak or Off-Peak), and the season (Summer or Winter).
+*RATES
+The monthly bill will consist of the following charges, plus adjustments:
+Customer Charge - per month $9.00
+Low-Income Pilot Program Charge – per month $0.19
+Demand Charge - per monthly kW of billing demand (1)
+Summer (June-September)(1) $9.28
+Winter (October-May)(1) $3.83
+Energy Charge - per kWh (1)
+Summer (June-September)
+On Peak kWh 34.13¢
+Off Peak kWh 5.78¢
+Winter (October-May)
+On Peak kWh 18.56¢
+Off Peak kWh 5.11¢
+(1) Refer to General Rules and Regulations, V. Billing Practices, Section A.
+Monthly Billing 
+[DOC 0] https://www.ameren.com/-/media/rates/missouri/residential/electric-rates/rates/uecsheet54rate1mres.ashx
+Periods, for specific applicability.
+On-peak and Off-peak hours applicable herein are:
+Summer (June-September)
+Peak hours - 3:00 P.M. to 7:00 P.M., Monday through Friday, excluding
+holidays(2)
+Off-Peak hours - All other hours
+Winter (October-May)
+Peak hours - 6:00 A.M. to 8:00 A.M. and 6:00 P.M. to 8:00 P.M.
+Monday through Friday, excluding holidays(2)
+Off-Peak hours - All other hours
+(2) Holidays of New Year's Day, Good Friday, Memorial Day, Independence
+Day, Labor Day, Thanksgiving Day, Thanksgiving Friday, Christmas Eve
+Day, and Christmas Day.
+*Indicates Change.
+Issued pursuant to the Order of the Mo.P.S.C. in Case No. ER-2024-0319.
+DATE OF ISSUE May 2, 2025 DATE EFFECTIVE June 1, 2025
+ISSUED BY Mark C. Birk Chairman & President St. Louis, Missouri
+NAME OF OFFICER TITLE ADDRESS
+
+UNION ELECTRIC COMPANY ELECTRIC SERVICE
+MO.P.S.C. SCHEDULE NO. 6 2nd Revised SHEET NO. 54.14
+CANCELLING MO.P.S.C. SCHEDULE NO. 6 1st Revised SHEET NO. 54.14
+APPLYING TO MISSOURI SERVICE AREA
+SERVICE CLASSIFICATION NO. 1(M)
+RESIDENTIAL ULTIMATE SAVER SERVICE (Cont'd.)
+ADJUSTMENTS
+The bill will include the followings adjustments:
+Fuel and Purchased Power Adjustment (Rider FAC). Applicable to all metered
+kilowatt-hours (kWh) of energy.
+Energy Efficiency Investment Charge (Rider EEIC). Applicable to all metered
+kilowatt-hours (kWh) of energy excluding kWh of energy supplied to customers that
+have satisfied the opt-out provisions or the low-income exemption provisions of
+Section 393.1075, RSMo.
+Renewable Energy Standard Rate Adjustment Mechanism (Rider RESRAM). Applicable to
+all metered kilowatt-hours (kWh) of energy.
+Tax Adjustment. Any license, franchise, gross receipts, occupation or similar
+charge or tax levied by any taxing authority on the amounts billed hereunder will
+be so designated and added as a separate item to bills rendered to customers under
+the jurisdiction of the taxing authority.
+DEMAND BILLING
+The Demand Charge will be assessed on the Customer's maximum usage measured over a
+one hour period between 6:00 A.M. and 10:00 P.M. on any day of the billing period.
+*SERVICE DETAILS
+Payments. Bills are due and payable within twenty-one (21) days from date of
+bill and become delinquent thereafter.
+Term of Use. Initial residential service period one (1) year, terminable
+thereafter on three (3) days' notice, however, customers may switch their
+residential service to a different residential rate subject to the terms of
+use and provisions of those rates.
+Character of Service Supplied. Company will specify and supply one standard
+single-phase and, for additional residential requirements, one three-phase
+secondary service voltage under this Service Classification, which service
+will be cumulated for billing purposes. Unless otherwise required for
+Company's engineering or other reasons, any additional service requested by
+customer will be provided, subject to the Company's approval, under the
+provisions of Section III - Special Facilities. Such additional service, if
+any, 
+[DOC 0] https://www.ameren.com/-/media/rates/missouri/residential/electric-rates/rates/uecsheet54rate1mres.ashx
+supplied through facilities installed on and after May 5, 1990, will not
+be cumulated or otherwise combined for billing purposes with any other
+service supplied to customer.
+*Indicates Change.
+Issued pursuant to the Order of the Mo.P.S.C. in Case No. ER-2022-0337.
+DATE OF ISSUE June 22, 2023 DATE EFFECTIVE July 9, 2023
+ISSUED BY Mark C. Birk Chairman & President St. Louis, Missouri
+NAME OF OFFICER TITLE ADDRESS
+
+UNION ELECTRIC COMPANY ELECTRIC SERVICE
+MO.P.S.C. SCHEDULE NO. 6 2nd Revised SHEET NO. 54.15
+CANCELLING MO.P.S.C. SCHEDULE NO. 6 1st Revised SHEET NO. 54.15
+APPLYING TO MISSOURI SERVICE AREA
+*SERVICE CLASSIFICATION NO. 1(M)
+RESIDENTIAL ULTIMATE SAVER SERVICE (Cont'd.)
+SERVICE DETAILS (Cont'd.)
+Residential Service Rate Not Applicable To:
+a. Service supplied through one meter (or more than one meter if the
+readings thereof are cumulated for billing purposes) to:
+(1) Premises which consist of one or more dwelling units and a
+commercial unit or
+(2) A residence or dwelling unit when any portion of such service is
+used in a commercial venture.
+As used herein, the term "dwelling unit" shall mean that portion of a
+building which by appearance, design or arrangement is normally used for
+residential purposes by a single family, whether or not actually occupied,
+and the term "commercial unit" shall mean that portion of a building or
+premises which by appearance, design or arrangement is normally used for
+commercial purposes, whether or not actually so used.
+b. Establishments in farming areas processing, distributing or selling farm
+or other products which do not originate through production on the
+premises served.
+c. Separate buildings or other structures intended and/or used for
+recreational or group activities.
+d. Nursing homes and/or retirement facilities licensed by the State of
+Missouri Department of Social Services Division of Aging.
+e. Single-metered service supplied to multiple occupancy buildings for which
+a Commission variance, from the separate metering requirement contained
+in Section V.L. Rent Inclusion of the Company's rules and regulations,
+has been granted.
+* 5. Generation Eligible for Net Metering. The description of billing applicable
+to generation that qualifies is contained in the Electric Power Purchases
+from Qualified Net Metering Facilities tariff sheets.
+General Rules and Regulations. In addition to the above specific rules and
+regulations, all of Company's General Rules and Regulations shall apply to
+the supply of service under this rate.
+*Indicates Change.
+DATE OF ISSUE April 24, 2026 DATE EFFECTIVE June 1, 2026
+ISSUED BY Michael Moehn Interim Chairman & President St. Louis, Missouri
+NAME OF OFFICER TITLE ADDRESS
+[DOC 1] https://efis.psc.mo.gov/Document/Display/761026
+%PDF-1.7
+%����
+124 0 obj
+<>
+endobj
+  
+139 0 obj
+<>/Filter/FlateDecode/ID[<7800CDCFF70DEC45AE0B59C7492F3C23><0CFB3FF20477544F87956BC99F6482F1>]/Index[124 42]/Info 123 0 R/Length 79/Prev 93091/Root 125 0 R/Size 166/Type/XRef/W[1 2 1]>>stream
+h�bbd``b`:$��Xs�K�`f��A�*� H�:��k)�`�$f��.@���,Ɓ �3��0���I
+endstream
+endobj
+startxref
+0
+%%EOF
+  
+165 0 obj
+<>stream
+h�b```�i,��� ��ea������[��00��>�}��������.�����J�0�03�b``fd�b�e��v1�4X-;c�s�R�+n�M�``9��v[
+\���1�(D-�����
+endstream
+endobj
+125 0 obj
+<>/Metadata 10 0 R/Pages 122 0 R/StructTreeRoot 17 0 R/Type/Catalog/ViewerPreferences 141 0 R>>
+endobj
+126 0 obj
+<>/MediaBox[0 0 612 792]/Parent 122 0 R/Resources<>/Font<>/ProcSet[/PDF/Text/ImageB/ImageC/ImageI]>>/Rotate 0/StructParents 0/Tabs/S/Type/Page>>
+endobj
+127 0 obj
+<>stream
+h��Wmo�:�+����k�D���@��vSa�tR�h���$�ʿ�9�%�-��]Eql���c?�9v�b��8�̃� \J�«]�*"ȔCǯ&�F}��̇�G|�u	B�0|(@�����-G�-�Q!Q�@ŁiM��
+��<"<{|"L�aZ�|P֜H)@��ZcE��p��"����zc����w(��� �%�t%s�~�A:�:`8�ݷZ��&��p������L��*��g�x�j�\Q����EElH�=+��һ4[�1����^��a�NC�k�6�55��Χ&)����1�f�Q�O����D󧂸£�)ծg���Ha��/�+-<+�+����(��:i<��އ�]���h�N�,F?���6|)}`���
+n�@�P-�4���~
+��Zc�z���q�ؔxZ�V�5P�V�܅�R[XCiUg��	���ߍ��!J�Im��(ˋ�S�Uۼ]�����p����nt����c�[4�ؽ�l�ۙ�X�,�b��b��-���-���a�a�(#ZHPBߏb���Z_7d�t�^��O7}�"�ݙ�����P�X����Ԛ	�5`���V�ǻ}��8}����s=���_<`q/"S���p�C��:6D���걱�?5/j��y�O�?��S�D���4a���M{���c����i���x6�;�e��NQό>�A����}���>����������(Z��~�.���I���<�UBTM�p�����cgb!��PU$�FX�SN)����R��2�v�Jy�N�~-%5��l���3��㉽��$-��(:� ��x܏ߤ�c{}&�t���,��4b��aާlf2��b0jE��ޛy���=K�%\.c�@���Nu���T�:��tl������c"uS����D����/ݥ&\
+;%w˝���$��`���A�=���?���Ap.i�O<��6�]�	]��a,j �b7�߯e������˳�	J��_��6�Zywu��?(�o�$%���m}i�~	0��	U�
+endstream
+endobj
+128 0 obj
+<>stream
+H��WMO�@�[�������ӻB
+����ش��Lȡ@����Y'D!�!�5����xߛ���9���������ݨ[��˛�
+Σ���"�����x2��ӻ�({�Qک�b|U���`���|/&��e��{b�
+��������^�E?���Q􋁂VD@�4���u�%0y�aRYza��yp6;"8�:@�OCJ�^ȃ<��`t������;�^@���R���{�!ʘ$L�R�.��C D��	�-7b�����q/}����
+v�;�2/�H�>�k�"a��C��B�rb_�ahvxpJ��3RU��O��e�`g����q�ƙ5�֪|85����w]zl�j]�:�{嗘*��:n�<�K ���L(s\qu@�Sb�6���!�J�qq� &]g����3U޸�e6��F^�S^�ʭ�iT��>W���A9/��V(o�u�r���6������i�����
+_rN��OK�9J.�j�(mu1)��0�p�)M�q
+�k�	%r�J���_KnE3��c"�X�;��lʕW�W�Ҳ��7]���V+V�S�$��˲|���WXi��W/�q*��%Z��s�Ƶ��?$�6q-*H�gM8=�����v`�b��ۿ��>��X���*ͅ�$O�,��-�����R�8��Kj��m5[\j�C�[���O�q�\;jv�U}([ѭ����r����ps�
+endstream
+endobj
+129 0 obj
+<>stream
+H��W�O�@~o��a�9����Ę Vs
+R�˅��Z�������D��kr�4���~����N=$S�j�!VB���(��S߃}J(�й���y0N�*��9��{���	�/�j4�C�a��ޯ=��*VO80�Å��7V�F�P\��
+W`�X�`qT�'�^�AT�A����������P�c%�|;Ĕ�F�J:�T�K����CFԦQT��6���	3�m>�9�����l���ЋRJ�ɇ2@sPq��
+��×W��i�j���JhU��3��V8��
+
+�r�k�s>���6����M�c�9H��j��
+cD�0��Z?~7*�s�+`�w򗦳Ą l
+��02p�)�*��JS��6��qܼj7 ��?�j��掅-1�ա�/%f�B��
+��A
+MT�z��KR�,LH��>e��SP�(b@[,� q=)A�͘���=5�^���P��
+[DOC 1] https://efis.psc.mo.gov/Document/Display/761026
+�A�w���A��e�ۇ��գ4����j��SRm���^6H��xr��C'i�%��C8:����(/E��p��b�:����5���Yo��+�/�mWZO��x�f���=$��%#H���yJZ$&u�!�{�.RQۙ"���oeD7�w����sʹ;N����T��
+"$�H�p�Ԏ��
+�Ғ`��@�/���s����91k?�<���F�%x`Jc�Er*�9�L*�
+�m�*z��s�8opj���N���<)��d�ȇ��W��adq3�	�l�$˻����8�)��%:�`)`�ـB7��09��5�"}No�Xi�e�M�7�uI/A�kQ��C���qVb�	0��\}
+endstream
+endobj
+130 0 obj
+<>stream
+H��W�o�0~���ឦ�*&��X�*AS*����v���J7h����0(u�C�c;�w��wg' ��i� ���P3�O\���\�=r�f��yF׮Cq^�8U$b )�
+F����y�w��/0:q��t��8����������^����4�t}�u�.�������8O�қ(�iy���$ڲ��p
+	_���HA@$� ŷCĄ���ҫ������N.
+>stream
+H��Wmk�0�n���[�ٖ�� Ͳ��nl�:���Q���,'��~'�-��A)�b�{��������ǋ������^����Q�X��ϣ��(���OF�A��$��ң��	����%���z�x�C�, 儅�9�iaV�/����E���C(�(�D�$�s�	�H�aX��\�<����9�xU�^�_̗o!���^������7o����N�	'�,)b�珂9�IV�C6���.g�����|��N%�|��:uyp�3�/lꫂp�Ce��S&=�ae�t\]o��J���rg2u���KP4B8
+�>��z��6�=����Q��)��P*��F�QTPq3.�2*�S/
+}�{W�\W�*��d8�z�j��LA� B1��4�F�6��tu0Q�$"e\���� �j�6�VWPo+�����T��
+��'�"j�i��R��vM��]{������lY[`�7���S*�`���=T�!�HEC���9J��.!�_��؈�y����wu���0�9�F��`�
+��f��RSS%5�����;wDɴ#k��+¢�`�4��W���Y� ��3��FY����^�-4�r��YY�;��US۽�'��8��7P������.����������ɤK�Re�qQ+��Sصb�[��ZoN�hǥ_��NP��B���`�sU ����8����ά�u0i�ew�9�EU^��1��>U hX��ys�l��Bu��W��N�S|t����;�M��5۩6�������ᛒt�]Xt�y_��_a��JX�Ű�I���7Ż����Uʏ0�z����r�P�����9Bb�T�[k�GS	��п_Z�o�}��iKK�*���َ}j6?�=��+����
+endstream
+endobj
+132 0 obj
+<>stream
+x�]��j�0��~
+�Cq�]C`k�n,�8���(�!o?�L`�����-}������1���1.ae�0��I�8o�ޕ��&*-p�-	�Ơ����K�
+�.xT����	��^�~��g��j[p8ʠofF�;uNt���0��-"�K_������E64�j*��g�V!��N
+��2��O���U�P��{������,y�J����C�T>?	Io+
+endstream
+endobj
+133 0 obj
+<>stream
+H��W�n�8}7�����DuWQh�"E��ċ>l���h��D����C�N[�k!Ӝ3g8g�9L���BB�(�8"	`��d	�^�K<��	�E���߆�F��f�a�q8�L������f�o>9��C�c���p���p�^�@�KzYt:VȆi��e�:��x��e����eL/y��y���{F� 	�7���A'&���������{�A��� hyÀ"I��R�lz[1(V�E�/X�
+��sD\�g��~p{F`��
+��n�@߾��|us
+��'*0b����w���
+^�IO�0~��}Y�m�4S�`��xQAC70c�T򁗬��(��Qt��i��1X֬F\��r�$.�zU���1���0�nts�5D<�i�D�Y���L�|NU���0e5[R�ە8C����-+鳲cdwX�ѿ�8���� xLk�e����ZѺ��h#g5����wҫ��o&Q�t͗!�L�S=��B�1���t
+��B�ӆ�ϩ<�EH^�q?SQo�]O�no������i�X�
+�s�5������!�
+X��籆�q��W�(H�
+��hј�]sb&�^�ki���~c�Ԏ3�yag��1�j�MM�tO�0j��
+>stream
+H����j�@����z��i��`�-		��KMjQ��JrU���ɓv�&�z7�Y|���vvg�]��4��ܗgs�ҢR�i҄��4�0��G�\��j�&o��{�l�X.���ͬ��J��h�d�^��`��+�R��}�T=QH&1�P�Y�!��r�h"�[��%�c��N.�mö�����n��OU;�	�2C��,C+4�����یmڽ
+���"�N�3ǁ�U0[�����Uq~\�.˶�I՞�_OX���g,
+7R��**�?��m(�e_WTݡ5�P�)�pd!>���A���L5];l���u(7O��ȷu�����ц�������!��%�,
+>stream
+H����n�P������"�r��+!Z�
+j�Pe�t�F��Z��uT��38�x�Tb��33�;g�������2�Fo5X�Ƒ�oΤB{�A	ka��#	������_`�>��x��8��?�y��N��I�P�q��ǋ`���.����bvzʍβ��A^�N&0=���8:\��t��
+׳�+�HA{{h�/�F�����k&�Ĉ��J"	BQ����y$4>�>S���)\>�4�׼�fUW�
+����Gը �%U��q"�4�*��D%B
+.RBh%n�9�I��O���
+[DOC 1] https://efis.psc.mo.gov/Document/Display/761026
+ϦZ㣚���ȹZ�9�)�c&>V\R|��=�)�=Vj]�͊��]�yX�Ӧ�{����
+߉@��I<�aL
+*�+���������P��2���Y���XS�ݎ��Q��)�?-op��������*�l�����t��~_�j!mWe,�TMx�Ɇ�M��PN���?�m&�0���ЩG�wx��*x��ۋ6�6��res'�YMfw��۝:|fw��P��>�*��>^���;	F�]-����o��v�.Y�r��y]<2o�ֶ6A+r��N�#-�]���oWLG�zw��l���������xo
+endstream
+endobj
+136 0 obj
+<>stream
+H���͎�0��H��]&�ֱ���4���h���&ig��'A�$%L�y�>i
+Iiq������!����Ҍi�Js�L<^@�E�n9hX��>Ĕ�H�g���vX7��0�<��X�
+�;�C�D	�
+b;��t0���./G���5p:zH�5L���|xu��	��̤&��I�GcX"I���վS�����X�����dD	��h��=�n���3vEH�	sBD��	����̋GN,$�+����b��O,��OSa#������r,D���XG
+,D���XX�����%���R^%G$K�.T�o�Tt��4`O�~%�
+I����a
+1=���Yٳ��)M�0{.��r	3�~.�:ߖ�W���8/�ܚ��J��W�vv+��<3�<7Y���S.�k[w��n�zS�4� �T��|7U�]ZGV�
+�;��<�t�+�,��y��t����!�-m��r�S����ԯ�
+_��&�_ܗK[������"M�j��g��S�N�G��>V�㥰�Q�������	�I�quqln~9,�mf���ۡ�8�ŧm6ڵ<Ϊ���^�o��+��
+endstream
+endobj
+137 0 obj
+<>stream
+x��{y|�E�U?�d&�$��$���"�B2�	I�� @(	�"�!�@<�(��«�����$��C�WEX/�w�]/������
+���v�LAW�x?��STw?}VWWUW=��(�N��r�zd7^K�
+���_P�hW�x+Q��"�R�|���9QDy#2o��hނ�օ٫��λf��s���&*\JtÉ�9u�O�}s}؀��g��O�{jÂ�+޺w�*��F�x�5��6D?���#�ް�nŢ1����N�s��i�Mu�b���7u��2q1�	QΪE�,�H��hϖ�];gѮ�13�2�^��$���:{�m��p�9K����Xڄ:��̽#�0��I?oq�5P������fc�~����h�&l75�U��T��`]�C?Λ�D�C���2ћku4WD�L¬
+a��1�1ӊRE����6r�-��E�I���&6�g�w˝RO�8͓��K��� :@������s�S��N����s:���2��#I��܃�s͢9t/���)���Zz����i>F��n)��P�V�>�H���4��zzO��؅���&���5�>�Ɖ�@{���I��f�5��M���S`�����.�}"�k1�\if�;0��} g��t\�	����Պ-|���N$h]��fѽ�i�!'
+���'���4�YD�����Z&agk1N������Ʒ�����i�g+(���4_TQ���ओ>�\؃�jp�
+&)��.���BA�����O�{S��>p�=j.��n���a��^/��\�8y.�1������8#�`�M
+�{;VoT؈���|����Uc�D9�F���I�DP�p-v8
+�z�h�E�g8�0�ڏ2����i�H�
+"E�L��x5Zeo���L��1�_����Y�w:�P%%Ԋ]
+��݁8T��M�U|=ِ<�s��%/�Vw�|��|
+>�/`�H�!����F?�<��sU'/��y�g��Z?WI����ޏh�|��vP�~�� ,��l!�q�)1��,�}�4uV|Oii
+�!u��1rs4�c�Dr���f������:
+�)��v�pHJ	U�h.�GA�T�a9-�L�6�)I^ا�x9��������@Z��Tm��k)pzĂ"/kAE����z����M�tG��M�����iȣ�VXA�)�7�%y�_�}���dT`�'�&J��1�.����X�=���'�#�c�-��~� �/�h�9��;�K����c�퇹'=F��:��m�%8�=tVc���G�;���J��+���8�uh=D?�t���3ڌ6�;~I|K��y\�e�ujN9c�|��a��HψR����ʯ�t^@��?�<ŏ���g�
+�v��rb�9���o�s1���q(gpN����`���8��<u�x�B��T�`
+P=��C>��y�[�	��iX��������(�v�[������'�(�'���������mĒ�(hy�=��?��ߊNe,P��_�[:�������a� Q�@b��7�y�'��_��8�.����ޓ*�}��Z��nQ��j��/�*�G��iZ���AGo���6X���iC.��ƀB6B!��W�?0����i܌V��6����s|�=������zp��)�t�5����f|\xk���Ot��楠�8�.������~�*=�q+_xp��.r��RR$��<��Tӿ��7��O���v4<�[����a_���c'4#���2m5���?�/���e�p*�T`t�p���E�������b׻�����3��ï��7GW�W~�%
+r��ùE瀰���Q��+���x����ް���1�aO�|0R�uJ��$�������g����'���.�s�]sA�/��_ʥF�����j�����oM!�?����/���U���/UF|��\á�>k�;�%��4/��D5n�ü:���_�(X�ü���R�Nꧬ��|��)��Kޢ����F{�v�+b>'|�u"R$����?�|����~P$�m�(��h��(�=v�?�5��4q/JEw�>S��X��������q��gw��ݰ��_vAˆ������Cx#G swSb�/h"
+ �X��f@ւ�rn���9
+[DOC 1] https://efis.psc.mo.gov/Document/Display/761026
+��~�[��Y�mA�@z��m�������~�~����J_(���H�ϼ��H�Ҁ.Ky`W�$�q�o����;�q����h��_Rz�UF�s=}�+D�q�e6�;��SH���8K�۠Nƃ�8��
+���		�܁U�Ǫr��7��UK�fu��B4	X�9�ȡ��6d�F�ڸ]��0�[n��Ub n��H]��ʻ@�آ�9��<�k8��xw!�C�H�n�Н"va�{�r�4-N��ዋ�ɽ�1����	��]ΦF"���7��?�8?�I�� �wtfbv��z3z﷫y�O�2�֗+9�cx0k8����"����]B�G��%�f��]-�z�������伲��އH�e���9�J{0n�����B�����+�!#.X�޸Wd����B��ӕ���M31.
+;���b�=�K��Pb@&�Js����h�&us���y�h*�[FpawC��3�VI<�y�9O����K����Z$�O��n>5B��2� ח�׈�qeC+�(g�k)4ÊI���;��5J�	t��~�O�hx]��I�c|�E�~�~�+�����S�)�w�nG�S�_+4��?`T.@��_�z����0��!#���<�G`7/F����P���Ǐ]�H��T���
+�뷄��[�ʜNK��;Cw�w����+Z!3�1��X$J+��N!q2��n�:�ty�#��@�6����m��38��u�(�vs�c��G����X
+H��]
+d|eL�$fI���p#�P�NUq��_��/��׬�����=::|�\v�[�`���3a��w��Q���mޖNȼ G£�u��B�N�ȄUx���7�tطB�\~@<�(�4�N2�8����Ӱ���d�X�GJi�4H��� a�e��	+%o���; mNU��n
+'��<
+�B�����w~%�Q��Y����p&kp�۬�?6c�H�`G܏g4x
+��//̂w좏���M�>
+��U
+�f%R_
+G��o�8�`qށw�6���?ĭ�g�ωHx�?v��NY��t�E1V��3�����\����?��J1\Ic�dQ9�p��G���H����ڼ�7���&�f԰����l�R ,G�0���8[3<�`��W�#�=G��?��ÊD��D"&�����xϫ6�V��)��<�e��1��S~�~�oV����g��E������$�.��7&o�͂(�1�.�:w�W��1�|n�J�K��#N�
+~���ψ��No
+�[	<�����W�^���̏�8V~ݽ�A�{�'���nL��n��,G��ip"eP❻!���O��ǋ������'��Dh�P�C�b���R��4Ѓ���-僐����R)��J_�;��k81��Xq2������	���a8��p�O��E�b���GQ>n�u�^~�q� �	�����d��仕��?~��Hd)]x�~�;�:�R�Ň� TFb����/�����ni��g��K�ߒ���O������S�D��84���QNT�z����m�_��Q�t����&�R��hPT�Hs;=J;�5�i�ԮlhMG�;�u���]�ƧF���?|�w����]n���BHڻu�?F����A�!�a�ֈ�Q=�cb��z%&�>�i������9�۷_^��.T��|�ʇ�9jtŘ���WN�8�j��5Ӧϸ�����+�y
+Q�����?wi��*w��!����������7�ON�3�wfFzZ�#�nKNJ��3�Gd�5<,4$8(�b0�`�.w��y�k=z�c����CE]��Z�
+U�/��ժn�K{��sn��noOwgO��\��ɶ�;l��e[+O�P��e���M�Ǫ�&UE�n��[ylC��õ�r���
+M�e��98��Q:'('����QF��X��1CYDLya� K(���;��=q�2I�GK+�����P]^�`���d{���1�C�a�p��B�jO@�Ǭ��]%wC�m�ه�6�ZiV�3d�cv݌j�VW#׈pb�2O̪ӱ_1ydi�m][���ثl��6�g��ꮭv���`�i�k��c�
+`b�$V�j�=�K��N䮼���(�5�W�<��a����kq4�M������g|L�嶦�j��S�਩+��EMW�s��.m��n�Fx��+��v-��lS%�]�*&vr�%E�Q���J��S�L�PS}��a���Ɖ\�	,�m��z9�cJ�:lM��h��Қ:_M@��ɢ��NQC���q:=YYRD̥8S�8T���d/oW9Ym��>�o�j
+s�~�]��V7��qB���F�Zȝ��Z�r���s�li��t�u@��(��鱤w��F�(o(�p�i��m��䨘0��V�T��mE�%o����6_�ӣ�ZK��H�T+�rFgg�R����/@	��V�R�j�6�c��Mk���_9��������|dz
+���]�~	y!M��EEմ���Kچ�55
+w؆7�6յ��6��i����7-*���h��}�g��l��!���5;��	�n�}Ҵ�}V�۫�[�H���iNE[�>����VV��|�
+����꟰�MԨZuU���[�T��_�T�*�uV�B�j!7���V������Qg��5z{g�z[�b�-�I�������U�]�A)�2h��s�c���<�:V�B��ۂ^��^5MM6���O���`����T�S6$G/�]#���q&h��4�a�
+I�,�*�|
+�U�f�9l�e �U�a�p����Vd�*����(��P���/.���"�.��@�f"]��(i1P�nT�۵���5�Q�5�Q�5�Z+��W{�%5K�����MI�����6k�Ɏ����3}�F�Y�7��;��-E��%�xGh���
+�m[ˈ�y�Ta�K��k��FMrI��
+TmU�@�6P�
+RƬ[Q��[Q�U�o%VS�{������G�jP(	�j�)𡓵j_>U�Ғ�|��V���w�t�V�t�Jg�t�Jתֵ��P��r�*��2��&�4\��Dm�F�m��+�r����x��|�6J�c�*��X���|����k��^�|$�e>B�R�ܷd�g�M`=Y_�@S�$k6�?R53���	�TO������#ܘÍ7i�P�
+E���ԭ��]���J.�ʅ�]8��Ef
+[DOC 1] https://efis.psc.mo.gov/Document/Display/761026
+ͅԦ�S_�X	��0O6�e��l�����/L��b��d��˓�z�ۅ�$ַ$%�K���ŞSdxI�ɾ��������G���*����E�(�Ƌ������Sy��޼W�7��/�V�
+6��G�H�
+�{c���d���d�!�������`F���
+f`|����}4��(�_�ǤF's��"k3Q���L��D�L�~����^	�<�kKQ��3s���\�Ū�4YKi���/�����hw��w�owJS"���4�Wހ������z2����`�D�$��&�F�]�;��q:Q����bf�������ߕ(�|@�jE�;����DFX�K�B��?�t�J�U�[�1����g��6#�������:nF����3B[y�;���3t�3t�3t�34�����Z�5<�B�E�Si�JST��S[B)� O'��{�7&����ܒ|��Ղ�&��toV$+�O�k�����I�f��t�@��2�ӝm~�<��66�1�3�f�9�e��X-a�K��b	���`?�����fT�Uf�LuU�ʯ�*�w [2O�BTL����T1���~�����U���YAU�b=���fc���Y�	��^��|W
+�<�v��UխlȪu	ҁ�G����L��55rLu��w�YC�ˋc�#�F^�I�/u^|b�]_@I����I՞�k
+����b?���l�e���M�#[�~Ib��&3o�$�/�~�C��e�v����gȥ}�]�g��3��G���w�c��쪏���e}�~E����Ӆ�s�9����h4�l.]%��ZG�`�g��X���Q)���Q鵳�d^7��O:�yJe��ѫ.o���ͣeʹ����y�{NY�h��rG]Y��uY;/Y��r�Yu?1Y��,K�5b�O4��#�Z;�Z;�Z#�#�ZJ�!�V�\�Ep�~ڰh뢡J���k���OR0����@ٔS�S"��e�)L�ľ��5E������Ɋ��0�-����,�~�%�Yz�+U��-Y�(J�I�R�JB�UN�}�2K�,���dI�RR��d���������e���tZ�����$/b�%��d�e>����4$��͢A��M	ȓ�Y����ȇ���U!�;�
+C�U�C�S�O�U<֛�l:��~����?�S�pԟ ����E��u�M6�E���o(�S�ѡ~/����{����ޕ�	��Կ�q�����r0K�O1�&f�2��[$
+FU��LK��������Qv����t��8E������Vc��Y-��e�����&S--�@A#=LǹF��;��S��ڽ�;!P���&��-���ы�&�/�a�p��F~�O���H�c�1�XH�4�*�����%b�6M۩���Y��F殢崂�����p�O�YA�JL�vR
+Q��`3x�08�:}�����[��\�ڏ��ש'88Rq3mOG���Eoc�oկ�q8��<�W�:������3�,)L�5M�Q���e�I#�x�x
+�&P/�������y�`Y�����p�l��������c���>9(}���-��4T������c�ӟ�s�\�8�#�;x"O�e�b'��"�W �-��Ԏ�S�g��t��h����0v�e�:߁X�'p-���{�B���tkp2h�����_�8Y��0�
+o�^���-�:tl��m0�B�48aq4� ����˖�߶S_��s���XN�<��p5�r/�E�����էx���!��9@����^�$�{�qR��H���f�v�v��G{K��nճ���X�V_��2�I���saA�����_���Q�1�c}�K';>5��C���}Ac
+�����[�.z��4h����/q�߁r<(NV�V
+�ǂ�p���j�wp�����o�;|���������\��!�Cxğ���tDyZD���m�����)�.��z?}��Vդ�f��7m51�f�G�5`��F\� �;�1�>T���#Zд�w��W���{��/a�D�_��T�7:�)_@Q�����"��V�!9�T=]���/��4q���'� �#!i˵�b���m��և���7^�I���TB%<g�.-�	�h�t���d�hLD�q���Ih��a��i�ƕ"�*w��VnC>
+�gH�>�����1Z|��k�~	{<@׈�(Υ��x-W�6������`�Z�K)b�H�
+�7g��\�;�/�Q>v7���*�B[%M�=����K��Ű��C�P3n�
+��J��KW�~	n��i
+��6��p?=Ao���#�yo����*��>�^��<�N�w�kib�	�+�)%c��]�֛`�@K!�Ɨ�I���71��:�ї��I��{=�M�o�>�$�1����s+��L&]4
+
+0�𼦉�@��{�)�2��X�8�Y��v�8�����v��v��~}�G�#���y:]�i�/�Mt�l�a�ӗƧ�S�I��<�~2�L������=��c������u(
+M|a����(�<�b���h;}�z�4�Y�8"r0�����8R�3�����E���T�@-���t#�D���gN�s��,��w�O�������)}�8�.X�8�]C�r\2>
+��^��Q/\�fj���8(P��Ԡ����)X���E�x3⣈o"L�9��xq���*��e!ⲃ�A���r�wg۬����6��eu��؆ݷ���5<�g�y�o3��tħ''������6J���&��ڝ��b-���±2�}09喔�R�Kի-6{�#5-ݜ�\9~��1�ͣ&��7Z
+>���[��JBčԇz��)�C�w��p����{,��؋�5�I��ʡ�3��e��?=_4jHF��%A�P
+,��7M'���%y���B��o9�s�^n��g�� Nc��]V/垽��f=��\Ys�
+8Xb���+ݮU����*����d�D2&u��G�F�4�����6!M)��G��us�c�ؑ����;��r��
+iuR|ϸ��L���R�X1�ڝ?�?M����xRBh`r��[k��"��]���<-��0>�:����w�`�!���G���T�5��<Ǽ��ͷ���)�C_���۝�[�"}ra@j�~��K�(� �U
+[DOC 2] https://www.efis.psc.mo.gov/Document/Display/874728
+%PDF-1.6
+%����
+584 0 obj
+<>
+endobj
+  
+611 0 obj
+<>/Filter/FlateDecode/ID[
+<2C033C43D4236944AAA1A42DE14D76B1>]/Index[584 45]/Info 583 0 R/Length 124/Prev 349792/Root 585 0 R/Size 629/Type/XRef/W[1 3 1]>>stream
+h�bbd```b``�	"��H�>ɢ)��ٽ`YM0���?��`2Lʃu��2e�٫���AdA8�d�ە�"��DΝ����HS��%@�W!#�u�8#M���?�?}t
+endstream
+endobj
+startxref
+0
+%%EOF
+  
+628 0 obj
+<>stream
+h�b```���<�@(��������������a��� c9c�&�?\�Y4%b>����P�p��o�R
+$#�x�UY�|]9Ye��9�Lk��z���()��)���SS@���A��b+_��=	����_��ĎTc}��(��2)���W�+a@�kttt�'���PE�f��w�iF�
+4L�`a����j,�M@Z�!�f� ����ўɖ1���!�/�=��Lʌ���̘��
+��6$^�?;��|�^�n�׌��L��[>3�1�3�1)�e�!���
+�	SV�M�����X�=A�
+݁Ǘ��*�fa`����1���@�����˃�
+endstream
+endobj
+585 0 obj
+<>/Metadata 60 0 R/Outlines 77 0 R/PageLayout/OneColumn/Pages 579 0 R/StructTreeRoot 201 0 R/Type/Catalog/ViewerPreferences<>>>
+endobj
+586 0 obj
+<>/ExtGState<>/Font<>/XObject<>>>/Rotate 0/StructParents 2/Tabs/S/Type/Page>>
+endobj
+587 0 obj
+<>stream
+h޴WkO�<�+��	1_ۉ4U�6`�
+��k�-M�$�¿���6Y�B�)j윋���Ke� AD)��E�5#G̑0
+�JF��g�����(�=$A�c>L(b�u`.�01�0���Iϰ`Y_��@c�%�cȟ?�A�>���g�^s���qO�Y�a:ɴ$ F^u:x��9�>�}ߪ�/��#�h���w:w�,��g=��N�՗��b�a��Y�~�(Ӹw�/�t�"��"�������QtQ�>j\�����_��<�_�\�O��K��^�c�Ϧ:��2��}�<���!G�
+�P�:v���H�3�*{�^/y�;̳
+�f3c����8����F�+�Y06��;�%">��׷rE-WV��X�Z!a���p�9)���`t\�5>�GJ|��������3�x���4�)���UA��@���<��Q�&nL\�%.sj(i��'Nd'T��@�"l�����o��]��6����y�����]8����%T����W&T��J�n5V�'��^����{_*��3:�weQ��Eߚcm>��͔����w��‌�s�����`�4�
+��Cr�ѯ�.�I�Y �
+���'_�G+�=�卑�UR3�@�����ٞ=}�
+�mQ*Ć"��7^�D�+���q�Й�j�*Y���Qu����79�*�a(oގ��zUǴ���EN�E�9-.�M1���U��q�6�#>�<�"��[?"k�����ZOp`�Jv��ޕ��`O��ZX
+�j����֤��7Qv������f��^o^K}?X�k�ܕ���Ju<}�t�`��y$�
+endstream
+endobj
+588 0 obj
+<>stream
+H�\��j�0��~
+�Cq�օB������=@j+]`q���������~F����eu�|7�~���q���.�8ܣE���*��uvzܖ��MP���y���|;�<�A�q�3��n��Z��0v����^���!�`�~�����K^�A/a�ʑ���
+�����B��SI���X�����Z�Z�B���ӽ�][��D�g�8IȨ|�.L�x+�e6� |`.�K����,|f�S2�-�Z&ΘE˰��	�Eװ���%2\�.�&�>�{���elK�k���d���x�_��蒐
+endstream
+endobj
+589 0 obj
+<>stream
+H�\�_k�@��|�ylJ4s��
+A�ڂ��u��d������;'�ta�H27?�����nߵ���}}��;�]3�k����vٲpM[O�����R
+Y���)^�ݩ�������4��æ��1��M����l�.?܆�#^b7��[�]Oiзj�^]���eO�&]o��SZ����!�b��$��x�:�Uw�Y�H��+��k�Ů��.;���j��7/�+傹@fAVfE6fC~f~F^1��7����-�yǼC~e~E~cN����a�K�%2�N�=2�f�2�~O��������{�=�~O��_h��Ah��Ah��Ah��Ah��A؛�7ao�ބ�	z�&�-������@s�9�`4���@s�9�`t8���������������(:Q>K�g�E'��E�(�Q���Gя�E?�~��1�c��F��o��F��o��F��o��F��o��+�_,�����6��n�vM���:��8�c`>z�����v��t���Uxg�
+7�
+endstream
+endobj
+590 0 obj
+<>stream
+H�\�͊�0��y�9�����? �b[�?�������=��;�.l@��	�3FEy,];B�zS�M�l����p�[��:ۚ�ߦ���������5��2�>)9�a�ŋ���T�{�Zw�ť��Uw��C7By���ou��e��R�������
+ga��L��fg-n�ݴ�iv���M��f7-n�ݴ8P�F=:�-���s��b�<�~������U�~�kA��
+endstream
+endobj
+591 0 obj
+<>stream
+H�\��j� ��>�w�ٜ%P�r��
+[DOC 2] https://www.efis.psc.mo.gov/Document/Display/874728
+��NR�eby��6l�*����s���)d�o݀�@�q�;��@�ڂ.]��b����q�i����"��w8=�8�Y�W�ȁf8}ކ3�aK��
+tx��g�^삠+v��!�a�{Bhk�
+��5Y�liFe�̓T���?����}YV�-ަ��x��B����m̒�N��(�}H)&�,�#����o0
+endstream
+endobj
+592 0 obj
+<>stream
+H�tS�n�0��+�(D�27A�o�]8l�@a���J���T���3$%m�g_�������?�puU��vxj��-��v�dr�
+['�V�AA9�@׆]��5�V�������@�h���J������=����z2�B6�Y��	�1\�
+�
+��_ Q�P�Dg�k���l�?0�6��.����Y�QMf`ᙣs��U�"
+��:e�b=+F�A�^�
+S��ѯ���7��s���8��~b;�!4�#c-mH>f��͊~1B�����+$�8��0�%}͊�ʒz�IM�l���2Z���0	�Q�7GFsi.������6�VCR$E�#���ૢ�c
+q@���$i�b��U��.Ҧ�N�$��4�M'$F(���`x���u���C�W���{G�ׁ���^���7ϮBܜ��<��}`<7=�1�ۺ?�!LrYW��E���ԺϠ��
+��j�R�tn�{��v���y���̡�E��I�w���@߸�kJPuG�!B��hM�D}�ǎ��gX(��l��Q�y
+endstream
+endobj
+593 0 obj
+<>stream
+H�\�Mj�0��>��3����M L)d��������F6�����8�*�-���g�[��QȠ�9�3��<�WvN�Ե\�W�v�MJ�oKƹ�1*c@Hsɼ���q���o�Mp���g�����H*h�8ʠ�^팠v��C�.��)>��P��z�q�㒬C�4�2�D�Y�QH�_�>�atߖ��wmU�#y{�m��}�|���,��6���L |,,�B�G�
+0��zq�
+endstream
+endobj
+594 0 obj
+<>stream
+H�|T�n�0��+x�fM�ulR���EV9=%�zI���K=l��֔fȑ��oÇ�4��a�t���w9���'���h�I�81ZC�-Z�ơ
+�������J�
+2������*�H��m5�6y��e�]G�y�m�z�q6��:w�RT��a�E�f��
+�
+�p����e߄V������enʝ\g�C��_v`����ߘ
+�7���y�r4y^s[�I���$�Ge��KDiS�WS|������������
+endstream
+endobj
+595 0 obj
+<>stream
+H�\�݊�0F������IU(�T/��u�j;��mZb���o�~��ڜ���!�(?�u����$��Ԯ�rk�}�k��"�U]����/��SQH>
+�^����*�t�6o��d[�g����W�kwՓ��4����u?҈��\o6��K8��^�Ft4�͎Uد�ar�">�Nt<��)�Jn]Q�/�UT6c��C%����$L;_��«,F�|��K��"��k��#��{�| ��Y�9L*3d3rL��	9�[���L77C77C77�%o�99�������������,�������������������������'e|���uS�MY7E�%c�z�
+�-t�~�Dy�>��؂c�j'�.��N�,|�W���X��
+endstream
+endobj
+596 0 obj
+<>stream
+H��S]k�@|ׯ�G�ԫ�����(ť��u)��qZ�&
+F�Ϳ�ޝl�Ж�H{��ݝ�ф!c����9`��\+������¹�^e�g\��Do]q�P	�N��Rj�3a,ZC�AnA��3T��~��gR�̥�Z�X4bҌ���*t6���5�(�#
+@��4�$pT�E�L�Q��q�&\[��b���P�9�XL��]A$��g	�����Cq��Gu=Hw���رe
+�ԧ��l=�4��2�6C��Y��o�3h���E�����IE$ǊU�!h��h(i�C��*�gJ[W��Z��hz@ZM��怘L����������������������V����n���
++ˈ�B�1��I�TTZRZ��K��������JO������u�p~>������X���x��UH�ZK\,����/A�I�WN�F�]&��d��1y��W�E�3�!o۔|3�m�fȊ~��R3�J�'#� W�T?�w?@���a^����b�	�����
+�
+endstream
+endobj
+597 0 obj
+<>stream
+H��S�n�0��+xZ�@͊z�ֱ�H���v���Cк�p��+ɏ�j=���h8b��ɵ��[�q�\�}�����")�����6yf�4+Q�I`��*`�4�X����l�́��c���P�����m�����|dǇ{*�P��}M����<�fJ���@�k�"������Mt���W�a��M�t�9���&���S9P���p�������tN���6�Q�N%P��ъ����`O�/#T���mf�f$�����N���p�՟��	�O���N���z��noR`�.�-�k�C-�ͺ��]�i"��}p�JRߺhU[o��:������f]��u?�����j_�V�a�ZつP�a���sw��Wز��wǶ��u69�'�5�D�(g����"iX�����#�P.�g�xf���o�!r��������7�I�(݁+���y̢b�$?N�.���V�
+endstream
+endobj
+598 0 obj
+<>stream
+H���Q��@��I�N����#J�ل�Ҩ�ȤIS�0ʨ4���A�[�t�f&����;��/5����@�r:��ģL�T��s�$.������62��?�g��9=�5Ff�a��-t�gSd���G<��~h0B��F�5�S�)�$i������E_�E\���'�����?�P<>>��Y)���S��ws����#��o4=��_� B0�$�>��'�<Й>�M�%��R�}����X�]"m[{�05
+w@L⡒�����|V3aW)/|�(��h�
+[DOC 2] https://www.efis.psc.mo.gov/Document/Display/874728
+c���-�Lʢ~����d�%��(=�oP~���������~=�0�~
+>stream
+H�|�Ok1��|�!'���4�h�zp)��\d�xw�V3R��}Gr���������7�9Ln�www�Y�ƌB
+�D�A����v�|�v�'����S����Ʀl��C�6G��>l~���ݍo@߂��õ
+}�l˨�)]�t������R� N<��Bl3�FA��R��8Gƞ
+�[G���1�a�-�@��Z_�
+�Q�����g�v�_�N��7�/]B�5������	F�_��0[=�X��x|���C����G��g�æ��%��#�
+��y���"�0�����HT!Ib���s�oy�&-	�_�4٦��&T9��%o���q�m7��|���zA~���~P>)*�x�iϊ_c��`H[�/�JU��k��$�f�[5ӂ!�SŌV]+4G-hUW,��+%B��������������K&Ѕ^߹�a�vƒ�#��E_�u_���T뒟ЯH$d&X_Rm�u�P�r��k+�������Ml/�Z�ϥ��E��ů�&��G��J.�� 9FGz���%���������K8�]+}������d�
+endstream
+endobj
+600 0 obj
+<>stream
+H��T�n�0��?̭n�zY�� @�����Ch/��e��(��S�ﻤ�Hi
+T:i�;ܙ�U�ɛ0\5u-�V4
+�L�
+~�J75̎��{��ᨹ�Z�-4:�k��F&/�x�1����~�ȗ�D(���Ƣ�����ekUȃ�ѝwYM��n�L�|h���`����,F{�w��X�
+�
+[͔�?��n��;F8?��\���B\\\.):]���y�M>
+%	JG0Q��k�VRl�FrT��wnp��ӗu�r"T��b愈�FHiUd������ro�YQ��-Gǖ�8���?] �2��8%y���$��o(������У��&�koblbf��L�J����X(7����jQ���5n���Ǔ�Q��U�>w=J�F |a���XtC~�*�;�M��{xV����#�'/3�,E�"����~�X=~BQ���!����=1��ۯ��$���#�7[���wG�U5�#�ȫ����񫐮k�����g�92��������N��DkV���N�&�6�3���o1��[������c+e�|�p^��~�/�����!{
+ެ*��Z~X�^��ǈ4����x��	Q�l�G����K!
+endstream
+endobj
+601 0 obj
+<>stream
+H����j1��y���o~�DPǅ���@q"���̌��}���f6!����{�r��G��r>|�t@�믰��T���C�����Ž�ݺ٭�Ư��ǻ����a�X]�9
+w`�8I��~+���4�
+��2w+�Hp1�+bR{��<"Q��u�N�d���R5��n;y�����,�l��m:YS2Y�H���}xm\�ZASnM<��qp�:��o�2�_���ʖe�p�n�g�q?��'��
+endstream
+endobj
+602 0 obj
+<>stream
+H�lV{PT���9������]����E`��E����������F����TF��a�D�5M�T�c3:5V���8H4�ƚ�t�i2ն��?@c�F���Q��sW�3ٻ������}����s@6t�E
+Kʦ9�����!k]ռ���,�5��]ȹ�ܹE�x�Ϗ�
+�ִ�n
+Z���.���u��5g7�6��_���ֶ4������C�zUkY�m��W��1
+�nزm���:�u����D��,`so2[�д��3�`��c�ՍMZƆ���8���Qۦ�[&J�"�_n��u�����7����`�9�.���Nb��� �kv��N@8�G䩎�T�Gnp��۱tl���էcg��8+�#k�Z�
+��dx\�pTn��3�b��~
+���!��E	���M<�
+@�J���d�۬�*�07��X?c�1�L��J�q%��w��R�+{UuƎ�ˉ[��w�yi�po���)���k(���Y�S�'_��ݿ�@2�!�2Hh� ʭ�U��G�Q� �
+��M10�8���-ݟe����m�I�Gc�%�QL*�6G����%s~�[�{��Ȭ�c���޽��k�:*��������H|č�ǐ��'ZQ�=��4�͛���L�M-fS��y�	�;}a؉Q��#9�Ҙ���H�e1���981�����6�C�i^_���҇}��1͜1�+��\*2�:�XT+�Z$�^������9w�e5��u��^O:�{�i�Q�Y�g��X*1꽮$=��;���\5֚d��H$�`UuUuq�8X�tWV������%�[}��EO瓹3~��>��3��Ǖ�~��б�g&qo]�X���9��J�P��EI��wO����z�ͨ��g�i��FՌ�
+QI�pdU@���p���&�+	(K&�#v���8�z�G�jd�VC6�Ps�� �b�3+pl���!�OC�>Y�`�_A���!Sz�1���G�A���I�5Q>�
+������+�uI[�>V�@)WJCrY�t���u���5t��*I,����%�$�Tr��y��T��Pʋ��ͫ��W��yQ��s� :��yS�C f�\^�M����@ԅą��PD�bI���J��V4��v��1��^8�e�&r��x�>i�Ք���p��>�y�|�#n��X�����<���S'�����2&��~Ӓ���ōO�2��9yhBg�?�sӍ�2Ԟg~��a
+�	���w�ҧ���TS��T�С�_`5=b�i�*]���jwJ�9���;��s�����PV(�$�Ĺ�n�vRQ�.���*����
+!���I���h50=����,�,�Vw4S�̏AԨ��S9Ѭ�mQs�Jj� ��pG-�(�ئ��rün@f)oć|��AY��Tw��X2)���B%q;Q�L�$�
+'�G�Fm<$	!&"Dyn�
+V*�
+-.�R�[gŴ*.�����]׿�w�gQe]=M���p�O><���}��5�jDў+��ut��ӿ��׈���&�	^�f���"��(Bߢ�R�pEaY*2�(�uϗ��L^5;��e�lNR�!(�ˁ��I��� �V�>
+[DOC 2] https://www.efis.psc.mo.gov/Document/Display/874728
+K=8��ZS�h�����N�ȫ��]'��긽�e}D(�OF]��佇��_�#i�TС��;w��;}C���KС�z�	�ω�E�L|YĢ\��8��c�q��:�UM6=�_�>�	��f��>|}$���W�o`;|7�k#�?e�<�8��%m������B�ؙ��؝���;W�]|��e�
+YC�7�/�7=�=!5��q?�uo�2�R>Ⱦ�\T�*f��U����[�g�3���7��l
+mu
+vd78h78X�j!�U=+Ysж�U�0�"��<(#��#2�
+.vx����J*ٞQ�N2J&�����1�
+�#�H� ���J8-��.\��f��zB�W�-x}	�|X���nԏނ"�
+��
+-���!�5���xҗ'�(������'��aN��j�M�=N.�{�Z�ϱOP4AH��(���]n�����	;��J���{��������H��ao8�#O��CE���&�#:�f�Ê�F�H[�3�����"0��r���R{�w
+g������
+OM��z�z�bk�k���(/g��18�2�(3���,L�n��aP^H��O�G�=`�gCCׯ?>/�
+t�W��~9�jz=�9�LOMM}u��s7�h�
+GDw�d��V�AOM����2�LٌO-���E$F��Xl���_�������O�[�q��k�7-|jq٠�?���#Ϻ|�����⧿ٸN%�es�����\=�s�Fr�r��c�LDI$�OʵZ�։$������˵r�"�Fm��!��qwhS����""�{��Ԛ��ڏ��k��ZTU���8���yt/h�z���EsY�h�|���#F>��*T/f��G���Qwt j������Zl�3��fca�n����#�e��e�Vm��p%���#��������'�/���r=ʪ����G�gϴm�N��҆O�������e�g����Ĳ���r���C���C-����Kg5kɓ����τ/h��ւQ�H�X���=0�����;�����
+�*�����V�Z�u����g�vE�"{s������V{(l.�-7���B*�2�Ŷ��>1�8��Ί�2��iԓz�&���Pۍ��c;�co��ocL�*�D#DB�?�bQX�BQs}����	��eQR�I�YE^�[-Յ�f)�@#h�� 8N	��pR�P4�L@���@=ʟ.��ԏ�P�w\�
+�e��M�C�5�����R}���
+�����m�����7��e�˶�1�����4���G=�M����Q7]���u'�};��-KS蜚$Av{��W˴��U�
+�,VF�X�.��o�7c�km�.EO�ߟ!�|�Wf�?2�H�y~�F;k-���?ٳ������[�	� ��W<[�l�+)���߸k�{'�y������r�.�]\�j�۝���5�LY,i敬����z��=��
+)'��F��b��R��ш;q/ލ�0O�!�$���LoA�ED��VVEt��F�	{�n(��4����,o�tW�3�dm�h��1�IU����Q�N,�������{�
+Dc;�;�*>����a�
+|����dY�ϲ���:{�n�����	L�ٻ�ME>�pK�"�	�"MQ1�<\�f��yX������!�I��0�Q툁B�����an1������N�з����P����s���
+�c���M���
+�K����C��������d��������&(M#
+Y�1!KL	�1\����x~�kv��o�G`��e�s-�9;�<G��X(�v`�fX�ư�Z�c��Q�+1�F�fl@�6��$bv�}�<ñ,�9��s��������1��?����>�]��P�;@Ԗ����.߻Cz�REz���=��vh`��ջ���HN!�dh�є/�%^�S�q�:�9��We�S��e���L����,D3��el��a6�6�����Y���+������`g������������!'ǉ^��
+�boJ��vRos���yQ�)S�Ĝrw��0��z^ojDߔ�HP����2ɥ?�("GNG�a"��D\%TE��q#쮉!�A=>@����9EG	a�gZ�mZXQ+�#D���|����<�`~��Ɛ|�3�B�z��^�n��x�����V�&?�W���)��Z�5�~LN�Ӭow̪��7;���5+{K#�+5� )�ޔx2A��$��%ْ��4��Bf��i��'Z�qP�D�++*-0Ą��P�T1o�Ԯ_;?����d��D�ą�#�^^�r��&���DeK��G��@}6��k�=gs?{qY�R�74��^���p~,�����ʜ@a���9��
+��Ր
+5�
+*����ŕRR������m
+<��:��W�oF��Hވw�˛�7�ۨ4�)g�i��T�*t7�����t�QO)'}��/�Q
+�Y�]J���M�r��f�b��d�Rd�:�|b5�����߆�UG�"� �W�$C��G
+�X�[N�uz��66�A�K߁�e�4
+��#���솖g+*Y�x���
+�����|֜a�c]�!f��#�t�:�0�N��s���*�7G�=w��7k����.���լRZ�|��t>�덵)\%a�5J���β��:q��Q8o-��rŃ����H�7��C�a�|�=�8ǟ�v�/�q
+��S��L��C�
+���qۿD1�
+{
+��!�u����������1��K�d��++�6��
+!�3jH�I�5��n��Ŗ�fY66��I�Y
+!�ݪ(��>FP��	����k%Qi�5�)z4�D]q�!�tp��"h��i�Tcd��3<��S0�.x
+�29�&k����
+�,R����KAjL�3���RE6��'�t�Xh~���h���CT$m>^2�Ky�D/�,d�)�e�8
+�E�$臘�x���8��&o�YD���#���}1�=�
+�5�ڿ���~��;��?^z�x�+�B.h���[����uuϘ��[Ŵ�]�?f���P�S�\�S�)gb�#�'�$m�:��^�JyR���Ͱէ\���
+��w�f�0��dΫ"/ҳ�lA��]fݺ2�L~gq��)��Ei?��?���P�S��fN�A���|S���
+[DOC 2] https://www.efis.psc.mo.gov/Document/Display/874728
+Z{������
+�/���&v�u�ݽqÎ��y�h�W>cݑw���8���'��^��^���7���coBl���Fv"�X�v��J���O���G��yv��o����l�T�@����4��r6�A�@3�X�:��k,�jW��Y�б�(�hy@�^��������&�72�?�p�I�v(��	~�'�k��첏m���=�~�;���>�q�����q�YcR��h�D��JX�D+�0VH��غ�h͠TJ�����i�)�U�Mj�N��ƶ����F:�U"���sR�f�^������<���g�^��(/�gM��=#�'~ \/��:��"e.$��'��,�p��Nߣ���|'�}�~�>��C�/�h�M�i�������L73"�ehVy���]͂����s"%�.z�|֊0�>�!n�L��C������f`�����d�<��
+�0�a���c�g�x�p����x���7Oz���
+�h�ݏ~d�پ��
+�h�������O����h�� �Q
+ǒia�f��d.27&�t0/2�p��((ɔ����a���6��b��_R#b/A���
+&Z2A������`�R����P6�D.㗅�R9�I�:R=�������J��H����+)7�ʤZ��{��)6eE��F�87.Ns�� ^�"�)�*�9��g�D��)B�y���6�:|h'$�8��<��4
+�vFQGE�ڹ
+h�p�=K�S��F|���6a�i-�����5���f�?��M�c���"�r�Ɯ5i3\���y�,JB��
+Ӡ�ЦNw��q^�	������\#"J��̈�C�Z0�.Κx��Ω1�Q}��Gk�'��u��Ԟ*5�,ٺО*k\�t�{�6�����u}�SM�3md�����I2����|ﱙ{�#��� fA��������i��6�M�ϼ�]\���2+�\�*$2��U�̞�>
+^
+
+^��쫡���"o�PHt��W�%�0�#��	*��r
+�5�)(�0�v.��_��x��22@��S�5�+���`��ZZ#�NoY��{֎���s�o�}׬��/C`��;`-��������
+6���OK*���_%pj^%�_����O���u6%��[�~׀rJ����	+�d<�o6�+��}�KI��X��]+�՞|�1�ӓ�Q'��9=��%9Vd|B<$����	.�[�ߖ����N��z9�[5�:��K�=�v(t�꭪�jV��x"���l,�.Q����T� +�Pi�"R��A�m�F5�(S����5^䭅�oN��#L)�%A����3�]~���������t�:Q,�V�E�EAd����zԦmF۴i$"��#q����Yi���t�DP$��g
+���6��K&}�&��x��^+K��X�8G��U'�e�H�������l\�d��sLK�b��4����Y|�J���Y����D��0�f��a&B�*�F��M��&-xu�V�ཚ/լ\]V��aW���ףŴvm�Fk���A-��9g|w�v�Xˮ���vz���;�x�́�>����$g?���詄���w�zI����Y�<��]�N��y�CEЁ��:�.�u�SlWн�P
+U�a�E�O?[W�Vا���ҧ�>�����7�)��7mo��de�k[+����k~tñ��~��+�>&��Ε��^��(����5��Ԅ?Z�rZ1�yؽ�����"D���U�)��B�������ڰ6�Qp��(m�gK�`9,�n�%d�]R;�̰*C��)��F��zF�:��U��zSeի��5*��#{��a�y�tb	����N.nkXu8�v��{;����^���z��5>�񩆝f�K}�\m��G~�eF͕���_��M\w{J{H�aI�liw%��X�Dr�S��]C��I8��!1�IlRZ
+	i��LZL�V)���jhC�ԡŁ@c-�2i����q����v�:Ig�Ng�����������}��{�ߊ'�n��֭��^O.|:��}���y3K��_|%���Yf�bԵ���uCq��-#ˬs�9�?��m�VZp"ޑ��s�=3�p -A���Kp)��/q	�q��~#a��=��7Ho1����>��`
+�aO��]RU��W�=4�pK��+6��V��G�'��7�S��
+�()`����0N�Ȏ:�|OQؠ5���
+����Y/fdOi��`)�h�E�A8H��<�
+gb�?���a1B&r**¨ThE\:%u�Iԟ%p�0M �`����`��1Ɏ����q$I�p�EL�7�r�ÂI2��&��ry,|9_
+E�	�8*�dD���j��O��`�Z��xDȐB(�-v��rk�+�U��:ة��U3g|��u��S[��W�C;��p(�bwAe:����B"��Rk��J�K�᭙��Bҗ֔�z`h*ע%�,�X�70\6r�>��x������-D�؀�"lU�����YiӘ� �@��	<-f#�d297���ʧ�B.��K�Df
+7�&g3�{�&��nb6s��&��ѭL�Ʒ�}����\���K�Mt�����n�7�;�=��6qw�!�pd��X^-�B����ZO`!`	pڬi�^K�ZBӧ����'R�GY�����8
+�2|�I�"����3�F��ahZ�`���F|���L�aV�S9d�!$�QD�.�p��O����+��D��Nd�g��|�Ȱ��/��"���zE�!��|�%DM��NSFy���;�����	z�;�w�_�[�����V�]�
+E��Ä��q"���#ّ8�+��<��Bv$��0'���am؉p�-�!��n�%f��NSFؠ5��0N�Gj�KsPL�&��ZHdgi;I��]�7�U8A�	�a*2�#�Q�hpP���^k�-�v��t��f��͔f����H��z6"��9�2*ּmf�H.U&��jq�Х�6l����W_W��bƪ�s����/���9�-��K!�w�t*��������7N&���d-�[�nhlY��:ڹ��gզ�6���?/OKw�D(y�$�OW�/i��W�6~E��7���ɺ��֫�Gj���`�ʊ�ϠH ���>��
+[DOC 3] https://www.unioncounty.coop/rate-schedule
+Rate Schedule | Union County Electric Cooperative
+Skip to main content
+Search
+Search
+Menu
+Your Coop
+About Us
+Cooperative Governance
+Employees
+Job Openings
+Touchstone Energy Cooperatives
+Annual Meeting
+Your Account
+Apply for Service
+Billing FAQ
+Capital Credits
+Energy Assistance
+Rate Schedule
+Member Programs
+Rebates & Incentives
+Renewable Energy Credit (REC) Program
+Operation Round-Up
+Power Supply Tour
+Youth Programs & Scholarships
+Co-op Connections Savings
+Products & Services
+Complete Home Surge Protection
+Electrical Wiring Service
+Generac
+Security Lights
+Sense Home Energy Monitor
+Water Heaters
+Safety
+Safety Quiz
+Grain Bin Clearance
+Power Line Safety
+Tree Planting
+Underground Facilities
+Energy Expertise
+Touchstone Energy Savings
+Energy Audit
+Electric Vehicles
+Load Management
+Solar Energy
+News
+Rate Schedule
+You are here
+Your Account
+Rate Schedule
+Single Phase Service
+Irrigation Service
+Multi-Phase Service
+Security Light Rental
+Miscellaneious Charges
+Single Phase Service
+Monthly Charges:
+Infrastructure Charge - $65.00
+Energy Charge per kWh:
+All energy (kWh)
+$0.1375
+Heat Usage Credit
+$0.0575
+Irrigation Service
+Annual and Monthly Charges:
+Annual Minimum Per Horse Power - $35.00
+Monthly Demand Charge - $22.50
+Energy Charge per kWh:
+All energy (kWh)
+$0.07
+Multi-Phase Service
+Monthly Charges:
+Facilities Charge - $115.00
+Energy Charge per kWh:
+All energy (kWh)
+$0.1375
+Off Peak Credit
+$0.0575
+Security Lights
+Rate per Month:
+LED 70 Watt Evluma Light Fixture
+$7.41
+Miscellaneous Other Charges
+Minimum Trip Charge (under 15 minutes onsite)
+$45.00
+Minimum Service Territory Trip Charge (15 - 30 minutes)
+$60.00
+Minimum non-Service Territory Trip Charge (under 30 minutes)
+$70.00
+Minimum Onsite Charge (if the crew is onsite for another reason)
+$20.00
+Overtime Labor Charge-Lineman or Electrician (minimum is 1 hour)
+$200.00
+Charge to Collect, Disconnect or Reconnect from Disconnect
+$75.00
+Back to Top
+Quick Links
+Contact Us
+News
+Statement of Nondiscrimination
+Contact Info
+Union County Electric Cooperative
+32708 477th Ave
+Elk Point, SD 57025
+Office:
+605-356-3395
+Fax:
+605-356-3397
+About Us
+Union County Electric Cooperative exists to provide high value energy to our Members by focusing on delivering safe, reliable, environmentally friendly electricity while promoting energy efficiency through education.
+Follow Us Online
+©2026 Union County Electric Cooperative. Your Local Touchstone Electric Cooperative.
+Your Coop
+About Us
+Cooperative Governance
+Employees
+Job Openings
+Touchstone Energy Cooperatives
+Annual Meeting
+Your Account
+Apply for Service
+Billing FAQ
+Capital Credits
+Energy Assistance
+Rate Schedule
+Member Programs
+Rebates & Incentives
+Renewable Energy Credit (REC) Program
+Operation Round-Up
+Power Supply Tour
+Youth Programs & Scholarships
+Co-op Connections Savings
+Products & Services
+Complete Home Surge Protection
+Electrical Wiring Service
+Generac
+Security Lights
+Sense Home Energy Monitor
+Water Heaters
+Safety
+Safety Quiz
+Grain Bin Clearance
+Power Line Safety
+Tree Planti
+[DOC 3] https://www.unioncounty.coop/rate-schedule
+ng
+Underground Facilities
+Energy Expertise
+Touchstone Energy Savings
+Energy Audit
+Electric Vehicles
+Load Management
+Solar Energy
+News

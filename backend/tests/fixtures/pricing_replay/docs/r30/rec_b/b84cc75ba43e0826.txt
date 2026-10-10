@@ -1,0 +1,1783 @@
+[DOC 0] https://www.comed.com/current-rates-tariffs
+Current Rates & Tariffs | ComEd - An Exelon Company
+Current Rates & Tariffs
+Current Rates & Tariffs
+At ComEd, we provide electronic tariff documents (in pdf format) for the convenience of our residential and business customers. Our tariffs are subject to regulatory review and approval by the Illinois Commerce Commission (ICC). However, users of electronic tariffs should note these tariffs are not the official documents and users assume responsibility for reliance upon tariffs in electronic format.
+Although ComEd aims to have this information current at all times, it should be emphasized that the rates and provisions in the tariffs are subject to revision. All of the tariffs below have been approved by the ICC. Notification of proposed changes to ComEd's tariffs are not provided on this website.
+Complete Schedule of Electric Service Tariffs
+Complete Schedule of Electric Service Tariffs
+ComEd's entire Schedule of rates, riders, and terms and conditions; including those listed below and others that are not listed below (approximately 800 pages).
+ComEd's Entire Schedule of Rates for Electric Service (PDF)
+Tariff Revisions
+Tariff Revisions
+A listing of modifications and additions to ComEd's tariffs for the current year.
+Index of Filings (PDF)
+Individual Retail Electric Service Tariffs
+Individual Retail Electric Service Tariffs
+Tariffs that Collect Taxes and Other Additions
+Tariffs that Collect Taxes and Other Additions
+Eco-Friendly and Renewable Energy Tariffs and Riders
+Eco-Friendly and Renewable Energy Tariffs and Riders
+Related Content:
+You may be interested in these additional resources.
+Carbon-Free Energy Resource Adjustment FAQs
+Important updates have been made to the Carbon Mitigation Credits.
+I can help you with:
+Billing and Payment >
+Outage >
+Downed Power Line >
+Account Management >
+Start, Stop, or Move Service >
+Solar >
+Ways to Save >
+Budget Billing >
+Login Issues >
+Find Billing Assistance >
+Chat with Atom
+Want a copy of this chat transcript? Enter your email address.
+Submit
+Cancel
+The chat transcript will be sent to
+OK
+Do you want to end the conversation? This will clear your chat history.
+Back to Chat
+End Chat
+I'd like a chat transcript.
+Type a message....
+Feedback
+[DOC 1] https://www.comed.com/cdn/assets/v3/assets/blt3ebb3fed6084be2a/blt86ebee5fe6ed02f8/6ac9488c20451657b3b7e4f3/2026_Ratebook.pdf?branch=prod_alias
+ILL. C. C. No. 10
+Commonwealth ELECTRICITY Original Title Sheet
+Edison Company (Canceling ILL. C. C. No. 4 In Its Entirety and
+Canceling ILL. C. C. No. 9 In Its Entirety)
+SCHEDULE OF RATES
+FOR
+ELECTRIC SERVICE
+Filed with the Illinois Commerce Commission on Date Effective: January 15, 2009
+December 16, 2008. Issued pursuant to the Issued by A. R. Pramaggiore, Exec. Vice President
+Illinois Commerce Commission Orders Post Office Box 805379
+entered July 26, 2006, in Docket No. 05-0597 Chicago, Illinois 60680-5379
+and August 15, 2007, in Docket No. 07-0432.
+
+ILL. C. C. No. 10
+Commonwealth ELECTRICITY 9th Revised Sheet No. 1
+Edison Company (Canceling 8th Revised Sheet No. 1)
+TABLE OF CONTENTS
+Beginning Sheet Number
+INTRODUCTORY INFORMATION
+Table of Contents .......................................................................................................................................... 1
+Preliminary Statement ................................................................................................................................... 4
+Cities and Villages and the Unincorporated Contiguous Territory
+to which this Schedule of Rates is Applicable ....................................................................................... 5
+RATES PERTAINING TO RETAIL CUSTOMERS
+Rate BES – Basic Electric Service .............................................................................................................. 19
+Rate BESH – Basic Electric Service Hourly Pricing ................................................................................... 29
+Rate RDS – Retail Delivery Service ............................................................................................................ 47
+Rate DSPP – Delivery Service Pricing and Performance ......................................................................... 417
+* Rate BEST – Basic Electric Service Time of Use Pricing ......................................................................... 483
+RATES PERTAINING TO ENTITIES OTHER THAN RETAIL CUSTOMERS
+Rate RESS – Retail Electric Supplier Service ............................................................................................ 82
+Rate TCS – Technical Charging Study ....................................................................................................... 93
+Rate MSPS – Metering Service Provider Service ....................................................................................... 94
+Rate DART – Data Access and Retrieval Tenets ..................................................................................... 226
+Rate GAP – Government Aggregation Protocols...................................................................................... 406
+GENERAL TERMS AND CONDITIONS .................................................................................................. 125
+* BILL FORMAT .................................................................................................................
+[DOC 1] https://www.comed.com/cdn/assets/v3/assets/blt3ebb3fed6084be2a/blt86ebee5fe6ed02f8/6ac9488c20451657b3b7e4f3/2026_Ratebook.pdf?branch=prod_alias
+......................... 216
+LANDLORD/PROPERTY MANAGER AGREEMENT ............................................................................ 222
+(Continued on Sheet No. 2)
+Filed with the Illinois Commerce Commission on Date Effective: August 29, 2025
+August 21, 2025. Issued pursuant to the Issued by David R. Perez, EVP and COO
+Illinois Commerce Commission Order on Rehearing Post Office Box 805379
+dated July 17, 2025, in Docket No. 24-0378. Chicago, Illinois 60680-5379
+Asterisk (*) indicates change.
+
+ILL. C. C. No. 10
+Commonwealth ELECTRICITY 7th Revised Sheet No. 2
+Edison Company (Canceling 6th Revised Sheet No. 2)
+TABLE OF CONTENTS
+(Continued from Sheet No. 1)
+Beginning Sheet Number
+RIDERS PERTAINING TO GENERALLY APPLICABLE ADJUSTMENTS
+Rider REA – Renewable Energy Adjustment............................................................................................ 235
+Rider ZEA – Zero Emission Adjustment ................................................................................................... 236
+Rider EEPA – Energy Efficiency Performance Adjustment ...................................................................... 237
+Rider ECR – Environmental Cost Recovery Adjustment .......................................................................... 240
+Rider FCA – Franchise Cost Additions ..................................................................................................... 249
+Rider LGC – Local Government Compliance Adjustment ........................................................................ 253
+Rider RCA – Retail Customer Assessments ............................................................................................. 256
+Rider TAX – Municipal and State Tax Additions ....................................................................................... 258
+Rider UF – Uncollectible Factors .............................................................................................................. 267
+Rider DG Rebate Adjustment – Renewable Energy Distributed Generation Rebate Adjustment ............ 347
+Rider EEPP – Energy Efficiency Pricing and Performance ...................................................................... 373
+* Rider CFRA – Carbon-Free Resource Adjustment .................................................................................. 388
+* Rider DSPM – Delivery Service Performance Metrics .............................................................................. 438
+* Rider ETAC – Energy Transition Assistance Charge .............................................................................. 452
+* Rider PIM – Performance Incentive Metrics ............................................................................................. 454
+* Rider DPA Refund – Deferred Prosecution Agreement Refund .............................................................. 585
+* Rider DSPR – Delivery Service Pricing Reconciliation ............................................................
+[DOC 1] https://www.comed.com/cdn/assets/v3/assets/blt3ebb3fed6084be2a/blt86ebee5fe6ed02f8/6ac9488c20451657b3b7e4f3/2026_Ratebook.pdf?branch=prod_alias
+................. 588
+* Rider RBA – Revenue Balancing Adjustment .......................................................................................... 596
+* Rider CTS – Coal to Solar ........................................................................................................................ 601
+* Rider EDITA – Excess Deferred Income Tax Adjustment ....................................................................... 609
+RIDERS PERTAINING TO PHYSICAL FACILITIES
+Rider DE – Distribution System Extensions ............................................................................................. 269
+Rider ML – Meter-Related Facilities Lease .............................................................................................. 273
+Rider NS – Nonstandard Services and Facilities ..................................................................................... 277
+Rider PM – Primary Metering Adjustment ................................................................................................ 281
+Rider RESALE – Allowance for Resale or Redistribution of Electricity ................................................... 282
+Rider ZSS – Zero Standard Service ......................................................................................................... 284
+Rider IQ – Interconnection Queue ............................................................................................................ 345
+RIDERS PERTAINING TO THE GENERATION OF ELECTRIC POWER AND ENERGY
+BY RETAIL CUSTOMERS
+Rider DG Rebate – Renewable Energy Distributed Generation Rebate .................................................. 245
+Rider POG – Parallel Operation of Retail Customer Generating Facilities ............................................... 288
+Rider POGNM – Parallel Operation of Retail Customer Generating Facilities with Net Metering ............ 294
+* Rider SPWS Rebate – Solar Paired with Storage Rebate ....................................................................... 306
+Rider POGCS – Parallel Operation of Retail Customer Generating Facilities Community Supply .......... 344
+RIDERS PERTAINING TO THE SUPPLY OF ELECTRIC POWER AND ENERGY
+Rider PE – Purchased Electricity .............................................................................................................. 311
+Rider PPO – Power Purchase Option ....................................................................................................... 330
+Rider MSS – Market Settlement Service .................................................................................................. 338
+(Continued on Sheet No. 3)
+Filed with the Illinois Commerce Commission on Date Effective: September 4, 2023
+July 21, 2023. Issued by T.R. Donnelly, President and COO
+Asterisk (*) indicates change. Post Office Box 805379
+Chicago, Illinois 60680-5379
+
+ILL. C. C. No. 10
+Commonwealth ELECTRICITY 7th Revised Sheet No. 3
+Edison Company (Canceling 6th Revised Sheet No. 3)
+TABLE OF
+[DOC 1] https://www.comed.com/cdn/assets/v3/assets/blt3ebb3fed6084be2a/blt86ebee5fe6ed02f8/6ac9488c20451657b3b7e4f3/2026_Ratebook.pdf?branch=prod_alias
+ CONTENTS
+(Continued from Sheet No. 2)
+Beginning Sheet Number
+RIDERS PERTAINING TO ELECTIVE SERVICES
+Rider AC – Residential Air Conditioner Load Cycling Program ................................................................ 335
+Rider GCB – Governmental Consolidated Billing ..................................................................................... 341
+Rider PTR – Peak Time Rebate ............................................................................................................... 351
+Rider RRTP – Residential Real Time Pricing Program ............................................................................ 356
+Rider VLR – Voluntary Load Response and System Reliability Program ................................................ 360
+Rider NAM – Non-AMI Metering .............................................................................................................. 444
+RIDERS PERTAINING TO ENTITIES OTHER THAN RETAIL CUSTOMERS
+Rider RESRRTP – Retail Electric Supplier Residential Real Time Pricing Program ................................ 363
+Rider SBO – Single Bill Option.................................................................................................................. 365
+Rider PORCB – Purchase of Receivables with Consolidated Billing ....................................................... 393
+Rider POU – Purchase of Uncollectibles .................................................................................................. 412
+Rider RMUD – Residential Meter Usage Data .......................................................................................... 448
+(Continued on Sheet No. 3)
+Filed with the Illinois Commerce Commission on Date Effective: September 4, 2023
+July 21, 2023. Issued by T.R. Donnelly, President and COO
+Post Office Box 805379
+Chicago, Illinois 60680-5379
+
+ILL. C. C. No. 10
+Commonwealth ELECTRICITY 1st Revised Sheet No. 3.1
+Edison Company (Canceling Original Sheet No. 3.1)
+TABLE OF CONTENTS
+(Continued from Sheet No. 3)
+Beginning Informational Sheet Number
+INFORMATIONAL SHEETS
+Purchased Electricity Charges – Supplement to Rate BES and Rider PE ................................................... 1
+PJM Services Charges – Supplement to Rate BES and Rider PE ............................................................... 2
+Purchased Electricity Adjustment Factor – Supplement to Rate BES and Rider PE ................................... 3
+Capacity Charges – Supplement to Rate BESH and Rider PPO ................................................................. 4
+PJM Services Charge – Supplement to Rate BESH and Rider PPO ........................................................... 5
+Miscellaneous Procurement Components Charge – Supplement to Rate BESH and Rider PPO ............... 6
+Hourly Purchased Electricity Adjustment Factor – Supplement to Rate BESH and Rider PPO .................. 7
+Environmental Cost Recovery Adjustment – Supplement to Rider ECR .......................................
+[DOC 1] https://www.comed.com/cdn/assets/v3/assets/blt3ebb3fed6084be2a/blt86ebee5fe6ed02f8/6ac9488c20451657b3b7e4f3/2026_Ratebook.pdf?branch=prod_alias
+............... 8
+Delivery Reconciliation Adjustment Factor – Supplement to Rider DSPR .................................................. 9
+Franchise Cost Percentages – Supplement to Rider FCA ......................................................................... 10
+Revenue Balancing Adjustment Factor – Supplement to Rider RBA ........................................................ 18
+Deferred Prosecution Agreement Refund Credits – Supplement to Rider DPA Refund ........................... 19
+Incremental Uncollectible Cost Factors – Supplement to Rider UF............................................................ 20
+Supply Base Uncollectible Cost Factors – Supplement to Rider UF .......................................................... 21
+Consolidated Billing Adjustment and Purchase of Receivables Adjustment – Supplement to
+Rider RCA ............................................................................................................................................ 22
+Historic Recovery Rate and Administrative Costs – Supplement to Rider POU ........................................ 23
+Delivery Service Charges – Supplement to Rate DSPP ............................................................................. 24
+Factors for Discounted Receivables Calculation – Supplement to Rider PORCB ..................................... 32
+* Distribution Loss Factors – Supplement to Rate BESH, Rate BEST, Rate RDS, and Rider PE ................ 33
+Single Bill Option Credit – Supplement to Rate RDS and Rider SBO ........................................................ 34
+Transmission Services Adjustment Factor and Miscellaneous Procurement Components Adjustment
+Factor – Supplement to Rider MSS ..................................................................................................... 35
+Renewable Energy Adjustments – Supplement to Rider REA ................................................................... 36
+Carbon-Free Resource Adjustments and Carbon-Free Resource Monthly Reconciliation Factors –
+Supplement to Rider CFRA .............................................................................................................. 36.1
+Self-Direct Renewable Portfolio Standard Adjustments – Supplement to Rider REA ............................ 36.2
+Zero Emission Adjustments – Supplement to Rider ZEA ........................................................................... 37
+Energy Efficiency Adjustments – Supplement to Rider EEPP .................................................................... 38
+Energy Transition Assistance Charge – Supplement to Rider ETAC ........................................................ 39
+Qualified Census Tracts – Supplement to General Terms and Conditions Service Application,
+Commencement, and Continuation Credit Requirements .................................................................... 40
+Energy Assistance Charge for the Supplemental Low-Income Energy Assistance Fund – Supplement
+to Rider RCA .
+[DOC 1] https://www.comed.com/cdn/assets/v3/assets/blt3ebb3fed6084be2a/blt86ebee5fe6ed02f8/6ac9488c20451657b3b7e4f3/2026_Ratebook.pdf?branch=prod_alias
+....................................................................................................................................... 41
+Performance Incentive Metrics – Supplement to Rider PIM ...................................................................... 42
+Distributed Generation Rebate Amount – Supplement to Rider DG Rebate .............................................. 48
+DG Rebate Required Smart Inverter Settings – Supplement to Rider DG Rebate .................................... 49
+Distributed Generation (DG) Rebate Adjustments – Supplement to Rider DG Rebate Adjustment .......... 56
+Non AMI Metering – Supplement to Rider NAM ........................................................................................ 60
+Excess Deferred Income Tax Adjustment Factor – Supplement to Rider EDITA ...................................... 62
+Coal to Solar Adjustment – Supplement to Rider CTS .............................................................................. 63
+* Excess Deferred Income Tax Adjustment Factor – Supplement to Rider EDITA ...................................... 62
+* Coal to Solar Adjustment – Supplement to Rider CTS .............................................................................. 63
+(Continued on Sheet No. 3.2)
+Filed with the Illinois Commerce Commission on Date Effective: August 29, 2025
+August 21, 2025. Issued pursuant to the Issued by David R. Perez, EVP and COO
+Illinois Commerce Commission Order on Rehearing Post Office Box 805379
+dated July 17, 2025, in Docket No. 24-0378. Chicago, Illinois 60680-5379
+Asterisk (*) indicates change.
+
+ILL. C. C. No. 10
+Commonwealth ELECTRICITY
+Edison Company Original Sheet No. 3.2
+TABLE OF CONTENTS
+(Continued from Sheet No. 3.1)
+Beginning Informational Sheet Number
+INFORMATIONAL SHEETS (CONTINUED)
+Delivery Service Charges – Supplement to Rate MRPP ............................................................................ 64
+Total Plan Adjustment Factor – Supplement to Rate MRPP ...................................................................... 65
+Eligible RESs and IMUD Annual Fee – Supplement to Rider IMUD .......................................................... 66
+Time of Use Distribution Facilities Charges – Supplement to Rate MRPP ................................................ 67
+Electric Vehicle Customer Incentive for Enrollment in Distribution Time of Use Pricing – Supplement to
+Rider EVEN ........................................................................................................................................... 68
+PJM Services and Miscellaneous Procurement Components Charge – Supplement to Rate BESH
+and Rider PPO ...................................................................................................................................... 69
+Basic Electric Service Time of Use Electricity Charges – Supplement to Rate BEST ............................... 70
+Basic Electric Service Time of Use Purchased Electricity Adjustment Factor – Su
+[DOC 1] https://www.comed.com/cdn/assets/v3/assets/blt3ebb3fed6084be2a/blt86ebee5fe6ed02f8/6ac9488c20451657b3b7e4f3/2026_Ratebook.pdf?branch=prod_alias
+ VILLAGES AND THE UNINCORPORATED CONTIGUOUS TERRITORY
+TO WHICH THIS SCHEDULE OF RATES IS APPLICABLE
+(Except as Otherwise Stated)
+City or Village County
+Ransom………………………………………………………………... LaSalle
+Reddick………………………………………………………………... Kankakee & Livingston
+Richmond……………………………………………………………… McHenry
+Richton Park. ………………………………………………………… Cook
+Ridott………………………………………………………………….. Stephenson
+Riverdale……………………………………………………………… Cook
+River Forest…………………………………………………………… Cook
+River Grove…………………………………………………………… Cook
+Riverside………………………………………………………………. Cook
+Riverwoods…………………………………………………………… Lake
+Robbins……………………………………………………………….. Cook
+Rock City……………………………………………………………… Stephenson
+Rockdale……………………………………………………………… Will
+† Rock Falls………………………………………………………….…. Whiteside
+Rockford……………………………………………………………….. Winnebago
+Rolling Meadows……………………………………………………… Cook
+Romeoville…………………………………………………………….. Will
+Roscoe…………………………………………………………………. Winnebago
+Roselle……………………………………………………………….. DuPage
+Rosemont…………………………………………………………….. Cook
+Round Lake…………………………………………………………… Lake
+Round Lake Beach…………………………………………………… Lake
+Round Lake Heights…………………………………………………. Lake
+Round Lake Park…………………………………………………….. Lake
+Rutland………………………………………………………………… LaSalle
+† Denotes that the Company serves only certain nonresidential customers in this municipality.
+(Continued on Sheet No. 16)
+Filed with the Illinois Commerce Commission on Date Effective: January 15, 2009
+December 16, 2008. Issued pursuant to the Issued by A. R. Pramaggiore, Exec. Vice President
+Illinois Commerce Commission Orders Post Office Box 805379
+entered July 26, 2006, in Docket No. 05-0597 Chicago, Illinois 60680-5379
+and August 15, 2007, in Docket No. 07-0432.
+
+ILL. C. C. No. 10
+Commonwealth ELECTRICITY
+Edison Company Original Sheet No. 16
+(Continued from Sheet No. 15)
+CITIES AND VILLAGES AND THE UNINCORPORATED CONTIGUOUS TERRITORY
+TO WHICH THIS SCHEDULE OF RATES IS APPLICABLE
+(Except as Otherwise Stated)
+City or Village County
+St. Anne……………………………………………………………….. Kankakee
+Sandwich……………………………………………………………… DeKalb
+Sauk Village………………………………………………………….. Cook
+Saunemin…………………………………………………………….. Livingston
+Scales Mound………………………………………………………… Jo Daviess
+Schaumburg………………………………………………………….. Cook
+Schiller Park………………………………………………………….. Cook
+Seneca………………………………………………………………… LaSalle
+Shabbona……………………………………………………………... DeKalb
+Shannon………………………………………………………………. Carroll
+Shorewood……………………………………………………………. Will
+Skokie…………………………………………………………………. Cook
+Sleepy Hollow………………………………………………………… Kane
+Somonauk…………………………………………………………….. DeKalb
+South Barrington……………………………………………………… Cook
+South Chicago Heights………………………………………………. Cook
+South Elgin……………………………………………………………. Kane
+South Holland…………………………………………………………. Cook
+South Wilmington…………………………………………………….. Grundy
+Spring Grove………………………………………………………….. McHenry
+Steger………………………………………………………………….. Cook & Will
+Sterling…………………………………………………………………. Whiteside
+Steward………………………………………………………………… Lee
+Stickney………………………………………………………………… Cook
+Stillman Valley…………………………………………………
+[DOC 1] https://www.comed.com/cdn/assets/v3/assets/blt3ebb3fed6084be2a/blt86ebee5fe6ed02f8/6ac9488c20451657b3b7e4f3/2026_Ratebook.pdf?branch=prod_alias
+DuPage
+Wheeling………………………………………………………………. Cook
+Willow Springs………………………………………………………… Cook
+Willowbrook…………………………………………………………… DuPage
+Wilmette……………………………………………………………….. Cook
+Wilmington…………………………………………………………….. Will
+Winfield………………………………………………………………… DuPage
+Winnebago……………………………………………………………. Winnebago
+Winslow………………………………………………………………… Stephenson
+Winthrop Harbor……………………………………………………… Lake
+Wonder Lake…………………………………………………………. McHenry
+Wood Dale……………………………………………………………. DuPage
+Woodridge…………………………………………………………….. DuPage
+Woodstock…………………………………………………………….. McHenry
+Worth…………………………………………………………………… Cook
+Yorkville……………………………………………………………….. Kendall
+Zion……………………………………………………………………. Lake
+Filed with the Illinois Commerce Commission on Date Effective: January 15, 2009
+December 16, 2008. Issued pursuant to the Issued by A. R. Pramaggiore, Exec. Vice President
+Illinois Commerce Commission Orders Post Office Box 805379
+entered July 26, 2006, in Docket No. 05-0597 Chicago, Illinois 60680-5379
+and August 15, 2007, in Docket No. 07-0432.
+
+ILL. C. C. No. 10
+Commonwealth ELECTRICITY 5th Revised Sheet No. 19
+Edison Company (Canceling 4th Revised Sheet No. 19)
+RATE BES
+BASIC ELECTRIC SERVICE
+APPLICABILITY.
+This tariff is applicable to any retail customer (a) using electric service for which the Company is providing
+bundled electric service; (b) to which the Residential Customer Group, Watt-Hour Customer Group,
+Demand Customer Group, Dusk to Dawn Lighting Customer Group, or General Lighting Customer Group,
+as defined in the Supply Groups section of the Retail Customer Categorizations part of the General Terms
+and Conditions of the Company's Schedule of Rates, is applicable, or would be applicable based upon the
+Company’s judgment with respect to such retail customer’s expected electric power and energy
+requirements; and (c) that meets the prerequisites of service, as applicable, provided in the Prerequisites
+of Service section of this tariff.
+Service hereunder is not applicable to a retail customer to which the Competitively Declared Customer
+Group is applicable.
+* Notwithstanding the aforementioned provisions of this Applicability section, service hereunder is not
+applicable to any retail customer that elects to be served, and during such time that service is taken, under
+Rate BESH - Basic Electric Service Hourly Pricing (Rate BESH), Rate RDS - Retail Delivery Service (Rate
+RDS), or Rate BEST – Basic Electric Service Time of Use Pricing (Rate BEST).
+DEFINITIONS.
+Definitions of terms used in this tariff are provided in the Definitions part of the General Terms and
+Conditions of the Company’s Schedule of Rates.
+PREREQUISITES OF SERVICE.
+For a situation in which a retail customer requesting service hereunder is currently receiving service from
+the Company under a different tariff, such retail customer must fulfill all obligations, except timely payment
+for service, for which it is responsible under such other tariff prior to terminating service under such other
+tariff and commencing servi
+[DOC 1] https://www.comed.com/cdn/assets/v3/assets/blt3ebb3fed6084be2a/blt86ebee5fe6ed02f8/6ac9488c20451657b3b7e4f3/2026_Ratebook.pdf?branch=prod_alias
+e
+The Customer Charge is applicable to the retail customer for the monthly billing period and is equal to
+the applicable Customer Charge listed in the Delivery Service Charges Informational Sheets of the
+Company’s Schedule of Rates for the delivery class applicable to the retail customer for the monthly
+billing period. Notwithstanding the previous provisions of this Customer Charge subsection, there is
+no Customer Charge for the Fixture-Included Lighting Delivery Class, Dusk to Dawn Lighting Delivery
+Class, or General Lighting Delivery Class.
+Standard Metering Service Charge
+The Standard Metering Service Charge provided on a $/kWh basis is applicable to the kilowatt-hours
+(kWhs) provided to the retail customer during the monthly billing period and is equal to the applicable
+Standard Metering Service Charge listed in the Delivery Service Charges Informational Sheets of the
+Company’s Schedule of Rates for the delivery class applicable to the retail customer for the monthly
+billing period. Otherwise, the Standard Metering Service Charge is applicable to the retail customer
+for the monthly billing period and is equal to the applicable Standard Metering Service Charge listed in
+such Delivery Service Charges Informational Sheets for the delivery class applicable to the retail
+customer for the monthly billing period. Notwithstanding the previous provisions of this paragraph,
+there is no Standard Metering Service Charge for the Fixture-Included Lighting Delivery Class.
+(Continued on Sheet No. 20.2)
+Filed with the Illinois Commerce Commission on Date Effective: June 20, 2012
+June 6, 2012. Issued pursuant to the Issued by A. R. Pramaggiore, President and CEO
+Illinois Commerce Commission Order dated Post Office Box 805379
+May 29, 2012, in Docket No. 11-0721. Chicago, Illinois 60680-5379
+Asterisk (*) indicates change.
+
+ILL. C. C. No. 10
+Commonwealth ELECTRICITY 2nd Revised Sheet No. 20.2
+Edison Company (Canceling 1st Revised Sheet No. 20.2)
+RATE BES
+BASIC ELECTRIC SERVICE
+(Continued from Sheet No. 20.1)
+MONTHLY CHARGES (CONTINUED).
+Distribution Facilities Charge
+The Distribution Facilities Charge provided on a $/kWh basis is applicable to the kWhs provided to the
+retail customer during the monthly billing period and is equal to the applicable Distribution Facilities
+Charge listed in the Delivery Service Charges Informational Sheets of the Company’s Schedule of
+Rates for the delivery class applicable to the retail customer for the monthly billing period.
+* Notwithstanding the above, beginning with the January 2026 monthly billing period, for a residential
+retail customer electing to take service under time of use (TOU) differentiated Distribution Facilities
+Charges, such residential retail customer’s Distribution Facilities Charges are provided on a $/kWh
+basis and differentiated by four TOU periods (shown in Central Prevailing Time, CPT): the Morning
+Period from 6:00 a.m. to 1:00 p.m., the Mid-Day Peak Period from 1:00 p.m. to 7:00 p.m., the Evening
+Period f
+[DOC 1] https://www.comed.com/cdn/assets/v3/assets/blt3ebb3fed6084be2a/blt86ebee5fe6ed02f8/6ac9488c20451657b3b7e4f3/2026_Ratebook.pdf?branch=prod_alias
+rom 7:00 p.m. to 9:00 p.m., and the Overnight Period from 9:00 p.m. to 6:00 a.m. of the
+subsequent day. The TOU Distribution Facilities Charges are listed in the Time of Use Distribution
+Facilities Charges Informational Sheets of the Company’s Schedule of Rates for the delivery class
+applicable to such residential retail customer for the monthly billing period. Each TOU Distribution
+Facilities Charge for the monthly billing period is applicable to the kWhs provided to the residential
+retail customer during the corresponding TOU period of the monthly billing period.
+The Secondary Voltage Distribution Facilities Charge provided on a $/kW basis is applicable to the
+portion of the Maximum Kilowatts Delivered (MKD) established by the retail customer during the
+monthly billing period served by electric conductors entering the retail customer’s premises below
+69,000 volts with transformation to below 2,400 volts provided by the Company, as applicable, and is
+equal to the applicable Secondary Voltage Distribution Facilities Charge listed in the Delivery Service
+Charges Informational Sheets of the Company’s Schedule of Rates for the delivery class applicable to
+the retail customer for the monthly billing period.
+The Primary Voltage Distribution Facilities Charge provided on a $/kW basis is applicable to the
+portion of the MKD established by the retail customer during the monthly billing period served by
+electric conductors entering the retail customer’s premises at or above 4,000 volts but below 69,000
+volts with either no transformation provided by the Company or transformation to 2,400 volts or above
+provided by the Company, as applicable, and is equal to the applicable Primary Voltage Distribution
+Facilities Charge listed in the Delivery Service Charges Informational Sheets of the Company’s
+Schedule of Rates for the delivery class applicable to the retail customer for the monthly billing period.
+The High Voltage Distribution Facilities Charge provided on a $/kW basis is applicable to the portion of
+the MKD established by the retail customer during the monthly billing period served by electric
+conductors entering the retail customer’s premises at or above 69,000 volts, as applicable, and is
+equal to the applicable High Voltage Distribution Facilities Charge listed in the Delivery Service
+Charges Informational Sheets of the Company’s Schedule of Rates applicable to the retail customer
+for the monthly billing period.
+The Distribution Facilities Charge provided on a $/fixture basis is applicable to the number of
+corresponding fixture units in place for the retail customer at the beginning of the monthly billing period
+and is equal to the applicable Distribution Facilities Charge listed in the Delivery Service Charges
+Informational Sheets of the Company’s Schedule of Rates for such corresponding fixture unit.
+(Continued on Sheet No. 21)
+Filed with the Illinois Commerce Commission on Date Effective: February 6, 2025
+January 30, 2025. Filed pursuant to the Is
+[DOC 1] https://www.comed.com/cdn/assets/v3/assets/blt3ebb3fed6084be2a/blt86ebee5fe6ed02f8/6ac9488c20451657b3b7e4f3/2026_Ratebook.pdf?branch=prod_alias
+No. 23)
+Filed with the Illinois Commerce Commission on Date Effective: February 13, 2014
+February 10, 2014. Issued pursuant to the Issued by A. R. Pramaggiore, President and CEO
+Illinois Commerce Commission Order dated Post Office Box 805379
+February 5, 2014, in Docket No. 13-0552. Chicago, Illinois 60680-5379
+
+ILL. C. C. No. 10
+Commonwealth ELECTRICITY 7th Revised Sheet No. 23
+Edison Company (Canceling 6th Revised Sheet No. 23)
+RATE BES
+BASIC ELECTRIC SERVICE
+(Continued from Sheet No. 22)
+MONTHLY CHARGES (CONTINUED).
+Non AMI Metering Monthly Charges
+If the Company provides non AMI metering to the retail customer served hereunder, such retail
+customer is subject to the monthly charges identified in Rider NAM, as applicable.
+Other Generally Applicable Charges
+The Company’s Schedule of Rates of which this tariff is a part includes General Terms and Conditions
+and riders that include other generally applicable charges. Service hereunder is subject to such
+General Terms and Conditions, riders, and other generally applicable charges.
+* OTHER CHARGES.
+Non AMI Metering Charges
+If a retail customer served hereunder is provided with non AMI metering, such retail customer is
+subject to the charges presented in the Other Charges section of Rider NAM, as applicable.
+Late Payment Charge
+The Late Payment Charge as described in the Billing and Payment part of the General Terms and
+Conditions of the Company’s Schedule of Rates is applicable to all charges applied in accordance with
+the provisions of this tariff.
+MEASUREMENT OF POWER AND ENERGY PROVIDED.
+Electric power and energy provided to a retail customer served hereunder are measured in accordance
+with the provisions of the Measurement of Energy and Demand subsection of the Continuing Electric
+Service section of the Billing and Payment part of the General Terms and Conditions of the Company's
+Schedule of Rates.
+(Continued on Sheet No. 24)
+Filed with the Illinois Commerce Commission on Date Effective: December 2, 2016
+October 18, 2016. Issued by A. R. Pramaggiore, President and CEO
+Asterisk (*) indicates change. Post Office Box 805379
+Chicago, Illinois 60680-5379
+
+ILL. C. C. No. 10
+Commonwealth ELECTRICITY 4th Revised Sheet No. 24
+Edison Company (Canceling 3rd Revised Sheet No. 24)
+RATE BES
+BASIC ELECTRIC SERVICE
+(Continued from Sheet No. 23)
+TERM OF SERVICE.
+Commencement of Service
+Service under this tariff does not commence until the retail customer fulfills all applicable prerequisites
+of service provided in the General Terms and Conditions of the Company's Schedule of Rates.
+Service hereunder does not commence until all applicable prerequisites of service, as provided in the
+Prerequisites of Service section of this tariff, are met. Service hereunder commences only for a retail
+customer to which the Residential Customer Group, Watt-Hour Customer Group, Demand Customer
+Group, Dusk to Dawn Lighting Customer Group, or General Lighting Customer Group is applicable.
+A retail customer’s term of service hereunder
+[DOC 1] https://www.comed.com/cdn/assets/v3/assets/blt3ebb3fed6084be2a/blt86ebee5fe6ed02f8/6ac9488c20451657b3b7e4f3/2026_Ratebook.pdf?branch=prod_alias
+ commences when the Company begins to provide
+service hereunder.
+* For a situation in which an applicant for electric service at a premises (a) has never received any
+tariffed service from the Company; (b) has expected electric power and energy requirements such
+that, in the Company's judgment, the Residential Customer Group, Watt-Hour Customer Group,
+Demand Customer Group, Dusk to Dawn Lighting Customer Group, or General Lighting Customer
+Group would be applicable to such applicant; and (c) has not requested or is not in compliance with
+the availability provisions or prerequisites of service under Rate BESH, Rate BEST, or Rate RDS,
+such applicant commences service hereunder, and is designated as a retail customer when the
+Company begins to provide electric service to such applicant.
+Termination of Service
+A retail customer may elect to terminate service hereunder and obtain electric power and energy
+supply from a Retail Electric Supplier (RES). In making such election, for a retail customer that is a (a)
+residential retail customer, (b) lighting retail customer that has established or is expected to establish
+30-minute demands for electric power and energy that do not exceed 100 kW, or (c) nonresidential
+retail customer to which the Watt-Hour Delivery Class or Small Load Delivery Class is applicable, the
+provision of service hereunder terminates and the provision of service from the Company under Rate
+RDS commences, effective on the Company’s next normally scheduled meter reading or billing cycle
+date for such retail customer, provided such effective date is at least eighteen (18) calendar days after
+the Company receives a valid and applicable Direct Access Service Request (DASR) for such retail
+customer and such retail customer is in compliance with all the prerequisites of service under Rate
+RDS. In making such election, for any other retail customer, the provision of service hereunder
+terminates and the provision of service from the Company under Rate RDS commences, effective on
+the Company’s next normally scheduled meter reading or billing cycle date for such retail customer,
+provided such effective date is at least seven (7) calendar days after the Company receives a valid
+and applicable DASR for such retail customer and such retail customer is in compliance with all the
+prerequisites of service under Rate RDS. Notwithstanding the provisions of the previous sentence, in
+making such election, for such other retail customer, such effective date may occur on a date other
+than the Company’s next normally scheduled meter reading or billing cycle date for such retail
+customer, provided such effective date is at least seven (7) calendar days after the Company receives
+a valid and applicable DASR for such retail customer, such retail customer is in compliance with all the
+prerequisites of service under Rate RDS, and such retail customer is subject to the Nonstandard
+Switching Fees provided in the Nonstandard Switching Fee subsection of the Other Ch
+[DOC 1] https://www.comed.com/cdn/assets/v3/assets/blt3ebb3fed6084be2a/blt86ebee5fe6ed02f8/6ac9488c20451657b3b7e4f3/2026_Ratebook.pdf?branch=prod_alias
+arges section
+of the Rates and Charges part of Rate RDS.
+(Continued on Sheet No. 25)
+Filed with the Illinois Commerce Commission on Date Effective: August 29, 2025
+August 21, 2025. Issued pursuant to the Issued by David R. Perez, EVP and COO
+Illinois Commerce Commission Order on Rehearing Post Office Box 805379
+dated July 17, 2025, in Docket No. 24-0378. Chicago, Illinois 60680-5379
+Asterisk (*) indicates change.
+
+ILL. C. C. No. 10
+Commonwealth ELECTRICITY 6th Revised Sheet No. 25
+Edison Company (Canceling 5th Revised Sheet No. 25)
+RATE BES
+BASIC ELECTRIC SERVICE
+(Continued from Sheet No. 24)
+TERM OF SERVICE (CONTINUED).
+Termination of Service (Continued)
+Notwithstanding the previous provisions of this Termination of Service subsection, for a situation in
+which a retail customer had received service from the Company under Rate RDS with electric power
+and energy supply service provided by a particular RES prior to commencing service hereunder, such
+retail customer is required to receive service from the Company hereunder on a continuous basis for a
+period of at least six (6) monthly billing periods before such retail customer may terminate service
+hereunder and obtain service from the Company under Rate RDS with electric power and energy
+supply service provided by such particular RES.
+In the event that a DASR submitted to the Company pertains to an election of service under Rate RDS
+with electric power and energy supply from a RES and is for a (a) residential retail customer, (b)
+lighting retail customer that has established or is expected to establish 30-minute demands for electric
+power and energy that do not exceed 100 kW, or (c) nonresidential retail customer to which the Watt-
+Hour Delivery Class or Small Load Delivery Class is applicable, then such DASR may be rescinded
+provided the Company receives notification from the retail customer or the RES to rescind such DASR
+no later than five (5) calendar days prior to the otherwise effective date of the election identified in
+such DASR. In the event that a DASR submitted to the Company pertains to an election of service
+under Rate RDS with electric power and energy supply from a RES and is for any other retail
+customer, then such DASR may be rescinded provided the Company receives notification from the
+RES to rescind such DASR no later than five (5) calendar days prior to the otherwise effective date of
+the switch identified in such DASR.
+A retail customer may elect to terminate service hereunder and obtain service under Rate BESH,
+provided such retail customer fulfills all prerequisites of service under Rate BESH.
+* A retail customer may elect to terminate service hereunder and obtain service under Rate BEST,
+provided that such retail customer fulfills all prerequisites of service under Rate BEST.
+A nonresidential retail customer or lighting retail customer may elect to terminate service hereunder
+and obtain service under Rate RDS and Rider PPO - Power Purchase Option (Rider PPO), provided
+such 
+[DOC 1] https://www.comed.com/cdn/assets/v3/assets/blt3ebb3fed6084be2a/blt86ebee5fe6ed02f8/6ac9488c20451657b3b7e4f3/2026_Ratebook.pdf?branch=prod_alias
+ 2026 monthly billing period, for a residential
+retail customer electing to take service under time of use (TOU) differentiated Distribution Facilities
+Charges, such residential retail customer’s Distribution Facilities Charges are provided on a $/kWh
+basis and differentiated by four TOU periods (shown in Central Prevailing Time, CPT): the Morning
+Period from 6:00 a.m. to 1:00 p.m., the Mid-Day Peak Period from 1:00 p.m. to 7:00 p.m., the Evening
+Period from 7:00 p.m. to 9:00 p.m., and the Overnight Period from 9:00 p.m. to 6:00 a.m. of the
+subsequent day. The TOU Distribution Facilities Charges are listed in the Time of Use Distribution
+Facilities Charges Informational Sheets of the Company’s Schedule of Rates for the delivery class
+applicable to such residential retail customer for the monthly billing period. Each TOU Distribution
+Facilities Charge for the monthly billing period is applicable to the kWhs provided to the residential
+retail customer during the corresponding TOU period of the monthly billing period.
+The Secondary Voltage Distribution Facilities Charge provided on a $/kW basis is applicable to the
+portion of the Maximum Kilowatts Delivered (MKD) established by the retail customer during the
+monthly billing period served by electric conductors entering the retail customer’s premises below
+69,000 volts with transformation to below 2,400 volts provided by the Company, as applicable, and is
+equal to the applicable Secondary Voltage Distribution Facilities Charge listed in the Delivery Service
+Charges Informational Sheets of the Company’s Schedule of Rates for the delivery class applicable to
+the retail customer for the monthly billing period.
+The Primary Voltage Distribution Facilities Charge provided on a $/kW basis is applicable to the
+portion of the MKD established by the retail customer during the monthly billing period served by
+electric conductors entering the retail customer’s premises at or above 4,000 volts but below 69,000
+volts with either no transformation provided by the Company or transformation to 2,400 volts or above
+provided by the Company, as applicable, and is equal to the applicable Primary Voltage Distribution
+Facilities Charge listed in the Delivery Service Charges Informational Sheets of the Company’s
+Schedule of Rates for the delivery class applicable to the retail customer for the monthly billing period.
+The High Voltage Distribution Facilities Charge provided on a $/kW basis is applicable to the portion of
+the MKD established by the retail customer during the monthly billing period served by electric
+conductors entering the retail customer’s premises at or above 69,000 volts, as applicable, and is
+equal to the applicable High Voltage Distribution Facilities Charge listed in the Delivery Service
+Charges Informational Sheets of the Company’s Schedule of Rates applicable to the retail customer
+for the monthly billing period.
+The Distribution Facilities Charge provided on a $/fixture basis is applicable to the num
+[DOC 1] https://www.comed.com/cdn/assets/v3/assets/blt3ebb3fed6084be2a/blt86ebee5fe6ed02f8/6ac9488c20451657b3b7e4f3/2026_Ratebook.pdf?branch=prod_alias
+plicable in accordance with the provisions of the Term of Service section of this tariff and is
+equal to $653.00.
+Non AMI Metering Charges
+If a retail customer served hereunder is provided with non AMI metering, such retail customer is
+subject to the charges presented in the Other Charges section of Rider NAM, as applicable.
+Late Payment Charge
+The Late Payment Charge as described in the Billing and Payment part of the General Terms and
+Conditions of the Company’s Schedule of Rates is applicable to all charges applied in accordance with
+the provisions of this tariff.
+(Continued on Sheet No. 41)
+Filed with the Illinois Commerce Commission on Date Effective: February 6, 2025
+January 30, 2025. Issued pursuant to the Issued by David R. Perez, EVP and COO
+Illinois Commerce Commission Order dated Post Office Box 805379
+January 16, 2025, in Docket No. 24-0378. Chicago, Illinois 60680-5379
+Asterisk (*) indicates change.
+
+ILL. C. C. No. 10
+Commonwealth ELECTRICITY 5th Revised Sheet No. 41
+Edison Company (Canceling 4th Revised Sheet No. 41)
+RATE BESH
+BASIC ELECTRIC SERVICE HOURLY PRICING
+(Continued from Sheet No. 40)
+MEASUREMENT OF POWER AND ENERGY PROVIDED.
+Electric power and energy provided to a retail customer served hereunder are measured in accordance
+with the provisions of the Measurement of Energy and Demand subsection of the Continuing Electric
+Service section of the Billing and Payment part of the General Terms and Conditions of the Company's
+Schedule of Rates. However, for a situation in which no metering installation or a metering installation that
+does not have an interval demand recording register is provided for the retail customer, the thirty (30)
+minute demands established by the retail customer and the kWhs delivered during each hour of the
+monthly billing period are statistically derived utilizing the load profile applicable to the retail customer, as
+such profile may be adjusted or modified pursuant to the Company’s standard methodology for
+determination of load profiles, and the kWhs delivered during the monthly billing period, as determined or
+measured for such retail customer, as applicable.
+TERM OF SERVICE.
+For a retail customer requesting service hereunder, such service does not commence until the retail
+customer fulfills all applicable prerequisites of service provided in the General Terms and Conditions of the
+Company's Schedule of Rates and the retail customer fulfills all applicable prerequisites of service
+provided in the Prerequisites of Service section of this tariff.
+Following a termination of service hereunder for a residential retail customer, such residential retail
+customer is not eligible to receive service hereunder for a period of at least twelve (12) months following
+the date of such termination.
+A retail customer’s term of service hereunder commences when the Company begins to provide service
+hereunder.
+* To terminate service hereunder and switch to a different tariff for electric service, a retail customer must
+pro
+[DOC 1] https://www.comed.com/cdn/assets/v3/assets/blt3ebb3fed6084be2a/blt86ebee5fe6ed02f8/6ac9488c20451657b3b7e4f3/2026_Ratebook.pdf?branch=prod_alias
+vide advance notice to the Company at least seven (7) calendar days prior to the date on which the
+customer requests service hereunder to be terminated. For a situation in which the switch is to Rate RDS,
+a valid and applicable Direct Access Service Request (DASR) for such retail customer may be provided in
+lieu of advance notice. Such notice or DASR, as applicable, is accepted by the Company and service
+hereunder is terminated on such date if (a) such date occurs (i) on the Company's normally scheduled
+meter reading or billing cycle date for such retail customer, or (ii) on a day other than the Company's
+normally scheduled meter reading or billing cycle date for such retail customer and such off cycle
+termination was not preceded by an off cycle switch to Rate BESH in the same monthly billing period, and
+(b) such retail customer, on or prior to such date, fulfills all prerequisites for, and on such date commences
+service under, such other applicable tariff that it selected and for which it is eligible. In the event such
+termination date occurs on a day other than the Company's normally scheduled meter reading or billing
+cycle date for such retail customer and such off cycle termination follows an off cycle switch to Rate BESH
+in the same monthly billing period, such termination notice is accepted by the Company and service
+hereunder is terminated on such termination date if (A) such retail customer pays to the Company the Off
+Cycle Termination Fee listed in the Other Charges section of this tariff at the time such notice is provided,
+and (B) such retail customer, on or prior to such date, fulfills all prerequisites for, and on such date
+commences service under, such other applicable tariff that it selected and for which it is eligible.
+(Continued on Sheet No. 42)
+Filed with the Illinois Commerce Commission on Date Effective: June 21, 2019
+May 7, 2019. Issued by T. R. Donnelly, President and COO
+Asterisk (*) indicates change. Post Office Box 805379
+Chicago, Illinois 60680-5379
+
+ILL. C. C. No. 10
+Commonwealth ELECTRICITY 4th Revised Sheet No. 42
+Edison Company (Canceling 3rd Revised Sheet No. 42)
+RATE BESH
+BASIC ELECTRIC SERVICE HOURLY PRICING
+(Continued from Sheet No. 41)
+TERM OF SERVICE (CONTINUED).
+Notwithstanding the provisions of the previous paragraph, to terminate service hereunder and switch to
+delivery service under Rate RDS with electric power and energy supply provided by a Retail Electric
+Supplier (RES), for a retail customer that is a (a) residential retail customer, (b) lighting retail customer that
+has established or is expected to establish thirty (30) minute demands for electric power and energy that
+do not exceed 100 kW, or (c) nonresidential retail customer to which the Watt-Hour Delivery Class or
+Small Load Delivery Class is applicable, the provision of service hereunder terminates and the provision of
+service from the Company under Rate RDS commences, effective on the Company’s next normally
+scheduled meter reading or billing 
+[DOC 1] https://www.comed.com/cdn/assets/v3/assets/blt3ebb3fed6084be2a/blt86ebee5fe6ed02f8/6ac9488c20451657b3b7e4f3/2026_Ratebook.pdf?branch=prod_alias
+cycle date for such retail customer, provided such effective date is at
+least eighteen (18) calendar days after the Company receives a valid and applicable DASR for such retail
+customer and such retail customer is in compliance with all the prerequisites of service under Rate RDS.
+Switching to Rate RDS on a date other than a normally scheduled meter reading or billing cycle date is not
+allowed for such retail customer.
+In the event that a DASR submitted to the Company pertains to a switch to service under Rate RDS with
+electric power and energy supply from a RES and is for a (a) residential retail customer, (b) lighting retail
+customer that has established or is expected to establish thirty (30) minute demands for electric power and
+energy that do not exceed 100 kW, or (c) nonresidential retail customer to which the Watt-Hour Delivery
+Class or Small Load Delivery Class is applicable, then such DASR may be rescinded provided the
+Company receives notification from the retail customer or the RES to rescind such DASR no later than five
+(5) calendar days prior to the otherwise effective date of the election identified in such DASR. In the event
+that a DASR submitted to the Company pertains to a switch to service under Rate RDS with electric power
+and energy supply from a RES and is for any other retail customer, then such DASR may be rescinded
+provided the Company receives notification from the RES to rescind such DASR no later than five (5)
+calendar days prior to the otherwise effective date of the switch identified in such DASR.
+In the event that a lighting retail customer terminates service under this tariff and does not elect to obtain
+service from the Company under any other tariffed service due to the fact that such lighting retail customer
+is abandoning the lighting system for which service hereunder has been provided, the lighting retail
+customer must provide the Company with sufficient notice to enable the Company and the lighting retail
+customer to cooperatively coordinate the termination of service hereunder to coincide with the
+abandonment of such lighting system.
+* Otherwise, in the event that (a) the retail customer terminates service from the Company under this tariff
+and (b) does not elect to obtain service from the Company under any other tariffed service at its premises
+due to the fact that such retail customer is vacating the premises, service hereunder continues for not
+more than ten (10) days after the date such retail customer vacates the premises, provided the retail
+customer provides timely notice to the Company to terminate service hereunder at such premises.
+(Continued on Sheet No. 43)
+Filed with the Illinois Commerce Commission on Date Effective: July 11, 2017
+July 10, 2017. Issued pursuant to Issued by A. R. Pramaggiore, President and CEO
+Illinois Commerce Commission Order dated Post Office Box 805379
+June 28, 2017, in Docket No. 17-0278. Chicago, Illinois 60680-5379
+Asterisk (*) indicates change.
+
+ILL. C. C. No. 10
+Commonw
+[DOC 1] https://www.comed.com/cdn/assets/v3/assets/blt3ebb3fed6084be2a/blt86ebee5fe6ed02f8/6ac9488c20451657b3b7e4f3/2026_Ratebook.pdf?branch=prod_alias
+ovisions regarding credit requirements, deposits, billing, and payment for service provided hereunder
+are included in the General Terms and Conditions of the Company’s Schedule of Rates.
+Provisions regarding the disconnection and reconnection of electric service provided hereunder for safety
+or other reasons are included in the Disconnection and Reconnection part of the General Terms and
+Conditions of the Company’s Schedule of Rates.
+Provisions addressing the resolution of disputes between the Company and a retail customer that involve
+the performance, breach, or alleged breach of any obligation under this tariff, or under any rider applicable
+to this tariff, or under any contract or any written agreement entered into under this tariff or applicable
+rider, are included in the Dispute Resolution part of the General Terms and Conditions of the Company’s
+Schedule of Rates.
+Nothing in this tariff precludes a residential entity that shares occupancy of a nonresidential retail
+customer’s premises from being served as a separate retail customer under a tariff applicable or available
+to residential retail customers.
+Nothing in this tariff precludes a nonresidential entity that shares occupancy of a residential retail
+customer’s premises from being served as a separate retail customer under a tariff applicable or available
+to nonresidential retail customers.
+(Continued on Sheet No. 46.1)
+Filed with the Illinois Commerce Commission on Date Effective: December 21, 2023
+December 20, 2023. Filed pursuant to the Issued by T.R. Donnelly, President and COO
+Illinois Commerce Commission Order dated Post Office Box 805379
+December 14, 2023, in Docket Nos. 22-0486/23-0055 (Cons.) Chicago, Illinois 60680-5379
+Asterisk (*) indicates change.
+
+ILL. C. C. No. 10
+Commonwealth ELECTRICITY 4th Revised Sheet No. 46.1
+Edison Company (Canceling 3rd Revised Sheet No. 46.1)
+RATE BESH
+BASIC ELECTRIC SERVICE HOURLY PRICING
+(Continued from Sheet No. 46)
+MISCELLANEOUS GENERAL PROVISIONS (CONTINUED).
+LMPs, listed in Eastern Prevailing Time (EPT), used to determine Hourly Energy Charges are available
+through PJM’s web site. Furthermore, the Company electronically posts on its web site indicative day-
+ahead hourly energy prices and indicative real time hourly energy prices determined from PJM day-ahead
+residual locational marginal prices and real time residual locational marginal prices, respectively, for the
+ComEd Zone. Such indicative hourly energy prices, listed in Central Prevailing Time (CPT), include
+adjustments for applicable losses and uncollectible costs incurred by the Company as described in the
+Hourly Energy Charges subsection of the Monthly Charges section of this tariff.
+The indicative day-ahead hourly energy prices are posted on a day-ahead basis in the form of twenty-four
+(24) hourly energy prices beginning with the hour from 11:00 p.m. of the present day to 12:00 a.m.
+(midnight) of the following day. The indicative real time hourly energy prices are posted on a day-aft
+[DOC 1] https://www.comed.com/cdn/assets/v3/assets/blt3ebb3fed6084be2a/blt86ebee5fe6ed02f8/6ac9488c20451657b3b7e4f3/2026_Ratebook.pdf?branch=prod_alias
+............................................. 71
+A. Technical and Operational Requirements .............................................................................. 72
+B. System Losses ........................................................................................................................ 72
+C. Scheduling and Provision of Data to PJM .............................................................................. 73
+10. Switching Suppliers and Switching to Bundled Electric Service ................................................. 73
+A. Switching Suppliers ................................................................................................................. 73
+B. Switching Metering Service Providers .................................................................................... 76
+C. Rescinding DASRs ................................................................................................................ 77
+D. Term of Service and Termination…………………………………………………………………. 77
+11. Customer Information ............................................................................................................... 77.2
+A. Historical Billing and Usage Information .............................................................................. 77.2
+B. Metering Information ............................................................................................................ 77.2
+12. Disconnection and Reconnection ............................................................................................. 77.2
+13. Dispute Resolution ...................................................................................................................... 78
+14. Miscellaneous General Provisions .............................................................................................. 78
+AVAILABILITY
+This tariff is available to any retail customer, provided such retail customer meets all the prerequisites of
+service described in the Prerequisites of Service section of the Application for and Commencement of
+Service part of this tariff.
+However, this tariff is not available to an applicant for electric service at a premises in the event that such
+applicant would be a new retail customer having never received any tariffed service from the Company
+and has expected electric power and energy requirements such that, in the Company's judgment, the
+applicant would be a retail customer that is a (a) residential retail customer, (b) lighting retail customer that
+has established or is expected to establish 30-minute demands for electric power and energy that do not
+exceed 100 kW, or (c) nonresidential retail customer to which the Watt-Hour Delivery Class or Small Load
+Delivery Class is applicable. This tariff is available to an applicant for service only after such applicant
+takes service as a retail customer under a tariff for bundled electric service and subsequently meets all the
+prerequisites of service described in the Prer
+[DOC 1] https://www.comed.com/cdn/assets/v3/assets/blt3ebb3fed6084be2a/blt86ebee5fe6ed02f8/6ac9488c20451657b3b7e4f3/2026_Ratebook.pdf?branch=prod_alias
+equisites of Service section of the Application for and
+Commencement of Service part of this tariff.
+(Continued on Sheet No. 49)
+Filed with the Illinois Commerce Commission on Date Effective: December 2, 2016
+October 18, 2016. Issued by A. R. Pramaggiore, President and CEO
+Asterisk (*) indicates change. Post Office Box 805379
+Chicago, Illinois 60680-5379
+
+ILL. C. C. No. 10
+Commonwealth ELECTRICITY 2nd Revised Sheet No. 49
+Edison Company (Canceling 1st Revised Sheet No. 49)
+RATE RDS
+RETAIL DELIVERY SERVICE
+(Continued from Sheet No. 48)
+AVAILABILITY (CONTINUED)
+Notwithstanding the provisions of the previous paragraph, this tariff is available to an applicant for service
+and such applicant is not required to first take service as a retail customer under a tariff for bundled
+electric service for a situation in which such applicant (a) would be a retail customer that is a (i)
+nonresidential retail customer to which the Watt-Hour Delivery Class or Small Load Delivery Class is
+applicable or (ii) lighting retail customer that has established or is expected to establish 30-minute
+demands for electric power and energy that do not exceed 100 kW, (b) is electing to take service at a
+premises at which electric power and energy supply service is being provided by a Retail Electric Supplier
+(RES), (c) has entered into a contractual agreement for the procurement of the electric power and energy
+supply service to be delivered hereunder at such premises without disruption of such procurement from
+such RES, and (d) is an entity established as a result of a change in identification for federal tax purposes
+due to the sale, merger, change in corporate form, or bankruptcy of the entity at such premises, provided
+such applicant meets all the prerequisites of service described in the Prerequisites of Service section of
+the Application for and Commencement of Service part of this tariff.
+* Additionally, this tariff is not available to an applicant for electric service at a premises in the event that
+such applicant (a) has received financial assistance in the previous 12 calendar months from the Low
+Income Home Energy Assistance Program or (b) is currently participating in the Percentage of Income
+Payment Plan. Notwithstanding the provisions of the previous sentence, this tariff is available to such
+applicant if the service hereunder is pursuant to (a) a government aggregation program adopted in
+accordance with Section 1-92 of the Illinois Power Agency Act or (b) an Illinois Commerce Commission
+(ICC)-approved savings guarantee plan pursuant to Section 16-115E(b) of the Public Utilities Act (Act)
+(220 ILCS 5/16-115E(b)).
+* Pursuant to Section 16-104(e) of the Act (220 ILCS 5/16-104(e)), a retail customer to which this tariff is
+available may take service hereunder for all or a portion of its electric power and energy requirements. A
+retail customer electing the latter option must designate the portion of its electric power and energy
+requirements to be served under this ta
+[DOC 1] https://www.comed.com/cdn/assets/v3/assets/blt3ebb3fed6084be2a/blt86ebee5fe6ed02f8/6ac9488c20451657b3b7e4f3/2026_Ratebook.pdf?branch=prod_alias
+he provisions of the General Terms and Conditions, Rider DE - Distribution System Extensions
+(Rider DE), Rider NS - Nonstandard Services and Facilities (Rider NS), and Rider ML - Meter-Related
+Facilities Lease (Rider ML).
+* Notwithstanding the preceding provisions of this Service and Facilities section, if the AMI Metering
+subsection of the Standard Metering section of the Metering part of the General Terms and Conditions of
+the Company’s Schedule of Rates is applicable to a retail customer and such retail customer refuses AMI
+metering, as described in the Non AMI Metering section of such Metering part, such facilities are
+furnished, installed, owned, operated, replaced, and maintained by the Company, provided the Company
+is allowed to recover from the retail customer the costs of furnishing, installing, owning, operating,
+replacing, and maintaining such non AMI metering in accordance with the provisions in Rider NAM – Non
+AMI Metering (Rider NAM) and such General Terms and Conditions.
+* For a situation in which the Company relocates or removes Company facilities in accordance with a retail
+customer's requirements or request, such relocation or removal is performed in accordance with the
+provisions for providing nonstandard services and facilities and/or non AMI metering, as applicable.
+(Continued on Sheet No. 52)
+Filed with the Illinois Commerce Commission on Date Effective: February 13, 2014
+February 10, 2014. Issued pursuant to the Issued by A. R. Pramaggiore, President and CEO
+Illinois Commerce Commission Order dated Post Office Box 805379
+February 5, 2014, in Docket No. 13-0552. Chicago, Illinois 60680-5379
+Asterisk (*) indicates change.
+
+ILL. C. C. No. 10
+Commonwealth ELECTRICITY
+Edison Company Original Sheet No. 52
+RATE RDS
+RETAIL DELIVERY SERVICE
+(Continued from Sheet No. 51)
+SERVICE OPTIONS
+TYPES OF CUSTOMERS.
+Customer Self-Managers
+A Customer Self-Manager (CSM) manages directly its own supply of electric power and energy and
+use of transmission services and ancillary transmission services, and submits its own Direct Access
+Service Requests (DASRs), rather than utilizing a RES for such purposes. A nonresidential retail
+customer may act as a CSM if it (a) has reasonable expectation that it will cause at least one
+megawatt (1 MW) to be delivered hereunder in each of at least ninety percent (90%) of the hours in
+the twelve (12) consecutive monthly billing periods following its designation as a CSM and in each
+subsequent twelve (12) consecutive monthly billing periods, absent a force majeure as defined in any
+applicable tariff on file with the FERC governing transactions over the transmission facilities located in
+the Company’s service territory, with such amount to be for one premises or multiple premises at
+which the CSM is the Company’s retail customer; (b) has the ability to procure, and procures, its
+transmission services and ancillary transmission services under each applicable tariff on file with the
+FERC governing the transmission of
+[DOC 1] https://www.comed.com/cdn/assets/v3/assets/blt3ebb3fed6084be2a/blt86ebee5fe6ed02f8/6ac9488c20451657b3b7e4f3/2026_Ratebook.pdf?branch=prod_alias
+Sheet No. 53)
+SERVICE OPTIONS (CONTINUED)
+SPLIT LOAD AND SUPPLIER OPTIONS.
+A retail customer electing to have its electric power and energy requirements supplied under any option
+provided in this Split Load and Supplier Options section must enter into a written contract with the
+Company. Such written contract specifies the supplier and split load option, the split load designations
+elected by the retail customer, and the term of provision of the option.
+Supplier Options
+Any portion of a retail customer’s electric power and energy requirements that is provided by the
+Company under the terms of a tariff for bundled electric service must be served under
+Rate BESH - Basic Electric Service Hourly Pricing (Rate BESH). A retail customer for which service is
+provided under Rate BESH for such portion is not eligible to elect to obtain Metering Service as
+described in the Alternative Metering Service subsection of the Metering Facilities section of the
+Metering part of this tariff.
+For a situation in which the retail customer is a nonresidential retail customer meeting all the
+prerequisites of service hereunder, such nonresidential retail customer may elect to have its electric
+power and energy requirements supplied under one of the three following supplier options for the
+purposes of split load supply: (1) by the Company under Rider PPO and by a RES with delivery
+service under Rate RDS; or (2) by the Company under Rate BESH and by a RES with delivery service
+under Rate RDS; or (3) by the Company under Rate BESH and by the Company under Rider PPO
+with delivery service under Rate RDS.
+For a situation in which the retail customer is a residential retail customer meeting all the prerequisites
+of service hereunder, such residential retail customer may elect to have its electric power and energy
+requirements supplied by the Company under Rate BESH and by a RES with delivery service under
+Rate RDS for the purposes of split load supply.
+(Continued on Sheet No. 55)
+Filed with the Illinois Commerce Commission on Date Effective: January 15, 2009
+December 16, 2008. Issued pursuant to the Issued by A. R. Pramaggiore, Exec. Vice President
+Illinois Commerce Commission Orders Post Office Box 805379
+entered July 26, 2006, in Docket No. 05-0597 Chicago, Illinois 60680-5379
+and August 15, 2007, in Docket No. 07-0432.
+
+ILL. C. C. No. 10
+Commonwealth ELECTRICITY
+Edison Company Original Sheet No. 55
+RATE RDS
+RETAIL DELIVERY SERVICE
+(Continued from Sheet No. 54)
+SERVICE OPTIONS (CONTINUED)
+SPLIT LOAD AND SUPPLIER OPTIONS (CONTINUED).
+Split Load Options
+A retail customer electing one of the supplier options described in the Supplier Options subsection of
+this Split Load and Supplier Options section designates the portions of its electric power and energy
+requirements to be so supplied in accordance with one of the following three mutually exclusive
+options: (a) meter by meter; (b) percentage of customer load; or (c) first through the meter.
+Meter by Meter
+The meter by meter opti
+[DOC 1] https://www.comed.com/cdn/assets/v3/assets/blt3ebb3fed6084be2a/blt86ebee5fe6ed02f8/6ac9488c20451657b3b7e4f3/2026_Ratebook.pdf?branch=prod_alias
+rgy in each half-hour of
+each monthly billing period, if any, is supplied to the retail customer by the other supplier and tariff
+designated in the elected supplier option.
+A retail customer electing this first through the meter option is required to have meter-related
+facilities adequate to measure the kWhs delivered to the retail customer and the rate at which
+such electricity is delivered to such retail customer for each half-hour in the monthly billing period
+for each metering installation at such retail customer’s premises.
+Notwithstanding the aforementioned provisions of this Split Load and Supplier Options section, all electric
+power and energy delivered to unmetered service locations, as allowed under the provisions of the
+General Terms and Conditions of the Company’s Schedule of Rates, must be provided by a single
+supplier.
+(Continued on Sheet No. 58)
+Filed with the Illinois Commerce Commission on Date Effective: January 15, 2009
+December 16, 2008. Issued pursuant to the Issued by A. R. Pramaggiore, Exec. Vice President
+Illinois Commerce Commission Orders Post Office Box 805379
+entered July 26, 2006, in Docket No. 05-0597 Chicago, Illinois 60680-5379
+and August 15, 2007, in Docket No. 07-0432.
+
+ILL. C. C. No. 10
+Commonwealth ELECTRICITY
+Edison Company Original Sheet No. 58
+RATE RDS
+RETAIL DELIVERY SERVICE
+(Continued from Sheet No. 57)
+SERVICE OPTIONS (CONTINUED)
+METERING SERVICE OPTIONS.
+For a situation in which (1) the retail customer meets all prerequisites of service hereunder, (2) the retail
+customer has all the electric power and energy it requires delivered hereunder, and (3) the retail customer
+is not taking service under a real time pricing program provided by a RES that is taking service under
+Rider RESRRTP - Retail Electric Supplier Residential Real Time Pricing Program (Rider RESRRTP), such
+retail customer may elect to have its Metering Service provided by a Metering Service Provider (MSP) as
+described in the Alternative Metering Service subsection of the Metering Facilities section of the Metering
+part of this tariff, rather than have its metering service provided by the Company. If the retail customer
+does not elect or is not eligible to elect to have its Metering Service provided by an MSP, then the
+Company provides the retail customer with metering service as provided in the Company-Provided
+Metering Service subsection of the Metering Facilities section of the Metering part of this tariff.
+DEFINITIONS
+GENERAL DEFINITIONS.
+Definitions of terms used in this tariff are provided in the Definitions part of the General Terms and
+Conditions of the Company’s Schedule of Rates.
+DELIVERY CLASSES.
+Delivery classes are the designations for retail customers located in the Company’s service territory so
+that retail customers can be categorized for the purposes of computing charges for the delivery of electric
+service and applying such charges to retail customers. Fifteen (15) delivery classes are identified for such
+purposes: the Reside
+[DOC 1] https://www.comed.com/cdn/assets/v3/assets/blt3ebb3fed6084be2a/blt86ebee5fe6ed02f8/6ac9488c20451657b3b7e4f3/2026_Ratebook.pdf?branch=prod_alias
+ntial Single Family Without Electric Space Heat Delivery Class, Residential Multi
+Family Without Electric Space Heat Delivery Class, Residential Single Family With Electric Space Heat
+Delivery Class, Residential Multi Family With Electric Space Heat Delivery Class, Watt-Hour Delivery
+Class, Small Load Delivery Class, Medium Load Delivery Class, Large Load Delivery Class, Very Large
+Load Delivery Class, Extra Large Load Delivery Class, High Voltage Delivery Class, Railroad Delivery
+Class, Fixture-Included Lighting Delivery Class, Dusk to Dawn Lighting Delivery Class, and General
+Lighting Delivery Class. These classes are defined in the Delivery Classes section of the Retail Customer
+Categorizations part of the General Terms and Conditions of the Company’s Schedule of Rates.
+(Continued on Sheet No. 59)
+Filed with the Illinois Commerce Commission on Date Effective: January 15, 2009
+December 16, 2008. Issued pursuant to the Issued by A. R. Pramaggiore, Exec. Vice President
+Illinois Commerce Commission Orders Post Office Box 805379
+entered July 26, 2006, in Docket No. 05-0597 Chicago, Illinois 60680-5379
+and August 15, 2007, in Docket No. 07-0432.
+
+ILL. C. C. No. 10
+Commonwealth ELECTRICITY 1st Revised Sheet No. 59
+Edison Company (Canceling Original Sheet No. 59)
+RATE RDS
+RETAIL DELIVERY SERVICE
+(Continued from Sheet No. 58)
+APPLICATION FOR AND COMMENCEMENT OF SERVICE
+PREREQUISITES OF SERVICE.
+The following prerequisites of service must be met before a retail customer commences service
+hereunder:
+1. Such retail customer must enter into a contractual agreement for the procurement of the electric power
+and energy supply service to be delivered hereunder from one or more of the following:
+a. a RES taking service from the Company under Rate RESS, or
+b. if such retail customer is a CSM and so chooses, a RES to which Rate RESS is available, or
+c. the Company under the terms of Rider PPO; and
+2. Such retail customer must fulfill all obligations, except timely payment for service, for which it is
+responsible with respect to terminating service under any tariff under which the Company has provided
+electric service to such retail customer; and
+3. The Company must be in receipt of a valid and applicable DASR that has been duly authorized by
+such retail customer; and
+4. Such retail customer fulfills all applicable prerequisites of service provided in the General Terms and
+Conditions of the Company's Schedule of Rates; and
+5. Such retail customer must reasonably cooperate with the Company as necessary to ensure that all
+meter-related facilities required for service hereunder are installed and in operating condition.
+* In lieu of meeting the third prerequisite of service listed in this Prerequisites of Service section, for a
+situation in which a retail customer is established as a result of a change in identification for federal tax
+purposes due to the sale, merger, change in corporate form, or bankruptcy of an entity at a premises, as
+described in the Availability
+[DOC 1] https://www.comed.com/cdn/assets/v3/assets/blt3ebb3fed6084be2a/blt86ebee5fe6ed02f8/6ac9488c20451657b3b7e4f3/2026_Ratebook.pdf?branch=prod_alias
+monthly
+billing period. Otherwise, the Standard Metering Service Charge is applicable to the retail customer
+for the monthly billing period and is equal to the applicable Standard Metering Service Charge listed in
+such Delivery Service Charges Informational Sheets for the delivery class applicable to the retail
+customer for the monthly billing period. Notwithstanding the previous provisions of this paragraph,
+there is no Standard Metering Service Charge for the Fixture-Included Lighting Delivery Class.
+Notwithstanding the previous provisions of this Standard Metering Service Charge subsection, if a
+retail customer served hereunder is provided with Metering Service by an MSP in accordance with the
+Alternative Metering Service subsection of the Metering Facilities section of the Metering part of this
+tariff, the Standard Metering Service Charge is not applicable to such retail customer. All other
+applicable charges continue to be applicable to such retail customer.
+(Continued on Sheet No. 61)
+Filed with the Illinois Commerce Commission on Date Effective: June 20, 2012
+June 6, 2012. Issued pursuant to the Issued by A. R. Pramaggiore, President and CEO
+Illinois Commerce Commission Order dated Post Office Box 805379
+May 29, 2012, in Docket No. 11-0721. Chicago, Illinois 60680-5379
+Asterisk (*) indicates change.
+
+ILL. C. C. No. 10
+Commonwealth ELECTRICITY 7th Revised Sheet No. 61
+Edison Company (Canceling 6th Revised Sheet No. 61)
+RATE RDS
+RETAIL DELIVERY SERVICE
+(Continued from Sheet No. 60)
+RATES AND CHARGES (CONTINUED)
+MONTHLY CHARGES (CONTINUED).
+Distribution Facilities Charge
+The Distribution Facilities Charge provided on a $/kWh basis is applicable to the kWhs delivered to the
+retail customer during the monthly billing period and is equal to the applicable Distribution Facilities
+Charge listed in the Delivery Service Charges Informational Sheets of the Company’s Schedule of
+Rates for the delivery class applicable to the retail customer for the monthly billing period.
+* Notwithstanding the above, beginning with the January 2026 monthly billing period, for a residential
+retail customer electing to take service under time of use (TOU) differentiated Distribution Facilities
+Charges, such residential retail customer’s Distribution Facilities Charges are provided on a $/kWh
+basis and differentiated by four TOU periods (shown in Central Prevailing Time, CPT): the Morning
+Period from 6:00 a.m. to 1:00 p.m., the Mid-Day Peak Period from 1:00 p.m. to 7:00 p.m., the Evening
+Period from 7:00 p.m. to 9:00 p.m., and the Overnight Period from 9:00 p.m. to 6:00 a.m. of the
+subsequent day. The TOU Distribution Facilities Charges are listed in the Time of Use Distribution
+Facilities Charges Informational Sheets of the Company’s Schedule of Rates for the delivery class
+applicable to such residential retail customer for the monthly billing period. Each TOU Distribution
+Facilities Charge for the monthly billing period is applicable to the kWhs provided to the residen
+[DOC 1] https://www.comed.com/cdn/assets/v3/assets/blt3ebb3fed6084be2a/blt86ebee5fe6ed02f8/6ac9488c20451657b3b7e4f3/2026_Ratebook.pdf?branch=prod_alias
+ta
+applicable to such scheduling are accurate and provided to PJM in good faith.
+The obligations of this Scheduling and Provision of Data to PJM section are met directly by a CSM unless
+such CSM elects to have the Company meet such obligations for such CSM. Notwithstanding the
+provisions of the previous sentence, for a situation in which, in the Company’s judgment, a CSM
+consistently provides grossly inaccurate schedules to PJM, the Company assumes the obligations of this
+Scheduling and Provision of Data to PJM section for such CSM.
+SWITCHING SUPPLIERS AND SWITCHING TO BUNDLED ELECTRIC SERVICE
+SWITCHING SUPPLIERS.
+Standard Switching
+In the event that a (a) lighting retail customer that has established or is expected to establish a 30-
+minute demand for electric power and energy in excess of 100 kW or (b) nonresidential retail customer
+to which the Medium Load Delivery Class, Large Load Delivery Class, Very Large Load Delivery
+Class, Extra Large Load Delivery Class, High Voltage Delivery Class, or Railroad Delivery Class is
+applicable elects to switch to a different provider of electric power and energy supply service for
+electric power and energy delivered hereunder, such election is effective on the Company’s next
+normally scheduled meter reading or billing cycle date for such retail customer, provided that such
+effective date is at least seven (7) calendar days after the Company receives a valid and applicable
+DASR from such different provider and further provided that the retail customer continues to comply
+with all the prerequisites of service hereunder.
+(Continued on Sheet No. 74)
+Filed with the Illinois Commerce Commission on Date Effective: December 2, 2016
+October 18, 2016. Issued by A. R. Pramaggiore, President and CEO
+Asterisk (*) indicates change. Post Office Box 805379
+Chicago, Illinois 60680-5379
+
+ILL. C. C. No. 10
+Commonwealth ELECTRICITY 4th Revised Sheet No. 74
+Edison Company (Canceling 3rd Revised Sheet No. 74)
+RATE RDS
+RETAIL DELIVERY SERVICE
+(Continued from Sheet No. 73)
+SWITCHING SUPPLIERS AND SWITCHING TO BUNDLED ELECTRIC SERVICE (CONTINUED)
+SWITCHING SUPPLIERS (CONTINUED).
+Standard Switching (Continued)
+In the event that a (a) residential retail customer, (b) lighting retail customer that has established or is
+expected to establish 30-minute demands for electric power and energy that do not exceed 100 kW, or
+(c) nonresidential retail customer to which the Watt-Hour Delivery Class or Small Load Delivery Class
+is applicable elects to switch to a different provider of electric power and energy supply service for
+electric power and energy delivered hereunder, such election is effective on the Company’s next
+normally scheduled meter reading or billing cycle date for such retail customer, provided that such
+effective date is at least eighteen (18) calendar days after the Company receives a valid and
+applicable DASR from such different provider and further provided that the retail customer continues to
+comply with all the prerequis
+[DOC 1] https://www.comed.com/cdn/assets/v3/assets/blt3ebb3fed6084be2a/blt86ebee5fe6ed02f8/6ac9488c20451657b3b7e4f3/2026_Ratebook.pdf?branch=prod_alias
+ites of service hereunder.
+In the event that a (a) lighting retail customer that has established or is expected to establish a 30-
+minute demand for electric power and energy in excess of 100 kW or (b) nonresidential retail customer
+to which the Medium Load Delivery Class, Large Load Delivery Class, Very Large Load Delivery
+Class, Extra Large Load Delivery Class, High Voltage Delivery Class, or Railroad Delivery Class is
+applicable taking service hereunder elects to switch to a tariff for bundled electric service provided by
+the Company, such election is effective on the Company’s next normally scheduled meter reading or
+billing cycle date for such retail customer, provided that such effective date is at least seven (7)
+calendar days after the Company receives a valid and applicable DASR from the Company and further
+provided that the retail customer complies with all the requirements for service under such tariff for
+bundled electric service. If the retail customer does not comply with all the requirements for service
+under the elected tariff for bundled electric service, such retail customer is switched to Rate BESH.
+In the event that a (a) residential retail customer, (b) lighting retail customer that has established or is
+expected to establish 30-minute demands for electric power and energy that do not exceed 100 kW, or
+(c) nonresidential retail customer to which the Watt-Hour Delivery Class or Small Load Delivery Class
+is applicable taking service hereunder elects to switch to a tariff for bundled electric service provided
+by the Company, such election is effective on the Company’s next normally scheduled meter reading
+or billing cycle date for such retail customer, provided that such effective date is at least eighteen (18)
+calendar days after the Company receives a valid and applicable DASR from the Company and further
+provided that the retail customer complies with all the requirements for service under such tariff for
+bundled electric service.
+(Continued on Sheet No. 75)
+Filed with the Illinois Commerce Commission on Date Effective: December 2, 2016
+October 18, 2016. Issued by A. R. Pramaggiore, President and CEO
+Post Office Box 805379
+Chicago, Illinois 60680-5379
+
+ILL. C. C. No. 10
+Commonwealth ELECTRICITY 8th Revised Sheet No. 75
+Edison Company (Canceling 7th Revised Sheet No. 75)
+RATE RDS
+RETAIL DELIVERY SERVICE
+(Continued from Sheet No. 74)
+SWITCHING SUPPLIERS AND SWITCHING TO BUNDLED ELECTRIC SERVICE (CONTINUED)
+SWITCHING SUPPLIERS (CONTINUED).
+Standard Switching (Continued)
+A DASR submitted to the Company by a RES that informs the Company of the termination of the
+provision of electric power and energy supply service by such RES for a retail customer for which the
+RES has been providing electric power and energy supply service, is designated as a Drop DASR.
+Any Drop DASR submitted to the Company must be submitted in accordance with this Standard
+Switching subsection.
+Any DASR submitted to the Company for any (a) residential retail c
+[DOC 1] https://www.comed.com/cdn/assets/v3/assets/blt3ebb3fed6084be2a/blt86ebee5fe6ed02f8/6ac9488c20451657b3b7e4f3/2026_Ratebook.pdf?branch=prod_alias
+ustomer, (b) lighting retail customer
+that has established or is expected to establish 30-minute demands for electric power and energy that
+do not exceed 100 kW, or (c) nonresidential retail customer to which the Watt-Hour Delivery Class or
+Small Load Delivery Class is applicable for the purpose of switching such retail customer’s electric
+power and energy supplier must be submitted in accordance with this Standard Switching subsection.
+Nonstandard Switching
+A (a) lighting retail customer that has established or is expected to establish a 30-minute demand for
+electric power and energy in excess of 100 kW or (b) nonresidential retail customer to which the
+Medium Load Delivery Class, Large Load Delivery Class, Very Large Load Delivery Class, Extra Large
+Load Delivery Class, High Voltage Delivery Class, or Railroad Delivery Class is applicable may elect
+to switch to a different provider of electric power and energy supply service for electric power and
+energy delivered hereunder with such switch effective on a date other than the Company’s normally
+scheduled meter reading or billing cycle date for such retail customer, provided that such effective
+date is at least seven (7) calendar days after the Company receives a valid and applicable DASR from
+such different provider and further provided that the retail customer continues to comply with all the
+prerequisites of service hereunder. The nonstandard switching fees provided in the Nonstandard
+Switching Fee subsection of the Other Charges section of the Rates and Charges part of this tariff are
+applicable to such retail customer.
+A (a) lighting retail customer that has established or is expected to establish a 30-minute demand for
+electric power and energy in excess of 100 kW or (b) nonresidential retail customer to which the
+Medium Load Delivery Class, Large Load Delivery Class, Very Large Load Delivery Class, Extra Large
+Load Delivery Class, High Voltage Delivery Class, or Railroad Delivery Class is applicable may elect
+to switch to an applicable tariff for bundled electric service provided by the Company with such switch
+effective on a date other than the Company’s normally scheduled meter reading or billing cycle date
+for such retail customer, provided that such effective date is at least seven (7) calendar days after the
+Company receives a valid and applicable DASR from the Company and further provided that the retail
+customer complies with all the requirements for service under such tariff for bundled electric service. If
+the retail customer does not comply with all the requirements for service under the elected tariff for
+bundled electric service, such retail customer is switched to Rate BESH. The nonstandard switching
+fees provided in the Nonstandard Switching Fee subsection of the Other Charges section of the Rates
+and Charges part of this tariff are applicable to such retail customer.
+(Continued on Sheet No. 76)
+Filed with the Illinois Commerce Commission on Date Effective: December 2, 2016
+O
+[DOC 1] https://www.comed.com/cdn/assets/v3/assets/blt3ebb3fed6084be2a/blt86ebee5fe6ed02f8/6ac9488c20451657b3b7e4f3/2026_Ratebook.pdf?branch=prod_alias
+ctober 18, 2016. Issued by A. R. Pramaggiore, President and CEO
+Post Office Box 805379
+Chicago, Illinois 60680-5379
+
+ILL. C. C. No. 10
+Commonwealth ELECTRICITY 4th Revised Sheet No. 76
+Edison Company (Canceling 3rd Revised Sheet No. 76)
+RATE RDS
+RETAIL DELIVERY SERVICE
+(Continued from Sheet No. 75)
+SWITCHING SUPPLIERS AND SWITCHING TO BUNDLED ELECTRIC SERVICE (CONTINUED)
+SWITCHING METERING SERVICE PROVIDERS.
+In the event that a (a) lighting retail customer that has established or is expected to establish a 30-minute
+demand for electric power and energy in excess of 100 kW or (b) nonresidential retail customer to which
+the Medium Load Delivery Class, Large Load Delivery Class, Very Large Load Delivery Class, Extra Large
+Load Delivery Class, High Voltage Delivery Class, or Railroad Delivery Class is applicable taking service
+hereunder elects to switch to a different provider of metering service, such election is effective on the
+Company’s next normally scheduled meter reading or billing cycle date for such retail customer, provided
+that such effective date is at least seven (7) calendar days after the Company receives a separate, valid
+and applicable DASR for such retail customer from such different provider. Such effective date is defined
+as the Effective Switch Date as described in Rate MSPS.
+In the event that a (a) residential retail customer, (b) lighting retail customer that has established or is
+expected to establish 30-minute demands for electric power and energy that do not exceed 100 kW, or (c)
+nonresidential retail customer to which the Watt-Hour Delivery Class or Small Load Delivery Class is
+applicable taking service hereunder elects to switch to a different provider of metering service, such
+election is effective on the Company’s next normally scheduled meter reading or billing cycle date for such
+retail customer, provided that such effective date is at least eighteen (18) calendar days after the
+Company receives a separate, valid and applicable DASR for such retail customer from such different
+provider. Such effective date is defined as the Effective Switch Date as described in Rate MSPS.
+In the event that a (a) lighting retail customer that has established or is expected to establish a 30-minute
+demand for electric power and energy in excess of 100 kW or (b) nonresidential retail customer to which
+the Medium Load Delivery Class, Large Load Delivery Class, Very Large Load Delivery Class, Extra Large
+Load Delivery Class, High Voltage Delivery Class, or Railroad Delivery Class is applicable taking service
+hereunder for which an MSP provides Metering Service switches to an applicable tariff for bundled electric
+service provided by the Company, such election is effective on the Company’s next normally scheduled
+meter reading or billing cycle date for such retail customer, provided that such effective date is at least
+seven (7) calendar days after the Company receives a separate, valid and applicable DASR for such retail
+customer from the C
+[DOC 1] https://www.comed.com/cdn/assets/v3/assets/blt3ebb3fed6084be2a/blt86ebee5fe6ed02f8/6ac9488c20451657b3b7e4f3/2026_Ratebook.pdf?branch=prod_alias
+ompany to provide for a switch from such MSP to the Company for the provision of
+metering service. The effective date of the switch from the MSP to the Company for the provision of
+metering service must coincide with the effective date of the switch to the aforementioned tariff for bundled
+electric service.
+In the event that a (a) residential retail customer, (b) lighting retail customer that has established or is
+expected to establish 30-minute demands for electric power and energy that do not exceed 100 kW, or (c)
+nonresidential retail customer to which the Watt-Hour Delivery Class or Small Load Delivery Class is
+applicable taking service hereunder for which an MSP provides Metering Service switches to an applicable
+tariff for bundled electric service provided by the Company, such election is effective on the Company’s
+next normally scheduled meter reading or billing cycle date for such retail customer, provided that such
+effective date is at least eighteen (18) calendar days after the Company receives a separate, valid and
+applicable DASR for such retail customer from the Company to provide for a switch from such MSP to the
+Company for the provision of metering service. The effective date of the switch from the MSP to the
+Company for the provision of metering service must coincide with the effective date of the switch to the
+aforementioned tariff for bundled electric service.
+.
+(Continued on Sheet No. 77)
+Filed with the Illinois Commerce Commission on Date Effective: December 2, 2016
+October 18, 2016. Issued by A. R. Pramaggiore, President and CEO
+Post Office Box 805379
+Chicago, Illinois 60680-5379
+
+ILL. C. C. No. 10
+Commonwealth ELECTRICITY 3rd Revised Sheet No. 77
+Edison Company (Canceling 2nd Revised Sheet No. 77)
+RATE RDS
+RETAIL DELIVERY SERVICE
+(Continued from Sheet No. 76)
+SWITCHING SUPPLIERS AND SWITCHING TO BUNDLED ELECTRIC SERVICE (CONTINUED)
+RESCINDING DASRS.
+Any DASR submitted for a (a) lighting retail customer that has established or is expected to establish a 30-
+minute demand for electric power and energy in excess of 100 kW or (b) nonresidential retail customer to
+which the Medium Load Delivery Class, Large Load Delivery Class, Very Large Load Delivery Class, Extra
+Large Load Delivery Class, High Voltage Delivery Class, or Railroad Delivery Class is applicable may be
+rescinded provided the Company receives notification to rescind the DASR no later than five (5) calendar
+days prior to the otherwise effective date of the switch identified in such DASR. Such notification to
+rescind a DASR must be submitted by the RES, MSP, or the Company, as applicable. A notification to
+rescind such DASR is not accepted by the Company directly from a retail customer.
+Any DASR submitted for a (a) residential retail customer, (b) lighting retail customer that has established
+or is expected to establish 30-minute demands for electric power and energy that do not exceed 100 kW,
+or (c) nonresidential retail customer to which the Watt-Hour Delivery Clas
+[DOC 1] https://www.comed.com/cdn/assets/v3/assets/blt3ebb3fed6084be2a/blt86ebee5fe6ed02f8/6ac9488c20451657b3b7e4f3/2026_Ratebook.pdf?branch=prod_alias
+s or Small Load Delivery Class is
+applicable may be rescinded provided the Company receives notification to rescind the DASR no later
+than five (5) calendar days prior to the otherwise effective date of the switch identified in such DASR.
+Such notification to rescind a DASR may be submitted by the RES, MSP, the Company, or the retail
+customer, as applicable.
+TERM OF SERVICE AND TERMINATION.
+A retail customer’s term of service hereunder commences when the Company begins to provide service
+hereunder. In the event that the retail customer terminates service from the Company under this tariff and
+does not elect to obtain service from the Company under any other tariffed service at its premises due to
+the fact that such retail customer is vacating the premises, service hereunder continues for not more than
+ten (10) days after the date such retail customer vacates the premises, provided the retail customer
+provides timely notice to the Company to terminate service hereunder at such premises.
+Notwithstanding the provisions of the previous paragraph, for a situation in which a lighting retail customer
+terminates service under this tariff and does not elect to obtain service from the Company under any other
+tariffed service due to the fact that such lighting retail customer is abandoning the lighting system for which
+service hereunder has been provided, the lighting retail customer must provide the Company with
+sufficient notice to enable the Company and the lighting retail customer to cooperatively coordinate the
+termination of service hereunder to coincide with the abandonment of such lighting system.
+To the extent that the retail customer is eligible for service under, and meets all requirements pertaining to,
+a tariff for bundled electric service provided by the Company, such retail customer has the right to
+terminate delivery service hereunder from the Company and switch to such applicable bundled electric
+service tariff in accordance with the applicable provisions described in the Switching Suppliers section of
+this Switching Suppliers and Switching to Bundled Electric Service part. Notwithstanding the previous
+provisions of this paragraph, a nonresidential retail customer obtaining directly procured electric power and
+energy supply, as applicable, under Rider PPO that is delivered hereunder is not allowed to switch to a
+tariff for bundled electric service during such retail customer’s term of service under Rider PPO. Such
+retail customer must continue to take service hereunder for the duration of its term of service under Rider
+PPO.
+(Continued on Sheet No. 77.1)
+Filed with the Illinois Commerce Commission on Date Effective: December 2, 2016
+October 18, 2016. Issued by A. R. Pramaggiore, President and CEO
+Post Office Box 805379
+Chicago, Illinois 60680-5379
+
+ILL. C. C. No. 10
+Commonwealth ELECTRICITY 2nd Revised Sheet No. 77.1
+Edison Company (Canceling 1st Revised Sheet No. 77.1)
+RATE RDS
+RETAIL DELIVERY SERVICE
+(Continued from Sheet No. 77)
+SWITCHIN
+[DOC 1] https://www.comed.com/cdn/assets/v3/assets/blt3ebb3fed6084be2a/blt86ebee5fe6ed02f8/6ac9488c20451657b3b7e4f3/2026_Ratebook.pdf?branch=prod_alias
+g
+service under Rate RESS - Retail Electric Supplier Service (Rate RESS) and (b) providing electric power
+and energy supply service to residential and/or small commercial retail customers.
+Notwithstanding the previous provisions of this Availability section, this rider is limited to the provision of
+meter usage data by the Company for residential and small commercial retail customers that are provided
+by the Company with advanced (AMI) metering, as described in Section 16-108 of the Public Utilities Act
+(Act), in accordance with the Smart Grid Advanced Metering Infrastructure Deployment Plan approved by
+the Illinois Commerce Commission (ICC) in Docket No. 12-0298, as modified by the ICC’s Interim Order
+dated June 5, 2013, and Final Order dated June 26, 2013, in Docket No. 13-0285, and as such plan is
+subsequently amended or updated (AMI Plan).
+PURPOSE.
+The purpose of this rider is to effectuate provisions in Public Act 103-0237, effective June 30, 2023, which
+amended subsection (b) of Section 16-122 of the Public Utilities Act (Act) which directs (i) the provision of
+data to support RESs in the development, marketing and offering of energy consumption management
+products with the electric power and energy supply service they provide to residential and small
+commercial retail customers and (ii) the ability of the Company to recover its costs associated with the
+provision of such data.
+DEFINITIONS.
+Generally, definitions used in this rider are provided in the Definitions part of the General Terms and
+Conditions of the Company's Schedule of Rates.
+The following definitions are for use in this rider.
+Energy Consumption Management Product
+Energy consumption management product means programs, products, and services as described in
+Section 16-122(b)(4) of the Act, which allow retail customers the means to more easily and effectively
+manage their energy consumption, including, but not limited to, products which provide time-of-use
+(TOU) pricing, demand response (DR), energy efficiency or management, beneficial electrification, on-
+site or community generation, or any other electricity-related products or services or customer billing or
+as otherwise authorized by the Commission.
+Non-Service Bill
+Non-Service Bill means a method to bill and collect charges for services other than those related to the
+delivery or supply of electric energy.
+Small Commercial Retail Customer
+Small commercial retail customer means a retail customer taking delivery service from the Company
+under either the Small Load Delivery Class or the Watt-Hour Delivery Class.
+(Continued on Sheet No. 80)
+Filed with the Illinois Commerce Commission on Date Effective: August 9, 2024
+August 2, 2024. Filed pursuant to the Issued by David R. Perez, EVP and COO
+Illinois Commerce Commission Order dated Post Office Box 805379
+June 20, 2024, in Docket No. 23-0773. Chicago, Illinois 60680-5379
+Asterisk (*) indicates change.
+
+ILL. C. C. No. 10
+Commonwealth ELECTRICITY 3rd Revised Sheet No. 80
+Edison Com
+[DOC 1] https://www.comed.com/cdn/assets/v3/assets/blt3ebb3fed6084be2a/blt86ebee5fe6ed02f8/6ac9488c20451657b3b7e4f3/2026_Ratebook.pdf?branch=prod_alias
+pany (Canceling 1st Revised Sheet No. 80)
+* RIDER IMUD
+INTERVAL METER USAGE DATA
+(Continued from Sheet No. 79)
+PREREQUISITES OF SERVICE.
+Before commencing service hereunder, a RES must comply with the following prerequisites of service.
+Such RES must:
+1. warrant that it (a) is providing electric power and energy supply service to each residential or small
+commercial retail customer for which the Company is to provide meter usage data in accordance with
+this rider, (b) is in possession of an authorization from each such residential or small commercial retail
+customer that it is allowed to have access to such residential or small commercial retail customer’s
+interval meter usage data on a (i) monthly basis or (ii) monthly and daily basis, as applicable, (c)
+requires such interval meter usage data to (i) develop or market an energy consumption management
+product for, or (ii) determine amounts to be charged or credited to each such residential or small
+commercial retail customer, and (d) commits to abiding by the provisions of this rider pertaining to the
+treatment of confidential information, with such warrant submitted to the Company by a responsible
+official of such RES in the form of a written sworn and notarized affidavit attesting to the truth of the
+statements contained in such warrant;
+2. have, and demonstrate through the successful completion of the Company’s testing program, the
+ability to electronically accept interval meter usage data for each residential or small commercial retail
+customer for which it is providing electric power and energy supply service, and for which the
+Company is to provide meter usage data in accordance with the provisions of this rider;
+3. submit an electronic data interchange (EDI) transaction to the Company; and
+4. submit payment as required per the terms of the IMUD Fees section of this tariff.
+CONTINUING OBLIGATIONS.
+RES Continuing Obligations
+A RES taking service hereunder must submit a request to a Company electronic mailbox for each
+residential or small commercial retail customer for which it is developing, marketing or providing
+electric power and energy supply service with an energy consumption management product and for
+which the Company is to provide meter usage data in accordance with this rider that notifies the
+Company that the transmission of meter usage data in accordance with the provisions of this rider with
+respect to each such residential or small commercial retail customer is to commence. The
+commencement of service hereunder with respect to such residential or small commercial retail
+customer is effective on the Company’s next normally scheduled billing cycle date for such residential
+or small commercial retail customer, provided such date is at least eighteen (18) calendar days after
+the Company receives such request.
+A RES taking service hereunder is obligated to electronically accept interval meter usage data at the
+end of each monthly billing period for each residential or small commercia
+[DOC 1] https://www.comed.com/cdn/assets/v3/assets/blt3ebb3fed6084be2a/blt86ebee5fe6ed02f8/6ac9488c20451657b3b7e4f3/2026_Ratebook.pdf?branch=prod_alias
+l retail customer for which
+such RES is providing electric power and energy supply service and for which the Company is
+providing meter usage data in accordance with this rider.
+(Continued on Sheet No. 81)
+Filed with the Illinois Commerce Commission on Date Effective: August 9, 2024
+August 2, 2024. Filed pursuant to the Issued by David R. Perez, EVP and COO
+Illinois Commerce Commission Order dated Post Office Box 805379
+June 20, 2024, in Docket No. 23-0773. Chicago, Illinois 60680-5379
+Asterisk (*) indicates change.
+
+ILL. C. C. No. 10
+Commonwealth ELECTRICITY 3rd Revised Sheet No. 81
+Edison Company (Canceling 1st Revised Sheet No. 81)
+* RIDER IMUD
+INTERVAL METER USAGE DATA
+(Continued from Sheet No. 80)
+CONTINUING OBLIGATIONS (CONTINUED).
+RES Continuing Obligations (Continued)
+A RES taking service hereunder must submit a notification to a Company electronic mailbox with
+respect to any residential or small commercial retail customer for which it no longer provides electric
+power and energy supply service.
+A RES taking service hereunder must submit a notification to a Company electronic mailbox with
+respect to any residential or small commercial retail customer for which it is receiving interval data
+under the terms of this rider and has been notified by such residential or small commercial retail
+customer of their intent to revoke such RESs authority to receive such data.
+A RES taking service hereunder must submit a notification to a Company electronic mailbox with
+respect to any residential or small commercial customer for which it is receiving interval data under the
+terms of this rider, but for which it is no longer developing, marketing or providing an energy
+consumption management product.
+A RES taking service hereunder must submit payment as required per the terms of the IMUD Fees
+Section of this tariff.
+A RES taking service hereunder must continue to abide by the provisions of the Prerequisites of
+Service section of this rider.
+Company Continuing Obligations
+The Company is obligated to electronically transmit interval meter usage data at the end of each
+monthly billing period for each residential or small commercial retail customer for which such RES is
+developing, marketing or providing electric power and energy supply service with an energy
+consumption management product and for which the Company is providing meter usage data in
+accordance with this rider. Such data transmission must occur no later than one (1) business day
+after the Company determines such meter usage data for the monthly billing period for such residential
+or small commercial retail customer.
+OPTIONAL DAILY DATA RETRIEVAL.
+A RES served hereunder may additionally elect to obtain access on a daily basis to the interval meter
+usage data for a residential or small commercial retail customer for which it is accepting interval meter
+usage data at the end of each monthly billing period in accordance with this rider, provided the Company
+is in possession of an affidavit, as desc
+[DOC 1] https://www.comed.com/cdn/assets/v3/assets/blt3ebb3fed6084be2a/blt86ebee5fe6ed02f8/6ac9488c20451657b3b7e4f3/2026_Ratebook.pdf?branch=prod_alias
+ribed in the Prerequisites of Service section of this rider in which
+such RES warrants that it is in possession of an authorization from such residential or small commercial
+retail customer that it is allowed to have access to such residential or small commercial retail customer’s
+interval meter usage data on a daily basis. Such daily meter usage data are made available to such RES
+by the Company no earlier than 1:00 P.M. Central Prevailing Time (CPT) on the calendar day immediately
+following the date during which such meter usage data were recorded. In order to obtain such daily
+access, such RES must submit an EDI transaction to the Company which requests the provision of data
+on a daily basis.
+(Continued on Sheet No. 81.1)
+Filed with the Illinois Commerce Commission on Date Effective: August 9, 2024
+August 2, 2024. Filed pursuant to the Issued by David R. Perez, EVP and COO
+Illinois Commerce Commission Order dated Post Office Box 805379
+June 20, 2024, in Docket No. 23-0773. Chicago, Illinois 60680-5379
+Asterisk (*) indicates change.
+
+ILL. C. C. No. 10
+Commonwealth ELECTRICITY
+Edison Company 1st Revised Sheet No. 81.1
+RIDER IMUD
+INTERVAL METER USAGE DATA
+(Continued from Sheet No. 81)
+IMUD FEES.
+IMUD System Fee
+The implementation costs associated with required updates to the Company’s systems to allow for the
+provision of data as described in this tariff are recovered from all RESs that are authorized to provide,
+and are providing, electric power and energy supply service to residential retail customers located in
+the Company’s service territory as of December 2023. Such fee shall be determined, as shown below,
+based upon the number of customers served by each RES as of December 2023 and shall be applied
+quarterly, beginning in June 2025, and extending through the fourth quarter of 2029.This fee will be
+designated as the IMUD System Fee on the next monthly RES Non-Service Bill, as applicable.
+Number of Customers Annual Per RES IMUD Quarterly Per RES IMUD
+Served by RES System Fee System Fee
+0 $ 1,000 $ 250
+1 - 1,000 $ 4,000 $ 1,000
+1,001 - 5,000 $ 6,000 $ 1,500
+5,001 - 10,000 $ 8,000 $ 2,000
+10,001 - 25,000 $ 11,000 $ 2,750
+25,001 - 50,000 $ 12,000 $ 3,000
+50,001 - 100,000 $ 14,000 $ 3,500
+Over 100,000 $ 16,000 $ 4,000
+The final Quarterly IMUD System Fee will be applied to RES Non-Service Bills in the first quarter of
+2030 and may include, in addition to the applicable Quarterly Per RES IMUD System Fee provided in
+the table above, an adjustment to recover any over- or under-recovered IMUD System Fee costs
+allocated in the same manner as the initial fee.
+IMUD Annual Fee
+Beginning June 1, 2025, and each June 1 thereafter, the ongoing costs associated with storing the
+data in order to allow for the provision of data as described in this tariff are recovered from all RES that
+are authorized to provide electric power and energy supply service to residential retail customers
+located in the Company’s service territory. Such fee shall be designated as the
+[DOC 1] https://www.comed.com/cdn/assets/v3/assets/blt3ebb3fed6084be2a/blt86ebee5fe6ed02f8/6ac9488c20451657b3b7e4f3/2026_Ratebook.pdf?branch=prod_alias
+ IMUD Annual Fee on
+the next monthly RES Non-Service Bill, as applicable, and shall be determined, in $ rounded to the
+nearest $1,000, in accordance with the following equation:
+IMUD Annual Fee=(OC÷ES)
+Where:
+OC = Ongoing Costs as provided in the Eligible RESs and IMUD Annual Fee Informational
+Sheets of the Company’s Schedule of Rates
+ES = Number of Eligible RESs as provided in the Eligible RESs and IMUD Annual Fee
+Informational Sheets of the Company’s Schedule of Rates
+(Continued on Sheet No. 81.2)
+Filed with the Illinois Commerce Commission on Date Effective: August 9, 2024
+August 2, 2024. Filed pursuant to the Issued by David R. Perez, EVP and COO
+Illinois Commerce Commission Order dated Post Office Box 805379
+June 20, 2024, in Docket No. 23-0773. Chicago, Illinois 60680-5379
+
+ILL. C. C. No. 10
+Commonwealth ELECTRICITY
+Edison Company 1st Revised Sheet No. 81.2
+RIDER IMUD
+INTERVAL METER USAGE DATA
+(Continued from Sheet No. 81.1)
+IMUD FEES (CONTINUED).
+IMUD Interchange Fee
+The volumetric costs associated with the provision of data as described in this tariff are recovered from
+all eligible RESs that request such interval meter usage data. Such fee shall be applied on the RES
+Non-Service Bill each month following the date upon which such request is made, shall be designated
+as the IMUD Interchange Fee, and shall be determined, in $ rounded to the nearest cent, in
+accordance with the following equation:
+IMUD Interchange Fee=(∑〖[MT] x (TF)〗)
+C
+Where:
+∑ = Summation over all customers for which a RES obtained data
+C
+MT = Monthly Transactions, equal to the number of EDI transactions provided to the RES
+for interval data
+TF = Transaction Fee, equal to $0.0285
+TERMINATION PROVISIONS.
+A RES taking service hereunder has the right to request of the Company to discontinue the provision of
+data being provided under the terms of this rider at any time on at least sixty (60) days written notice to the
+Company. In such event, the RES must submit a request to a Company electronic mailbox for each
+residential retail customer with respect to which the Company had been providing interval meter usage
+data that notifies the Company that the request for the provision of data hereunder with respect to each
+such residential or small commercial retail customer is terminated. The termination of the provision of data
+hereunder with respect to such residential or small retail customer is effective on the Company’s next
+normally scheduled billing cycle date for such residential or small commercial retail customer, provided
+such date is at least eighteen (18) calendar days after the Company receives such request.
+The Company has the right to discontinue the provision of data to a RES hereunder if such RES (a) has its
+service under Rate RESS terminated; or (b) fails to abide by the continuing obligations of this rider.
+DISPUTE RESOLUTION.
+Disputes between or among the Company, the RES, or a retail customer that involve the performance,
+breach, or alleged breach of any obligati
+[DOC 1] https://www.comed.com/cdn/assets/v3/assets/blt3ebb3fed6084be2a/blt86ebee5fe6ed02f8/6ac9488c20451657b3b7e4f3/2026_Ratebook.pdf?branch=prod_alias
+on under this rider, under any tariff to which this rider is
+applicable, or under any contract entered into under an applicable tariff, may be resolved in accordance
+with the provisions of the Dispute Resolution part of the General Terms and Conditions of the Company’s
+Schedule of Rates.
+(Continued on Sheet No. 81.3)
+Filed with the Illinois Commerce Commission on Date Effective: August 9, 2024
+August 2, 2024. Filed pursuant to the Issued by David R. Perez, EVP and COO
+Illinois Commerce Commission Order dated Post Office Box 805379
+June 20, 2024, in Docket No. 23-0773. Chicago, Illinois 60680-5379
+
+ILL. C. C. No. 10
+Commonwealth ELECTRICITY
+Edison Company Original Sheet No. 81.3
+RIDER IMUD
+INTERVAL METER USAGE DATA
+(Continued from Sheet No. 81.2)
+MISCELLANEOUS GENERAL PROVISIONS.
+The RES must treat any residential or small commercial retail customer-specific information provided by
+the Company in accordance with the provisions of this rider as confidential information. Such RES may
+use such information for any such residential or small commercial retail customer only to effectuate the
+provisions of its contractual arrangements with such residential or small commercial retail customer for the
+development, marketing and provision of electric power and energy supply service with an energy
+consumption management product. Such RES is responsible for ensuring the confidentiality of such
+information and the applicable limitation of the use of such information. To do so, such RES shall
+implement and maintain reasonable security measures to protect customer-specific information from
+unauthorized access or disclosure.
+Beginning in July 2025, and extending through 2030 the Company shall report (a) on a monthly basis, the
+number of RESs receiving data under the terms of this tariff and (b) on an annual basis, the amount of
+revenues related to the IMUD System Fee collected from RESs in the preceding June – May period.
+The RES must abide by the provisions of any applicable tariffs or contracts with the Company under which
+the Company provides the RES with services.
+For the purposes of this rider, interval meter usage data are provided on a thirty (30) minute or sixty (60)
+minute basis in accordance with the configuration of the applicable AMI metering. The Company expects
+to reconfigure all AMI metering with meter usage data recorded and provided on a thirty (30) minute basis
+at residential or small commercial retail customer premises to having such meter usage data recorded and
+provided on a sixty (60) minute basis. The Company must inform the RES at least eighteen (18) calendar
+days prior to the beginning of the monthly billing period in which the Company intends to make such
+reconfiguration at an individual residential or small commercial retail customer’s premises for which the
+Company is providing such RES with meter usage data in accordance with this rider.
+The Company’s Schedule of Rates, of which this rider is a part, includes General Terms and Conditio
+[DOC 2] https://www.comed.com/cdn/assets/v3/assets/blt3ebb3fed6084be2a/blt51c693930a51fa85/6ac948f7dad506fcf89e74db/2026_Index_of_Filings.pdf?branch=prod_alias
+Time of Use Electricity Adjustment
+(TPEA) | Rate BES
+213th Revised Informational Sheet No. 3
+Rate BESH
+213th Revised Informational Sheet No. 7
+Rate BEST
+4th Revised Informational Sheet No. 71
+Filing Date: 08/19/2026
+Effective Date: 08/20/2026 | Filing of ComEd’s Rider Carbon-
+Free Resource Adjustment
+(Rider CFRA) | Carbon-Free Resource Adjustments
+48th Revised Informational Sheet No. 36.1
+Filing Date: 08/19/2026
+Effective Date: 08/20/2026 | Filing of ComEd’s Rider
+Zero Emission
+Adjustments
+(Rider ZEA) | Rider ZEA
+20th Revised Informational Sheet No. 37
+Filing Date: 08/19/2026
+Effective Date: 08/20/2026 | Filing of ComEd’s
+Rider Renewable Energy
+Adjustment (Rider REA) | Rider REA
+12th Revised Informational Sheet No. 36
+Filing Date: 08/20/2026
+Effective Date: 08/20/2026 | Filing of ComEd’s
+Supply Charges and Factors
+Determined by
+Formulae Rider UF Update | Purchased Electricity Charges
+85th Revised Informational Sheet No. 1
+PJM Services Charges
+76th Revised Informational Sheet No. 2
+Capacity Charge
+73rd Revised Informational Sheet No. 4
+PJM Services Charge
+74th Revised Informational Sheet No. 5
+
+Page 8 of
+INDEX OF FILINGS WITH THE ILLINOIS COMMERCE COMMISSION
+2026 YEAR TO DATE
+Miscellaneous Procurement
+Components Charge
+78th Revised Informational Sheet No. 6
+Incremental Uncollectable Cost Factor
+58th Revised Informational Sheet No. 20
+Transmission Services Adjustment Factor
+and Miscellaneous Procurement
+Component Adjustment Factor
+61st Revised Informational Sheet No. 35
+Basic Electric Service Time of Use
+Electricity Charges
+2nd Revised Informational Sheet No. 70
+PJM Service s and Miscellaneous
+Procurement Components Charge
+2nd Revised Informational Sheet No. 72
+Filing Date: 07/17/2026 Filing of ComEd’s Rider Rider IQ
+Effective Date: 08/31/2026 Interconnection Queue (Rider 4th Revised Sheet No. 346
+IQ)
+Filing Date: 08/25/2026 Filing of General Terms and Conditions
+Effective Date: 09/01/2026 ComEd’s 1st Revised Sheet No. 159
+Compliance 2nd Revised Sheet No.160
+Filing Original Sheet No. 160.1
+ICC Dkt. 21-0719 3rd Revised Sheet No. 161
+Residential 2nd Revised Sheet No. 162
+Overhead
+Primary Poles
+Filing Date: 07/31/2026 Filing of ComEd’s Rider Parallel Rider POGNM
+Effective Date: 09/14/2026 Operation of Retail Customer 10th Revised Sheet No. 294
+Generation Facilities with Net 3rd Revised Sheet No. 294.1
+Metering (Rider PONM) 1st Revised Sheet No. 294.2
+Tariff Revisions 9th Revised Sheet No. 295
+for CRGA 4th Revised Sheet No. 295.1
+9th Revised Sheet No. 296
+6th Revised Sheet No. 297
+7th Revised Sheet No. 298
+4th Revised Sheet No. 298.1
+4th Revised Sheet No. 298.2
+5th Revised Sheet No. 299
+4th Revised Sheet No. 300
+6th Revised Sheet No. 301
+7th Revised Sheet No. 301.1
+7th Revised Sheet No. 302
+9th Revised Sheet No. 303
+6th Revised Sheet No. 304
+7th Revised Sheet No. 305
+Page 8 of
+INDEX OF FILINGS WITH THE ILLINOIS COMMERCE COMMISSION
+2026 YEAR TO DATE |  | 
+ |  | Miscellaneous Procurement
+Components Charge
+78th Revised Informational Sheet No. 6
+Incrementa
+[DOC 2] https://www.comed.com/cdn/assets/v3/assets/blt3ebb3fed6084be2a/blt51c693930a51fa85/6ac948f7dad506fcf89e74db/2026_Index_of_Filings.pdf?branch=prod_alias
+l Uncollectable Cost Factor
+58th Revised Informational Sheet No. 20
+Transmission Services Adjustment Factor
+and Miscellaneous Procurement
+Component Adjustment Factor
+61st Revised Informational Sheet No. 35
+Basic Electric Service Time of Use
+Electricity Charges
+2nd Revised Informational Sheet No. 70
+PJM Service s and Miscellaneous
+Procurement Components Charge
+2nd Revised Informational Sheet No. 72
+Filing Date: 07/17/2026
+Effective Date: 08/31/2026 | Filing of ComEd’s Rider
+Interconnection Queue (Rider
+IQ) | Rider IQ
+4th Revised Sheet No. 346
+Filing Date: 08/25/2026
+Effective Date: 09/01/2026 | Filing of
+ComEd’s
+Compliance
+Filing
+ICC Dkt. 21-0719
+Residential
+Overhead
+Primary Poles | General Terms and Conditions
+1st Revised Sheet No. 159
+2nd Revised Sheet No.160
+Original Sheet No. 160.1
+3rd Revised Sheet No. 161
+2nd Revised Sheet No. 162
+Filing Date: 07/31/2026
+Effective Date: 09/14/2026 | Filing of ComEd’s Rider Parallel
+Operation of Retail Customer
+Generation Facilities with Net
+Metering (Rider PONM)
+Tariff Revisions
+for CRGA | Rider POGNM
+10th Revised Sheet No. 294
+3rd Revised Sheet No. 294.1
+1st Revised Sheet No. 294.2
+9th Revised Sheet No. 295
+4th Revised Sheet No. 295.1
+9th Revised Sheet No. 296
+6th Revised Sheet No. 297
+7th Revised Sheet No. 298
+4th Revised Sheet No. 298.1
+4th Revised Sheet No. 298.2
+5th Revised Sheet No. 299
+4th Revised Sheet No. 300
+6th Revised Sheet No. 301
+7th Revised Sheet No. 301.1
+7th Revised Sheet No. 302
+9th Revised Sheet No. 303
+6th Revised Sheet No. 304
+7th Revised Sheet No. 305
+
+Page 9 of
+INDEX OF FILINGS WITH THE ILLINOIS COMMERCE COMMISSION
+2026 YEAR TO DATE
+Filing Date: 09/15/2026 Filing of ComEd’s Rider Coal to Solar Adjustments
+Effective Date: 09/16/2026 Coal to Solar 10th Revised Informational Sheet No. 63
+(Rider CTS)
+Filing Date: 09/17/2026 Filing of Rate BES
+Effective Date: 09/18/2026 ComEd’s Hourly Purchased 214th Revised Informational Sheet No. 3
+Electricity Adjustment
+Factor (HPEA) Rate BESH
+214th Revised Informational Sheet No. 7
+Purchased Electricity Adjustment
+Factor (PEA) Rate BEST
+5th Revised Informational Sheet No. 71
+Time of Use Electricity Adjustment
+(TPEA)
+Filing Date: 09/17/2026 Filing of ComEd’s Rider Carbon- Carbon-Free Resource Adjustments
+Effective Date: 09/18/2026 Free Resource Adjustment 49th Revised Informational Sheet No. 36.1
+(Rider CFRA)
+Filing Date: 09/18/2026 Filing of ComEd’s Purchased Electricity Charges
+Effective Date: 09/19/2026 Supply Charges and Factors 86th Revised Informational Sheet No. 1
+Determined by Formulae
+Fall Procurement Filing PJM Services Charges
+77th Revised Informational Sheet No. 2
+PJM Services Charge
+75th Revised Informational Sheet No. 5
+Miscellaneous Procurement
+Components Charge
+79th Revised Informational Sheet No. 6
+Transmission Services Adjustment Factor
+and Miscellaneous Procurement
+Component Adjustment Factor
+62nd Revised Informational Sheet No. 35
+PJM Service s and Miscellaneous
+Procurement Components Charge
+3rd Revised Informational Sheet No. 72
+Fili

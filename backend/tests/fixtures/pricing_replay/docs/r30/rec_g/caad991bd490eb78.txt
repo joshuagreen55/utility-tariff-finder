@@ -1,0 +1,943 @@
+[DOC 0] https://www.dominionenergy.com/virginia/rates-and-tariffs/residential-rates
+Residential Rates
+Rate Schedules serve Virginia customers who purchase both the supply (generation and transmission) and delivery (distribution) portions of their electric service from Dominion Energy Virginia. Customers that wish to participate in Retail Access will do so under Virginia Jurisdictional Rate Schedules 1, GS-1, GS-2, GS-3, GS-3EV, GS-4, 5C, 24, 27, or 28.
+Table of Contents
+Entire Filed Tariff
+(This is the entire filed tariff document as filed with the Virginia State Corporation Commission. Separate documents for each rate schedule are provided below.)
+Dominion Energy Virginia collects and remits a consumption tax for all consumed kWh delivered and billed by the company. Consumption tax information and associated rates are located at the end of the filed tariff.
+Virginia Jurisdictional Fuel Deferral
+Rate Schedules
+Rates
+Schedule 1 - Basic Residential Rate
+Schedule 1G - Off-Peak Plan
+Schedule 1G - Residential Service
+Schedule 1G - Residential Service (Experimental) Rebate Program
+Schedule 1P - TOU (Closed)
+Schedule 1S - Demand TOU
+Schedule 1T - Energy TOU
+Schedule 1W - Time-Controlled Storage Water Heating
+Riders
+Exhibit of Applicable Riders
+Rider A - Fuel Charge Rider
+Rider C1A - Peak-Shaving Increment Rider
+Rider C4A - Energy Efficiency Increment Rider
+Rider CCR - Coal Ash Closure
+Rider CE - Clean Energy Projects and Power Purchase Agreements
+Rider CERC - Chesterfield Energy Reliability Center
+Rider D - Tax Effect Recovery
+Rider DIST - Distribution Facilities Projects
+Rider E - Environmental Projects
+Rider F - Receivers or Trustees
+Rider G - Renewable Energy Program
+Rider GEN - Generation Facilities Projects
+Rider OSW - Coastal Virginia Offshore Wind
+Rider PIPP - Universal Service Fee
+Rider REC - Renewable Energy Certificate Purchase Program
+Rider RGGI - Regional Greenhouse Gas Initiative
+Rider RPS - Renewable Energy Portfolio Standard
+Rider SMR - Small Modular Reactor
+Rider SNA - Surry and North Anna Nuclear Life Extension Program
+Rider T1 - Transmission
+Rider TRG - 100 Percent Total Renewable Generation
+Rider VCS  - Virginia Community Solar Pilot Program
+(Effective 6/1/2026)
+Special Tariffs
+Schedule 24 - Solid State Outdoor Lighting
+Schedule 27 - Outdoor Lighting-HPSV
+Schedule 28 - Outdoor Lighting-non HPSV
+Schedule 29 - Privately Owned Outdoor Lighting
+Schedule DP-R - Residential Service (Experimental)
+Schedule 1EV - Residential Service With Electric Vehicle Charging (Experimental)
+Schedule EV - Residential Electric Vehicle Charging (Experimental)
+Schedule EVCR - Electric Vehicle Residential Charging Service
+Schedule EVFCP - Electric Vehicle Direct Current Fast Charging Pricing Tariff
+Schedule EVL2P - Electric Vehicle Level Two Pricing Tariff
+Schedule Multi-Family Shared Solar
+Schedule SS - Shared Solar
+Schedule SP - Solar Purchase (Experimental)
+Deferred Fuel Tariffs
+Pro-Rata Share of Fuel Deferral Charges
+Deferred Fuel Cost Charge Tariff
+Tax
+Consumption Tax
+Sales and Use Tax Surcharge
+Follow us and keep track of our latest sto
+[DOC 0] https://www.dominionenergy.com/virginia/rates-and-tariffs/residential-rates
+ries
+Report an Outage
+Useful Links
+Sign In
+Make a Payment
+Report Outage or Emergency
+Save Energy & Money
+Start, Stop or Move
+Rates & Tariffs
+Safety
+Services
+Products & Services
+Dominion Energy Solutions
+Large Business Services
+Government Solutions
+Economic Development
+Lakes & Recreation
+Dominion Energy
+Our Company
+About Us
+Careers
+Newsroom
+Investors
+Suppliers
+Making Energy
+Delivering Energy
+Feedback
+Follow Us
+Keep track of the latest stories
+Need help?
+Customer Support
+{
+}
+Copyright © 2026 Dominion Energy
+Privacy
+|
+Do Not Sell or Share My Info (CA)
+|
+En Español
+|
+Terms and Conditions
+[DOC 1] https://www.dominionenergy.com/-/media/content/rates-and-tariffs/pdfs/virginia/residential/schedule-1.pdf
+Virginia Electric and Power Company
+Schedule 1
+RESIDENTIAL SERVICE
+_________________
+I. APPLICABILITY AND AVAILABILITY
+This schedule is applicable only to Customers (1) who elect to receive separately metered
+and billed Electricity Supply Service and Electric Delivery Service from the Company or (2)
+who are eligible for and elect to purchase Electricity Supply Service from a Competitive Service
+Provider in accordance with Va. Code § 56-577 A for use in and about (a) a single-family
+residence, flat or apartment, (b) a combination farm and one occupied single-family residence,
+flat or apartment, (c) a private residence used as a boarding and/or rooming house with no more
+than one cooking installation nor more than ten bedrooms, or (d) separately metered service to
+detached accessory buildings appurtenant to residential dwellings unless such buildings use
+electricity for commercial or industrial purposes.
+A combination residence and farm, having more than one single-family residence, flat or
+apartment served electricity through a single meter, that was being billed under this schedule
+prior to April 1, 1971, may continue to be supplied electricity under this schedule provided each
+such dwelling unit is occupied by the owner or by a tenant working on the farm. Such multiple-
+residence farms connected on and after April 1, 1971, shall not be served under this schedule.
+This schedule is not applicable for (a) individual motors rated over 15 HP, and
+(b) commercial use as in hotels, public inns, motels, auto courts, tourist courts, tourist camps, or
+trailer camps.
+II. MONTHLY RATE
+A. Distribution Service Charges
+1. Basic Customer Charge
+Basic Customer Charge $7.58 per billing month.
+2. Plus Distribution kWh Charge
+a. Billing Months of June – September
+First 800 kWh @ 3.5690¢ per kWh
+Over 800 kWh @ 2.3596¢ per kWh
+b. Billing Months of October – May
+First 800 kWh @ 3.5690¢ per kWh
+Over 800 kWh @ 2.3596¢ per kWh
+(Continued)
+Filed 06-16-26 Superseding Filing Effective For Usage On and After 01-01-26.
+Electric-Virginia This Filing Effective For Usage On and After 07-01-26.
+
+Virginia Electric and Power Company
+Schedule 1
+RESIDENTIAL SERVICE
+_________________
+(Continued)
+II. MONTHLY RATE (Continued)
+3. Plus each Distribution kilowatt-hour used is subject to all applicable riders in
+the Exhibit of Applicable Riders, including non-bypassable charges.
+4. Plus, where the Customer receives service in accordance with Section XXV –
+NET METERING of the Company’s TERMS AND CONDITIONS and where
+the aggregate nameplate capacity of the Renewable Fuel Generator exceeds 20
+kW of alternating current, the Customer shall be billed a Distribution Standby
+Charge of $4.19 per kW of demand, minus the charge under II.A.2., above, but
+not less than zero.
+B. Electricity Supply (ES) Service Charges
+Paragraph II.B. is not applicable to Customers receiving Electricity Supply Service
+from a Competitive Service Provider, except for non-bypassable charges in the
+Exhibit of Applicable Riders
+[DOC 1] https://www.dominionenergy.com/-/media/content/rates-and-tariffs/pdfs/virginia/residential/schedule-1.pdf
+, as discussed in Paragraph V., below:
+1. Generation kWh Charge
+a. Billing Months of June – September
+First 800 ES kWh @ 3.1212¢ per kWh
+Over 800 ES kWh @ 4.6243¢ per kWh
+b. Billing Months of October – May
+First 800 ES kWh @ 3.0064¢ per kWh
+Over 800 ES kWh @ 2.6965¢ per kWh
+2. Plus Transmission kWh Charge
+a. All kWh @ 0.970¢ per kWh
+b. Plus, where the Customer receives service in accordance with
+Section XXV – NET METERING of the Company’s TERMS AND
+CONDITIONS and where the aggregate nameplate capacity of the
+Renewable Fuel Generator exceeds 20 kW of alternating current, the
+Customer shall be billed a Transmission Standby Charge of $1.32 per
+kW of demand, minus the charge under II.B.2.a., above, but not less
+than zero.
+3. Plus each Electricity Supply kilowatt-hour used is subject to all applicable
+riders in the Exhibit of Applicable Riders, including non-bypassable charges,
+as discussed in Paragraph V., below.
+(Continued)
+Filed 06-16-26 Superseding Filing Effective For Usage On and After 01-01-26.
+Electric-Virginia This Filing Effective For Usage On and After 07-01-26.
+
+Virginia Electric and Power Company
+Schedule 1
+RESIDENTIAL SERVICE
+_________________
+(Continued)
+II. MONTHLY RATE (Continued)
+4. Plus, where the Customer receives service in accordance with Section XXV –
+NET METERING of the Company’s TERMS AND CONDITIONS and
+where the aggregate nameplate capacity of the Renewable Fuel Generator
+exceeds 20 kW of alternating current, each measured kW of Demand is
+subject to all applicable riders, included in the Exhibit of Applicable Riders.
+C. The minimum charge shall be the Basic Customer Charge in II.A.1., above.
+III. DETERMINATION OF DEMAND
+Where demand is measured by the Company, such demand will be determined as the
+highest average kW measured during any 30-minute interval of the current billing month,
+rounded to the nearest tenth.
+IV. METER READING AND BILLING
+A. The Company shall have the option of reading meters monthly or bimonthly. When
+the meter is read at other than monthly intervals, the Company may render an
+interim monthly bill based on estimated kWh use during periods for which the
+meter was not read.
+B. When bills are calculated for a bimonthly period, the Basic Customer Charge shall
+be multiplied by two; the number of kWh specified in the initial block of the
+Distribution kWh Charge and the Generation kWh Charge shall be multiplied by
+two before the rates per kWh are applied to the usage for the bimonthly period; the
+rate specified in II.A.4. shall be multiplied by two before the kW of demand is
+applied to such modified rate; the rate specified in II.B.2.b. shall be multiplied by
+two before the kW of demand is applied to such modified rate; and the minimum
+charge shall be the modified Basic Customer Charge.
+V. NON-BYPASSABLE CHARGES
+Any Commission approved non-bypassable charges in the Exhibit of Applicable Riders
+shall apply to all Customers, irrespective of generation supplier pursuant to Virginia Law, unless
+the Customer meets t
+[DOC 1] https://www.dominionenergy.com/-/media/content/rates-and-tariffs/pdfs/virginia/residential/schedule-1.pdf
+he statutory requirements for exemption from such charges.
+VI. TERM OF CONTRACT
+Open order.
+Filed 06-16-26 Superseding Filing Effective For Usage On and After 01-01-26.
+Electric-Virginia This Filing Effective For Usage On and After 07-01-26.
+[DOC 2] https://www.dominionenergy.com/-/media/content/rates-and-tariffs/pdfs/virginia/residential/schedule-1g.pdf
+Virginia Electric and Power Company
+Schedule 1G
+RESIDENTIAL SERVICE
+_________________
+I. APPLICABILITY
+This schedule is applicable only to Customers electing to receive separately metered and
+billed Electricity Supply Service and Electric Delivery Service from the Company for use in and
+about (a) a single-family residence, flat or apartment, (b) a combination farm and one occupied
+single-family residence, flat or apartment, (c) a private residence used as a boarding and/or
+rooming house with no more than one cooking installation nor more than ten bedrooms, or (d)
+separately metered service to detached accessory buildings appurtenant to residential dwellings
+unless such buildings use electricity for commercial or industrial purposes.
+A combination residence and farm, having more than one single-family residence, flat or
+apartment served electricity through a single meter, that was being billed under Schedule 1 prior
+to April 1, 1971, may be supplied electricity under this schedule provided each such dwelling
+unit is occupied by the owner or by a tenant working on the farm. Such multiple-residence farms
+connected on and after April 1, 1971, shall not be served under this schedule.
+This schedule is not applicable for (a) individual motors rated over 15 HP, and (b)
+commercial use as in hotels, public inns, motels, auto courts, tourist courts, tourist camps, or
+trailer camps.
+II. AVAILABILITY
+This schedule is available only where:
+A. The Customer has an advanced metering infrastructure (AMI) meter;
+B. The Customer does not participate in a PJM Interconnection, LLC or Company-
+Sponsored demand response program or peak-shaving demand response program;
+and
+C. A Customer who discontinues service under this schedule after less than one year of
+service may not be served under this schedule or under any other residential time-
+of-usage rate schedule for the Customer’s account at the same premise within one
+year of such discontinuation of service.
+(Continued)
+Filed 06-16-26 Superseding Filing Effective For Usage On and After 01-01-26.
+Electric-Virginia This Filing Effective For Usage On and After 07-01-26.
+
+Virginia Electric and Power Company
+Schedule 1G
+RESIDENTIAL SERVICE
+________________
+(Continued)
+III. MONTHLY RATE
+A. Distribution Service Charges
+1. Basic Customer Charge $7.58 per billing month
+2. Plus Distribution kWh Charge
+a. For the period beginning May 1 and extending through September 30
+All On-Peak kWh @ 4.6743¢ per kWh
+All Off-Peak kWh @ 3.2360¢ per kWh
+All Super Off-Peak kWh @ 2.3674¢ per kWh
+b. For the period beginning October 1 and extending through April 30
+All On-Peak kWh @ 4.1294¢ per kWh
+All Off-Peak kWh @ 2.8185¢ per kWh
+All Super Off-Peak kWh @ 2.4315¢ per kWh
+3. Plus each Distribution kilowatt-hour used is subject to all applicable riders in
+the Exhibit of Applicable Riders, including non-bypassable charges.
+4. Plus, where the Customer receives service in accordance with Section XXV –
+NET METERING of the Company’s TERMS AND CONDITIONS a
+[DOC 2] https://www.dominionenergy.com/-/media/content/rates-and-tariffs/pdfs/virginia/residential/schedule-1g.pdf
+nd
+where the aggregate nameplate capacity of the Renewable Fuel Generator
+exceeds 20 kW of alternating current, the Customer shall be billed a
+Distribution Standby Charge of $4.19 per kW of demand, minus the charge
+under III.A.2., above, but not less than zero.
+B. Electricity Supply (ES) Service Charges
+2
+1. Generation kWh Charge
+a. For the period beginning May 1 and extending through September 30
+All On-Peak ES kWh @ 15.3972¢ per kWh
+All Off-Peak ES kWh @ 0.9307¢ per kWh
+All Super Off-Peak ES kWh @ 0.0112¢ per kWh
+b. For the period beginning October 1 and extending through April 30
+All On-Peak ES kWh @ 11.9944¢ per kWh
+All Off-Peak ES kWh @ 1.7867¢ per kWh
+All Super Off-Peak ES kWh @ 1.5514¢ per kWh
+2. Plus Transmission kWh Charge
+a. All kWh @ 0.970¢ per kWh
+b. Plus, where the Customer receives service in accordance with
+Section XXV – NET METERING of the Company’s TERMS AND
+CONDITIONS and where the aggregate nameplate capacity of the
+Renewable Fuel Generator exceeds 20 kW of alternating current, the
+Customer shall be billed a Transmission Standby Charge of $1.32 per kW
+of demand, minus the charge under III.B.2.a., above, but not less than
+zero.
+Filed 06-16-26 Superseding Filing Effective For Usage On and After 01-01-26.
+Electric-Virginia This Filing Effective For Usage On and After 07-01-26.
+
+Virginia Electric and Power Company
+Schedule 1G
+RESIDENTIAL SERVICE
+_________________
+(Continued)
+III. MONTHLY RATE (CONTINUED)
+3. Plus, where the Customer receives service in accordance with Section XXV –
+NET METERING of the Company’s TERMS AND CONDITIONS and
+where the aggregate nameplate capacity of the Renewable Fuel Generator
+exceeds 20 kW of alternating current, each measured kW of Demand is
+subject to all applicable riders, included in the Exhibit of Applicable Riders.
+4. Plus each Electricity Supply kilowatt-hour used is subject to all applicable
+riders in the Exhibit of Applicable Riders, including non-bypassable charges,
+as discussed in Paragraph VII., below.
+C. The minimum charge shall be the Basic Customer Charge in Paragraph III.A.1.,
+above.
+IV. DETERMINATION OF ON-PEAK, OFF-PEAK, AND SUPER OFF-PEAK HOURS
+A. On-Peak Hours (Except certain holidays)
+1. For the period of May 1 through September 30, On-Peak hours are:
+3 p.m. to 6 p.m., Mondays through Fridays.
+2. For the period of October 1 through April 30, On-Peak hours are:
+6 a.m. to 9 a.m. and 5 p.m. to 8 p.m., Mondays through Fridays.
+B. Off-Peak and Super Off-Peak Hours
+1. For the period of May 1 through September 30, Off-Peak hours are:
+5 a.m. to 3 p.m. and 6 p.m. to 12 a.m., Mondays through Fridays.
+2. For the period of October 1 through April 30, Off-Peak hours are:
+5 a.m. to 6 a.m.; 9 a.m. to 5 p.m.; and, 8 p.m. to 12 a.m., Mondays through
+Fridays.
+3. Off-Peak hours are: 5 a.m. to 12 a.m. on weekends and holidays, as identified
+in Paragraph IV.B.5, below.
+4. Super Off-Peak hours are: 12 a.m. to 5 a.m.
+5. The following holidays are observed as Off-Peak and Super Off-Peak:
+New Year’s Day, Me
+[DOC 2] https://www.dominionenergy.com/-/media/content/rates-and-tariffs/pdfs/virginia/residential/schedule-1g.pdf
+morial Day, Independence Day, Labor Day,
+Thanksgiving, and Christmas.
+(Continued)
+Filed 06-16-26 Superseding Filing Effective For Usage On and After 01-01-26.
+Electric-Virginia This Filing Effective For Usage On and After 07-01-26.
+
+Virginia Electric and Power Company
+Schedule 1G
+RESIDENTIAL SERVICE
+________________
+(Continued)
+V. DETERMINATION OF DEMAND
+Where demand is measured by the Company, such demand will be determined as the
+highest average kW measured during any 30-minute interval of the current billing month,
+rounded to the nearest tenth.
+VI. METER READING AND BILLING
+A. The Company may render an interim monthly bill based on estimated kWh usage
+during periods for which the meter was not read.
+B. When bills are calculated for a bimonthly period, the Basic Customer Charge shall be
+multiplied by two; and the minimum charge shall be the modified Basic Customer
+Charge.
+VII. NON-BYPASSABLE CHARGES
+Any Commission approved non-bypassable charges in the Exhibit of Applicable Riders
+shall apply to all Customers pursuant to Virginia Law, unless the Customer meets the statutory
+requirements for exemption from such charges.
+VIII. TERM OF CONTRACT
+Open order.
+Filed 06-16-26 Superseding Filing Effective For Usage On and After 01-01-26.
+Electric-Virginia This Filing Effective For Usage On and After 07-01-26.
+[DOC 3] https://www.dominionenergy.com/-/media/content/rates-and-tariffs/pdfs/virginia/residential/schedule-1p.pdf
+Virginia Electric and Power Company
+Schedule 1P
+RESIDENTIAL SERVICE
+_________________
+I. APPLICABILITY AND AVAILABLITY
+This schedule is available only to Customers who elect to receive Electricity Supply
+Service and Electric Delivery Service from the Company and who have received service under
+this schedule or who have applied for service under this schedule prior to November 12, 1986.
+This schedule is closed to all other Customers as of May 16, 1986. A Customer served under
+this schedule prior to its closing may continue being served under this schedule until the
+Customer requests another schedule.
+This schedule is applicable to separately metered and billed supply of alternating current
+electricity to any Customer for use in and about (a) a single-family residence, flat or apartment,
+(b) a combination farm and one occupied single-family residence, flat or apartment, or (c) a
+private residence used as a boarding and/or rooming house with no more than one cooking
+installation nor more than ten bedrooms, or (d) separately metered service to detached accessory
+buildings appurtenant to residential dwellings unless such buildings use electricity for
+commercial or industrial purposes.
+A combination residence and farm, having more than one single-family residence, flat or
+apartment served electricity through a single meter, that was being billed under Schedule 1 prior
+to April 1, 1971, may be supplied electricity under this schedule provided each such dwelling
+unit is occupied by the owner or by a tenant working on the farm. Such multiple-residence farms
+connected on and after April 1, 1971, shall not be served under this schedule.
+This schedule is not applicable for (a) individual motors rated over 15 HP, and (b)
+commercial use as in hotels, public inns, motels, auto courts, tourist courts, tourist camps, or
+trailer camps.
+II. MONTHLY RATE
+A. Distribution Service Charges
+1. Basic Customer Charge
+Basic Customer Charge $15.70 per billing month.
+2. Plus Distribution Demand Charge
+All On-Peak kW of Demand @ $2.538 per kW
+3. Plus Distribution kWh Charge
+All On-Peak kWh @ 1.4111¢ per kWh
+All Off-Peak kWh @ 1.4111¢ per kWh
+4. Plus each Distribution kilowatt-hour used is subject to all applicable riders in
+the Exhibit of Applicable Riders, including non-bypassable charges.
+(Continued)
+Filed 12-09-25 Superseding Filing Effective For Usage On and After 01-01-25.
+Electric-Virginia This Filing Effective For Usage On and After 01-01-26.
+
+Virginia Electric and Power Company
+Schedule 1P
+RESIDENTIAL SERVICE
+_________________
+(Continued)
+II. MONTHLY RATE (Continued)
+B. Electricity Supply (ES) Service Charges
+1. Generation Demand Charge
+a. For the billing months of June – September
+All On-Peak kW of ES Demand @ $2.573 per kW
+b. For the billing months of October – May
+All On-Peak kW of ES Demand @ $2.573 per kW
+2. Plus Electricity Supply kWh Charge
+All On-Peak ES kWh @ 2.4897¢ per kWh
+All Off-Peak ES kWh @ 0.2018¢ per kWh
+3. Plus Transmission kWh Charge
+All kWh @ 0.970¢
+[DOC 3] https://www.dominionenergy.com/-/media/content/rates-and-tariffs/pdfs/virginia/residential/schedule-1p.pdf
+ per kWh
+4. Plus each Electricity Supply kilowatt-hour used is subject to all applicable
+riders in the Exhibit of Applicable Riders, including non-bypassable charges,
+as discussed in Paragraph VII., below.
+C. The minimum charge shall be the Basic Customer Charge in II.A.1. above.
+III. DETERMINATION OF DISTRIBUTION DEMAND
+The kW of demand shall be determined as the highest average kW load measured in any
+30-minute interval during the On-Peak hours of the current billing month.
+IV. DETERMINATION OF ELECTRICITY SUPPLY (ES) DEMAND
+The kW of demand shall be determined in accordance with Paragraph III. above.
+V. DETERMINATION OF ON-PEAK AND OFF-PEAK HOURS
+A. On-Peak hours are defined as the hours between 10 a.m. and 10 p.m., E.D.T. (9 a.m.
+and 9 p.m. E.S.T.), Mondays through Fridays.
+B. Off-Peak hours are defined as all hours other than those listed in Paragraph V.A.,
+above.
+(Continued)
+Filed 12-09-25 Superseding Filing Effective For Usage On and After 01-01-25.
+Electric-Virginia This Filing Effective For Usage On and After 01-01-26.
+
+Virginia Electric and Power Company
+Schedule 1P
+RESIDENTIAL SERVICE
+_________________
+(Continued)
+VI. METER READING AND BILLING
+A. The Company shall have the option of reading meters monthly or bimonthly. When
+the meter is read at other than monthly intervals, the Company may render an
+interim monthly bill based on estimated kWh usage during periods for which the
+meter was not read.
+B. When bills are calculated for a bimonthly period, the Basic Customer Charge, the
+Distribution Demand Charge, and the Generation Demand Charge shall be
+multiplied by two; and the minimum charge shall be the modified Basic Customer
+Charge.
+VII. NON-BYPASSABLE CHARGES
+Any Commission approved non-bypassable charges in the Exhibit of Applicable Riders
+shall apply to all Customers pursuant to Virginia Law, unless the Customer meets the statutory
+requirements for exemption from such charges.
+VIII. TERM OF CONTRACT
+The term of contract for the purchase of electricity under this schedule shall not be less
+than one year.
+Filed 12-09-25 Superseding Filing Effective For Usage On and After 01-01-25.
+Electric-Virginia This Filing Effective For Usage On and After 01-01-26.
+[DOC 4] https://www.dominionenergy.com/-/media/content/rates-and-tariffs/pdfs/virginia/residential/schedule-1s.pdf
+Virginia Electric and Power Company
+Schedule 1S
+RESIDENTIAL SERVICE
+_________________
+I. APPLICABILITY AND AVAILABILITY
+This schedule is applicable only to Customers electing to receive separately metered and
+billed Electricity Supply Service and Electric Delivery Service from the Company for use in and
+about (a) a single-family residence, flat or apartment, (b) a combination farm and one occupied
+single-family residence, flat or apartment, or (c) a private residence used as a boarding and/or
+rooming house with no more than one cooking installation nor more than ten bedrooms, or (d)
+separately metered service to detached accessory buildings appurtenant to residential dwellings
+unless such buildings use electricity for commercial or industrial purposes.
+A combination residence and farm, having more than one single-family residence, flat or
+apartment served electricity through a single meter, that was being billed under Schedule 1 prior
+to April 1, 1971, may be supplied electricity under this schedule provided each such dwelling
+unit is occupied by the owner or by a tenant working on the farm. Such multiple-residence farms
+connected on and after April 1, 1971, shall not be served under this schedule.
+This schedule is not applicable for (a) individual motors rated over 15 HP, and (b)
+commercial use as in hotels, public inns, motels, auto courts, tourist courts, tourist camps, or
+trailer camps.
+A Customer who discontinues service under this schedule after less than one year of
+service may not be served under this schedule or under any other residential time-of-usage rate
+schedule within one year of such discontinuation of service.
+II. MONTHLY RATE
+A. Distribution Service Charges
+1. Basic Customer Charge
+Basic Customer Charge $12.99 per billing month.
+2. Plus Distribution Demand Charge
+All On-Peak kW of Demand @ $2.478 per kW
+3. Plus Distribution kWh Charge
+All kWh @ 1.5465¢ per kWh
+4. Plus each Distribution kilowatt-hour used is subject to all applicable riders in
+the Exhibit of Applicable Riders, including non-bypassable charges.
+5. Plus, where the Customer receives service in accordance with Section XXV –
+NET METERING of the Company’s TERMS AND CONDITIONS and
+where the aggregate nameplate capacity of the Renewable Fuel Generator
+exceeds 20 kW of alternating current, the Customer shall be billed a
+Distribution Standby Charge of $4.19 per kW of demand, minus the charges
+under II.A.2. and II.A.3., above, but not less than zero.
+(Continued)
+Filed 06-16-26 Superseding Filing Effective For Usage On and After 01-01-26.
+Electric-Virginia This Filing Effective For Usage On and After 07-01-26.
+
+Virginia Electric and Power Company
+Schedule 1S
+RESIDENTIAL SERVICE
+_________________
+(Continued)
+II. MONTHLY RATE (Continued)
+B. Electricity Supply (ES) Service Charges
+1. Generation Demand Charge
+a. For the billing months of June – September
+All On-Peak kW of ES Demand @ $2.407 per kW
+b. For the billing months of October – May
+All On-Peak kW of ES Demand @ $2.407 pe
+[DOC 4] https://www.dominionenergy.com/-/media/content/rates-and-tariffs/pdfs/virginia/residential/schedule-1s.pdf
+r kW
+2. Plus Generation kWh Charge
+All On-Peak ES kWh @ 3.1424¢ per kWh
+All Off-Peak ES kWh @ 0.2911¢ per kWh
+3. Plus Transmission kWh Charge
+a. All kWh @ 0.970¢ per kWh
+b. Plus, where the Customer receives service in accordance with
+Section XXV – NET METERING of the Company’s TERMS AND
+CONDITIONS and where the aggregate nameplate capacity of the
+Renewable Fuel Generator exceeds 20 kW of alternating current, the
+Customer shall be billed a Transmission Standby Charge of $1.32 per kW
+of demand, minus the charge under II.B.3.a., above, but not less than zero.
+4. Plus each Electricity Supply kilowatt-hour used is subject to all applicable
+riders in the Exhibit of Applicable Riders, including non-bypassable charges,
+as discussed in Paragraph VIII., below.
+5. Plus, where the Customer receives service in accordance with Section XXV –
+NET METERING of the Company’s TERMS AND CONDITIONS and
+where the aggregate nameplate capacity of the Renewable Fuel Generator
+exceeds 20 kW of alternating current, each measured kW of Demand is
+subject to all applicable riders, included in the Exhibit of Applicable Riders.
+C. The minimum charge shall be the Basic Customer Charge in II.A.1. above.
+(Continued)
+Filed 06-16-26 Superseding Filing Effective For Usage On and After 01-01-26.
+Electric-Virginia This Filing Effective For Usage On and After 07-01-26.
+
+Virginia Electric and Power Company
+Schedule 1S
+RESIDENTIAL SERVICE
+_________________
+(Continued)
+III. DETERMINATION OF DISTRIBUTION DEMAND
+The kW of demand will be determined as the highest average kW load measured in any
+30-minute interval during the On-Peak hours of the current billing month.
+IV. DETERMINATION OF ELECTRICITY SUPPLY ES DEMAND
+The kW of demand shall be determined in accordance with Paragraph III. above.
+V. DETERMINATION OF DEMAND FOR TRANSMISSION STANDBY CHARGES
+The kW of demand specified in Paragraph II.B.3.b above will be determined as the
+highest average kW load measured in any 30-minute interval during the current billing month.
+VI. DETERMINATION OF ON-PEAK AND OFF-PEAK HOURS
+A. On-Peak Hours (Except certain holidays)
+1. For the period of June 1 through September 30, On-Peak hours are: 11 a.m. to
+10 p.m., Mondays through Fridays.
+2. For the period of October 1 through May 31, On-Peak hours are: 7 a.m. to
+11 a.m. and 5 p.m. to 9 p.m., Mondays through Fridays.
+B. Off-Peak Hours
+1. Off-Peak hours are defined as all hours other than those listed in
+Paragraph VI. A. above.
+2. The following holidays are observed as Off-Peak: New Year's Day, Memorial
+Day, Independence Day, Labor Day, Thanksgiving, and Christmas.
+VII. METER READING AND BILLING
+A. The Company shall have the option of reading meters monthly or bimonthly. When
+the meter is read at other than monthly intervals, the Company may render an
+interim monthly bill based on estimated kWh usage during periods for which the
+meter was not read.
+B. When bills are calculated for a bimonthly period, the Basic Customer Charge, the
+Distribution Demand Charge an
+[DOC 4] https://www.dominionenergy.com/-/media/content/rates-and-tariffs/pdfs/virginia/residential/schedule-1s.pdf
+d the Generation Demand Charge shall be
+multiplied by two; and the minimum charge shall be the modified Basic Customer
+Charge.
+(Continued)
+Filed 06-16-26 Superseding Filing Effective For Usage On and After 01-01-26.
+Electric-Virginia This Filing Effective For Usage On and After 07-01-26.
+
+Virginia Electric and Power Company
+Schedule 1S
+RESIDENTIAL SERVICE
+_________________
+(Continued)
+VIII. NON-BYPASSABLE CHARGES
+Any Commission approved non-bypassable charges in the Exhibit of Applicable Riders
+shall apply to all Customers pursuant to Virginia Law, unless the Customer meets the statutory
+requirements for exemption from such charges.
+IX. TERM OF CONTRACT
+Open order.
+Filed 06-16-26 Superseding Filing Effective For Usage On and After 01-01-26.
+Electric-Virginia This Filing Effective For Usage On and After 07-01-26.
+[DOC 5] https://www.dominionenergy.com/-/media/content/rates-and-tariffs/pdfs/virginia/residential/schedule-1t.pdf
+Virginia Electric and Power Company
+Schedule 1T
+RESIDENTIAL SERVICE
+_________________
+I. APPLICABILITY AND AVAILABILITY
+This schedule is applicable only to Customers electing to receive separately metered and
+billed Electricity Supply Service and Electric Delivery Service from the Company for use in and
+about (a) a single-family residence, flat or apartment, (b) a combination farm and one occupied
+single-family residence, flat or apartment, or (c) a private residence used as a boarding and/or
+rooming house with no more than one cooking installation nor more than ten bedrooms, or (d)
+separately metered service to detached accessory buildings appurtenant to residential dwellings
+unless such buildings use electricity for commercial or industrial purposes.
+A combination residence and farm, having more than one single-family residence, flat or
+apartment served electricity through a single meter, that was being billed under Schedule 1 prior
+to April 1, 1971, may continue to be supplied electricity under this schedule provided each such
+dwelling unit is occupied by the owner or by a tenant working on the farm. Such multiple-
+residence farms connected on and after April 1, 1971, shall not be served under this schedule.
+This schedule is not applicable for (a) individual motors rated over 15 HP, and (b)
+commercial use as in hotels, public inns, motels, auto courts, tourist courts, tourist camps, or
+trailer camps.
+A Customer who discontinues service under this schedule after less than one year of
+service may not be served under this schedule or under any other residential time-of-usage rate
+schedule within one year of such discontinuation of service.
+II. MONTHLY RATE
+A. Distribution Service Charges
+1. Basic Customer Charge
+Basic Customer Charge $12.99 per billing month.
+2. Plus Distribution kWh Charge
+All On-Peak kWh @ 8.0512¢ per kWh
+All Off-Peak kWh @ 0.8440¢ per kWh
+3. Plus each Distribution kilowatt-hour used is subject to all applicable riders in
+the Exhibit of Applicable Riders, including non-bypassable charges.
+(Continued)
+Filed 12-09-25 Superseding Filing Effective For Usage On and After 01-01-25.
+Electric-Virginia This Filing Effective For Usage On and After 01-01-26.
+
+Virginia Electric and Power Company
+Schedule 1T
+RESIDENTIAL SERVICE
+_________________
+(Continued)
+II. MONTHLY RATE (Continued)
+B. Electricity Supply (ES) Service Charges
+1. Generation kWh Charge
+All On-Peak ES kWh @ 5.6744¢ per kWh
+All Off-Peak ES kWh @ 1.4167¢ per kWh
+2. Plus Transmission kWh Charge
+All kWh @ 0.970¢ per kWh
+C. Plus each Electricity Supply kilowatt-hour used is subject to all applicable riders in
+the Exhibit of Applicable Riders, including non-bypassable charges, as discussed in
+Paragraph V., below.
+D. The minimum charge shall be the Basic Customer Charge in Paragraph II.A.1.,
+above.
+III. DETERMINATION OF ON-PEAK AND OFF-PEAK HOURS
+A. On-Peak Hours (Except certain holidays)
+1. For the period of June 1 through September 30, On-Peak hours are: 11 a.m. to
+10 p.m., Monda
+[DOC 5] https://www.dominionenergy.com/-/media/content/rates-and-tariffs/pdfs/virginia/residential/schedule-1t.pdf
+ys through Fridays.
+2. For the period of October 1 through May 31, On-Peak hours are: 7 a.m. to
+11 a.m. and 5 p.m. to 9 p.m., Mondays through Fridays.
+B. Off-Peak Hours
+1. Off-Peak hours are defined as all hours other than those listed in Paragraph III. A.
+above.
+2. The following holidays are observed as Off-Peak: New Year’s Day, Memorial
+Day, Independence Day, Labor Day, Thanksgiving, and Christmas.
+(Continued)
+Filed 12-09-25 Superseding Filing Effective For Usage On and After 01-01-25.
+Electric-Virginia This Filing Effective For Usage On and After 01-01-26.
+
+Virginia Electric and Power Company
+Schedule 1T
+RESIDENTIAL SERVICE
+_________________
+(Continued)
+IV. METER READING AND BILLING
+A. The Company shall have the option of reading meters monthly or bimonthly. When
+the meter is read at other than monthly intervals, the Company may render an interim
+monthly bill based on estimated kWh usage during periods for which the meter was
+not read.
+B. When bills are calculated for a bimonthly period, the Basic Customer Charge shall be
+multiplied by two; and the minimum charge shall be the modified Basic Customer
+Charge.
+V. NON-BYPASSABLE CHARGES
+Any Commission approved non-bypassable charges in the Exhibit of Applicable Riders
+shall apply to all Customers pursuant to Virginia Law, unless the Customer meets the statutory
+requirements for exemption from such charges.
+VI. TERM OF CONTRACT
+Open order.
+Filed 12-09-25 Superseding Filing Effective For Usage On and After 01-01-25.
+Electric-Virginia This Filing Effective For Usage On and After 01-01-26.
+[DOC 6] https://www.dominionenergy.com/-/media/content/rates-and-tariffs/pdfs/virginia/residential/schedule-dpr.pdf
+Virginia Electric and Power Company
+Schedule DP-R
+RESIDENTIAL SERVICE
+(EXPERIMENTAL)
+________________
+I. APPLICABILITY
+This schedule is applicable only to Customers electing to receive separately metered and
+billed Electricity Supply Service and Electric Delivery Service from the Company for use in and
+about (a) a single-family residence, flat or apartment, (b) a combination farm and one occupied
+single-family residence, flat or apartment, or (c) a private residence used as a boarding and/or
+rooming house with no more than one cooking installation nor more than ten bedrooms, or (d)
+separately metered service to detached accessory buildings appurtenant to residential dwellings
+unless such buildings use electricity for commercial or industrial purposes.
+This schedule is not applicable to (a) individual motors rated over 15 HP, (b) commercial
+use as in hotels, public inns, motels, auto courts, tourist courts, tourist camps, or trailer camps.
+Service under this schedule shall terminate effective July 31, 2017 (“Closure Date”).
+However, any Customer, who received service under this schedule prior to the Closure Date,
+may continue to receive service in accordance with this schedule until such Customer (i) selects
+an alternative, applicable schedule or (ii) discontinues service at the service location. In either
+case, this schedule shall no longer be available at the service location. No new Customer may
+receive service under this schedule after the Closure Date.
+II. AVAILABILITY
+Subject to a limitation of 2,000 accounts, this schedule is available only where:
+A. Either: 1) the Company has in place its advanced metering infrastructure (AMI),
+or 2) the Customer was receiving service in accordance with this schedule,
+Schedule 1P, Schedule 1S, or Schedule 1T as of March 22, 2013;
+B. The Customer does not participate in a PJM Interconnection, LLC or Company-
+sponsored capacity-related demand response program; and
+C. The Company received the Customer’s request for service in accordance with this
+schedule before December 1, 2014.
+(Continued)
+Filed 12-09-25 Superseding Filing Effective For Usage On and After 01-01-25.
+Electric-Virginia This Filing Effective For Usage On and After 01-01-26.
+
+Virginia Electric and Power Company
+Schedule DP-R
+RESIDENTIAL SERVICE
+(EXPERIMENTAL)
+________________
+(Continued)
+III. MONTHLY RATE
+A. Distribution Service Charges
+1. Basic Customer Charge $7.58 per billing month
+2. Plus Distribution kWh Charge
+All kWh @ 0.8216¢ per kWh
+3. Plus Distribution kW Charge
+All kW @ $3.182 per kW
+4. Plus each Distribution kilowatt-hour used is subject to all applicable riders in
+the Exhibit of Applicable Riders, including non-bypassable charges.
+B. Electricity Supply (ES) Service Charges
+1. Generation kWh Charge
+a. For the period beginning April 16 and extending through October 15
+(Cooling Season):
+Day Time Rate
+Classification Period per ES kWh
+1 p.m. to 7 p.m. @ 29.5893¢
+A 10 a.m. to 1 p.m. & 7 p.m. to 10 p.m. @ 6.9706¢
+All other hours @ 2.0379¢
+
+[DOC 6] https://www.dominionenergy.com/-/media/content/rates-and-tariffs/pdfs/virginia/residential/schedule-dpr.pdf
+B 10 a.m. to 10 p.m. @ 5.0214¢
+All other hours @ 1.1115¢
+C 10 a.m. to 10 p.m. @ 2.2320¢
+All other hours @ 0.4021¢
+(Continued)
+Filed 12-09-25 Superseding Filing Effective For Usage On and After 01-01-25.
+Electric-Virginia This Filing Effective For Usage On and After 01-01-26.
+
+Virginia Electric and Power Company
+Schedule DP-R
+RESIDENTIAL SERVICE
+(EXPERIMENTAL)
+________________
+(Continued)
+III. MONTHLY RATE (Continued)
+b. For the period beginning October 16 and extending through April 15
+(Heating Season):
+Day Time Rate
+Classification Period per ES kWh
+A 5 a.m. to 11 a.m. & 5 p.m. to 10 p.m. @ 29.5893¢
+All other hours @ 5.4236¢
+B 5 a.m. to 11 a.m. & 5 p.m. to 10 p.m. @ 6.0155¢
+All other hours @ 2.7325¢
+C 5 a.m. to 11 a.m. & 5 p.m. to 10 p.m. @ 2.1421¢
+All other hours @ 0.7842¢
+c. During the annual period beginning June 1 and continuing through May
+31 of the next year, the Customer can anticipate the following day
+frequency (non-leap year) regarding day classification, with no more than
+30 days classified as “A,” and at least 280 days classified as “C.”
+Day Classification Number of Days Expected
+A 30
+B 55
+C 280
+2. Plus Transmission kWh Charge
+All kWh @ 0.970¢ per kWh
+3. Plus each Electricity Supply kilowatt-hour used is subject to all applicable
+riders in the Exhibit of Applicable Riders, including non-bypassable charges,
+as discussed in Paragraph VII., below.
+C. The minimum charge will be the Basic Customer Charge.
+(Continued)
+Filed 12-09-25 Superseding Filing Effective For Usage On and After 01-01-25.
+Electric-Virginia This Filing Effective For Usage On and After 01-01-26.
+
+Virginia Electric and Power Company
+Schedule DP-R
+RESIDENTIAL SERVICE
+(EXPERIMENTAL)
+________________
+(Continued)
+IV. NOTIFICATION OF DAY CLASSIFICATION
+For a given day, the Generation kWh Charge day classification will be available via the
+Internet (at a site to be designated by the Company) by 6 p.m. the preceding day. Should the
+Company fail to update the Internet site by 6 p.m., the classification shall default to “C.”
+V. DETERMINATION DEMAND
+The demand applicable under Paragraph III.A.3. will be the highest average kW
+measured during any 30-minute interval of the current billing month.
+VI. METER READING AND BILLING
+The Company shall have the option of reading meters monthly or bimonthly. When bills
+are calculated for a bimonthly period, the Basic Customer Charge and the Distribution kW
+Charge will be multiplied by two.
+VII. NON-BYPASSABLE CHARGES
+Any Commission approved non-bypassable charges in the Exhibit of Applicable Riders
+shall apply to all Customers pursuant to Virginia Law, unless the Customer meets the statutory
+requirements for exemption from such charges.
+VIII. TERM OF CONTRACT
+The term of contract under this schedule shall be for not less than one year.
+Filed 12-09-25 Superseding Filing Effective For Usage On and After 01-01-25.
+Electric-Virginia This Filing Effective For Usage On and After 01-01-26.
+[DOC 7] https://www.dominionenergy.com/-/media/content/rates-and-tariffs/pdfs/virginia/residential/schedule-1ev.pdf
+Virginia Electric and Power Company
+Schedule 1EV
+RESIDENTIAL SERVICE
+WITH ELECTRIC VEHICLE CHARGING
+(EXPERIMENTAL)
+______________
+I. APPLICABILITY
+This schedule is applicable only where the Customer 1) owns or leases a licensed electric
+motor vehicle, subject to state inspection, which requires periodic battery charging, and 2) meets
+the applicability requirements of the following paragraphs.
+This schedule is applicable only to Customers electing to receive separately metered and
+billed Electricity Supply Service and Electric Delivery Service from the Company for use in and
+about (a) a single-family residence, flat or apartment, (b) a combination farm and one occupied
+single-family residence, flat or apartment, or (c) a private residence used as a boarding and/or
+rooming house with no more than one cooking installation nor more than ten bedrooms, or (d)
+separately metered service to detached accessory buildings appurtenant to residential dwellings
+unless such buildings use electricity for commercial or industrial purposes.
+This schedule is not applicable to (a) individual motors rated over 15 HP, (b) commercial
+use as in hotels, public inns, motels, auto courts, tourist courts, tourist camps, or trailer camps.
+Service under this schedule shall terminate effective November 30, 2018 ("Closure
+Date"). However, any Customer, who received service under this schedule on the Closure Date,
+may continue to receive service in accordance with this schedule until such Customer (i) selects
+an alternative, applicable schedule, (ii) discontinues service at the service location, or (iii)
+discontinues operating an electric vehicle – in which case such customer shall provide the
+Company with notice within thirty (30) days. In either case, this schedule shall no longer be
+available at the service location. No new Customer may receive service under this schedule after
+the Closure Date.
+II. AVAILABILITY
+This schedule is available to no more than 750 participants in the Company’s Electric
+Vehicle (EV) Pilot Program who contract for service under this schedule to be effective on or
+before September 1, 2016.
+III. MONTHLY RATE
+A. Distribution Service Charges
+1. Basic Customer Charge
+Basic Customer Charge $7.58 per billing month.
+(Continued)
+Filed 12-09-25 Superseding Filing Effective For Usage On and After 01-01-25.
+Electric-Virginia This Filing Effective For Usage On and After 01-01-26.
+
+Virginia Electric and Power Company
+Schedule 1EV
+RESIDENTIAL SERVICE
+WITH ELECTRIC VEHICLE CHARGING
+(EXPERIMENTAL)
+________________
+(Continued)
+III. MONTHLY RATE (Continued)
+2. Plus Distribution kWh Charge
+a. All On-Peak, Intermediate,
+and Off-Peak kWh @ 3.3434¢ per kWh
+b. Plus All Super Off-Peak kWh @ 0.0178¢ per kWh
+3. Plus each Distribution kilowatt-hour used is subject to all applicable riders in
+the Exhibit of Applicable Riders, including non-bypassable charges.
+B. Electricity Supply (ES) Service Charges
+1. Generation kWh Charge, April 16 through October 15:
+All On-Peak ES kWh @ 6.
+[DOC 7] https://www.dominionenergy.com/-/media/content/rates-and-tariffs/pdfs/virginia/residential/schedule-1ev.pdf
+8787¢ per kWh
+All Intermediate ES kWh @ 2.1486¢ per kWh
+All Off-Peak ES kWh @ 0.7295¢ per kWh
+All Super Off-Peak ES kWh @ 0.0155¢ per kWh
+2. Generation kWh Charge, October 16 through April 15:
+All On-Peak ES kWh @ 5.3813¢ per kWh
+All Off-Peak ES kWh @ 2.0147¢ per kWh
+All Super Off-Peak ES kWh @ 1.6902¢ per kWh
+3. Plus Transmission kWh Charge
+All kWh @ 0.970¢ per kWh
+4. Plus each Electricity Supply kilowatt-hour used is subject to all applicable
+riders in the Exhibit of Applicable Riders, including non-bypassable charges,
+as discussed in Paragraph VI., below.
+C. The minimum charge shall be the Basic Customer Charge in Paragraph III.A.1.,
+above.
+(Continued)
+Filed 12-09-25 Superseding Filing Effective For Usage On and After 01-01-25.
+Electric-Virginia This Filing Effective For Usage On and After 01-01-26.
+
+Virginia Electric and Power Company
+Schedule 1EV
+RESIDENTIAL SERVICE
+WITH ELECTRIC VEHICLE CHARGING
+(EXPERIMENTAL)
+_______________
+(Continued)
+IV. DEFINITION OF ON-PEAK, INTERMEDIATE, OFF-PEAK, AND SUPER
+OFF-PEAK HOURS
+A. For the period of April 16 through October 15, inclusive:
+On-Peak: 1 p.m. to 7 p.m.
+Intermediate: 10 a.m. to 1 p.m. & 7 p.m. to 10 p.m.
+Off-Peak: 10 p.m. to 1 a.m. & 5 a.m. to 10 a.m.
+Super Off-Peak: 1 a.m. to 5 a.m.
+B. For the period of October 16 through April 15, inclusive:
+On-Peak: 6 a.m. to 11 a.m. & 5 p.m. to 10 p.m.
+Intermediate: Not applicable
+Off-Peak: 5 a.m. to 6 a.m., 11 a.m. to 5 p.m. & 10 p.m. to 1 a.m.
+Super Off-Peak: 1 a.m. to 5 a.m.
+V. METER READING AND BILLING
+A. The Company shall have the option of reading meters monthly or bimonthly. When
+the meter is read at other than monthly intervals, the Company may render an
+interim monthly bill based on estimated kWh use during periods for which the
+meter was not read.
+B. When bills are calculated for a bimonthly period, the Basic Customer Charge shall
+be multiplied by two; and the minimum charge shall be the modified Basic
+Customer Charge.
+VI. NON-BYPASSABLE CHARGES
+Any Commission approved non-bypassable charges in the Exhibit of Applicable Riders
+shall apply to all Customers pursuant to Virginia Law, unless the Customer meets the statutory
+requirements for exemption from such charges.
+VII. TERM OF CONTRACT
+The term of contract shall be for not less than twelve billing months.
+Filed 12-09-25 Superseding Filing Effective For Usage On and After 01-01-25.
+Electric-Virginia This Filing Effective For Usage On and After 01-01-26.
