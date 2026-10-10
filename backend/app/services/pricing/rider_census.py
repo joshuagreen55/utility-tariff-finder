@@ -6,8 +6,14 @@ optional / location_fee_or_tax / event_day).
 """
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass, field
 from typing import Iterable
+
+
+def normalize_rider_code(raw: str | None) -> str:
+    """Census key: ``DSM-R`` / ``dsm r`` / ``dsm_r`` all → ``dsm_r``."""
+    return re.sub(r"[^A-Za-z0-9]+", "_", (raw or "").strip()).strip("_").lower()
 
 VALID_DISPOSITIONS = frozenset({
     "applies",
@@ -64,13 +70,13 @@ def evaluate_rider_census(
 ) -> CensusResult:
     """Return whether every inventory rider has a valid cited disposition."""
     inv = list(inventory)
-    by_code = {d.rider_code: d for d in dispositions}
+    by_code = {normalize_rider_code(d.rider_code): d for d in dispositions}
     missing: list[str] = []
     invalid: list[str] = []
     reasons: list[str] = []
 
     for entry in inv:
-        d = by_code.get(entry.code)
+        d = by_code.get(normalize_rider_code(entry.code))
         if d is None:
             missing.append(entry.code)
             reasons.append(f"census_gap:{entry.code}")
@@ -100,7 +106,7 @@ def evaluate_rider_census(
 
     # Dispositions for unknown inventory codes are non-blocking warnings;
     # they do not open the census, but they do not close a gap either.
-    inv_codes = {e.code for e in inv}
+    inv_codes = {normalize_rider_code(e.code) for e in inv}
     for code, d in by_code.items():
         if code not in inv_codes:
             reasons.append(f"disposition_without_inventory:{code}")
