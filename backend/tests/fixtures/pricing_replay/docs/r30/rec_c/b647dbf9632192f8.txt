@@ -1,0 +1,3788 @@
+[DOC 0] https://www.entergyarkansas.com/ratecase2026
+Rate Case 2026 - Entergy Arkansas
+Residential customers
+Residential customer security deposits
+Residential energy price
+Energy efficiency programs
+How to read my Entergy bill
+Business customers
+Property management services
+Builder services and standards
+Energy efficiency programs
+Commercial and industrial electric energy price
+Agricultural customers
+Payment and billing
+Payment options
+Billing options
+Tools to manage my bill
+I need help paying my bill
+Communities
+The Power to Care
+Corporate and foundation giving
+Business and economic development
+About us
+About our CEO
+Newsroom
+Next Generation Arkansas
+2025 Formula Rate Plan
+Contact us
+Outages
+myEntergy
+Log in
+Report an outage
+Make a payment
+Register an account
+Click to open the search input field
+Click to open the search input field
+Search
+Menu
+Menu
+Notice of filing and changes in rates
+Notice is hereby given by Entergy Arkansas, LLC (Entergy Arkansas or the Company) that on February 27, 2026, EAL
+filed with the Arkansas Public Service Commission
+(APSC or the Commission) rate schedules changing charges for electric service for all retail classes of customers in Arkansas and an Application for approval thereof.
+In accordance with Ark. Code Ann. § 23-4-401, Arkansas Public Service Commission Rule of Practice and Procedure 23 CAR § 462-806, and the settlement agreement approved by Order No. 62 in Docket No. 16-036-FR, Entergy Arkansas is filing an application for a general change in rates, charges and tariffs. The purpose of the Application is to reset Entergy Arkansas’s base rates and enable the Company to continue providing safe, reliable and affordable power to its customers. The Company’s new rate structures are designed to help maintain affordability, increase efficiency, and offer innovative bill solutions for customers, all while supporting continued economic development and allowing Entergy Arkansas to make steady investments in the grid with minimal impact for the majority of customers.
+The revised rate schedules provide for increases in charges for certain classes of retail customers under adjusted test year conditions as shown in the table below.  The total calculated base rate deficiency is $44.6 million, which includes the Company’s existing formula rate plan rider revenues within base rates thus lowering the base rate deficiency.  This increase is the approximate effect that retail ratepayers as a group will experience in their total bills under adjusted test year conditions as the result of the proposals described above.
+The net effect of the proposed changes as applied to the principal classifications of the Company’s retail customers is estimated to be as follows:
+The foregoing estimated increases are calculated under adjusted test year conditions and do not reflect any increase or decrease in revenues that might result from customers’ utilization of one or more of the optional rates of the Company. Notice is also given that other rates or rate schedules of other customer classes or 
+[DOC 0] https://www.entergyarkansas.com/ratecase2026
+service may be affected by a final order of the Commission.
+Upon written request, the Company will provide to any customer an estimate of the calculated average monthly dollar amount by which the proposed rates will increase that customer’s electric bill.  The estimate will be based on the customer’s average consumption level, unless such consumption data is not reasonably ascertainable by the Company. The calculated average monthly dollar amount will be provided to the customer subject to the following qualifications:
+(1)       The calculated averages are estimates, which may change depending on customer usage, and the rates filed and approved by the Commission, and
+(2)       The calculated average will be provided in only those cases where a customer’s proposed rate schedule will not be a different rate schedule under which the customer presently takes service.
+The present and proposed monthly unit price and customer charges for each class of customer or each major rate classification, contained in the present rate schedule and the proposed rate, are as follows:
+Rate Schedule
+Description
+Present Block
+Present Rate
+Proposed Rate
+RS
+General Purpose Residential Service
+Customer Charge:
+Charge Per Month
+$8.40
+$12.92
+Low Income Customer Charge:
+Charge Per Month
+N/A
+$6.46
+Energy Charge Per kWh:
+June-September
+1st 1,500 kWh
+$0.07392
+$0.11377
+All additional kWh
+$0.09593
+$0.14764
+October-May
+1st 1,500 kWh
+$0.06990
+$0.10758
+All additional kWh
+$0.05154
+$0.07933
+Low/Level Use Provision
+Customer Charge:
+Charge Per Month
+$8.40
+$12.92
+Energy Charge Per kWh:
+June-September
+1st 1,500 kWh
+$0.06991
+$0.10760
+All additional kWh
+$0.08987
+$0.13832
+October-May
+1st 1,500 kWh
+$0.06392
+$0.09836
+All additional kWh
+$0.04707
+$0.07244
+Three-Phase Service
+Charge Per Month
+$3.31
+$5.10
+RT
+Optional Residential Time-Of-Use
+Customer Charge:
+Charge Per Month
+$13.81
+N/A
+Energy Charge Per kWh:
+On-Peak Hours Use:
+$0.15451
+N/A
+Off-Peak Hours Use:
+$0.03050
+N/A
+Three-Phase Service
+Charge Per Month
+$3.31
+N/A
+REMT
+Residential Energy Management Time-Of-Use
+Customer Charge:
+$8.40
+N/A
+Energy Charge per kWh:
+On-Peak Hours
+$0.13880
+N/A
+Mid-Peak Hours
+$0.06698
+N/A
+Off-Peak Hours
+$0.05716
+N/A
+Three-Phase Service – per month charge
+$3.31
+N/A
+RTOU
+Residential Time-Of-Use
+Customer Charge:
+Charge Per Month
+N/A
+$12.92
+Energy Charge per kWh:
+On-Peak kWh
+N/A
+$0.31041
+Off-Peak kWh
+N/A
+$0.10347
+Discount Period kWh
+N/A
+$0.06208
+Three-Phase Service
+Charge Per Month
+N/A
+$5.10
+SGS
+Small General Service
+Customer Charge:
+Charge Per Month
+$24.25
+N/A
+Demand Charge:
+All kW over 6.0 kW
+$4.43
+N/A
+Energy Charge:
+1st 900 kWh plus 150 kWh/kW over 6.0 kW
+$0.05637
+N/A
+Additional kWh
+$0.03972
+N/A
+Minimum:
+Customer Charge:
+Charge Per Month
+$24.25
+N/A
+Demand Charge Per kW
+Highest kW over 6.0 kW est. in the 12 months ending with the current month:
+$2.95
+N/A
+ESGS
+Extra-Small General Service
+Customer Charge:
+N/A
+$39.65
+Demand Charge:
+All kW over 6.0 kW
+N/A
+$7.25
+Energy Charge:
+All kWh
+N/A
+$0.09214
+GS
+General Service
+Customer C
+[DOC 0] https://www.entergyarkansas.com/ratecase2026
+harge:
+Charge Per Month
+N/A
+$39.65
+Demand Charge:
+All kW over 6.0 kW
+N/A
+$7.25
+Energy Charge:
+1st 900 kWh plus 150 kWh/kW over 6.0 kW
+N/A
+$0.09214
+Additional kWh
+N/A
+$0.06494
+Minimum:
+Customer Charge:
+Charge Per Month
+N/A
+$39.65
+Demand Charge Per kW
+Highest kW over 6.0 kW est. in the 12 months ending with the current month:
+N/A
+$4.82
+GFS
+General Farm Service
+Customer Charge:
+Charge Per Month
+$20.20
+$33.03
+Demand Charge Per kW:
+All kW over 6.0 kW
+$3.94
+$6.44
+Energy Charge Per kWh:
+All kWh
+$0.04192
+$0.06853
+Minimum
+Demand Charge per kVA
+$1.52
+$2.48
+Three-Phase Service
+Charge Per Month
+$2.98
+$4.87
+MP
+Municipal Pumping Service
+Sludge Grinders
+Charge per installed horsepower
+$1.01
+$1.65
+Minimum
+Charge Per Month
+$32.96
+$53.89
+AP
+Agricultural Pumping Service
+Seasonal Rate (A)
+Energy Charge per kWh:
+1st 268 kWh/kW of Billing Load
+$0.08246
+N/A
+All additional kWh
+$0.05647
+N/A
+Minimum
+Demand charge per kW of
+Cumulative Billing Load
+Per Season
+$10.42
+N/A
+Optional Monthly Rate (B)
+Energy Charge per kWh:
+1st 402 kWh/kW of Billing Load
+$0.07979
+$0.13045
+All additional kWh
+$0.05647
+$0.09232
+Minimum
+Demand charge per kW:
+All kW of Billing Load
+$6.12
+$10.01
+IP
+Irrigation Pumping Service
+Demand Charge per kW:
+Peak Season
+N/A
+$7.35
+Minimum Demand Charge
+Demand Charge per KW of Billing Load
+N/A
+$12.78
+Energy Charge per kWh:
+All kWh
+N/A
+$0.09949
+Peak Season Minimum
+Demand Charge per KW of Billing Load
+N/A
+$562.32
+CGS
+Cotton Ginning Service
+Energy Charge per kWh:
+1st 268 kWh/kW of Billing Load
+$0.09419
+$0.15401
+All additional kWh
+$0.06461
+$0.10564
+Minimum
+October – Demand Charge
+Per kW of Billing Load
+$4.35
+$7.11
+November – Demand Charge
+Per kW of Billing Load
+$8.69
+$14.21
+December – Demand Charge
+Per kW of Billing Load
+$13.04
+$21.32
+CTV
+Community Antenna TV Power Supply Service
+Energy Charge per kWh
+All kWh
+$0.07557
+$0.12356
+Minimum
+Charge per installation
+$1.70
+$2.78
+TSS
+Traffic Signal Service
+Traffic Control Signals
+Each direction/3 lenses per direction
+$3.93
+$6.43
+Each lens in excess of 3 per direction
+$1.19
+$1.95
+Flashing or Warning Signals and Safety Surveillance Video Equipment
+First 100 or less lamp Watts per signal
+$3.93
+$6.43
+Each additional 25 Watts per signal:
+$0.60
+$0.98
+Monthly minimum charge
+Per Signal
+$3.93
+$6.43
+LGS
+Large General Service
+Customer Charge:
+Charge Per Month
+$90.53
+$137.00
+Demand Charge Per kW
+All Summer Period kW
+$18.79
+$31.32
+All Other Period kW
+$15.94
+$26.56
+Energy Charge Per kWh
+All Summer Period kWh
+$0.01035
+$0.00980
+All Other Period kWh
+$0.00736
+$0.00696
+Minimum
+Customer Charge:
+Charge Per Month
+$90.53
+$137.00
+Demand Charge Per kW
+Highest kW over established in the 12 months ending with the current month
+$6.36
+$10.60
+GST
+Large General Service Time-Of-Use
+Customer Charge:
+Charge Per Month
+$90.53
+$137.00
+Demand Charge Per kW
+Summer Period
+On-Peak kW
+$25.25
+$39.78
+All Excess kW
+$7.44
+$11.93
+Other Period
+On-Peak kW
+$21.31
+$33.56
+All Excess kW
+$6.45
+$10.07
+Energy Charge Per kWh
+Summer Period
+All On-Peak kWh
+$0.00754
+$0.01004
+All Off-Peak 
+[DOC 0] https://www.entergyarkansas.com/ratecase2026
+kWh
+$0.00538
+$0.00503
+Other Period
+All On-Peak kWh
+$0.00415
+$0.00392
+All Off-Peak kWh
+$0.00355
+$0.00335
+Minimum
+Customer Charge:
+Charge Per Month
+$90.53
+$137.00
+Demand Charge Per kW
+Highest kW over established in the 12 months ending with the current month
+$6.36
+$10.60
+LPS
+Large Power Service
+Customer Charge:
+Charge Per Month
+$468.60
+$710.00
+Demand Charge Per kW
+All Summer Period kW
+$18.22
+$30.36
+All Other Period kW
+$15.29
+$25.48
+Energy Charge Per kWh
+All Summer Period kWh
+$0.01035
+$0.00980
+All Other Period kWh
+$0.00736
+$0.00696
+Minimum
+Customer Charge:
+Charge Per Month
+$468.60
+$710.00
+Demand Charge Per kW
+Highest kW over established in the 12 months ending with the current month
+$6.36
+$10.60
+PST
+Large Power Service Time-Of-Use
+Customer Charge:
+Charge Per Month
+$468.60
+$710.00
+Demand Charge Per kW
+Summer Period
+On-Peak kW
+$24.66
+$38.86
+All Excess kW
+$7.22
+$11.66
+Other Period
+On-Peak kW
+$20.77
+$32.72
+All Excess kW
+$6.27
+$9.82
+Energy Charge per kWh
+Summer Period
+All On-Peak kWh
+$0.00755
+$0.01004
+All Off-Peak kWh
+$0.00539
+$0.00503
+Other Period
+All On-Peak kWh
+$0.00415
+$0.00392
+All Off-Peak kWh
+$0.00355
+$0.00335
+Minimum
+Customer Charge:
+Charge Per Month
+$468.60
+$710.00
+Demand Charge Per kW
+Highest kW over established in the 12 months ending with the current month
+$6.36
+$10.60
+LPHDLS
+Large Power High-Density Service
+Customer Charge:
+Charge Per Month
+$315.21
+$477.00
+Demand Charge Per kW
+Firm Contract KW
+$16.96
+$38.02
+Option A Nonfirm KW
+$11.64
+N/A
+Option B Nonfirm KW
+$9.70
+$23.65
+Energy Charge per kWh
+Summer Period
+All Summer Period kWh
+$0.01035
+$0.00271
+Other Period
+All Other Period kWh
+$0.00736
+$0.00193
+Minimum:
+Customer Charge:
+Charge Per Month
+$315.21
+$477.00
+Demand Charge Per kW
+Highest kW over established in the 12 months ending with the current month
+$6.36
+$10.60
+L1
+Municipal Street Lighting Service
+Company Owned Facilities
+A.  Incandescent Lighting
+100 Watt Unenclosed*
+First Unit/Pole
+$1.90
+$2.83
+150 Watt Unenclosed*
+First Unit/Pole
+$2.72
+$4.05
+B.  Mercury Vapor Lighting
+100 Watt*
+First Unit/Pole
+$2.90
+$4.31
+175 Watt*
+First Unit/Pole
+$4.03
+$5.99
+Each Excess Unit/Pole
+$1.48
+$2.20
+250 Watt*
+First Unit/Pole
+$4.96
+$7.38
+Each Excess Unit/Pole
+$2.02
+$3.00
+400 Watt*
+First Unit/Pole
+$4.96
+$7.38
+Each Excess Unit/Pole
+$3.22
+$4.79
+1000 Watt*
+First Unit/Pole
+$7.93
+$11.80
+Each Excess Unit/Pole
+$4.65
+N/A
+C.  High Pressure Sodium Lighting
+150 Watt*
+First Unit/Pole
+$5.77
+$8.58
+Each Excess Unit/Pole
+$4.54
+$6.75
+250 Watt*
+First Unit/Pole
+$6.97
+$10.37
+Each Excess Unit/Pole
+$5.52
+$8.21
+360 Watt*
+First Unit/Pole
+$7.14
+$10.62
+Each Excess Unit/Pole
+$5.18
+N/A
+400 Watt*
+First Unit/Pole
+$7.41
+$11.02
+Each Excess Unit/Pole
+$6.29
+$9.36
+D.  Metal Halide Lighting
+150 Watt Contempo Post-top*
+First Unit/Pole
+$21.34
+N/A
+Each Excess Unit/Pole
+$18.72
+N/A
+320 Watt Open*
+First Unit/Pole
+$24.69
+$36.72
+Each Excess Unit/Pole
+$20.39
+$30.33
+320 Watt Cobra*
+First Unit/Pole
+$23.82
+$35.43
+Each Excess Unit/Pole
+$19.52
+N/A
+E.  LED Lighting
+60 Watt Open*
+First Unit/Pole
+$4.94
+$7.35
+Each Exces
+[DOC 0] https://www.entergyarkansas.com/ratecase2026
+s Unit/Pole
+$2.88
+N/A
+87 Watt Open*
+First Unit/Pole
+$5.27
+N/A
+Each Excess Unit/Pole
+$3.21
+N/A
+110 Watt Open*
+First Unit/Pole
+$5.52
+$8.21
+Each Excess Unit/Pole
+$3.47
+N/A
+67 Watt Cobra*
+First Unit/Pole
+$5.27
+$7.84
+Each Excess Unit/Pole
+$3.21
+N/A
+110 Watt Cobra*
+First Unit/Pole
+$5.63
+$8.37
+Each Excess Unit/Pole
+$3.58
+$5.33
+140 Watt Cobra*
+First Unit/Pole
+$6.33
+$9.42
+Each Excess Unit/Pole
+$4.28
+$6.37
+213 Watt Cobra*
+First Unit/Pole
+$7.28
+N/A
+Each Excess Unit/Pole
+$5.22
+N/A
+96 Watt Acorn Post-top*
+First Unit/Pole
+$16.04
+N/A
+Each Excess Unit/Pole
+$11.31
+N/A
+140 Watt Shoebox*
+First Unit/Pole
+$18.29
+N/A
+Each Excess Unit/Pole
+$9.29
+N/A
+213 Watt Shoebox*
+First Unit/Pole
+$20.27
+N/A
+Each Excess Unit/Pole
+$11.26
+N/A
+280 Watt Shoebox*
+First Unit/Pole
+$22.14
+$32.93
+Each Excess Unit/Pole
+$13.14
+$19.54
+4800 Lumen NEMA
+First Unit/Pole
+$5.80
+$8.63
+Each Excess Unit/Pole
+$3.69
+N/A
+6900 Lumen NEMA
+First Unit/Pole
+$6.19
+$9.21
+Each Excess Unit/Pole
+$3.92
+$5.83
+12300 Lumen Flood
+First Unit/Pole
+$14.43
+$21.46
+Each Excess Unit/Pole
+$9.70
+N/A
+5400 Lumen Cobra
+First Unit/Pole
+$6.33
+$9.42
+Each Excess Unit/Pole
+$4.25
+$6.32
+9100 Lumen Cobra
+First Unit/Pole
+$6.96
+$10.35
+Each Excess Unit/Pole
+$4.73
+$7.04
+12300 Lumen Cobra
+First Unit/Pole
+$7.68
+$11.42
+Each Excess Unit/Pole
+$5.45
+$8.11
+21000 Lumen Cobra
+First Unit/Pole
+$9.57
+$14.23
+Each Excess Unit/Pole
+$7.34
+$10.92
+12200 Lumen Shoebox
+First Unit/Pole
+$21.09
+$31.37
+Each Excess Unit/Pole
+$11.94
+$17.76
+22400 Lumen Shoebox
+First Unit/Pole
+$23.54
+$35.01
+Each Excess Unit/Pole
+$14.39
+$21.40
+24800 Lumen Shoebox
+First Unit/Pole
+$26.25
+$39.05
+Each Excess Unit/Pole
+$17.09
+$25.42
+8400 Lumen Acorn
+First Unit/Pole
+$19.57
+$29.11
+Each Excess Unit/Pole
+$14.77
+$21.97
+7400 Lumen Contempo
+First Unit/Pole
+$10.27
+$15.28
+9100 Lumen Shoebox
+First Unit/Pole
+$11.23
+$16.70
+5400 Lumen Acorn
+First Unit/Pole
+$14.44
+$21.48
+4500 Lumen Traditional
+First Unit/Pole
+$10.91
+$16.23
+6200 Lumen Traditional
+First Unit/Pole
+$11.37
+$16.91
+24000 Lumen Off Road
+First Unit/Pole
+$15.02
+$22.34
+F. Steel Poles
+For Poles of 30 Feet or Less
+Each Pole
+$1.83
+$2.72
+For Poles of 35 Feet
+Each Pole
+$2.81
+$4.18
+Company Owned Facilities
+A. Mercury Vapor Lighting
+100 Watt*
+First Unit/Pole
+$1.50
+$2.23
+175 Watt*
+First Unit/Pole
+$1.14
+$1.70
+250 Watt*
+First Unit/Pole
+$1.74
+$2.59
+400 Watt*
+First Unit/Pole
+$2.71
+$4.03
+Each Excess Unit/Pole
+$1.92
+N/A
+1000 Watt*
+First Unit/Pole
+$4.28
+N/A
+B. High Pressure Sodium Lighting
+150 Watt*
+First Unit/Pole
+$3.80
+$5.65
+Each Excess Unit/Pole
+$2.95
+$4.39
+250 Watt*
+First Unit/Pole
+$4.31
+$6.41
+Each Excess Unit/Pole
+$3.35
+$4.98
+400 Watt*
+First Unit/Pole
+$4.41
+$6.56
+Each Excess Unit/Pole
+$3.41
+N/A
+1000 Watt*
+First Unit/Pole
+$9.19
+$13.67
+Each Excess Unit/Pole
+$6.69
+$9.95
+C. Metal Halide Lighting
+150 Watt*
+First Unit/Pole
+$15.11
+N/A
+Each Excess Unit/Pole
+$4.18
+N/A
+320 Watt*
+First Unit/Pole
+$15.91
+N/A
+Each Excess Unit/Pole
+$5.66
+N/A
+Municipally Owned and Maintained LED Facilities
+A. Customer Charge
+Per Fixture
+$1.09
+$1.62
+B. Energy Charge
+Per kWh for all kWh
+$0.03459
+$
+[DOC 1] https://www.entergyarkansas.com/ratecase2026?s=
+Rate Case 2026 - Entergy Arkansas
+Residential customers
+Residential customer security deposits
+Residential energy price
+Energy efficiency programs
+How to read my Entergy bill
+Business customers
+Property management services
+Builder services and standards
+Energy efficiency programs
+Commercial and industrial electric energy price
+Agricultural customers
+Payment and billing
+Payment options
+Billing options
+Tools to manage my bill
+I need help paying my bill
+Communities
+The Power to Care
+Corporate and foundation giving
+Business and economic development
+About us
+About our CEO
+Newsroom
+Next Generation Arkansas
+2025 Formula Rate Plan
+Contact us
+Outages
+myEntergy
+Log in
+Report an outage
+Make a payment
+Register an account
+Click to open the search input field
+Click to open the search input field
+Search
+Menu
+Menu
+Notice of filing and changes in rates
+Notice is hereby given by Entergy Arkansas, LLC (Entergy Arkansas or the Company) that on February 27, 2026, EAL
+filed with the Arkansas Public Service Commission
+(APSC or the Commission) rate schedules changing charges for electric service for all retail classes of customers in Arkansas and an Application for approval thereof.
+In accordance with Ark. Code Ann. § 23-4-401, Arkansas Public Service Commission Rule of Practice and Procedure 23 CAR § 462-806, and the settlement agreement approved by Order No. 62 in Docket No. 16-036-FR, Entergy Arkansas is filing an application for a general change in rates, charges and tariffs. The purpose of the Application is to reset Entergy Arkansas’s base rates and enable the Company to continue providing safe, reliable and affordable power to its customers. The Company’s new rate structures are designed to help maintain affordability, increase efficiency, and offer innovative bill solutions for customers, all while supporting continued economic development and allowing Entergy Arkansas to make steady investments in the grid with minimal impact for the majority of customers.
+The revised rate schedules provide for increases in charges for certain classes of retail customers under adjusted test year conditions as shown in the table below.  The total calculated base rate deficiency is $44.6 million, which includes the Company’s existing formula rate plan rider revenues within base rates thus lowering the base rate deficiency.  This increase is the approximate effect that retail ratepayers as a group will experience in their total bills under adjusted test year conditions as the result of the proposals described above.
+The net effect of the proposed changes as applied to the principal classifications of the Company’s retail customers is estimated to be as follows:
+The foregoing estimated increases are calculated under adjusted test year conditions and do not reflect any increase or decrease in revenues that might result from customers’ utilization of one or more of the optional rates of the Company. Notice is also given that other rates or rate schedules of other customer classes or 
+[DOC 1] https://www.entergyarkansas.com/ratecase2026?s=
+service may be affected by a final order of the Commission.
+Upon written request, the Company will provide to any customer an estimate of the calculated average monthly dollar amount by which the proposed rates will increase that customer’s electric bill.  The estimate will be based on the customer’s average consumption level, unless such consumption data is not reasonably ascertainable by the Company. The calculated average monthly dollar amount will be provided to the customer subject to the following qualifications:
+(1)       The calculated averages are estimates, which may change depending on customer usage, and the rates filed and approved by the Commission, and
+(2)       The calculated average will be provided in only those cases where a customer’s proposed rate schedule will not be a different rate schedule under which the customer presently takes service.
+The present and proposed monthly unit price and customer charges for each class of customer or each major rate classification, contained in the present rate schedule and the proposed rate, are as follows:
+Rate Schedule
+Description
+Present Block
+Present Rate
+Proposed Rate
+RS
+General Purpose Residential Service
+Customer Charge:
+Charge Per Month
+$8.40
+$12.92
+Low Income Customer Charge:
+Charge Per Month
+N/A
+$6.46
+Energy Charge Per kWh:
+June-September
+1st 1,500 kWh
+$0.07392
+$0.11377
+All additional kWh
+$0.09593
+$0.14764
+October-May
+1st 1,500 kWh
+$0.06990
+$0.10758
+All additional kWh
+$0.05154
+$0.07933
+Low/Level Use Provision
+Customer Charge:
+Charge Per Month
+$8.40
+$12.92
+Energy Charge Per kWh:
+June-September
+1st 1,500 kWh
+$0.06991
+$0.10760
+All additional kWh
+$0.08987
+$0.13832
+October-May
+1st 1,500 kWh
+$0.06392
+$0.09836
+All additional kWh
+$0.04707
+$0.07244
+Three-Phase Service
+Charge Per Month
+$3.31
+$5.10
+RT
+Optional Residential Time-Of-Use
+Customer Charge:
+Charge Per Month
+$13.81
+N/A
+Energy Charge Per kWh:
+On-Peak Hours Use:
+$0.15451
+N/A
+Off-Peak Hours Use:
+$0.03050
+N/A
+Three-Phase Service
+Charge Per Month
+$3.31
+N/A
+REMT
+Residential Energy Management Time-Of-Use
+Customer Charge:
+$8.40
+N/A
+Energy Charge per kWh:
+On-Peak Hours
+$0.13880
+N/A
+Mid-Peak Hours
+$0.06698
+N/A
+Off-Peak Hours
+$0.05716
+N/A
+Three-Phase Service – per month charge
+$3.31
+N/A
+RTOU
+Residential Time-Of-Use
+Customer Charge:
+Charge Per Month
+N/A
+$12.92
+Energy Charge per kWh:
+On-Peak kWh
+N/A
+$0.31041
+Off-Peak kWh
+N/A
+$0.10347
+Discount Period kWh
+N/A
+$0.06208
+Three-Phase Service
+Charge Per Month
+N/A
+$5.10
+SGS
+Small General Service
+Customer Charge:
+Charge Per Month
+$24.25
+N/A
+Demand Charge:
+All kW over 6.0 kW
+$4.43
+N/A
+Energy Charge:
+1st 900 kWh plus 150 kWh/kW over 6.0 kW
+$0.05637
+N/A
+Additional kWh
+$0.03972
+N/A
+Minimum:
+Customer Charge:
+Charge Per Month
+$24.25
+N/A
+Demand Charge Per kW
+Highest kW over 6.0 kW est. in the 12 months ending with the current month:
+$2.95
+N/A
+ESGS
+Extra-Small General Service
+Customer Charge:
+N/A
+$39.65
+Demand Charge:
+All kW over 6.0 kW
+N/A
+$7.25
+Energy Charge:
+All kWh
+N/A
+$0.09214
+GS
+General Service
+Customer C
+[DOC 1] https://www.entergyarkansas.com/ratecase2026?s=
+harge:
+Charge Per Month
+N/A
+$39.65
+Demand Charge:
+All kW over 6.0 kW
+N/A
+$7.25
+Energy Charge:
+1st 900 kWh plus 150 kWh/kW over 6.0 kW
+N/A
+$0.09214
+Additional kWh
+N/A
+$0.06494
+Minimum:
+Customer Charge:
+Charge Per Month
+N/A
+$39.65
+Demand Charge Per kW
+Highest kW over 6.0 kW est. in the 12 months ending with the current month:
+N/A
+$4.82
+GFS
+General Farm Service
+Customer Charge:
+Charge Per Month
+$20.20
+$33.03
+Demand Charge Per kW:
+All kW over 6.0 kW
+$3.94
+$6.44
+Energy Charge Per kWh:
+All kWh
+$0.04192
+$0.06853
+Minimum
+Demand Charge per kVA
+$1.52
+$2.48
+Three-Phase Service
+Charge Per Month
+$2.98
+$4.87
+MP
+Municipal Pumping Service
+Sludge Grinders
+Charge per installed horsepower
+$1.01
+$1.65
+Minimum
+Charge Per Month
+$32.96
+$53.89
+AP
+Agricultural Pumping Service
+Seasonal Rate (A)
+Energy Charge per kWh:
+1st 268 kWh/kW of Billing Load
+$0.08246
+N/A
+All additional kWh
+$0.05647
+N/A
+Minimum
+Demand charge per kW of
+Cumulative Billing Load
+Per Season
+$10.42
+N/A
+Optional Monthly Rate (B)
+Energy Charge per kWh:
+1st 402 kWh/kW of Billing Load
+$0.07979
+$0.13045
+All additional kWh
+$0.05647
+$0.09232
+Minimum
+Demand charge per kW:
+All kW of Billing Load
+$6.12
+$10.01
+IP
+Irrigation Pumping Service
+Demand Charge per kW:
+Peak Season
+N/A
+$7.35
+Minimum Demand Charge
+Demand Charge per KW of Billing Load
+N/A
+$12.78
+Energy Charge per kWh:
+All kWh
+N/A
+$0.09949
+Peak Season Minimum
+Demand Charge per KW of Billing Load
+N/A
+$562.32
+CGS
+Cotton Ginning Service
+Energy Charge per kWh:
+1st 268 kWh/kW of Billing Load
+$0.09419
+$0.15401
+All additional kWh
+$0.06461
+$0.10564
+Minimum
+October – Demand Charge
+Per kW of Billing Load
+$4.35
+$7.11
+November – Demand Charge
+Per kW of Billing Load
+$8.69
+$14.21
+December – Demand Charge
+Per kW of Billing Load
+$13.04
+$21.32
+CTV
+Community Antenna TV Power Supply Service
+Energy Charge per kWh
+All kWh
+$0.07557
+$0.12356
+Minimum
+Charge per installation
+$1.70
+$2.78
+TSS
+Traffic Signal Service
+Traffic Control Signals
+Each direction/3 lenses per direction
+$3.93
+$6.43
+Each lens in excess of 3 per direction
+$1.19
+$1.95
+Flashing or Warning Signals and Safety Surveillance Video Equipment
+First 100 or less lamp Watts per signal
+$3.93
+$6.43
+Each additional 25 Watts per signal:
+$0.60
+$0.98
+Monthly minimum charge
+Per Signal
+$3.93
+$6.43
+LGS
+Large General Service
+Customer Charge:
+Charge Per Month
+$90.53
+$137.00
+Demand Charge Per kW
+All Summer Period kW
+$18.79
+$31.32
+All Other Period kW
+$15.94
+$26.56
+Energy Charge Per kWh
+All Summer Period kWh
+$0.01035
+$0.00980
+All Other Period kWh
+$0.00736
+$0.00696
+Minimum
+Customer Charge:
+Charge Per Month
+$90.53
+$137.00
+Demand Charge Per kW
+Highest kW over established in the 12 months ending with the current month
+$6.36
+$10.60
+GST
+Large General Service Time-Of-Use
+Customer Charge:
+Charge Per Month
+$90.53
+$137.00
+Demand Charge Per kW
+Summer Period
+On-Peak kW
+$25.25
+$39.78
+All Excess kW
+$7.44
+$11.93
+Other Period
+On-Peak kW
+$21.31
+$33.56
+All Excess kW
+$6.45
+$10.07
+Energy Charge Per kWh
+Summer Period
+All On-Peak kWh
+$0.00754
+$0.01004
+All Off-Peak 
+[DOC 1] https://www.entergyarkansas.com/ratecase2026?s=
+kWh
+$0.00538
+$0.00503
+Other Period
+All On-Peak kWh
+$0.00415
+$0.00392
+All Off-Peak kWh
+$0.00355
+$0.00335
+Minimum
+Customer Charge:
+Charge Per Month
+$90.53
+$137.00
+Demand Charge Per kW
+Highest kW over established in the 12 months ending with the current month
+$6.36
+$10.60
+LPS
+Large Power Service
+Customer Charge:
+Charge Per Month
+$468.60
+$710.00
+Demand Charge Per kW
+All Summer Period kW
+$18.22
+$30.36
+All Other Period kW
+$15.29
+$25.48
+Energy Charge Per kWh
+All Summer Period kWh
+$0.01035
+$0.00980
+All Other Period kWh
+$0.00736
+$0.00696
+Minimum
+Customer Charge:
+Charge Per Month
+$468.60
+$710.00
+Demand Charge Per kW
+Highest kW over established in the 12 months ending with the current month
+$6.36
+$10.60
+PST
+Large Power Service Time-Of-Use
+Customer Charge:
+Charge Per Month
+$468.60
+$710.00
+Demand Charge Per kW
+Summer Period
+On-Peak kW
+$24.66
+$38.86
+All Excess kW
+$7.22
+$11.66
+Other Period
+On-Peak kW
+$20.77
+$32.72
+All Excess kW
+$6.27
+$9.82
+Energy Charge per kWh
+Summer Period
+All On-Peak kWh
+$0.00755
+$0.01004
+All Off-Peak kWh
+$0.00539
+$0.00503
+Other Period
+All On-Peak kWh
+$0.00415
+$0.00392
+All Off-Peak kWh
+$0.00355
+$0.00335
+Minimum
+Customer Charge:
+Charge Per Month
+$468.60
+$710.00
+Demand Charge Per kW
+Highest kW over established in the 12 months ending with the current month
+$6.36
+$10.60
+LPHDLS
+Large Power High-Density Service
+Customer Charge:
+Charge Per Month
+$315.21
+$477.00
+Demand Charge Per kW
+Firm Contract KW
+$16.96
+$38.02
+Option A Nonfirm KW
+$11.64
+N/A
+Option B Nonfirm KW
+$9.70
+$23.65
+Energy Charge per kWh
+Summer Period
+All Summer Period kWh
+$0.01035
+$0.00271
+Other Period
+All Other Period kWh
+$0.00736
+$0.00193
+Minimum:
+Customer Charge:
+Charge Per Month
+$315.21
+$477.00
+Demand Charge Per kW
+Highest kW over established in the 12 months ending with the current month
+$6.36
+$10.60
+L1
+Municipal Street Lighting Service
+Company Owned Facilities
+A.  Incandescent Lighting
+100 Watt Unenclosed*
+First Unit/Pole
+$1.90
+$2.83
+150 Watt Unenclosed*
+First Unit/Pole
+$2.72
+$4.05
+B.  Mercury Vapor Lighting
+100 Watt*
+First Unit/Pole
+$2.90
+$4.31
+175 Watt*
+First Unit/Pole
+$4.03
+$5.99
+Each Excess Unit/Pole
+$1.48
+$2.20
+250 Watt*
+First Unit/Pole
+$4.96
+$7.38
+Each Excess Unit/Pole
+$2.02
+$3.00
+400 Watt*
+First Unit/Pole
+$4.96
+$7.38
+Each Excess Unit/Pole
+$3.22
+$4.79
+1000 Watt*
+First Unit/Pole
+$7.93
+$11.80
+Each Excess Unit/Pole
+$4.65
+N/A
+C.  High Pressure Sodium Lighting
+150 Watt*
+First Unit/Pole
+$5.77
+$8.58
+Each Excess Unit/Pole
+$4.54
+$6.75
+250 Watt*
+First Unit/Pole
+$6.97
+$10.37
+Each Excess Unit/Pole
+$5.52
+$8.21
+360 Watt*
+First Unit/Pole
+$7.14
+$10.62
+Each Excess Unit/Pole
+$5.18
+N/A
+400 Watt*
+First Unit/Pole
+$7.41
+$11.02
+Each Excess Unit/Pole
+$6.29
+$9.36
+D.  Metal Halide Lighting
+150 Watt Contempo Post-top*
+First Unit/Pole
+$21.34
+N/A
+Each Excess Unit/Pole
+$18.72
+N/A
+320 Watt Open*
+First Unit/Pole
+$24.69
+$36.72
+Each Excess Unit/Pole
+$20.39
+$30.33
+320 Watt Cobra*
+First Unit/Pole
+$23.82
+$35.43
+Each Excess Unit/Pole
+$19.52
+N/A
+E.  LED Lighting
+60 Watt Open*
+First Unit/Pole
+$4.94
+$7.35
+Each Exces
+[DOC 1] https://www.entergyarkansas.com/ratecase2026?s=
+s Unit/Pole
+$2.88
+N/A
+87 Watt Open*
+First Unit/Pole
+$5.27
+N/A
+Each Excess Unit/Pole
+$3.21
+N/A
+110 Watt Open*
+First Unit/Pole
+$5.52
+$8.21
+Each Excess Unit/Pole
+$3.47
+N/A
+67 Watt Cobra*
+First Unit/Pole
+$5.27
+$7.84
+Each Excess Unit/Pole
+$3.21
+N/A
+110 Watt Cobra*
+First Unit/Pole
+$5.63
+$8.37
+Each Excess Unit/Pole
+$3.58
+$5.33
+140 Watt Cobra*
+First Unit/Pole
+$6.33
+$9.42
+Each Excess Unit/Pole
+$4.28
+$6.37
+213 Watt Cobra*
+First Unit/Pole
+$7.28
+N/A
+Each Excess Unit/Pole
+$5.22
+N/A
+96 Watt Acorn Post-top*
+First Unit/Pole
+$16.04
+N/A
+Each Excess Unit/Pole
+$11.31
+N/A
+140 Watt Shoebox*
+First Unit/Pole
+$18.29
+N/A
+Each Excess Unit/Pole
+$9.29
+N/A
+213 Watt Shoebox*
+First Unit/Pole
+$20.27
+N/A
+Each Excess Unit/Pole
+$11.26
+N/A
+280 Watt Shoebox*
+First Unit/Pole
+$22.14
+$32.93
+Each Excess Unit/Pole
+$13.14
+$19.54
+4800 Lumen NEMA
+First Unit/Pole
+$5.80
+$8.63
+Each Excess Unit/Pole
+$3.69
+N/A
+6900 Lumen NEMA
+First Unit/Pole
+$6.19
+$9.21
+Each Excess Unit/Pole
+$3.92
+$5.83
+12300 Lumen Flood
+First Unit/Pole
+$14.43
+$21.46
+Each Excess Unit/Pole
+$9.70
+N/A
+5400 Lumen Cobra
+First Unit/Pole
+$6.33
+$9.42
+Each Excess Unit/Pole
+$4.25
+$6.32
+9100 Lumen Cobra
+First Unit/Pole
+$6.96
+$10.35
+Each Excess Unit/Pole
+$4.73
+$7.04
+12300 Lumen Cobra
+First Unit/Pole
+$7.68
+$11.42
+Each Excess Unit/Pole
+$5.45
+$8.11
+21000 Lumen Cobra
+First Unit/Pole
+$9.57
+$14.23
+Each Excess Unit/Pole
+$7.34
+$10.92
+12200 Lumen Shoebox
+First Unit/Pole
+$21.09
+$31.37
+Each Excess Unit/Pole
+$11.94
+$17.76
+22400 Lumen Shoebox
+First Unit/Pole
+$23.54
+$35.01
+Each Excess Unit/Pole
+$14.39
+$21.40
+24800 Lumen Shoebox
+First Unit/Pole
+$26.25
+$39.05
+Each Excess Unit/Pole
+$17.09
+$25.42
+8400 Lumen Acorn
+First Unit/Pole
+$19.57
+$29.11
+Each Excess Unit/Pole
+$14.77
+$21.97
+7400 Lumen Contempo
+First Unit/Pole
+$10.27
+$15.28
+9100 Lumen Shoebox
+First Unit/Pole
+$11.23
+$16.70
+5400 Lumen Acorn
+First Unit/Pole
+$14.44
+$21.48
+4500 Lumen Traditional
+First Unit/Pole
+$10.91
+$16.23
+6200 Lumen Traditional
+First Unit/Pole
+$11.37
+$16.91
+24000 Lumen Off Road
+First Unit/Pole
+$15.02
+$22.34
+F. Steel Poles
+For Poles of 30 Feet or Less
+Each Pole
+$1.83
+$2.72
+For Poles of 35 Feet
+Each Pole
+$2.81
+$4.18
+Company Owned Facilities
+A. Mercury Vapor Lighting
+100 Watt*
+First Unit/Pole
+$1.50
+$2.23
+175 Watt*
+First Unit/Pole
+$1.14
+$1.70
+250 Watt*
+First Unit/Pole
+$1.74
+$2.59
+400 Watt*
+First Unit/Pole
+$2.71
+$4.03
+Each Excess Unit/Pole
+$1.92
+N/A
+1000 Watt*
+First Unit/Pole
+$4.28
+N/A
+B. High Pressure Sodium Lighting
+150 Watt*
+First Unit/Pole
+$3.80
+$5.65
+Each Excess Unit/Pole
+$2.95
+$4.39
+250 Watt*
+First Unit/Pole
+$4.31
+$6.41
+Each Excess Unit/Pole
+$3.35
+$4.98
+400 Watt*
+First Unit/Pole
+$4.41
+$6.56
+Each Excess Unit/Pole
+$3.41
+N/A
+1000 Watt*
+First Unit/Pole
+$9.19
+$13.67
+Each Excess Unit/Pole
+$6.69
+$9.95
+C. Metal Halide Lighting
+150 Watt*
+First Unit/Pole
+$15.11
+N/A
+Each Excess Unit/Pole
+$4.18
+N/A
+320 Watt*
+First Unit/Pole
+$15.91
+N/A
+Each Excess Unit/Pole
+$5.66
+N/A
+Municipally Owned and Maintained LED Facilities
+A. Customer Charge
+Per Fixture
+$1.09
+$1.62
+B. Energy Charge
+Per kWh for all kWh
+$0.03459
+$
+[DOC 2] https://www.entergyarkansas.com/frp2025
+2025 Formula Rate Plan - Entergy Arkansas
+Residential customers
+Residential customer security deposits
+Residential energy price
+Energy efficiency programs
+How to read my Entergy bill
+Business customers
+Property management services
+Builder services and standards
+Energy efficiency programs
+Commercial and industrial electric energy price
+Agricultural customers
+Payment and billing
+Payment options
+Billing options
+Tools to manage my bill
+I need help paying my bill
+Communities
+The Power to Care
+Corporate and foundation giving
+Business and economic development
+About us
+About our CEO
+Newsroom
+Next Generation Arkansas
+2025 Formula Rate Plan
+Contact us
+Outages
+myEntergy
+Log in
+Report an outage
+Make a payment
+Register an account
+Click to open the search input field
+Click to open the search input field
+Search
+Menu
+Menu
+Entergy Arkansas 2025 Formula Rate Plan
+ENTERGY ARKANSAS, LLC
+APSC DOCKET NO. 16-036-FR
+NOTICE OF FILING MADE ON JULY 7, 2025
+Notice is hereby given that on July 7, 2025, Entergy Arkansas, LLC (EAL or the Company) filed with the Arkansas Public Service Commission (APSC or the Commission) an Application for Approval of a Rate Adjustment and Evaluation Report pursuant to Rate Schedule No. 44, Formula Rate Plan Rider (Rider FRP).  The Company requests an order approving its proposed Rider FRP Revenue Change and Rate Adjustment by December 12, 2025. The Rate Adjustment amount is $92.3 million and will affect customers in the Residential, Small General Service, Large General Service, and Lighting rate classes. Please see Table 1 below for a breakdown by rate class.  Table 2 provides the change in the current FRP rate and the proposed FRP rate. All retail base rates and applicable riders on file with the APSC will be increased by the percentage of base revenues listed in Table 2 below.
+Table 1
+RATE CLASS
+2026 FRP REVENUE CHANGE
+ANNUAL PERCENTAGE CHANGE
+CUMULATIVE FRP REVENUE CHANGE
+CUMULATIVE PERCENTAGE CHANGE
+Residential
+43,462,112
+4.1%
+311,750,247
+41.2%
+Small General Service
+22,717,879
+4.1%
+161,886,767
+40.2%
+Large General Service
+24,389,981
+3.6%
+170,948,698
+30.4%
+Lighting
+1,736,490
+3.9%
+12,128,556
+34.3%
+Total
+92,306,462
+656,714,269
+Table 2
+RATE CLASS
+CURRENT RATE
+PROPOSED RATE
+Residential
+44.8034%
+52.1959%
+Small General Service
+42.8335%
+50.1709%
+Large General Service
+42.3959%
+49.3925%
+Lighting
+41.9947%
+48.9316%
+If the Commission does not issue a final order by December 12, 2025, the proposed Rate Adjustment will become effective on January 2, 2026, for the first billing cycle of January 2026, subject to refund.
+Information relative to the filing in this matter, including the date and place of the public hearing, which will be set by order of the Commission, can be obtained from Karen Shook, the Secretary of the APSC, 1000 Center Street, Little Rock, Arkansas 72201, or on the APSC website, http://apsc.arkansas.gov.  Information can also be obtained by email at
+[email protected]
+or by phone at 501-682-5782.  Copies of the Application, Evaluation Repo
+[DOC 3] https://www.entergyarkansas.com/integrated-resource-planning
+Integrated Resource Planning - Entergy Arkansas
+Residential customers
+Residential customer security deposits
+Residential energy price
+Energy efficiency programs
+How to read my Entergy bill
+Business customers
+Property management services
+Builder services and standards
+Energy efficiency programs
+Commercial and industrial electric energy price
+Agricultural customers
+Payment and billing
+Payment options
+Billing options
+Tools to manage my bill
+I need help paying my bill
+Communities
+The Power to Care
+Corporate and foundation giving
+Business and economic development
+About us
+About our CEO
+Newsroom
+Next Generation Arkansas
+2025 Formula Rate Plan
+Contact us
+Outages
+myEntergy
+Log in
+Report an outage
+Make a payment
+Register an account
+Click to open the search input field
+Click to open the search input field
+Search
+Menu
+Menu
+Entergy Arkansas Integrated Resource Planning
+2024 Integrated Resource Plan
+An Integrated Resource Plan is a planning process and framework in which the costs and benefits of supply-side and demand-side alternatives are evaluated to develop resource portfolio options that help meet Entergy Arkansas’s planning objectives.
+Entergy Arkansas 2024 Integrated Resource Plan
+Entergy Arkansas 2024 Integrated Resource Plan Mid-Cycle Update
+2024 Integrated Resource Plan Overview
+2024 IRP Stakeholder Kickoff – Meeting #1
+Tuesday, Jan. 30, 2024, from 10 a.m. until 11:30 a.m. CST.
+Download the meeting slides
+.
+For information or questions about this virtual kickoff meeting, email us at
+[email protected]
+.
+2024 IRP Stakeholder Kickoff – Questions and Answers
+Set 1: Questions and answers
+Set 2: Questions and answers
+Set 3: Questions and answers
+Set 4: Questions and answers
+Set 5: Questions and answers
+Set 6: Questions and answers
+Set 7: Questions and answers as of July 22, 2026
+IRP supplementary data posting questions and answers
+2024 IRP Stakeholder Kickoff – Meeting #2
+Thursday, Aug. 15, 2024, from 10 a.m. until 11:30 a.m. CST.
+Download the meeting slides
+.
+For information or questions about this meeting, email us at
+[email protected]
+.
+2021 Integrated Resource Plan
+For more than a century, Entergy Arkansas has provided safe, reliable, and affordable electricity to its customers in Arkansas. We continue to serve our diverse, growing customer base by proactively planning for future resource needs by the most reliable and economic means possible.
+Entergy Arkansas 2021 Integrated Resource Plan
+Entergy Arkansas 2021 Integrated Resource Plan Mid-Cycle Update
+Contact us
+Please contact the IRP Inbox at
+[email protected]
+with comments or questions.
+>>
+Archived planning documents
+About us
+About our CEO
+Arkansas’ Bright Future
+Integrated Resource Planning
+Select transmission projects
+Request for energy and capacity proposals
+Business and economic development
+Newsroom
+Search
+Search
+myEntergy account
+Report an outage
+Make a payment
+Login or sign up
+Account support
+Additional links
+Integrated Resource Planning
+DOE Smart Grid Grant awarded
+Independence Plant CCR rul
+[DOC 4] https://www.entergyarkansas.com/wp-content/uploads/Entergy-Arkansas-Rate-Case-2026-Legal-Notice.pdf
+chedule under which the customer presently takes service.
+The present and proposed monthly unit price and customer charges for each class of customer or
+each major rate classification, contained in the present rate schedule and the proposed rate, are as follows:
+Rate Present Proposed
+Schedule Description Present Block Rate Rate
+RS GENERAL PURPOSE RESIDENTIAL SERVICE
+Customer Charge: Charge Per Month $8.40 $12.92
+Low Income Customer Charge: Charge Per Month N/A $6.46
+Energy Charge Per kWh:
+June-September 1st 1,500 kWh $0.07392 $0.11377
+All additional kWh $0.09593 $0.14764
+October-May 1st 1,500 kWh $0.06990 $0.10758
+All additional kWh $0.05154 $0.07933
+Low/Level Use Provision
+Customer Charge: Charge Per Month $8.40 $12.92
+Energy Charge Per kWh:
+June-September 1st 1,500 kWh $0.06991 $0.10760
+All additional kWh $0.08987 $0.13832
+October-May 1st 1,500 kWh $0.06392 $0.09836
+All additional kWh $0.04707 $0.07244
+Three-Phase Service Charge Per Month $3.31 $5.10
+RT OPTIONAL RESIDENTIAL TIME-OF-USE
+Customer Charge: Charge Per Month $13.81 N/A
+Energy Charge Per kWh: On-Peak Hours Use: $0.15451 N/A
+Off-Peak Hours Use: $0.03050 N/A
+Three-Phase Service Charge Per Month $3.31 N/A
+REMT RESIDENTIAL ENERGY MANAGEMENT TIME-OF-USE
+Customer Charge: $8.40 N/A
+Energy Charge per kWh: On-Peak Hours $0.13880 N/A
+Mid-Peak Hours $0.06698 N/A
+Off-Peak Hours $0.05716 N/A
+Three-Phase Service - per month charge $3.31 N/A
+RTOU RESIDENTIAL TIME-OF-USE
+Customer Charge: Charge Per Month N/A $12.92
+Energy Charge per kWh: On-Peak kWh N/A $0.31041
+Off-Peak kWh N/A $0.10347
+Discount Period kWh N/A $0.06208
+Three-Phase Service Charge Per Month N/A $5.10
+SGS Small General Service
+Customer Charge: Charge Per Month $24.25 N/A
+Demand Charge: All kW over 6.0 kW $4.43 N/A
+Energy Charge: 1st 900 kWh plus 150 $0.05637 N/A
+kWh/kW over 6.0 kW
+Additional kWh $0.03972 N/A
+Minimum:
+- 2 -
+
+Customer Charge: Charge Per Month $24.25 N/A
+Demand Charge Per kW Highest kW over 6.0 kW $2.95 N/A
+est. in the 12 months
+ending with the current
+m onth:
+ESGS Extra-Small General Service
+Customer Charge: N/A $39.65
+Demand Charge: All kW over 6.0 kW N/A $7.25
+Energy Charge: All kWh N/A $0.09214
+GS General Service
+Customer Charge: Charge Per Month N/A $39.65
+Demand Charge: All kW over 6.0 kW N/A $7.25
+Energy Charge: 1st 900 kWh plus 150 N/A $0.09214
+kWh/kW over 6.0 kW
+Additional kWh N/A $0.06494
+Minimum:
+Customer Charge: Charge Per Month N/A $39.65
+Demand Charge Per kW Highest kW over 6.0 kW N/A $4.82
+est. in the 12 months
+ending with the current
+m onth:
+GFS GENERAL FARM SERVICE
+Customer Charge: Charge Per Month $20.20 $33.03
+Demand Charge Per kW: All kW over 6.0 kW $3.94 $6.44
+Energy Charge Per kWh: All kWh $0.04192 $0.06853
+Minimum Demand Charge per kVA $1.52 $2.48
+Three-Phase Service Charge Per Month $2.98 $4.87
+MP MUNICIPAL PUMPING SERVICE
+Sludge Grinders Charge per installed $1.01 $1.65
+horsepower
+Minimum Charge Per Month $32.96 $53.89
+AP AGRICULTURAL PUMPING SERVICE
+Seasonal Rate (A)
+Energy Charge per kWh: 1st 26
+[DOC 4] https://www.entergyarkansas.com/wp-content/uploads/Entergy-Arkansas-Rate-Case-2026-Legal-Notice.pdf
+8 kWh/kW of Billing $0.08246 N/A
+Load
+All additional kWh $0.05647 N/A
+Minimum Demand charge per kW
+of
+Cumulative Billing Load
+Per Season $10.42 N/A
+Optional Monthly Rate (B)
+Energy Charge per kWh: 1st 402 kWh/kW of Billing $0.07979 $0.13045
+Load
+All additional kWh $0.05647 $0.09232
+Minimum Demand charge per kW:
+All kW of Billing Load $6.12 $10.01
+IP IRRIGATION PUMPING SERVICE
+Demand Charge per kW: Peak Season N/A $7.35
+Minimum Demand Charge Demand Charge per KW N/A $12.78
+of Billing Load
+Energy Charge per kWh: All kWh N/A $0.09949
+Peak Season Minimum Demand Charge per KW N/A $562.32
+o f Billing Load
+CGS COTTON GINNING SERVICE
+Energy Charge per kWh: 1st 268 kWh/kW of Billing $0.09419 $0.15401
+Load
+- 3 -
+
+All additional kWh $0.06461 $0.10564
+Minimum
+October - Demand Charge Per kW of Billing Load $4.35 $7.11
+November - Demand Charge Per kW of Billing Load $8.69 $14.21
+December - Demand Charge Per kW of Billing Load $13.04 $21.32
+CTV COMMUNITY ANTENNA TV POWER SUPPLY SERVICE
+Energy Charge per kWh All kWh $0.07557 $0.12356
+Minimum Charge per installation $1.70 $2.78
+TSS TRAFFIC SIGNAL SERVICE
+Traffic Control Signals Each direction/3 lenses $3.93 $6.43
+per direction
+Each lens in excess of 3 $1.19 $1.95
+p er direction
+Flashing or Warning Signals and Safety Surveillance Video First 100 or less lamp $3.93 $6.43
+E quipment Watts per signal
+Each additional 25 Watts $0.60 $0.98
+per signal:
+Monthly minimum charge Per Signal $3.93 $6.43
+LGS LARGE GENERAL SERVICE
+Customer Charge: Charge Per Month $90.53 $137.00
+Demand Charge Per kW All Summer Period kW $18.79 $31.32
+All Other Period kW $15.94 $26.56
+Energy Charge Per kWh All Summer Period kWh $0.01035 $0.00980
+All Other Period kWh $0.00736 $0.00696
+Minimum
+Customer Charge: Charge Per Month $90.53 $137.00
+Demand Charge Per kW Highest kW over $6.36 $10.60
+established in the 12
+months ending with the
+c urrent month
+GST LARGE GENERAL SERVICE TIME-OF-USE
+Customer Charge: Charge Per Month $90.53 $137.00
+Demand Charge Per kW
+Summer Period On-Peak kW $25.25 $39.78
+All Excess kW $7.44 $11.93
+Other Period On-Peak kW $21.31 $33.56
+All Excess kW $6.45 $10.07
+Energy Charge Per kWh
+Summer Period All On-Peak kWh $0.00754 $0.01004
+All Off-Peak kWh $0.00538 $0.00503
+Other Period All On-Peak kWh $0.00415 $0.00392
+All Off-Peak kWh $0.00355 $0.00335
+Minimum
+Customer Charge: Charge Per Month $90.53 $137.00
+Demand Charge Per kW Highest kW over $6.36 $10.60
+established in the 12
+months ending with the
+c urrent month
+LPS LARGE POWER SERVICE
+Customer Charge: Charge Per Month $468.60 $710.00
+Demand Charge Per kW All Summer Period kW $18.22 $30.36
+All Other Period kW $15.29 $25.48
+Energy Charge Per kWh All Summer Period kWh $0.01035 $0.00980
+All Other Period kWh $0.00736 $0.00696
+Minimum
+Customer Charge: Charge Per Month $468.60 $710.00
+- 4 -
+
+Demand Charge Per kW Highest kW over $6.36 $10.60
+established in the 12
+months ending with the
+c urrent month
+PST LARGE POWER SERVICE TIME-OF-USE
+Customer Charge: Charge Per Month $468.60 $710.00
+D
+[DOC 4] https://www.entergyarkansas.com/wp-content/uploads/Entergy-Arkansas-Rate-Case-2026-Legal-Notice.pdf
+emand Charge Per kW
+Summer Period On-Peak kW $24.66 $38.86
+All Excess kW $7.22 $11.66
+Other Period On-Peak kW $20.77 $32.72
+All Excess kW $6.27 $9.82
+Energy Charge per kWh
+Summer Period All On-Peak kWh $0.00755 $0.01004
+All Off-Peak kWh $0.00539 $0.00503
+Other Period All On-Peak kWh $0.00415 $0.00392
+All Off-Peak kWh $0.00355 $0.00335
+Minimum
+Customer Charge: Charge Per Month $468.60 $710.00
+Demand Charge Per kW Highest kW over $6.36 $10.60
+established in the 12
+months ending with the
+c urrent month
+LPHDLS LARGE POWER HIGH-DENSITY SERVICE
+Customer Charge: Charge Per Month $315.21 $477.00
+Demand Charge Per kW Firm Contract KW $16.96 $38.02
+Option A Nonfirm KW $11.64 N/A
+Option B Nonfirm KW $9.70 $23.65
+Energy Charge per kWh
+Summer Period All Summer Period kWh $0.01035 $0.00271
+Other Period All Other Period kWh $0.00736 $0.00193
+Minimum:
+Customer Charge: Charge Per Month $315.21 $477.00
+Demand Charge Per kW Highest kW over $6.36 $10.60
+established in the 12
+months ending with the
+c urrent month
+L1 Municipal Street Lighting Service
+Company Owned Facilities
+A. Incandescent Lighting
+100 Watt Unenclosed* First Unit/Pole $1.90 $2.83
+150 Watt Unenclosed* First Unit/Pole $2.72 $4.05
+B. Mercury Vapor Lighting
+100 Watt* First Unit/Pole $2.90 $4.31
+175 Watt* First Unit/Pole $4.03 $5.99
+Each Excess Unit/Pole $1.48 $2.20
+250 Watt* First Unit/Pole $4.96 $7.38
+Each Excess Unit/Pole $2.02 $3.00
+400 Watt* First Unit/Pole $4.96 $7.38
+Each Excess Unit/Pole $3.22 $4.79
+1000 Watt* First Unit/Pole $7.93 $11.80
+Each Excess Unit/Pole $4.65 N/A
+C. High Pressure Sodium Lighting
+150 Watt* First Unit/Pole $5.77 $8.58
+Each Excess Unit/Pole $4.54 $6.75
+250 Watt* First Unit/Pole $6.97 $10.37
+Each Excess Unit/Pole $5.52 $8.21
+360 Watt* First Unit/Pole $7.14 $10.62
+Each Excess Unit/Pole $5.18 N/A
+- 5 -
+
+400 Watt* First Unit/Pole $7.41 $11.02
+Each Excess Unit/Pole $6.29 $9.36
+D. Metal Halide Lighting
+150 Watt Contempo Post-top* First Unit/Pole $21.34 N/A
+Each Excess Unit/Pole $18.72 N/A
+320 Watt Open* First Unit/Pole $24.69 $36.72
+Each Excess Unit/Pole $20.39 $30.33
+320 Watt Cobra* First Unit/Pole $23.82 $35.43
+Each Excess Unit/Pole $19.52 N/A
+E. LED Lighting
+60 Watt Open* First Unit/Pole $4.94 $7.35
+Each Excess Unit/Pole $2.88 N/A
+87 Watt Open* First Unit/Pole $5.27 N/A
+Each Excess Unit/Pole $3.21 N/A
+110 Watt Open* First Unit/Pole $5.52 $8.21
+Each Excess Unit/Pole $3.47 N/A
+67 Watt Cobra* First Unit/Pole $5.27 $7.84
+Each Excess Unit/Pole $3.21 N/A
+110 Watt Cobra* First Unit/Pole $5.63 $8.37
+Each Excess Unit/Pole $3.58 $5.33
+140 Watt Cobra* First Unit/Pole $6.33 $9.42
+Each Excess Unit/Pole $4.28 $6.37
+213 Watt Cobra* First Unit/Pole $7.28 N/A
+Each Excess Unit/Pole $5.22 N/A
+96 Watt Acorn Post-top* First Unit/Pole $16.04 N/A
+Each Excess Unit/Pole $11.31 N/A
+140 Watt Shoebox* First Unit/Pole $18.29 N/A
+Each Excess Unit/Pole $9.29 N/A
+213 Watt Shoebox* First Unit/Pole $20.27 N/A
+Each Excess Unit/Pole $11.26 N/A
+280 Watt Shoebox* First Unit/Pole $22.14 $32.93
+Each Excess Unit/Pole $1
+[DOC 4] https://www.entergyarkansas.com/wp-content/uploads/Entergy-Arkansas-Rate-Case-2026-Legal-Notice.pdf
+3.14 $19.54
+4800 Lumen NEMA First Unit/Pole $5.80 $8.63
+Each Excess Unit/Pole $3.69 N/A
+6900 Lumen NEMA First Unit/Pole $6.19 $9.21
+Each Excess Unit/Pole $3.92 $5.83
+12300 Lumen Flood First Unit/Pole $14.43 $21.46
+Each Excess Unit/Pole $9.70 N/A
+5400 Lumen Cobra First Unit/Pole $6.33 $9.42
+Each Excess Unit/Pole $4.25 $6.32
+9100 Lumen Cobra First Unit/Pole $6.96 $10.35
+Each Excess Unit/Pole $4.73 $7.04
+12300 Lumen Cobra First Unit/Pole $7.68 $11.42
+Each Excess Unit/Pole $5.45 $8.11
+21000 Lumen Cobra First Unit/Pole $9.57 $14.23
+Each Excess Unit/Pole $7.34 $10.92
+12200 Lumen Shoebox First Unit/Pole $21.09 $31.37
+Each Excess Unit/Pole $11.94 $17.76
+22400 Lumen Shoebox First Unit/Pole $23.54 $35.01
+Each Excess Unit/Pole $14.39 $21.40
+24800 Lumen Shoebox First Unit/Pole $26.25 $39.05
+Each Excess Unit/Pole $17.09 $25.42
+8400 Lumen Acorn First Unit/Pole $19.57 $29.11
+Each Excess Unit/Pole $14.77 $21.97
+7400 Lumen Contempo First Unit/Pole $10.27 $15.28
+9100 Lumen Shoebox First Unit/Pole $11.23 $16.70
+5400 Lumen Acorn First Unit/Pole $14.44 $21.48
+4500 Lumen Traditional First Unit/Pole $10.91 $16.23
+- 6 -
+
+6200 Lumen Traditional First Unit/Pole $11.37 $16.91
+24000 Lumen Off Road First Unit/Pole $15.02 $22.34
+F. Steel Poles
+For Poles of 30 Feet or Less Each Pole $1.83 $2.72
+For Poles of 35 Feet Each Pole $2.81 $4.18
+Company Owned Facilities
+A. Mercury Vapor Lighting
+100 Watt* First Unit/Pole $1.50 $2.23
+175 Watt* First Unit/Pole $1.14 $1.70
+250 Watt* First Unit/Pole $1.74 $2.59
+400 Watt* First Unit/Pole $2.71 $4.03
+Each Excess Unit/Pole $1.92 N/A
+1000 Watt* First Unit/Pole $4.28 N/A
+B. High Pressure Sodium Lighting
+150 Watt* First Unit/Pole $3.80 $5.65
+Each Excess Unit/Pole $2.95 $4.39
+250 Watt* First Unit/Pole $4.31 $6.41
+Each Excess Unit/Pole $3.35 $4.98
+400 Watt* First Unit/Pole $4.41 $6.56
+Each Excess Unit/Pole $3.41 N/A
+1000 Watt* First Unit/Pole $9.19 $13.67
+Each Excess Unit/Pole $6.69 $9.95
+C. Metal Halide Lighting
+150 Watt* First Unit/Pole $15.11 N/A
+Each Excess Unit/Pole $4.18 N/A
+320 Watt* First Unit/Pole $15.91 N/A
+Each Excess Unit/Pole $5.66 N/A
+Municipally Owned and Maintained LED Facilities
+A. Customer Charge Per Fixture $1.09 $1.62
+B. Energy Charge Per kWh for all kWh $0.03459 $0.05144
+* - Not available for new installations
+L1BNR Municipal Street Lighting Service Within Buffalo National
+River Boundaries
+L1BNR 28W COBRA Per Fixture $4.66 $6.93
+L1SH Municipal Shielded Street Lighting Service
+A. High Pressure Sodium Lighting
+150 Watt Cobra Head First Unit/Pole $6.73 $10.01
+Each Excess Unit/Pole $4.83 $7.18
+250 Watt Cobra Head First Unit/Pole $8.09 $12.03
+Each Excess Unit/Pole $6.64 N/A
+400 Watt Cobra head First Unit/Pole $8.43 $12.54
+Each Excess Unit/Pole $7.31 N/A
+150 Watt Post Top Colonial (Subdivision) $6.12 $9.10
+B. Steel Poles
+For Poles of 30 Feet or Less Each Pole $1.83 N/A
+For Poles of 35 Feet Each Pole $2.81 $4.18
+L4 All Night Outdoor Lighting Service
+Nightwatchers
+A. Incandescent Unshielded
+300 Watt* Per Light $5.76 $8.57
+B. Mercury V
+[DOC 4] https://www.entergyarkansas.com/wp-content/uploads/Entergy-Arkansas-Rate-Case-2026-Legal-Notice.pdf
+apor Unshielded
+100 Open* Per Light $4.95 $7.36
+175 Open* Per Light $5.09 $7.57
+250 Open* Per Light $5.42 $8.06
+- 7 -
+
+400 Open* Per Light $6.65 $9.89
+400 Open* Per Light $10.06 $14.96
+C. High Pressure Sodium Unshielded
+100 Open* Per Light $8.42 $12.52
+150 Open* Per Light $6.34 $9.43
+250 Open* Per Light $7.47 $11.11
+250 Cobra* Per Light $10.56 $15.71
+250 Traditionaire* Per Light $14.56 $21.66
+400 Open* Per Light $8.73 $12.99
+400 Cobra* Per Light $11.92 $17.73
+150 Colonial* Per Light $10.25 $15.25
+150 Acorn* Per Light $11.86 $17.64
+400 Shoebox* Per Light $13.26 $19.72
+400 Square* Per Light $16.15 $24.02
+1000 Shoebox* Per Light $22.43 $33.36
+D. High Pressure Sodium Shielded
+150 Cobra* Per Light $8.83 $13.13
+250 Cobra* Per Light $11.67 $17.36
+400 Cobra* Per Light $12.95 $19.26
+150 Colonial Post Top* Per Light $8.93 $13.28
+E. Metal Halide Unshielded
+175 Acorn* Per Light $15.43 $22.95
+150 Acorn* Per Light $13.39 $19.92
+400 Open* Per Light $9.10 $13.54
+320 Open* Per Light $9.83 $14.62
+400 Shoebox* Per Light $14.39 $21.40
+400 Cobra* Per Light $15.63 $23.25
+320 Cobra* Per Light $15.71 $23.37
+320 Shoebox* Per Light $21.29 $31.67
+400 Square* Per Light $19.16 $28.50
+1000 Shoebox* Per Light $25.91 $38.54
+1000 Square* Per Light $28.19 $41.93
+F. Light Emitting Diode (LED)
+2150 Lumen Traditional Per Light $9.90 $14.73
+4500 Lumen Traditional Per Light $10.34 $15.38
+6200 Lumen Traditional Per Light $10.78 $16.03
+5200 Lumen Granville Per Light $15.15 $22.53
+7700 Lumen Granville Per Light $15.71 $23.37
+5200 Lumen Acorn Per Light $14.07 $20.93
+8400 Lumen Acorn Per Light $14.77 $21.97
+12200 Lumen Shoebox Per Light $11.94 $17.76
+22400 Lumen Shoebox Per Light $14.39 $21.40
+24800 Lumen Shoebox Per Light $17.09 $25.42
+4800 Lumen NEMA Per Light $7.69 $11.44
+6900 Lumen NEMA Per Light $8.16 $12.14
+9100 Lumen Cobra PAL Per Light $10.37 $15.42
+12300 Lumen Cobra PAL Per Light $11.97 $17.80
+21000 Lumen Cobra PAL Per Light $16.15 $24.02
+Floodlights
+A. Mercury Vapor Unshielded
+400 Watt Flood* Per Light $8.37 $12.45
+1000 Watt Flood* Per Light $13.16 $19.57
+B. High Pressure Sodium Unshielded
+100 Watt Flood* Per Light $9.52 $14.16
+250 Watt Flood* Per Light $10.74 $15.98
+400 Watt Flood* Per Light $11.54 $17.17
+1000 Watt Flood* Per Light $15.13 $22.50
+- 8 -
+
+C. Metal Halide Unshielded
+250 Watt Flood* Per Light $14.61 $21.73
+400 Watt Flood* Per Light $12.72 $18.92
+320 Watt Flood* Per Light $12.75 $18.96
+1000 Watt Flood* Per Light $17.27 $25.69
+D. Light Emitting Diode (LED)
+5500 Lumen Flood Light Per Light $10.55 $15.69
+7600 Lumen Flood Light Per Light $11.05 $16.44
+11500 Lumen Flood Light Per Light $12.27 $18.25
+22400 Lumen Flood Light Per Light $14.49 $21.55
+32300 Lumen Flood Light Per Light $17.58 $26.15
+* - Not available for new installations
+Poles/Pole Equipment
+30 foot Wood Pole Each Pole $3.26 $4.85
+35 foot Wood Pole Each Pole $3.99 $5.93
+30 foot Steel-5” Square Pole** Each Pole $8.46 $12.58
+28 foot Concrete Octagon Pole** Each Pole $5.41 $8.05
+18 foot Fiberglass Round Pole** Eac
+[DOC 4] https://www.entergyarkansas.com/wp-content/uploads/Entergy-Arkansas-Rate-Case-2026-Legal-Notice.pdf
+h Pole $2.66 $3.96
+39 foot Steel Round Tapered Pole** Each Pole $11.97 $17.80
+Plugged 4-way Adapter** Each Adapter $1.93 $2.87
+** - Available for new installations only as Additional Facilities
+Energy Rate For Subdivision Owned Lighting Facilities
+Energy Charge All determined kWh $0.02827 $0.04205
+VAR Voltage Adjustment Rider - LGS
+Service is delivered and metered at secondary voltage: No reductions 0% 0%
+Service is delivered at secondary voltage but metered at Reduce Demand and 1.0% 1.0%
+p rimary voltage. E nergy for losses by:
+Service is delivered at primary voltage but metered at
+secondary voltage and customer
+owns and maintains all transformation facilities.
+Reduce Monthly Demand $2.18 $3.64
+Charge per kW by:
+Reduce Daily Demand $0.0717 $0.1197
+C harge per kW by:
+Service is delivered and metered at primary voltage and
+customer owns and maintains all
+transformation facilities.
+Reduce Demand and 1.0% 1.0%
+Energy for losses by:
+Reduce Monthly Demand $2.18 $3.64
+Charge per kW by:
+Reduce Daily Demand $0.0717 $0.1197
+C harge per kW by:
+Service is delivered at transmission voltage but metered at
+p rimary voltage.
+Reduce Demand and 1.0% 1.0%
+Energy for losses by:
+Reduce Monthly Demand $4.66 $7.77
+Charge per kW by:
+Reduce Daily Demand $0.1532 $0.2555
+C harge per kW by:
+Service is delivered and metered at transmission voltage.
+- 9 -
+
+Reduce Demand and 2.0% 2.0%
+Energy for losses by:
+Reduce Monthly Demand $4.66 $7.77
+Charge per kW by:
+Reduce Daily Demand $0.1532 $0.2555
+C harge per kW by:
+VAR Voltage Adjustment Rider - GS
+Service is delivered and metered at secondary voltage: No reductions 0% 0%
+Service is delivered at secondary voltage but metered at Reduce Demand and 1.0% 1.0%
+p rimary voltage. E nergy for losses by:
+Service is delivered at primary voltage but metered at
+secondary voltage and customer
+owns and maintains all transformation facilities.
+Reduce Monthly Demand $2.18 $3.28
+Charge per kW by:
+Reduce Daily Demand $0.0717 $0.1078
+C harge per kW by:
+Service is delivered and metered at primary voltage and
+customer owns and maintains all
+transformation facilities.
+Reduce Demand and 1.0% 1.0%
+Energy for losses by:
+Reduce Monthly Demand $2.18 $3.28
+Charge per kW by:
+Reduce Daily Demand $0.0717 $0.1078
+C harge per kW by:
+Service is delivered at transmission voltage but metered at
+p rimary voltage.
+Reduce Demand and 1.0% 1.0%
+Energy for losses by:
+Reduce Monthly Demand $4.66 $7.00
+Charge per kW by:
+Reduce Daily Demand $0.1532 $0.2301
+C harge per kW by:
+Service is delivered and metered at transmission voltage.
+Reduce Demand and 2.0% 2.0%
+Energy for losses by:
+Reduce Monthly Demand $4.66 $7.00
+Charge per kW by:
+Reduce Daily Demand $0.1532 $0.2301
+C harge per kW by:
+OIS Optional Interruptible Service Rider
+Monthly Customer Charge $224.68 $340.00
+Monthly Minimum Demand Charge $4.83 $12.62
+SSR Standby Service Rider
+Customer Charge Charge Per Month $468.60 $710.00
+Reservation Charge Rate Per kW of Reserved $3.73 $5.64
+S ervice
+Maintenance Demand Charge:
+Sum
+[DOC 4] https://www.entergyarkansas.com/wp-content/uploads/Entergy-Arkansas-Rate-Case-2026-Legal-Notice.pdf
+mer Period $/kW/Day $0.1748 $0.3823
+Other Period $/kW/Day $0.1524 $0.3233
+Backup Demand Charge:
+Summer Period $/kW/Day $0.4400 $0.9954
+Other Period $/kW/Day $0.3714 $0.8388
+Maintenance Energy Charge:
+Summer Period Energy Charge Per kWh $0.02709 $0.00980
+Other Period Energy Charge Per kWh $0.01927 $0.00696
+- 10 -
+
+Backup Energy Charge:
+Summer Period Energy Charge Per kWh $0.02709 $0.00980
+Other Period Energy Charge Per kWh $0.01927 $0.00696
+SMWHR Separately Metered Commercial Space and Water
+Heating Rider
+Energy Charge per kWh: 1st 1000 kwh $0.04543 $0.07335
+All additional kWh $0.03765 $0.06079
+Minimum Charge Per Month $3.98 $6.42
+HFLR Highly Fluctuating Load Rider
+Demand Charge Per kVA $0.27 $0.45
+GSMR Modification of General Service Minimum Rider
+Minimum Demand Charge Per kVA or fraction $1.81 $2.96
+t hereof
+LCR Large Cogeneration Rider
+Customer Charge Charge Per Month $22.42 $22.69
+SCR Small Cogeneration Rider
+Customer Charge Charge Per Month $22.42 $22.69
+SESR Seasonal Service Rider
+Demand Charge Per kW for all kW $3.41 $5.55
+AFCR Additional Facilities Charge Rider
+Option A Monthly Charge 0.875% 0.912%
+Option B Selected Recovery Term 8.939% 8.948%
+1
+Selected Recovery Term 4.764% 4.773%
+2
+Selected Recovery Term 3.374% 3.383%
+3
+Selected Recovery Term 2.681% 2.690%
+4
+Selected Recovery Term 2.266% 2.276%
+5
+Selected Recovery Term 1.991% 2.001%
+6
+Selected Recovery Term 1.795% 1.805%
+7
+Selected Recovery Term 1.649% 1.660%
+8
+Selected Recovery Term 1.537% 1.547%
+9
+Selected Recovery Term 1.447% 1.458%
+10
+Monthly % Post- 0.290% 0.289%
+Recovery Term
+Operation and Maintenance of Customer-Owned Facilities Monthly Charge 0.199% 0.225%
+AFCRG Additional Facilities Charge Rider - Governmental
+Option A Monthly Charge 1.428% 1.243%
+Option B Selected Recovery Term 9.492% 9.279%
+1
+Selected Recovery Term 5.317% 5.104%
+2
+Selected Recovery Term 3.927% 3.714%
+3
+Selected Recovery Term 3.234% 3.021%
+4
+Selected Recovery Term 2.819% 2.607%
+5
+- 11 -
+
+Selected Recovery Term 2.544% 2.332%
+6
+Selected Recovery Term 2.348% 2.136%
+7
+Selected Recovery Term 2.202% 1.991%
+8
+Selected Recovery Term 2.090% 1.878%
+9
+Selected Recovery Term 2.000% 1.789%
+10
+Monthly % Post- 0.843% 0.620%
+Recovery Term
+Operation and Maintenance of Customer-Owned Facilities Monthly Charge 0.752% 0.556%
+CAC Charges Related To Customer Activity
+Meter Test Fee Per Occurrence $53.00 $69.00
+Trip Fee Per Occurrence $15.00 $20.00
+Meter Tampering Fee 1st Occurrence N/A $157.00
+Each Additional N/A $257.00
+O ccurrence
+Reconnection Fee
+During Normal Working Hours Reconnected at $39.00 $50.75
+Customer's Meter
+Reconnected at Other $87.00 $113.00
+Customers taking service N/A $250.00
+under Rate Schedule No.
+17, Agricultural Water
+Pumping, or Rate
+Schedule No. 18,
+Irrigation Pumping
+Remote reconnect fee $2.50 N/A
+After Normal Working Hours Reconnected at $56.00 N/A
+Customer's Meter
+Reconnected at Other $105.00 N/A
+Remote reconnect fee $2.50 N/A
+Advanced Metering Infrastructure (AMI) Opt-Out Fees
+One-Time Service and Adminis
+[DOC 4] https://www.entergyarkansas.com/wp-content/uploads/Entergy-Arkansas-Rate-Case-2026-Legal-Notice.pdf
+tration Fee per Account $63.50 $82.50
+Monthly Manual Meter Reading Fee per Account $21.80 $28.00
+Payment by Drawdraft and Levelized/Equal Payment Credit Per month $1.00 $1.00
+Late Payment Charge per late bill 2.0% 1.5%
+Charge for Datalink
+Subscription Charge Daily Viewing Option (per $39.50 $39.50
+month, per meter)
+Hourly Viewing Option $122.50 $122.50
+(per month, per meter)
+Installation of Interval Meter Monthly Payment Option $12.50 $12.50
+(per month, per meter)
+Single Payment Option $300.00 $300.00
+per meter
+Optional Wireless Communication Link Daily Viewing Option (per $9.00 $9.00
+month, per meter)
+Hourly Viewing Option $12.00 $12.00
+(per month, per meter)
+Initial Setup/Activation - $15.00 $15.00
+S ingle Payment
+Electronic Load Data Product Fees
+kVA Analysis Report (e-mail) Per Month $3.20 $3.20
+kVa Peaks Summary Report (e-mail) Per Month $3.20 $3.20
+NDCR ANO Decommissioning Cost Rider
+ANO-1
+Residential Per kWh $0.00000 $0.00000
+Small General Service Per kWh $0.00000 $0.00000
+Large General Service Per kW $0.00 $0.00
+Lighting Per kWh $0.00000 $0.00000
+ANO-2
+- 12 -
+
+Residential Per kWh $0.00000 $0.00000
+Small General Service Per kWh $0.00000 $0.00000
+Large General Service Per kW $0.00 $0.00
+Lighting Per kWh $0.00000 $0.00000
+CCR Capacity Cost Recovery Rider
+Residential Per kWh ($0.00096) ($0.00096)
+Small General Service Per kWh ($0.00098) ($0.00098)
+Large General Service Per kW ($0.15735) ($0.15735)
+Lighting Per kWh ($0.00046) ($0.00046)
+ECR Energy Cost Recovery Rider
+All Classes Per kWh $0.01333 $0.01333
+EECR Energy Efficiency Cost Rate Rider
+Residential Per kWh $0.00327 $0.00327
+Small General Service Per kWh $0.00321 $0.00321
+Large General Service Per kWh $0.00219 $0.00219
+Lighting Per kWh $0.00171 $0.00171
+FLCF Federal Litigation Consulting Fee Rider
+All Classes Per kWh $0.00007 $0.00007
+GGR Grand Gulf Rider
+Residential Per kWh $0.00762 $0.00762
+Small General Service Per kWh $0.00681 $0.00681
+Large General Service Per kW $1.15 $1.15
+Lighting Per kWh $0.00862 $0.00862
+GMES Government Mandated Expenditure Surcharge Rider
+Residential Per kWh $0.00000 $0.00000
+Small General Service Per kWh $0.00000 $0.00000
+Large General Service Per kWh $0.00000 $0.00000
+Lighting Per kWh $0.00000 $0.00000
+MISO MISO Rider
+Residential Per kWh ($0.00538) ($0.00538)
+Small General Service Per kWh ($0.00434) ($0.00434)
+Large General Service Per kW ($0.95183) ($0.95183)
+Lighting Per kWh ($0.00126) ($0.00126)
+PCA Production Cost Allocation Rider
+Residential Per kWh $0.00000 $0.00000
+Small General Service Per kWh $0.00000 $0.00000
+Large General Service Per kWh $0.00000 $0.00000
+Lighting Per kWh $0.00000 $0.00000
+TA Tax Adjustment Rider
+Residential Percent of Base Revenue -1.1760% -1.1760%
+Small General Service Percent of Base Revenue -1.2517% -1.2517%
+Large General Service Percent of Base Revenue -0.8462% -0.8462%
+Lighting Percent of Base Revenue -1.1072% -1.1072%
+IRCR Internal Restructuring Credit Rider
+Residential Percent of Base Revenue 0.0000% 0.0000%
+Small General S
+[DOC 4] https://www.entergyarkansas.com/wp-content/uploads/Entergy-Arkansas-Rate-Case-2026-Legal-Notice.pdf
+ervice Percent of Base Revenue 0.0000% 0.0000%
+Large General Service Percent of Base Revenue 0.0000% 0.0000%
+Lighting Percent of Base Revenue 0.0000% 0.0000%
+- 13 -
+
+FRP Formula Rate Plan Rider*
+Residential Percent of Base Revenue 52.4369% 0.0000%
+Small General Service Percent of Base Revenue 50.2977% 0.0000%
+Large General Service Percent of Base Revenue 49.3354% 0.0000%
+Lighting Percent of Base Revenue 48.7436% 0.0000%
+* - Rider FRP will reset to 0 percent as a result of this base rate proceeding; however, EAL
+will file a Rider FRP netting adjustment in July of 2026, which will take effect January 2027
+t hat is anticipated to be greater than 0.
+UGP Tariff Governing the Installation of Electric Underground
+Residential Distribution Systems and Underground
+Service Connections
+Differential Costs for Underground Service
+Base Cost Originating From:
+Overhead
+In Company Provided Conduit
+Single-phase 100 Amp Per installation $295.00 $295.00
+Single-phase 200 Amp Per installation $320.00 $320.00
+Single-phase 320/400 Amp Per installation $325.00 $325.00
+In Customer Provided Conduit
+Single-phase 100 Amp Per installation $284.00 $284.00
+Single-phase 200 Amp Per installation $308.00 $308.00
+Single-phase 320/400 Amp Per installation $307.00 $307.00
+Underground
+Single-phase 100 Amp Per installation ($16.00) ($16.00)
+Single-phase 200 Amp Per installation ($9.00) ($9.00)
+Single-phase 320/400 Amp Per installation ($54.00) ($54.00)
+Incremental Cost
+In Company Provided Conduit
+Single-phase 100 Amp $/Foot $5.64 $5.64
+Single-phase 200 Amp $/Foot $5.96 $5.96
+Single-phase 320/400 Amp $/Foot $8.49 $8.49
+In Customer Provided Conduit
+Single-phase 100 Amp $/Foot $2.70 $2.70
+Single-phase 200 Amp $/Foot $3.02 $3.02
+Single-phase 320/400 Amp $/Foot $4.61 $4.61
+Differential Cost Per Pole Per Pole $60.00 $60.00
+EOP Extension of Facilities Present & Proposed
+Permanent Residential Extensions
+Non-Seasonal Residential Customer Payment Total Customer Estimated Investment minus
+R esponsibility Residential Allowance Plus
+Additional Costs
+Seasonal Residential Customer Payment Total Customer Estimated Investment minus
+R esponsibility Residential Allowance Plus
+Permanent Non-Residential Extensions Additional Costs
+Seasonal Agricultural Customer Payment Total Customer Estimated Investment minus
+R esponsibility Seas. Agri. Allowance Plus
+Additional Costs
+All Other Permanent Non-Residential Customers Total Customer Estimated Investment plus
+R esponsibility Additional Costs (Subject to Monthly
+G uaranteed Payment)
+Non-Permanent Service Locations Mandatory CIAC 2.5 times Estimated Cost
+(Excluding Salvageable
+Material) + cost of ROW
+and ROW clearing
+- 14 -
+
+Planned Land Use Developments Annual Revenue
+Guarantee
+Single Phase Facilities Estimated Investment
+times 1.25% times 12
+Three Phase Facilities Estimated Investment
+times 2.25% times 12
+The approximate amount of the dollar change and percentage change proposed for each rate schedule
+under test period conditions are included in the table below.
+[DOC 4] https://www.entergyarkansas.com/wp-content/uploads/Entergy-Arkansas-Rate-Case-2026-Legal-Notice.pdf
+ The amounts below reflect the dollar change
+and percentage change where the existing revenues Entergy Arkansas collects through its existing
+formula rate plan rider are included to offset the dollar and percentage change as these are amounts
+already included on customers’ bills through the formula rate plan adjustment.
+DOLLAR AND PERCENTAGE CHANGE BY RATE SCHEDULE
+Approximate Approximate
+Rate Schedule Dollar Change Percentage Change
+General Purpose Residential Service ($6,807) 0.00%
+Residential Time-Of-Use $7,050 3.52%
+Total Residential Class Revenues $243 0.00%
+Extra-Small General Service $2,229,330 8.32%
+General Service (1) $31,474,583 7.16%
+General Farm Service (2) $978,201 4.30%
+Municipal Pumping Service $4,500 7.32%
+Agricultural Water Pumping Service $868,351 7.97%
+Irrigation Pumping Service $2,565,414 7.76%
+Cotton Ginning Service ($196,894) -2.97%
+Community Antenna TV Power Supply $315,676 7.63%
+Traffic Signal Service $70,958 7.82%
+Total Small General Service Class Revenues $38,310,118 7.03%
+Large General Service (3) $3,423,925 1.74%
+Large General Service Time-Of-Use (4) $549,477 0.82%
+Large Power Service (4) ($1,434,820) -0.53%
+Large Power Service Time-Of-Use (4) ($93,916) -0.18%
+Large Power High-Load Density Service (5) $3,834,290 4.57%
+Total Large General Service Class Revenues $6,278,957 0.94%
+Municipal Street Lighting Service ($67) 0.00%
+All Night Outdoor Lighting Service $0 0.00%
+Total Lighting Class Revenues ($67) 0.00%
+Notes:
+(1) Includes Rider SMWHR, Rider HFLR, Rider GSMR, Rider VAR and OIS
+(2) Includes Rider SMWHR
+(3) Includes Rider SMWHR, Rider VAR and OIS
+- 15 -
+
+(4) Includes Rider VAR and OIS
+(5) Includes Rider VAR
+The Application was filed on February 27, 2026, in APSC Docket No. 26-001-U. Entergy Arkansas
+has requested the proposed rate schedule changes take effect with the first billing cycle of January 2027.
+The Commission has not yet established a procedural schedule or hearing for this matter.
+Arkansas Public Service Commission Procedural Rule 23 CAR § 462-402 identifies procedures for
+interested persons to intervene as a party or to make limited appearances, if said persons comply with the
+procedural requirements and time limits set forth in the Rule. Procedural Rule 23 CAR § 462-407(c)
+provides for relevant public comments, which may be in writing or orally at the hearing. Further information
+about the Company’s Application and about Commission procedures may be obtained by contacting the
+Secretary of the Commission, viewing the Commission’s website or Entergy Arkansas’ website at
+https://www.entergyarkansas.com/ratecase2026. The name, address, phone number, email address of
+the Commission Secretary, and the URL address of the Commission’s website are as follows:
+Karen Shook Secretary
+Arkansas Public Service Commission
+P.O. Box 400
+Little Rock, Arkansas 72201
+Phone: 501-682-5782
+email address: socmaster@arkansas.gov
+APSC website address: http://www.arkansas.gov/psc/index.htm
+by: ENTERGY ARKANSAS,LLC
+P. O. Box 551
+Litt
+[DOC 5] https://www.entergyarkansas.com/integrated-resource-planning?s=
+Integrated Resource Planning - Entergy Arkansas
+Residential customers
+Residential customer security deposits
+Residential energy price
+Energy efficiency programs
+How to read my Entergy bill
+Business customers
+Property management services
+Builder services and standards
+Energy efficiency programs
+Commercial and industrial electric energy price
+Agricultural customers
+Payment and billing
+Payment options
+Billing options
+Tools to manage my bill
+I need help paying my bill
+Communities
+The Power to Care
+Corporate and foundation giving
+Business and economic development
+About us
+About our CEO
+Newsroom
+Next Generation Arkansas
+2025 Formula Rate Plan
+Contact us
+Outages
+myEntergy
+Log in
+Report an outage
+Make a payment
+Register an account
+Click to open the search input field
+Click to open the search input field
+Search
+Menu
+Menu
+Entergy Arkansas Integrated Resource Planning
+2024 Integrated Resource Plan
+An Integrated Resource Plan is a planning process and framework in which the costs and benefits of supply-side and demand-side alternatives are evaluated to develop resource portfolio options that help meet Entergy Arkansas’s planning objectives.
+Entergy Arkansas 2024 Integrated Resource Plan
+Entergy Arkansas 2024 Integrated Resource Plan Mid-Cycle Update
+2024 Integrated Resource Plan Overview
+2024 IRP Stakeholder Kickoff – Meeting #1
+Tuesday, Jan. 30, 2024, from 10 a.m. until 11:30 a.m. CST.
+Download the meeting slides
+.
+For information or questions about this virtual kickoff meeting, email us at
+[email protected]
+.
+2024 IRP Stakeholder Kickoff – Questions and Answers
+Set 1: Questions and answers
+Set 2: Questions and answers
+Set 3: Questions and answers
+Set 4: Questions and answers
+Set 5: Questions and answers
+Set 6: Questions and answers
+Set 7: Questions and answers as of July 22, 2026
+IRP supplementary data posting questions and answers
+2024 IRP Stakeholder Kickoff – Meeting #2
+Thursday, Aug. 15, 2024, from 10 a.m. until 11:30 a.m. CST.
+Download the meeting slides
+.
+For information or questions about this meeting, email us at
+[email protected]
+.
+2021 Integrated Resource Plan
+For more than a century, Entergy Arkansas has provided safe, reliable, and affordable electricity to its customers in Arkansas. We continue to serve our diverse, growing customer base by proactively planning for future resource needs by the most reliable and economic means possible.
+Entergy Arkansas 2021 Integrated Resource Plan
+Entergy Arkansas 2021 Integrated Resource Plan Mid-Cycle Update
+Contact us
+Please contact the IRP Inbox at
+[email protected]
+with comments or questions.
+>>
+Archived planning documents
+About us
+About our CEO
+Arkansas’ Bright Future
+Integrated Resource Planning
+Select transmission projects
+Request for energy and capacity proposals
+Business and economic development
+Newsroom
+Search
+Search
+myEntergy account
+Report an outage
+Make a payment
+Login or sign up
+Account support
+Additional links
+Integrated Resource Planning
+DOE Smart Grid Grant awarded
+Independence Plant CCR rul
+[DOC 6] https://www.entergyarkansas.com/wp-content/uploads/ArkansasMidCycleReport.pdf
+pproval for the Big Island Solar PPA, a 440MW solar PV facility
+procured from the 2022 Renewable and Storage RFP (Docket No. 26-003-U). The 2024 IRP assumed a target COD of
+2029; however, the project is expected to be online ahead of schedule.
+Lastly, in Q1 2026, EAL completed and made selections out of its 2025 CCCT RFP. The chosen project has a 2031 COD,
+and this shift is refl ected in Figures 2 and 3, where the 2030 CCCT assumption from EAL’s 2024 IRP Preferred Portfolio
+(see Figure 1) is shown shifting to a Winter 2031 start date.
+223 CAR § 459-105. page 3
+
+Entergy Arkansas 2024 Mid-Cycle Report
+Load Forecast
+The load growth forecast refl ected in Future 2 in
+the 2024 IRP continues to materialize, with EAL
+executing agreements with Avaio, Google, and
+others for new power supply of ~1GWs in the last 12
+months alone, with additional large industrial growth
+potential on the horizon. Together, these projects
+broaden the state’s industrial mix, increasing
+regional economic activity.
+The Preferred Portfolio
+remains the correct strategy
+Since the 2024 IRP, EAL has advanced its resource
+acquisition strategy signifi cantly as described above. Entergy Arkansas powers Google’s $4B
+The revised summer and winter Load and Capability
+investment in the state
+charts are provided below in Figures 2 and 3.
+Delivering big wins for customers and communities
+Posted: Oct 2, 2025 | Posted: Arkansas Team | Category: News release |
+The 2024 IRP Mid-Cycle Report demonstrates that
+Tags: AR economic development, Arkansas, Data centers
+EAL requires new generating capacity throughout
+the 20-year planning period to maintain reliable
+customer service. Accounting for impacts to existing
+resources (like the deactivation of Lake Catherine
+Unit 4 and the cessation of coal operations at
+EAL’s White Bluff and Independence Steam Electric
+Stations (White Bluff and Independence), as well
+as projected load growth, estimates indicate a
+potential slight defi cit by summer 2027, which
+grows in winter 2027 and summer 2028. The
+analysis supports a near-term focus on a balanced
+portfolio of dispatchable CTs and CCCTs, as well
+as renewable energy resources. These additions
+are necessary to address substantial capacity and
+energy requirements driven by industrial growth and
+steady residential demand. If customer load begins
+to increase at a pace faster than projected in the
+load forecast, it may become necessary to adjust
+the resource plans by bringing forward the schedule
+for adding new resources where possible, to ensure
+reliability over the long term.
+As provided in Action Plan Item #5 listed below,
+EAL will also continue to assess solar, battery, and
+gas resources to optimize capacity, energy, and
+reliability while supporting renewable integration.
+These evaluations will inform future RFP processes.
+page 4
+
+Entergy Arkansas 2024 Mid-Cycle Report
+Figure 2: 2024 IRP Mid-Cycle Report - Summer Capacity Position
+2024 IRP Mid-Cycle Report: Summer Capacity Position
+Figure 3: 2024 IRP Mid-Cycle R
+[DOC 7] https://www.entergyarkansas.com/wp-content/uploads/2024/11/EAL-IRP-2024.pdf
+oactively plan for future
+resource needs while serving its diverse and growing customer base with a focus on affordability,
+reliability, and sustainability .
+EAL recognizes that creating an affordable, reliable, and sustainable future for customers and their
+communities requires continued transformation of the Company’s resource portfolio, and this IRP
+provides insights into EAL’s planning process .
+EAL integrates key objectives into its resource planning to benefit customers by focusing on several
+strategic initiatives, such as:
+• E nhancing the energy portfolio through diversification, while maintaining strong nuclear
+performance;
+• M aintaining and strengthening reliability through the addition of dispatchable generation, which
+will also reliably support the planned addition of renewable resources;
+• M aintaining affordable electricity costs by adding new highly efficient or zero emissions gener-
+ation resources that qualify for tax credits and strategically siting resources in areas where EAL
+can reduce cost;
+• A ddressing customer demand for clean energy by offering low-to-zero greenhouse gas resources
+and providing customer-specific tariffs such as Green Promise and Go ZERO to access green and
+clean energy attributes that are in high demand by customers;
+• Investing in infrastructure to improve service reliability and resilience; and
+• A ctively engaging stakeholders to gather feedback and insights to drive continuous improve-
+ments and alignment .
+6
+Entergy Arkansas, LLC | 2024 Integrated Resource Plan PAGE 5
+
+Chapter 1: Executive Summary
+Customers prioritize reliable, affordable, and sustainable power
+Many of today’s energy customers are looking for significant insight into how their energy is generated,
+delivered, and managed, including their energy sources . EAL actively works with its customers to
+understand their expectations and develop voluntary offerings that align with their needs and goals .
+FIGURE 1: EAL’S SERVICE TERRITORY
+EAL’s customer base has grown to over 730,000 residential, commercial, industrial, and governmental
+customers located in 63 of Arkansas’ 75 counties, which cover over 40,880 square miles . By combining
+an understanding of customer goals with sound and comprehensive planning, EAL can address
+customer needs while continuing to achieve the planning objectives of affordability, reliability, and
+sustainability .
+EAL is able to meet its customers’ reliability requirements with its existing nuclear, natural gas, and
+coal resources . EAL’s objective of maintaining its existing fleet of dispatchable generation and adding
+dispatchable generation to replace the coal units will both support and strengthen reliability and
+support the deployment of planned renewable resources .
+7
+Entergy Arkansas, LLC | 2024 Integrated Resource Plan PAGE 6
+
+Chapter 1: Executive Summary
+Existing Solar Solar Additions in 2024 Solar Additions 2025-30
+• Stuttgart 81 MW • Walnut Bend 100 MW • Flat Fork 200 MW
+• Chicot 100 MW • Driver 250 MW • F
+[DOC 7] https://www.entergyarkansas.com/wp-content/uploads/2024/11/EAL-IRP-2024.pdf
+
+implementation of the 2021 IRP Action Plan and align the preferred portfolio with changes in the inputs .
+Stakeholder engagement was part of the process, and EAL hosted a stakeholder meeting to review the
+mid-cycle IRP .
+For the 2024 IRP, EAL has implemented improvements based on previous IRP cycles and prioritized
+incorporating feedback from stakeholders both from the 2021 Stakeholder Report and input received
+from the current 2024 IRP process . This input was based on relevant questions raised during stake-
+holder meetings and post meetings as follow-up questions . As in the 2021 IRP and Mid-Cycle IRP, a
+future based approach was utilized with the addition of a reference scenario specifically focused on
+modeling compliance with the final CAA 111 rule . Additionally, in response to stakeholder comments
+regarding the renewable cost assumptions in the 2021 IRP, EAL included sensitivity cases for capital
+cost projections of renewables and battery energy storage systems (“BESS”) in the 2024 IRP .
+18
+Entergy Arkansas, LLC | 2024 Integrated Resource Plan PAGE 17
+
+Chapter 2: Long-Term Resource Planning
+The Mid-Cycle IRP Action Plan
+The Mid-Cycle IRP Action Plan contained nine action items, some of which are still in process .
+The current status of each action item is described below:
+1. C omplete the Acquisitions EAL acquired Searcy Solar in January 2022, and the unit has been operational since
+of Searcy, Walnut Bend, then .
+Driver, and West Memphis Additionally, EAL completed the acquisitions of Walnut Bend, Driver, and West
+Solar Build-Own-Transfer Memphis facilities in 2024 . Walnut Bend achieved commercial operations in September
+(“BOT”) Resources 2024, Driver and West Memphis are expected to be online by the end of 2024 .
+2. C omplete the 2021 In August 2021, EAL issued its 2021 Renewables RFP and completed the RFP in early
+Renewables RFP 2022 . The APSC approved the two 200 MW solar PPA resources selected from 2021
+Renewables RFP, and they are currently under construction . The PPAs are expected to
+begin in 2025 .
+3. E ffectuate the Deactivation In the prior IRP, LC4 was assumed to deactivate in 2025 . However, EAL has since
+of LC4 in 2025 determined that LC4 is needed to operate through December 2027 . This IRP also
+assumes a CT replaces LC4 and operates within three years of LC4’s deactivation per
+MISO’s generator replacement process . EAL will file for approval at the APSC for the
+replacement CT in the fourth quarter of 2024 .
+4. Identify DSM EAL’s current portfolio includes DSM opportunities through agricultural irrigation load
+Opportunities control, smart thermostats, residential direct load control program, and an interruptible
+tariff . Since the 2021 IRP Mid-cycle Update, EAL has added the Large Power High Load
+Density Service tariff (Crypto customers) which also receives capacity accreditation
+from MISO . EAL has begun assessing additional DSM opportunities through pilot
+offerings .
+5. Continue Participation in After the 2020-2022 triann
+[DOC 7] https://www.entergyarkansas.com/wp-content/uploads/2024/11/EAL-IRP-2024.pdf
+stomer base has grown to over 730,000 residential, commercial, industrial, and governmental
+customers in 63 of Arkansas’ 75 counties, covering over 40,880 square miles . The Company currently
+controls, through ownership or through PPA, a diverse array of generating resources totaling approxi-
+mately 5,479 MW of installed capacity (“ICAP”) to serve these native load customers as of 2023 .
+The Company fleet includes 37% of its clean capacity from the 1,726 MW of nuclear power resources
+from the two-unit ANO plant located near Russellville, Arkansas, as well as 303 MW from the Grand
+Gulf Nuclear Station (“Grand Gulf”) near Port Gibson, Mississippi, which is under a long-term PPA .
+EAL also utilizes 1,026 MW from coal-fired generation at White Bluff Steam Electric Station (“WB”) and
+Independence Steam Electric Station (“ISES”), located near Redfield and Newark, Arkansas . EAL shares
+ownership of WB with the Arkansas Electric Cooperative Corporation (“AECC”) and several municipal
+electric utilities; and shares ownership of ISES with AECC, Entergy Mississippi, LLC; Entergy Power, LLC;
+East Texas Electric Cooperative; along with several municipal electric utilities .
+EAL relies on 2,070 MW of natural gas-fired generation that includes 563 MW from the Hot Spring
+Plant, 481 MW from the Ouachita Plant, and 504 MW from Union Power Station, which are modern
+combined cycle combustion turbine (“CCCTs”), as well as 522 MW from the LC4 plant .
+EAL’s generation fleet includes about 6% of renewable capacity with 73 MW of hydro-electric capacity
+along the Ouachita River Valley, 81 MW of solar from the Stuttgart Solar facility and 100 MW of solar
+from the Chicot Solar facility . Since the 2021 IRP, EAL added a 100 MW solar photovoltaic (“PV”) and
+10 MW of battery resource located near White County, Arkansas named Searcy Solar . The resource
+achieved commercial operation in December 2021 with EAL’s BOT commencing on January 21, 2022 .
+Additional information about EAL’s existing resources is available in Appendix B .
+Chart 2 below shows the percentage, by fuel type, of energy sources serving EAL’s native load in
+2023 .
+MISO
+Nuclear Solar Hydro Coal Gas
+Purchase
+71.3% 1.2%* 0.8% 9.6% 15.3%
+1.8%
+*SOLAR % EXCLUDES GREEN OFFERING SUBSCRIPTION OF ~0 .07% SOLAR
+CHART 2: 2023 EAL FUEL MIX
+22
+Entergy Arkansas, LLC | 2024 Integrated Resource Plan PAGE 21
+
+Chapter 3: Integrated Resource Planning Process
+In addition to these generating resources, EAL’s portfolio also includes resources that provide capacity
+value through reductions in customer load . These LMRs contributed nearly 485 MW combined of
+capacity including value associated with reduced line losses and reserves .
+EAL also manages a portfolio of EE programs that produce both energy savings for customers and a
+reduction in load served by the Company . These programs have reduced the Company’s load behind
+the customer meter by an incremental 272 MW since 2020 and an aggregate 772 MW since programs
+were introduced in 2014 
+[DOC 7] https://www.entergyarkansas.com/wp-content/uploads/2024/11/EAL-IRP-2024.pdf
+ers’ reductions in natural gas
+Increases/
+usage → electric end-use equipment
+Decreases
+Population Economic
+Shifts/ Activity:
+Decreases in Usage
+Declines/ Growth/
+Growth Contraction
+• Increased Energy Efficiency
+• Technical changes – i .e .,
+appliance and lighting efficiency
+• Conservation measures –
+changes in personal behavior
+• Increased participation in interruptible rate offerings
+• Adoption of behind-the-meter rooftop solar
+FIGURE 12: LOAD FACTOR UNCERTAINTY
+These factors have varying effects on hourly consumption patterns across each day in the study
+period . This can create higher or lower annual peak loads and shifts in time-of-day peaks .
+Low Case Energy Forecast
+The low case forecast was developed using a bottom-up approach by customer class: residential,
+commercial, industrial, and governmental . The forecast was developed using historical sales volumes,
+customer counts, and temperature inputs from January 2010 through April 2023, as well as future
+estimates for normal weather (based on 20-year averages) and EE . In addition, the forecast includes
+estimates for changes in customer counts, future growth in large industrial usage, estimates of future
+consumption growth from electric vehicles (“EVs”), and declines due to future rooftop solar adoption .
+Regression Models for Non-Large Industrial Forecasts
+The sales forecasts for the residential, commercial, small industrial, and governmental classes are
+developed individually using statistical regression software and a mix of historical and forward-looking
+data . The historical data primarily includes monthly sales volumes by class and temperature data
+expressed as cooling degree days (“CDDs”) and heating degree days (“HDDs”) . Some of the forecasts
+also use historical indices for elements such as population, employment, and levels of end-use
+consumption for things such as heating/cooling, refrigeration, and lighting . These historical data are
+used in Itron’s Metrix ND® forecasting software . This software is used to develop statistical relationships
+between historical consumption levels and explanatory variables such as weather, economic factors,
+and month-of-year, and those relationships are applied going forward to estimates of normal weather,
+38
+Entergy Arkansas, LLC | 2024 Integrated Resource Plan PAGE 37
+
+Chapter 4: Model Inputs and Assumptions
+economic factors, and the month-of-year to develop the forecast . Explanatory variables are typically
+included in each class-level forecast model if the statistical significance is greater than 95% .
+Residential Forecasts for EAL
+The long-term residential forecast projects an increase in electricity consumption with 1 .4%/yr .
+Compound Annual Growth Rate (“CAGR”) for 2026-2045 . This forecasted increase is largely due
+to increasing average Use Per Customer (“UPC”) in the long-term periods, reflecting EV adoption
+increases, slightly offset by nearly flat customer count growth . The customer counts are projected
+based on S&P Global’s county lev
+[DOC 7] https://www.entergyarkansas.com/wp-content/uploads/2024/11/EAL-IRP-2024.pdf
+el economic data for EAL’s service territory .
+The monthly model for residential UPC, taking into account expected efficiency is:
+Energy Customers UPC
+2027 -0.2% 0.1% -0.3%
+2030 0.3% 0.1% 0.3%
+2033 1.5% 0.1% 1.4%
+2036 2.2% 0.0% 2.2%
+2039 2.0% -0.1% 2.1%
+2042 2.2% 0.0% 2.2%
+2045 2.0% -0.1% 2.1%
+2026-2045 CAGR 1.4% 0.0% 1.4%
+TABLE 4: YOY GROWTH RESIDENTIAL
+Residential UPC per day =
+Heating Degree Days * Heating end-use index * Heating coefficient +
+Cooling Degree Days * Cooling end-use index * Cooling coefficient +
+other use coefficient * other end-use index
+Table 4 shows the year-over-year changes and CAGRs in residential energy, customer counts, and UPC .
+The residential forecasts use variables for individual months instead of heating or cooling indices with
+monthly values across a year, allowing for greater precision with each monthly result . The regression
+uses actual historical weather, and the resulting coefficients are applied to estimates for trended normal
+weather levels in the future .
+Commercial Forecast for EAL
+The long-term commercial forecast projects an increase in electricity consumption with 3 .3%/yr . CAGR
+for 2026-2045 . This forecasted increase is largely due to a slightly increasing customer count and
+higher usage driven by estimated increases for electrification modifications and EV adoption levels in
+the commercial sector . Since the prior IRP, the EV adoption curve was revised significantly, based on
+announced plans at the time from auto manufacturers and other positive news around vehicle charging .
+Industry trends combined with refining the EV forecast methodology, using vehicle registration data
+39
+Entergy Arkansas, LLC | 2024 Integrated Resource Plan PAGE 38
+
+Chapter 4: Model Inputs and Assumptions
+and resulted in a higher EV forecast . Similarly, more electrification opportunities are expected since the
+last IRP .
+The commercial sales forecast is developed using a methodology similar to the residential forecast
+with the exception being that the commercial sales are forecasted in total, rather than by UPC . This
+is because of the diversity of commercial customers, such as a large hospital versus a small office .
+Otherwise, the commercial forecast accounts for organic EE, primarily from heating, ventilation, air
+conditioning (“HVAC”) and refrigeration as well as Company-sponsored DSM programs, which are
+discussed further below .
+Year Energy Customers
+2027 1.6% 0.5%
+2030 2.5% 0.4%
+2033 3.1% 0.3%
+2036 5.0% 0.1%
+2039 4.5% 0.0%
+2042 3.4% -0.1%
+2045 2.7% -0.2%
+2026-2045 CAGR 3.3% 0.1%
+TABLE 5: YOY GROWTH COMMERCIAL
+The monthly model for Commercial Sales:
+Heating Degree Days * Heating efficiency index * Heating coefficient +
+Cooling Degree Days * Cooling efficiency index * Cooling coefficient +
+other use coefficient * other use efficiency index
+Governmental Forecast for EAL
+Governmental energy usage is forecasted to be relatively flat with only a slight increase for 2026-2045
+with a CAGR of -0 .1/yr . This is due largely to a 
+[DOC 7] https://www.entergyarkansas.com/wp-content/uploads/2024/11/EAL-IRP-2024.pdf
+slight decrease in customer counts, offset by a modest
+increase in UPC .
+Small Industrial Forecast for EAL
+The small industrial forecast includes industrial sales not forecasted individually in the large industrial
+forecast, further described below . Forecasts are based on historical trends and IHS economic indices
+such as labor force, refining, and chemicals . Small industrial sales can be volatile and are generally not
+temperature related .
+40
+Entergy Arkansas, LLC | 2024 Integrated Resource Plan PAGE 39
+
+Chapter 4: Model Inputs and Assumptions
+Large Industrial Growth
+The 2026-2045 CAGR for EAL’s large industrial sales is 0 .2% . Due to their sizes, customers in the large
+industrial class are forecasted individually . Existing large industrial customers are forecasted based on
+historical usage, known or expected future outages, and information about expansions or contractions .
+Forecasts for new or prospective large industrial customers are based on information from the customer
+and from EAL’s Economic Development team as to each customer’s expected MW size, operating profile,
+and ramping schedule . The forecasts for new large industrial loads are also risk-adjusted based on the
+customer’s expected likelihood and progress towards achieving commercial operation .
+Year Sales
+2027 0.6%
+2030 2.8%
+2033 0.0%
+2036 0.0%
+2039 0.0%
+2042 0.0%
+2045 0.0%
+2026-2045 CAGR 0.2%
+TABLE 6: YOY LARGE IND GROWTH
+Energy Consumption by Class
+EAL’s energy consumption comes mostly from the industrial and residential customer classes who
+account for 49% and 29%, respectfully, of the forecasted sales for 2026 .
+2026 Class Mix 2045 Class Mix
+29% Residential 30% Residential
+22% Commercial 31% Commercial
+49% Industrial 39% Industrial
+0% Governmental 0% Governmental
+CHART 8: 2026 ENERGY CLASS MIX CHART 9: 2045 ENERGY CLASS MIX
+This consumption mix by class shifts throughout the study
+period, namely an increase in commercial sales from
+incremental EV and Electrification over time, offsetting
+generally flat industrial sales in the long-term. See Chart 9
+for the projected 2045 energy mix by customer class.
+41
+Entergy Arkansas, LLC | 2024 Integrated Resource Plan PAGE 40
+
+Chapter 4: Model Inputs and Assumptions
+Energy Efficiency
+EE comes from consideration of two sources: (1) the effects of naturally occurring or organic EE and (2)
+the effects of EAL’s Commission-approved EE and DSM programs . The naturally occurring EE includes
+customers replacing older HVAC systems or appliances with newer, more efficient units, replacing
+incandescent lighting with LED lighting, and the growth in numbers of new multi-family (apartments)
+residences over single-family residences . Data for the naturally occurring EE are the Statistically Adjusted
+End Use estimates from Energy Information Administration to reflect expected changes in EE codes and
+standards as well as adoption and turnover rates for each end use . EAL’s EE programs help customers
+make the same types of efficiency improvements and h
+[DOC 7] https://www.entergyarkansas.com/wp-content/uploads/2024/11/EAL-IRP-2024.pdf
+elp move the timeline forward from when the
+naturally occurring efficiency would occur . Together, organic EE and the Commission-approved EE
+programs result in EAL’s customers using less electricity on a per-customer basis than what would have
+otherwise been consumed . As shown in the graphic below, these programs have effects in the program
+year, which accumulate and carry forward creating impacts on future periods as well .
+FIGURE 13: CHRONOLOGICAL DSM IMPACT
+Solar
+The low case forecast includes a decrement for estimated future customer solar installations . A
+separate set of forecast models estimates these future solar installations using technical, economic and
+market potential, combined with cumulative historical adoption trends in the EAL service territory .
+The technical potential is based on a report from the National Renewable Energy Laboratory (“NREL”)
+that assesses the percentage of sales potentially offset by rooftop solar, derived from the number of
+buildings and rooftops that are suitable in each state . The potential used for EAL’s service area (MISO
+South) is 30% for residential and 39% for commercial which, in effect, becomes the ceiling for the
+number of customers adopting rooftop solar .
+42
+Entergy Arkansas, LLC | 2024 Integrated Resource Plan PAGE 41
+
+Chapter 4: Model Inputs and Assumptions
+The economic potential comes from the results of a payback model, which considers factors including
+installed panel costs, tax incentives, and electricity prices . The installed panel cost curve is based on
+estimates from IHS . The assumed installed cost for rooftop solar can be seen below .
+Cost for Rooftop Solar (in $/Wdc)
+Customer Class 2023 2024 2025
+Residential 2.76 2.72 2.63
+Commercial 1.53 1.52 1.44
+TABLE 7: COST FOR ROOFTOP SOLAR
+The power prices are based on EAL’s forecasted retail rates going out five years and are scaled based
+on annual zonal Locational Marginal Price (“LMP”) estimates for the long term . For residential and
+commercial customer installations, it is assumed that there is a federal tax credit of 30%, which begins
+to taper by 2030 to 22% by 2045 .
+The market potential is developed using a customer adoption model that considers how new technol-
+ogies are adopted over time .
+Solar adoption rates over time are then calculated using a combination of the potential impacts
+described above and EAL historical solar adoption trends . The resulting future solar adoption estimate
+is allocated to monthly megawatt hours levels based on assumed average installation sizes and hourly
+profiles of the solar intensity for EAL’s region (MISO South) using solar profiles from NREL .4
+From 2026 forward, the low case forecast includes relatively small effects from rooftop solar adoption
+from residential customers, as payback periods exceed 10 years . The commercial forecast has a higher
+impact on total sales reduction, due to the assumed panel sizes being higher for larger sites and lower
+payback periods . A number of customers are also as
+[DOC 7] https://www.entergyarkansas.com/wp-content/uploads/2024/11/EAL-IRP-2024.pdf
+sumed to install solar for non-economic reasons .
+CHART 10: EAL SOLAR DECREMENT 5
+4, 5 http://pvwatts.nrel.gov/
+43
+Entergy Arkansas, LLC | 2024 Integrated Resource Plan PAGE 42
+
+Chapter 4: Model Inputs and Assumptions
+Electrification and Conversions
+The Low Case forecast includes an assumption for company-run sales growth programs to encourage
+electrification . The programs include both on-road and non-road conversions, such as fleet electri-
+fication and commercial process electrification, respectively . Based on estimates from 2023, these
+projects are expected to add nearly 1 .9 TWH to commercial sales by 2050 .
+Trended Normal Weather
+The temperature assumptions used for long-term planning are based on “Normal” weather, which is
+customary utility forecasting practice . For EAL’s planning, this is an average based on twenty years of
+temperature history . The use of 20 years strikes a reasonable balance between longer periods (30
+years), which may take longer to pick up changing weather trends and shorter periods (10 years), which
+may not provide enough data points to smooth out volatility .
+Analysis of historical data reveals that trends in average temperatures, expressed as CDDs and HDDs,
+have not been flat over the last few decades, and there is no evidence at this time to support an
+assumption of future temperatures remaining flat . As such, EAL has calculated a “Trended Normal”
+assumption for long-term energy planning using trends in 20-year rolling averages of monthly
+temperatures from 2003 - 2022 . Those trends are applied to the base level of the 20-year normal
+temperatures, and the trended normal result is used in the forecasts . By 2045, the effect of the trended
+normal temperature assumption increases summer (July - September) residential and commercial
+energy consumption by 58 GWh (1%) and decreases winter (December - February) energy consumption
+by 38 GWh (-1%) .
+CHART 11: CDDS AND HDDS – EXTRAPOLATION OF 20 YEAR ROLLING
+44
+Entergy Arkansas, LLC | 2024 Integrated Resource Plan PAGE 43
+
+Chapter 4: Model Inputs and Assumptions
+Hourly Load Forecast
+Methodology
+The load forecast combines three elements: the volumes from the monthly sales forecasts described
+above, the estimated monthly peak loads, and the hourly consumption profiles or shapes . These
+elements are developed using Itron’s Metrix ND® software .
+The forecasted monthly sales provide the monthly MWh volume for the load forecasts and reflect the
+expected effects of a few elements, such as customer growth or declines, new large industrial loads,
+and EE . The monthly volumes are also used to develop the peak forecasts and are estimated based
+on the historical relationship of peaks to energy, while also considering the effects of weather . Hourly
+load shapes are developed from historical hourly load by customer class and in total . Those historical
+shapes are used along with historical weather data (HDD and CDD), calendar data to account for
+differences in usage on weekends or hol
+[DOC 7] https://www.entergyarkansas.com/wp-content/uploads/2024/11/EAL-IRP-2024.pdf
+idays, and other data to develop “typical load shapes” by
+customer class to be used for the forecast period .
+The final step in producing the hourly load forecasts is to combine – or calibrate – the monthly
+energy, monthly peak, and the hourly shapes described above . Using Itron’s Metrix LT® software, the
+energy volumes, the estimated peaks, and the typical hourly shapes are calibrated such that the three
+elements fit together in a way that the final result preserves the volume of energy while fitting it to the
+hourly profiles while maintaining, as closely as possible, the relationship of peak MW to monthly MWh .
+This process also reallocates the forecasted solar and EV energy using specific profile hours for each
+product technology . The result is a set of hourly load values, by class, for the forecast period from
+which a peak level can be determined, as shown below .
+Reference Case Peak Comparison to Previous IRP
+Since EAL’s 2021 IRP cycle, there have been increases in the peak load forecast levels . This increase is
+primarily due to estimated growth in the large industrial class, driven by large new loads .
+EAL IRP Reference Case Peak Load* by Version
+8,000
+7,000
+6,000
+5,000
+4,000
+3,000
+2,000
+1,000
+0
+6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5
+02 02 02 02 03 03 03 03 03 03 03 03 03 03 04 04 04 04 04 04
+2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+*includes distribution losses 2021 IRP 2024 IRP
+CHART 12: EAL IRP REFERENCE CASE PEAKS BY VERSION
+45
+Entergy Arkansas, LLC | 2024 Integrated Resource Plan PAGE 44
+
+Chapter 4: Model Inputs and Assumptions
+IRP Load Scenarios - Load levers by Future
+In past IRP iterations, EAL would create “high” and “low” sensitivity forecasts by adjusting a Reference
+Case up or down to reflect a range of load possibilities . For this IRP, EAL started with a low scenario
+and then adjusted specific levers to produce the reference and high scenarios . This process modifi-
+cation was driven primarily by potential industrial growth not included in the business plan load forecast
+approved in mid-2023 . A summary of the levers used is shown below and described in each of the
+future scenarios:
+Adjustments to low case by Scenario
+Lever Reference High
+EVs Higher Higher (equal to Reference)
+Building Electrification Higher Higher (equal to Reference)
+Energy Efficiency Lower Higher (equal to Reference)
+Customer Growth (Industrial) Higher Higher
+Customer Usage (Industrial) Higher Higher
+TABLE 8: LOAD LEVERS BY FUTURE
+In the low scenario, there is assumed to be less year-over-year growth among residential and
+commercial customers . Additionally, the average UPC was decreased to lower levels, accounting for
+the potential of greater effects from EE . To further reduce the energy in the low scenario, EV adoption
+was also lowered . Industrial customer growth was held steady .
+The main cause of changes in the high scenario is the addition of even more large industrial customers
+with large load additions . This was driven by a recent significant i
+[DOC 7] https://www.entergyarkansas.com/wp-content/uploads/2024/11/EAL-IRP-2024.pdf
+ncrease in interest from large
+customers in EAL’s service area .
+The results of these volumetric changes provide forecasted sales, which are converted to hourly loads
+to model estimated impacts to EAL’s peaks, as shown below .
+14,000
+12,000
+10,000
+8,000
+6,000
+4,000
+2,000
+0
+CHART 13: EAL IRP PEAK LOAD FORECAST BY FUTURE
+Entergy Arkansas, LLC | 2024 Integrated Resource Plan PAGE 45
+WM
+6202 7202 8202 9202 0302 1302 2302 3302 4302 5302 6302 7302 8302 9302 0402 1402 2402 3402 4402 5402
+Annual Non -Coincident Peak Load* by Scenario
+Low Reference High
+*includes distribution losses
+46
+
+Chapter 4: Model Inputs and Assumptions
+EVs
+The low case forecast includes an assumed level of additional energy consumption resulting from the
+adoption of EVs, as well as growth of total on-road vehicles over time, as overall adoption is expected
+to continue to increase . Overall, the additional GWh volumes from the EV forecast in the low case are
+minimal in the near term with growth to the residential and commercial consumption volume estimated
+to start increasing more in the late-2030s . The low case assumes 99% market saturation by 2070 .
+These usage levels were then assumed to increase by an additional 25% for the EV forecast inputs for
+the reference and high scenarios .
+CHART 14: RESIDENTIAL EV LEVELS
+CHART 15: COMMERCIAL EV LEVELS
+Industrial Growth
+Regarding industrial growth, the low scenario assumes increases in usage driven by existing customer
+expansions and the anticipation of new customers . Reference and high scenarios include even higher
+potential industrial growth, based on a recent significant increase in interest from large customers in
+EAL’s service area .
+47
+Entergy Arkansas, LLC | 2024 Integrated Resource Plan PAGE 46
+
+Chapter 4: Model Inputs and Assumptions
+Capacity Resource Options
+Generation Technology Assessment - As part of its long-standing sustainability and as the operator of
+one of the cleanest generation fleets in the nation, Entergy’s commitment to reduce utility emissions by
+50% below 2000 levels and achieve net-zero emissions by 2050 requires a continued transformation
+of its generation portfolio . EAL’s IRP process evaluates available generation alternatives to meet
+customer energy needs per the planning objectives . As part of this process, the generation and
+storage technology assessment was prepared to identify a range of potential supply-side resource
+alternatives that merit more detailed analysis due to their potential to meet EAL’s planning objectives of
+balancing affordability, reliability, and sustainability .
+Technology Evaluation and Selection - As illustrated in Figure 14, EAL evaluated the cost-effec-
+tiveness and feasibility of deployment for many potential supply-side resources . The three-phased
+(i .e ., Technical, Economic, Technology Selection) process to select generation alternatives considers
+qualitative and quantitative criteria and results in a final selection of supply-side resources that are best
+positioned to meet
+[DOC 7] https://www.entergyarkansas.com/wp-content/uploads/2024/11/EAL-IRP-2024.pdf
+atchable assets . EAL continues to evaluate the options for deploying CCS with the new and
+existing generation, as well as investigate integrated solutions that can provide substantial capital cost
+avoidance .
+The long-term suitability of dual fuel natural gas and hydrogen powered generation technologies to
+meet EAL’s planning objectives is largely dependent on natural gas prices, technology improvements,
+and advancements in infrastructure investment . The two main pathways to decarbonization for conven-
+tional generation resources include CCS and hydrogen firing/co-firing .
+CCS involves capturing roughly 95% of the CO2 emitted from the plant, generally through contact with
+an amine based liquid solvent, and permanently stores it in geologic formations deep underground .
+Portions of Arkansas likely possess the geology necessary to store CO2 gas, as visualized in the U .S .
+Geological Survey map below in Figure 16 . The expanded tax credits provided by the IRS Section 45Q
+have spurred significant carbon storage investments throughout the country, particularly in regions with
+a heavy industrial presence and adequate geology . The EPA’s final revision to the EPA CAA Section
+111(b) rules for new gas generation is another driver for CCS investments in the region to the extent that
+the rule does not cause a bottleneck in the supply chain, labor availability, and other resources .
+49
+Entergy Arkansas, LLC | 2024 Integrated Resource Plan PAGE 48
+
+Chapter 4: Model Inputs and Assumptions
+Hydrogen firing/co-firing can also provide decarbonization solutions due to the lack of a carbon
+presence in the gas . The newest large frame turbines have the capability to run with up to 30% or
+higher co-blending, if a hydrogen supply is available and the balance of plant equipment is designed to
+accommodate . The turbine original equipment manufacturers (“OEMs”) are actively working to achieve
+commercial viability for firing with 100% hydrogen . For wider deployment of this hydrogen firing through
+a turbine, necessary advancements that need to be made, include, but are not limited to, building
+hydrogen production and delivery infrastructure, combustor systems, and emission reduction technol-
+ogies for Nitrogen Oxide (“NOx”) . As OEMs advance, EAL will continue to evaluate the development of
+hydrogen fueled power generation technology .
+FIGURE 16: GEOLOGIC CARBON STORAGE POTENTIAL IN THE UNITED STATES 6
+6 https://www.usgs.gov/media/images/geologic-carbon-storage-potential-united-states
+50
+Entergy Arkansas, LLC | 2024 Integrated Resource Plan PAGE 49
+
+Chapter 4: Model Inputs and Assumptions
+Technology MW Installed Fixed O&M Variable O&M Levelized Cost
+(Summer) Capital Cost (L. Real 2024$/MWh) (L. Real 2024$/kw-yr) of Electricity
+(Nominal $/kw-ac) (L. Real 2024$/kw-yr)
+CT 428 $1,543 $7.85 $6.76 $184
+CCCT (1x1) w/ duct firing 733 $1,752 $14.26 $4.70 $57
+CCCT (2x1) 1,230 $1,487 $10.91 $4.22 $51
+Aeroderivative CT 88 $4,285 $26.93 $9.21 $183
+RICE 129 $2,171 $36.18 $13.83 $164
+
+[DOC 7] https://www.entergyarkansas.com/wp-content/uploads/2024/11/EAL-IRP-2024.pdf
+hievable by any unit that burns pipeline-quality natural
+gas . Intermediate load CTs, which are those that operate at annual capacity factors of greater than
+20% but less than 40%, are subject to an output-based CO₂ emissions efficiency standard of 1,170
+lb CO₂/MWh-gross, which is expected to be achievable by the most efficient commercially available
+simple-cycle CT designs . Base load CTs (>40% annual capacity factor) are subject to phased emission
+standards, with a Phase 1 standard of 800 lb CO₂/MWh-gross 7, and a Phase 2 standard of 100 lb
+CO₂/MWh-gross . The Phase 1 standard applies once a new base load turbine unit begins operation,
+and the Phase 2 standard applies beginning January 1, 2032, with the possibility of a single 1-year
+extension to this date if necessary due to factors outside the control of the EGU owner/operator .
+Compliance with EPA’s Phase 2 standard for new base load CT units is expected to require the appli-
+cation of CCS at an effectiveness of 90% or greater .
+Fuel Price Forecasts
+Natural Gas Price Forecasts
+Three natural gas price forecast scenarios were used to develop the 2024 IRP . The first year of the
+natural gas price forecast is based on NYMEX Henry Hub forward prices, which are market future
+prices as of November 2023 . Because the NYMEX futures market becomes increasingly illiquid as the
+time horizon increases, NYMEX forward prices are not a reliable predictor of future prices in the long
+term . Due to this limitation, the long-term POV regarding future natural gas prices utilizes an average
+across several independent, third-party consultant forecasts . Gas markets are influenced by multiple
+complex forces; consequently, long-term natural gas prices are highly uncertain . Therefore, EAL
+presents and uses three alternatives for natural gas prices to address this uncertainty . In levelized 2024
+dollars per MMBtu throughout the IRP period, the reference case natural gas price forecast is $4 .34/
+MMBtu, the low case is $2 .99/MMBtu, and the high case is $5 .76/MMBtu .
+7 This emission standard applies to any new base load combustion turbine with a maximum heat input rating of greater than 2,000 MMBtu/hr.
+EPA’s final rule includes a formula to calculate the applicable Phase 1 emission standard for units with a maximum rating of less than 2,000
+MMBtu/hr, up to a maximum emission standard of 900 lb CO2/MWh-gross for the smallest units.
+60
+Entergy Arkansas, LLC | 2024 Integrated Resource Plan PAGE 59
+
+Chapter 4: Model Inputs and Assumptions
+Described in more detail later in Chapter 5, each of the IRP Futures assumes the natural gas price
+forecast sensitivity appropriate for the future world envisioned .
+$12.00
+$10.00
+$8.00
+$6.00
+$4.00
+$2.00
+$0.00
+Entergy Arkansas, LLC | 2024 Integrated Resource Plan PAGE 60
+utBMM/$
+lanimoN
+4202 5202 6202 7202 8202 9202 0302 1302 2302 3302 4302 5302 6302 7302 8302 9302 0402 1402 2402 3402 4402 5402
+Annual Natural Gas Price Forecast Scenarios
+Ref Case Low Case High Case
+CHART 17: ANNUAL NAT
+[DOC 7] https://www.entergyarkansas.com/wp-content/uploads/2024/11/EAL-IRP-2024.pdf
+URAL GAS PRICE FORECAST SCENARIOS
+Coal Price Forecasts
+The delivered to plant coal price forecast for White Bluff and Independence is based on a weighted
+average price of coal commodity and coal transportation commitments under contract and third-
+party consultant forecasts of Powder River Basin coal prices for any open coal commodity position .
+In addition, railcar expenses and appropriate plant specific coal handling cost adders are included .
+Current transportation rates are escalated by the All-Inclusive Less Fuel index and current fuel
+surcharges are escalated by the diesel fuel price index . Current plant specific delivery component
+costs are escalated based on an appropriate index to forecast the future year component cost . In
+levelized 2024 dollars per MMBtu throughout the IRP period, the delivered coal price is $2 .52 in the
+reference gas case, $2 .48 in the low gas case, and $2 .52 in the high gas case . The delivered coal price
+forecast for non-Entergy plants comes directly from the Aurora default input database provided by
+Energy Exemplar and prices vary by plant .
+$2.80
+$2.70
+$2.60
+$2.50
+$2.40
+$2.30
+$2.20
+2024 2025 2026 2027 2028 2029 2030
+utBMM/$
+lanimoN
+Annual Delivered to Plant Coal Price Forecast Scenarios
+Ref Gas Case Low Gas Case High Gas Case
+CHART 18: ANNUAL DELIVERED TO PLANT COAL PRICE FORECAST SCENARIOS
+61
+
+Chapter 4: Model Inputs and Assumptions
+CO2 Price Forecasts - EAL’s POV on a potential carbon price recognizes the uncertainty of national
+carbon regulation by considering a range of potential policies and timing . The Company’s CO2 price
+forecast is based on the following four cases from the ICF International, Inc . (“ICF”) Q3 2022 Core CO2
+Price Trajectory issued in September 2022 by ICF 8 :
+• “ No CO2” case, in which the power sector does not face a CO2 price .
+• “Regulatory” case, in which prices representative of action under CAA are utilized .
+• “ 80% Reduction” case, in which prices consistent with a national cap and trade program that
+begins in 2035 and targets an 80% reduction from 2020 levels by 2050 are utilized .
+• “ Legislative” case, in which high prices consistent with the Climate Leadership Council’s Carbon
+Dividend proposal are utilized .
+The CO2 price projections for each of ICF’s four cases are weighted using the following probabilities,
+according to ICF’s professional judgement and based on the likelihood of the outcomes, to arrive at
+EAL’s POV price assumption .
+Case 2023 2024 2025 2026 2027 2028 2029 2030 2035 2040 2045 2050
+No CO2 100% 100% 100% 100% 100% 80% 75% 75% 75% 35% 25% 15%
+Regulatory - - - - - 20% 25% 25% 25% 25% 25% 25%
+80% Reduction - - - - - - - - - 30% 30% 30%
+Legislative - - - - - - - - - 10% 20% 30%
+TABLE 13: CO2 PROBABILITY WEIGHTINGS
+$120
+$100
+$80
+$60
+$40
+$20
+$0
+8 ICF provides professional services and technology-based solutions to governmental and commercial clients, including management, marketing,
+technology, and policy consulting and implementation services. Additional infor
+[DOC 7] https://www.entergyarkansas.com/wp-content/uploads/2024/11/EAL-IRP-2024.pdf
+mation can be found at https://www.icf.com/.
+Entergy Arkansas, LLC | 2024 Integrated Resource Plan PAGE 61
+Ts/$
+lanimoN
+4202 5202 6202 7202 8202 9202 0302 1302 2302 3302 4302 5302 6302 7302 8302 9302 0402 1402 2402 3402
+EAL’s low case assumes no CO2 price, the medium case assumes EAL’s point of view CO2 price (i .e ., the
+weighted average of the four ICF cases described above), and the high case assumes ICF’s Legislative
+case as shown below:
+Low Medium High
+CHART 19: CO2 PRICE FORECAST SCENARIOS
+62
+
+CHAPTER
+5
+Modeling Framework
+Summary
+• As with previous IRPs, a futures-based approach was employed for the 2024 IRP. Four futures were
+modeled to bookend a broad range of uncertainties.
+• A second scenario modeled around Future 2A was developed to capture the uncertainties around
+EPA Rule CAA 111 and how that could impact resources for EAL.
+• Due to the recent implementation of the MISO seasonal construct, the 2024 IRP winter and summer
+seasons were modeled to represent MISO’s new Planning Resource Auction.
+• In comparison to previous IRPs, because of the new MISO seasonal construct, the model favored
+gas resources as they provide consistent capacity accreditation levels in both the summer and
+winter seasons.
+Futures-Based Approach
+Instead of analyzing and planning for one set of outcomes, EAL’s IRP uses a futures-based approach
+to evaluate portfolios across a broad range of potential future conditions. Long-term outcomes result
+from many variables, and futures are designed as different combinations of assumptions that could
+coexist together resulting in a range of market outcomes.
+Major areas of uncertainty
+Market unit Renewable MISO
+Sales and Customer Natural gas Federal Emissions
+life generation market
+load growth usage trends prices policy prices
+assumptions capital cost reforms
+63
+Entergy Arkansas, LLC | 2024 Integrated Resource Plan PAGE 62
+
+Chapter 5: Modeling Framework
+The 2024 EAL IRP considers four scenarios, depicted in Table 14 below .
+Future 1 Future 2A Future 2B Future 3
+Peak Load & Low Reference Reference High
+Energy Growth
+Natural Gas Prices Low Reference Reference High
+MISO Coal All ETR cease to use All ETR cease to use All ETR cease to use All ETR cease to use
+Deactivations coal by 2030 coal by 2030 coal by 2030 coal by 2030
+All MISO coal aligns All MISO coal aligns All MISO coal by All MISO coal aligns
+with MTEP Future 1 with MTEP Future 2 2030 with MTEP Future 3
+(46 year life) (36 year life) (30 year life)
+MISO Natural Gas 50 year life 45 year life NGCC by 2035 35 year life
+CC
+Deactivations
+MISO Natural 46 year life 36 year life Steam gas generating 30 year life
+Gas Other units by 2030
+Deactivation
+Carbon Tax No Cost Reference Cost Reference Cost High Cost
+Scenario
+Renewable Capital High Cost Reference Cost Reference Cost Low Cost
+Cost
+Narrative Lower growth from Moderate amount Entergy and utilities High energy growth
+the residential and of industrial growth across MISO deactivate from both industrial
+industrial sector is forecas
+[DOC 7] https://www.entergyarkansas.com/wp-content/uploads/2024/11/EAL-IRP-2024.pdf
+ted which existing units early to be and residential
+forecasted which would drive the compliant with proposed sectors forecasted.
+reduces the need to need for new changes to CAA Section
+Renewable cost
+transition from the development. 111(d).
+assumed to be low
+existing fleet.
+New resources built due to more efficient
+Renewable cost would comply with supply chain.
+assumed to be high. proposed changes to
+111(b).
+TABLE 14: IRP FUTURES ASSUMPTIONS
+The four futures vary key modeling parameters, contemplating three distinct load paradigms, three
+commodity price sensitivities, and three renewable cost sensitivities are modeled . In Future 1, the
+EAL load forecast reflects the lowest load growth of all the scenarios modeled . Futures 2A and 2B
+utilize a moderate growth load profile . The highest load modeled is employed in Future 3 with a
+high industrial growth assumption . This set of scenarios was designed to demonstrate the impact of
+differences in load forecasts (such as quicker-than-expected industrial growth) on capacity expansion
+portfolios . Once the capacity expansion for these four futures was complete, the TRSC was computed,
+and a qualitative risk assessment was performed for each portfolio . Chapter 6 describes the scenario
+comparisons .
+64
+Entergy Arkansas, LLC | 2024 Integrated Resource Plan PAGE 63
+
+Chapter 5: Modeling Framework
+Market Modeling and EAL Portfolio Optimization
+The development of the 2024 IRP relied on the Aurora Energy Market Model to develop optimized
+portfolios for the MISO energy market and EAL under a range of possible futures . Aurora is a
+production cost and capacity expansion optimization tool that simulates energy market operations
+using hourly demand and individual resource operating characteristics in a chronological dispatch
+algorithm and uses projected market economics to determine the optimal long-term resource portfolio
+under varying future conditions including fuel prices, available generation technologies, environmental
+constraints, and future demand forecasts . Aurora’s optimization process identifies the set of future
+resources that most economically meets the identified requirements given the defined constraints .
+Aurora’s logic seeks to build the most valuable resources to the system based on the combination of
+fixed and variable costs as well as energy revenue from the hourly dispatch for the whole simulation
+period . The capacity expansion analysis does not explicitly consider transmission constraints within the
+EAL or MISO study regions when developing the optimized portfolios . Transmission considerations and
+other site-specific factors are considered when evaluating specific resource options .
+Gas resource capacity credit – The capacity credit assumption for gas resource alternatives in the IRP
+is based on MISO’s 2024/2025 PY Schedule 53 class averages (ISAC9/ICAP10 ) published February 23,
+2024, and Seasonal UCAP11 /ISAC Ratio published February 21, 2024 . The class average is multiplied
+by the UCAP/
+[DOC 7] https://www.entergyarkansas.com/wp-content/uploads/2024/11/EAL-IRP-2024.pdf
+ Additions
+CCCT IRP Additions CT IRP Additions Wind IRP Additions
+Total Load Requirement
+92
+Entergy Arkansas, LLC | 2024 Integrated Resource Plan PAGE 91
+
+Chapter 6: Action Plan
+EAL Preferred Portfolio vs. Winter Peak Load with 27.4% PRM
+10000
+8000
+6000
+4000
+2000
+0
+6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5
+2 2 2 2 3 3 3 3 3 3 3 3 3 3 4 4 4 4 4 4
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+Total Existing Capacity Short Term / Market Capacity Solar Planned Resources
+Battery Planned Resources Thermal Planned Resources Solar IRP Additions
+CCCT IRP Additions CT IRP Additions Wind IRP Additions
+Total Load Requirement
+The preferred portfolio is one of three portfolios modeled under Future 2 market assumptions that are
+similar in the first ten years, specifically, Aurora identified the need for dispatchable generation in 2030
+in all three Future 2 portfolios .
+The preferred portfolio features a balanced mix of renewable, baseload, and peaking resources,
+supporting EAL’s load growth . The CCCT instead of two CTs in 2030 provides better energy coverage,
+mitigating market exposure . Moreover, the CCCT offers a pathway for lower carbon operations with
+hydrogen-capable technology, aligning with Entergy’s future carbon goals .
+The results support the conclusion that EAL’s initial future supply-side resources should be focused on
+a combination of new dispatchable CT and CCCT resources as well as renewable energy resources .
+The near-term addition of CTs and a CCCT are needed to meet the large capacity, and energy
+needs due to industrial growth and continued steady residential growth . Ensuring these dispatchable
+resources are hydrogen capable and CCS enabled will help to mitigate environmental risks and
+ensure the resources are best positioned to provide sustained value for customers in the future . In the
+near-term, renewable resource additions will be made based on specific project proposals . Including
+renewable resources also increases fuel supply diversity, lowers environmental cost risk, and responds
+to customers’ preferences for renewable energy, while also making progress toward meeting Entergy’s
+announced sustainability goals . Over the long-term, the amount and timing of capacity needs cannot
+be known completely . Load requirements, commodity prices, environmental policy considerations,
+technology adoption, and other factors may impact the resources needed to serve customers . The
+2024 EAL IRP shows that a mix of resources and resource types enhances the adaptability of EAL’s
+portfolio to changes, such as rapidly evolving customer demand and sustainability requirements . In
+the near term, resource additions will be made based on specific projects . EAL’s preferred resource
+plan maintains the planning assumptions for existing and planned resources and begins adding gas
+resources starting in the 2029-30, time frame followed by renewable resources and CTs to support the
+integration of renewable resources .
+93
+Entergy Ark

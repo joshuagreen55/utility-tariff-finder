@@ -1,0 +1,1935 @@
+[DOC 0] https://www.londonhydro.com/accounts-services/electricity-rates/residential-electricity-rates
+Residential Electricity Rates | London Hydro
+Skip to main content
+Alert
+×
+Unfortunately, we are not able to proceed with your registration if you do not have the power to enter your company into a legally binding agreement with London Hydro.
+OK
+Secondary Menu
+Register/Login to MyLondonHydro
+Contact
+Language
+London Hydro
+Accounts & Services
+Billing & Payment
+Start. Stop. Transfer.
+Online Services
+Electricity Rates
+Generation
+Conservation
+Water
+Business Customer Hub
+Outages
+Outage Map
+Outage Resources
+Sign Up for Outage Notifications
+Major Event Days
+Projects & Operations
+Contractor Information
+EV Connections
+CAM General Information and Process
+Conditions of Service
+Current Projects
+Capacity Map
+About Us
+About London Hydro
+News
+Regulatory Documents
+Contact Us
+Tenders for Bid
+Sustainability
+London Hydro’s Recognition of Indigenous Businesses
+Safety
+Careers
+Menu
+Search for the content on the site
+Open/Close Search
+Breadcrumb
+Home
+Electricity Rates
+Residential Electricity Rates
+Residential and small business customers can choose between three price plans: Time-of-Use (TOU), Tiered, and Ultra-Low Overnight (ULO).
+Customers can use London Hydro's
+Price Plan Calculator
+to automatically compare the plans based on their actual usage and easily switch between them.
+If you don't have a MyLondonHydro account or access to the London Hydro app, you can switch price plans by completing an
+election form
+or by contacting us at (519) 661-5503, Monday through Friday, 8:30 am - 4 pm. If you would like to learn more about your pricing options, visit
+www.oeb.ca/choice
+.
+Residential Electricity Rates, Effective May 1, 2026 - October 31, 2026 - Breakdown of Charges
+Breakdown of Charges
+Rates Effective May 1, 2026 - October 31, 2026
+Electricity price (TOU or Tier or ULO)
+Peak TOU Rate
+per kWh
+$0.203
+Mid-Peak TOU Rate
+per kWh
+$0.157
+Off-Peak TOU Rate
+per kWh
+$0.098
+First 600 kWh Tier
+per kWh
+$0.120
+Second >600 kWh Tier
+per kWh
+$0.142
+On-Peak ULO Rate
+per kWh
+$0.391
+Mid-Peak ULO Rate
+per kWh
+$0.157
+Weekend Off-Peak ULO Rate
+per kWh
+$0.098
+Ultra-Low Overnight ULO Rate
+per kWh
+$0.039
+Delivery
+Fixed Monthly Charge
+per month
+$31.69
+Rate Rider for Recovery of Advanced Capital Module
+per month
+$0.04
+IESO Smart Metering Entity Charge
+per month
+$0.42
+Rate Rider for Disposition of Account 1509
+per month
+$0.00
+Rate Rider for Disposition of Global Adjustment Account*
+per kWh
+$0.0054
+Rate Rider for Disposition of Deferral/Variance Accounts
+per kWh
+$0.0009
+Rate Rider for Disposition of Capacity Based Recovery Account**
+per kWh
+$0.0005
+Network Charge***
+per kWh
+$0.0116
+Connection Charge***
+per kWh
+$0.0084
+Adjustment Factor Charge****
+per kWh
+kWh x 0.0288 x Electricity Rate
+Regulatory
+Wholesale Market Service Charge***
+per kWh
+$0.0041
+Capacity Based Recovery
+per kWh
+$0.0006
+Rural Rate Protection Charge***
+per kWh
+$0.0006
+Government
+Administration Charge******
+per month
+$0.25
+HST
+per bill
+13%
+Ontario Electricity Rebate
+per bill
+(23.5%)
+*Applicable only for Non-RPP Customers
+**Applicable on
+[DOC 0] https://www.londonhydro.com/accounts-services/electricity-rates/residential-electricity-rates
+ly for Class B Customers
+***In calculating your bill, your consumption amount will be adjusted to account for heat loss. When electricity is delivered over a power line, it is normal for a small amount of power to be consumed or lost as heat. Equipment such as wires and transformers consume power before it gets to your home or business. The adjustment factor accounts for these losses.
+****Adjustment Factor Charge is kWh x 0.0288 x Electricity Rate. For Example: 200 kWh x 0.0288 Adjustment Factor x Electricity Rate = 5.76 kWh x $0.151/kWh = $0.8697.
+***** Monthly Administration charge applies to non-retailer affiliated customers only.
+Image
+Log into MyLondonHydro or the London Hydro App to Choose the Price Plan That's Best for You
+You can now compare electricity price plans based on your actual usage and easily switch between plans.
+Learn More
+About TOU Pricing
+With TOU prices, the price depends on when you use electricity. You can help manage your electricity costs by shifting your usage to lower price periods when possible.
+There are three TOU periods:
+Off-peak: When demand for electricity is lowest. Ontario households use most of their electricity – nearly two thirds of it – during off-peak hours.
+Mid-peak: When demand for electricity is moderate. These periods are during the daytime, but not the busiest times of day.
+On-peak: When demand for electricity is generally higher. These are the busier times of day - generally when people are cooking, starting up their computers and running heaters or air conditioners.
+People use electricity differently depending on the season, so the TOU price periods are different in the winter than they are in the summer.
+About Ultra Low Pricing
+Like TOU, ULO prices depend on when you use electricity. This price plan is ideal for those who can shift a significant amount of their usage to overnight.
+There are four ULO price periods:
+Ultra-Low Overnight
+, when demand for electricity is lowest on average.
+Weekend Off-peak
+, when demand for electricity is generally lower.
+Mid-peak
+, when demand for electricity is moderate.
+On-peak
+, when demand for electricity is highest on average.
+The ULO price periods are the same in the summer as they are in the winter. On weekends and holidays the cheapest rates are in effect all day.
+View the Holiday Schedule for Time-of-Use and Ultra-Low Overnight
+.
+About Tiered Pricing
+With Tiered prices, you can use a certain amount of electricity each month at a lower price. Once that limit (called a threshold) is exceeded, a higher price applies. For residential customers, the threshold normally changes with the season to reflect changing usage patterns – for example, there are fewer hours of daylight in the winter and some customers use electric heating.
+In the winter period (November 1 – April 30), the Tier threshold for residential customers is 1,000 kWh so that households can use more power at the lower price. In the summer period (May 1 – October 31), the Tier threshold for residential 
+[DOC 0] https://www.londonhydro.com/accounts-services/electricity-rates/residential-electricity-rates
+customers is 600 kWh.
+For small business customers, the Tier threshold is 750 kWh all year round.
+Tiered prices give you the flexibility to use electricity at any time of day at the same price, although that price will change if you exceed the threshold during the month.
+Main navigation
+Accounts & Services
+Billing & Payment
+About My Bill
+Assistance Programs
+Billing Inserts
+Energy Retailers
+Payment Arrangements
+Payment Options
+Paperless Billing & Aeroplan Program
+Aeroplan Rewards
+Price Plan Comparison Tool
+Protect Yourself from Scams
+Submit Your Water Meter Reading
+Start. Stop. Transfer.
+I want to START service.
+Sign Up to Be a MyLondonHydro Customer.
+I want to STOP service.
+I want to TRANSFER my account
+Online Services
+MyLondonHydro
+Delegate Access
+MyWater
+London Hydro App
+Builder's Portal
+Interval Data Centre
+Property Management Portal
+Electricity Rates
+Commercial Electricity Rates
+Residential Electricity Rates
+Electric Vehicle Charging (EVC) Rate
+Generation
+Back Up Generation
+Load Displacement
+Net Metering
+Conservation
+Energy Efficiency
+Carbon Footprint Calculator
+Water
+Water Rates
+Business Customer Hub
+Footer Logo
+Image
+Powering London.
+Empowering You.
+Company
+Accessibility Plan
+Careers
+Conditions of Service
+About London Hydro
+Customer Care
+Contact Us
+New Customer
+MyLondonHydro
+News
+Green Button Platform
+Quick Links
+IESO
+Ontario Energy Board
+Electrical Safety Authority
+Ministry of Energy
+Natural Resources Canada
+London Hydro, 111 Horton Street, P.O. Box 2700, London, ON N6A 4H6
+Phone:  (519) 661-5503  Fax: (519) 661-5838
+Privacy Policy
+Accessibility Plan
+Change Language
+Accounts & Services
+Billing & Payment
+About My Bill
+Assistance Programs
+Billing Inserts
+Energy Retailers
+Payment Arrangements
+Payment Options
+Paperless Billing & Aeroplan Program
+Aeroplan Rewards
+Price Plan Comparison Tool
+Protect Yourself from Scams
+Submit Your Water Meter Reading
+Start. Stop. Transfer.
+I want to START service.
+Sign Up to Be a MyLondonHydro Customer.
+I want to STOP service.
+I want to TRANSFER my account
+Online Services
+MyLondonHydro
+Delegate Access
+MyWater
+London Hydro App
+Builder's Portal
+Interval Data Centre
+Property Management Portal
+Electricity Rates
+Commercial Electricity Rates
+Residential Electricity Rates
+Electric Vehicle Charging (EVC) Rate
+Generation
+Back Up Generation
+Load Displacement
+Net Metering
+Conservation
+Energy Efficiency
+Carbon Footprint Calculator
+Water
+Water Rates
+Business Customer Hub
+Outages
+Outage Map
+Outage Resources
+Sign Up for Outage Notifications
+Major Event Days
+Projects & Operations
+Contractor Information
+Certificate of Insurance
+EV Connections
+CAM General Information and Process
+Conditions of Service
+Current Projects
+Capacity Map
+About Us
+About London Hydro
+Corporate Structure
+Annual Report
+Report on Progress
+Accessibility (AODA)
+London Hydro Land Acknowledgement
+Privacy Policy
+Forced Labour in Supply Chains
+Equity, Diversity, Inclusion, and Belonging
+News
+Regulatory Documents
+Contact Us
+Tenders for Bid
+Sustainability
+London Hydro
+[DOC 0] https://www.londonhydro.com/accounts-services/electricity-rates/residential-electricity-rates
+’s Recognition of Indigenous Businesses
+Safety
+Careers
+[DOC 1] https://www.londonhydro.com/accounts-services/electricity-rates
+Electricity Rates | London Hydro
+Skip to main content
+Alert
+×
+Unfortunately, we are not able to proceed with your registration if you do not have the power to enter your company into a legally binding agreement with London Hydro.
+OK
+Secondary Menu
+Register/Login to MyLondonHydro
+Contact
+Language
+London Hydro
+Accounts & Services
+Billing & Payment
+Start. Stop. Transfer.
+Online Services
+Electricity Rates
+Generation
+Conservation
+Water
+Business Customer Hub
+Outages
+Outage Map
+Outage Resources
+Sign Up for Outage Notifications
+Major Event Days
+Projects & Operations
+Contractor Information
+EV Connections
+CAM General Information and Process
+Conditions of Service
+Current Projects
+Capacity Map
+About Us
+About London Hydro
+News
+Regulatory Documents
+Contact Us
+Tenders for Bid
+Sustainability
+London Hydro’s Recognition of Indigenous Businesses
+Safety
+Careers
+Menu
+Search for the content on the site
+Open/Close Search
+Electricity Rates
+Residential Time-of-Use Pricing Effective May 1, 2026 - October 31, 2026
+TOU Price Periods
+Winter (November 1 - April 30)
+Summer (May 1 - October 31)
+TOU Prices (¢/kWh)
+Off-Peak
+Weekdays 7 p.m. – 7 a.m.
+Weekends and holidays all day
+Weekdays 7 p.m. – 7 a.m.
+Weekends and holidays all day
+9.8¢
+Mid-Peak
+Weekdays 11 a.m. – 5 p.m.
+Weekdays 7 a.m. – 11 a.m. and 5 p.m. – 7 p.m.
+15.7¢
+On-Peak
+Weekdays 7 a.m. – 11 a.m. and 5 p.m. – 7 p.m.
+Weekdays 11 a.m. – 5 p.m.
+20.3¢
+Residential Ultra-Low Overnight Pricing Effective May 1, 2026 - October 31, 2026
+ULO Price Periods
+All Year
+ULO Prices (¢/kWh)
+Ultra-Low Overnight
+Every day 11 p.m. - 7 a.m.
+3.9¢
+Weekend Off-Peak
+Weekends and holidays 7 a.m. – 11 p.m.
+9.8¢
+Mid-Peak
+Weekdays 7 a.m. – 4 p.m. and 9 p.m. to 11 p.m.
+15.7¢
+On-Peak
+Weekdays 4 p.m. – 9 p.m.
+39.1¢
+Residential Tier Pricing Effective May 1, 2026 - October 31, 2026
+Tier Thresholds
+Winter (November 1 - April 30)
+Summer (May 1 - October 31)
+Tier Prices (¢/kWh)
+Tier 1
+Residential – first 1,000 kWh/month
+Non-residential – first 750 kWh/month
+Residential – first 600 kWh/month
+Non-residential – first 750 kWh/month
+12.0¢
+Tier 2
+Residential – for electricity used above 1,000 kWh/month
+Non-residential – for electricity used above 750 kWh/month
+Residential – for electricity used above 600 kWh/month
+Non-residential – for electricity used above 750 kWh/month
+14.2¢
+Electricity impacts many aspects of our lives, whether you are operating appliances, charging an electric vehicle, or working on your home computer...where would we be without electricity?
+As of May 1st, 2023, residential and small business customers can choose between three price plans: Time-of-Use (TOU), Tiered, and Ultra-Low Overnight (ULO).
+Customers can use London Hydro's
+Price Plan Calculator
+to automatically compare the plans based on their actual usage and easily switch between them.
+With TOU and ULO, the price you pay depends on when you use electricity. With Tiered prices, you can use a certain amount of electricity each month at a lower price. Once that limit is exceeded, a higher
+[DOC 1] https://www.londonhydro.com/accounts-services/electricity-rates
+ price applies.
+If you would like to switch your current Regulated Price Plan immediately, please contact our customer service department at 519-661-5800 ext. 5503. Changes to your price plan will take effect on your next billing cycle.
+Considering Switching Price Plans?
+When switching price plans, there are a few things to consider. Make sure you have some of your recent electricity bills handy as you go through the information below. Keep in mind the effect of COVID-19 on your electricity use (for instance, you may have been working from home). Most of the information you will need is on the Electricity line of your bill.
+Your price plan
+Which price plan are you currently on? If you’re unsure, check your price plan in MyLondonHydro or Trickl, or look at the Electricity line of your bill.
+Your usage
+How much electricity do you use in a month? If you’re unsure, look in MyLondonHydro or Trickl, or at the Electricity line on your bill. You might also want to look at your historical energy usage.
+Your consumption pattern
+The time of day you use electricity can be another factor in your choice. Historically, the typical residential customer who paid TOU prices has used nearly two-thirds of their power at off-peak times — from 7 pm to 7 am on weekdays and all weekends and holidays. The other third of their power used was typically split equally between on- and mid-peak times.
+If switching to ULO, it would be important to consider that ULO's on-peak is from 4 pm to 9 pm on Weekdays, with the Ultra-Low rate not taking effect until 11 pm.
+Look at your energy usage in MyLondonHydro or Trickl to see when you've historically used power.
+Seasonal changes and time of year
+As described above, the TOU price periods and Tier thresholds change with the season and are different during the winter (November 1 – April 30) and summer (May 1 – October 31) periods. Does the amount of electricity you use change based on the season?
+If you’re thinking about switching, you should pay close attention to how much electricity you use in a month, because on Tiered pricing the price is higher for every kWh of electricity that you use above the Tier threshold of 1,000 kWh in the winter or 600 kWh in the summer. For instance, if you heat your home electrically, your monthly use in the winter may be higher. And the same goes for the summer if you need to run your air conditioner.
+With TOU prices, the price depends on when you use electricity. Although the TOU price periods also change with the season, the electricity you use after 7 p.m. every day, and all the time on weekends and holidays, is charged at the lowest price under TOU all year round.
+Lifestyle and daily habits
+Are you often home during the day on weekdays, so shifting your usage is more challenging? Do you have large appliances that you need to run during the day on weekdays? Do you have a pool, hot tub or electric vehicle? Can you shift more of that usage to nighttime or weekend hours?
+Small business
+If you’re a smal
+[DOC 1] https://www.londonhydro.com/accounts-services/electricity-rates
+l business owner, some of the same factors mentioned earlier also apply – how much electricity do you use each month, and when do you use it? Keep in mind that the Tier threshold for small business customers is 750 kWh all year round. And not all small businesses are the same. A large restaurant with several ovens running in the evening may have a very different electricity usage pattern than a small salon that’s only open during the day. So may a dry cleaner compared to a convenience store, or a clothing store compared to a bakery.
+Image
+Image
+Residential Electricity Rates
+View Residential Rates
+Image
+Commercial Electricity Rates
+View Commercial Rates
+Image
+Log into the London Hydro app or MyLondonHydro to Choose the Price Plan That's Best for You
+You can compare electricity price plans based on your actual usage. Easily switch between plans in the London Hydro app or MyLondonHydro.
+Learn more
+If you would like to learn more about your pricing options, visit
+www.oeb.ca/choice
+.
+Need help deciding on which is best for you?
+You may also use Ontario Energy Board's
+Online Comparison Calculator
+You can also view the
+informational flyer
+here that is available in seventeen languages including French, Arabic, Cree, Korean, Punjabi, Urdu, Ojibway, Farsi, and more.
+If you don't have a MyLondonHydro account or access to London Hydro's mobile app, you can switch price plans by completing an election form {hyperlink election form} or by contacting us at (519) 661-5503, Monday through Friday, 8:30 am - 4 pm.
+Electricity Rates FAQs
+What is Customer Choice
+If you’re a residential or small business customer, you can choose to switch between Time-of-Use (TOU) and Tiered prices. And beginning May 1st, 2023, you can switch to the new Ultra-Low Overnight (ULO) price plan.
+To switch price plans, you must notify London Hydro by completing an election form or by using the online Price Comparison Tool in your MyLondonHydro account. You can ask to switch price plans at any time.
+If you want to stay with your current price plan, no action is required.
+What are TOU prices?
+With TOU prices, the price depends on when you use electricity.
+There are three TOU price periods:
+Off-peak, when demand for electricity is generally lower. This price applies in the evenings on weekdays and all day on weekends. Every household and small business is different, but on average, Ontario households use nearly two thirds of their electricity during off-peak hours.
+Mid-peak, when demand for electricity is moderate. These periods are during the daytime, but not the busiest times of day.
+On-peak, when demand for electricity is generally higher. These are the busier times of day – generally when people are cooking, starting up their personal electronics and running heaters or air conditioners.
+With TOU pricing, you can help manage your electricity costs by shifting your usage to lower price periods when possible.
+What are ULO prices?
+With ULO prices, the price depends on when you use electricity.
+[DOC 1] https://www.londonhydro.com/accounts-services/electricity-rates
+
+There are four ULO price periods:
+Ultra-Low Overnight, when demand for electricity is lowest on average.
+Weekend Off-peak, when demand for electricity is generally lower.
+Mid-peak, when demand for electricity is moderate.
+On-peak, when demand for electricity is highest on average.
+The ULO price periods are the same in the summer as they are in the winter.
+What are Tiered prices?
+With Tiered prices, you can use a certain amount of electricity each month at a lower price. Once that limit (called a threshold) is exceeded, a higher price applies. In the winter period (November 1 – April 30), the Tier threshold for residential customers is 1,000 kWh. In the summer period (May 1 – October 31), the Tier threshold for residential customers is 600 kWh. The Tier threshold for small business customers is 750 kWh all year round.
+Tiered prices give you the flexibility to use electricity at any time of day at the same price, although that price will change if you exceed the threshold during the month.
+What do TOU, Tiered and ULO prices pay for?
+The OEB sets TOU, Tiered and ULO prices based on a forecast of how much it will cost to supply TOU, Tiered and ULO customers with the electricity they are expected to use over the next 12 months, and to recover the same forecast average cost of supply.
+The OEB sets TOU, Tiered and ULO prices under the Regulated Price Plan. The Regulated Price Plan is designed to provide stable pricing, encourage conservation and ensure that the price customers pay for electricity better reflects the price paid to generators that produce the electricity that customers use in their homes or small businesses.
+Electricity distributors are not allowed to make a profit from the sale of electricity.
+How often are Regulated Price Plan prices (TOU, Tiered and ULO) set?
+The OEB typically sets TOU, Tiered and ULO prices once a year, for November 1, based on an estimate of how much it will cost to supply residential and small business customers on the Regulated Price Plan with the electricity that they are expected to use.
+Will I save money by switching price plans?
+There is no guarantee you will save money if you switch price plans. The total bill impact of switching will vary depending on how much electricity you consume in a month and when it is consumed during the day.
+Considering switching price plans? For more information, go to
+www.oeb.ca/choice
+and use the OEB’s bill calculator to estimate what your bill might look like if you switched price plans.
+What do I need to do to switch price plans?
+If you don’t want to switch price plans, you don’t need to do anything. You will stay on your current price plan.
+If you do want to switch price plans, here are the rules that apply. These rules also apply if you later want to switch back or to another price plan.
+London Hydro must make its election form available on its website, and to any customer that requests it. London Hydro must accept election forms by email or mail at a minimum. You’ll need to 
+[DOC 1] https://www.londonhydro.com/accounts-services/electricity-rates
+fill out the election form to notify London Hydro that you want to switch. The form is intended to be as simple as possible in terms of the information that you need to provide. You should have a recent electricity bill on hand when filling out the form, as you will need your utility account number.
+Within 10 business days of receiving your election form, London Hydro must tell you if your election form can’t be processed and must explain why (for instance, if you’re not authorized to make changes to the account, or the account can’t be verified).
+If there are no issues with your election form, London Hydro has the same 10 business days to let you know when you can expect to start being billed on your new price plan.
+A switch in price plans can only take effect at the start of a billing period. A billing period is generally about 30 days long, but that can vary. The start and end dates are identified on your electricity bill. Many customers are not billed based on a calendar month, and the start of your billing period can be any given day of a month.
+London Hydro must start charging you on your new price plan as of your next billing period after you submit your election form if London Hydro receives that form at least 10 business days before that billing period starts, and provided there are no issues with your form (see above).
+If London Hydro receives your complete election form less than 10 business days before the start of your next billing period, London Hydro might still be able to switch you for your next billing period. But if London Hydro can’t do so, London Hydro has to start charging you on your new price plan at the start of the next billing period after that.
+Because a switch in prices can only take effect at the beginning of a billing period, it could take some time between the day you provide your election form and the day you actually start getting charged on your new price plan.
+If I have switched to a new price plan, can I switch back to my previous price plan or another price plan?
+Yes.
+Can all customers switch plans?
+The choice between TOU, Tiered and ULO prices is available to residential and small business customers that have smart meters and are billed under the OEB’s Regulated Price Plan.
+Some residential and small business customers are charged Tiered prices because their meters can’t be used to bill TOU or ULO prices. They can’t switch to TOU or ULO prices at this time.
+If you live in a condo or apartment that has its own individual meter and your bill comes from a company other than your electricity utility, you are a customer of a unit sub-meter provider (USMP). Customers of USMPs also can’t switch price plans. That decision can only be made for the building as a whole by the person that retained a USMP for the property. In most cases, the property manager, landlord or condominium board sets up this arrangement.
+I receive a monthly credit from the Ontario Electricity Support Program (OESP). Will I lose that credit if I
+[DOC 2] https://www.londonhydro.com/accounts-services/electricity-rates/commercial-electricity-rates
+Commercial Electricity Rates | London Hydro
+Skip to main content
+Alert
+×
+Unfortunately, we are not able to proceed with your registration if you do not have the power to enter your company into a legally binding agreement with London Hydro.
+OK
+Secondary Menu
+Register/Login to MyLondonHydro
+Contact
+Language
+London Hydro
+Accounts & Services
+Billing & Payment
+Start. Stop. Transfer.
+Online Services
+Electricity Rates
+Generation
+Conservation
+Water
+Business Customer Hub
+Outages
+Outage Map
+Outage Resources
+Sign Up for Outage Notifications
+Major Event Days
+Projects & Operations
+Contractor Information
+EV Connections
+CAM General Information and Process
+Conditions of Service
+Current Projects
+Capacity Map
+About Us
+About London Hydro
+News
+Regulatory Documents
+Contact Us
+Tenders for Bid
+Sustainability
+London Hydro’s Recognition of Indigenous Businesses
+Safety
+Careers
+Menu
+Search for the content on the site
+Open/Close Search
+Breadcrumb
+Home
+Electricity Rates
+Commercial Electricity Rates
+A small number of London Hydro customers use tiered rates. Tiered Pricing is broken down into set amounts of electricity that may be used at a specific rate; once this set amount is exceeded, the rate changes to a more expensive tier.
+As of November 1, 2025 - April 30, 2026, Tiered prices for non-residential customers are:
+First Tier - Up to 750 kWh
+Second Tier - More than 750 kWh
+12.0 cents per kWh
+14.2 cents per kWh
+Electricity Charges for Commercial, Less Than 50 kW With No Interval Meter  (Rates Effective May 1, 2026 - October 31, 2026)
+Commercial, Less Than 50 KW With No Interval Meter (Rates Effective May 1, 2026 - October 31, 2026)
+Electricity price (TOU or Tier or ULO)
+Peak TOU Rate
+per kWh
+$0.203
+Mid-Peak TOU Rate
+per kWh
+$0.157
+Off-Peak TOU Rate
+per kWh
+$0.098
+First 750 kWh Tier
+per kWh
+$0.120
+Second >750 kWh Tier
+per kWh
+$0.142
+On-Peak ULO Rate
+per kWh
+$0.391
+Mid-Peak ULO Rate
+per kWh
+$0.157
+Weekend Off-Peak ULO Rate
+per kWh
+$0.098
+Ultra-Low Overnight ULO Rate
+per kWh
+$0.039
+Delivery
+Fixed Monthly Charge
+per month
+$36.38
+Rate Rider for Recovery of Advanced Capital Module
+per month
+$0.09
+IESO Smart Metering Entity Charge
+per month
+$0.42
+Rate Rider for Disposition of Account 1509
+per month
+$0.00
+Distribution Volumetric Rate
+per kWh
+$0.0156
+Rate Rider for Disposition of Global Adjustment Account*
+per kWh
+$0.0017
+Rate Rider for Disposition of Deferral/Variance Accounts
+per kWh
+$0.0010
+Rate Rider for Disposition of Capacity Based Recovery Account**
+per kWh
+$0.0005
+Network Charge***
+per kWh
+$0.0108
+Connection Charge***
+per kWh
+$0.0076
+Adjustment Factor Charge****
+per kWh
+kWh x 0.0288 x Electricity Rate
+Regulatory
+Wholesale Market Service Charge***
+per kWh
+$0.0041
+Capacity Based Recovery
+per kWh
+$0.0006
+Rural Rate Protection Charge***
+per kWh
+$0.0006
+Government
+Administration Charge******
+per month
+$0.25
+HST
+per bill
+13%
+Ontario Electricity Rebate
+per bill
+(23.5%)
+*Applicable only for Non-RPP Customers
+**Applicable only for Class B Customers
+***In calculating your bill, your 
+[DOC 2] https://www.londonhydro.com/accounts-services/electricity-rates/commercial-electricity-rates
+consumption amount will be adjusted to account for heat loss. When electricity is delivered over a power line, it is normal for a small amount of power to be consumed or lost as heat. Equipment such as wires and transformers consume power before it gets to your home or business. The adjustment factor accounts for these losses.
+****Adjustment Factor Charge is kWh x 0.0288 x Electricity Rate. For Example: 200 kWh x 0.0288 Adjustment Factor x Electricity Rate = 5.76 kWh x $0.151/kWh = $0.8697.
+***** Monthly Administration charge applies to non-retailer affiliated customers only.
+Loss Factors
+Distribution Loss Factors, Secondary Metered Customers
+Customer Less Than 5000 kW
+1.0288
+Customer Greater Than 5000 kW
+1.0119
+Distribution Loss Factors, Primary Metered Customers
+Customer Less Than 5000 kW
+1.0185
+Customer Greater Than 5000 kW
+1.0016
+Electricity Charges for General Service, Greater Than 50 kW With An Interval Meter (Rates Effective May 1, 2026)
+General Service, Greater Than 50 KW With An Interval Meter (Rates Effective May 1, 2026)
+Electricity
+Spot Market Price
+Delivery
+Fixed Monthly Charge
+per month
+$177.28
+Rate Rider for Recovery of Advanced Capital Module
+per month
+$1.02
+Rate Rider for Disposition of Account 1509
+per month
+$0.00
+Distribution Volumetric Rate
+per kW
+$3.7344
+Rate Rider for Disposition of Global Adjustment Account*
+per kWh
+$0.0054
+Rate Rider for Disposition of Deferral/Variance Accounts**
+per kW
+$0.0206
+Rate Rider for Disposition of Deferral/Variance Accounts
+per kW
+$0.4855
+Rate Rider for Disposition of Capacity Based Recovery Account***
+per kW
+$0.1916
+Network Charge****
+per kW
+$4.8724
+Connection Charge****
+per kW
+$3.8077
+Transformer Allowance (if applicable)
+per kW
+(0.60)
+Primary Metering Allowance for Transformer Losses (if applicable)
+%
+(1.00)
+Regulatory
+Wholesale Market Service Charge****
+per kWh
+$0.0041
+Capacity Based Recovery
+per kWh
+$0.
+0006
+Rural Rate Protection Charge****
+per kWh
+$0.
+0006
+Government
+Administration Charge*******
+per month
+$0.25
+HST
+per bill
+13%
+*Applicable only for Non-RPP Customers
+**Applicable only for Non-Wholesale Market Participants
+***Applicable only for Class B Customers
+****In calculating your bill, your consumption amount will be adjusted to account for heat loss. When electricity is delivered over a power line, it is normal for a small amount of power to be consumed or lost as heat. Equipment such as wires and transformers consume power before it gets to your home or business. The adjustment factor accounts for these losses.
+*****Adjustment Factor Charge is kWh x 0.0288 x Electricity Rate. For Example: 200 kWh x 0.0288 Adjustment Factor x Electricity Rate = 5.76 kWh x $0.151/kWh = $0.8697.
+****** Monthly Administration charge applies to non-retailer affiliated customers only.
+Loss Factors
+Distribution Loss Factors, Secondary Metered Customers
+Customer Less Than 5000 kW
+1.0288
+Customer Greater Than 5000 kW
+1.0119
+Distribution Loss Factors, Primary Metered Customers
+Customer Less Than 5000 kW
+1.018
+[DOC 2] https://www.londonhydro.com/accounts-services/electricity-rates/commercial-electricity-rates
+5
+Customer Greater Than 5000 kW
+1.0016
+Electricity Charges for Large Users (Rates Effective May 1, 2026)
+Large User (Rates Effective May 1, 2026)
+Electricity
+Spot Market Price
+Delivery
+Fixed Monthly Charge
+per month
+$22,851.07
+Rate Rider for Recovery of Advanced Capital Module
+per month
+$77.13
+Rate Rider for Disposition of Account 1509
+per month
+$0.00
+Distribution Volumetric Rate
+per kW
+$3.1541
+Rate Rider for Disposition of Deferral/Variance Accounts
+per kW
+$0.4902
+Network Charge
+per kW
+$4.9913
+Connection Charge
+per kW
+$3.8077
+Regulatory
+Wholesale Market Service Charge*
+per kWh
+$0.0041
+Capacity Based Recovery
+per kWh
+$0.0006
+Rural Rate Protection Charge*
+per kWh
+$0.0006
+Administration Charge**
+per month
+$0.25
+Government
+HST
+per bill
+13%
+*The consumption used for these rates is subject to an Adjustment Factor. When electricity is delivered over a power line, it is normal for a small amount of power to be consumed or lost as heat. Equipment such as wires and transformers consume power before it gets to your home or business. The adjustment factor accounts for these losses. This charge is included in the Delivery portion of the bill.
+**Monthly Administration charge applies to non-retailer affiliated customers only.
+Loss Factors
+Distribution Loss Factors, Secondary Metered Customers
+Customer Less Than 5000 kW
+1.0288
+Customer Greater Than 5000 kW
+1.0119
+Distribution Loss Factors, Primary Metered Customers
+Customer Less Than 5000 kW
+1.0185
+Customer Greater Than 5000 kW
+1.0016
+Main navigation
+Accounts & Services
+Billing & Payment
+About My Bill
+Assistance Programs
+Billing Inserts
+Energy Retailers
+Payment Arrangements
+Payment Options
+Paperless Billing & Aeroplan Program
+Aeroplan Rewards
+Price Plan Comparison Tool
+Protect Yourself from Scams
+Submit Your Water Meter Reading
+Start. Stop. Transfer.
+I want to START service.
+Sign Up to Be a MyLondonHydro Customer.
+I want to STOP service.
+I want to TRANSFER my account
+Online Services
+MyLondonHydro
+Delegate Access
+MyWater
+London Hydro App
+Builder's Portal
+Interval Data Centre
+Property Management Portal
+Electricity Rates
+Commercial Electricity Rates
+Residential Electricity Rates
+Electric Vehicle Charging (EVC) Rate
+Generation
+Back Up Generation
+Load Displacement
+Net Metering
+Conservation
+Energy Efficiency
+Carbon Footprint Calculator
+Water
+Water Rates
+Business Customer Hub
+Footer Logo
+Image
+Powering London.
+Empowering You.
+Company
+Accessibility Plan
+Careers
+Conditions of Service
+About London Hydro
+Customer Care
+Contact Us
+New Customer
+MyLondonHydro
+News
+Green Button Platform
+Quick Links
+IESO
+Ontario Energy Board
+Electrical Safety Authority
+Ministry of Energy
+Natural Resources Canada
+London Hydro, 111 Horton Street, P.O. Box 2700, London, ON N6A 4H6
+Phone:  (519) 661-5503  Fax: (519) 661-5838
+Privacy Policy
+Accessibility Plan
+Change Language
+Accounts & Services
+Billing & Payment
+About My Bill
+Assistance Programs
+Billing Inserts
+Energy Retailers
+Payment Arrangements
+Payment Options
+Paperless Billing & Aeroplan Progra
+[DOC 2] https://www.londonhydro.com/accounts-services/electricity-rates/commercial-electricity-rates
+m
+Aeroplan Rewards
+Price Plan Comparison Tool
+Protect Yourself from Scams
+Submit Your Water Meter Reading
+Start. Stop. Transfer.
+I want to START service.
+Sign Up to Be a MyLondonHydro Customer.
+I want to STOP service.
+I want to TRANSFER my account
+Online Services
+MyLondonHydro
+Delegate Access
+MyWater
+London Hydro App
+Builder's Portal
+Interval Data Centre
+Property Management Portal
+Electricity Rates
+Commercial Electricity Rates
+Residential Electricity Rates
+Electric Vehicle Charging (EVC) Rate
+Generation
+Back Up Generation
+Load Displacement
+Net Metering
+Conservation
+Energy Efficiency
+Carbon Footprint Calculator
+Water
+Water Rates
+Business Customer Hub
+Outages
+Outage Map
+Outage Resources
+Sign Up for Outage Notifications
+Major Event Days
+Projects & Operations
+Contractor Information
+Certificate of Insurance
+EV Connections
+CAM General Information and Process
+Conditions of Service
+Current Projects
+Capacity Map
+About Us
+About London Hydro
+Corporate Structure
+Annual Report
+Report on Progress
+Accessibility (AODA)
+London Hydro Land Acknowledgement
+Privacy Policy
+Forced Labour in Supply Chains
+Equity, Diversity, Inclusion, and Belonging
+News
+Regulatory Documents
+Contact Us
+Tenders for Bid
+Sustainability
+London Hydro’s Recognition of Indigenous Businesses
+Safety
+Careers
+[DOC 3] https://www.londonhydro.com/accounts-services/electricity-rates/electric-vehicle-charging-evc-rate
+Electric Vehicle Charging (EVC) Rate | London Hydro
+Skip to main content
+Alert
+×
+Unfortunately, we are not able to proceed with your registration if you do not have the power to enter your company into a legally binding agreement with London Hydro.
+OK
+Secondary Menu
+Register/Login to MyLondonHydro
+Contact
+Language
+London Hydro
+Accounts & Services
+Billing & Payment
+Start. Stop. Transfer.
+Online Services
+Electricity Rates
+Generation
+Conservation
+Water
+Business Customer Hub
+Outages
+Outage Map
+Outage Resources
+Sign Up for Outage Notifications
+Major Event Days
+Projects & Operations
+Contractor Information
+EV Connections
+CAM General Information and Process
+Conditions of Service
+Current Projects
+Capacity Map
+About Us
+About London Hydro
+News
+Regulatory Documents
+Contact Us
+Tenders for Bid
+Sustainability
+London Hydro’s Recognition of Indigenous Businesses
+Safety
+Careers
+Menu
+Search for the content on the site
+Open/Close Search
+Breadcrumb
+Home
+Electricity Rates
+Electric Vehicle Charging (EVC) Rate
+The Electric Vehicle Charging (EVC) Rate is a province-wide rate option established by the Ontario Energy Board (OEB) for eligible public DC fast charging stations.
+Eligible customers pay 17% of the Retail Transmission Service Rate (RTSR) that would otherwise apply to customers in the General Service 50 kW to 4,999 kW class.
+Example: If a customer’s base RTSR is $100/kW, it would instead pay $17/kW under the EVC Rate.
+If you own or operate a public commercial EV charging station, you may be eligible for the EVC Rate.
+Eligibility requirements
+To qualify, your site must meet all of the following:
+Have at least one DC fast charger (DCFC) on site
+The total capacity (kW) of any non-DCFC chargers at the station does not exceed the total DCFC charging capacity
+At least 90% of your site’s monthly peak demand (kW) must come from EV charging
+Non-charging auxiliary load must be 10% or less
+Have a monthly peak demand between 50 kW and 4,999 kW
+Have a 12-month average load factor of 20% or less
+Based on the average of your last 12 monthly load factors
+Any distributed energy resource behind the meter must not exceed the station’s annual peak demand
+Opt in by submitting the EVC Rate form and attesting that you meet the eligibility requirements
+Plan your connection
+Connecting a new public EV charging station starts with a preliminary consultation.
+EV charging connections
+Image
+Apply for the EVC Rate
+Opt in by submitting the EVC Rate opt-in form
+Get the opt-in form
+Image
+Talk to our team
+Not sure how the criteria apply to your site? Questions about the Rate? Our Team is here to help.
+Contact us
+How do I calculate the 90% requirement?
+The requirement is based on your site’s monthly peak demand (kW). To qualify, at least 90% of that peak demand must be attributable to EV charging, meaning any non-charging auxiliary load must be 10% or less.
+What is load factor and how is it assessed?
+Load factor compares how steadily electricity is used over time. For the EVC Rate, your station must
+[DOC 3] https://www.londonhydro.com/accounts-services/electricity-rates/electric-vehicle-charging-evc-rate
+ have a 12-month average load factor of 20% or less, calculated using the average of your last 12 monthly load factors.
+Does behind-the-meter generation affect eligibility?
+It can. Any distributed energy resource behind the meter must not exceed the station’s annual peak demand.
+Who can opt in (owner, operator, tenant)?
+For the EVC Rate, the “customer” is the owner or operator of the EV charging station connected (or intended to be connected) to the distributor’s system. It is not the EV driver using the station
+Main navigation
+Accounts & Services
+Billing & Payment
+About My Bill
+Assistance Programs
+Billing Inserts
+Energy Retailers
+Payment Arrangements
+Payment Options
+Paperless Billing & Aeroplan Program
+Aeroplan Rewards
+Price Plan Comparison Tool
+Protect Yourself from Scams
+Submit Your Water Meter Reading
+Start. Stop. Transfer.
+I want to START service.
+Sign Up to Be a MyLondonHydro Customer.
+I want to STOP service.
+I want to TRANSFER my account
+Online Services
+MyLondonHydro
+Delegate Access
+MyWater
+London Hydro App
+Builder's Portal
+Interval Data Centre
+Property Management Portal
+Electricity Rates
+Commercial Electricity Rates
+Residential Electricity Rates
+Electric Vehicle Charging (EVC) Rate
+Generation
+Back Up Generation
+Load Displacement
+Net Metering
+Conservation
+Energy Efficiency
+Carbon Footprint Calculator
+Water
+Water Rates
+Business Customer Hub
+Footer Logo
+Image
+Powering London.
+Empowering You.
+Company
+Accessibility Plan
+Careers
+Conditions of Service
+About London Hydro
+Customer Care
+Contact Us
+New Customer
+MyLondonHydro
+News
+Green Button Platform
+Quick Links
+IESO
+Ontario Energy Board
+Electrical Safety Authority
+Ministry of Energy
+Natural Resources Canada
+London Hydro, 111 Horton Street, P.O. Box 2700, London, ON N6A 4H6
+Phone:  (519) 661-5503  Fax: (519) 661-5838
+Privacy Policy
+Accessibility Plan
+Change Language
+Accounts & Services
+Billing & Payment
+About My Bill
+Assistance Programs
+Billing Inserts
+Energy Retailers
+Payment Arrangements
+Payment Options
+Paperless Billing & Aeroplan Program
+Aeroplan Rewards
+Price Plan Comparison Tool
+Protect Yourself from Scams
+Submit Your Water Meter Reading
+Start. Stop. Transfer.
+I want to START service.
+Sign Up to Be a MyLondonHydro Customer.
+I want to STOP service.
+I want to TRANSFER my account
+Online Services
+MyLondonHydro
+Delegate Access
+MyWater
+London Hydro App
+Builder's Portal
+Interval Data Centre
+Property Management Portal
+Electricity Rates
+Commercial Electricity Rates
+Residential Electricity Rates
+Electric Vehicle Charging (EVC) Rate
+Generation
+Back Up Generation
+Load Displacement
+Net Metering
+Conservation
+Energy Efficiency
+Carbon Footprint Calculator
+Water
+Water Rates
+Business Customer Hub
+Outages
+Outage Map
+Outage Resources
+Sign Up for Outage Notifications
+Major Event Days
+Projects & Operations
+Contractor Information
+Certificate of Insurance
+EV Connections
+CAM General Information and Process
+Conditions of Service
+Current Projects
+Capacity Map
+About Us
+About London Hydro
+Corporate Structure
+Annual Repor
+[DOC 3] https://www.londonhydro.com/accounts-services/electricity-rates/electric-vehicle-charging-evc-rate
+t
+Report on Progress
+Accessibility (AODA)
+London Hydro Land Acknowledgement
+Privacy Policy
+Forced Labour in Supply Chains
+Equity, Diversity, Inclusion, and Belonging
+News
+Regulatory Documents
+Contact Us
+Tenders for Bid
+Sustainability
+London Hydro’s Recognition of Indigenous Businesses
+Safety
+Careers
+[DOC 4] https://www.londonhydro.com/accounts-services/water/water-rates
+Water Rates | London Hydro
+Skip to main content
+Alert
+×
+Unfortunately, we are not able to proceed with your registration if you do not have the power to enter your company into a legally binding agreement with London Hydro.
+OK
+Secondary Menu
+Register/Login to MyLondonHydro
+Contact
+Language
+London Hydro
+Accounts & Services
+Billing & Payment
+Start. Stop. Transfer.
+Online Services
+Electricity Rates
+Generation
+Conservation
+Water
+Business Customer Hub
+Outages
+Outage Map
+Outage Resources
+Sign Up for Outage Notifications
+Major Event Days
+Projects & Operations
+Contractor Information
+EV Connections
+CAM General Information and Process
+Conditions of Service
+Current Projects
+Capacity Map
+About Us
+About London Hydro
+News
+Regulatory Documents
+Contact Us
+Tenders for Bid
+Sustainability
+London Hydro’s Recognition of Indigenous Businesses
+Safety
+Careers
+Menu
+Search for the content on the site
+Open/Close Search
+Breadcrumb
+Home
+Water
+Water Rates
+January 1, 2026, Water and Wastewater Usage Charges
+January 1, 2026, Water Rates - Volumetric Portion of charge based on the amount of water used each month
+Block
+Water Supply (based on consumption)
+Rate ($ per m3)
+m3
+1
+0-7
+0.00
+First 7
+2
+>7-15
+2.6404
+Next 8
+3
+>15-25
+3.3948
+Next 10
+4
+>25-35
+3.7720
+Next 10
+5
+>35-250
+1.4334
+Next 215
+6
+>250-7,000
+1.3579
+Next 6,750
+7
+>7,000-50,000
+1.2373
+Next 43,000
+8
+50,000 +
+1.1015
+Over 50,000
+January 1, 2026, Sewer System/Wastewater Rates - Volumetric Portion of charge based on the amount of water used each month
+Block
+Sewer System Charge (based on consumption)
+Rate ($ per m3)
+m3
+1
+0-7
+0.00
+First 7
+2
+>7-15
+2.5444
+Next 8
+3
+>15-25
+3.2714
+Next 10
+4
+>25-35
+3.6349
+Next 10
+5
+>35-250
+1.3809
+Next 215
+6
+>250-7,000
+1.3086
+Next 6,750
+7
+>7,000-50,000
+1.1922
+Next 43,000
+8
+50,000 +
+1.0615
+Over 50,000
+January 1, 2026 Infrastructure Connection Charges
+Water Rates- a fixed monthly charge component based on the size of your water meter as of January 1, 2026
+Monthly Water Connection Charge Based On Meter Size
+Water Connection Charge ($/month)
+Wastewater Connection Charge ($/month)
+16 mm
+$18.54
+$17.02
+19 mm
+$27.80
+$25.50
+25 mm
+$46.34
+$42.53
+40 mm
+$92.70
+$85.04
+50 mm
+$148.32
+$136.06
+76 mm
+$324.42
+$297.64
+100 mm
+$556.16
+$510.21
+150 mm
+$1,297.71
+$1,190.54
+200 mm
+$2,224.62
+$2,040.89
+250 mm
+$2,780.93
+$2,551.86
+January 1, 2026, Stormwater Charges Based on Class and Land Size
+Stormwater Charges Based on Class and Land Size
+Storm Drainage Charge ($/month)
+Storm Drainage Charge ($/hectare/month)
+Residential/Commercial/Institutional/Industrial Equal to or Less Than 0.4 Hectares
+$20.74
+Residential, land area equal to or below 0.40 hectares without a storm sewer within 90m of property
+$15.59
+Land area above 0.40 hectares
+$172.62
+January 1, 2026, Fire Protection Charge
+Fire Protection Charge ($/month), effective January 1, 2026
+Customer Assistance Fund ($/month)
+Residential
+$1.90
+$0.25
+Institutional, Commercial, Industrial (ICI) 5 under 5 hectares
+$12.72
+Institutional, Commercial, Industrial (ICI) 5 hectares and over
+$63.58
+
+[DOC 4] https://www.londonhydro.com/accounts-services/water/water-rates
+Main navigation
+Accounts & Services
+Billing & Payment
+About My Bill
+Assistance Programs
+Billing Inserts
+Energy Retailers
+Payment Arrangements
+Payment Options
+Paperless Billing & Aeroplan Program
+Aeroplan Rewards
+Price Plan Comparison Tool
+Protect Yourself from Scams
+Submit Your Water Meter Reading
+Start. Stop. Transfer.
+I want to START service.
+Sign Up to Be a MyLondonHydro Customer.
+I want to STOP service.
+I want to TRANSFER my account
+Online Services
+MyLondonHydro
+Delegate Access
+MyWater
+London Hydro App
+Builder's Portal
+Interval Data Centre
+Property Management Portal
+Electricity Rates
+Commercial Electricity Rates
+Residential Electricity Rates
+Electric Vehicle Charging (EVC) Rate
+Generation
+Back Up Generation
+Load Displacement
+Net Metering
+Conservation
+Energy Efficiency
+Carbon Footprint Calculator
+Water
+Water Rates
+Business Customer Hub
+Footer Logo
+Image
+Powering London.
+Empowering You.
+Company
+Accessibility Plan
+Careers
+Conditions of Service
+About London Hydro
+Customer Care
+Contact Us
+New Customer
+MyLondonHydro
+News
+Green Button Platform
+Quick Links
+IESO
+Ontario Energy Board
+Electrical Safety Authority
+Ministry of Energy
+Natural Resources Canada
+London Hydro, 111 Horton Street, P.O. Box 2700, London, ON N6A 4H6
+Phone:  (519) 661-5503  Fax: (519) 661-5838
+Privacy Policy
+Accessibility Plan
+Change Language
+Accounts & Services
+Billing & Payment
+About My Bill
+Assistance Programs
+Billing Inserts
+Energy Retailers
+Payment Arrangements
+Payment Options
+Paperless Billing & Aeroplan Program
+Aeroplan Rewards
+Price Plan Comparison Tool
+Protect Yourself from Scams
+Submit Your Water Meter Reading
+Start. Stop. Transfer.
+I want to START service.
+Sign Up to Be a MyLondonHydro Customer.
+I want to STOP service.
+I want to TRANSFER my account
+Online Services
+MyLondonHydro
+Delegate Access
+MyWater
+London Hydro App
+Builder's Portal
+Interval Data Centre
+Property Management Portal
+Electricity Rates
+Commercial Electricity Rates
+Residential Electricity Rates
+Electric Vehicle Charging (EVC) Rate
+Generation
+Back Up Generation
+Load Displacement
+Net Metering
+Conservation
+Energy Efficiency
+Carbon Footprint Calculator
+Water
+Water Rates
+Business Customer Hub
+Outages
+Outage Map
+Outage Resources
+Sign Up for Outage Notifications
+Major Event Days
+Projects & Operations
+Contractor Information
+Certificate of Insurance
+EV Connections
+CAM General Information and Process
+Conditions of Service
+Current Projects
+Capacity Map
+About Us
+About London Hydro
+Corporate Structure
+Annual Report
+Report on Progress
+Accessibility (AODA)
+London Hydro Land Acknowledgement
+Privacy Policy
+Forced Labour in Supply Chains
+Equity, Diversity, Inclusion, and Belonging
+News
+Regulatory Documents
+Contact Us
+Tenders for Bid
+Sustainability
+London Hydro’s Recognition of Indigenous Businesses
+Safety
+Careers
+[DOC 5] https://www.londonhydro.com/about-us/about-london-hydro/corporate-structure
+Corporate Structure | London Hydro
+Skip to main content
+Alert
+×
+Unfortunately, we are not able to proceed with your registration if you do not have the power to enter your company into a legally binding agreement with London Hydro.
+OK
+Secondary Menu
+Register/Login to MyLondonHydro
+Contact
+Language
+London Hydro
+Accounts & Services
+Billing & Payment
+Start. Stop. Transfer.
+Online Services
+Electricity Rates
+Generation
+Conservation
+Water
+Business Customer Hub
+Outages
+Outage Map
+Outage Resources
+Sign Up for Outage Notifications
+Major Event Days
+Projects & Operations
+Contractor Information
+EV Connections
+CAM General Information and Process
+Conditions of Service
+Current Projects
+Capacity Map
+About Us
+About London Hydro
+News
+Regulatory Documents
+Contact Us
+Tenders for Bid
+Sustainability
+London Hydro’s Recognition of Indigenous Businesses
+Safety
+Careers
+Menu
+Search for the content on the site
+Open/Close Search
+Breadcrumb
+Home
+About London Hydro
+Corporate Structure
+CEO
+Ysni Semsedini
+With over 20 years of experience in the electricity distribution, telecommunications, manufacturing, and healthcare industries, Ysni Semsedini is known for his collaborative approach, working closely with employees, shareholders, stakeholders, and the community at large to foster innovation and nurture partnerships.
+Ysni's career includes a previous tenure at London Hydro along with executive positions at several other Local Distribution Companies in the Province. He holds a Bachelor of Engineering Science (B.ESc) in Electrical Engineering and a Master of Engineering Science (M.ESc) in Power Systems from Western University. Additionally, Ysni earned an MBA from Wilfrid Laurier University and is a registered Professional Engineer (P.Eng.) with the Professional Engineers of Ontario. He also holds the ICD.D designation from the Institute of Corporate Directors.
+A respected thought leader, Ysni has built strong relationships within the electrical distribution sector and actively serves on multiple boards. He is dedicated to driving London Hydro's strategic vision forward, pursuing sustainable growth, and positioning the corporation as an industry leader in the electrification economy.
+Board Chair
+Tania Goodine, MBA, B.A.P.S.Y.
+Tania was appointed to the London Hydro Board of Directors in 2021 and took on the role of Board Chair in 2025. She was also the Chair of London Hydro's Human Resources Committee (2023-2025) and the Chair of the CEO Selection Committee (2023-2024). Tania retired from Libro Credit Union in 2023, where she held the role of Executive Vice President, Strategy and Innovation. She helped Libro develop and sustain its strong culture, build its brand, and grow in southwestern Ontario’s communities.
+Tania holds a Master's of Business Administration from York University and a Bachelor of Arts in Honours Psychology from Western University. She is a lifelong learner, having completed several executive education programs over her career.
+Tania lives in downtown London, wh
+[DOC 5] https://www.londonhydro.com/about-us/about-london-hydro/corporate-structure
+ere she and her husband enjoy gardening and golfing. She was a member of the Boys and Girls Club Board of Directors and continues to stay connected within the London community.
+Vice Chair
+Andrew N. Hrymak, BEng, Ph.D.
+Professor Hrymak has served as Special Advisor to the President on Industry Partnerships, the Green Economy, and Sustainability, Provost & Vice-President, Academic  and Dean of Engineering at Western University.  He serves as Director of the Fraunhofer Innovation Platform for Composites Research at  Western University. Professor Hrymak holds a BEng degree from McMaster University and a Ph.D. from Carnegie Mellon University. He is a Fellow of both the Canadian Academy of Engineering and the Chemical Institute of Canada, and is a licensed Professional Engineer in Ontario.
+Board Members
+Tracy Gustafson, CPA, CA
+Tracy began her career in Toronto, Ontario where she obtained her CPA, CA Designation.  She worked with multinational public corporations running several accounting projects in a variety of industries.  Tracy moved to London in 2001 and has been focusing her career advising private corporations on a vast array of business and taxation issues. Tracy served as Chair of the Board of Directors for the Children’s Health Foundation where she acquired an in-depth knowledge of the continuum of care for children in Southwestern Ontario and across the country.  She has also gained valuable experience in the software development and data analytics industry as the Director of Product Management for a healthcare data insights company.  She joined Valente CPAs in 2018 and is honoured to be working alongside the brilliant partners and staff.
+Guy Holburn, Ph.D., M.A., B.A. Hons
+Appointed to the London Hydro Board in 2017, Guy Holburn is Professor of Business, Economics and Public Policy at Ivey Business School, Western University. An expert on the intersection of business strategy and public policy, much of his research and teaching is applied to strategy and policy issues in the energy and utility sectors in Canada, the United States, and internationally.
+Dr. Holburn joined Ivey in July 2001 after completing his Ph.D. in Business and Public Policy and M.A. in Economics at the University of California, Berkley. He is the founder and former Director of the Ivey Energy Policy and Management Centre, Canada’s leading university-based centre for research and outreach on national energy issues. He is also a member of the Council for Clean and Reliable Energy.
+Before his Ph.D. studies, Dr. Holburn worked for several years as a management consultant with Bain and Company in London, England, and was a founding member of the Bain South Africa office. His undergraduate degree (Economics, B.A. Hons. First Class) is from Cambridge University.
+Paul Madden
+Paul Madden has enjoyed a varied and successful 30-year career with the global 3M Company, a Fortune 100 organization. Throughout his tenure, Paul held a number of senior leadership roles, including CEO of 
+[DOC 5] https://www.londonhydro.com/about-us/about-london-hydro/corporate-structure
+3M Australia/New Zealand in 2007, President of 3M Canada in 2012, and Global President of 3M’s Automotive and Aerospace Division in 2016. He retired in 2018 after decades of delivering innovative solutions and driving business growth across international markets.
+During his time as President of 3M Canada, Paul led a team of 2,000 employees and oversaw more than $1 billion in sales. His work in Canada extended beyond business leadership, as he actively contributed to the community. He was a member of the Canadian Council of Chief Executives, served on the United Way cabinet in the London region, and participated on the St. Joseph’s Hospital Foundation Fundraising Board. His leadership style combined strategic vision with a deep commitment to corporate and social responsibility.
+Paul also spent over a decade working directly in the electrical industry, collaborating with electric utilities in Canada, the U.S., and globally. As Global President of 3M’s Automotive and Aerospace Division, he worked closely with major auto and aerospace OEMs around the world, bringing innovative technologies to market. His career reflects a blend of technical expertise, global insight, and a dedication to excellence in both business and community engagement.
+Councillor Corrine Rahman, M.A.
+Corrine Rahman was elected as the Councillor for Ward 7 for the 2022-2026 term of Council. Corrine was appointed to London Hydro’s Board of Directors in November 2022.
+Corrine earned an Honours B.A. in Communications Studies and a general B.A. political science from the University of Windsor. Additionally, she holds a master’s degree in Leadership studies from the University of Guelph. Corrine completed a graduate certificate in human resource management and a certificate in negotiations and dispute resolution.
+Corrine is a Professor at Fanshawe College in the Business Management graduate certificate program. She served as a Trustee for Thames Valley District School Board from 2018-2022. She was the West Regional lead for the Justice of the Peace Appointments Advisory Committee from 2016-2019. She is also a past member of the Judicial Appointments Advisory committee for the region.
+Corrine values relationship building, hard work and open communication. She is an advocate for smart development, affordability and budget-conscious decision-making. She champions a diverse and welcoming London.  She resides in Ward 7 with her husband and three children.
+Tim Watson, CFA, ICD.D
+Mr. Watson was appointed to the London Hydro Board in 2023.
+After growing up in London and graduating from Ivey Business School, he spent 25 years in the investment banking sector, completing financing and M&A advisory assignments while based in Toronto, Calgary, San Francisco, and Houston.  He served as Managing Director with RBC Capital Markets, CIBC World Markets, and was head of the Canadian energy infrastructure group at Bank of America Merrill Lynch.  He then served as Executive Vice President and CFO at AltaGa
+[DOC 5] https://www.londonhydro.com/about-us/about-london-hydro/corporate-structure
+s Ltd., a large publicly-traded North American infrastructure company with regulated utilities.  At AltaGas, he oversaw financial reporting, treasury, tax, risk, financial planning, enterprise risk management, insurance, investor relations, corporate development, M&A, and helped lead acquisitions and divestitures.
+Most recently, Mr. Watson served as CFO at a smaller private software company in Toronto, working closely with its founders in raising capital and strategic planning.  He currently lectures part-time at Ivey Business School, teaching M&A and Investment Banking.  He is a certified Chartered Financial Analyst (CFA) and a Certified Director (ICD.D) with the Institute of Corporate Directors. He has also completed the Chartered Investment Management (CIM) certification and various other executive education and ICD programs.  He has over 10 years of experience serving on both for-profit and not-for-profit boards.
+Main navigation
+About Us
+About London Hydro
+Corporate Structure
+Annual Report
+Report on Progress
+Accessibility (AODA)
+London Hydro Land Acknowledgement
+Privacy Policy
+Forced Labour in Supply Chains
+Equity, Diversity, Inclusion, and Belonging
+News
+Regulatory Documents
+Contact Us
+Tenders for Bid
+Sustainability
+London Hydro’s Recognition of Indigenous Businesses
+Footer Logo
+Image
+Powering London.
+Empowering You.
+Company
+Accessibility Plan
+Careers
+Conditions of Service
+About London Hydro
+Customer Care
+Contact Us
+New Customer
+MyLondonHydro
+News
+Green Button Platform
+Quick Links
+IESO
+Ontario Energy Board
+Electrical Safety Authority
+Ministry of Energy
+Natural Resources Canada
+London Hydro, 111 Horton Street, P.O. Box 2700, London, ON N6A 4H6
+Phone:  (519) 661-5503  Fax: (519) 661-5838
+Privacy Policy
+Accessibility Plan
+Change Language
+Accounts & Services
+Billing & Payment
+About My Bill
+Assistance Programs
+Billing Inserts
+Energy Retailers
+Payment Arrangements
+Payment Options
+Paperless Billing & Aeroplan Program
+Aeroplan Rewards
+Price Plan Comparison Tool
+Protect Yourself from Scams
+Submit Your Water Meter Reading
+Start. Stop. Transfer.
+I want to START service.
+Sign Up to Be a MyLondonHydro Customer.
+I want to STOP service.
+I want to TRANSFER my account
+Online Services
+MyLondonHydro
+Delegate Access
+MyWater
+London Hydro App
+Builder's Portal
+Interval Data Centre
+Property Management Portal
+Electricity Rates
+Commercial Electricity Rates
+Residential Electricity Rates
+Electric Vehicle Charging (EVC) Rate
+Generation
+Back Up Generation
+Load Displacement
+Net Metering
+Conservation
+Energy Efficiency
+Carbon Footprint Calculator
+Water
+Water Rates
+Business Customer Hub
+Outages
+Outage Map
+Outage Resources
+Sign Up for Outage Notifications
+Major Event Days
+Projects & Operations
+Contractor Information
+Certificate of Insurance
+EV Connections
+CAM General Information and Process
+Conditions of Service
+Current Projects
+Capacity Map
+About Us
+About London Hydro
+Corporate Structure
+Annual Report
+Report on Progress
+Accessibility (AODA)
+London Hydro Land Acknowledgement
+
+[DOC 5] https://www.londonhydro.com/about-us/about-london-hydro/corporate-structure
+Privacy Policy
+Forced Labour in Supply Chains
+Equity, Diversity, Inclusion, and Belonging
+News
+Regulatory Documents
+Contact Us
+Tenders for Bid
+Sustainability
+London Hydro’s Recognition of Indigenous Businesses
+Safety
+Careers
+[DOC 6] https://www.londonhydro.com/media/3261/download?attachment
+%PDF-1.7
+%����
+1 0 obj
+<>/Metadata 94 0 R/ViewerPreferences 95 0 R>>
+endobj
+2 0 obj
+<>
+endobj
+3 0 obj
+<>/ExtGState<>/XObject<>/ProcSet[/PDF/Text/ImageB/ImageC/ImageI] >>/Annots[ 18 0 R 26 0 R 27 0 R] /MediaBox[ 0 0 612 792] /Contents 4 0 R/Group<>/Tabs/S/StructParents 0>>
+endobj
+4 0 obj
+<>
+stream
+x��]�o�Ɩ�n���|��M��(�b�4I�h�l�ڋ��(�[�.I%u��=�33$%�����]l��E�9�׌��˺�g�Z|���u]g�E>?_�n����}��W��b���f}u���q�<���7߈߾�>?sl�R����g�z����~��X����=?�z��q;??s�6G��s#�	ED�G���77������%�ݛ�3qIp�8�ӟ'B���%n����A��󳿂��~�E�1`�?O�[��?�`��_��.��x���O���uw"�7���K|r����uo�V�~��Gc(�1Q�C�)��a��������Z�Ӽ7�
+ױC���2���e2o�uN�2���R��L�����S��º��^\�3b\���^�bF��	"��㷟�-$p|�OGiy����س�$�_��(��Ǘ�jD�_l�z�W�כM}���"�Co�0�kǁ;������.��7�W�X�+%-L��tR���d	��,q�]����W`0_�}�������s�_oJ�Z$��Oc��:CRZ�{p�'���� a�;��$�c]��G�O����H�A�Aj�^��@w�)�0
+F=�M_�`~b;�_ҕ�|$A�R@�J�[<�0��ͭSx��W�}���ۍ����@�Ǘ�+�#u1���[�(
+m�O����;��ڑ�dk��`�4�Rjg������~Gr�5`���E|
+�U���O����hҕ���.6��X�6V���UG
+����"d��\�$�m(+3Wr�|�6ɣ�Ux��lQ��wTɤ�
+|;��֦"��4^�g��|��+mР�0�x5�֒=��gb���:�� �}���	���Uօ�4��*[��2X�3���.���Vt��j�WfX�2t=�,9)�����2����oٚJTV�ؔK�2�Ȱ6�b^f��r�X<��0/)Ƞ쮨8��>�|��.`O�S/�{��h�eM�!�n�)"m�+[�����w.�D��tl���	]�T4��櫺T׾Qih��8 ev}Yk�Y�}Yu
+DF��r���͗��ŉ	���[I����)��Y>-f�ēϋb��]�r�DTu������\/P�EU�1�
+�:�U�ߗy&U�C٢*���H�E��ﭝ^D�pl�K�g"����4;T
+}�Tu��m�nJ;��Ҏ��n��+\g$����g���m�~������
+�o̈́�!�4��l��'����"r����6� L	lḆc����]�4��;��v��[��I����(��R���
+b�C}��%�i-�$��O�,��z���L��l,����7@&�O2
+\+o��sm��U�X�Ͳ�W��'��R%ꑱ��04�$��s�^����5���qk��wM+f��f*�c�V^���0�(���DQ�l�w �@�>�05X����F�Tq��[�?@����\f�ڱ?� s�$��p��|�P����Y�f��X�t۵C3��{�?����~�6�esz�'�u���v�h�)�U�����.��SϤ	�*�q鱞Nh�"�>�ګjnu���V�`�������LE��oU?�+���
+l괙��{�~s ��{!uu�̷V��|��,)$$CI��ߖ�_��d�g��J
+�K۩Ə��[q3Vz�yM�I���Lw�;���R(�6�%��KC��)��W�y�p��%n�XG�Đ�g��ʥu?��UT�}=��i�˖��43�	��^
+4�{"����?*!�(+�P��×4���ه/����9&9m�PH�Ȣt���+�3�V 0i6��cV :�
+�%E��v�����+�D?c����諽����<�Xdƞ�$c�yL2b��E�AH���yo"n�A<�S0�.e��x�"��P���l3�.�R&s%� ��x��h��͡'D���-�!g��W�hJdmىK�V2@΅,�֚SY�R5�&)�����n�;�4������|�@Qm^,�j4���\���.N�r��9�q���ۚZS.Uq��"�/�0Y�=-�V��/)Y���+�Nj�D���@K:�9*PS�eS�w���(X�2fQ��e�f��G��G-cF�7�eMڠ�GW��ҥ&Y'�R{߱�㝨{��g4������пv����$Z�S����2)��yo���3k
+mɅ�e񛚺؛e�S��`��bJf�;5��T�꺻���T��<��6��f�5<
+Cг
+`y^b'�X��p1XhD2x(��	9�{�$:�Oӱ�)9v�rĔ8*_��zS2��7%�x=є|\�V���/�(�ͤ����ڛ�RS_n�c_2܌u��L:���(ڏ��=�a�S�<��z����^ǹ���	}�E����S	���0��=��}y=�y:"�q�ј/ ����C^����:���U7�.��Hص����Ay�i���=�ڣO�1�E�-o��ɒU&�ȭ�U�;8Y5��JK��s��e�%��&��5c存��N��ok��ܰ_��g��y6SI��q��B�ݩ��i�ޠ��[�l`"�{���*ugm*����iz���2�;�y���{L�������K���,��ܫ�����ʱ��������8YQ�D��BsXT��r�s
+Vb�Ě�!E!�$�
+�om=�!���6��)}����,�X��[mív��SR3B��O+���֘��H]���w�Ct+���Mי�{���
+��m�r�i��@�R|^4�?ޢ�hS�A<��وSs�-�YQB��x��~���	�г�������f�f��h�u���Z<��Or���m��*�(�Lnd�ZSos�fȑ��rl�.�<+�r�^W3�b�!~���T��p���<"��
+QO�S[
+[DOC 6] https://www.londonhydro.com/media/3261/download?attachment
+���'+P9.x�x��C��6��nM������L*׸�8��(+����y?�\�V���`de�������v��P���MvH�v^L�C�1L�$C�2̠.X��i�Z��u݆�<
+h��oPg���g�v���q�f(����Im�'�����i��f��|K#�voQo���������[�>�[Fhk�Wi���8�e_��y��)@��ql?}L1b���
+t����[dǙ�g-��oU|�
+P�9��Ւg����D]U1�]Tu��V�qͳ���!��q�!�C;�;����9'Ğ�~~�#�.!hjR��}�02Ϡi��
+j��)h�������X�:G��hҝ���ZrP��x5%5�F�=�dO����Y�d�[��J�W6�
+7�u�s(M���\��h
+�d��Х�?�>4�F4H���vLX�g�X.�!Nq<�STmU���3+�τ����~����U)|]����W^��5N���Anxj�l�j�'�T�|+O�W�T)�~v�L��/�wm��O�oj��Ƿ���Es��������!X\��P�i�.ng�Bn��0������R�I���;�I<�x6-�]����w�$2s����#X�،���18-*��7x�U������"�?��	�ϗ/����;h����1��ʫ��O[�܆i�-�O�(�J�M��7�M�B� �H�:C�B�B�?�����K���Ol`�O������i�b]�LIr�S�t�Q���Xv���[��ް��;�w�~�E��c\1��R��O�g��x|6��0�[[�أ�'�Tl	�񱛦��T���e�R7����4=֫_��Y�3}ۼ;��}���`v�l�eN_����E�9�����K|}9
+��!�]szP��A����X�G`�6�2>̔;��F)]-q��x��rl�..�)�\�L��w#Չ�\`yЧ2P�+ʭl>����!gļ��b>z��c�7�Oy����[(D����t3�"?���z�Mf�	��>/�|ǱSwȚ]�w >�nα#���|j�{p��T���A���$��'��7&��SKҜr$>�\�0�W�;����b°�q.���0�1���6�G����״g6H����I��SA�V�|�AW�Rhr3����By�IBi���k�\?��%�񥴾������N���7�^:�F�󑿕�JҀ�ꈚ�>dÁ����Gu���Ik�b^�C���	զ��|k���2�Uc���%�v�������BM�Ԅ���-����\�K8�(�@WO��SH���%kP��k��q�mO5�D��0M�8��\�O7r*/��y�H󀅙�p'�=o���?rg�,7�8F.�D�Q�8����yn��>C_=����EŇ�X">�KJ���|ꆒ��I�ѷl��/'N�-2`� �R�Y*�[�qn��J�"q/��qX?t�ſ���N9����K+��E�S�?�^㟋Fs�3k�P]��lq��*���߸Wϻ��zq|8ß�Z
+v�;u��U�q8�b[�!^ V�w��~�F�v�q=n��1`r�~����H(G�{r����5�Am�#Ϳ<�̿L�x�>Ro'���PD��Ho��+x!����l���N�ђ%KC(߬u���iZ]*_#U|GJ_B�
+����e�7���-��H���F�������1�'�rl����p�I��IXY���9��
+�Tv�yg����gR�\����0?�Q0�id�#���Jz��&=�?픭�L���GQ�#cҝ�]��hU�-��ʹ��R��ǝ�lLŬ"���G��#s�Ղ��e^Fm�e(3���s�Vh�Jy�g��c+	�Z����\[a�Li��6���l4TF���թ� U���F�Z%	[Ɩ��EWn(؊tcQ
+��d0J�A�0� ^4F�&���v�B�i�j��r�s
+��������sd��1k�#����HʂN�C�T���<1�Y��>	��ǋ"��B/�Ź���Q.�;�:�o�Y��ݜ��������1~&?eX��`n�
+endstream
+endobj
+5 0 obj
+<>
+endobj
+6 0 obj
+<>
+endobj
+7 0 obj
+<>
+endobj
+8 0 obj
+<>
+endobj
+9 0 obj
+<>
+endobj
+10 0 obj
+<>
+endobj
+11 0 obj
+<>
+endobj
+12 0 obj
+<>
+endobj
+13 0 obj
+<>
+stream
+x�흇_S�������u��j�ZI�(*u�ںv)�Z[iQ��	�0��{��2�II������GDfH�~.|��7���s�=�{�3��ɝ�ɝ�ɝ�p:���:�vˤ����@�HSLJV��͡IdN�䤏l1�b������D�_HP�/�9�a̺=1���
+���^7�GI����H�#���p����Jy��)Q�D4��]�����S�e�@}f��e�W�I8d�?p�g/�X�&A��������Qv�6Ʈ�����VP��(	T�7�8 '�B���h�xoe=��{��S�]�P�1��w�s:����yWR����!h����魕�9��*����1s�ٻ�Qek�M����X^��n�E?�p-�Ww���2
+jb�� q9H}�"\,v��a�A��~�w��O\�u{�Z������[�э�U�`�H2(�Ű��+`۸q��Y���`�H��6��?aV�o�����*�A�{����W���F`V=����<�p���6$W��f8�N&\0�3���7?p� վ��lx�����{���ITm�s�Ȓ�G��*ɻ�J>���y����(�[�<.�'�+�'e5 	!S>���nn��y�ņ7սOgTd��Z�Q��Ei�aՀhE�t��y\��FX4<^x��T����6xxPc���4��N�%�m\P���T�h!�t������#�t�1�-�ĦM�{���]�#{�`����������^y��c�y��$�o{�v��J	>ۦ����*���&:�8q�>��GD���i��㍘{�$�f���Ks'5�8Kp�|��4(�C��)%�J������{�{~������%��E���W�x�|ԇ�.�+1�ۙf%�ԏ��0���_�7��
+[DOC 6] https://www.londonhydro.com/media/3261/download?attachment
+n�'Z4���9����.N�<�(�rmTC6&��)��PT�*���焟�	\;f�^�v�DN���*�a`,�}e�¾P�֔<�|�ET��i��P�^�s��}�O�Z;�s��[[j.��C�1�O�ƕ&��ߌ:5���
+7����v�s��?�#�����W�ls���D��ßV�ofE�X�O'u-���3����K�
+��c��*HQׂ�R�~/˾p�%=�\$ޙY�[0��9#]rFV�aHg"[ֻ�
+JÓʟ����`w/��z�W&�2P�b�<�*T��;&5�Ҹ��s:�K(��	~!
+B��Ԟ�-�ԟG�b����e�F�t
+�_���K���{9u�����̈́�,�T�7E0�h���-��(�'nþ�A
+%Z}�]����rQ��Eq���/Ũe�&��MB�>��
+�߰F�y�y�8�Z���+7?�5"�]g�zQNw~�+��<�Rs�M���\0ˣWn_Z
+-t8\�g�`��4�	5kHV>��������E��mTԷ`��F'^�7f�NU�[��V���e.F����prj�����xt�{B�uA\|reLč�tT��
+Sӫ��t�d�a��jZ���A�9��䂸�_����S�
+m�o���T�WH|�\X��3OR*���t���p^=���)1%��k�q��u�|H�w�| �Lo���2Iɑ��{�'l
+Ed��L>�����#L�e}m]���每K}8�Gخ%]��>��6��ǈ��?��4
+S@�0+��W������tq\^�?���u���Sӣo�g�sV�
+psP��W$�f���8��A��K�n��G�<'�հv(e�E�=�W��ʕĔ��:�ׁI�9�\%aS���	����X��ږ����51k�y�|��ʅp�n�ڤ٘e�:;�L	j�vg'��-h�(�䜽kߥ�������x�oH���`9t�Ʈ�CX�##G�U
+�$3��A9��i�],6�S������	?:�T�����~���q�^e5^�A��+�v�$\gf�"b��Am{Jo��箂+)�����p:�K�{�_�\$��)�*�r�a������*\��<0��n/4�q:�����Y���m�
+����`�>�6}�pV��<�ݫ�u�64Â��h3t
+��cW�[~��-�]���"���L�ru\P�7E
+k�b7�sL\��b'3�5��),z�o���JV���1�\W��0�� �;���V�����Y_�3�ģ��_\,v�㗊�v��M�d墸�|Co�|���\�l��&Q2��A���"�~�PǬ	v�
+���2�oR4��=x�,P�-k����k��d�8Z���fQ���%X�E�ݛu|�u+���Q�,��,���#�x�KQ�9��U;4rUR�)�r	\PHa�0q6��ݸ�I��
+�52%9�ƍk��q�����њ帠l�#�%�����O\͒��;Of�h�v\�+#�Eӊ�4p	�oM	>�tD.�
+���Ҹ��ݸ�,Z��v����
+�٣�\���n\�W�����]����x���9����,N�CFSW�P��1v�dޢ���d�	�'n9��*O'��I-~w@�M&��?�̝�E>
+q�I�+U���rZǂ��>G������R)b.6�D�n�0"��(7Y���d���d�\�Nh��\*�#F&�X<�}�c���qso����&��,��tY-�삫�Y���Ȋ�����$����`���Gr΅���R! `�LUz���[��~/���h@��Ғ�ωVű�
+#�Y�C5z*�2Oވ�:rf����z��-.
+������	�+�	�L8^t둼���GF��Z�^��{�܋?�g��u��^,�"0a�ʿ�F"D��M���5n�u�>�a8�9�|A-S�4����^�]t=�^�c�HK�5�ԽnO�����Ρ�0��R�P+��-��/�ʙ�B���_��f�d_�>uSH,��+E,A�9���?..�:$WE�
+b��8�1�����>��؞�;���:�����������zZ�r���Z����������k���T�K���ص/b�;�n=b��51K�����[�}�V��7��%Ƽ%~���_��ī�6-��D�;"�*��auв%a�1y]���5��0]f�z�!3�9Fǁf[x�qg�{�j�G;��z����J?t!�qX/�r;�=�|��q���P�>!����dFyx
+ɕ�����+�Մ��_l��h�z_Vm]��b���Q��E�ɔ����L挲�Ã�
+��(�`W=|�\#o�?�C��Oi�,y�9�X�γʑ��I(�z���b���z$��������8��ߺ6��)&�ِA�����vZq����\�t%��ɘi�n��3p�g\�H3Ւ!�#�hz��ۏ�Wc$Y�զ_��8-�d��hx%f�=���f��}�6fy�zڡ�L3�):���v����*������ӑV��]	>�)s$[�lfq���h�T�v�Y����uR����ț^�~f�
+�����4
+��ޔ������bC�~�[��ޗV3��֓��j�k	C�8ʖ&�x�
+`�z3-��ign)4"�g���J?��~.�@Wo��W<�ذ�
+�?����1:\���
+���З�Y����T/�Ҫ��7�@Pt�t������[$���t&J~����5X�̓7��t��#7��b^���Y�.����M���`)C�3:���aD1��/�C"�����Y]��\��=pE.��sѕpP�I;N�Y�K0�Hȹp~( �"*k>�T�\4FPрZTwa���̺�m�:F&g'�z���E+���YD��赻;2�)_,#�*}��Ncf�B���=�����)��|��s�eK�����Hw^Y�?A!��>�y�J��gʺf7����7<��
+�Q�pz*�b�����d�C����.9LJ�V���6�_H�)g�b�D6�Tc����=c��BF8MOE�կ\�i�G��5t�W����:>ޒ�ʫ}����H/,b����&l9a��[���5F�ݥll�YD�ī��N����B)�,f?��s���p���E��Φ�-�w�d��c4��_"�w�V\���`
+[DOC 6] https://www.londonhydro.com/media/3261/download?attachment
+q��Q	������OѸZ�3�`'\�ו_n��0�rXpy����bC��ZX���y�U���0��e�� ���Q���@;�"_b�l��&@�� K��b�(���ߪ{Qt\�e�u��W;飲Oߢޒ��h�}��.�"���L�`��$�/���1#��A�׾���>�@W�3qyx5��5=rm�\�#�ky;�ݥU��?񧂿qz�yʧ�H�]�E1��3�X��H�R(�%[C��"]Y'n�Q������)�*'=M�Ֆ�ɔ�>����jݑ^L�hPkG���M�>y�+��c�ܞY���IW6�|��5�F�hŎ1pU=~E�*��/-�`��
+���ǯ��_/���g.#�Z0�UߞV�a��U�q���L���#:٥��٥�yqؓ�U}�3}�μR�F-�%APM�*����1q[(�9���*.�� �*"��7�@ɮ�=!���l���-�	p��U���vA�w�e>W�]���m�`�%f�N�I\E�XJn?a��=%o(�tu���6��c�cV[������*{I�"�T(�l:�|c���'��x
+�cY��3eߥ�o�R9fÞ�*+.�N�u ��=��}�pN�b��EL\�
+�1�Z~Do��3*z�.��
+Wl�~&l%'o;I�S��AD�Km�n;Y%��
+�3��� ! ��x����|�5+����*�LN#g>�������b���}�~b�{b��L]T��E����
+��z�YF��2%�gl4�������)U�}�, �M�Zʿ����_�Y+S:�\�1��f�">,�kK�r��QG���ҟ# ���(��Y�f5F�Ni4O�p�r'wr'wr'wr'wr'w�V�?�6S2
+endstream
+endobj
+14 0 obj
+<>
+endobj
+15 0 obj
+<>
+endobj
+16 0 obj
+<>
+endobj
+17 0 obj
+<>
+endobj
+18 0 obj
+<>/F 4/A<>/StructParent 1>>
+endobj
+19 0 obj
+<>
+endobj
+20 0 obj
+[ 21 0 R] 
+endobj
+21 0 obj
+<>
+endobj
+22 0 obj
+<>
+endobj
+23 0 obj
+<>
+endobj
+24 0 obj
+<>
+endobj
+25 0 obj
+<>
+endobj
+26 0 obj
+<>/F 4/A<>/StructParent 2>>
+endobj
+27 0 obj
+<>/F 4/A<>/StructParent 3>>
+endobj
+28 0 obj
+<>
+endobj
+36 0 obj
+<>
+stream
+x��V�N�0}G�����VH����i���.m�B*���8viVMi�}���̙�g�#$$ ("���� x��L�iG
+�aA(�Q M
+R��I �8-h� S�V�!A!S
+�g���"e մ�I-'��ж�1�����A�d�@	���po��DmZ�ݤY���O
+�䵗'\C�p�1��[�Ґ�5�w��0������T!)c�.�"zܔ��@�QP�� �"��R/@M���ҹ?"c�"j|���P#6fw���ձqU�&���-��$���fP��+2~��-�5;�$62���"5�����}�C񩏷L!����%W����gJ6b��G������퐵F��֘"v*�E�Q�Et�_��I�D�/���~����W뼺�h���+Rr�B>D�کP�U�C��
+�^�b��to�_�c�J�E@}��bX�����(&>����r��((�ZQz�o{;n���Q�wrݵ�"߶eW+ס��dWt�۽1���+�{cD�F��7�k���������J3;{�ט8�Np@���:�u��u�i�9-&��˫և?4+��
+?��D�,2���-�ϧ5	�����,:�����5	�&^n���V����/�E�F��]g�~���?+�=�'�:�b�|`>Oo�{u�>`�{焕�c7�s�O7�{b}*���M*��eSW�/�����܍�3o��8�	!��E�e5���O��U�/OE�����\卬�u6)����3}��y�(f���b>u
+ޠ��fe�d��٪t�כ��i?z� ��������>�-��CXn%����K�D|����'�L��~���	,��#�����
+endstream
+endobj
+51 0 obj
+<>
+endobj
+81 0 obj
+[ 293 0 0 0 0 0 0 0 0 0 0 0 313 0 0 0 637 0 0 0 0 637 0 0 0 0 0 0 0 0 0 0 0 685 0 667 0 615 581 745 0 483 0 0 572 893 771 770 657 0 726 633 612 0 0 1028 0 0 0 0 0 0 0 0 0 599 0 527 0 594 0 0 640 302 0 603 302 0 640 617 0 0 434 0 416 0 579] 
+endobj
+82 0 obj
+<>
+stream
+x��|	xSǵ����J�W��۲d[�%/Xز-/���5�Cl�`cc0�P $v��$��|i��hӐ��uI��,��qڦY�KM��MB�ЬФmB�?�����kh^���}�{��:����>s�̙3B��`�C[��H�o7^��tcn[������)?�v�_������݋��݊
+]=k7�h<P�	����|g�v[���{���k�;?�����)�ݘ�$.L��C�{w�4?��g��~r����ͬ�u�d?��}GO�M�7�|��o\��>���V��
+�ޱ�}�{s�g���H��ټ�wl<p�߳uM�]ץd������֪x ���*K���e������v�����?�p�^�-�=XW
+	�v����^�|��Sm��=�G��,���`U3(�2,A.=���9o������.s1w����F�
+�U�?���c#$
+�Аۭ���q�B���"�՝�q\��Z�g?T=]��%��e-�ndH4��5��Cr��Fk �@�!
+x�[9]*p�B��K�a���23�DQ��(�Qf�!Vb�2Ė!��Ǧ���{����C���C�������G�pF>C�Β�g���3��;}��~��c*��9��)o��ϭ�
+���kwV�����N���z���9�y�`2�"9�"��Er�E2�"K�^%�_�
+[DOC 6] https://www.londonhydro.com/media/3261/download?attachment
+�^~����5�5Fm���B�{���ܳUS�#�gj����	����x�z~Š|ݯ$GEh_Ӿ�}��wϾ������?#�Gm�u�D�����c�]j�=r��{�CG=���A�Z�������}
+�Y1�o&zq���+�:}�r�����+��P�:�@�a�ԩ'�y�����'6y32��&�V�&6�����]��V�Tܱ��;բi�Lg"�oǿMc��U���S�M#7Q�y�n�~�ۺ��vR�\^޷�9?�{6k���SD&��qq��w�i�ݏ�>�?v}?r��~�>\`���Ʌ)�B���}�������;�}xB�;
+�3�s8��b�lo��l�{���cv��t�l��I�m�'W�B@G,?#�I9L� /����,�������0</�G0�$V�,������x�#
+|�P�\��d��*�V�j��-n��f��ųSK��㝋f]w�M��ۘUԟق�|4����fK��nnBX�m������⺺���.X��%RX"�%R����kI�Y�wbno8�{kEx��/�6�a�*��6�x�zM۶,�j��nz{!aUԲ��i����b��tN�c�8����fQi��co(;�N���.��\J��z��\3�x^I֪��N6��]��]��n�ކ?M�uQ:�?\��~ބ�	�%�	�ݧ�A�_C/�#T�"	��;�i�`�A|���l>����8V��B�W����7�3��d����5���Ax~91�\�Vr�_�%�ćgb*�'��j2@>�Q2އ��(r�A|��'���@�d��^B����
+6��������]N��n�
+gV�q+����M��'q�J��[M���.�ς�
+�����Oh��>��������ux��19�T>ގ56�;�w�;���t�R���EXFn���w	I��N��;�5���	��v�?P'l��܊�^�a���G� I����F��?��
+�H�~
+½�l���&�`�E�L٢�<�/1/����C���-`���/���_��,h�� ����3)�8݈`��1�A�0��@�
+~�"����H�b�cU��b�8����I��'�}�v2 ?�:�<�{�����j�5r>��@O�bD���q�V��<��b�*n3��	�߯g��h��G§���ӭ8b4������W��zz�st�^�<����7i�G+:
+��)Y͕�)�g<;!�0Հ��>�X�a�~r;
+t�"�_?En�Y��±���	Aa���=:�>Ͼ/V8Z���m�q:)�vϧ`��9�_�
+�����Jξ��b���#9�^�f�����2{eEE�45-�.Xs��:�55ZZ�?7���7߿�7u�3�Ϯ������NWn\~��+6lXA�Ry�����c5�����t���\���(q�8�|�|��۸�8�Gq_�`�|�d�l)�K��|��5eI��ܔb�4����@ ��I���ٜ,I�=����e�Ɣ��@0[�e��S(�����n��R����Z�UU�q�h;�����WEPHJ���V�Ա����٢��N�<\sy��-XD��4.��64,|��{?Z��Q_U��f�IY��`��E߭�s��>kqچ�ꗬ$����9���lRg�Ouy3s���(�����X�Z����\���(� �[{B?rB��Ͻ��-Zɂ'�D��Hr�$:fs-�R]����B/��dxG9Q����w�+�\�qѸ�o=���Lb�0�`�$J���-�a>��-��
+Ǚ,&�)fj0������T�b��XU�^��z���ȈFH+����$@�p�a$���3��U��JN8 ��U��3ȇ�w�f�m�%�
+�.9�KR�S�Lw�d\�3�S/����wO2�q�mGƾ1�1>R�?�L6���d"fU��fb6;�w鈎�呼<�8�d�g
+좥2??b�ȑU��⺊�<�k�f"��A
+[[�80j�`�B@��4��$�t.�R��X���R�KZ�93�#'׻����K��>e����g��ST� #{��U��2ɷѪ]M���n)s(��k���h�������)�%Y>9]��Qbs��������Cy� mB�������:YGс�j�F��o��T��i��-U�Ւ��سe����G��ѹ��+���I�,�����އ���X�ʋ�L�(G���8�8ŏc�J}��.0�Fb1c�Q����I��nUg11	21�ot?��>�����?����eGA���	�QjB�9�7��U�y�F[K�⌵�:}�u��G�J�c�i��Z6
+&.z&.�#c?����4a�]�$���E̛�}f�T�if'��A�9��ȕsI1���u�XϜVg~:�S��drb���J��NH˅�b噜�
+�W+OP�TV�;��G?�*ۻ�xʷ�}ƴ:�{�Y�TNнK��t��%|����ݮK�����Gv)g��R"i�'+�2�WeB��"�q%�q����L=�V\2ǙMs1�C��Wg���:�I)�FK�Wn��1��E��so��2���˄�%�r�\�&�q4&=D9:�v����EOx'��1N%����-�����vz9޵�5i��ŞL�y����� Pl����!I��[��2�q����fc�����F�$�R�q�����WIӍ2��7�s%�$���DU1���8Pu�M4c��BA
+1�~�u���)S�����1^���^��z���A���T'�I���)�)��a\�`�w�q��VliU��U3ɰ�U�wVB����2e�yB��񅐀n��O�Ә�'�>o瑹�0���k�U�r��zB�p�z���������
+(#2�C���WQ�*x\�d�ǐ�s��!�^ϾrM�B�N%3U�Bv� +X�'Gx��P=�T�m���\�ѯ�]�j��6�a\%.s4l�_g�ű�3��XJ�mʁџ*?$�F~K��)g�,?�#n	�*�,�#|�r��G���\)��&F���,IyY�$��b�vn�H�xj��9�䂵h��9ԍ�5�d�zL'Ty8L�h&�Hٗkr��j%�V�I?��4�k��+��wά�)+����9kwaq}O�����M:�Zr�Ү������%��#������U�3�c%�;'�r

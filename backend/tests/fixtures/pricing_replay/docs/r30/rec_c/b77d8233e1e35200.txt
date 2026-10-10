@@ -1,0 +1,656 @@
+[DOC 0] https://duquesnelight.com/service-reliability/service-map/rates/residential-rates
+Residential Rates
+Distribution Charges
+All residential customers — regardless of whether you receive your electric supply from DLC or from an Electric Generation Supplier (EGS) — are responsible for paying Distribution Charges to DLC which consist of:
+Customer Charge
+: a monthly basic service charge that includes costs for meter reading, your billing, service equipment and other expenses. DLC incurs these expenses even in months when you may not use electricity.
+Energy Charge
+: a per kilowatt-hour (kWh) charge for delivering electricity over our distribution system to your home from the transmission system.
+Supply and Transmission Charges
+The
+Transmission Charge
+is the basic service charge for the cost of transporting high-voltage electricity from a supply facility to the distribution lines of an electric distribution company.
+The
+Supply Charge
+is the basic service charge for the generation of electricity to you. If you elect to purchase your electric supply from DLC, you will be charged according to the residential rates as listed in the table below. This is also known as the default service rate or Price to Compare (PTC). The PTC consists of both Default Service Supply and Transmission Service Charges rates and is helpful when comparing offers from EGSs. All power generation costs are passed through directly to customers from these energy suppliers, meaning that DLC does not profit from electric generation.
+To learn where you can find these charges on your monthly bill,
+view a sample bill
+.
+Current and Upcoming Default Service Supply Rate ('Price to Compare')
+Duquesne Light Company Class Average Price to Compare by Rate Class in Cents Per Kilowatt Hour
+Scheduled rate changes can occur up to four times a year. The PTC may be higher or lower in future adjustments. Customers can choose their electric generation supplier or remain with the default rate.
+Learn how to participate in Electric Choice
+.
+Rate
+Name
+Description
+PTC
+ACTUAL
+06/01/2026
+ptc
+ESTIMATE
+12/01/2026
+RS
+Residential Service
+Duquesne Light's standard rate for most residential customers. Available to residential or combined residential and farm customers using the Company's standard low voltage service for lighting, appliance operation, and general household purposes and for commercial or professional activity where associated consumption represents less than 25% of the total monthly usage at the premise.
+14.14
+14.56
+RH
+Residential Service Heating
+Available to residential or combined residential and farm customers using the Company's standard low voltage service for lighting, appliance operation, and general household purposes and for commercial or professional activity where associated consumption represents less than 25% of the total monthly usage at the premise, and as the sole primary method of space heating except that the space heating system may be supplemented with renewable energy sources such as solar, wind, wood or hydro.
+12.70
+13.12
+RA
+Residential Service Add On Heat Pump
+Av
+[DOC 0] https://duquesnelight.com/service-reliability/service-map/rates/residential-rates
+ailable to residential or combined residential and farm customers using the Company's standard low voltage service for lighting, appliance operation, and general household purposes and for commercial or professional activity where associated consumption represents less than 25% of the total monthly usage at the premise, and an add-on heat pump for space heating.
+Effective January 1, 2025, Rate RA will no longer be available to new customers or applicants or to new installations for existing customers.
+13.48
+13.89
+If you elect to purchase your electric supply from DLC, you will be charged according to the residential rates (RS, RH, and RA) as found in Rider No. 8 – Default Service Supply (“DSS”) of the Company’s
+Retail Tariff
+. Additionally, if you select DLC to supply your electricity, we will provide and charge for transmission service. The Transmission Service Charges (“TSC”) can be found in Appendix A of the Retail Tariff.
+In addition to the rates above, DLC also offers a Time-of-Use (TOU) Supply Rate to eligible residential customers, which provide an opportunity to save on electricity supply costs during off-peak times, such as overnight and weekends.
+Learn more about DLC's TOU Supply Rate
+.
+If you elect to purchase your electric supply from an EGS, you must purchase both your electric supply and transmission service from your selected EGS and are responsible for any other charges from the EGS. Any month in which your supplier becomes unavailable or during which you have not chosen a supplier, DLC will supply electricity as per the provisions of Rider No. 8 – Default Service Supply and Appendix A – Transmission Service Charges.
+You may change suppliers or return to Duquesne Light for electric supply as defined in Rule No. 45 of the Company’s Retail Tariff.
+To learn more about DLC's Residential Rates, please
+visit the Company’s Retail Tariff
+.
+For more information about the Pennsylvania Electric Choice Program, visit
+www.papowerswitch.com
+.
+Service & Reliability
+Start, Stop or Transfer Service
+Start New Service
+Start New Business Service
+Transfer Service
+Stop Service
+Electric Installation Rules
+Reliability Projects
+General Project Information
+Service Map
+Continuance of Service
+Customer Choice/Shop For Electricity
+Calculate the Savings
+Customer Choice FAQ
+Selecting DLC
+Information For Suppliers
+Rates
+Business Rates
+Residential Rates
+We Don’t Just Power Your Lights,
+We Power The Moments You Call Life.
+One More Reason We’re Larger Than Light.
+[DOC 1] https://www.duquesnelight.com/service-reliability/service-map/rates/residential-rates
+Residential Rates
+Distribution Charges
+All residential customers — regardless of whether you receive your electric supply from DLC or from an Electric Generation Supplier (EGS) — are responsible for paying Distribution Charges to DLC which consist of:
+Customer Charge
+: a monthly basic service charge that includes costs for meter reading, your billing, service equipment and other expenses. DLC incurs these expenses even in months when you may not use electricity.
+Energy Charge
+: a per kilowatt-hour (kWh) charge for delivering electricity over our distribution system to your home from the transmission system.
+Supply and Transmission Charges
+The
+Transmission Charge
+is the basic service charge for the cost of transporting high-voltage electricity from a supply facility to the distribution lines of an electric distribution company.
+The
+Supply Charge
+is the basic service charge for the generation of electricity to you. If you elect to purchase your electric supply from DLC, you will be charged according to the residential rates as listed in the table below. This is also known as the default service rate or Price to Compare (PTC). The PTC consists of both Default Service Supply and Transmission Service Charges rates and is helpful when comparing offers from EGSs. All power generation costs are passed through directly to customers from these energy suppliers, meaning that DLC does not profit from electric generation.
+To learn where you can find these charges on your monthly bill,
+view a sample bill
+.
+Current and Upcoming Default Service Supply Rate ('Price to Compare')
+Duquesne Light Company Class Average Price to Compare by Rate Class in Cents Per Kilowatt Hour
+Scheduled rate changes can occur up to four times a year. The PTC may be higher or lower in future adjustments. Customers can choose their electric generation supplier or remain with the default rate.
+Learn how to participate in Electric Choice
+.
+Rate
+Name
+Description
+PTC
+ACTUAL
+06/01/2026
+ptc
+ESTIMATE
+12/01/2026
+RS
+Residential Service
+Duquesne Light's standard rate for most residential customers. Available to residential or combined residential and farm customers using the Company's standard low voltage service for lighting, appliance operation, and general household purposes and for commercial or professional activity where associated consumption represents less than 25% of the total monthly usage at the premise.
+14.14
+14.56
+RH
+Residential Service Heating
+Available to residential or combined residential and farm customers using the Company's standard low voltage service for lighting, appliance operation, and general household purposes and for commercial or professional activity where associated consumption represents less than 25% of the total monthly usage at the premise, and as the sole primary method of space heating except that the space heating system may be supplemented with renewable energy sources such as solar, wind, wood or hydro.
+12.70
+13.12
+RA
+Residential Service Add On Heat Pump
+Av
+[DOC 1] https://www.duquesnelight.com/service-reliability/service-map/rates/residential-rates
+ailable to residential or combined residential and farm customers using the Company's standard low voltage service for lighting, appliance operation, and general household purposes and for commercial or professional activity where associated consumption represents less than 25% of the total monthly usage at the premise, and an add-on heat pump for space heating.
+Effective January 1, 2025, Rate RA will no longer be available to new customers or applicants or to new installations for existing customers.
+13.48
+13.89
+If you elect to purchase your electric supply from DLC, you will be charged according to the residential rates (RS, RH, and RA) as found in Rider No. 8 – Default Service Supply (“DSS”) of the Company’s
+Retail Tariff
+. Additionally, if you select DLC to supply your electricity, we will provide and charge for transmission service. The Transmission Service Charges (“TSC”) can be found in Appendix A of the Retail Tariff.
+In addition to the rates above, DLC also offers a Time-of-Use (TOU) Supply Rate to eligible residential customers, which provide an opportunity to save on electricity supply costs during off-peak times, such as overnight and weekends.
+Learn more about DLC's TOU Supply Rate
+.
+If you elect to purchase your electric supply from an EGS, you must purchase both your electric supply and transmission service from your selected EGS and are responsible for any other charges from the EGS. Any month in which your supplier becomes unavailable or during which you have not chosen a supplier, DLC will supply electricity as per the provisions of Rider No. 8 – Default Service Supply and Appendix A – Transmission Service Charges.
+You may change suppliers or return to Duquesne Light for electric supply as defined in Rule No. 45 of the Company’s Retail Tariff.
+To learn more about DLC's Residential Rates, please
+visit the Company’s Retail Tariff
+.
+For more information about the Pennsylvania Electric Choice Program, visit
+www.papowerswitch.com
+.
+Service & Reliability
+Start, Stop or Transfer Service
+Start New Service
+Start New Business Service
+Transfer Service
+Stop Service
+Electric Installation Rules
+Reliability Projects
+General Project Information
+Service Map
+Continuance of Service
+Customer Choice/Shop For Electricity
+Calculate the Savings
+Customer Choice FAQ
+Selecting DLC
+Information For Suppliers
+Rates
+Business Rates
+Residential Rates
+We Don’t Just Power Your Lights,
+We Power The Moments You Call Life.
+One More Reason We’re Larger Than Light.
+[DOC 2] https://duquesnelight.com/service-reliability/service-map/rates
+Rates
+Duquesne Light Company (DLC) rates for customers are determined by filings made at the Pennsylvania Public Utility Commission. The entire filing is called a tariff. The tariff contains rules and regulations as well as the schedule of rates and riders for electric service as approved by the Pennsylvania Public Utility Commission (PUC).
+Four Parts to Your Bill
+A customer's bill is made up of four parts: Customer Charge, Distribution Charge, Supply/Generation Charge and Transmission Charge.
+Customer Charge -
+A monthly basic service charge that includes costs for meter reading, customer billing, service equipment, and other expenses. We have these expenses even in months that you may not use electricity.
+Distribution Charges -
+Basic service charges for delivering electricity over our distribution system to consumers home or business from the transmission system.
+Supply/Generation Charges -
+Basic service charges for the supply of electricity to retail customers.
+Transmission Charges -
+Basic service charges for the cost of transporting high-voltage electricity from a supply facility to the distribution lines of an electric distribution company.
+Understanding Your Bill
+If you would like more help in understanding your bill, see our
+residential sample bills
+or a
+commercial/industrial bill sample
+.
+Schedule of Rates
+The schedule of rates or tariff is available for download in Adobe Acrobat Reader PDF format. This tariff has been approved by the PUC and currently is in effect. The tariff contains detailed information about the different rates available to residential customers (Residential Service (RS), Residential Service Heating (RH) and Residential Service Add-on Heat Pump (RA)). DLC has certified to the PUC that this is an accurate electronic representation of the tariffs which are officially filed at the Commission. Users of electronic tariffs should note, however, that such tariffs are not the official documents, and users assume responsibility for reliance upon tariffs in electronic format.
+Tariff Resources
+See the schedule of rates and more.
+View All
+Service & Reliability
+Start, Stop or Transfer Service
+Start New Service
+Start New Business Service
+Transfer Service
+Stop Service
+Electric Installation Rules
+Reliability Projects
+General Project Information
+Service Map
+Continuance of Service
+Customer Choice/Shop For Electricity
+Calculate the Savings
+Customer Choice FAQ
+Selecting DLC
+Information For Suppliers
+Rates
+Business Rates
+Residential Rates
+We Don’t Just Power Your Lights,
+We Power The Moments You Call Life.
+One More Reason We’re Larger Than Light.
+[DOC 3] https://duquesnelight.com/energy-money-savings/home-energy-center/shift-and-save/time-of-use-supply-rate
+Time-of-Use Supply Rate - Default Service
+TAKE CHARGE OF YOUR ELECTRIC BILL WITH A
+TIME-OF-USE SUPPLY RATE
+EXPLORE THE TIME-OF-USE SUPPLY RATE
+The Time-of-Use Supply Rate is an electricity supply rate offered by DLC through its default service plan for eligible residential customers. By enrolling in the rate and shifting your electricity consumption to off-peak and super off-peak times, such as overnight or weekends, you may be able to save.
+Time-of-Use Supply Rate Program
+OPPORTUNITY TO SAVE
+If you can shift your electricity use for appliances and devices, such as dishwashers, washing machines, and EV charging, to off-peak and super off-peak times, you’ll have the greatest potential to save.
+Time-of-Use Supply Rate Program
+TIME-BASED RATE
+Your electricity supply rate will change throughout the day and will be lowest during off-peak and super off-peak times, such as overnight and all day on weekends.
+TIME-OF-USE SUPPLY RATE SCHEDULE
+Non-Holiday Weekdays
+Weekends and Holidays
+Peak Period
+3 p.m. to 9 p.m.
+None
+Off-Peak Period
+9 p.m. to 11 p.m.
+6 a.m. to 3 p.m.
+6 a.m. to 11 p.m.
+Super Off-Peak Period
+11 p.m. to 6 a.m.
+11 p.m. to 6 a.m.
+Holidays include New Year’s Day, Memorial Day, Independence Day, Labor Day, Thanksgiving Day, and Christmas Day.
+CURRENT PRICE TO COMPARE
+Shown here is the Price to Compare (PTC) as measured in cents/kWh for each of the time-of-use periods, as well as DLC's standard default service rate for comparison. While your enrollment in the Time-of-Use Supply Rate will not impact your transmission fee, the PTC includes both supply charges and the transmission fee and can be used to compare rates with offers from electric generation suppliers. The PTC is typically adjusted at least twice per year on June 1 and December 1, but the off-peak and super off-peak rates will always be less than DLC’s standard default service rate, while the peak rate will always be higher.
+Residential Service Rates
+Residential Service Rate
+DLC’s Standard Default Service Price to Compare
+DLC’s Time-of-Use Price to Compare
+Peak
+Off-Peak
+Super Off-Peak
+Residential Service (RS)
+14.14¢
+36.15¢
+8.67¢
+7.13¢
+Residential Service Heating (RH)
+12.70¢
+34.71¢
+7.23¢
+5.69¢
+Residential Service Add-on Heat Pump (RA)
+13.48¢
+35.49¢
+8.00¢
+6.47¢
+REVIEW YOUR USAGE
+Log into your "My Electric Use" portal to review your hourly usage and find tools and resources to help you estimate how the Time-of-Use Supply Rate may impact your bill.
+Get Started
+ENROLL IN THE RATE
+If you think the Time-of-Use Supply Rate is a good fit for you, apply today. If eligible, your enrollment will take effect immediately.
+Apply for the Rate
+FREQUENTLY ASKED QUESTIONS
+Are all residential customers eligible to enroll?
+No, customers participating in budget billing, virtual meter aggregation, the Customer Assistance Program (CAP), the Peak Savers Rewards Program (Rider No. 23), or the Smart Charging Rewards Program (Rider No. 7) are not eligible to enroll. Additionally, customers must demonstrate a timely
+[DOC 3] https://duquesnelight.com/energy-money-savings/home-energy-center/shift-and-save/time-of-use-supply-rate
+ payment history to enroll.
+When will my enrollment take effect?
+After submitting your application, your enrollment will take effect immediately if you're eligible to enroll. If you're not eligible, the enrollment form will have a message indicating why.
+How do I know if the rate is right for me?
+If you're able to shift your electricity use, such as large appliance use and electric vehicle charging, away from peak time to off-peak and super off-peak times, including nights and weekends, this rate may be right for you.
+Time-of-Use Rates may not be appropriate for customers that cannot change the time of day that they rely on electricity, such as those with medical devices that require electricity or customers who are home during peak hours. If you are a low-income customer, other programs and assistance may be available to help you to afford your bill.
+Visit DLC's Payment Assistance webpage
+or contact us at  1-888-393-7600 for more information or to apply for assistance.
+Can I be enrolled in an electric generation supplier (EGS) rate and DLC's Time-of-Use Supply Rate?
+No, because they are both electricity supply rates. We encourage you to compare DLC's Time-of-Use Supply Rate with DLC’s standard default service supply rate and Electric Generation Supplier (EGS) offerings using
+PA Power Switch
+, the official electric shopping website of the Pennsylvania Public Utility Commission.
+Learn more about shopping for your electricity supply here
+.
+How can I cancel my enrollment in the rate?
+After you enroll, you may cancel your enrollment in the Time-of-Use Supply rate anytime and instead select DLC’s standard default service supply rate or an electric generation supplier rate. Once you cancel your enrollment, you may not re-enroll in the rate for at least one year.
+To cancel, email
+EnergyShift@duqlight.com
+with your name, service address, and account number.
+How does the rate work with net metering?
+Net metering customers are eligible to participate in the Time-of-Use Supply Rate. Here's how it works:
+First, your solar generation is used to offset your      usage in the current billing period on a kilowatt-hour-to-kilowatt-hour      basis, meaning a kilowatt-hour generated in the peak time period may be      used to offset a kilowatt-hour used in the off-peak or super off-peak time      period and vice versa.
+If you have excess solar generation in the current      billing period (meaning you produced more electricity than you used), the      excess will be banked and used to offset your usage in future billing      periods.
+The kilowatt-hours in your bank are applied      chronologically, meaning the oldest kilowatt-hours in your bank will be      used to offset your usage first regardless of which time-of-use period      (peak, off-peak, super off-peak) they were generated during.
+On an annual basis, DLC will compensate you for any      kilowatt-hours remaining in your bank on May 31. For net metering      customers enrolled in the Time-of-Use Supply Rat
+[DOC 3] https://duquesnelight.com/energy-money-savings/home-energy-center/shift-and-save/time-of-use-supply-rate
+e, this payment will be      calculated based on when the kilowatt-hours were generated using the peak,      off-peak, and super off-peak supply rates.
+How will the rate appear on my electric bill?
+The Time-of-Use Supply Rate will only appy to your supply charges and does not affect any other charges you may see on your monthly electric bill, such as distribution charges. These supply charges will be listed on the
+final page of your electric bill
+, under “Supply Charges,” and will be broken out by peak, off-peak, and super off-peak. For net metering customers, supply charges will only appear if your generation doesn’t fully offset your usage.
+Are there any other rate options for electric vehicle drivers?
+Yes, DLC is also offering an EV Time-of-Use Distribution Rate for up to 1,500 residential customers that own or lease an electric vehicle.
+Learn more about the Time-of-Use Distribution Rate.
+ADDITIONAL RESOURCES
+Payment Assistance
+My Electric Use
+Shopping for Electricity
+Residential Rates
+EV Time-of-Use Distribution Rate
+EV Guide
+Business Time-of-Use Supply Rate
+QUESTIONS ABOUT THE RATE?
+If you have any questions or feedback about the Time-of-Use Supply Rate, reach out to our support team for assistance today.
+Your question has been successfully submitted.
+Question submission failed, please try again.
+Your Name
+Email Address*
+Additional comments or questions
+Submit
+[DOC 4] https://duquesnelight.com/service-reliability/service-map/rates/business-rates
+Business Rates
+Distribution Charges
+All business customers — regardless of whether you receive your electric supply from DLC or from an Electric Generation Supplier (EGS) — are responsible for paying Distribution Charges to DLC. Distribution Charges can consist of a Customer Charge, an Energy Charge and a Demand Charge, depending on which rate schedule you take service under.
+To learn more, please visit the Company’s
+Retail Tariff
+.
+Supply and Transmission Charges: Default Service
+DLC's Tariff Supplement, called Rider No. 8 - Default Service Supply (DSS) provides small and medium commercial and industrial customers with default service supply rates that are determined using Request for Proposals (RFP).  For purposes of Rider No. 8, small customers are those with a monthly metered demand that is less than 25 kW and medium customers are those with a monthly metered demand between 25 kW and 200 kW, on average, in a 12-month period.  Note: if you select DLC to supply your electricity, the Company will provide and charge for transmission service.  The Transmission Service Charges (TSC) can be found in Appendix A of the Retail Tariff.
+More information about DLC's Rider No. 8 or Appendix A,
+is available in the company's Retail Tariff
+.
+If you elect to purchase your electric supply from an EGS, you must purchase both electric supply and transmission service from your selected EGS and you are responsible for any other charges from the EGS.  Any month in which your supplier becomes unavailable or during which you have not chosen a supplier, DLC will supply electricity as per the provisions of Rider No. 8 – Default Service Supply and Appendix A – Transmission Service Charges.
+You can switch to an Electric Generation Supplier (EGS) at any time.  At the bottom of this page you can find price to compare information, which is helpful when comparing offers from EGSs.  To see a list of licensed EGSs in Pennsylvania, please visit
+PAPowerSwitch.com
+.
+Supply and Transmission Charges: Hourly Price Service
+DLC's Tariff Supplement, called Rider No. 9 – Day-Ahead Hourly Price Service (HPS) provides medium (≥ 200 kW) and large commercial and industrial customers with the ability to purchase their electric supply requirements on a day-ahead, hourly basis.  Electric supply charges for Rider No. 9 customers are more closely tied to hourly wholesale market prices. DLC does not set these wholesale market prices. This means that your electric supply charges could experience more fluctuations, which could increase or decrease the amount of their bills. As an HPS customer, you are placed on a monthly billing cycle and are not eligible for summary billing.  Rider No. 9 is also available for the supply of electricity to generating stations that are not otherwise self-supplying and where the generating station is not otherwise receiving service from an EGS.  If you select DLC to supply your electricity, the Company will provide and charge for transmission service.  The Transmission
+[DOC 4] https://duquesnelight.com/service-reliability/service-map/rates/business-rates
+ Service Charges (TSC) can be found in Appendix A of the Retail Tariff.
+Find out more about DLC's Rider No. 9,
+by visiting the company's Retail Tariff
+.
+If you elect to purchase your electric supply from an EGS, you must purchase both electric supply and transmission from the selected EGS and are responsible for any other charges from the EGS.  Any month in which the supplier becomes unavailable or during which you have not chosen a supplier, DLC will supply electricity as per the provisions of Rider No. 9 – Day-Ahead Hourly Price Service and Appendix A – Transmission Service Charges.
+Customers can switch to an EGS at any time. To see a list of licensed EGSs in Pennsylvania, please visit
+PAPowerSwitch.com
+.
+Current and Upcoming Default Service Supply Rate ('Price to Compare'):
+Scheduled rate changes can occur up to four times a year. The PTC may be higher or lower in future adjustments. Customers can choose their electric generation supplier or remain with the default rate.
+Learn how to participate in Electric Choice
+.
+Community Development New Load:
+To learn more about this Program, click
+here
+.
+Business Time-of-Use Rate:
+DLC also offers a Time-of-Use (TOU) Supply Rate to eligible small-to-medium commercial and industrial customers, which provide an opportunity to save on electricity supply costs during off-peak times, such as overnight and weekends.
+Learn more about DLC's TOU Supply Rate
+for business customers.
+Duquesne Light Company
+Class Average Price to Compare by Rate Class
+in Cents Per Kilowatt Hour
+Rate
+Name
+Description
+ptc
+ACTUAL
+09/01/2026
+ptc
+ESTIMATE
+12/01/2026
+GS
+General Service Small
+Available for the standard electric service taken on a small general service, non-demand metered, customer's premises for which a residential rate is not available.
+10.88
+11.18
+GM < 25 kW
+General Service Medium
+Available for the standard electric service taken on a medium general service, demand metered - less than 25 kilowatts, customer's premises for which a residential rate is not available.
+11.57
+11.87
+GM > 25 < 200 kW
+General Service Medium
+Available for the standard electric service taken on a medium general service, demand metered - greater than or equal to 25 and less than 200 kilowatts, customer's premises for which a residential rate is not available.
+11.50
+12.46
+GM > 200 kW
+General Service Medium
+Available for the standard electric service taken on a medium general service, demand metered - greater than or equal to 200 kilowatts, customer's premises for which a residential rate is not available.
+N/A
+N/A
+GMH < 25 kW
+General Service Medium Heating
+Available for all standard electric service taken on a medium general service, demand metered - less than 25 kilowatts, customer's premises for which a residential rate is not available, where the Company's service is the sole method of space heating, and where such calculated heat loss converted into kilowatt-hour consumption during the heating season is determined by the Company to be at least 25% o
+[DOC 4] https://duquesnelight.com/service-reliability/service-map/rates/business-rates
+f the customer's entire electric energy requirements during the heating season.
+11.13
+11.42
+GMH > 25 < 200 kW
+General Service Medium Heating
+Available for all standard electric service taken on a medium general service, demand metered - greater than or equal to 25 and less than 200 kilowatts, customer's premises for which a residential rate is not available, where the Company's service is the sole method of space heating, and where such calculated heat loss converted into kilowatt-hour consumption during the heating season is determined by the Company to be at least 25% of the customer's entire electric energy requirements during the heating season.
+11.11
+12.07
+GMH > 200 kW
+General Service Medium
+Available for all standard electric service taken on a medium general service, demand metered - greater than or equal to 200 kilowatts, customer's premises for which a residential rate is not available, where the Company's service is the sole method of space heating,, and where such calculated heat loss converted into kilowatt-hour consumption during the heating season is determined by the Company to be at least 25% of the customer's entire electric energy requirements during the heating season.
+N/A
+N/A
+GL
+General Service Large
+Available for all the standard electric service taken on a customer's premises where the demand is not less than 300 kilowatts.
+N/A
+N/A
+GLH
+General Service Large Heating
+Available for all standard electric service, where the demand is not less than 300 kilowatts, taken on a customer's premises for which a residential rate is not available, where the Company's service is the sole method of space heating,, and where such calculated heat loss converted into kilowatt-hour consumption during the heating season is determined by the Company to be at least 25% of the customer's entire electric energy requirements during the heating season.
+N/A
+N/A
+L
+Large Power Service
+Available for all the standard electric service taken on a customer's premises where the demand is not less than 5,000 kilowatts.
+N/A
+N/A
+HVPS
+High Voltage Power Service
+Available to customers with Contract On-Peak Demands greater than or equal to 5,000 kilowatts (≥ 5,000 kW) where service is supplied at 69,000 volts or higher.
+N/A
+N/A
+UMS
+Unmetered Service
+Available to customers using unmetered standard service at each point of connection for customer-owned and maintained equipment such as traffic signals, communication devices and billboard lighting.
+10.78
+11.08
+AL
+Architectural Lighting Service
+Available for separately metered circuitry connected solely to outdoor architectural lighting equipment, with demand of 5 kilowatts or greater, to be operated during non-peak periods.
+0.87
+1.07
+SE
+Street Lighting Energy
+Available for the entire electric energy requirements of municipal street lighting systems where the municipality has not less than 15,000 street lamp installations and provides for the ownership, operation, and maintenance of its own street lamp installations and 
+[DOC 4] https://duquesnelight.com/service-reliability/service-map/rates/business-rates
+takes its entire energy requirements for street lighting under this rate.
+6.63
+6.84
+SM
+Street Lighting Municipal
+Available for mercury vapor, high pressure sodium, and LED lighting of public streets, highways, bridges, parks and similar public spaces, for normal dusk to dawn operation of approximately 4,200 hours per year.
+7.27
+7.48
+SH
+Street Lighting Highway
+Available for high intensity discharge lighting of state highways for normal dusk to dawn operation of approximately 4,200 hours per year where the highway lighting system acceptable to Duquesne Light Company is installed by the State and ownership of the entire highway lighting system has been transferred to the Company for a nominal consideration.
+8.16
+8.37
+PAL
+Private Area Lighting
+Available for high pressure sodium, LED lighting, and flood lighting of residential, commercial and industrial private property installations including parking lots, for normal dusk to dawn operation of approximately 4,200 hours per year.
+6.92
+7.13
+For more information about the Pennsylvania Electric Choice Program, visit
+www.papowerswitch.com
+.
+To learn more about selecting DLC as your supplier, please
+click here
+.
+Service & Reliability
+Start, Stop or Transfer Service
+Start New Service
+Start New Business Service
+Transfer Service
+Stop Service
+Electric Installation Rules
+Reliability Projects
+General Project Information
+Service Map
+Continuance of Service
+Customer Choice/Shop For Electricity
+Calculate the Savings
+Customer Choice FAQ
+Selecting DLC
+Information For Suppliers
+Rates
+Business Rates
+Residential Rates
+We Don’t Just Power Your Lights,
+We Power The Moments You Call Life.
+One More Reason We’re Larger Than Light.
+[DOC 5] https://duquesnelight.com/company/about/corporate-responsibility
+Corporate Responsibility
+Our Commitment to Corporate Responsibility
+Duquesne Light Company (DLC) is playing a vital role in helping the Pittsburgh region transition to a clean energy future that is greener and healthier for all. As we join our trusted partners in setting the stage for future generations to thrive, we're focused on delivering exceptional results today while boldly harnessing opportunities for tomorrow.
+DLC is proud to be a
+Platinum Sustainable PGH Workplace
+. This designation recognizes businesses, nonprofits and organizations that have demonstrated a commitment to socially just and environmentally sustainable operations.
+We welcome you to explore our steadfast commitment to corporate responsibility and the efforts we're making to enhance our environmental, social and governance (ESG) strategy.
+Download 2025 Report
+Corporate Responsibility Reporting
+Click the button below to access our library of Corporate Responsibility Reporting.
+Learn More
+VALUES IN ACTION: FEATURED STORIES
+DLC’s Free Heat Pump Training Is Building a Clean Energy Workforce
+Duquesne Light Company Aids Customers Through $150,000 Investment With Local Nonprofit Partners
+Protecting our Roots: How DLC is Promoting a Healthier, More Resilient Forest
+“Ensuring a clean energy future for all would not be possible without a solid understanding of and commitment to corporate responsibility. We are making significant strides in ensuring that everything we do has a positive impact on our employees, customers, communities and the environment. Our work is nowhere near finished, but I’m extremely optimistic about the progress we’ve made and the steps we’re taking to achieve our full potential.”
+— Kevin Walker, President and CEO, Duquesne Light Holdings
+Environmental
+CLEAN ENERGY
+Duquesne Light Company is here to power resilient, sustainable Pittsburgh communities and support clean energy growth in ways that benefit all customers. By supporting innovative energy solutions, DLC can help our communities transition to a clean energy future.
+Learn More
+ELECTRIC VEHICLES
+We’re leading the charge! Today our fleet includes electric sedans and pickup trucks, plug-in hybrid bucket trucks, electric forklift and more.
+We’re committed to 30x30 — by 2030, 30% of DLC’s fleet will be powered by electricity.
+Learn More
+Social
+COMPANY CULTURE
+We believe that fostering a culture of inclusion and respect serves as a competitive advantage, enabling us to attract and retain a high performing workforce.
+Learn More
+COMMUNITY AND CORPORATE GIVING
+We don't just power the lights; we empower lives. Our commitment to our customers and communities goes beyond our job description. DLC team members donate thousands of volunteer hours yearly and we donate millions of charitable dollars to the communities we serve.
+Learn More
+ADDITIONAL INFORMATION
+Use your voice
+to contact legislators and public officials.
+Governance
+CODE OF ETHICS
+DLC is committed to maintaining the highest standards of business and ethics. 
+[DOC 5] https://duquesnelight.com/company/about/corporate-responsibility
+We believe in providing a work environment that is respectful, and conducting itself in accordance with applicable federal, state and local laws, rules and regulations.
+Learn More
+INNOVATION CENTER
+At DLC, we’re constantly searching for ways to improve how we provide safe, reliable and affordable energy to the Western Pennsylvania region. We take pride in creating groundbreaking strategies to achieve that goal
+Learn More
+ADDITIONAL INFORMATION
+FERC Standards of Conduct
+Investor Relations
+[DOC 6] https://www.duquesnelight.com/service-reliability/service-map/rates
+Rates
+Duquesne Light Company (DLC) rates for customers are determined by filings made at the Pennsylvania Public Utility Commission. The entire filing is called a tariff. The tariff contains rules and regulations as well as the schedule of rates and riders for electric service as approved by the Pennsylvania Public Utility Commission (PUC).
+Four Parts to Your Bill
+A customer's bill is made up of four parts: Customer Charge, Distribution Charge, Supply/Generation Charge and Transmission Charge.
+Customer Charge -
+A monthly basic service charge that includes costs for meter reading, customer billing, service equipment, and other expenses. We have these expenses even in months that you may not use electricity.
+Distribution Charges -
+Basic service charges for delivering electricity over our distribution system to consumers home or business from the transmission system.
+Supply/Generation Charges -
+Basic service charges for the supply of electricity to retail customers.
+Transmission Charges -
+Basic service charges for the cost of transporting high-voltage electricity from a supply facility to the distribution lines of an electric distribution company.
+Understanding Your Bill
+If you would like more help in understanding your bill, see our
+residential sample bills
+or a
+commercial/industrial bill sample
+.
+Schedule of Rates
+The schedule of rates or tariff is available for download in Adobe Acrobat Reader PDF format. This tariff has been approved by the PUC and currently is in effect. The tariff contains detailed information about the different rates available to residential customers (Residential Service (RS), Residential Service Heating (RH) and Residential Service Add-on Heat Pump (RA)). DLC has certified to the PUC that this is an accurate electronic representation of the tariffs which are officially filed at the Commission. Users of electronic tariffs should note, however, that such tariffs are not the official documents, and users assume responsibility for reliance upon tariffs in electronic format.
+Tariff Resources
+See the schedule of rates and more.
+View All
+Service & Reliability
+Start, Stop or Transfer Service
+Start New Service
+Start New Business Service
+Transfer Service
+Stop Service
+Electric Installation Rules
+Reliability Projects
+General Project Information
+Service Map
+Continuance of Service
+Customer Choice/Shop For Electricity
+Calculate the Savings
+Customer Choice FAQ
+Selecting DLC
+Information For Suppliers
+Rates
+Business Rates
+Residential Rates
+We Don’t Just Power Your Lights,
+We Power The Moments You Call Life.
+One More Reason We’re Larger Than Light.
+[DOC 7] https://www.duquesnelight.com/service-reliability/customer-choice/rates/tariff-resources
+Tariff Resources
+Duquesne Light Company (DLC) has certified to the Pennsylvania Public Utility Commission that this is an accurate electronic representation of the tariff which is officially filed at the Commission.
+Users of electronic tariffs should note, however, that such tariffs are not the official documents, and users assume responsibility for reliance upon tariffs in electronic format.
+Retail Tariff
+Current Tariff
+- Contains rules and regulations and schedule of rates and riders for electric service as approved by the Pennsylvania Public Utility Commission and currently in effect.
+The
+schedule of rates is available for download
+(right click, select Save Target As) in Adobe Acrobat Reader PDF format. If you need the free Adobe Acrobat Reader you can download it from the
+Adobe Acrobat Web Site
+.
+Tariff History
+- Provides a description of the current tariff and all supplements thereto, including dates of submission, approval or other action by the Pennsylvania Public Utility Commission and effective date.
+Pending Supplements
+SupplementNo.111toTariffNo.25-RiderNo.8-DefautServiceSupply(DSS)Semi-AnnualUpdateEffective12.01.2026
+Supplier Tariff
+The current Supplier Tariff can be found
+here
+.
+RFP Default Calculation Model
+ACTUAL - Default Service Rate Calculation Model - FRA
+ACTUAL - Default Service Rate Calculation Model - SMALL - Effective 6.1.26
+ESTIMATE-DefaultServiceRateCalculationModel-SMALL-Effective12.1.26
+ACTUAL - Default Service Rate Calculation Model - MEDIUM - Effective 9.1.26
+ESTIMATE-DefaultServiceRateCalculationModel-MEDIUM-Effective12.1.26
+ACTUAL - Default Service Rate Calculation Model - LIGHTING - Effective 6.1.26
+ESTIMATE-DefaultServiceRateCalculationModel-LIGHTING-Effective12.1.26
+ACTUAL - Default Service Rate Calculation Model - RESIDENTIAL - Effective 6.1.26
+ESTIMATE-DefaultServiceRateCalculationModel-RESIDENTIAL-Effective12.1.26
+Default Service Procurement
+DLC is a default-service electric provider for customers who don't choose an electric generation supplier (EGS). For more information on current and previous Provider of Last Resort (POLR) contracts, go to
+www.duquesnelight.com/procurement
+.
+FERC Related Filings
+DLC submits filings to the Federal Energy Regulatory Commission (FERC). These filings are primarily related to the Company's transmission rates.
+FERC Annual Filing
+contains a copy of the Company's annual filing submitted to FERC to establish a cost of service formula rate for determining its annual transmission revenue requirement in PJM.  Appendix 1 contains the true-up calculation and Appendix 2 contains the new Network Service Rate effective June 1, 2026.
+Settled Formula 2026 Calculations:
+True-Up
+|
+Estimate
+Service & Reliability
+Start, Stop or Transfer Service
+Start New Service
+Start New Business Service
+Transfer Service
+Stop Service
+Electric Installation Rules
+Reliability Projects
+General Project Information
+Service Map
+Continuance of Service
+Customer Choice/Shop For Electricity
+Calculate the Savings
+Customer C
+[DOC 7] https://www.duquesnelight.com/service-reliability/customer-choice/rates/tariff-resources
+hoice FAQ
+Selecting DLC
+Information For Suppliers
+Rates
+Business Rates
+Residential Rates
+We Don’t Just Power Your Lights,
+We Power The Moments You Call Life.
+One More Reason We’re Larger Than Light.

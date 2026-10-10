@@ -1,0 +1,3170 @@
+[DOC 0] https://www.evergy.com/-/media/documents/billing/missouri/detailed_tariffs_mo/mo-metro-rate.pdf
+EVERGY METRO, INC. d/b/a EVERGY MISSOURI METRO
+P.S.C. MO. No. 7 Original Sheet No. 0.1
+Canceling P.S.C. MO. No. Sheet No.
+For Missouri Retail Service Area
+ADOPTION NOTICE
+ELECTRIC
+On June 4, 2018, the transactions authorized by the Missouri Public Service Commission (“Commission”) Report and
+Order dated May 24, 2018, in Case No. EM-2018-0012 closed. As a result, Great Plains Energy Incorporated, a Missouri
+corporation, was merged with Westar Energy, Inc. (“Westar”), a Kansas corporation and Evergy, Inc. (“Evergy”) was
+created as a holding company owning, directly and indirectly, subsidiary operating utility companies. Since that time,
+Kansas City Power & Light Company (a direct subsidiary of Evergy) changed its legal name to Evergy Metro, Inc. in
+accordance with corporation law. The company will continue doing business as Evergy Metro, Inc.d/b/a Evergy Missouri
+Metro.
+Evergy Missouri Metro hereby adopts, ratifies and makes its own in every respect, as if the same had been originally
+filed by it, all tariffs, schedules, and rules and regulations of Kansas City Power & LightCompany. Evergy Metro, Inc. will
+operate in the areas formerly served by Kansas City Power & LightCompany using the name Evergy Missouri Metro.
+FILED
+Missouri Public
+Service Commission
+EN-2020-0063; JE-2020-0045
+DATE OF ISSUE: September 6, 2019 EFFECTIVE DATE: October 7, 2019
+ISSUED BY: Darrin Ives, VP Regulatory Affairs
+
+EVERGY METRO, INC. d/b/a EVERGY MISSOURI METRO
+P.S.C. MO. No. 7 Original
+Cancelling P.S.C. MO. No.
+Evergy Metro, Inc.
+Schedule of Rates
+For
+Electricity
+APPLYING TO THE FOLLOWING TERRITORY
+All TerritoriesFormerly Served by
+Kansas City Power & LightCompany
+__________________________________________________________________________________________
+Issued: October 4, 2019 Effective: November 3, 2019
+Issued by: Darrin R. Ives, Vice President
+FILED
+Missouri Public
+Service Commission
+JE-2020-0054
+
+EVERGY METRO, INC. d/b/a EVERGY MISSOURI METRO
+P.S.C. MO. No. 7 17th Revised Sheet No. TOC-1
+Canceling P.S.C. MO. No. 7 16th Revised Sheet No. TOC-1
+For Missouri Retail Service Area
+TABLE OF CONTENTS
+OF RATES for STATE of MISSOURI
+Rate Schedule Title Rate Schedule Sheet No.
+Tax Adjustment TA 1
+Additional Equipment Rental Charge AE 2
+Reserved For Future Use 3
+Reserved For Future Use 4
+Residential Service R 5
+Reserved for Future Use 6
+Residential Time of Use RTOU 7
+Reserved for Future Use 8
+Small General Service SGS 9
+Medium General Service MGS 10
+Large General Service LGS 11
+Limited Time-Related Pricing TRP 12
+Reserved For Future Use 13
+Large Power Service LPS 14
+Large Power Service Off-Peak Rider LPS-1 15
+Clean Charge Network CCN 16
+Small General Service - All Electric (FROZEN) SGA 17
+Medium General Service - All Electric (FROZEN) MGA 18
+Large General Service - All Electric (FROZEN) LGA 19
+Reserved for Future Use 20
+Reserved For Future Use 21
+Thermal Storage Rider TS 22
+Special Interruptible Contracts SIC 23
+Underutilized Infrastructure Rider UIC 24
+Reserved for Future Use 25
+[DOC 0] https://www.evergy.com/-/media/documents/billing/missouri/detailed_tariffs_mo/mo-metro-rate.pdf
+
+Market Based Demand Response Program MBDR 26
+Voluntary Load Reduction Rider VLR 27
+Standby Service Rider SSR 28
+Special Contract Service SCS 29
+Reserved For Future Use 30
+Parallel Generation Contract Service PG 31
+Economic Development Rider EDR 32
+Private Unmetered Lighting Service (FROZEN) AL 33
+Net Metering Interconnection Agreement NM 34
+Municipal Street Lighting Service (Urban Area) ML 35
+Municipal Street Lighting Service (Suburban Area) (FROZEN) 3ML 36
+Municipal Traffic Control Signal Service TR 37
+Municipal Underground Cost Recovery Rider UG 38
+Solar Subscription Rider SSP 39
+Renewable Energy Rider RER 40
+Urban Core Development Rider UCD 41
+Issued: December 2, 2022 Effective: January 1, 2023
+Issued by: Darrin R. Ives, Vice President 1200 Main, Kansas City, MO 64105
+FILED
+-
+Missouri
+Public
+Service
+Commission
+-
+01/09/2023
+-
+ER-2022-0129
+-
+YE-2023-0104
+______
+January 9, 2023
+
+EVERGY METRO, INC. d/b/a EVERGY MISSOURI METRO
+P.S.C. MO. No. 7 1st Revised Sheet No. TOC-1A
+Canceling P.S.C. MO. No. 7 Original Sheet No. TOC-1A
+For Missouri Retail Service Area
+TABLE OF CONTENTS
+OF RATES for STATE of MISSOURI
+Rate Schedule Title Rate Schedule Sheet No.
+Promotional Practices GENERAL 42
+Promotional Practices PROGRAMS 43
+Private Unmetered LED Lighting Service PL 44
+Off-Peak Lighting Service OLS 45
+Solar Photovoltaic Rebate Program SR 46
+Part Night Lighting PNL 47
+Municipal Street Lighting Service – LED Program ML-LED 48
+Demand Side Investment Mechanism Rider DSIM 49
+Fuel Adjustment Clause FAC 50
+Limited Large Customer Economic Development Discount Rider PED 51
+Business EV Charging Service BEVCS 54
+Commercial EV Charger Rebate CEVCR 55
+Low-Income Solar Subscription Pilot Rider LIS 56
+Residential Battery Energy Storage Pilot RBES 57
+Issued: December 2, 2022 Effective: January 1, 2023
+Issued by: Darrin R. Ives, Vice President 1200 Main, Kansas City, MO 64105
+FILED
+-
+Missouri
+Public
+Service
+Commission
+-
+01/09/2023
+-
+ER-2022-0129
+-
+YE-2023-0104
+______
+January 9, 2023
+
+EVERGY METRO, INC. d/b/a EVERGY MISSOURI METRO
+P.S.C. MO. No. 7 2nd Revised Sheet No. TOC - 2
+Canceling P.S.C. MO. No. 7 1st Revised Sheet No. TOC - 2
+For Missouri Retail Service Area
+TABLE OF CONTENTS
+OF RATES for STATE of MISSOURI
+Rate Schedule Title Rate Schedule Sheet No.
+Residential
+Residential Service R 5
+Residential Time of Use RTOU 7
+Residential Battery Energy Storage Pilot RBES 57
+Commercial & Industrial
+Small General Service SGS 9
+Medium General Service MGS 10
+Large General Service LGS 11
+Large Power Service LPS 14
+Large Power Service Off-Peak Rider LPS-1 15
+Small General Service - All Electric (FROZEN) SGA 17
+Medium General Service - All Electric (FROZEN) MGA 18
+Large General Service - All Electric (FROZEN) LGA 19
+Business EV Charging Service BEVCS 54
+Commercial EV Charger Rebate CEVCR 55
+Limited-Time Related Pricing TRP 12
+Lighting
+Off-Peak Lighting Service OLS 45
+Private Unmetered Lighting Service (FROZEN) AL 33
+Municipal Street Lighting Service (Urban Area) ML 35
+Municipal Street Li
+[DOC 0] https://www.evergy.com/-/media/documents/billing/missouri/detailed_tariffs_mo/mo-metro-rate.pdf
+ghting Service (Suburban Area) (FROZEN) 3ML 36
+Municipal Traffic Control Signal Service TR 37
+Private Unmetered LED Lighting Service PL 44
+Part Night Lighting PNL 47
+Municipal Street Lighting Service – LED Program ML-LED 48
+Customer Generation and Renewables
+Net Metering Interconnection Agreement NM 34
+Parallel Generation Contract Service PG 31
+Solar Photovoltaic Rebate Program SR 46
+Standby Service Rider SSR 28
+Solar Subscription Rider SSP 39
+Renewable Energy Rider RER 40
+Energy Efficiency, Demand Response, & End Use
+Clean Charge Network CCN 16
+Underutilized Infrastructure Rider UIC 24
+Market Based Demand Response Program MBDR 26
+Demand Side Investment Mechanism Rider DSIM 49
+Issued: December 2, 2022 Effective: January 1, 2023
+Issued by: Darrin R. Ives, Vice President 1200 Main, Kansas City, MO 64105
+FILED
+-
+Missouri
+Public
+Service
+Commission
+-
+01/09/2023
+-
+ER-2022-0129
+-
+YE-2023-0104
+______
+January 9, 2023
+
+EVERGY METRO, INC. d/b/a EVERGY MISSOURI METRO
+P.S.C. MO. No. 7 3rd Revised Sheet No. TOC–2A
+Canceling P.S.C. MO. No. 7 2nd Revised Sheet No. TOC-2A
+For Missouri Retail Service Area
+TABLE OF CONTENTS
+OF RATES for STATE of MISSOURI
+Rate Schedule Title Rate Schedule Sheet No.
+Riders & Surcharges
+Tax Adjustment TA 1
+Additional Equipment Rental Charge AE 2
+Thermal Storage Rider TS 22
+Municipal Underground Cost Recovery Rider UG 38
+Economic Development Rider EDR 32
+Voluntary Load Reduction Rider VLR 27
+Special Interruptible Contracts SIC 23
+Special Contract Service SCS 29
+Urban Core Development Rider UCD 41
+Promotional Practices GENERAL 42
+Promotional Practices PROGRAMS 43
+Fuel Adjustment Clause FAC 50
+Limited Large Customer Economic Development Discount Rider PED 51
+Low-Income Solar Subscription Pilot Rider LIS 56
+Issued: December 2, 2022 Effective: January 1, 2023
+Issued by: Darrin R. Ives, Vice President 1200 Main, Kansas City, MO 6410(cid:24)
+FILED
+-
+Missouri
+Public
+Service
+Commission
+-
+01/09/2023
+-
+ER-2022-0129
+-
+YE-2023-0104
+______
+January 9, 2023
+
+RESIDENTIAL
+
+EVERGY METRO, INC. d/b/a EVERGY MISSOURI METRO
+P.S.C. MO. No. 7 4th Revised Sheet No. 5
+-----='-----
+Canceling P.S.C. MO. No. ___7 ~-- 3rd Revised Sheet No. 5
+-----=----
+For Missouri Retail Service Area
+RESIDENTIAL STANDARD TIER SERVICE
+Schedule R
+AVAILABILITY
+For secondary electric service to a single-occupancy private residence and individually-metered, multiple
+occupancy residential dwellings:
+Single-phase electric service for residential customers that have a dwelling unit having kitchen facilities, sleeping
+::!!
+facilities, living facilities and permanent provisions for sanitation. This rate schedule shall also be applicable to r
+m
+ordinary domestic and farm use, including but not limited to well pumps, barns, machine sheds, detached garages,
+0
+home workshops and other structures used for permanent human occupancy subject to Company approval.
+However, this schedule is not applicable for crop irrigation, commercial dairies, hatcheries, feed lots, feed mills,
+dormitories or other 
+[DOC 0] https://www.evergy.com/-/media/documents/billing/missouri/detailed_tariffs_mo/mo-metro-rate.pdf
+structures designed to provide multiple sleeping quarters for unrelated individuals, or any other
+commercial enterprise. Customers currently served with separately metered space heat may be served under the
+single meter heat rate (Rate B).
+"C
+C:
+!2:
+Service under this rate will be available to Customers without Advanced Metering Infrastructure (AMI) metering due o"
+en
+to opt-out of AMI metering or due to technological barriers limiting the installation of AMI metering.
+CD
+<
+~-
+As of April 1, 2026, this rate shall be available as an opt-in option to customers otherwise served under the
+Company's Residential Peak Adjustment Service (Schedule RPKA). (1
+0
+Three-phase electric service for ordinary domestic and farm use customers being served residential three-phase 3
+prior to the effective date of this revision or, at the Company's discretion, for residential customers requesting 3
+~-
+ordinary domestic use residential three-phase service subsequent to the effective date of this revision. The o·
+Customer shall bear all costs related to provision of three-phase service greater than the costs associated with
+::J
+providing normal, single-phase residential.
+0
+I\)
+Single-phase electric service through a single or separately metered circuit for space heating purposes in the ~
+residence. Single metered electric space heating equipment shall be of a size and design sufficient to heat the
+0
+entire residence. Electric space heating equipment may be supplemented by wood burning fireplaces, wood burning I\)
+0)
+stoves, active or passive solar heating, and used in conjunction with fossil fuels where the combination of energy
+m
+sources results in a net economic benefit to the customer. Electric space heating equipment shall be permanently
+~
+installed and thermostatically controlled. In addition to the electric space heating equipment, only permanently
+0
+installed all-electric single-phase equipment used to cool or air condition the same space which is electrically heated I\)
+0)
+may be connected to the separately metered circuit, with the exception noted in Rate Section D below. I
+0
+0
+-..J
+.i:,.
+Temporary or seasonal service will not be supplied under this schedule.
+I
+c...
+m
+rl,
+0
+I\)
+0)
+I
+0
+0
+e..x..,.
+Issued: January 5, 2026 Effective: February 4, 2026
+Issued by: Darrin R. Ives, Vice President 1200 Main, Kansas City, MO 64105
+
+EVERGY METRO, INC. d/b/a EVERGY MISSOURI METRO
+P.S.C. MO. No. 7 12th Revised Sheet No. SA
+Canceling P.S.C. MO. No. ___7 ~-- 11th Revised Sheet No. --~ SA ~ ---
+For Missouri Retail Service Area
+RESIDENTIAL STANDARD TIER SERVICE
+Schedule R
+TERM OF CONTRACT
+Contracts under this schedule shall be for a period of not less than one year from the effective date thereof, however,
+customers may switch their residential service to a different residential rate subject to the terms of use and
+provisions of those rates.
+::!!
+RATE r
+Single-phase kWh and three-phase kWh will be cumulated for billing under this schedule. m
+0
+RESIDENTIAL GENERAL USE, 1RS1A, 1RS
+[DOC 0] https://www.evergy.com/-/media/documents/billing/missouri/detailed_tariffs_mo/mo-metro-rate.pdf
+1AN, 1RS1AP, 1RS1AS,1RSLIS (Marketed as "Standard Tier
+Rate/Plan")
+For general residential use, the kWh shall be billed as follows:
+"C
+A. CUSTOMER CHARGE (Per Month) $12.00 C:
+!2:
+o"
+en
+B. ENERGY CHARGE
+CD
+Summer Season Winter Season <
+~-
+First 600 kWh per month $0. 14053 per kWh $0. 12495 per kWh
+Next 400 kWh per month $0. 14053 per kWh $0.07693 per kWh (1
+Over 1000 kWh per month $0.15515 per kWh $0.06824 per kWh 0 3
+3
+~-
+RESIDENTIAL GENERAL USE AND SPACE HEAT -ONE METER, 1 RS6A (FROZEN)
+o·
+When the customer has electric space heating equipment for the residence and the equipment is of a size and
+::J
+design approved by the Company or when a customer has electric space heating equipment and electric water
+0
+heating equipment of a size and design approved by the Company connected through a separately metered circuit I\)
+and has been served under this rate schedule prior to July 9, 1996, the kWh shall be billed as follows: ~
+0
+A. CUSTOMER CHARGE (Per Month) $12.00 I\)
+0)
+m
+B. ENERGY CHARGE
+~
+Summer Season Winter Season
+0
+First 600 kWh per month $0. 14360 per kWh $0. 10093 per kWh I\)
+0)
+Next 400 kWh per month $0. 14360 per kWh $0. 10093 per kWh I
+0
+Over 1000 kWh per month $0.14360 per kWh $0.06553 per kWh 0
+--.J
+.i:,.
+I
+MINIMUM c...
+m
+Minimum Monthly Bill: rl,
+0
+I\)
+(1) Customer Charge; plus 0)
+I
+0
+(2) Any additional charges for line extensions, if applicable. 0
+e..x..,
+Issued: January 5, 2026 Effective: February 4, 2026
+Issued by: Darrin R. Ives, Vice President 1200 Main, Kansas City, MO 64105
+
+EVERGY METRO, INC. d/b/a EVERGY MISSOURI METRO
+P.S.C. MO. No. 7 12th Revised Sheet No. 5B
+Canceling P.S.C. MO. No. ___7 ~-- 11th Revised Sheet No. --~ 5B ~ ---
+For Missouri Retail Service Area
+RESIDENTIAL STANDARD TIER SERVICE
+Schedule R
+RATE (continued)
+C. RESIDENTIAL GENERAL USE AND SPACE HEAT-2 METERS 1RS2A (FROZEN)
+When the customer has electric space heating equipment for the residence and the equipment is of a size and
+design approved by the Company connected through a separately metered circuit, the kWh used shall be billed
+::!!
+as follows. The option of separately metered space heating is limited to premises connected prior to January r
+1, 2007. m
+0
+CUSTOMER CHARGE (Per Month) $15.25
+ENERGY CHARGE (Per kWh):
+Summer Season Winter Season
+"C
+First 600 kWh per month $0.14360 $0.12495 C:
+!2:
+Next 400 kWh per month $0.14360 $0.07693 o"
+en
+Over 1000 kWh per month $0.14360 $0.06608
+CD
+<
+~-
+Separately metered space heat rate:
+All kWh (Per kWh) $0.14360 $0.06608 (1
+0
+3
+D. When a customer has electric space heating equipment and electric water heating equipment of a size and 3
+~-
+design approved by the Company connected through a separately metered circuit, the kWh used shall be billed
+o·
+on Rate C above. This option of connecting water heating equipment on the separately metered circuit is limited
+::J
+to customers being served under this schedule prior to July 9, 1996.
+0
+I\)
+MINIMUM ~
+Minimum Monthly Bill:
+0
+I\)
+0)
+(1) Customer Charge; plus
+m
+(2) Any addition
+[DOC 0] https://www.evergy.com/-/media/documents/billing/missouri/detailed_tariffs_mo/mo-metro-rate.pdf
+al charges for line extensions, if applicable.
+~
+0
+I\)
+0)
+I
+0
+0
+--.J
+.i:,.
+I
+c..
+m
+rl,
+0
+I\)
+0)
+I
+0
+0 e..x ..,
+Issued: January 5, 2026 Effective: February 4, 2026
+Issued by: Darrin R. Ives, Vice President 1200 Main, Kansas City, MO 64105
+
+EVERGY METRO, INC. d/b/a EVERGY MISSOURI METRO
+P.S.C. MO. No. 7 5th Revised Sheet No. SC
+Canceling P.S.C. MO. No. ___7 ~-- 4th Revised Sheet No. --~SC~ ---
+For Missouri Retail Service Area
+RESIDENTIAL STANDARD TIER SERVICE
+Schedule R
+SUMMER AND WINTER SEASONS
+For determination of Seasonal periods, the four (4) summer months shall be defined as the four (4) monthly billing
+periods of June through September. The eight (8) winter months shall be defined as the eight (8) monthly billing
+periods of October through May. Customer bills for meter reading periods including one or more days in both
+seasons will reflect the number of days in each season.
+::!!
+r
+DEMAND SIDE INVESTMENT MECHANISM RIDER m
+0
+Subject to Schedule DSIM filed with the State Regulatory Commission.
+FUEL ADJUSTMENT
+Fuel Adjustment Clause, Schedule FAC, shall be applicable to all customer billings under this schedule.
+"C
+TAX ADJUSTMENT C:
+!2:
+Tax Adjustment Schedule TA shall be applicable to all customer billings under this schedule. o"
+en
+CD
+REGULATIONS <
+~-
+Subject to Rules and Regulations filed with the State Regulatory Commission.
+(1
+0
+3
+3
+~-
+o·
+::J
+0
+I\)
+~
+0
+I\)
+0)
+m
+~
+0
+I\)
+0)
+I
+0
+0
+--.J
+.i:,.
+I
+c...
+m
+rl,
+0
+I\)
+0)
+I
+0
+0
+e..x..,
+Issued: January 5, 2026 Effective: February 4, 2026
+Issued by: Darrin R. Ives, Vice President 1200 Main, Kansas City, MO 64105
+
+EVERGY METRO, INC. d/b/a EVERGY MISSOURI METRO
+P.S.C. MO. No. 7 3rd Revised Sheet No. SD
+Canceling P.S.C. MO. No. ___7 ~-- 2nd Revised Sheet No. --~SD- ---
+For Missouri Retail Service Area
+RESIDENTIAL PEAK ADJUSTMENT SERVICE
+Schedule RPKA
+AVAILABILITY
+Available to single metered Residential customers receiving AMI-metered secondary electric service to a single
+occupancy private residence or individually metered living units in multiple occupancy residential buildings, on or
+after January 1, 2023.
+::!!
+All new Residential Customers and accounts initiated will be placed directly on this rate schedule. Customers on r
+this rate schedule will have the option to request service under all other eligible rate options subject to the terms m
+0
+of those rates and can return to this rate at any time.
+Single-phase electric service for residential customers that have a dwelling unit having kitchen facilities, sleeping
+facilities, living facilities and permanent provisions for sanitation. This rate schedule shall also be applicable to
+ordinary domestic and farm use, including but not limited to well pumps, barns, machine sheds, detached garages,
+"C
+home workshops and other structures used for permanent human occupancy subject to Company approval. C:
+!2:
+However, this schedule is not applicable for crop irrigation, commercial dairies, hatcheries, feed lots, feed mills, o"
+en
+dormitories or other structures desig
+[DOC 0] https://www.evergy.com/-/media/documents/billing/missouri/detailed_tariffs_mo/mo-metro-rate.pdf
+ned to provide multiple sleeping quarters for unrelated individuals, or any other
+CD
+commercial enterprise. <
+~-
+Three-phase electric service for residential customers being served residential three-phase prior to the effective (1
+date of this revision or, at the Company's discretion, for residential customers requesting ordinary domestic use 0 3
+residential three-phase service subsequent to the effective date of this revision. The Customer shall bear all costs 3
+~-
+related to provision of three-phase service greater than the costs associated with providing normal, single-phase
+o·
+residential.
+::J
+0
+Not available for Temporary, Seasonal, Three phase Standby, Supplemental, Resale or single metered multi I\)
+occupancy Residential Service. ~
+0
+APPLICABILITY I\)
+0)
+Customers with usage during on-peak periods will be charged an additional amount for that usage, and Customers
+m
+with usage during the super off-peak periods will receive a credit for that usage.
+~
+0
+TERM OF CONTRACT I\)
+0)
+Contracts under this schedule shall be for a period of not less than one (1) year from the effective date thereof, I
+0
+however, customers may switch their residential service to a different residential rate subject to the terms of use 0
+-..J
+and provisions of those rates. .i:,.
+I
+c...
+m
+rl,
+0
+I\)
+0)
+I
+0
+0
+e..x..,.
+Issued: January 5, 2026 Effective: February 4, 2026
+Issued by: Darrin R. Ives, Vice President 1200 Main, Kansas City, MO 64105
+
+EVERGY METRO, INC. d/b/a EVERGY MISSOURI METRO
+P.S.C. MO. No. 7 1st RevisedSheet No. 5E
+Canceling P.S.C. MO. No. Original Sheet No. 5E
+For Missouri Retail Service Area
+RESIDENTIAL PEAK ADJUSTMENT SERVICE
+Schedule RPKA
+RATE, General Use 1RPKA, With Net Metering 1RPKANM, With Parallel Generation 1RPKAPG(Marketed as
+“Default Time Based Plan”):
+Single-phase kWh and three-phase kWh will be cumulated for billing under this schedule.
+A. Customer Charge (Per Month) $12.00
+Summer Winter
+Season Season
+B. Energy Charge (Per kWh)
+First 600 kWh per month $0.14094 $0.12233
+Next 400 kWh per month $0.14094 $0.07532
+Over 1000 kWh per month $0.15094 $0.06681
+Peak Adjustment Charge per On-Peak kWh $0.01000 $0.00250
+Peak Adjustment Credit per Super Off-Peak kWh $0.01000 $0.01000
+PRICING PERIODS
+Pricing periods are established in Central Time, every day, year-round. The hours for each pricing period are as follows:
+On-Peak: 4pm-8pm
+Super Off-Peak: 12am-6am
+MINIMUM
+Minimum Monthly Bill:
+(1) Customer Charge; plus
+(2) Any additional charges for line extensions, if applicable.
+SUMMER AND WINTER SEASONS
+For determination of Seasonal periods, the four (4) summer months shall be defined as the four (4) monthly billing
+periods of June through September. The eight (8) winter months shall be defined as the eight (8) monthly billing periods
+of October through May. Customer bills for meter reading periods including one or more days in both seasons will
+reflect the number of days in each season for purposes of blocked energy charge billing. For purposes of Peak
+Adjust
+[DOC 0] https://www.evergy.com/-/media/documents/billing/missouri/detailed_tariffs_mo/mo-metro-rate.pdf
+ment billing, when meter reading periods include one or more days in both seasons, the time-related charges and
+credits will reflect the usage for each period occurring in each season.
+DEMAND SIDE INVESTMENT MECHANISM RIDER
+Subject to Schedule DSIM filed with the State Regulatory Commission.
+FUEL ADJUSTMENT
+Fuel Adjustment Clause, Schedule FAC, shall be applicable to all customer billings under this schedule.
+TAX ADJUSTMENT
+Tax Adjustment Schedule TA shall be applicable to all customer billings under this schedule.
+June 20, 2025
+Issued: March 21, 2025 Effective: April 21, 2025
+Issued by: Darrin R. Ives, Vice President 1200 Main, Kansas City, MO 64105
+FILED
+-
+Missouri
+Public
+Service
+Commission
+-
+06/20/2025
+-
+ET-2025-0286
+-
+JE-2025-0134
+
+EVERGY METRO, INC. d/b/a EVERGY MISSOURI METRO
+P.S.C. MO. No. 7 Original Sheet No. 5F
+Canceling P.S.C. MO. No. Revised Sheet No.
+For Missouri Retail Service Area
+RESIDENTIAL PEAK ADJUSTMENT SERVICE
+Schedule RPKA
+REGULATIONS
+Subject to Rules and Regulations filed with the State Regulatory Commission.
+Issued: December 2, 2022 Effective: January 1, 2023
+Issued by: Darrin R. Ives, Vice President 1200 Main, Kansas City, MO 64105
+FILED
+-
+Missouri
+Public
+Service
+Commission
+-
+01/09/2023
+-
+ER-2022-0129
+-
+YE-2023-0104
+______
+January 9, 2023
+
+(cid:0)(cid:2)(cid:0)(cid:3)(cid:4)(cid:5)(cid:6)(cid:7)(cid:8)(cid:9)(cid:9)(cid:10)(cid:11)(cid:3)(cid:8)(cid:6)(cid:7)(cid:0)(cid:12)(cid:3)(cid:10)(cid:13)(cid:6)(cid:8)(cid:14)(cid:15)(cid:16)(cid:6)(cid:17)(cid:18)(cid:19)(cid:18)(cid:20)(cid:6)(cid:0)(cid:2)(cid:0)(cid:3)(cid:4)(cid:5)(cid:6)(cid:7)(cid:8)(cid:9)(cid:9)(cid:10)(cid:11)(cid:3)(cid:8)(cid:6)(cid:7)(cid:0)(cid:12)(cid:3)(cid:10)(cid:6)
+(cid:21)(cid:16)(cid:9)(cid:16)(cid:15)(cid:16)(cid:6)(cid:7)(cid:10)(cid:16)(cid:6)(cid:14)(cid:22)(cid:23)(cid:6)(cid:6) (cid:24)(cid:6) (cid:6) (cid:6) (cid:25)(cid:26)(cid:27)(cid:6) (cid:28)(cid:29)(cid:30)(cid:31) (cid:29)!(cid:6)"(cid:27)(cid:29)(cid:29)(cid:26)(cid:6)#$(cid:23)(cid:6) %(cid:6)
+&’()(cid:29)*(cid:31)(+(cid:6),(cid:23)"(cid:23)&(cid:23)(cid:6)-.(cid:23)(cid:6)#$(cid:23)(cid:6)(cid:6) (cid:24)(cid:6) (cid:6) (cid:6) (cid:24)(cid:26)(cid:27)(cid:6) (cid:28)(cid:29)(cid:30)(cid:31) (cid:29)!(cid:6)"(cid:27)(cid:29)(cid:29)(cid:26)(cid:6)#$(cid:23)(cid:6) %(cid:6)
+(cid:6)(cid:6)(cid:6)(cid:6)(cid:6)(cid:6)/$0(cid:6)-(cid:31) $10(cid:31)(cid:6)(cid:28)(cid:29)(cid:26)’(cid:31)*(cid:6)"(cid:29)0(cid:30)(cid:31))(cid:29)(cid:6)20(cid:29)’(cid:6)
+345674896:;(cid:6)<9=43(cid:6)>54(cid:6)
+5?@ABCDA(cid:6)3<>(cid:6)
+EFEGHEIGHGJK(cid:6)
+9@LM(cid:6)NOPA(cid:6)M?@ABCDA(cid:6)OQQDLAM(cid:6)PR(cid:6)NAMLBASPLOD(cid:6)?CMPRTANM(cid:6)U@R(cid:6)BR(cid:6)SRP(cid:6)VCODLWX(cid:6)CSBAN(cid:6)OSX(cid:6)RP@AN(cid:6)NAMLBASPLOD(cid:6)NOPAY(cid:6)(cid:6)ZCMPRTANM(cid:6)
+VCODLWXLS[(cid:6)WRN(cid:6)P@LM(cid:6)NOPA(cid:6)ULDD(cid:6)[ASANODDX(cid:6)\A(cid:6)P@RMA(cid:6)ULP@(cid:6)UADD(cid:6)QCTQM](cid:6)\ONSM](cid:6)TO?@LSA(cid:6)M@ABM](cid:6)BAPO?@AB(cid:6)[ONO[AM(cid:6)OSB(cid:6)@RTA(cid:6)
+
+[DOC 0] https://www.evergy.com/-/media/documents/billing/missouri/detailed_tariffs_mo/mo-metro-rate.pdf
+3)(cid:140)|(cid:132)Jzn{J(cid:6)
+9O(cid:131)(cid:6):BaCMPTASP(cid:6)5?@ABCDA(cid:6)9:(cid:6)M@ODD(cid:6)\A(cid:6)OQQDL?O\DA(cid:6)PR(cid:6)ODD(cid:6)?CMPRTAN(cid:6)\LDDLS[M(cid:6)CSBAN(cid:6)P@LM(cid:6)M?@ABCDAY(cid:6)
+mn(cid:142)|HEJGq{(cid:132)(cid:6)
+5C\aA?P(cid:6)PR(cid:6)3CDAM(cid:6)OSB(cid:6)3A[CDOPLRSM(cid:6)WLDAB(cid:6)ULP@(cid:6)P@A(cid:6)5POPA(cid:6)3A[CDOPRNX(cid:6)ZRTTLMMLRS(cid:143)(cid:6)
+(cid:144) 1(cid:29)!(cid:145)(cid:6)(cid:6)(cid:6)(cid:6)(cid:6)(cid:6)(cid:6)"(cid:29)(cid:146)(cid:26)(cid:29)(cid:147)(cid:148)(cid:29)0(cid:6)(cid:25)(cid:149)(cid:6)(cid:150)(cid:151)(cid:150)(cid:152) (cid:153)(cid:154)(cid:154)(cid:29))(cid:26)(cid:31)(cid:30)(cid:29)(cid:145)(cid:6)(cid:6).)(cid:26)$(cid:148)(cid:29)0(cid:6)(cid:25)(cid:149)(cid:6)(cid:150)(cid:151)(cid:150)(cid:152)(cid:6)
+(cid:144) 1(cid:29)!(cid:6)(cid:148)(cid:155)(cid:145)(cid:6)(cid:6)(cid:156)’00(cid:31)((cid:6)(cid:28)(cid:23)(cid:6)(cid:144)(cid:30)(cid:29) (cid:149)(cid:6)(cid:157)(cid:31))(cid:29)(cid:6),0(cid:29) (cid:31)!(cid:29)((cid:26) (cid:158)(cid:150)(cid:151)(cid:151)(cid:6)-’(cid:31)((cid:149)(cid:6)(cid:159)’( ’ (cid:6)&(cid:31)(cid:26)(cid:155)(cid:149)(cid:6)-.(cid:6)(cid:6)%(cid:160)(cid:158)(cid:151)¡(cid:6)
+¢£⁄¥ƒ(cid:6)§(cid:6)¤'““«‹›'(cid:6)fi‹fl(cid:176)'–(cid:6)†‡›·'–‡(cid:6)(cid:181)«¶¶'““'«•(cid:6)§(cid:6)‚„”„»”…„…‰(cid:6)§(cid:6)¥(cid:190)§…„…¿§„„(cid:192)‚(cid:6)§(cid:6)`¥§…„…¿§„„‰(cid:192)
+
+EVERGY METRO, INC. d/b/a EVERGY MISSOURI METRO
+P.S.C. MO. No. 7 4th Revised Sheet No. 7
+------'-----
+Canceling P.S.C. MO. No. ___7 ~-- 3rd Revised Sheet No. 7
+------'-----
+For Missouri Retail Service Area
+RESIDENTIAL TIME OF USE - THREE PERIOD
+Schedule RTOU
+AVAILABILITY
+Available to single metered Residential customers receiving AMI-metered secondary electric service to a single
+occupancy private residence or individually metered living units in multiple occupancy residential buildings.
+Not available for Temporary, Seasonal, Three phase Standby, Supplemental, Resale or single metered multi
+::!!
+occupancy Residential Service.
+r
+m
+0
+APPLICABILITY
+This rate shall be available as an opt-in option to customers otherwise served under the Company's Residential
+Peak Adjustment Service (Schedule RPKA) to encourage customers to shift consumption from higher cost time
+periods to lower-cost time periods.
+"C
+A Customer exiting the program, disconnected for non-payment, or on a pay agreement may not be allowed to C:
+!2:
+participate in this rate, at the Company's discretion. o"
+en
+CD
+TERM OF CONTRACT <
+~-
+Contracts under this schedule shall be for a period of not less than one (1) year from the effective date thereof,
+however, customers may switch their residential service to a different residential rate subject to the terms of use (1
+and provisions of those rates. 0 3
+3
+~-
+RATE, 1RTOU, With Net Metering 1RTOUN, (Marketed as "Nights & Weekends Plan"}
+o·
+::J
+A. CUSTOMER CHARGE (Per month) $12.00
+0
+I\)
+B. ENERGY CHARGE (Per Pricing Period) ~
+Summer Season Winter Season
+[DOC 0] https://www.evergy.com/-/media/documents/billing/missouri/detailed_tariffs_mo/mo-metro-rate.pdf
+
+0
+Peak $0.33803 per kWh $0.27642 per kWh I\)
+0)
+Off-Peak $0.11268 per kWh $0. 10840 per kWh
+m
+Super Off-Peak $0.05633 per kWh $0.04675 per kWh
+~
+0
+I\)
+0)
+I
+0
+0
+-..J
+.i:,.
+I
+c...
+m
+rl,
+0
+I\)
+0)
+I
+0
+0
+e..x..,.
+Issued: January 5, 2026 Effective: February 4, 2026
+Issued by: Darrin R. Ives, Vice President 1200 Main, Kansas City, MO 64105
+
+EVERGY METRO, INC. d/b/a EVERGY MISSOURI METRO
+P.S.C. MO. No. 7 2nd Revised Sheet No. 7A
+Canceling P.S.C. MO. No. 7 1st Revised Sheet No. 7A
+For Missouri Retail Service Area
+Residential Time of Use – Three Period
+Schedule RTOU
+PRICING PERIODS
+Pricing periods are established in Central Time year-round. The hours for each pricing period are as follows:
+On-Peak: 4pm-8pm, Monday through Friday, excluding holidays
+Super Off-Peak: 12am-6am every day
+Off-Peak: All other hours
+Holidays are New Year’s Day, Memorial Day, Independence Day, Labor Day, Thanksgiving Day, and Christmas
+Day.
+MINIMUM
+Minimum Monthly Bill:
+1) Customer Charge; plus
+2) Any additional charges for line extensions, if applicable.
+SUMMER AND WINTER SEASONS
+For determination of Seasonal periods, the four (4) summer months shall be defined as the four (4) monthly billing
+periods of June through September. The eight (8) winter months shall be defined as the eight (8) monthly billing
+periods of October through May. Customer bills for meter reading periods including one or more days in both
+seasons will reflect the usage for each period occurring in each season.
+DEMAND SIDE INVESTMENT MECHANISM RIDER
+Subject to Schedule DSIM filed with the State Regulatory Commission.
+FUEL ADJUSTMENT
+Fuel Adjustment Clause, Schedule FAC, shall be applicable to all customer billings under this schedule.
+TAX ADJUSTMENT
+Tax Adjustment Schedule TA shall be applicable to all customer billings under this schedule.
+REGULATIONS
+Subject to Rules and Regulations filed with the State Regulatory Commission.
+Issued: December 2, 2022 Effective: January 1, 2023
+Issued by: Darrin R. Ives, Vice President 1200 Main, Kansas City, MO 64105
+FILED
+-
+Missouri
+Public
+Service
+Commission
+-
+01/09/2023
+-
+ER-2022-0129
+-
+YE-2023-0104
+______
+January 9, 2023
+
+EVERGY METRO, INC. d/b/a EVERGY MISSOURI METRO
+P.S.C. MO. No. 7 2nd Revised Sheet No. 7B
+Canceling P.S.C. MO. No. ___7 ~-- 1st Revised Sheet No. --~ 7B - ---
+For Missouri Retail Service Area
+RESIDENTIAL HIGH DIFFERENTIAL TIME OF USE
+Schedule RTOU-3
+AVAILABILITY
+Available to single metered Residential customers receiving AMI-metered secondary electric service to a single
+occupancy private residence or individually metered living units in multiple occupancy residential buildings.
+Not available for Temporary, Seasonal Three phase Standby, Supplemental, Resale or single metered multi
+::!!
+occupancy Residential Service. r
+m
+0
+APPLICABILITY
+This rate shall be available as an opt-in option to customers otherwise served under the Company's Residential
+Peak Adjustment Service (Schedule RPKA) to encourage customers to shift consumption from higher cost time
+period
+[DOC 0] https://www.evergy.com/-/media/documents/billing/missouri/detailed_tariffs_mo/mo-metro-rate.pdf
+s to lower-cost time periods. This rate offers a high differential designed to minimize the Super Off-Peak rate,
+making the period advantageous to those customers such as electric vehicle owners, able to shift loads to the later
+"C
+period. C:
+!2:
+o"
+en
+TERM OF CONTRACT
+CD
+Contracts under this schedule shall be for a period of not less than one (1) year from the effective date thereof, <
+~-
+however, customers may switch their residential service to a different residential rate subject to the terms of use
+and provisions of those rates. (1
+0
+3
+RATE 1RTOU3. With Net Metering 1RTOU3N. (Marketed as "Nights and Weekends Max Plan"} 3
+~-
+o·
+A CUSTOMER CHARGE (Per month) $12.00
+::J
+0
+B. ENERGY CHARGE (Per Pricing Period) I\)
+Summer Season Winter Season ~
+Peak $0.35879 per kWh $0.27305 per kWh
+0
+Off-Peak $0.11960 per kWh $0.09102 per kWh I\)
+0)
+Super Off-Peak $0.02990 per kWh $0.02275 per kWh
+m
+~
+0
+I\)
+0)
+I
+0
+0
+-..J
+.i:,.
+I
+c...
+m
+rl,
+0
+I\)
+0)
+I
+0
+0
+e..x..,.
+Issued: January 5, 2026 Effective: February 4, 2026
+Issued by: Darrin R. Ives, Vice President 1200 Main, Kansas City, MO 64105
+
+EVERGY METRO, INC. d/b/a EVERGY MISSOURI METRO
+P.S.C. MO. No. Original Sheet No. 7C
+Canceling P.S.C. MO. No. Revised Sheet No.
+For Missouri Retail Service Area
+Residential High Differential Time of Use
+Schedule RTOU-3
+PRICING PERIODS
+Pricing periods are established in Central Time year-round. The hours for each pricing period are as follows:
+On-Peak: 4pm-8pm, Monday through Friday, excluding holidays
+Super Off-Peak: 12am-6am every day
+Off-Peak: All other hours
+Holidays are New Year’s Day, Memorial Day, Independence Day, Labor Day, Thanksgiving Day, and Christmas Day.
+MINIMUM
+Minimum Monthly Bill:
+1) Customer Charge; plus
+2) Any additional charges for line extensions, if applicable.
+SUMMER AND WINTER SEASONS
+For determination of Seasonal periods, the four (4) summer months shall be defined as the four (4) monthly billing
+periods of June through September. The eight (8) winter months shall be defined as the eight (8) monthly billing
+periods of October through May. Customer bills for meter reading periods including one or more days in both
+seasons will reflect the usage for each period occurring in each season.
+DEMAND SIDE INVESTMENT MECHANISM RIDER
+Subject to Schedule DSIM filed with the State Regulatory Commission.
+FUEL ADJUSTMENT
+Fuel Adjustment Clause, Schedule FAC, shall be applicable to all customer billings under this schedule.
+TAX ADJUSTMENT
+Tax Adjustment Schedule TA shall be applicable to all customer billings under this schedule.
+REGULATIONS
+Subject to Rules and Regulations filed with the State Regulatory Commission.
+Issued: December 2, 2022 Effective: January 1, 2023
+Issued by: Darrin R. Ives, Vice President 1200 Main, Kansas City, MO 64105
+FILED
+-
+Missouri
+Public
+Service
+Commission
+-
+01/09/2023
+-
+ER-2022-0129
+-
+YE-2023-0104
+______
+January 9, 2023
+
+EVERGY METRO, INC. d/b/a EVERGY MISSOURI METRO
+P.S.C. MO. No. 7 1st Revised Sheet No. 7D
+Canceling P.S.C. MO. No. ___7 ~--
+[DOC 0] https://www.evergy.com/-/media/documents/billing/missouri/detailed_tariffs_mo/mo-metro-rate.pdf
+ Original Sheet No. __~ 7_D ___
+For Missouri Retail Service Area
+SEPARATELY METERED ELECTRIC VEHICLE TIME OF USE
+Schedule RTOU-EV
+AVAILABILITY
+Available to Residential customers receiving AMI-metered secondary electric service to a single occupancy private
+residence and who receive electric service under an existing single-metered residential rate at the same premise.
+For customers with electric vehicle charging at the residence connected through a separately metered circuit.
+::!!
+This rate is available to all residential Customers as an optional rate except that it is not available to Customers that
+r
+own and operate generation in parallel with the Company's electric system, or that receive service under Net m
+0
+Metering tariff (Schedule NM). Not available for Temporary, Seasonal, Three phase Standby, Supplemental,
+Resale, or single metered multi-occupancy Residential Service.
+APPLICABILITY
+This rate shall be available as an opt-in option to customers otherwise served under the Company's Residential
+"C
+Peak Adjustment Service (Schedule RPKA). C:
+!2:
+o"
+en
+TERM OF CONTRACT
+CD
+Contracts under this schedule shall be for a period of not less than one year from the effective date thereof, however, <
+~-
+customers may switch their residential service to a different residential rate subject to the terms of use and
+provisions of those rates. (1
+0
+3
+RAT E 1 RTOU-EV 3
+~-
+o·
+A. CUSTOMER CHARGE (Per month) $3.25
+::J
+0
+B. ENERGY CHARGE (Per Pricing Period) I\)
+Summer Season Winter Season ~
+Peak $0.35879 per kWh $0.27305 per kWh
+0
+Off-Peak $0.11960 per kWh $0.09102 per kWh I\)
+0)
+Super Off-Peak $0.02990 per kWh $0.02275 per kWh
+m
+~
+0
+I\)
+0)
+I
+0
+0
+-..J
+.i:,.
+I
+c...
+m
+rl,
+0
+I\)
+0)
+I
+0
+0
+e..x..,.
+Issued: January 5, 2026 Effective: February 4, 2026
+Issued by: Darrin R. Ives, Vice President 1200 Main, Kansas City, MO 64105
+
+EVERGY METRO, INC. d/b/a EVERGY MISSOURI METRO
+P.S.C. MO. No. Original Sheet No. 7E
+Canceling P.S.C. MO. No. Revised Sheet No.
+For Missouri Retail Service Area
+Separately Metered Electric Vehicle Time of Use
+Schedule RTOU-EV
+PRICING PERIODS
+Pricing periods are established in Central Time year-round. The hours for each pricing period are as
+follows:
+On-Peak: 4pm-8pm, Monday through Friday, excluding holidays
+Super Off-Peak: 12am-6am every day
+Off-Peak: All other hours
+Holidays are New Year’s Day, Memorial Day, Independence Day, Labor Day, Thanksgiving Day, and Christmas Day.
+MINIMUM
+Minimum Monthly Bill:
+1) Customer Charge; plus
+2) Any additional charges for line extensions, if applicable.
+SUMMER AND WINTER SEASONS
+For determination of Seasonal periods, the four (4) summer months shall be defined as the four (4) monthly billing
+periods of June through September. The eight (8) winter months shall be defined as the eight (8) monthly billing
+periods of October through May. Customer bills for meter reading periods including one or more days in both
+seasons will reflect the usage for each period occurring in each season.
+DEMAND SIDE INVESTMENT MECHANI
+[DOC 0] https://www.evergy.com/-/media/documents/billing/missouri/detailed_tariffs_mo/mo-metro-rate.pdf
+SM RIDER
+Subject to Schedule DSIM filed with the State Regulatory Commission.
+FUEL ADJUSTMENT
+Fuel Adjustment Clause, Schedule FAC, shall be applicable to all customer billings under this schedule.
+TAX ADJUSTMENT
+Tax Adjustment Schedule TA shall be applicable to all customer billings under this schedule.
+REGULATIONS
+Subject to Rules and Regulations filed with the State Regulatory Commission.
+Issued: December 2, 2022 Effective: January 1, 2023
+Issued by: Darrin R. Ives, Vice President 1200 Main, Kansas City, MO 64105
+FILED
+-
+Missouri
+Public
+Service
+Commission
+-
+01/09/2023
+-
+ER-2022-0129
+-
+YE-2023-0104
+______
+January 9, 2023
+
+EVERGY METRO, INC. d/b/a EVERGY MISSOURI METRO
+P.S.C. MO. No. 7 3rd Revised Sheet No. 7F
+-----=--==-------
+Canceling P.S.C. MO. No. ___7 ~-- 2nd Revised Sheet No. --~ 7F - ---
+For Missouri Retail Service Area
+RESIDENTIAL TIME OF USE - TWO PERIOD
+Schedule RTOU-2
+AVAILABILITY
+Available to single metered Residential customers receiving AMI-metered secondary electric service as an optional
+rate.
+Not available for Standby, Supplemental, Resale or single metered multi-occupancy Residential Service.
+::!!
+r
+APPLICABILITY m
+0
+Single-phase electric service for residential customers that have a dwelling unit having kitchen facilities, sleeping
+facilities, living facilities and permanent provisions for sanitation. This rate schedule shall also be applicable to ordinary
+domestic and farm use, including but not limited to well pumps, barns, machine sheds, detached garages, home
+workshops and other structures used for permanent human occupancy subject to Company approval. However, this
+schedule is not applicable for crop irrigation, commercial dairies, hatcheries, feed lots, feed mills, dormitories or other
+"C
+structures designed to provide multiple sleeping quarters for unrelated individuals, or any other commercial enterprise. C:
+!2:
+o"
+en
+Three-phase electric service for ordinary domestic and farm use customers being served residential three-phase prior
+CD
+to the effective date of this revision or, at the Company's discretion, for residential customers requesting ordinary <
+~-
+domestic use residential three-phase service subsequent to the effective date of this revision. The Customer shall
+bear all costs related to provision of three-phase service greater than the costs associated with providing normal, (1
+single-phase residential. 0 3
+3
+~-
+TERM OF CONTRACT
+o·
+Contracts under this schedule shall be for a period of not less than one year from the effective date thereof, however,
+::J
+customers may switch their residential service to a different residential rate subject to the terms of use and
+0
+provisions of those rates. I\)
+~
+RAT E. 1 RTOU2. With Net Metering 1 RTOU2N. (Marketed as "Summer Peak Time Based Plan")
+0
+I\)
+0)
+A CUSTOMER CHARGE (Per month) $12.00
+m
+~
+B. ENERGY CHARGE (Per Pricing Period)
+0
+Summer Season I\)
+0)
+On-Peak $0.38328 per kWh I
+0
+Off-Peak $0.09582 per kWh 0
+-..J
+.i:,.
+I
+Winter Season c...
+m
+Off-Peak $0.11311 per kWh rl,
+[DOC 0] https://www.evergy.com/-/media/documents/billing/missouri/detailed_tariffs_mo/mo-metro-rate.pdf
+
+Super Off-Peak $0.05656 per kWh 0
+I\)
+0)
+I
+0
+0
+e..x..,.
+Issued: January 5, 2026 Effective: February 4, 2026
+Issued by: Darrin R. Ives, Vice President 1200 Main, Kansas City, MO 64105
+
+EVERGY METRO, INC. d/b/a EVERGY MISSOURI METRO
+P.S.C. MO. No. Original Sheet No. 7G
+Canceling P.S.C. MO. No. Revised Sheet No.
+For Missouri Retail Service Area
+Residential Time of Use – Two Period
+Schedule RTOU-2
+PRICING PERIODS
+Pricing periods are established in Central Time by Season. The hours for each pricing period by Season are as
+follows:
+Summer
+On-Peak: 4pm-8pm, Monday through Friday, excluding holidays
+Off-Peak: All other hours
+Winter
+Super off-peak Midnight-6am, every day
+Off-peak All other hours
+Holidays are New Year’s Day, Memorial Day, Independence Day, Labor Day, Thanksgiving Day, and Christmas
+Day.
+MINIMUM
+Minimum Monthly Bill:
+1) Customer Charge; plus
+2) Any additional charges for line extensions, if applicable.
+SUMMER AND WINTER SEASONS
+For determination of Seasonal periods, the four (4) summer months shall be defined as the four (4) monthly billing
+periods of June through September. The eight (8) winter months shall be defined as the eight (8) monthly billing
+periods of October through May. Customer bills for meter reading periods including one or more days in both
+seasons will reflect the usage for each period occurring in each season.
+DEMAND SIDE INVESTMENT MECHANISM RIDER
+Subject to Schedule DSIM filed with the State Regulatory Commission.
+FUEL ADJUSTMENT
+Fuel Adjustment Clause, Schedule FAC, shall be applicable to all customer billings under this schedule.
+TAX ADJUSTMENT
+Tax Adjustment Schedule TA shall be applicable to all customer billings under this schedule.
+REGULATIONS
+Subject to Rules and Regulations filed with the State Regulatory Commission.
+___________________________________________________________________________________
+Issued: December 2, 2022 Effective: January 1, 2023
+Issued by: Darrin Ives, Vice President 1200 Main, Kansas City, MO 64105
+FILED
+-
+Missouri
+Public
+Service
+Commission
+-
+01/09/2023
+-
+ER-2022-0129
+-
+YE-2023-0104
+______
+January 9, 2023
+
+EVERGY METRO, INC. d/b/a EVERGY MISSOURI METRO
+P.S.C. MO. No. 7 11th Revised Sheet No. 30
+Canceling P.S.C. MO. No. 7 10th Revised Sheet No. 30
+For Missouri Retail Service Area
+NET METERING OPTION FOR RESIDENTIAL TIME OF USE
+Schedule NM-TOU
+PURPOSE
+To modify the DETERMINATION OF NET ELECTRICAL ENERGY section of the Company Net Metering
+Interconnect Application Agreement tariff, sheet 34D to allow residential customers receiving service under a Time
+of Use (TOU) rate schedule to participate in Net Metering.
+APPLICABILITY
+Applicable to Customer-Generators with a Company approved interconnection agreement, receiving service under
+Schedule RTOU, RTOU-2, or RTOU-3. All aspects of the Company Net Metering Interconnect Application
+Agreement tariff, sheets 34 through 34P, except for the DETERMINATION OF NET ELECTRICAL ENERGY
+section are applicable to customers receiving service as a result of th
+[DOC 0] https://www.evergy.com/-/media/documents/billing/missouri/detailed_tariffs_mo/mo-metro-rate.pdf
+31)(cid:30)!|(cid:6)(cid:131) *(cid:30)(cid:6)-1(cid:30)! "(cid:30))(cid:27) (cid:25)(cid:26)}}(cid:6).( )|(cid:6)(cid:132)()!(!(cid:6)’ (cid:27)(cid:129)|(cid:6)./(cid:6)(cid:133)(cid:134)(cid:25)}(cid:135)(cid:6)
+(cid:136)(cid:137)(cid:138)(cid:139)(cid:140)(cid:6)(cid:141)(cid:6)(cid:142)(cid:143)(cid:144)(cid:144)(cid:145)(cid:146)(cid:147)(cid:143)(cid:6)(cid:148)(cid:146)(cid:149)(cid:150)(cid:143)(cid:151)(cid:6)(cid:152)(cid:153)(cid:147)(cid:154)(cid:143)(cid:151)(cid:153)(cid:6)(cid:155)(cid:145)(cid:156)(cid:156)(cid:143)(cid:144)(cid:144)(cid:143)(cid:145)(cid:157)(cid:6)(cid:141)(cid:6)(cid:158)(cid:159)(cid:160)(cid:159)¡(cid:160)¢(cid:159)¢£(cid:6)(cid:141)(cid:6)(cid:139)⁄(cid:141)¢(cid:159)¢¥(cid:141)(cid:159)(cid:159)ƒ(cid:158)(cid:6)(cid:141)(cid:6)§(cid:139)(cid:141)¢(cid:159)¢¥(cid:141)(cid:159)(cid:159)£ƒ
+
+EVERGY MISSOURI METRO, INC. d/b/a EVERGY MISSOURI METRO
+P.S.C. MO. No. 7 10th Revised Sheet No. 8A
+Canceling P.S.C. MO. No. 7 9th Revised Sheet No. 8A
+For Missouri Retail Service Area
+Residential Time Of Day Service (FROZEN)
+Schedule RTOD
+MINIMUM
+Minimum Monthly Bill:
+(i) $12.00 per customer; plus
+(ii) Any additional charges for line extensions.
+SUMMER AND WINTER SEASONS
+For determination of Seasonal periods, the four (4) summer months shall be defined as the four (4) monthly billing
+periods of June through September. The eight (8) winter months shall be defined as the eight (8) monthly billing
+periods of October through May. Customer bills for meter reading periods including one or more days in both
+seasons will reflect the usage for each period occurring in each season.
+SUMMER ON-PEAK AND OFF-PEAK PERIODS
+On-peak hours are defined to be the hours between 1 p.m. and 7 p.m., Monday through Friday, excluding week-
+day holidays during the Summer Season. Off-Peak hours are defined to be all other hours during the Summer
+Season. Week-day holidays are Independence Day and Labor Day.
+DEMAND SIDE INVESTMENT MECHANISM RIDER
+Subject to Schedule DSIM filed with the State Regulatory Commission.
+FUEL ADJUSTMENT:
+Fuel Adjustment Clause, Schedule FAC, shall be applicable to all customer billings under this schedule.
+TAX ADJUSTMENT
+Tax Adjustment Schedule TA shall be applicable to all customer billings under this schedule.
+REGULATIONS
+Subject to Rules and Regulations filed with the State Regulatory Commission.
+Issued: December 2, 2022 Effective: January 1, 2023
+Issued by: Darrin R. Ives, Vice President 1200 Main, Kansas City, MO 64105
+FILED
+-
+Missouri
+Public
+Service
+Commission
+-
+01/09/2023
+-
+ER-2022-0129
+-
+YE-2023-0104
+______
+January 9, 2023
+
+EVERGY METRO, INC. d/b/a EVERGY MISSOURI METRO
+P.S.C. MO. No. 7 Original Sheet No. 57
+Canceling P.S.C. MO. No. Revised Sheet No.
+For Missouri Retail Service Area
+RESIDENTIAL BATTERY ENERGY STORAGE PILOT
+Schedule RBES
+PURPOSE
+The Residential Battery Energy Storage (RBES) pilot will evaluate the ability of residential batteries to deliver customer
+benefits and provide services in support of the Compan
+[DOC 0] https://www.evergy.com/-/media/documents/billing/missouri/detailed_tariffs_mo/mo-metro-rate.pdf
+y’s electrical system. The RBES pilot will allow the Company to
+evaluate the ability of a residential battery energy storage system (BESS) to 1) provide the Company with demand
+response capacity to better manage grid and system peaks charging, 2) minimize grid impacts by self-consuming
+renewable generation and minimizing exports to the grid, and 3) provide customer bill savings and back-up power
+benefits.
+AVAILABILITY
+This voluntary pilot Program is limited to 50 residential customers meeting the eligibility requirements below.
+ELIGIBILITY
+The program is available to residential customers meeting the following eligibility criteria:
+1. Customer must own the residential property at which the BESS will be installed
+2. Customer’s service must be single phase 120/240V AC and meet the minimum electrical and code requirements
+established by the BESS technology provider.
+3. Customer’s site must meet the Company’s site suitability requirements
+4. Company employees, board of directors, contractors, agents and affiliate employees shall not be permitted to
+participate
+If a customer leaves prior to the conclusion of the pilot the battery storage system will be redeployed to an eligible customer
+to collect data for the remainder of the pilot.
+PROGRAM PROVISIONS
+Company will own, install, maintain, and operate a BESS on the Customer’s premise.
+Company may operate the BESS for a variety of uses, including but not limited to:
+1. Customer self-consumption local generation to minimize the export of energy and minimize the customer
+energy draw from the grid during peak usage periods.
+2. Charge the BESS from local generation or the Company’s power grid when energy costs less, during “off-peak”
+hours.
+3. Use the reserved/stored capacity of the BESS to manage system load during periods of peak usage.
+Residential Battery Energy Storage (RBES) Pilot program cost is capped at 2.5 million dollars.
+Cost for pilot EM&V will be covered by company shareholders.
+Issued: December 2, 2022 Effective: January 1, 2023
+Issued by Darrin Ives, Vice President 1200 Main, Kansas City, MO 64105
+FILED
+-
+Missouri
+Public
+Service
+Commission
+-
+01/09/2023
+-
+ER-2022-0129
+-
+YE-2023-0104
+______
+January 9, 2023
+
+EVERGY METRO, INC. d/b/a EVERGY MISSOURI METRO
+P.S.C. MO. No. 7 Original Sheet No. 57A
+Canceling P.S.C. MO. No. Revised Sheet No.
+For Missouri Retail Service Area
+RESIDENTIAL BATTERY ENERGY STORAGE PILOT
+Schedule RBES
+MONTHLY BILLING
+Participants shall be assessed the following program fees and charges.
+BESS $ 10.00 per month
+PROGRAM CONDITIONS
+1. Participant must agree to the contractual terms in the Residential Battery Energy Storage Pilot Agreement.
+2. Participant must provide suitable location, typically outdoors in a protected location or in garage, for installation
+of the BESS in close proximity to the Customer’s electrical panel and distributed generation disconnect.
+3. Installation of the BESS will require connecting the BESS to the Customer’s service panel/service entrance and
+recon
+[DOC 0] https://www.evergy.com/-/media/documents/billing/missouri/detailed_tariffs_mo/mo-metro-rate.pdf
+necting the distributed generation feed to the BESS. Participant will be provided with a proposed wiring
+diagram prior to installation.
+4. The Company will obtain all applicable permits and install the BESS in accordance with all applicable codes.
+5. Participant must allow the Company or its agents, with reasonable notice, unrestricted access to the BESS on
+Participant’s property for system installation and to perform any necessary ongoing system maintenance.
+6. The Company will file a report at the end of the first quarter of 2026 that outlines the results of the pilot and
+directly addresses the learning objectives that were initially identified.
+7. The Company will not file for any residential battery pilot, expansion of the existing pilot, or otherwise request
+recovery of a residential battery program until after the report subject to subparagraph 6 above is filed.
+8. The RBES Pilot Program is capped at $2.5 million through December 31, 2025. Shareholders will cover the
+cost of EM&V.
+DEFINITIONS
+Battery Energy Storage System (BESS) – includes battery, inverter, control system(s) and cabling. Multiple equipment
+models may be used.
+Participant – customer that meets the eligibility requirements and signs the Residential Battery Energy Storage Pilot
+Agreement
+Program – this Battery Energy Storage Pilot program
+TAX ADJUSTMENT
+Tax Adjustment Schedule TA shall be applicable to all customer billings under this schedule.
+REGULATIONS
+Subject to Rules and Regulations filed with the State Regulatory Commission.
+Issued: December 2, 2022 Effective: January 1, 2023
+Issued by Darrin Ives, Vice President 1200 Main, Kansas City, MO 64105
+FILED
+-
+Missouri
+Public
+Service
+Commission
+-
+01/09/2023
+-
+ER-2022-0129
+-
+YE-2023-0104
+______
+January 9, 2023
+
+COMMERCIAL
+&
+INDUSTRIAL
+
+EVERGY METRO, INC. d/b/a EVERGY MISSOURI METRO
+P.S.C. MO. No. 7 4th Revised Sheet No. 9
+Cancelling P.S.C. MO. 7 3rd Revised Sheet No. 9
+For Missouri Retail Service Area
+SMALL GENERAL SERVICE
+Schedule SGS
+AVAILABILITY
+For electric service through one meter to a customer using electric service for purposes other than those included in the
+availability provisions of the Residential Service Rate Schedule. At the Company’s discretion, service may be provided
+through more than one meter where it is economical for the Company to do so.
+For secondary electric service through a separately metered circuit for existing customers for electric space heating
+purposes. Electric space heating equipment may be supplemented by or used as a supplement to wood burning
+fireplaces, wood burning stoves, active or passive solar heating, and in conjunction with fossil fuels where the
+combination of energy sources results in a net economic benefit to the customer. Electric space heating equipment shall
+be permanently installed, thermostatically controlled, and of a size and design approved by the Company. In addition to
+the electric space heating equipment, only permanently installed all electric equipment, used to cool 
+[DOC 0] https://www.evergy.com/-/media/documents/billing/missouri/detailed_tariffs_mo/mo-metro-rate.pdf
+or air condition the
+same space which is electrically heated, may be connected to the separately metered circuit. For billing purposes,
+usage from separately metered installations will be combined by the Company and treated as a single meter.
+Service will not be supplied where the ultimate use is primarily for residential purposes.
+Standby, breakdown or supplementary service is available under this schedule if the customer seeking such service first
+enters into a special contract which includes technical and safety requirements similar to those required for qualifying
+facilities in 4 CSR 240-20.060(2)(C). These requirements, and the associated interconnection costs, shall be reasonable
+and assessed on a nondiscriminatory basis with respect to other customers with similar load characteristics. Temporary
+service supplied under this schedule will be connected and disconnected in accordance with the General Rules and
+Regulations.
+APPLICABILITY
+Applicable to multiple-occupancy buildings when the tenants or occupants of the building are furnished with electric
+service on a rent inclusion basis.
+This rate also will be applied to the combined use of a customer at the premise where two or more classes of service
+(such as one-phase and three-phase services) to the customer at such premise are measured by separate meters, but
+only in the case of such customers connected prior to May 5, 1986. Monthly Maximum Demand will be computed as the
+sum of the individual meters’ monthly maximum 30-minute interval demand at each service. Customers with more than
+one class of service connected on or after May 5, 1986 will be billed separately for each class of service.
+TERM OF CONTRACT
+Contracts under this schedule shall be for a period of not less than one year from the effective date thereof, except in the
+case of temporary service.
+Issued: December 2, 2022 Effective: January 1, 2023
+Issued by: Darrin R. Ives, Vice President 1200 Main, Kansas City, MO 64105
+FILED
+-
+Missouri
+Public
+Service
+Commission
+-
+01/09/2023
+-
+ER-2022-0129
+-
+YE-2023-0104
+_Ja_nua_ry 9_, 20_23_
+
+EVERGY METRO, INC. d/b/a EVERGY MISSOURI METRO
+P.S.C. MO. No. 7 11th Revised Sheet No. 9A
+Canceling P.S.C. MO. No. 7 10th Revised Sheet No. 9A
+For Missouri Retail Service Area
+Small General Service
+Schedule SGS
+RATE FOR SERVICE AT SECONDARY VOLTAGE, 1SGSE & 1SUSE
+A. CUSTOMER CHARGE:
+Customer pays one of the following charges per month based upon the Facilities Demand:
+Metered Service:
+0-24 kW $18.69
+25-199 kW $51.81
+200-999 kW $105.24
+1000 kW or above $898.57
+Unmetered Service: $7.84
+B. FACILITIES CHARGE:
+Per kW of Facilities Demand per month
+First 25 kW $0.000
+All kW over 25 kW $3.011
+C. ENERGY CHARGE:
+Summer Season Winter Season
+First 180 Hours Use per month: $0.16583 per kWh $0.12885 per kWh
+Next 180 Hours Use per month: $0.07871 per kWh $0.06291 per kWh
+Over 360 Hours Use per month: $0.07010 per kWh $0.05679 per kWh
+Issued: December 2, 2022 Effective: January 1, 2023
+Issued by: Darrin R. Ives, Vice Presid
+[DOC 0] https://www.evergy.com/-/media/documents/billing/missouri/detailed_tariffs_mo/mo-metro-rate.pdf
+Revised Sheet No. 10
+For Missouri Retail Service Area
+MEDIUM GENERAL SERVICE
+Schedule MGS
+AVAILABILITY
+For electric service through one meter to a customer using electric service for purposes other than those included in
+the availability provisions of the Residential Service Rate Schedule. At the Company’s discretion, service may be
+provided through more than one meter where it is economical for the Company to do so.
+For secondary electric service through a separately metered circuit for existing customers for electric space heating
+purposes. Electric space heating equipment may be supplemented by or used as a supplement to wood burning
+fireplaces, wood burning stoves, active or passive solar heating, and in conjunction with fossil fuels where the
+combination of energy sources results in a net economic benefit to the customer. Electric space heating equipment
+shall be permanently installed, thermostatically controlled, and of a size and design approved by the Company. In
+addition to the electric space heating equipment, only permanently installed all electric equipment, used to cool or
+air condition the same space which is electrically heated, may be connected to the separately metered circuit. For
+billing purposes, usage from separately metered installations will be combined by the Company and treated as a
+single meter.
+Service will not be supplied where the ultimate use is primarily for residential purposes.
+Standby, breakdown or supplementary service is available under this schedule if the customer seeking such service
+first enters into a special contract which includes technical and safety requirements similar to those required for
+qualifying facilities in 4 CSR 240-20.060(2)(C). These requirements, and the associated interconnection costs, shall
+be reasonable and assessed on a nondiscriminatory basis with respect to other customers with similar load
+characteristics. Temporary service supplied under this schedule will be connected and disconnected in accordance
+with the General Rules and Regulations.
+APPLICABILITY
+Applicable to multiple-occupancy buildings when the tenants or occupants of the building are furnished with electric
+service on a rent inclusion basis.
+This rate also will be applied to the combined use of a customer at the premise where two or more classes of
+service (such as one-phase and three-phase services) to the customer at such premise are measured by separate
+meters, but only in the case of such customers connected prior to May 5, 1986. Monthly Maximum Demand will be
+computed as the sum of the individual meters’ monthly maximum 30-minute interval demand at each service.
+Customers with more than one class of service connected on or after May 5, 1986 will be billed separately for each
+class of service.
+TERM OF CONTRACT
+Contracts under this schedule shall be for a period of not less than one year from the effective date thereof, except
+in the case of temporary service.
+Issued: December 2, 2022 Effective: January 1, 2023
+Issued
+[DOC 0] https://www.evergy.com/-/media/documents/billing/missouri/detailed_tariffs_mo/mo-metro-rate.pdf
+ by: Darrin R. Ives, Vice President 1200 Main, Kansas City, MO 64105
+FILED
+-
+Missouri
+Public
+Service
+Commission
+-
+01/09/2023
+-
+ER-2022-0129
+-
+YE-2023-0104
+_Ja_nua_ry 9_, 20_23_
+
+EVERGY METRO, INC. d/b/a EVERGY MISSOURI METRO
+P.S.C. MO. No. 7 11th Revised Sheet No. 10A
+Canceling P.S.C. MO. No. 7 10th Revised Sheet No. 10A
+For Missouri Retail Service Area
+Medium General Service
+Schedule MGS
+RATE FOR SERVICE AT SECONDARY VOLTAGE, 1MGSE
+A. CUSTOMER CHARGE:
+Customer pays one of the following charges per month based upon the Facilities Demand:
+0-24 kW $55.47
+25-199 kW $55.47
+200-999 kW $112.65
+1000 kW or above $961.83
+B. FACILITIES CHARGE:
+Per kW of Facilities Demand per month $3.223
+C. DEMAND CHARGE:
+Summer Season Winter Season
+Per kW of Billing Demand per month $4.217 $2.145
+D. ENERGY CHARGE:
+Summer Season Winter Season
+First 180 Hours Use per month: $0.10953 per kWh $0.09464 per kWh
+Next 180 Hours Use per month: $0.07492 per kWh $0.05664 per kWh
+Over 360 Hours Use per month: $0.06319 per kWh $0.04751 per kWh
+Issued: December 2, 2022 Effective: January 1, 2023
+Issued by: Darrin R. Ives, Vice President 1200 Main, Kansas City, MO 64105
+FILED
+-
+Missouri
+Public
+Service
+Commission
+-
+01/09/2023
+-
+ER-2022-0129
+-
+YE-2023-0104
+______
+January 9, 2023
+
+EVERGY METRO, INC. d/b/a EVERGY MISSOURI METRO
+P.S.C. MO. No. 7 11th Revised Sheet No. 10B
+Canceling P.S.C. MO. No. 7 10th Revised Sheet No. 10B
+For Missouri Retail Service Area
+Medium General Service
+Schedule MGS
+RATE FOR SERVICE AT PRIMARY VOLTAGE, 1MGSF
+A. CUSTOMER CHARGE:
+Customer pays one of the following charges per month based upon the Facilities Demand:
+0-24 kW $55.47
+25-199 kW $55.47
+200-999 kW $112.65
+1000 kW or above $961.83
+B. FACILITIES CHARGE:
+Per kW of Facilities Demand per month $2.671
+C. DEMAND CHARGE:
+Summer Season Winter Season
+Per kW of Billing Demand per month $4.118 $2.094
+D. ENERGY CHARGE:
+Summer Season Winter Season
+First 180 Hours Use per month: $0.10691 per kWh $0.09242 per kWh
+Next 180 Hours Use per month: $0.07323 per kWh $0.05533 per kWh
+Over 360 Hours Use per month: $0.06174 per kWh $0.04660 per kWh
+Issued: December 2, 2022 Effective: January 1, 2023
+Issued by: Darrin R. Ives, Vice President 1200 Main, Kansas City, MO 64105
+FILED
+-
+Missouri
+Public
+Service
+Commission
+-
+01/09/2023
+-
+ER-2022-0129
+-
+YE-2023-0104
+______
+January 9, 2023
+
+EVERGY METRO, INC. d/b/a EVERGY MISSOURI METRO
+P.S.C. MO. No. 7 11th Revised Sheet No. 10C
+Canceling P.S.C. MO. No. 7 10th Revised Sheet No. 10C
+For Missouri Retail Service Area
+Medium General Service
+Schedule MGS
+REACTIVE DEMAND ADJUSTMENT (Secondary and Primary Service)
+Company may determine the customer’s monthly maximum 30-minute reactive demand in kilovars. In each month a
+charge of $0.803 per month shall be made for each kilovar by which such maximum reactive demand is greater than
+fifty percent (50%) of the customer’s Monthly Maximum Demand (kW) in that month. The maximum reactive demand
+in kilovars shall be computed similarly to the Monthly Maximum
+[DOC 0] https://www.evergy.com/-/media/documents/billing/missouri/detailed_tariffs_mo/mo-metro-rate.pdf
+NATION OF HOURS USE
+Hours Use shall be determined by dividing the total monthly kWh on all meters by the Monthly Maximum Demand in
+the current month.
+METERING AT DIFFERENT VOLTAGES
+The Company may, at its option, install metering equipment on the secondary side of a primary voltage customer’s
+transformer. In that event, the customer’s metered demand and energy shall be increased either by the installation
+of compensation metering equipment, or by 2.34% if metering equipment is not compensated.
+The Company may also, at its option, install metering equipment on the primary side of the transformer for a
+secondary voltage customer. In this case, the customer’s metered demand and energy shall be decreased by
+2.29%, or alternatively, compensation metering may be installed.
+DEMAND SIDE INVESTMENT MECHANISM RIDER & NON-MEEIA OPT-OUT PROVISIONS
+Subject to Schedule DSIM and Rules and Regulations filed with the State Regulatory Commission (Section 8.09,
+Sheet 1.28).
+FUEL ADJUSTMENT
+Fuel Adjustment Clause, Schedule FAC, shall be applicable to all customer billings under this schedule.
+TAX ADJUSTMENT
+Tax Adjustment Schedule TA shall be applicable to all customer billings under this schedule.
+REGULATIONS
+Subject to Rules and Regulations filed with the State Regulatory Commission.
+Issued: December 2, 2022 Effective: January 1, 2023
+Issued by: Darrin R. Ives, Vice President 1200 Main, Kansas City, MO 64105
+FILED
+-
+Missouri
+Public
+Service
+Commission
+-
+01/09/2023
+-
+ER-2022-0129
+-
+YE-2023-0104
+______
+January 9, 2023
+
+EVERGY METRO, INC. d/b/a EVERGY MISSOURI METRO
+P.S.C. MO. No. 7 4th Revised Sheet No. 11
+Cancelling P.S.C. MO. No. 7 3rd Revised Sheet No. 11
+For Missouri Retail Service Area
+LARGE GENERAL SERVICE
+Schedule LGS
+AVAILABILITY
+For electric service through one meter to a customer using electric service for purposes other than those included in
+the availability provisions of the Residential Service Rate Schedule. At the Company’s discretion, service may be
+provided through more than one meter where it is economical for the Company to do so.
+For secondary electric service through a separately metered circuit for existing customers for electric space heating
+purposes. Electric space heating equipment may be supplemented by or used as a supplement to wood burning
+fireplaces, wood burning stoves, active or passive solar heating, and in conjunction with fossil fuels where the
+combination of energy sources results in a net economic benefit to the customer. Electric space heating equipment
+shall be permanently installed, thermostatically controlled, and of a size and design approved by the Company. In
+addition to the electric space heating equipment, only permanently installed all electric equipment, used to cool or air
+condition the same space which is electrically heated, may be connected to the separately metered circuit. For
+billing purposes, usage from separately metered installations will be combined by the Company and treated as a
+single meter.
+Service will 
+[DOC 0] https://www.evergy.com/-/media/documents/billing/missouri/detailed_tariffs_mo/mo-metro-rate.pdf
+not be supplied where the ultimate use is primarily for residential purposes.
+Standby, breakdown or supplementary service is available under this schedule if the customer seeking such service
+first enters into a special contract which includes technical and safety requirements similar to those required for
+qualifying facilities in 4 CSR 240-20.060(2)(C). These requirements, and the associated interconnection costs, shall
+be reasonable and assessed on a nondiscriminatory basis with respect to other customers with similar load
+characteristics. Temporary service supplied under this schedule will be connected and disconnected in accordance
+with the General Rules and Regulations.
+APPLICABILITY
+Applicable to multiple-occupancy buildings when the tenants or occupants of the building are furnished with electric
+service on a rent inclusion basis.
+This rate also will be applied to the combined use of a customer at the premise where two or more classes of service
+(such as one-phase and three-phase services) to the customer at such premise are measured by separate meters,
+but only in the case of such customers connected prior to May 5, 1986. Monthly Maximum Demand will be
+computed as the sum of the individual meters’ monthly maximum 30-minute interval demand at each service.
+Customers with more than one class of service connected on or after May 5, 1986 will be billed separately for each
+class of service.
+TERM OF CONTRACT
+Contracts under this schedule shall be for a period of not less than one year from the effective date thereof, except in
+the case of temporary service.
+Issued: December 2, 2022 Effective: January 1, 2023
+Issued by: Darrin R. Ives, Vice President 1200 Main, Kansas City, MO 64105
+FILED
+-
+Missouri
+Public
+Service
+Commission
+-
+01/09/2023
+-
+ER-2022-0129
+-
+YE-2023-0104
+______
+January 9, 2023
+
+EVERGY METRO, INC. d/b/a EVERGY MISSOURI METRO
+P.S.C. MO. No. 7 11th Revised Sheet No. 11A
+Canceling P.S.C. MO. No. 7 10th Revised Sheet No. 11A
+For Missouri Retail Service Area
+Large General Service
+Schedule LGS
+RATE FOR SERVICE AT SECONDARY VOLTAGE, 1LGSE
+A. CUSTOMER CHARGE:
+Customer pays one of the following charges per month based upon the Facilities Demand:
+0-24 kW $122.14
+25-199 kW $122.14
+200-999 kW $122.14
+1000 kW or above $1,042.78
+B. FACILITIES CHARGE:
+Per kW of Facilities Demand per month $3.494
+C. DEMAND CHARGE:
+Summer Season Winter Season
+Per kW of Billing Demand per month $6.978 $3.754
+D. ENERGY CHARGE:
+Summer Season Winter Season
+First 180 Hours Use per month: $0.09803 per kWh $0.09008 per kWh
+Next 180 Hours Use per month: $0.06758 per kWh $0.05194 per kWh
+Over 360 Hours Use per month: $0.04352 per kWh $0.03657 per kWh
+Issued: December 2, 2022 Effective: January 1, 2023
+Issued by: Darrin R. Ives, Vice President 1200 Main, Kansas City, MO 64105
+FILED
+-
+Missouri
+Public
+Service
+Commission
+-
+01/09/2023
+-
+ER-2022-0129
+-
+YE-2023-0104
+______
+January 9, 2023
+
+EVERGY METRO, INC. d/b/a EVERGY MISSOURI METRO
+P.S.C. MO. No. 7 11th Revised Sheet No. 11B
+Can
+[DOC 0] https://www.evergy.com/-/media/documents/billing/missouri/detailed_tariffs_mo/mo-metro-rate.pdf
+celing P.S.C. MO. No. 7 10th Revised Sheet No. 11B
+For Missouri Retail Service Area
+Large General Service
+Schedule LGS
+RATE FOR SERVICE AT PRIMARY VOLTAGE, 1LGSF
+A. CUSTOMER CHARGE:
+Customer pays one of the following charges per month based upon the Facilities Demand:
+0-24 kW $122.14
+25-199 kW $122.14
+200-999 kW $122.14
+1000 kW or above $1,042.78
+B. FACILITIES CHARGE:
+Per kW of Facilities Demand per month $2.897
+C. DEMAND CHARGE:
+Summer Season Winter Season
+Per kW of Billing Demand per month $6.819 $3.669
+D. ENERGY CHARGE:
+Summer Season Winter Season
+First 180 Hours Use per month: $0.09584 per kWh $0.08802 per kWh
+Next 180 Hours Use per month: $0.06597 per kWh $0.05070 per kWh
+Over 360 Hours Use per month: $0.04250 per kWh $0.03586 per kWh
+Issued: December 2, 2022 Effective: January 1, 2023
+Issued by: Darrin R. Ives, Vice President 1200 Main, Kansas City, MO 64105
+FILED
+-
+Missouri
+Public
+Service
+Commission
+-
+01/09/2023
+-
+ER-2022-0129
+-
+YE-2023-0104
+______
+January 9, 2023
+
+EVERGY METRO, INC. d/b/a EVERGY MISSOURI METRO
+P.S.C. MO. No. 7 10th Revised Sheet No. 11C
+Canceling P.S.C. MO. No. 7 9th Revised Sheet No. 11C
+For Missouri Retail Service Area
+Large General Service
+Schedule LGS
+REACTIVE DEMAND ADJUSTMENT (Secondary and Primary Service)
+Company may determine the customer’s monthly maximum 30-minute reactive demand in kilovars. In each month
+a charge of $0.874 per month shall be made for each kilovar by which such maximum reactive demand is greater
+than fifty percent (50%) of the customer’s Monthly Maximum Demand (kW) in that month. The maximum reactive
+demand in kilovars shall be computed similarly to the Monthly Maximum Demand as defined in the Determination
+of Demands section.
+MINIMUM MONTHLY BILL
+The Minimum Monthly Bill shall be equal to the sum of the Customer Charge, Facilities Charge, Demand Charge,
+and Reactive Demand Adjustment.
+SUMMER AND WINTER SEASONS
+For determination of Seasonal periods, the four (4) summer months shall be defined as the four (4) monthly billing
+periods of June through September. The eight (8) winter months shall be defined as the eight (8) monthly billing
+periods of October through May. Customer bills for meter reading periods including one or more days in both
+seasons will reflect the number of days in each season.
+SECONDARY AND PRIMARY VOLTAGE CUSTOMER DEFINITIONS
+Secondary voltage customer Receives service on the low side of the line transformer.
+Primary voltage customer Receives service at Primary voltage of 12,000 volts or over but not
+exceeding 69,000 volts. Customers receiving service at 4160 volts as of
+May 5, 1986 are also classified as Primary voltage customers. Customer
+will own all equipment necessary for transformation including the line
+transformer.
+Issued: December 2, 2022 Effective:(cid:3)January 1, 2023
+Issued by: Darrin R. Ives, Vice President 1200 Main, Kansas City, MO 64105
+FILED
+-
+Missouri
+Public
+Service
+Commission
+-
+01/09/2023
+-
+ER-2022-0129
+-
+YE-2023-0104
+______
+January 9, 2023
+
+EVERGY METRO
+[DOC 0] https://www.evergy.com/-/media/documents/billing/missouri/detailed_tariffs_mo/mo-metro-rate.pdf
+Issued by: Darrin R. Ives, Vice President 1200 Main, Kansas City, MO 64105
+FILED
+-
+Missouri
+Public
+Service
+Commission
+-
+01/09/2023
+-
+ER-2022-0129
+-
+YE-2023-0104
+______
+January 9, 2023
+
+EVERGY METRO, INC. d/b/a EVERGY MISSOURI METRO
+P.S.C. MO. No. 7 2nd Revised Sheet No. 14
+-----=---'-----
+Canceling P.S.C. MO. No. ___7 ~-- 1st Revised Sheet No. 14
+-------
+For Missouri Retail Service Area
+LARGE POWER SERVICE
+Schedule LPS
+AVAILABILITY
+For electric service through one meter to a customer using electric service for purposes other than those included in
+the availability provisions of the Residential Service Rate Schedule. At the Company's discretion, service may be
+provided through more than one meter where it is economical for the Company to do so.
+::!!
+Service will not be supplied where the ultimate use is primarily for residential purposes. r
+m
+0
+Customers on this schedule, who increase their load through a single expansion that is reasonably expected to reach
+s:::
+or exceed seventy-five thousand (75,000) kilowatts shall not be allowed to receive service for such expansion under
+iii"
+this schedule and will be required to receive service under Schedule LLPS or other applicable rate schedule for such en
+0
+expansion. Should Customers on this Schedule reach or exceed seventy-five thousand (75,000) kilowatts through C:
+:::::!.
+one or more expansions, each less than seventy-five thousand (75,000) kilowatts, the Company shall examine the
+"C
+collective nature and purpose of these expansions and may require the customer to receive service under Schedule C:
+!:!::
+LLPS or other applicable rate schedule. o"
+en
+CD
+Service is available under this schedule to the following types of customers based on voltage level: <
+~;r
+Secondary voltage customer - Receives service on the low side of the line transformer. C1
+0
+3
+Primary voltage customer- Receives service at Primary Voltage of 12,000 volts or over but not 3
+iii"
+exceeding 69,000 volts. Customers receiving service at 4,160 volts as of May en
+o·
+5, 1986 are also classified as Primary voltage customers. Customer will own all
+::J
+equipment necessary for transformation including the line transformer.
+0w- -
+Substation voltage customer - Service is taken directly out of a distribution substation at primary voltage. The 0
+~
+customer will own the feeder circuits out of this substation.
+0
+"'
+(J)
+Transmission voltage customer -The customer owns, leases, or otherwise bears financial responsibility for the
+m
+distribution substation. Service is taken off of the Company's transmission
+0
+system. ~
+0
+"'
+0,
+Standby, breakdown, or supplementary service is available under this schedule if the customer seeking such service I
+0
+first enters into a special contract which includes technical and safety requirements similar to those required for ....>.
+i
+qualifying facilities in 20 CSR 4240-20.060(2)(C). These requirements, and the associated interconnection costs, shall
+I
+be reasonable and assessed on a nondiscriminatory basis with respec
+[DOC 0] https://www.evergy.com/-/media/documents/billing/missouri/detailed_tariffs_mo/mo-metro-rate.pdf
+t to other customers with similar load t...
+m
+characteristics. Temporary or seasonal service will not be supplied under this schedule.
+~
+0
+"'
+TERM OF CONTRACT (J)
+I
+Contracts under this schedule shall be for a period of not less than one year from the effective date thereof. 0 ... .>.
+0
+~
+Issued: February 5, 2026 Effective: March 9, 2026
+Issued by: Darrin R. Ives, Senior Vice President 1200 Main, Kansas City, MO 64105
+
+EVERGY METRO, INC. d/b/a EVERGY MISSOURI METRO
+P.S.C. MO. No. 7 11th Revised Sheet No. 14A
+Canceling P.S.C. MO. No. 7 10th Revised Sheet No. 14A
+For Missouri Retail Service Area
+Large Power Service
+Schedule LPS
+RATE FOR SERVICE AT SECONDARY VOLTAGE, 1PGSE
+A. CUSTOMER CHARGE (per month): $1,181.28
+B. FACILITIES CHARGE:
+Per kW of Facilities Demand per month $3.956
+C. DEMAND CHARGE:
+Per kW of Billing Demand per month
+Summer Season Winter Season
+First 2443 kW $15.348 $10.433
+Next 2443 kW $12.277 $8.141
+Next 2443 kW $10.285 $7.182
+All kW over 7329 kW $7.508 $5.529
+D. ENERGY CHARGE:
+Summer Season Winter Season
+First 180 Hours Use per month: $0.09127 per kWh $0.07737 per kWh
+Next 180 Hours Use per month: $0.05425 per kWh $0.04934 per kWh
+Over 360 Hours Use per month: $0.02603 per kWh $0.02577 per kWh
+RATE FOR SERVICE AT PRIMARY VOLTAGE, 1PGSF
+A. CUSTOMER CHARGE (per month): $1,181.28
+B. FACILITIES CHARGE:
+Per kW of Facilities Demand per month $3.279
+C. DEMAND CHARGE:
+Per kW of Billing Demand per month
+Summer Season Winter Season
+First 2500 kW $14.996 $10.192
+Next 2500 kW $11.998 $7.956
+Next 2500 kW $10.049 $7.017
+All kW over 7500 kW $7.337 $5.404
+D. ENERGY CHARGE:
+Summer Season Winter Season
+First 180 Hours Use per month: $0.08918 per kWh $0.07559 per kWh
+Next 180 Hours Use per month: $0.05302 per kWh $0.04820 per kWh
+Over 360 Hours Use per month: $0.02541 per kWh $0.02518 per kWh
+Issued: December 2, 2022 Effective: January 1, 2023
+Issued by: Darrin R. Ives, Vice President 1200 Main, Kansas City, MO 64105
+FILED
+-
+Missouri
+Public
+Service
+Commission
+-
+01/09/2023
+-
+ER-2022-0129
+-
+YE-2023-0104
+______
+January 9, 2023
+
+EVERGY METRO, INC. d/b/a EVERGY MISSOURI METRO
+P.S.C. MO. No. 7 11th Revised Sheet No. 14B
+Canceling P.S.C. MO. No. 7 10th Revised Sheet No. 14B
+For Missouri Retail Service Area
+Large Power Service
+Schedule LPS
+RATE FOR SERVICE AT SUBSTATION VOLTAGE, 1PGSV
+A. CUSTOMER CHARGE (per month): $1,181.28
+B. FACILITIES CHARGE:
+Per kW of Facilities Demand per month $0.990
+C. DEMAND CHARGE:
+Per kW of Billing Demand per month
+Summer Season Winter Season
+First 2530 kW $14.817 $10.073
+Next 2530 kW $11.854 $7.862
+Next 2530 kW $9.929 $6.936
+All kW over 7590 kW $7.251 $5.340
+D. ENERGY CHARGE:
+Summer Season Winter Season
+First 180 Hours Use per month: $0.08813 per kWh $0.07473 per kWh
+Next 180 Hours Use per month: $0.05239 per kWh $0.04764 per kWh
+Over 360 Hours Use per month: $0.02512 per kWh $0.02488 per kWh
+RATE FOR SERVICE AT TRANSMISSION VOLTAGE, 1PGSZ
+A. CUSTOMER CHARGE (per month): $1,181.28
+B. FACILITIES CHARGE:
+Per kW of Facilities Deman
+[DOC 0] https://www.evergy.com/-/media/documents/billing/missouri/detailed_tariffs_mo/mo-metro-rate.pdf
+d per month $0.000
+C. DEMAND CHARGE:
+Per kW of Billing Demand per month
+Summer Season Winter Season
+First 2553 kW $ 14.690 $9.983
+Next 2553 kW $ 11.748 $7.791
+Next 2553 kW $ 9.839 $6.875
+All kW over 7659 kW $ 7.185 $5.292
+D. ENERGY CHARGE:
+Summer Season Winter Season
+First 180 Hours Use per month: $0.08735 per kWh $0.07403 per kWh
+Next 180 Hours Use per month: $0.05192 per kWh $0.04721 per kWh
+Over 360 Hours Use per month: $0.02490 per kWh $0.02465 per kWh
+Issued: December 2, 2022 Effective: January 1, 2023
+Issued by: Darrin R. Ives, Vice President 1200 Main, Kansas City, MO 64105
+FILED
+-
+Missouri
+Public
+Service
+Commission
+-
+01/09/2023
+-
+ER-2022-0129
+-
+YE-2023-0104
+______
+January 9, 2023
+
+EVERGY METRO, INC. d/b/a EVERGY MISSOURI METRO
+P.S.C. MO. No. 7 10th Revised Sheet No. 14C
+Canceling P.S.C. MO. No. 7 9th Revised Sheet No. 14C
+For Missouri Retail Service Area
+Large Power Service
+Schedule LPS
+REACTIVE DEMAND ADJUSTMENT (Secondary, Primary, Substation and Transmission Voltage Service)
+Company may determine the customer’s monthly maximum 30-minute reactive demand in kilovars. In each month
+a charge of $0.99294 per month shall be made for each kilovar by which such maximum reactive demand is
+greater than fifty percent (50%) of the customer’s Monthly Maximum Demand (kW) in that month. The maximum
+reactive demand in kilovars shall be computed similarly to the Monthly Maximum Demand as defined in the
+Determination of Demands section.
+MINIMUM MONTHLY BILL
+The Minimum Monthly Bill shall be equal to the sum of the Customer Charge, Facilities Charge, Demand Charge,
+and Reactive Demand Adjustment.
+SUMMER AND WINTER SEASONS
+For determination of Seasonal periods, the four (4) summer months shall be defined as the (4) monthly billing
+periods of June through September. The eight (8) winter months shall be defined as the eight (8) monthly billing
+periods of October through May Customer bills for meter reading periods including one or more days in both
+seasons will reflect the number of days in each season.
+Issued: December 2, 2022 Effective: January 1, 2023
+Issued by: Darrin R. Ives, Vice President 1200 Main, Kansas City, MO 64105
+FILED
+-
+Missouri
+Public
+Service
+Commission
+-
+01/09/2023
+-
+ER-2022-0129
+-
+YE-2023-0104
+______
+January 9, 2023
+
+FORM N0.13 P. S. C. MO. No, .... 7. ............... . . ..... ...... ....... { OriginaJ } SH£ET No ......1 .40. ......
+FletdHd
+Cancelling P. S. C. MO. No .....~ ...... ~.~~.l?.~vio~.~-~~~~. .. { Orlglnal } SHEET No ................... .
+Revised
+~~~-~~.£~T.!':.~9.~~~. . ~ .~!9.t'.I. .~ 9.~~~.~Y.. For ......M l,-'ftw.l ~~J.SeJXi'-0.Area. .............. . I
+N-of l1wln0 Co,po,etlllln ot ~lpallry ColNnunltV, Tctwn •r City i I
+!
+LARGE POWER SERVICE
+Schedule LPS JUL Sc198f)lued)
+MISSOURI
+DETERMINATION OF DEMANDS:
+Public Service Commls.,lo
+Demand will be determined by demand Instruments or, at the Company's option, by demand tests.
+MINIMUM DEMAND:
+980 kW for service at Secondary Voltage.
+1000 kW for service at Primary Voltage.
+1008 k
+[DOC 0] https://www.evergy.com/-/media/documents/billing/missouri/detailed_tariffs_mo/mo-metro-rate.pdf
+the Company for the provision of electric service that is approved by the Commission under its applicable standards
+or Company tariff.
+TERM
+Schedule LLPS Customers shall take service for a minimum term that includes up to five (5) years of an optional
+transitional load ramp period plus twelve (12) years. The Term shall commence on the date permanent service
+begins, or as set forth in the LLPS Service Agreement. During the transitional load ramp period, the Customer's
+maximum load may be lower than seventy-five megawatts (75 MW). Specific details of the Customer's Load Ramp
+may be addressed in the LLPS Service Agreement.
+Issued: February 5, 2026 Effective: March 9, 2026
+Issued by: Darrin R. Ives, Senior Vice President 1200 Main, Kansas City, MO 64105
+
+EVERGY METRO, INC. d/b/a EVERGY MISSOURI METRO
+P.S.C. MO. No. 7 _____ Original Sheet No. __- -'-7-'-7 ___
+Canceling P.S.C. MO. No. ______ Revised Sheet No.
+-------
+For Missouri Retail Service Area
+LARGE LOAD POWER SERVICE
+Schedule LLPS
+Unless otherwise mutually agreed in the LLPS Service Agreement, the LLPS Service Agreement will automatically
+extend for periods of five years ("Extension Term") at the end of the Term or any Extension Term, unless either
+party to the LLPS Service Agreement provides at least thirty-six (36) months' written notice to the other party prior
+to the end of the Term or any Extension Term of its intent not to renew the LLPS Service Agreement.
+::!!
+A Customer providing notice of non-extension will remain subject to the Exit Fee and Early Termination Fee based r
+m
+upon the remainder of the Term or Extension Term to the extent applicable under the Customer's LLPS Service
+0
+Agreement.
+s:::
+iii"
+Service shall remain in effect throughout the Term and any Extension Term unless cancelled, modified, or en
+0
+terminated in writing and pursuant to the terms of Schedule LLPS or the LLPS Service Agreement, or the Customer C:
+:::::!.
+changes to another applicable Company rate schedule pursuant to the terms of Schedule LLPS.
+"C
+C:
+!:!::
+RATE o"
+en
+CD
+A CUSTOMER CHARGE (per month): Summer Season Winter Season <
+~;r
+$1,181.28 $1,181.28
+C1
+0
+B. GRID CHARGE Summer Season Winter Season 3
+Per kW of Grid Demand per month-Substation $3.003 $3.003 3
+iii"
+Per kW of Grid Demand per month-Trans. $2.200 $2.200 en
+o·
+::J
+C. DEMAND CHARGE:
+Per kW of Billing Demand per month Summer Season Winter Season 0w- -
+AllkW $21.038 $19.038 0
+~
+0
+D. ENERGY CHARGE: Summer Season Winter Season "'
+(J)
+All kWh: $0.02988 per kWh $0.02988 per kWh
+m
+0
+DETERMINATION OF DEMANDS ~
+Demand shall be determined by demand instruments or, at the Company's option, by demand tests. 0 " '
+0,
+I
+0
+Monthly Maximum Demand - The Monthly Maximum Demand is defined as the highest demand indicated in any ....>.
+i
+15-minute interval during the month on all meters.
+I
+t...
+m
+Grid Demand - Grid Demand shall be equal to the highest Monthly Maximum Demand occurring in the last twelve
+~
+(12) months including the current month. 0
+"'
+(J)
+I
+Minimum Demand
+[DOC 0] https://www.evergy.com/-/media/documents/billing/missouri/detailed_tariffs_mo/mo-metro-rate.pdf
+regulatory liability to be addressed in the next general ratemaking proceeding. C:
+!:!::
+o"
+en
+ADDITIONAL TERMS
+CD
+Customers receiving service under this schedule are required to enter in a written service agreement (the LLPS <
+~;r
+Service Agreement) that specifies certain provisions of their electric service, including Contract Capacity. Riders
+applicable to Customer's service will be specified in an exhibit attached to the LLPS Service Agreement, which may C1
+0
+be periodically amended subject to the mutual agreement of the Company and Customer to reflect Customer's 3
+participation in Company-offered programs. 3
+iii"
+en
+o·
+Service to Customers under this schedule shall not commence until the Company has sufficient capacity to meet
+::J
+the Customer's Contract Capacity requirements.
+0w- -
+ADJUSTMENTS AND SURCHARGES 0
+~
+The rates hereunder are subject to adjustment as provided in the following schedules:
+0
+"'
+(J)
+• Fuel Adjustment Clause (FAC)
+m
+• Tax Adjustment (TA) 0
+~
+• Demand Side Investment Mechanism Rider (DSIM)
+0
+"'
+• Cost Stabilization Rider (CSR) 0,
+I
+0
+....>.
+DEFINITIONS AND CONDITIONS i
+I
+t...
+1. Alternating current, at approximately 60 hertz, at the standard phase and voltage available. m
+~
+0
+2. Service under this rate schedule is subject to Company's General Rules and Regulations presently on file with "'
+(J)
+the Missouri Public Service Commission and any modifications subsequently approved. 0 I
+....>.
+0
+~
+3. All provisions of this rate schedule are subject to changes made by order of the regulatory authority having
+jurisdiction.
+Issued: February 5, 2026 Effective: March 9, 2026
+Issued by: Darrin R. Ives, Senior Vice President 1200 Main, Kansas City, MO 64105
+
+EVERGY METRO, INC. d/b/a EVERGY MISSOURI METRO
+P.S.C. MO. No. 7 4th Revised Sheet No. 17
+Cancelling P.S.C. 7 3rd Revised Sheet No. 17
+For Missouri Retail Service Area
+SMALL GENERAL SERVICE – ALL ELECTRIC (FROZEN)
+Schedule SGA
+AVAILABILITY
+This Schedule is available only to Customers’ physical locations currently taking service under this Schedule and
+who are served hereunder continuously thereafter.
+For electric service through one meter to an existing customer using electric service for purposes other than those
+included in the availability provisions of the Residential Service Rate Schedule. At the Company’s discretion, service
+may be provided through more than one meter where it is economical for the Company to do so.
+For electric service for all lighting, cooking, water heating, comfort space heating (except aesthetic fireplaces),
+comfort cooling, general purposes, and any other purposes requiring energy. The customer must have electric water
+heating and electric space heating equipment. This equipment shall be of a size and design approved by the
+Company. Electric space heating and electric water heating equipment shall be permanently installed, connected
+and thermostatically controlled. For billing purposes, usage from separately metered installations will be combined
+by th
+[DOC 0] https://www.evergy.com/-/media/documents/billing/missouri/detailed_tariffs_mo/mo-metro-rate.pdf
+e Company and treated as a single meter.
+Service will not be supplied where the ultimate use is primarily for residential purposes.
+Standby, breakdown, or supplementary service is available under this schedule if the customer seeking such service
+first enters into a special contract which includes technical and safety requirements similar to those required for
+qualifying facilities in 4 CSR 240-20.060(2)(C). These requirements, and the associated interconnection costs, shall
+be reasonable and assessed on a nondiscriminatory basis with respect to other customers with similar load
+characteristics. Temporary or seasonal service will not be supplied under this schedule.
+APPLICABILITY
+Applicable to all multiple-occupancy buildings when the tenants or occupants of the building are furnished with electric
+service on a rent inclusion basis.
+TERM OF CONTRACT
+Contracts under this schedule shall be for a period of not less than one year from the effective date thereof.
+Issued: December 2, 2022 Effective: January 1, 2023
+Issued by: Darrin R. Ives, Vice President 1200 Main, Kansas City, MO 64105
+FILED
+-
+Missouri
+Public
+Service
+Commission
+-
+01/09/2023
+-
+ER-2022-0129
+-
+YE-2023-0104
+______
+January 9, 2023
+
+EVERGY METRO, INC. d/b/a EVERGY MISSOURI METRO
+P.S.C. MO. No. 7 11th Revised Sheet No. 17A
+Canceling P.S.C. MO. No. 7 10th Revised Sheet No. 17A
+For Missouri Retail Service Area
+Small General Service – All Electric (FROZEN)
+Schedule SGA
+RATE FOR SERVICE AT SECONDARY VOLTAGE, 1SGAE
+A. CUSTOMER CHARGE (per month):
+Customer pays one of the following charges based upon the Facilities Demand:
+0 - 24 kW $18.69
+25-199 kW $51.81
+200-999 kW $105.24
+1000 kW or above $898.57
+B. FACILITIES CHARGE:
+Per kW of Facilities Demand per month
+First 25 kW $0.000
+All kW over 25 kW $3.011
+C. ENERGY CHARGE:
+Summer Season Winter Season
+First 180 Hours Use per month: $0.16583 per kWh $0.11803 per kWh
+Next 180 Hours Use per month: $0.07871 per kWh $0.06291 per kWh
+Over 360 Hours Use per month: $0.07010 per kWh $0.05679 per kWh
+RATE FOR SERVICE AT PRIMARY VOLTAGE, 1SGAF
+A. CUSTOMER CHARGE (per month):
+Customer pays one of the following charges based upon the Facilities Demand:
+0 - 24 kW $18.69
+25-199 kW $51.81
+200-999 kW $105.24
+1000 kW or above $898.57
+B. FACILITIES CHARGE:
+Per kW of Facilities Demand per month
+First 26 kW $0.000
+All kW over 26 kW $2.940
+C. ENERGY CHARGE:
+Summer Season Winter Season
+First 180 Hours Use per month: $0.16205 per kWh $0.11533 per kWh
+Next 180 Hours Use per month: $0.07689 per kWh $0.06147 per kWh
+Over 360 Hours Use per month: $0.06849 per kWh $0.05547 per kWh
+Issued: December 2, 2022 Effective: January 1, 2023
+Issued by: Darrin R. Ives, Vice President 1200 Main, Kansas City, MO 64105
+FILED
+-
+Missouri
+Public
+Service
+Commission
+-
+01/09/2023
+-
+ER-2022-0129
+-
+YE-2023-0104
+______
+January 9, 2023
+
+EVERGY METRO, INC. d/b/a EVERGY MISSOURI METRO
+P.S.C. MO. No. 7 3rd Revised Sheet 17B
+Cancelling P.S.C. MO. No. 7 2nd Revised Sheet 17B
+For Missouri Retail Service Area
+[DOC 0] https://www.evergy.com/-/media/documents/billing/missouri/detailed_tariffs_mo/mo-metro-rate.pdf
+equipment on the primary side of the transformer for a
+secondary voltage customer . In this case, the customer's metered demand and energy shall be decreased by
+2.29% or alternatively, compensation metering may be installed.
+DEMAND SIDE INVESTMENT MECHANISM RIDER & NON-MEEIA OPT-OUT PROVISIONS
+Subject to Schedule DSIM and Rules and Regulations filed with the State Regulatory Commission (Section 8.09,
+Sheet 1.28).
+FUEL ADJUSTMENT
+Fuel Adjustment Clause, Schedule FAC, shall be applicable to all customer billings under this schedule.
+TAX ADJUSTMENT
+Tax Adjustment Schedule TA shall be applicable to all customer billings under this schedule.
+REGULATIONS
+Subject to Rules and Regulations filed with the State Regulatory Commission.
+September 29, 2015
+Issued: September 8, 2015 Effective: Octobe1 B, 2:015
+Issued by: Darrin R. Ives, Vice President 1200 Main, Kansas City, MO 64105
+FILED
+Missouri Public
+Servicr. Commission
+ER-2014-0370: YE-2016-0078
+
+EVERGY METRO, INC. d/b/a EVERGY MISSOURI METRO
+P.S.C. MO. No. 7 4th Revised Sheet No. 18
+Cancelling P.S.C. MO. 7 3rd Revised Sheet No. 18
+Missouri Retail Service
+For
+Area
+MEDIUM GENERAL SERVICE – ALL ELECTRIC (FROZEN)
+Schedule MGA
+AVAILABILITY
+This Schedule is available only to Customers’ physical locations currently taking service under this Schedule and
+who are served hereunder continuously thereafter.
+For electric service through one meter to an existing customer using electric service for purposes other than those
+included in the availability provisions of the Residential Service Rate Schedule. At the Company’s discretion, service
+may be provided through more than one meter where it is economical for the Company to do so.
+For electric service for all lighting, cooking, water heating, comfort space heating (except aesthetic fireplaces),
+comfort cooling, general purposes, and any other purposes requiring energy. The customer must have electric water
+heating and electric space heating equipment. This equipment shall be of a size and design approved by the
+Company. Electric space heating and electric water heating equipment shall be permanently installed, connected
+and thermostatically controlled. For billing purposes, usage from separately metered installations will be combined
+by the Company and treated as a single meter.
+Service will not be supplied where the ultimate use is primarily for residential purposes.
+Standby, breakdown, or supplementary service is available under this schedule if the customer seeking such service
+first enters into a special contract which includes technical and safety requirements similar to those required for
+qualifying facilities in 4 CSR 240-20.060(2)(C). These requirements, and the associated interconnection costs, shall
+be reasonable and assessed on a nondiscriminatory basis with respect to other customers with similar load
+characteristics. Temporary or seasonal service will not be supplied under this schedule.
+APPLICABILITY
+Applicable to all multiple-occupancy buildings when th
+[DOC 0] https://www.evergy.com/-/media/documents/billing/missouri/detailed_tariffs_mo/mo-metro-rate.pdf
+e tenants or occupants of the building are furnished with
+electric service on a rent inclusion basis.
+TERM OF CONTRACT
+Contracts under this schedule shall be for a period of not less than one year from the effective date thereof.
+DATE EFFECTIVE: January 1, 2023
+DATE OF ISSUE: December 2, 2022
+ISSUED BY: Darrin R. Ives, Vice President 1200 Main, Kansas City, Mo. 64105
+FILED
+-
+Missouri
+Public
+Service
+Commission
+-
+01/09/2023
+-
+ER-2022-0129
+-
+YE-2023-0104
+______
+January 9, 2023
+
+EVERGY METRO, INC. d/b/a EVERGY MISSOURI METRO
+P.S.C. MO. No. 7 11th Revised Sheet No. 18A
+Canceling P.S.C. MO. No. 7 10th Revised Sheet No. 18A
+For Missouri Retail Service Area
+Medium General Service – All Electric (FROZEN)
+Schedule MGA
+RATE FOR SERVICE AT SECONDARY VOLTAGE, 1MGAE
+A. CUSTOMER CHARGE (per month):
+Customer pays one of the following charges based upon the Facilities Demand:
+0 - 24 kW $55.47
+25-199 kW $55.47
+200-999 kW $112.65
+1000 kW or above $961.83
+B. FACILITIES CHARGE:
+Per kW of Facilities Demand per month $3.223
+C. DEMAND CHARGE:
+Summer Season Winter Season
+Per kW of Billing Demand per month $4.217 $3.038
+D. ENERGY CHARGE:
+Summer Season Winter Season
+First 180 Hours Use per month: $0.10953 per kWh $0.08304 per kWh
+Next 180 Hours Use per month: $0.07492 per kWh $0.04751 per kWh
+Over 360 Hours Use per month: $0.06319 per kWh $0.04125 per kWh
+Issued: December 2, 2022 Effective: January 1, 2023
+Issued by: Darrin R. Ives, Vice President 1200 Main, Kansas City, MO 64105
+FILED
+-
+Missouri
+Public
+Service
+Commission
+-
+01/09/2023
+-
+ER-2022-0129
+-
+YE-2023-0104
+______
+January 9, 2023
+
+EVERGY METRO, INC. d/b/a EVERGY MISSOURI METRO
+P.S.C. MO. No. 7 11th Revised Sheet No. 18B
+Canceling P.S.C. MO. No. 7 10th Revised Sheet No. 18B
+For Missouri Retail Service Area
+Medium General Service – All Electric (FROZEN)
+Schedule MGA
+RATE FOR SERVICE AT PRIMARY VOLTAGE, 1MGAF
+A. CUSTOMER CHARGE (per month):
+Customer pays one of the following charges based upon the Facilities Demand:
+0 - 24 kW $55.47
+25-199 kW $55.47
+200-999 kW $112.65
+1000 kW or above $961.83
+B. FACILITIES CHARGE:
+Per kW of Facilities Demand per month $2.671
+C. DEMAND CHARGE:
+Summer Season Winter Season
+Per kW of Billing Demand per month $4.118 $2.972
+D. ENERGY CHARGE:
+Summer Season Winter Season
+First 180 Hours Use per month: $0.10691 per kWh $0.08117 per kWh
+Next 180 Hours Use per month: $0.07323 per kWh $0.04633 per kWh
+Over 360 Hours Use per month: $0.06174 per kWh $0.04048 per kWh
+Issued: December 2, 2022 Effective: January 1, 2023
+Issued by: Darrin R. Ives, Vice President 1200 Main, Kansas City, MO 64105
+FILED
+-
+Missouri
+Public
+Service
+Commission
+-
+01/09/2023
+-
+ER-2022-0129
+-
+YE-2023-0104
+______
+January 9, 2023
+
+EVERGY METRO, INC. d/b/a EVERGY MISSOURI METRO
+P.S.C. MO. No. 7 11th Revised Sheet No. 18C
+Canceling P.S.C. MO. No. 7 10th Revised Sheet No. 18C
+For Missouri Retail Service Area
+Medium General Service – All Electric (FROZEN)
+Schedule MGA
+REACTIVE DEMAND ADJUSTMENT (Secondary and Primary)
+Company may deter
+[DOC 0] https://www.evergy.com/-/media/documents/billing/missouri/detailed_tariffs_mo/mo-metro-rate.pdf
+ER-20·14-0370: YE-2016-0075
+
+KANSAS CITY POWER ANO LIGHT COMPANY
+P .S.C. MO. No. _____7 _ __ Fifth Revised Sheet No. 1B E
+Canceling P.S.C. MO. No. ------'7'---- Fourth Revised Sheet No. 1B E
+For Missouri Retail Service Area
+Medium General Service - All Electric (FROZEN)
+Schedule MGA
+METERING AT DIFFERENT VOLTAGES
+The Company may, at its option, install metering equipment on the secondary side of a primary voltage
+customer's transformer. In that event, the customer's metered demand and energy shall be increased either by
+the Installation of compensated meterlng equipment, or by 2.34% if metering equipment is not compensated.
+The Company may also, at its option, install metering equipment on the primary side of the transformer for a
+secondary voltage customer. In this case, the customer's metered demand and energy shall be decreased by
+2.29%, or alternatively, compensation metering may be installed.
+DEMAND SIDE INVESTMENT MECHANISM RIDER & NON-MEEIA OPT-OUT PROVISIONS
+Subject to Schedule DSIM and Rules and Regulations filed with the State Regulatory Commission (Section 8.09,
+Sheet 1.28).
+FUEL ADJUSTMENT
+Fuel Adjustment Clause, Schedule FAC, shall be applicable to all customer billings under this schedule.
+Tf:v< ADJUSTMENT
+Tax Adjustment Schedule TA shall be applicable to all customer billings under this schedule.
+REGULATIONS
+Subject to Rules and Regulations filed with the State Regulatory Commission.
+September 29. 2015
+Issued: September 8, 2015 Effective: Ocieber 8, 2016
+Issued by: Darrin R Ives, Vice President FILED 1200 Main, Kansas City, MO 64105
+Missouri Public
+Service Commission
+ER-2014-0370; YE-2016-0078
+
+EVERGY METRO, INC. d/b/a EVERGY MISSOURI METRO
+P.S.C. MO. No. 7 4th Revised Sheet No. 19
+Cancelling P.S.C. MO. 7 3rd Revised Sheet No. 19
+Missouri Retail Service Area
+LARGE GENERAL SERVICE – ALL ELECTRIC (FROZEN)
+Schedule LGA
+AVAILABILITY
+This Schedule is available only to Customers’ physical locations currently taking service under this Schedule
+and who are served hereunder continuously thereafter.
+For electric service through one meter to an existing customer using electric service for purposes other than
+those included in the availability provisions of the Residential Service Rate Schedule. At the Company’s
+discretion, service may be provided through more than one meter where it is economical for the Company to
+do so.
+For electric service for all lighting, cooking, water heating, comfort space heating (except aesthetic fireplaces),
+comfort cooling, general purposes, and any other purposes requiring energy. The customer must have
+electric water heating and electric space heating equipment. This equipment shall be of a size and design
+approved by the Company. Electric space heating and electric water heating equipment shall be permanently
+installed, connected and thermostatically controlled. For billing purposes, usage from separately metered
+installations will be combined by the Company and treated as a single meter.
+Service will not be su
+[DOC 0] https://www.evergy.com/-/media/documents/billing/missouri/detailed_tariffs_mo/mo-metro-rate.pdf
+pplied where the ultimate use is primarily for residential purposes.
+Standby, breakdown, or supplementary service is available under this schedule if the customer seeking such
+service first enters into a special contract which includes technical and safety requirements similar to those
+required for qualifying facilities in 4 CSR 240-20.060(2)(C). These requirements, and the associated
+interconnection costs, shall be reasonable and assessed on a nondiscriminatory basis with respect to other
+customers with similar load characteristics. Temporary or seasonal service will not be supplied under this
+schedule.
+APPLICABILITY
+Applicable to all multiple-occupancy buildings when the tenants or occupants of the building are furnished
+with electric service on a rent inclusion basis.
+TERM OF CONTRACT
+Contracts under this schedule shall be for a period of not less than one year from the effective date thereof.
+DATE OF ISSUE: December 2, 2022 DATE EFFECTIVE: January 1, 2023
+ISSUED BY: Darrin R. Ives, Vice President 1200 Main, Kansas City, Mo. 64105
+FILED
+-
+Missouri
+Public
+Service
+Commission
+-
+01/09/2023
+-
+ER-2022-0129
+-
+YE-2023-0104
+_Ja_nua_ry 9_, 20_23_
+
+EVERGY METRO, INC. d/b/a EVERGY MISSOURI METRO
+P.S.C. MO. No. 7 11th Revised Sheet No. 19A
+Canceling P.S.C. MO. No. 7 10th Revised Sheet No. 19A
+For Missouri Retail Service Area
+Large General Service – All Electric (FROZEN)
+Schedule LGA
+RATE FOR SERVICE AT SECONDARY VOLTAGE, 1LGAE
+A. CUSTOMER CHARGE (per month):
+Customer pays one of the following charges based upon the Facilities Demand:
+0-24 kW $122.14
+25-199 kW $122.14
+200-999 kW $122.14
+1000 kW or above $1,042.78
+B. FACILITIES CHARGE:
+Per kW of Facilities Demand per month $3.494
+C. DEMAND CHARGE:
+Summer Season Winter Season
+Per kW of Billing Demand per month $6.978 $3.476
+D. ENERGY CHARGE:
+Summer Season Winter Season
+First 180 Hours Use per month: $0.09803 per kWh $0.08662 per kWh
+Next 180 Hours Use per month: $0.06758 per kWh $0.04648 per kWh
+Over 360 Hours Use per month: $0.04352 per kWh $0.03628 per kWh
+Issued: December 2, 2022 Effective: January 1, 2023
+Issued by: Darrin R. Ives, Vice President 1200 Main, Kansas City, MO 64105
+FILED
+-
+Missouri
+Public
+Service
+Commission
+-
+01/09/2023
+-
+ER-2022-0129
+-
+YE-2023-0104
+______
+January 9, 2023
+
+EVERGY METRO, INC. d/b/a EVERGY MISSOURI METRO
+P.S.C. MO. No. 7 11th Revised Sheet No. 19B
+Canceling P.S.C. MO. No. 7 10th Revised Sheet No. 19B
+For Missouri Retail Service Area
+Large General Service – All Electric (FROZEN)
+Schedule LGA
+RATE FOR SERVICE AT PRIMARY VOLTAGE, 1LGAF
+A. CUSTOMER CHARGE (per month):
+Customer pays one of the following charges based upon the Facilities Demand:
+0-24 kW $122.14
+25-199 kW $122.14
+200-999 kW $122.14
+1000 kW or above $1,042.78
+B. FACILITIES CHARGE:
+Per kW of Facilities Demand per month $2.897
+C. DEMAND CHARGE:
+Summer Season Winter Season
+Per kW of Billing Demand per month $6.819 $3.394
+D. ENERGY CHARGE:
+Summer Season Winter Season
+First 180 Hours Use per month: $0.09584 per kWh $0.0848
+[DOC 0] https://www.evergy.com/-/media/documents/billing/missouri/detailed_tariffs_mo/mo-metro-rate.pdf
+VICE
+Service shall be provided for a fixed term of not less than one (1) year.
+RATE FOR SERVICE 1BEVCS
+A. Customer Charge (Per Month) $122.14
+B. Facility Charge (Per kW of Facility Demand per month) $3.494
+C. Energy Charge per Pricing Period (Per kWh)
+Summer Winter
+Season Season_
+On-Peak Period $0.21942 $0.17159
+Off-Peak Period $0.11520 $0.09143
+Super Off-Peak Period $0.03657 $0.03657
+Issued: December 2, 2022 Effective: January 1, 2023
+Issued by: Darrin R. Ives, Vice President 1200 Main, Kansas City, MO 64105
+FILED
+-
+Missouri
+Public
+Service
+Commission
+-
+01/09/2023
+-
+ER-2022-0129
+-
+YE-2023-0104
+______
+January 9, 2023
+
+EVERGY METRO, INC. d/b/a EVERGY MISSOURI METRO
+P.S.C. MO. No. 7 Original Sheet No. 54A
+Canceling P.S.C. MO. No. 7 Sheet No.
+For Missouri Retail Service Area
+BUSINESS EV CHARGING SERVICE
+Schedule BEVCS
+MINIMUM MONTHLY BILL
+The Minimum Monthly Bill shall be equal to the sum of the Customer Charge and Facilities Charge.
+SEASONS
+The Summer Season is four consecutive months, beginning and effective June 1 and ending September 30 inclusive.
+The Winter Season is eight consecutive months, beginning and effective October 1 and ending May 31. Customer bills
+for meter reading periods including one or more days in both seasons will reflect the usage in each season.
+PRICING PERIODS
+Pricing periods are established in Central Time year-round. The hours for each pricing period are as follows:
+On-Peak: 2 p.m. – 8 p.m., Monday through Friday, excluding Holidays
+Super Off-Peak 12 a.m. – 6 a.m., every day
+Off- Peak Period: All other hours
+HOLIDAYS
+Holidays are New Year’s Day, Memorial Day, Independence Day, Labor Day, Thanksgiving Day, and Christmas Day.
+MONTHLY MAXIMIM DEMAND
+The Monthly Maximum Demand shall be the customer's maximum fifteen (15) minute integrated demand measured in
+kW during the current billing period.
+FACILITIES DEMAND
+Facilities Demand shall be equal to the highest Monthly Maximum Demand recorded in the last twelve (12) months
+including the current month. If there are less than eleven (11) previous billing periods, the determination will be made
+using all available previous billing periods.
+DEMAND SIDE INVESTMENT MECHANISM RIDER & NON-MEEIA OPT-OUT PROVISIONS
+Subject to Schedule DSIM and Rules and Regulations filed with the State Regulatory Commission (Section 8.09, Sheet
+1.28).
+FUEL ADJUSTMENT
+Fuel Adjustment Clause, Schedule FAC, shall be applicable to all customer billings under this schedule.
+TAX ADJUSTMENT
+Tax Adjustment Schedule TA shall be applicable to all customer billings under this schedule.
+REGULATIONS
+Subject to Rules and Regulations filed with the State Regulatory Commission
+_____________________________________________________________________________
+Issued: December 2, 2022 Effective: January 1, 2023
+Issued by: Darrin R. Ives, Vice President 1200 Main, Kansas City, MO 64105
+FILED
+-
+Missouri
+Public
+Service
+Commission
+-
+01/09/2023
+-
+ER-2022-0129
+-
+YE-2023-0104
+______
+January 9, 2023
+
+EVERGY METRO, INC. d/b/a EVERGY MIS
+[DOC 0] https://www.evergy.com/-/media/documents/billing/missouri/detailed_tariffs_mo/mo-metro-rate.pdf
+een the utility meter and EVSE required to
+install new EV charging equipment.
+MULTIFAMILY – A residential development with a parking facility of at least eight (8) parking spaces that serves
+at least five (5) or more housing units such as apartment buildings and condominiums. .
+PORT – EVSE cables and connector that connect to the standard charging inlet in a car. When an EVSE has
+two sets of cables and can charge two EVs simultaneously, it is referred to as a dual-port EVSE
+PUBLIC – A site that is available to the general public or the customers of an establishment that is open to the
+general public, including but not limited to government facilities, libraries, parks, retail establishments, and
+restaurants.
+QUALIFIED EVSE – EVSE that meet the Company’s requirements and have been approved by the Company.
+SITE – The property owned or occupied by the Customer where the EVSE will be installed.
+SITE HOST – The business entity participating in the TE Rebate Program that owns, operates, and maintains
+the EVSE and the customer of record for the Company that will be responsible for paying the corresponding
+electric bill.
+WORKPLACE – A non-residential site with at least ten (10) onsite employees intended to provide vehicle
+charging service to employees or visitors of the business that occupies the site, but typically not to the general
+public.
+Issued: December 2, 2022 Effective: January 1, 2023
+Issued by: Darrin R. Ives, Vice President 1200 Main, Kansas City, MO 64105
+FILED
+-
+Missouri
+Public
+Service
+Commission
+-
+01/09/2023
+-
+ER-2022-0129
+-
+YE-2023-0104
+______
+January 9, 2023
+
+EVERGY METRO, INC. d/b/a EVERGY MISSOURI METRO
+P.S.C. MO. No. 7 Original Sheet No. 55B
+Canceling P.S.C. MO. No. 7 Sheet No.
+For Missouri Retail Service Area
+COMMERCIAL EV CHARGER REBATE
+Schedule CEVCR
+TERM
+The Program will begin April 1, 2023, and shall continue for a period of five years, terminating on March 31,
+2028. The Company may begin accepting applications prior to April 1, 2023, to the extent that it is able to do
+so. Applications for incentives under each category will be accepted until the earlier of the date that funding
+is exhausted for the incentive or March 31, 2028. All projects must be complete and applications submitted
+no later than March 31, 2028.
+PROGRAM FUNDING
+Total Company-supplied budget for the Program shall not exceed $3.0 million including $300,000 allocated
+for customer education and program administrative expenses but not including funds made available from
+other sources such as private, federal or state grants or programs. Distribution costs not contributed by
+Customer are not to exceed $1 million per utility. Each incentive is also subject to an individual budget
+estimated as follows:
+Category Budget
+Commercial EV Charger Rebate $ 2,700,000
+Customer Education & Program Administration $ 300,000
+Total $ 3,000,000
+Of the total Company-supplied budget for the Program, incentives paid out to Multifamily will be limited to
+7.5% of the total budget.
+REGULATIO
+[DOC 0] https://www.evergy.com/-/media/documents/billing/missouri/detailed_tariffs_mo/mo-metro-rate.pdf
+ed: December 2, 2022 Effective: January 1, 2023
+Issued by: Darrin R. Ives, Vice President 1200 Main, Kansas City, MO 64105
+FILED
+-
+Missouri
+Public
+Service
+Commission
+-
+01/09/2023
+-
+ER-2022-0129
+-
+YE-2023-0104
+______
+January 9, 2023
+
+EVERGY METRO, INC. d/b/a EVERGY MISSOURI METRO
+P.S.C. MO. No. 7 Original Sheet No. 12A
+Canceling P.S.C. MO. No. Revised Sheet No.
+For Missouri Retail Service Area
+LIMITED TIME-RELATED PRICING SERVICE
+Schedule TRP
+ENERGY CHARGE: The energy charge is calculated based on kWh used during the billing period
+multiplied by that hour’s pricing. The hourly TRP energy pricing reflects time-
+variable energy and demand costs into static hourly pricing.
+Hourly TRP Pricing of Energy per hour, day-type, and season is as follows:
+GENERAL LOAD (1LGPT, 1LGST):
+Hour Summer Winter Summer Winter
+Ending Weekday Weekday Weekend Weekend
+1 $0.04927 $0.05752 $0.04712 $0.06300
+2 $0.04698 $0.05605 $0.04549 $0.06127
+3 $0.04588 $0.05586 $0.04450 $0.05963
+4 $0.04548 $0.05635 $0.04406 $0.06006
+5 $0.04716 $0.05940 $0.04450 $0.06228
+6 $0.05065 $0.06621 $0.04584 $0.06571
+7 $0.05424 $0.07919 $0.04695 $0.06958
+8 $0.05639 $0.08079 $0.04926 $0.07486
+9 $0.05968 $0.07918 $0.05177 $0.08105
+10 $0.06149 $0.08107 $0.05328 $0.08603
+11 $0.06509 $0.07802 $0.05517 $0.08334
+12 $0.07025 $0.07536 $0.05854 $0.07950
+13 $0.07500 $0.07344 $0.06186 $0.07680
+14 $0.11408 $0.07283 $0.06443 $0.07470
+15 $0.16586 $0.07088 $0.09685 $0.07406
+16 $0.24416 $0.07016 $0.10065 $0.07431
+17 $0.30589 $0.07253 $0.10306 $0.07721
+18 $0.28129 $0.07817 $0.10048 $0.08516
+19 $0.19435 $0.07922 $0.09536 $0.08593
+20 $0.15009 $0.07725 $0.09135 $0.08389
+21 $0.09054 $0.07611 $0.05490 $0.08098
+22 $0.05895 $0.06884 $0.05251 $0.07390
+23 $0.05436 $0.06304 $0.04939 $0.06778
+24 $0.05093 $0.05759 $0.04705 $0.06178
+Issued: December 2, 2022 Effective: January 1, 2023
+Issued by: Darrin R. Ives, Vice President 1200 Main, Kansas City, MO 64105
+FILED
+-
+Missouri
+Public
+Service
+Commission
+-
+01/09/2023
+- ER-2022-0129
+- YE-2023-0104
+______
+January 9, 2023
+
+EVERGY METRO, INC. d/b/a EVERGY MISSOURI METRO
+P.S.C. MO. No. 7 Original Sheet No. 12B
+Canceling P.S.C. MO. No. Revised Sheet No.
+For Missouri Retail Service Area
+LIMITED TIME-RELATED PRICING SERVICE
+Schedule TRP
+ENERGY CHARGE (cont’d):
+POWER LOAD (1PGPT, 1PGST, 1PSUT, 1PTRT):
+Hour Summer Winter Summer Winter
+Ending Weekday Weekday Weekend Weekend
+1 $0.04770 $0.05121 $0.04337 $0.05322
+2 $0.04506 $0.04990 $0.04174 $0.05185
+3 $0.04380 $0.04973 $0.04074 $0.05056
+4 $0.04334 $0.05017 $0.04031 $0.05090
+5 $0.04527 $0.05288 $0.04074 $0.05265
+6 $0.04930 $0.05894 $0.04209 $0.05535
+7 $0.05343 $0.07048 $0.04320 $0.05840
+8 $0.05591 $0.07191 $0.04552 $0.06256
+9 $0.05970 $0.07047 $0.04803 $0.06744
+10 $0.06179 $0.07215 $0.04955 $0.07137
+11 $0.06594 $0.06944 $0.05145 $0.06925
+12 $0.07188 $0.06708 $0.05483 $0.06622
+13 $0.07736 $0.06536 $0.05816 $0.06409
+14 $0.09359 $0.06482 $0.06073 $0.06244
+15 $0.11406 $0.06309 $0.07021 $0.06194
+16 $0.14398 $0.06245 $0.07341 $0.06213
+17 $0.16030 $0.06
+[DOC 0] https://www.evergy.com/-/media/documents/billing/missouri/detailed_tariffs_mo/mo-metro-rate.pdf
+456 $0.07514 $0.06442
+18 $0.14456 $0.06957 $0.07212 $0.07069
+19 $0.10986 $0.07050 $0.06673 $0.07129
+20 $0.09208 $0.06876 $0.06275 $0.06968
+21 $0.07104 $0.06774 $0.05118 $0.06739
+22 $0.05886 $0.06127 $0.04878 $0.06181
+23 $0.05357 $0.05611 $0.04565 $0.05698
+24 $0.04962 $0.05127 $0.04330 $0.05226
+LOAD DISTINCTIONS
+Customers with maximum demand of 1000 kW or above shall be considered Power Load customers for the purposes
+of this tariff. All customers meeting the minimum capacity requirements of this tariff, but with maximum demands
+below 1000 kW, shall be considered General Load customers for the purposes of this tariff.
+Issued: December 2, 2022 Effective: January 1, 2023
+Issued by: Darrin R. Ives, Vice President 1200 Main, Kansas City, MO 64105
+FILED
+-
+Missouri
+Public
+Service
+Commission
+-
+01/09/2023
+-
+ER-2022-0129
+-
+YE-2023-0104
+______
+January 9, 2023
+
+EVERGY METRO, INC. d/b/a EVERGY MISSOURI METRO
+P.S.C. MO. No. 7 Original Sheet No. 12C
+Canceling P.S.C. MO. No. Revised Sheet No.
+For Missouri Retail Service Area
+LIMITED TIME-RELATED PRICING SERVICE
+Schedule TRP
+SUMMER AND WINTER BILLING PERIOD
+For determination of Seasonal periods, the four (4) summer months shall be defined as the four (4) monthly billing
+periods of June through September. The eight (8) winter months shall be defined as the eight (8) monthly billing
+periods of October through May.
+REACTIVE DEMAND ADJUSTMENT
+Company may determine the customer’s monthly maximum 30-minute reactive demand in kilovars. In each month a
+charge of $0.874 per month for General Load customers and a charge of $0.99294 per month for Power Load
+customers shall be made for each kilovar by which such maximum reactive demand is greater than fifty percent (50%)
+of the customer’s Monthly Maximum Demand (kW) in that month. The maximum reactive demand in kilovars shall be
+computed similarly to the Monthly Maximum Demand as defined in the Determination of Demands section.
+MINIMUM MONTHLY BILL
+The Minimum Monthly Bill shall be equal to the sum of the Customer Charge and Facilities Charge.
+DETERMINATION OF DEMANDS
+Demand will be determined by demand instruments or, at the Company’s option, by demand tests. The Actual
+Demand shall be the maximum thirty (30) minute demand, measured in kW during the current billing period.
+MINIMUM DEMAND:
+200 kW for General Load service at Secondary Voltage
+204 kW for General Load service at Primary Voltage
+980 kW for Power Load service at Secondary Voltage
+1000 kW for Power Load service at Primary Voltage
+1008 kW for Power Load service at Substation Voltage
+1016 kW for Power Load service at Transmission Voltage
+FACILITIES DEMAND:
+Facilities Demand shall be equal to the higher of: (a) the highest Monthly Maximum Demand occurring in the
+last twelve (12) months including the current month or (b) the Minimum Demand.
+DEMAND SIDE INVESTMENT MECHANISM RIDER
+Subject to Schedule DSIM and Rules and Regulations filed with the State Regulatory Commission (Section 8.09,
+Sheet 1.28)
+FUEL ADJUSTMENT
+Fuel
+[DOC 0] https://www.evergy.com/-/media/documents/billing/missouri/detailed_tariffs_mo/mo-metro-rate.pdf
+ Adjustment Clause, Schedule FAC, shall be applicable to all customer billings under this schedule.
+TAX ADJUSTMENT
+Tax Adjustment Schedule TA shall be applicable to all customer billings under this schedule.
+REGULATION
+Subject to Rules and Regulations filed with the Missouri Public Service Commission.
+Issued: December 2, 2022 Effective: January 1, 2023
+Issued by: Darrin R. Ives, Vice President 1200 Main, Kansas City, MO 64105
+FILED
+-
+Missouri
+Public
+Service
+Commission
+-
+01/09/2023
+-
+ER-2022-0129
+-
+YE-2023-0104
+______
+January 9, 2023
+
+EVERGY METRO, INC. d/b/a EVERGY MISSOURI METRO
+P.S.C. MO. No. 7 Original Sheet No. 5(cid:27)
+Canceling P.S.C. MO. No. Revised Sheet No.
+For Missouri Retail Service Area
+Special High-Load Factor Market Rate
+Schedule MKT
+PURPOSE
+This rate schedule is designed to provide certain Non-Residential Customers access to energy pricing as set by
+the Southwest Power Pool Integrated Marketplace.
+AVAILABILITY
+This special rate is available to Non-Residential customers for service to accounts originating after March 31,
+2022, at a single location who:
+(cid:120) Operate a facility with a load equal to or in excess of a monthly demand of one hundred thousand
+kilowatts or is reasonably projected to be at least one hundred and fifty thousand kilowatts within five (5)
+years of the new customer first receiving service from Company.
+and
+(cid:120) At full load, Customer must be able to demonstrate and maintain an Annual Load Factor throughout the
+year of 0.85 or greater. During initial startup or commissioning, not to exceed five years, the Customer
+must be able to demonstrate the average of its Monthly Load Factors for the immediately preceding
+twelve months is 0.85 or greater.
+Customer’s Annual Energy Usage
+Annual Load Factor =
+Customer(cid:397)s Annual Noncoincident Peak Demand (cid:1499) Number of Hours in the Year
+Customer’s Monthly Energy Usage
+M onthly Load Factor =
+Customer(cid:397)s Monthly Noncoincident Peak Demand (cid:1499) Number of Hours in the Month
+Service is available under this schedule to the following types of customers based on voltage level:
+Substation voltage customer - Service is taken directly out of a distribution substation at primary
+voltage. The customer will own the feeder circuits out of this substation.
+Transmission voltage customer - The customer owns, leases, or otherwise bears financial responsibility
+for the distribution substation. Service is taken off of the Company's transmission system.
+This rate is not available for standby, breakdown, supplementary, maintenance or resale service except as
+noted below. Sub-metering or the reselling of electricity is prohibited.
+Service under this tariff may not be combined with service under an Economic Development Rider, an
+Economic Redevelopment Rider, the Renewable Energy Rider, the Solar Subscription Rider, service as a
+Special Contract, or be eligible for participation in programs offered pursuant to the Missouri Energy Efficiency
+Investment Act, or for partic
+[DOC 1] https://www.evergy.com/-/media/media/evergy-web/landing/missouri-tou-rate-landing/mo-tou-rate-costs.pdf
+Evergy Missouri Metro
+Nights & Nights &
+Standard Peak Reward
+Weekends Weekends
+Peak Saver Saver
+Saver Max Saver
+Three time periods
+Three time periods
+with different
+with different
+New default prices, with the
+prices, with an Closest to the current standard residential rate
+residential rate highest difference
+overnight and
+in prices between
+weekend discount
+time periods
+Summer Non-Summer
+Non- Non- Non-
+Summer Summer Summer (June-Sept.) (Oct.-May)
+Summer Summer Summer
+(June- (June- (June-
+(Oct.- (Oct.- (Oct.-
+Period Time Sept.) Sept.) Sept.) First Next Over First Next Over
+May) May) May)
+Name Period 600kWh 400kWh 1000kWh 600kWh 400kWh 1000kWh
+4pm-
+Peak $0.3833 $0.3380 $0.2764 $0.3588 $0.2731 $0.1509 $0.1509 $0.1609 $0.1248 $0.0778 $0.0693
+8pm
+$0.1131
+All other
+Off-Peak $0.1127 $0.1084 $0.1196 $0.0910 $0.1409 $0.1409 $0.1509 $0.1223 $0.0753 $0.0668
+hours
+$0.0958
+Super 12am-
+$0.0566 $0.0563 $0.0468 $0.0299 $0.0228 $0.1309 $0.1309 $0.1409 $0.1123 $0.0653 $0.0568
+Off-Peak 6am
+EEvveerrggyy MMiissssoouurrii MWeetsrot
+NNiigghhttss && NNiigghhttss &&
+SSttaannddaarrdd PPeeaakk RReewwaarrdd
+WWeeeekkeennddss WWeeeekkeennddss
+PPeeaakk SSaavveerr SSaavveerr
+SSaavveerr MMaaxx SSaavveerr
+TThhrreeee ttiimmee ppeerriiooddss
+TThhrreeee ttiimmee ppeerriiooddss
+wwiitthh ddiiffffeerreenntt
+wwiitthh ddiiffffeerreenntt
+NNeeww ddeeffaauulltt pprriicceess,, wwiitthh tthhee
+pprriicceess,, wwiitthh aann CClloosseesstt ttoo tthhee ccuurrrreenntt ssttaannddaarrdd rreessiiddeennttiiaall rraattee
+rreessiiddeennttiiaall rraattee hhiigghheesstt ddiiffffeerreennccee
+oovveerrnniigghhtt aanndd
+iinn pprriicceess bbeettwweeeenn
+wweeeekkeenndd ddiissccoouunntt
+ttiimmee ppeerriiooddss
+SSuummmmeerr NNoonn--SSuummmmeerr
+NNoonn-- NNoonn-- NNoonn--
+SSuummmmeerr SSuummmmeerr SSuummmmeerr ((JJuunnee--SSeepptt..)) ((OOcctt..--MMaayy))
+SSuummmmeerr SSuummmmeerr SSuummmmeerr
+((JJuunnee-- ((JJuunnee-- ((JJuunnee--
+((OOcctt..-- ((OOcctt..-- ((OOcctt..--
+PPeerriioodd TTiimmee SSeepptt..)) SSeepptt..)) SSeepptt..)) FFiirrsstt NNeexxtt OOvveerr FFiirrsstt NNeexxtt OOvveerr
+MMaayy)) MMaayy)) MMaayy))
+NNaammee PPeerriioodd 660000kkWWhh 440000kkWWhh 11000000kkWWhh 660000kkWWhh 440000kkWWhh 11000000kkWWhh
+44ppmm--
+PPeeaakk $$00..33823431 $$00..23831830 $$00..22278694 $$00..23655848 $$00..22073301 $$00..11258039 $$00..11258039 $$00..11368039 $$00..11020438 $$00..00779778 $$00..00769973
+88ppmm
+$$00..01914371
+AAllll ootthheerr
+OOffff--PPeeaakk $$00..01913287 $$00..01902844 $$00..11016926 $$00..00891120 $$00..11148039 $$00..11148039 $$00..11550099 $$00..01927283 $$00..00777523 $$00..00676782
+hhoouurrss
+$$00..00891508
+SSuuppeerr 1122aamm--
+$$00..00546763 $$00..00546639 $$00..00436888 $$00..00229695 $$00..00222083 $$00..11300893 $$00..11300893 $$00..11440099 $$00..10182738 $$00..00665732 $$00..00566782
+OOffff--PPeeaakk 66aamm
+ |  |  | Standard
+Peak Saver |  | Nights &
+Weekends
+Saver |  | Nights &
+Weekends
+Max Saver |  | Peak Reward
+Saver |  |  |  |  | 
+ |  |  | New default
+residential rate |  | Three time perio
+[DOC 2] https://www.evergy.com/manage-account/rate-information-link/plan-options
+You Have Rate Plan Options - Evergy
+Skip to content
+Evergy, navigate to home page
+Search
+Help Center
+Moving
+Outages
+My Account
+Search our site
+Search
+Residential
+Residential
+Business
+Select Region
+Optimize Your Experience
+Enter your zip code or select your region to view content tailored to you.
+Zip Code
+Submit
+Please enter your address
+Or
+select a region
+Missouri Metro
+Missouri West
+Kansas Central
+Kansas Metro
+Evergy Service Area
+Billing & Rate Plans
+Pay My Bill
+Rate Plan Options
+Explore flexible rate plans to match your household and energy usage
+Payment Options
+Get paperless billing, even payments, payment plans and more
+Energy Assistance
+Check eligibility and enroll in assistance plans or programs.
+Understanding My Bill
+Learn what to expect and how to read your bill
+Compare My Bill
+View data about your energy usage and bills over time
+Energy & Money Saving Tips
+Find practical tips and home ideas to help you save
+Home Upgrades & Products
+Subscription Programs
+Support locally-produced, emissions-free solar and wind energy
+Community Impact
+Affordable Energy
+How we're working to keep rates affordable and regionally competitive
+Economic Development
+Learn how we support local businesses and workforce development
+Electrical & Storm Safety
+Stay safe around electricity and during storms
+Evergy Gives Back
+Learn about the impact of Evergy's community support programs
+Our Energy Mix
+How and where Evergy sources energy to ensure year-round reliability
+Our Sustainable Practices
+Balancing short-term initiatives with long-term goals
+Power Grid Reliability
+Our commitment to deliver reliable energy now and in the future
+Pay My Bill
+Home
+Manage Account
+Rate Information
+Plan Options
+Please
+choose your location here
+.
+This way, you see local, relevant rate plan information personal to you.
+Footer Content
+Evergy, navigate ;o home page
+Other Common Pages
+Company
+About Evergy
+Investor Relations
+Careers & Internships
+Customer Advisory Panel
+Newsroom
+Community Grants
+Partnerships
+Trade Allies
+Contractor Safety
+Suppliers
+Construction & Upgrades
+Transmission Projects
+Economic Development
+Resources
+Scams & Energy Theft
+How Rates Are Set
+Tariffs, Rules & Riders
+Tree Trimming
+Home Solar & Net Metering
+Meter & Service Requests
+Quick Links
+Call Before You Dig 811
+Report a Scam
+© 2026 Evergy All Rights Reserved
+Privacy Policy
+Terms & Conditions
+Accessibility Standards
+Sitemap
+Feedback
+Feedback
+✖︎

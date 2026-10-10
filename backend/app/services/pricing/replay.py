@@ -12,13 +12,22 @@ import re
 from dataclasses import dataclass, field
 from decimal import Decimal
 from pathlib import Path
+from functools import lru_cache
 from typing import Any, Iterable
+
 from app.services.pricing.extraction import (
     ExtractionAccept,
     ExtractionHold,
     dual_extract_components,
 )
+from app.services.pricing.inventory_from_docs import (
+    build_inventory_from_document_set,
+    comparable_oracles,
+    merge_inventory,
+    riders_from_text,
+)
 from app.services.pricing.official_sites import official_context
+from app.services.pricing.rider_census import InventoryRider
 from app.services.pricing.types import money
 
 DEFAULT_FIXTURE_DIR = (
@@ -79,6 +88,10 @@ class ReplayReport:
         return sum(1 for r in self.results if r.outcome == "skipped")
 
     @property
+    def accepted_unscored(self) -> int:
+        return sum(1 for r in self.results if r.outcome == "accepted_unscored")
+
+    @property
     def scored(self) -> int:
         return self.accepted_correct + self.accepted_wrong + self.held
 
@@ -103,6 +116,7 @@ class ReplayReport:
             "accepted_wrong": self.accepted_wrong,
             "held": self.held,
             "skipped": self.skipped,
+            "accepted_unscored": self.accepted_unscored,
             "scored": self.scored,
             "accept_correct_rate": round(self.accept_correct_rate, 4),
             "hold_reasons": self.hold_reasons(),
@@ -156,7 +170,10 @@ def load_document_text(row: dict[str, Any], fixture_dir: Path | None = None) -> 
     """Concatenate per-URL re-fetched text for the plan's document set."""
     root = fixture_dir or DEFAULT_FIXTURE_DIR
     docs = row.get("documents") or {}
-    # Prefer an exact window when present.
+    # R30+: the exact <document> text the models saw.
+    windows = [root / f for f in docs.get("window_files") or []]
+    if windows and all(p.exists() for p in windows):
+        return "\n".join(p.read_text(errors="replace") for p in windows)
     wsha = docs.get("window_sha")
     if wsha:
         wp = root / "docs" / f"window_{wsha}.txt"
@@ -220,6 +237,57 @@ def _cents_match(official: list[Decimal], compiled: list[Decimal]) -> bool:
     return a == b
 
 
+_GOLDEN_PLANS_PATH = (
+    Path(__file__).resolve().parents[3]
+    / "tests" / "fixtures" / "pricing_golden" / "plans.json"
+)
+_DOC_HEADER_RE = re.compile(r"^\[DOC \d+\]\s+(\S+)", re.M)
+
+
+@lru_cache(maxsize=1)
+def _golden_plans() -> dict[str, dict[str, Any]]:
+    try:
+        plans = json.loads(_GOLDEN_PLANS_PATH.read_text())["plans"]
+    except (OSError, KeyError, ValueError):
+        return {}
+    return {p["plan_key"]: p for p in plans}
+
+
+def _source_url(
+    row: dict[str, Any], doc: str, golden: dict[str, Any] | None,
+) -> str | None:
+    urls = (row.get("documents") or {}).get("urls") or []
+    if urls:
+        return urls[0]
+    if golden and golden.get("source_url"):
+        return golden["source_url"]
+    selected = (row.get("doc_set") or {}).get("selected") or []
+    if selected:
+        return selected[0]
+    m = _DOC_HEADER_RE.search(doc)
+    return m.group(1) if m else None
+
+
+def _inventory_for_row(
+    row: dict[str, Any],
+    doc: str,
+    source_url: str | None,
+    golden: dict[str, Any] | None,
+) -> tuple[list[InventoryRider], Any]:
+    """Rebuild the live run's G5 inventory + G6 oracle from documents only."""
+    members = ((golden or {}).get("document_set") or {}).get("documents") or []
+    built = build_inventory_from_document_set(
+        members=members, document_texts=[(source_url, doc)], plan_components=[],
+    )
+    recorded = [
+        InventoryRider(code=str(c), name=str(c))
+        for c in row.get("inventory") or [] if str(c).strip()
+    ]
+    inventory = merge_inventory(built.inventory, riders_from_text(doc), recorded)
+    oracles = comparable_oracles(built.typical_bills)
+    return inventory, (oracles[0].cents_per_kwh if oracles else None)
+
+
 def replay_plan(
     row: dict[str, Any],
     *,
@@ -247,9 +315,10 @@ def replay_plan(
         base.detail = "missing_document_text"
         return base
 
-    urls = (row.get("documents") or {}).get("urls") or []
-    source_url = urls[0] if urls else None
+    golden = _golden_plans().get(base.plan_key) if base.set_name == "golden" else None
+    source_url = _source_url(row, doc, golden)
     source_ctx = official_context(base.utility)
+    inventory, typical = _inventory_for_row(row, doc, source_url, golden)
 
     def extract_fn(_document: str, model: str, _ctx: dict) -> list[dict]:
         m = (model or "").lower()
@@ -271,8 +340,9 @@ def replay_plan(
         extract_fn=extract_fn,
         source_ctx=source_ctx,
         source_url=source_url,
-        inventory=None,
+        inventory=inventory,
         dispositions=None,
+        typical_bill_cents_per_kwh=typical,
         force=force,
     )
     if isinstance(result, ExtractionHold):
@@ -286,9 +356,9 @@ def replay_plan(
     base.compiled = [str(x) for x in compiled]
     official = _official_cents(row)
     if not official:
-        # Accepted but no oracle — count as held for scoring purity.
-        base.outcome = "held"
-        base.hold_reason = "no_official_oracle"
+        # Non-golden sets have no oracle: accepted, but not scored.
+        base.outcome = "accepted_unscored"
+        base.detail = f"compiled={base.compiled}"
         return base
     if _cents_match(official, compiled):
         base.outcome = "accepted_correct"

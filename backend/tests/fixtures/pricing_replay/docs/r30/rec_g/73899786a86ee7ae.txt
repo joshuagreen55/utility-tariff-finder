@@ -1,0 +1,1008 @@
+[DOC 0] https://app.bchydro.com/accounts-billing/rates-energy-use/electricity-rates.html
+Electricity rates
+Learn about our rates
+Get a detailed look at your rate structure and how you’re charged for your electricity use.
+Knowing how to
+read your BC Hydro bill
+and using our
+tracking tools
+to view your electricity use is a good way to monitor and manage your bill.
+Residential customers
+View all residential rates
+Residential Tiered Rate
+Residential Flat Rate
+Time-of-Day Pricing
+(available with the tiered or flat rate)
+Business customers
+General Service Rates
+Fleet Electrification Rates
+Irrigation Rate
+Transmission Rate
+Industrial Electrification Rates
+Street lighting rates
+Street Lighting Service Rates
+Unmetered Small General Service Rates
+Non-integrated areas
+Residential Non-Integrated Rates
+Business Non-Integrated Rates
+Don't see your rate? Other electricity rates for specific customer groups can be found in the
+Electric Tariff
+.
+[DOC 1] https://app.bchydro.com/toolbar/about/strategies-plans-regulatory/tariffs-terms-conditions/electric-tariff.html
+Electric Tariff
+Prices regulated by the BCUC
+BC Hydro's services and pricing are regulated by the
+B.C. Utilities Commission
+(BCUC). The Electric Tariff contains the approved terms and conditions of distribution voltage service provided by BC Hydro as well as the approved rates for service at distribution voltage and transmission voltage.
+Additional terms and conditions of transmission voltage service are contained in Tariff Supplements 5 and 6.
+What the terms and conditions cover
+The
+Electric Tariff
+[PDF, 6.8 MB]
+is BC Hydro's service agreement with customers, and it governs all aspects of using our services, including:
+Provision of electricity (connections, equipment on private property, upgrades, etc.)
+Metering (installation, testing, etc.)
+Meter reading and billing
+Rates and charges
+Load changes and operations
+Distribution extensions (35 kV and less)
+General provisions (resale of electricity, rental premises, liabilities, etc.)
+Rate zone special terms
+Schedule of standard charges
+Electricity rates information
+While the Electric Tariff includes a list of rates and charges, see our
+electricity rates
+section for more user-friendly explanations of rates specific to residential, business, Zone II and street lighting.
+This tariff information is provided for your convenience. If there are differences between this material and the official printed versions of BC Hydro's Tariffs, the official version approved by the BCUC shall prevail.
+Distribution tariff supplements
+Tariff Supplement 118: Interruptible Electricity Supply Agreement between BC Hydro and Ulkatcho Energy Limited Partnership for The Solar Generating Facility at Anahim Lake
+[PDF, 557 KB]
+Tariff Supplement 112: Interruptible Electricity Supply Agreement between BC Hydro and Tll Yahda Energy for the Solar North (SNR) Generating Facility
+[PDF, 230 KB]
+Tariff Supplement 94: Interruptible Electricity Supply Agreement between BC Hydro and IPP Customer for the Fort Ware Generating Facility
+[PDF, 261 KB]
+Transmission tariff supplements
+Tariff Supplement 5: Electricity Supply Agreement (ESA)
+[PDF, 3.0 MB]
+Tariff Supplement 6: Facilities Agreement
+[PDF, 1.4 MB]
+Tariff Supplement 54: Modified Demand Agreement for RS 1852
+[PDF, 1.4 MB]
+Tariff Supplement 74: Customer Baseline Load Determination Guidelines
+[PDF, 1.4 MB]
+Tariff Supplement 86: Shore Power Service Agreement
+[PDF, 149 KB]
+Tariff Supplement 87: Agreement for Customers with an Indirect Interconnection to the BC Hydro System Taking Electricity under an Applicable Rate Schedule
+[PDF, 183 KB]
+Tariff Supplement 88: Agreement for New Transmission Service Customers with an Indirect Interconnection to the BC Hydro System
+[PDF, 145 KB]
+Tariff Supplement 89: Billing Formula for Customers that Sell Electricity to BC Hydro pursuant to an Electricity Purchase Agreement with a Contracted GBL
+[PDF, 321 KB]
+Tariff Supplement 93: West Fraser Mills Ltd – Pacific Inland Resources Division
+[PDF, 241 KB]
+Tariff Supplement 95: Department of National Defence
+[PDF, 
+[DOC 1] https://app.bchydro.com/toolbar/about/strategies-plans-regulatory/tariffs-terms-conditions/electric-tariff.html
+395 KB]
+Tariff Supplement 102: Richmond Plywood Corporation Limited
+[PDF, 412 KB]
+Tariff Supplement 103: Mount Polley Mining Corporation
+[PDF, 311 KB]
+Tariff Supplement 106: Pretium Resources Inc.
+[PDF, 722 KB]
+Tariff Supplement 108: Dawson Creek Area Interim Transmission Service
+[PDF, 318 KB]
+Tariff Supplement 109: North Coast Transmission Line Development Security Agreement
+[PDF, 307 KB]
+Tariff Supplement 110: Natal Load Curtailment
+[PDF, 373 KB]
+Tariff Supplement 114: North Coast Supplement to Electricity Supply Agreement
+[PDF, 195 KB]
+Tariff Supplement 115: North Coast Supplement to Facilities Agreement
+[PDF, 166 KB]
+Please note:
+Tariff Supplements 91 and 92 for Fortis Tilbury were rescinded in 2019 by government direction
+Tariff Supplement 37 for the Northwest Transmission Line was rescinded in 2021 by government direction
+[DOC 2] https://app.bchydro.com/work-with-us/selling-clean-energy/closed-offerings/feed-in-tariff.html
+Feed-In Tariff
+2024-05-28T16:48:25.232-07:00
+Skip to content
+Contact us
+My profile
+Personal information
+Subscriptions & alerts
+Change password
+Customer support centre
+Log out
+Log in
+Accounts
+Energy savings
+News
+Projects & operations
+Community
+Work with us
+Outages & safety
+Login
+/
+Registration
+Billing & payments
+Moving
+Electrical connections
+Electricity rates & energy use
+Get help
+Create Profile
+Join Team Power Smart
+Get to know your bill
+Go paperless with your BC Hydro bill
+Looking into a high bill
+Track and manage your electricity use
+Time-of-day usage tracking tips
+How to do a breaker test
+Late payment and disconnection
+Non-payment disconnections in winter
+Get your service reconnected
+Ways to pay your bill
+Trouble paying your BC Hydro bill?
+What you should know as a BC Hydro customer
+B.C. electricity affordability credit
+Move or cancel your service
+New BC Hydro customers
+Customer generation
+Self-generation
+Community generation
+How to apply
+Rebates for solar panels and battery storage
+Connection requests
+Express connections
+Design connections
+Technical info for engineers, contractors & developers
+Overhead & underground connections requirements
+Distribution Technical Standards & Guides
+Contractor authorizations & permits
+Customer-owned poles
+Preparing your site for connection services
+Electrical service connection forms & guides
+TSBC information sharing agreement
+Specialized connection services
+Large load connections
+Transmission generator interconnections
+Distribution generator interconnections
+Attaching to BC Hydro poles, towers and ducts
+The B.C. advantage for growing business
+Customer equipment maintenance & isolations
+Customer equipment maintenance
+Voltage conversion
+Large load connections
+Emerging industries connections
+Distribution Technical Standards and Guides
+Customer connections process improvements
+Electrical services we offer
+Designated voltage areas
+Electricity rates
+Residential rates
+General Service Business Rates
+Fleet Electrification Rates
+Irrigation Rate
+Transmission Rates
+Street Lighting Service Rates
+Power factor and your bill
+Industrial electrification rates
+Non-integrated areas
+Electricity meters
+Radio frequency
+Security and your privacy
+Meter types, access, and replacements
+Access your building or strata's electricity use history
+Request peak load data
+Understand your home's electrical capacity
+Business resources
+Residential
+Business
+Electric vehicles in B.C.
+Indigenous communities
+Stratas and housing providers
+Innovation demonstrations, and research
+Tips and technologies
+Electronics
+Generation
+Heating & cooling
+Kitchen
+Laundry
+Lighting
+Water
+Rebates & free programs
+Rebates for home renovations
+Deals on energy-efficient products
+Free programs based on income
+Offers for remote communities
+Peak Saver
+Rebates for solar panels and battery storage
+Condo and Apartment Rebate Program
+Building or buying a home
+High performance, energy efficient homes
+Building & renovating
+Get an EnerGuide Home Evaluation
+Understanding your home as 
+[DOC 2] https://app.bchydro.com/work-with-us/selling-clean-energy/closed-offerings/feed-in-tariff.html
+a system
+Energy concepts, explained
+The benefits of an electric home
+Tools & calculators
+Power Smart Shop
+HydroHome app
+Join Team Power Smart
+Buildings we love
+Programs & incentives
+Energy management
+Demand response for business
+Buy and upgrade equipment
+Electrification
+New construction
+Energy-efficient technologies & tips
+Compressed air systems
+Fan & pump systems
+Harmonics & power quality
+Heating & cooling
+Lighting systems
+Refrigeration
+Solar panels and battery storage systems
+Tools & resources
+Energy efficiency benchmarking
+Track your business' electricity use
+Owning & buying an EV
+Why drive an EV?
+EV technologies and types
+Cost of owning an EV
+Buying a new EV
+Buying a used EV
+Vehicle-to-everything
+Charging your EV at home
+Home EV charger options
+Installing EV charger at home
+Installing EV charger at multi-unit residential building
+EV charging and your electricity bill
+Metering and billing options
+Public EV charging
+How fast your EV can charge
+Our fast charging network
+Charging rates & roaming
+Charging help centre
+Trip planning & public charging
+Rebates & incentives
+EV incentives in B.C.
+EV chargers eligible for rebates
+Rebates for single-family home chargers
+Rebates for multi-unit residential building chargers
+Rebates for workplace chargers
+Charger rebate top-ups
+EV news and resources
+EV resources for industry
+Electric fleets
+Electric forklifts
+Planning our EV network
+Installing a charger at work
+Industry resources for EV fast charging
+Industry resources for EV Level 2 charging
+Program offers for Indigenous governing bodies
+Energy assessment funding
+Energy efficiency retrofit incentives
+Heating system maintenance rebates
+Basic energy saving measures
+Rebates for solar panels and battery storage
+Condo and rental building offers
+Rebates for whole-building upgrades
+Rebates for solar panels and battery storage
+Resources
+Rental lighting rebate program
+Energy Coaching Services
+Social housing building offers
+Social Housing Energy Savings Program
+Rebates for solar panels and battery storage
+Active innovation demonstrations
+Stories & features
+Media centre
+2026 stories & features
+2025 stories & features
+2024 stories & features
+2023 stories & features
+2022 stories & features
+2021 stories & features
+2020 stories & features
+Projects
+Operations
+Bella Bella Generating Station Upgrade
+Clayton Heights Substation
+Elkford low-likelihood outage risk
+Mount Pleasant Substation upgrade
+North Coast transmission projects
+First Nations partnership
+Construction activities
+Jobs and business opportunities
+News and updates
+North Langford Substation
+Vancouver Island Grid-Scale Battery Energy Storage System
+Westbank Substation Upgrade
+Vancouver, Coast & Mountains
+La Joie Dam Improvement Project
+Surrey Langley SkyTrain
+West End Substation
+Vancouver Island
+Campbell River System Upgrades
+Victoria to Esquimalt Cable Replacement Project
+Victoria to Saanich Cable Replacement Project
+Columbia
+/
+Kootenays
+Walter Hardman Project
+Northern B.C.
+North Coast B.C. electrification
+Prince Ge
+[DOC 2] https://app.bchydro.com/work-with-us/selling-clean-energy/closed-offerings/feed-in-tariff.html
+orge to Terrace capacitors project
+John Horgan Dam and Generating Station
+Thompson
+/
+Okanagan
+Westbank Substation upgrade project
+West Kelowna Transmission Project
+Wilsey Fish Passage Project
+View all projects
+Rights of Way and power lines
+Pollinator corridors under power lines
+Rights of Way guidelines
+Transmission line relocation
+Our facilities
+Columbia Region
+Lower Mainland and Coast
+Peace Region
+Vancouver Island
+Non-Integrated Areas
+Thermal Generation
+Dam safety
+Seismic hazards & our dams
+Dam safety reports
+Dam safety FAQ
+Transmission
+Transmission planning
+Transmission scheduling
+Transmission system
+Water, flows and reservoirs
+Hydrometeorologic data
+Reservoir levels
+Reservoir discharges
+Importing and exporting power
+Regional reports & programs
+Indigenous relations
+Youth & education
+Community giving
+Recreation areas & visitor centres
+Local government support
+Community ReGreening program
+Report graffiti on our equipment
+Decorative wraps on BC Hydro equipment
+Decorative wrap application
+Power Smart Champions
+Opportunities with BC Hydro
+Employment and scholarships
+Advancing reconciliation
+Power Smart for Schools
+Grants for community groups
+Scholarships and awards
+Employee giving
+BC Hydro Power Pioneers
+BC Hydro Visitor Centres
+Vancouver Island
+John Hart
+Puntledge River
+Upper Campbell Reservoir
+Lower Mainland
+Buntzen Lake
+Buntzen Lake Trails
+Hayward Lake
+Jones Lake
+Ruskin Dam
+Stave Falls Visitor Centre
+Stave Lake
+Southern
+Arrow Lakes Reservoir
+Bridge River
+Kootenay Canal
+Pend d'Oreille
+Revelstoke Dam Visitor Centre
+Shuswap River
+Northern
+Alexander Mackenzie's Landing
+Clayton Falls
+W.A.C. Bennett Dam Visitor Centre
+Williston Reservoir
+D.A. Thomas
+Taylor
+FAQs for local governments
+Small-scale, multi-unit housing guide
+Local government collaborations
+Sustainable communities program
+Resources and projects
+Newsletter
+Careers
+Connect to our grid
+Selling clean energy
+Suppliers
+Alliance of Energy Professionals
+Current job opportunities
+Apprenticeships, training, and co-ops
+Apprenticeships
+Pre-apprentice programs
+Engineers-in-training program
+Co-operative educational program
+Technologist trainee program
+Tour guides
+Employee benefits
+Indigenous professionals in development
+Customer service roles
+Career centre tips
+Careers FAQ
+North Coast Expression of Interest
+New business
+Independent power projects
+Electricity purchase agreements
+First Nations Electricity Program 2026
+Documents
+Battery energy storage system
+2025 RFEOI for Capacity
+Questions and answers
+2025 Call for Power
+Documents
+Engagement
+Questions and answers
+The Participants
+2024 Call for Power
+Background and development
+Call documents
+Questions and answers
+The Participants
+Closed offers
+Haida Gwaii - RFEOI
+Feed-In Tariff
+Community-Based Biomass Power Call RFQ
+Bioenergy Phase 2 Call RFP
+Clean Power Call
+Bioenergy Phase I Call RFP
+F2006 Open Call for Power
+Standing Offer Program
+Micro-SOP for First Nations and Communities
+Remote community renewable energy projects
+Bid opportunities
+Doing business with 
+[DOC 2] https://app.bchydro.com/work-with-us/selling-clean-energy/closed-offerings/feed-in-tariff.html
+BC Hydro
+Safety information for contractors
+Cybersecurity requirements for suppliers
+Training information for contractors
+Indigenous procurement
+Registered civil contractor list
+Request to join the registered civil contractor list
+Invoicing and payments
+Membership benefits
+How to apply
+Consulting engineers
+Contractor membership
+Distributor membership
+Become an affiliate
+Hire an Alliance member
+Program information
+Alliance incentives info
+News & features
+Power outages
+Electrical safety
+Emergency preparation
+Trees and plants near power lines
+Power lines and your health
+Outage map
+Outage list
+Power outage & storm safety
+Prepare your home for an outage
+Prepare your business for an outage
+During a power outage
+How power is restored
+Planned outages
+Working near power lines
+Electrical safety training courses for workers
+Safe distance from downed power lines
+Outdoor safety and BC Hydro sites
+Electricity safety at home
+Safety at home
+Protect your electronics
+Electrical safety for kids
+Motor vehicle accidents involving power lines
+Vehicles with high loads
+Earthquakes, wildfires, and floods
+Evacuation resources and preparedness
+Our wildfire prevention work
+Trees and plants on your property
+How we manage trees near our system
+Staying safe around overhead lines
+Electric and magnetic fields from power lines
+What the health experts are saying
+Research and resources on EMF
+Main Menu
+Search
+My profile
+Personal information
+Subscriptions & alerts
+Change password
+Customer support centre
+Log out
+Log in
+Accounts
+Energy savings
+News
+Projects & operations
+Community
+Work with us
+Outages & safety
+Contact us
+Login
+/
+Registration
+Create Profile
+Join Team Power Smart
+Billing & payments
+Get to know your bill
+Go paperless with your BC Hydro bill
+Looking into a high bill
+Track and manage your electricity use
+Time-of-day usage tracking tips
+How to do a breaker test
+Late payment and disconnection
+Non-payment disconnections in winter
+Get your service reconnected
+Ways to pay your bill
+Trouble paying your BC Hydro bill?
+What you should know as a BC Hydro customer
+B.C. electricity affordability credit
+Moving
+Move or cancel your service
+New BC Hydro customers
+Electrical connections
+Customer generation
+Self-generation
+Community generation
+How to apply
+Rebates for solar panels and battery storage
+Connection requests
+Express connections
+Design connections
+Technical info for engineers, contractors & developers
+Overhead & underground connections requirements
+Distribution Technical Standards & Guides
+Contractor authorizations & permits
+Customer-owned poles
+Preparing your site for connection services
+Electrical service connection forms & guides
+TSBC information sharing agreement
+Specialized connection services
+Large load connections
+Transmission generator interconnections
+Distribution generator interconnections
+Attaching to BC Hydro poles, towers and ducts
+The B.C. advantage for growing business
+Customer equipment maintenance & isolations
+Customer equipment maintenance
+Voltage conversion
+Lar
+[DOC 2] https://app.bchydro.com/work-with-us/selling-clean-energy/closed-offerings/feed-in-tariff.html
+ge load connections
+Emerging industries connections
+Distribution Technical Standards and Guides
+Customer connections process improvements
+Electrical services we offer
+Designated voltage areas
+Electricity rates & energy use
+Electricity rates
+Residential rates
+General Service Business Rates
+Fleet Electrification Rates
+Irrigation Rate
+Transmission Rates
+Street Lighting Service Rates
+Power factor and your bill
+Industrial electrification rates
+Non-integrated areas
+Electricity meters
+Radio frequency
+Security and your privacy
+Meter types, access, and replacements
+Access your building or strata's electricity use history
+Request peak load data
+Understand your home's electrical capacity
+Get help
+Business resources
+Residential
+Tips and technologies
+Electronics
+Generation
+Heating & cooling
+Kitchen
+Laundry
+Lighting
+Water
+Rebates & free programs
+Rebates for home renovations
+Deals on energy-efficient products
+Free programs based on income
+Offers for remote communities
+Peak Saver
+Rebates for solar panels and battery storage
+Condo and Apartment Rebate Program
+Building or buying a home
+High performance, energy efficient homes
+Building & renovating
+Get an EnerGuide Home Evaluation
+Understanding your home as a system
+Energy concepts, explained
+The benefits of an electric home
+Tools & calculators
+Power Smart Shop
+HydroHome app
+Join Team Power Smart
+Buildings we love
+Business
+Programs & incentives
+Energy management
+Demand response for business
+Buy and upgrade equipment
+Electrification
+New construction
+Energy-efficient technologies & tips
+Compressed air systems
+Fan & pump systems
+Harmonics & power quality
+Heating & cooling
+Lighting systems
+Refrigeration
+Solar panels and battery storage systems
+Tools & resources
+Energy efficiency benchmarking
+Track your business' electricity use
+Electric vehicles in B.C.
+Owning & buying an EV
+Why drive an EV?
+EV technologies and types
+Cost of owning an EV
+Buying a new EV
+Buying a used EV
+Vehicle-to-everything
+Charging your EV at home
+Home EV charger options
+Installing EV charger at home
+Installing EV charger at multi-unit residential building
+EV charging and your electricity bill
+Metering and billing options
+Public EV charging
+How fast your EV can charge
+Our fast charging network
+Charging rates & roaming
+Charging help centre
+Trip planning & public charging
+Rebates & incentives
+EV incentives in B.C.
+EV chargers eligible for rebates
+Rebates for single-family home chargers
+Rebates for multi-unit residential building chargers
+Rebates for workplace chargers
+Charger rebate top-ups
+EV news and resources
+EV resources for industry
+Electric fleets
+Electric forklifts
+Planning our EV network
+Installing a charger at work
+Industry resources for EV fast charging
+Industry resources for EV Level 2 charging
+Indigenous communities
+Program offers for Indigenous governing bodies
+Energy assessment funding
+Energy efficiency retrofit incentives
+Heating system maintenance rebates
+Basic energy saving measures
+Rebates for solar panels and battery storage
+Stratas 
+[DOC 3] https://app.bchydro.com/accounts-billing/rates-energy-use.html
+Electricity rates & energy use
+Electricity rates
+Learn about the rate structures that we have for residential, business and other customers. Your rate structure determines how you're charged for the electricity you use.
+Electricity meters
+Electricity meters measure your electricity use for billing. Learn about the meters on our system, how they work, and the benefits of smart meters.
+Understand your electricity use
+Get to know the tools available within MyHydro, which is your online account with us. Check out the top tips for using MyHydro to track and manage your electricity use.
+Understand your home’s electrical capacity
+If you’re planning to add new electrical load to your home, your contractor will need to understand your home’s capacity. Learn about gathering that data and your options, which might not require a service upgrade.
+Access your building or strata's electricity use history
+For multi-unit residential, strata or mixed-use buildings looking to check if there's capacity to add electric vehicle charging, electric heating, or other electrical load based on historical peak load data. Plus, learn how to interpret the data.
+Related information
+Looking into a high bill
+The most common reasons for a higher-than-expected bill are changes to the outdoor temperature and changes to how you use electricity at home.
+Energy efficiency tips, rebates and programs
+Incentives are available to make energy-efficient upgrades at your home or business, and we've got tips to help you save energy and money.
+[DOC 4] https://app.bchydro.com/accounts-billing/bill-payment/rates-energy-use.html
+Track and manage your electricity use online
+Use your MyHydro account to understand your usage
+In the dark about your electricity use? Keeping an eye on your consumption with your online MyHydro account allows you to spot patterns and identify ways to save.
+Log in to your account
+regularly to track and understand your electricity use – right down to the hour. The data comparison tools also allow you to discover how your household’s electricity habits have changed over time, with the seasons, and in comparison to your neighbours.
+Ready to up your knowledge, and lower your bill? Let’s walk through the tools available within your MyHydro account, and
+what you should be looking for
+as you dig into your data.
+Register now
+Already registered? Log in to your MyHydro account
+.
+Examine your electricity use with our tracking tools
+Keeping track of your household’s electricity use is one of the best ways to understand how you’re using electricity and identify opportunities to save.
+Track your electricity use by the month, day or hour in with tracking tools found in your MyHydro account.
+Three ways to track your usage:
+1. Hourly
+Your hourly data is your best look at how your usage fluctuates based on what you're doing throughout the day. Click the blue bars in your consumption graph to reveal this level of detail up to the previous day.
+If you're on a time-of-day rate plan, refer to our
+time-of-day MyHydro tips instead
+.
+What to look for:
+Look for spikes (the highest bars) and think about what activities you were doing during those highest energy-consuming hours, like running the dryer or cooking in the oven.
+Take a look at your overnight usage (typically the lowest bars). This represents your “always on” systems, like your fridge and thermostat, and idle electronics, like your PVR. See if there’s any efficiency to gain overnight.
+2. Daily
+Your daily data over the past few weeks is a great way to understand how your consumption shifts with your weekly schedule.
+What to look for:
+Is there a pattern of lower usage on weekdays and higher on weekends? This typically results from leaving home for school or work on weekdays, and being home more on weekends.
+Depending on your lifestyle, the weekday versus weekend difference may not be so noticeable. For example, if you work or study from home, or tackle activities that use a lot of electricity during the week, like laundry or meal prep.
+3.  Weekly
+See how your usage compares week over week through the month.
+What to look for:
+Keep an eye on the projected cost of your electricity use at the end of the billing period.
+If you want to take action to lower that projection before your next bill, explore our
+energy-saving tips and technologies
+.
+Start tracking your electricity use online with your MyHydro account
+.
+Log in
+Comparing your consumption
+The comparison tools available in your MyHydro account provide you with more context and a better understanding for how you're using electricity.
+Use the comparison tools in yo
+[DOC 4] https://app.bchydro.com/accounts-billing/bill-payment/rates-energy-use.html
+ur MyHydro account to dive deeper into your electricity use.
+Three ways to compare your electricity use:
+1. Outdoor temperature
+See how the average outdoor temperature influences your usage. Cold snaps in winter and heat waves in summer are the biggest contributors to increased usage, if you use electric systems to heat or cool. Apply this comparison and look at how the blue bars of your usage change in relation to the temperature line.
+2. Previous year
+Look at your electricity use compared to the same period last year to see how it’s changed. The average outdoor temperature can be a significant factor here, as well as things like house guests, renovations or lifestyle changes.
+3. Similar homes nearby
+See how you stack up next to other homes in your area. Your comparison is based on the average electricity use of at least 30 similar homes nearby.
+Find out how your electricity use measures up
+.
+Log in
+Set up email alerts in MyHydro
+We have two types of alerts you can opt-in to:
+Tier 2 alert:
+we'll send you an email when your electricity use is halfway to reaching Tier 2, and another email after you’ve reached it.
+Log-in reminder:
+Set up a weekly or monthly reminder email to log in to check your electricity use to see how you’re tracking.
+Dive deeper into your electricity use
+Want to expand your learning beyond the consumption graphs?
+Use our
+cost calculator
+to understand the typical cost of running the individual appliances, lighting and electronics in your home.
+Download our free
+HydroHome app
+. It provides a high-level breakdown of what’s using energy in your home and, if you upgrade to add a hub, you’ll see real-time and device-specific energy data.
+To investigate your home’s usage at a circuit level,
+conduct a breaker test
+. This process involves monitoring your smart meter while activating individual breakers, and can help you find sources of high usage, energy waste, or other issues
+Get energy saving tips and updates
+Sign up
+to receive our monthly Connected e-newsletter and be the first to hear about new rebates and offers, contests, energy saving tips, and more straight your inbox.
+Subscribe now
+[DOC 5] https://app.bchydro.com/accounts-billing/rates-energy-use/electricity-rates/residential-rates.html
+Residential rates
+How we calculate your electricity costs
+Residential customers can choose between the flat rate and tiered rate plan, which can both also be combined with optional time-of-day pricing. Log in and use our rate estimator to compare your estimated costs on each plan.
+Try the rate estimator
+Tiered rate
+You're charged a lower price for electricity use up to a certain threshold in each billing period. If you go over that threshold, all electricity use afterwards is charged at a higher price. This plan is a good option for customers with average or lower electricity use.
+Flat rate
+Pay a fixed price per kilowatt-hour (kWh) of electricity. This price doesn't change no matter how much or little electricity you use, which can be a good option for customers with higher electricity use.
+Time-of-day pricing
+The price for electricity is highest in the evening and lowest overnight. Time-of-day pricing is available with either the tiered or flat rate plan.
+Resources
+Change your rate
+Want to update your account? It's quick and easy to change your rate online.
+Change your rate
+Help us design new rate plans
+We're currently exploring additional residential rate options to meet the diverse needs of our customers. Learn about
+rate design
+and how you can get involved.
+[DOC 6] https://app.bchydro.com/accounts-billing/rates-energy-use/electricity-rates/business-rates.html
+General Service Business Rates
+How we calculate the rate you're charged
+For business customers, the rate that you're charged for electricity will depend on your annual peak demand and total annual energy usage.
+Small General Service
+Medium General Service
+Large General Service
+Declaration of eligibility for General Service (business) rate
+Small General Service Rate
+The Small General Service rate is for business customers with an annual peak demand less than 35 kW. They receive service under rate schedules 1300, 1301, 1310, or 1311 of the
+Electric Tariff
+.
+What you'll see on your bill
+Basic Charge
+A small, daily amount that partially recovers fixed customer-related costs, including customer service channels, metering, billing, payment processing, collections, and distribution system costs that are customer-related (electrical lines and transformers).
+40.89 cents per day.
+Energy Charge
+14.06 cents per kWh.
+Minimum Charge
+A charge that covers the cost of maintaining our equipment year round for customers with high electricity usage in the winter but low electricity usage in the summer.
+40.89 cents per day.
+Equal to the Basic Charge.
+Discounts
+1.5% on entire bill if electricity is metered at primary potential.
+$0.25 per kW if customer supplies transformation from a primary to a secondary potential.
+If eligible for both, the 1.5% discount is applied first.
+Medium General Service Rate
+The Medium General Service rate is for business customers with an annual peak demand between 35 and 150 kW, and that use less than 550,000 kWh of electricity per year. They receive service under rate schedules 1500, 1501, 1510, or 1511 of the
+Electric Tariff
+.
+What you'll see on your bill
+Basic Charge
+A small, daily amount that partially recovers fixed customer-related costs, including customer service channels, metering, billing, payment processing, collections, and distribution system costs that are customer-related (electrical lines and transformers).
+29.99 cents per day.
+Demand Charge
+Demand is the rate at which electricity is used and is typically measured in kilowatts (kW). Peak demand is the highest rate of electricity use during a period of time. Our smart meters measure demand using 15-minute intervals with three consecutive five-minute sub-intervals. The highest 15-minute demand average recorded in each billing period is used to calculate the demand charge on your bill.
+$6.07 per kW.
+Energy Charge
+10.86 cents per kWh.
+Minimum Charge
+A charge that covers the cost of maintaining our equipment year round for customers with high electricity usage in the winter but low electricity usage in the summer.
+Equal to 50% of the highest Demand Charge during the previous November 1 to March 31 period. The Basic Charge, Energy Charge, and Demand Charge are replaced by the Minimum Charge if their sum is less than this amount.
+Power Factor Surcharge
+A measure of efficiency, and the ratio of usable power (kW) to reactive power (kVar) in a circuit. It varies between 0 and 1, and i
+[DOC 6] https://app.bchydro.com/accounts-billing/rates-energy-use/electricity-rates/business-rates.html
+s normally given as a percentage (1 to 100%). We apply a power factor surcharge to business customers whose power factor drops below 90%.
+Learn more about
+power factor
+.
+Applicable if power factor is below 90%.
+Discounts
+1.5% on entire bill if electricity is metered at primary potential.
+$0.25 per kW if customer supplies transformation from a primary to a secondary potential.
+If eligible for both, the 1.5% discount is applied first.
+Large General Service Rate
+The Large General Service rate is for business customers with an annual peak demand of at least 150 kW, or that use more than 550,000 kWh of electricity per year. They receive service under rate schedules 1600, 1601, 1610, or 1611 of the
+Electric Tariff
+.
+What you'll see on your bill
+Basic Charge
+A small, daily amount that partially recovers fixed customer-related costs, including customer service channels, metering, billing, payment processing, collections, and distribution system costs that are customer-related (electrical lines and transformers).
+29.99 cents per day.
+Demand Charge
+Demand is the rate at which electricity is used and is typically measured in kilowatts (kW). Peak demand is the highest rate of electricity use during a period of time. Our smart meters measure demand using 15-minute intervals with three consecutive five-minute sub-intervals. The highest 15-minute demand average recorded in each billing period is used to calculate the demand charge on your bill.
+$13.83 per kW.
+Energy Charge
+6.79 cents per kWh.
+Minimum Charge
+A charge that covers the cost of maintaining our equipment year round for customers with high electricity usage in the winter but low electricity usage in the summer.
+Equal to 50% of the highest Demand Charge during the previous November 1 to March 31 period. The Basic Charge, Energy Charge, and Demand Charge are replaced by the Minimum Charge if their sum is less than this amount.
+Power Factor Surcharge
+A measure of efficiency, and the ratio of usable power (kW) to reactive power (kVar) in a circuit. It varies between 0 and 1, and is normally given as a percentage (1 to 100%). We apply a power factor surcharge to business customers whose power factor drops below 90%.
+Learn more about
+power factor
+.
+Applicable if power factor is below 90%.
+Discounts
+1.5% on entire bill if electricity is metered at primary potential.
+$0.25 per kW if customer supplies transformation from a primary to a secondary potential.
+If eligible for both, the 1.5% discount is applied first.
+Declaration of eligibility for General Service (business) rate
+The declaration indicates that the service address and meter number meets the BC Hydro Electric Tariff ('Tariff') definition for what qualifies for General Service where energy is used:
+In common areas of multiple occupancy buildings.
+In a dwelling where a part is used to carry on a business if the whole dwelling is supplied through one meter, and the hourly energy consumption is at least 35 kWh or the peak demand is at least 35 kW.
+On a f
+[DOC 6] https://app.bchydro.com/accounts-billing/rates-energy-use/electricity-rates/business-rates.html
+arm:
+for lodging that is not a dwelling,
+for processing of farm products produced elsewhere than on this farm,
+to sell farm or other products to the general public, or
+for any commercial operation not ordinarily conducted upon a farm.
+In a business, commercial, institutional or industrial use, including use in:
+Hotels, Motels
+Schools
+Churches
+Hospitals
+Nursing homes
+Boarding houses, Rooming houses
+Recreational establishments, Amusement parks, Halls, Resorts
+Mobile home parks, RV Park and similar establishments
+Marinas and Yacht clubs.
+If you meet these eligibility requirements and wish to be placed on the General Service rate, please
+submit your declaration
+[PDF, 25 KB]
+and required documents.
+[DOC 7] https://app.bchydro.com/accounts-billing/rates-energy-use/electricity-rates/power-factor.html
+Power factor and your bill
+Some customer types, mainly
+business customers
+, will see a power factor surcharge on their bill if their power factor is below 90%. This surcharge is not applicable to our residential rates.
+What is power factor?
+Power factor refers to the ability of your electrical system to convert electric current into useful work such as heat, light, and mechanical motion. To use electrical power efficiently your system should draw mostly real power, measured in kilowatts (kW), from our system. If your equipment draws too much reactive power, measured in kilovolt-amperes-reactive (kVAR), it can't perform work as efficiently and limits the capacity of our lines to deliver real power and quality voltage to your facility.
+The total power your facility draws, also called apparent power, is the square root of the sum of the squares of real and reactive powers. The ratio of real power to total power is called power factor, and your equipment is performing best when that ratio is between 90% and 100%.
+To calculate power factor we use the following formula:
+How your poor power factor impacts your neighbours and our electrical system
+Poor power factor at your site can cause voltage fluctuations and power quality issues for neighbouring facilities, which negatively affects their equipment. It also limits the capacity of our lines to deliver energy to you and to our other customers. To counteract these effects we need to install capacitors on our system to use our lines efficiently and to maintain power quality for all customers on the line.
+Why do I have to pay a surcharge?
+When your power factor is below 100% your facility is drawing both reactive power and real power. However, the energy charges (cents per KWh) applied to your account only reflects the cost of providing you with real power you have consumed.
+A power factor surcharge is applied to your account when your power factor is below 90%. It is used to recover the cost of supplying reactive power to you, which isn’t included in other charges.
+Amount of the surcharge
+If your average power factor for the billing period falls below 90%, your bill will be increased by the following percentages, which are applied to the total of all other charges for the same period.
+Power factor
+Power factor allowance
+Surcharge
+100%
+but 90% or more
+None
+90%
+but 88% or more
+2%
+88%
+but 85% or more
+4%
+85%
+but 80% or more
+9%
+80%
+but 75% or more
+16%
+75%
+but 70% or more
+24%
+70%
+but 65% or more
+34%
+65%
+but 60% or more
+44%
+60%
+but 55% or more
+57%
+55%
+but 50% or more
+72%
+50%
+80%
+Refer to your bill details to see the percentage and amount of the surcharge if your power factor has fallen below 90% for the bill period.
+Causes of poor power factor
+Large inductive loads such as power transformers and electric motor  driven loads such as fans, pumps and air compressors may cause poor  power factor. Additionally, loads that draw current in a non-linear  fashion, such as variable speed drives, computers, broadcasting  e
+[DOC 7] https://app.bchydro.com/accounts-billing/rates-energy-use/electricity-rates/power-factor.html
+quipment, compact fluorescent and LED lighting, electrical chargers,  induction furnaces and many other devices may also contribute to low  power factor in a customer's system.
+Good places to start your investigation are:
+Large fans and motors (especially if they are only partially loaded).
+Equipment with a high number of transformers (such as lighting ballasts).
+Failed or improperly sized capacitors (used for power factor correction).
+Harmonics in a system caused by non-linear electrical loads.
+How to correct your power factor
+Depending on the cause of your low power factor, there are different solutions that may be appropriate. Some examples are:
+Capacitors can be installed in your electrical system when the cause of the poor power factor is a linear inductive load, such as an electric motor driving a fan. Capacitors produce a leading power factor to counteract the lagging power factor of inductive loads.
+Harmonics filters may be needed in your system to improve power factor if the cause is a non-linear load.
+Sometimes operational changes in a facility are all that are needed to improve power factor. For example, you can operate a motor closer to the full-load rating.
+Who can correct your low power factor
+A qualified electrical contractor can provide power factor correction services and/or equipment. You may have an electrician on staff or one you already work with who can do this for you.
+We can also provide referrals through our
+Alliance of Energy Professionals
+, which includes qualified contractors that can help you optimize your power factor.
+The benefits of correcting your power factor
+Improving on a low power factor may help you:
+Reduce electricity bills by eliminating power factor surcharges.
+Enhance equipment operation by improving voltage.
+Improve energy efficiency of your electrical system by reducing line losses.
+Eliminate or reduce transformer maintenance or upgrades.
+Who to call if you still need help
+Please call us at 1 800 BC HYDRO (1 800 224 9376).
+Our call centre hours are:
+Monday to Friday: 7 a.m. to 8 p.m.
+Saturday: 9 a.m. to 5 p.m.
+We're closed Sundays and holidays.

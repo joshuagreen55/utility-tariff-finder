@@ -1,0 +1,2388 @@
+[DOC 1] https://www.hydroquebec.com/data/documents-donnees/pdf/electricity-rates.pdf?v=20261001
+stomer with a domestic contract may submit a request in writing for a change of rate during
+the term of the contract. The change of rate takes effect, at the customer’s discretion, either at the
+beginning of the consumption period during which Hydro-Québec receives the written request,
+at the beginning of the previous consumption period or at the beginning of any subsequent
+consumption period;
+c) In the case of a new domestic contract and only during the first 12 monthly periods, the customer
+may, only once, request a change of rate that would take effect at the beginning of the contract or
+at the beginning of any one of the consumption periods preceding the request.
+To obtain a change of rate under this subparagraph, the customer must submit a request to
+Hydro-Québec in writing before the end of the 14th monthly period following the date of the
+beginning of the contract.
+2026 Electricity Rates – 9
+
+Section 2 – Rate D
+SECTION 2
+–
+RATE D
+Application 2.4
+Domestic Rate D applies to a contract for domestic use in a dwelling where the electricity is metered
+separately and the maximum power demand was less than 65 kilowatts during the 12 consecutive
+monthly periods ending at the end of the consumption period in question.
+Barring provisions to the contrary, it does not apply:
+a) to youth or general tourist accommodation establishments covered in the Tourist Accommodation Act
+and its implementing regulation;
+b) to establishments covered in the Act respecting health services and social services.
+Structure of Rate D 2.5
+The structure of Rate D for a weekly contract is as follows:
+46.154¢ system access charge for each day in the consumption period
+plus
+7.065¢ per kilowatthour for energy consumed, up to the product of 40 kilowatthours and the number
+of days in the consumption period, and
+11.142¢ per kilowatthour for the remaining consumption.
+If applicable, the credit for supply, as described in Article 12.3, applies.
+Change from Rate D to Rate D P for a contract with a maximum power demand 2.6
+of at least 50 kilowatts but less than 65 kilowatts
+Each year, after the new rates come into effect on April 1, Hydro-Québec will determine if it would be
+more advantageous for the customer to change to Rate D P. Hydro-Québec will automatically replace
+Rate D by Rate D P as of the consumption period beginning on or after April 1 of the current year if, for
+the 12 consecutive monthly periods immediately preceding this period, the following conditions are met:
+a) The maximum power demand under the contract was at least 50 kilowatts but less than 65 kilowatts;
+b) Applying Rate D P yields savings of at least 3% on the customer’s electricity bill in comparison to the
+amount payable under Rate D, based on the new prices in effect.
+A customer whose rate is changed by Hydro-Québec under this article may, once only, choose another
+rate for which the contract is eligible. The rate change request must be sent to Hydro-Québec before the
+end of the 3rd monthly period after the rat
+[DOC 1] https://www.hydroquebec.com/data/documents-donnees/pdf/electricity-rates.pdf?v=20261001
+ other cases, the electricity delivered to a residential outbuilding is subject to the appropriate
+general rate.
+2026 Electricity Rates – 11
+
+Section 2 – Rate D
+Mixed use 2.12
+When the electricity is not exclusively for habitation purposes, Rate D applies on condition that the
+installed capacity for purposes other than habitation does not exceed 10 kilowatts.
+If the installed capacity for purposes other than habitation exceeds 10 kilowatts, the appropriate general
+rate applies.
+In determining the installed capacity for purposes other than habitation, any central water heating,
+space heating or air conditioning equipment for both habitation and other purposes is not considered.
+Farms 2.13
+Electricity supplied to a farm is subject to a domestic rate.
+Electricity not directly used for a dwelling, residential outbuildings or the farm is measured by an
+additional meter and billed at the appropriate general rate.
+If there is no additional meter, Rate D applies only when the installed capacity of the premises, other
+than the dwelling, the residential outbuildings and the farm, does not exceed 10 kilowatts. If the installed
+capacity of the premises exceeds 10 kilowatts, the appropriate general rate applies.
+12 – 2026 Electricity Rates
+
+Section 3 – Rate DP
+SECTION 3
+–
+RATE D P
+Application 2.14
+Domestic Rate D P applies to a contract for domestic use in a dwelling where the electricity is metered
+separately and the maximum power demand was at least 50 kilowatts during one of the 12 consecutive
+monthly periods ending at the end of the consumption period in question.
+Rate D P also applies to the exceptions provided for in articles 2.8 to 2.13 if the maximum power demand
+was at least 50 kilowatts during one of the consumption periods included in the 12 consecutive monthly
+periods ending at the end of the consumption period in question. Barring provisions to the contrary, it
+does not apply:
+a) to youth or general tourist accommodation establishments covered in the Tourist Accommodation Act
+and its implementing regulation;
+b) to establishments covered in the Act respecting health services and social services.
+Structure of Rate D P 2.15
+The structure of Rate D P for a weekly contract is as follows:
+6.878¢ per kilowatthour, up to 1,200 kilowatthours per monthly period, and
+10.458¢ per kilowatthour for the remaining consumption
+plus a monthly charge of
+$ 5.369 p er kilowatt of billing demand in excess of 50 kilowatts during the summer period, or
+$7.266 per kilowatt of billing demand in excess of 50 kilowatts during the winter period.
+When a consumption period overlaps with the beginning or end of the winter period, the demand charge
+is prorated according to the number of days in the consumption period that fall within the summer period
+and the winter period, respectively.
+The minimum monthly bill is $13.833 when single-phase electricity is delivered or $20.750 when
+three-phase electricity is delivered.
+If applicable, the credit for supply at medium or high voltage
+[DOC 1] https://www.hydroquebec.com/data/documents-donnees/pdf/electricity-rates.pdf?v=20261001
+s eligible for it on May 31, 2009, and for which
+electricity is delivered to an apartment building or a community residence consisting of dwellings where
+there is bulk metering.
+Barring provisions to the contrary, it does not apply:
+a) to youth and general tourist accommodation establishments covered in the Tourist Accommodation
+Act and its implementing regulation;
+b) to establishments covered in the Act respecting health services and social services.
+Community residence consisting of dwellings and rooms, 2.22
+or community residence or rooming house with 10 rooms or more
+On condition that the electricity is exclusively for habitation purposes, including the electricity for
+common areas and collective services, Rate D M also applies when the electricity is delivered to:
+a) a community residence consisting of dwellings and rooms, where there is bulk metering;
+b) a rooming house or community residence with 10 rooms or more.
+When the electricity is not exclusively for habitation purposes, Rate D M applies in accordance with the
+provisions of Article 2.28.
+Structure of Rate D M 2.23
+The structure of Rate D M for a weekly contract is as follows:
+46.154¢ system access charge for each day in the consumption period, times the multiplier,
+plus
+7.065¢ per kilowatthour for energy consumed, up to the product of 40 kilowatthours, the number of
+days in the consumption period and the multiplier, and
+11.142¢ per kilowatthour for the remaining consumption
+plus a monthly charge of
+$7.266 per kilowatt of billing demand in excess of the base billing demand.
+If applicable, the credit for supply, as described in Article 12.3, applies.
+Billing demand 2.24
+The billing demand at Rate D M is equal to the maximum power demand during the consumption period
+in question, but is never less than the minimum billing demand as defined in Article 2.25.
+Minimum billing demand 2.25
+The minimum billing demand for any given consumption period is equal to 65% of the maximum
+power demand during a consumption period that falls wholly within the winter period included in
+the 12 consecutive monthly periods ending at the end of the consumption period in question.
+2026 Electricity Rates – 15
+
+Section 4 – Rate DM
+For a change to Rate D M from Rate D T or a general rate, the minimum billing demand is determined
+as specified in this article.
+When a customer terminates a weekly contract and signs another for the delivery of electricity at the
+same location and for similar purposes within the following 12 consecutive monthly periods, these
+two contracts are considered to be a single contract for calculation of the minimum billing demand.
+Base billing demand 2.26
+The base billing demand is the higher of the following values:
+a) 50 kilowatts or
+b) 4 kilowatts times the multiplier.
+Multiplier 2.27
+The multiplier is determined as follows:
+a) Apartment building or community residence consisting of dwellings:
+Number of dwellings in the apartment building or community residence.
+b) Community residence co
+[DOC 1] https://www.hydroquebec.com/data/documents-donnees/pdf/electricity-rates.pdf?v=20261001
+failure, makes it possible for
+the dual-energy system to operate, for some time, on the auxiliary energy source only, regardless of the
+outdoor temperature. The device must meet Hydro-Québec’s requirements.
+2026 Electricity Rates – 17
+
+Section 5 – Rate DT
+Structure of Rate D T 2.34
+The structure of Rate D T for a weekly contract is as follows:
+46.154¢ system access charge for each day in the consumption period, times the multiplier,
+plus
+5.131¢ per kilowatthour for energy consumed when the temperature is equal to or higher than −12°C
+or −15°C, depending on the climate zones defined by Hydro-Québec, and
+30.001¢ per kilowatthour for energy consumed when the temperature is below −12°C or −15°C,
+as applicable,
+plus a monthly charge of
+$7.266 per kilowatt of billing demand in excess of the base billing demand.
+If applicable, the credit for supply, as described in Article 12.3, applies.
+Multiplier 2.35
+For a contract at Rate D T, the multiplier is 1 except when there is bulk metering that includes the
+consumption of the dual-energy system, and when the contract was subject to Rate D T or eligible for
+Rate D M on May 31, 2009.
+When the multiplier is not 1, it is determined as specified in Article 2.27.
+Billing demand 2.36
+The billing demand at Rate D T is equal to the maximum power demand during the consumption period in
+question, but is never less than the minimum billing demand as defined in Article 2.37.
+Minimum billing demand 2.37
+The minimum billing demand for any given consumption period is equal to 65% of the maximum
+power demand during a consumption period that falls wholly within the winter period included in the
+12 consecutive monthly periods ending at the end of the consumption period in question.
+For a change to Rate D T from Rate D P, Rate D M or a general rate, the minimum billing demand is
+determined as specified in this article.
+When a customer terminates a weekly contract and signs another for the delivery of electricity at the
+same location and for similar purposes within the following 12 consecutive monthly periods, these
+two contracts are considered to be a single contract for calculation of the minimum billing demand.
+Base billing demand 2.38
+The base billing demand is the higher of the following values:
+a) 50 kilowatts or
+b) 4 kilowatts times the multiplier.
+Apartment building, community residence or rooming house with a dual‑energy system 2.39
+For an apartment building, community residence or rooming house, a customer who uses a dual-energy
+system that meets the conditions in Article 2.31 may opt for Rate D T. If the electricity is exclusively for
+habitation purposes, Rate D T applies in accordance with the following conditions:
+18 – 2026 Electricity Rates
+
+Section 5 – Rate DT
+a) When the electricity for a dwelling is metered separately and the meter records the consumption
+of a dual-energy system, the contract for such dwelling is subject to Rate D T;
+b) When the electricity for the common areas and collective services is metered
+[DOC 1] https://www.hydroquebec.com/data/documents-donnees/pdf/electricity-rates.pdf?v=20261001
+ting of its decision to accept or deny their request to connect
+their self-generation facility to the grid and sign up for this option.
+2026 Electricity Rates – 21
+
+Section 6 – Net Metering for Customer‑Generators – Option I
+Eligibility 2.48
+To be eligible for this option, the customer must meet the following conditions:
+a) Their maximum self-generation capacity must not exceed the lesser of:
+– 1,000 kilowatts, or
+– the estimated maximum power demand for the contract;
+b) The electricity must be generated at a facility that is located at the same delivery point as the contract;
+c) The customer must use one or more of the following types of generation only:
+– wind power,
+– photovoltaic power,
+– hydroelectric power,
+– geothermal power for generating electricity,
+– bioenergy (biogas or forest biomass residue).
+Sign‑up date 2.49
+This option takes effect at the start of the first consumption period following installation of the
+appropriate metering equipment.
+Billing 2.50
+During the entire period in which the Net Metering Option is in effect, the bill for each consumption
+period is established as follows:
+a) the system access charge for the rate applicable to the contract
+plus
+b) the amount billed for the electricity delivered, minus the balance in the surplus bank, based on the
+prices and conditions for the applicable rate and taking into account, if applicable, the credit for supply
+applicable to domestic rates as described in Article 12.3. The amount billed cannot be negative.
+Surplus bank restrictions 2.51
+The surplus bank is reset to 0 either:
+a) on March 31 of each even year;
+b) at the start of the consumption period beginning after a date selected by the customer that falls
+within the 24 months following the sign-up date established in accordance with Article 2.49 and
+every 24 months thereafter;
+c) when this option ceases to apply.
+When the surplus bank is reset to 0, the customer is credited the balance at the price of the average cost
+of electricity supply, i.e., 4.730¢ per kilowatthour.
+The balance in the surplus bank may not be applied to a different contract.
+22 – 2026 Electricity Rates
+
+Section 6 – Net Metering for Customer‑Generators – Option I
+Restrictions 2.52
+Hydro-Québec reserves the right to deny a customer’s sign-up request based on system management
+requirements and the system’s capacity to handle the electricity injected.
+Moreover, the provisions of the Net Metering Option shall not be interpreted as an obligation on the
+part of Hydro-Québec to assume additional costs to install equipment or reinforce the transmission or
+distribution system in order to supply a customer wishing to sign up for this option. Hydro-Québec will
+not build any new facilities to offer this option, nor allocate existing facilities to guarantee the possibility
+of injecting electricity into the system. The customer shall assume any and all costs associated with the
+injection of electricity under the Net Metering Option.
+Termination 2.53
+A customer who no lon
+[DOC 1] https://www.hydroquebec.com/data/documents-donnees/pdf/electricity-rates.pdf?v=20261001
+and events occur, the customer is
+entitled to the following credit:
+58.490¢ per kilowatthour of energy curtailed.
+No credit is given for a peak demand event if the value of the energy curtailed is less than 1.000¢.
+Termination 2.65
+A customer who no longer wishes to benefit from this option must notify Hydro-Québec in writing
+through the Customer Space at www.hydroquebec.com or by calling customer services.
+The option will cease to apply the day after Hydro-Québec is notified.
+2026 Electricity Rates – 27
+
+Section 9 – Rate Flex D
+SECTION 9
+–
+RATE FLEX D
+Application 2.66
+Rate Flex D applies to the Rate D–eligible contract of a customer who is able to reduce their
+consumption, at Hydro-Québec’s request, during peak hours as defined in Article 2.67.
+Definitions 2.67
+In this section, the following definitions apply:
+peak demand event: The sequence of peak hours indicated by Hydro-Québec in the peak demand event
+notification sent to the customer in accordance with Article 2.71.
+peak hours: All hours from 06:00 to 10:00 and from 16:00 to 20:00 during the winter period, excluding
+December 24, 25, 26 and 31, January 1 and 2, as well as Good Friday and Easter Monday when the latter
+fall within the winter period.
+Sign‑up procedure 2.68
+To sign up for this rate, the customer must submit a request through the Customer Space at
+www.hydroquebec.com, through the site www.hiloenergie.com, or by contacting Hydro-Québec’s
+customer services.
+Hydro-Québec notifies the customer in writing of its decision to accept or deny the request within
+5 business days of receiving it. The rate applies as of the day following Hydro-Québec’s acceptance.
+Hydro-Québec reserves the right to deny the customer’s sign-up request or terminate their Rate Flex D
+contract if it encounters recurring problems in gathering hourly metering data.
+Eligibility 2.69
+For the contract to be eligible for this rate, the following conditions must be met:
+a) Metering at each delivery point must be done by a single communicating meter installed by
+Hydro-Québec;
+b) The customer must have created a Customer Space at www.hydroquebec.com and, for as long
+as this rate applies, this Space must include a valid email address to which the peak demand event
+notifications will be sent;
+c) Barring any exceptions determined by Hydro-Québec, the customer who terminates their contract at
+this rate without having prevailed themselves of it for a complete winter period cannot sign up again
+during that same winter or the following winter period;
+d) The electrical installation must not be supplied by an off-grid system;
+e) The customer must not be signed up for the Winter Credit Option described in Section 8 of this chapter;
+f) The customer must not be signed up for a Net Metering Option.
+28 – 2026 Electricity Rates
+
+Section 9 – Rate Flex D
+Conditions applicable to peak demand events 2.70
+Peak demand events may occur at any time during peak hours. They must meet the following conditions:
+Maximum number of events per day: 2
+M
+[DOC 1] https://www.hydroquebec.com/data/documents-donnees/pdf/electricity-rates.pdf?v=20261001
+inimum interval between 2 events (hours): 6
+Duration of each event (hours): 4
+Maximum duration of events per winter period (hours): 120
+Peak demand event notifications 2.71
+As of the time Rate Flex D applies, Hydro-Québec will send a peak demand event notification by email,
+push notification or both, or via any other method agreed upon with the customer, before 15:00 on the
+day prior to each peak demand event. The notifications shall include the event’s start and end times.
+Delivery times for notifications may vary depending on the transmission process used by the customer’s
+telecommunications provider.
+If a peak demand event occurs the day after Hydro-Québec’s acceptance, the notification may be sent
+after 15:00.
+Hydro-Québec will also post all peak demand event notifications on its website at www.hydroquebec.com.
+Hydro-Québec cannot be held responsible for non-receipt of a notification due to the failure of systems
+or equipment belonging to the customer or the customer’s telecommunications provider.
+Structure of Rate Flex D 2.72
+The structure of Rate Flex D for a weekly contract is as follows:
+46.154¢ system access charge for each day in the consumption period
+plus
+a) During the winter period:
+4.886¢ per kilowatthour for energy consumed outside peak demand events, up to the product
+of 40 kilowatthours and the number of days in the consumption period, and
+9.103¢ per kilowatthour for the remaining energy consumed outside peak demand events, and
+46.463¢ per kilowatthour for energy consumed during peak demand events;
+or
+b) During the summer period:
+7.065¢ per kilowatthour for energy consumed, up to the product of 40 kilowatthours and the
+number of days in the consumption period, and
+11.142¢ per kilowatthour for the remaining consumption.
+If applicable, the credit for supply, as described in Article 12.3, applies.
+2026 Electricity Rates – 29
+
+Section 9 – Rate Flex D
+Termination 2.73
+The customer may terminate the Rate Flex D contract at any time by calling Hydro-Québec’s customer
+services.
+The contract will then become subject to Rate D, if it is still eligible, or to any other rate for which it is
+eligible, the day after Hydro-Québec is notified of the termination.
+If the rate change occurs partway through a consumption period, the period will be split into two
+sub-periods for billing purposes. Consumption will then be billed at Rate Flex D based on Hydro-Québec’s
+meter reading on the day it receives the customer’s termination notice and at the new rate based on the
+reading taken at the end of the consumption period.
+30 – 2026 Electricity Rates
+
+Section 10 – Demand Response – Leeway Option
+SECTION 10
+–
+DEMAND RESPONSE – LEEWAY OPTION
+Application 2.74
+The Demand Response – Leeway Option (D R Leeway Option), described in Section 3 of Chapter 6,
+applies to the Rate D M or D P contract of a customer who is able to reduce their power demand during
+the winter period at Hydro-Québec’s request.
+Termination 2.75
+A customer who no longer wishes to benefit fr
+[DOC 1] https://www.hydroquebec.com/data/documents-donnees/pdf/electricity-rates.pdf?v=20261001
+om this option must notify Hydro-Québec by calling
+customer services.
+The option ceases to apply the day after Hydro-Québec is notified by the customer, and no credit is granted.
+This article does not, however, apply if the customer terminates the service contract during the winter
+period.
+2026 Electricity Rates – 31
+
+
+
+CHAPTER 3
+– RATES FOR SMALL POWER
+SECTION 1
+–
+RATE G
+Application 3.1
+General Rate G applies to a small-power contract with a minimum billing demand of less than
+65 kilowatts.
+Rate G does not apply to electricity delivered for the purpose of supplying a direct-current electric
+vehicle charging station rated 400 volts or more.
+Structure of Rate G 3.2
+The structure of monthly Rate G for an annual contract is as follows:
+$15.426 system access charge
+plus
+$22.071 per kilowatt of billing demand in excess of 50 kilowatts
+plus
+12.388¢ per kilowatthour for the first 15,090 kilowatthours, and
+9.534¢ per kilowatthour for the remaining consumption.
+The minimum monthly bill is $15.426 when single-phase electricity is delivered or $46.278 when
+three-phase electricity is delivered.
+If applicable, the credit for supply at medium or high voltage and the adjustment for transformation
+losses, as described in articles 12.2 and 12.4, apply.
+Billing demand 3.3
+The billing demand at Rate G is equal to the maximum power demand during the consumption period in
+question, but is never less than the minimum billing demand as defined in Article 3.4.
+Minimum billing demand 3.4
+The minimum billing demand for any given consumption period is equal to 65% of the maximum
+power demand during a consumption period that falls wholly within the winter period included in the
+12 consecutive monthly periods ending at the end of the given consumption period.
+When the minimum billing demand reaches or exceeds 65 kilowatts, the contract ceases to be eligible
+for Rate G. It then becomes subject to Rate M or, if the average load factor for the last 12 consumption
+periods is less than 26%, to Rate G 9.
+Rate M or Rate G 9 applies from the start of the consumption period during which the minimum billing
+demand reaches or exceeds 65 kilowatts.
+2026 Electricity Rates – 33
+
+Section 1 – Rate G
+When a customer terminates an annual contract and signs another for the delivery of electricity at
+the same location and for similar purposes within the following 12 consecutive monthly periods, these
+two contracts are considered to be a single contract for calculation of the minimum billing demand.
+For a change to Rate G from Rate G 9, Rate M or a domestic rate, the minimum billing demand is
+determined as specified in the first paragraph of this article.
+Short‑term contract 3.5
+A short-term contract for general use of small power, where the electricity delivered is metered and the
+contract has a term of at least 1 monthly period, is eligible for Rate G, but the system access charge and
+minimum monthly bill are increased by $15.426.
+In the winter period, the monthly demand charge is increased by
+[DOC 1] https://www.hydroquebec.com/data/documents-donnees/pdf/electricity-rates.pdf?v=20261001
+for each hour.
+This value is prorated according to the number of hours included in the peak demand event.
+Sign‑up procedure 3.11
+To sign up for this option, the customer must submit a request through the Customer Space or contact
+Hydro-Québec’s customer services.
+Hydro-Québec notifies the customer in writing of its decision to accept or deny the request within
+5 business days of receiving it. If the request is accepted, the option applies as of the day following
+Hydro-Québec’s acceptance.
+Hydro-Québec reserves the right to deny a customer’s sign-up request or terminate a customer’s
+enrollment in this option if it encounters recurring problems in gathering hourly metering data.
+Eligibility 3.12
+To be eligible for this option, the customer must meet the following conditions:
+a) Metering at each delivery point must be done by a single communicating meter installed by
+Hydro-Québec;
+b) The customer must have created a Customer Space at www.hydroquebec.com and, for as long as
+this option applies, this Space must include a valid email address to which the peak demand event
+notifications will be sent;
+c) The contract must have a consumption history of at least 1 monthly period;
+d) The electrical installation must not be supplied by an off-grid system;
+e) The customer must not be signed up for any of the rate options described in Chapter 6;
+f) The customer must not be signed up for a Net Metering Option.
+Conditions applicable to peak demand events 3.13
+Peak demand events may occur at any time during peak hours. They must meet the following conditions:
+Maximum number of events per day: 2
+Minimum interval between 2 events (hours): 6
+Duration of each event (hours): 4
+Maximum duration of events per winter period (hours): 120
+Peak demand event notifications 3.14
+As of the time the option applies, Hydro-Québec will send a peak demand event notification by email or
+by any other means agreed upon with the customer, before 15:00 on the day prior to each peak demand
+event, indicating the event start and end times.
+Delivery times for notifications may vary depending on the transmission process used by the customer’s
+telecommunications provider.
+2026 Electricity Rates – 37
+
+Section 3 – Winter Credit Option for Rate G Customers
+If a peak demand event occurs the day after Hydro-Québec’s acceptance, the notification may be sent
+after 15:00.
+Hydro-Québec will also post all peak demand event notifications on its website at www.hydroquebec.com.
+Hydro-Québec cannot be held responsible for non-receipt of a notification due to the failure of systems
+or equipment belonging to the customer or the customer’s telecommunications provider.
+Credit 3.15
+For each consumption period during which one or more peak demand events occur, the customer is
+entitled to the following credit:
+62.558¢ per kilowatthour of energy curtailed.
+No credit is given for a peak demand event if the value of the energy curtailed is less than 1.00¢.
+Termination 3.16
+A customer who no longer wishes to benefit f
+[DOC 1] https://www.hydroquebec.com/data/documents-donnees/pdf/electricity-rates.pdf?v=20261001
+ Rate Flex G applies, Hydro-Québec will send a peak demand event notification by email,
+push notification or both, or via any other method agreed upon with the customer, before 15:00 on the
+day prior to each peak demand event. The notifications shall include the event’s start and end times.
+Delivery times for notifications may vary depending on the transmission process used by the customer’s
+telecommunications provider.
+If a peak demand event occurs the day after Hydro-Québec’s acceptance, the notification may be sent
+after 15:00.
+Hydro-Québec will also post all peak demand event notifications on its website at www.hydroquebec.com.
+Hydro-Québec cannot be held responsible for non-receipt of a notification due to the failure of systems
+or equipment belonging to the customer or the customer’s telecommunications provider.
+Structure of Rate Flex G 3.23
+The structure of monthly Rate Flex G for an annual contract is as follows:
+$15.426 system access charge
+plus
+a) During the winter period:
+10.173¢ per kilowatthour for energy consumed outside peak demand events, and
+56.516¢ per kilowatthour for energy consumed during peak demand events;
+or
+b) During the summer period:
+12.388¢ per kilowatthour.
+The minimum monthly bill is $15.426 when single-phase electricity is delivered or $46.278 when
+three-phase electricity is delivered.
+Termination 3.24
+The customer may terminate the Rate Flex G contract at any time by calling Hydro-Québec’s customer
+services.
+The contract will then become subject to Rate G, if it is still eligible, or to any other rate for which it is
+eligible, the day after Hydro-Québec is notified of the termination.
+40 – 2026 Electricity Rates
+
+Section 4 – Rate Flex G
+If the rate change occurs partway through a consumption period, the period will be split into two
+sub-periods for billing purposes. Consumption will then be billed at Rate Flex G based on Hydro-Québec’s
+meter reading on the day it receives the customer’s termination notice and at the new rate based on the
+reading taken at the end of the consumption period.
+Installation of maximum‑demand meter 3.25
+In the case of a contract at Rate Flex G, Hydro-Québec installs a maximum-demand meter when the
+electrical installation is such that the maximum power demand is likely to exceed 50 kilowatts.
+2026 Electricity Rates – 41
+
+
+
+CHAPTER 4
+– RATES FOR MEDIUM POWER
+SECTION 1
+–
+RATE M
+Application 4.1
+General Rate M applies to a medium-power contract with a maximum power demand of at least
+50 kilowatts during one of the 12 consecutive monthly periods ending at the end of the consumption
+period in question.
+Structure of Rate M 4.2
+The structure of monthly Rate M for an annual contract is as follows:
+$18.242 per kilowatt of billing demand
+plus
+6.292¢ per kilowatthour for the first 210,000 kilowatthours, and
+4.666¢ per kilowatthour for the remaining consumption.
+The minimum monthly bill is $15.426 when single-phase electricity is delivered or $46.278 when
+three-phase electricity is delivered.
+If applic
+[DOC 1] https://www.hydroquebec.com/data/documents-donnees/pdf/electricity-rates.pdf?v=20261001
+t the beginning of the contract
+or at the beginning of a consumption period, at the customer’s discretion.
+To obtain this revision, the customer must submit a written request to Hydro-Québec in writing before the
+end of the 14th monthly period following the date of the beginning of the contract.
+Short‑term contract 4.7
+A short-term contract for general use of medium power, where the electricity delivered is metered and
+the contract has a duration of at least 1 monthly period, is eligible for Rate M, but the minimum monthly
+bill is increased by $15.426.
+In the winter period, the monthly demand charge is increased by $7.542.
+When a consumption period to which the increased demand charge applies overlaps with the beginning
+or the end of the winter period, this increase is prorated according to the number of days in the
+consumption period that fall within the winter period.
+When a customer terminates a short-term contract and signs another for the delivery of electricity at
+the same location and for similar purposes within the following 12 consecutive monthly periods, these
+two contracts are considered to be a single contract for calculation of the minimum billing demand.
+Installation of maximum‑demand meter 4.8
+Hydro-Québec installs a maximum-demand meter for all Rate M contracts in order to measure the
+maximum power demand.
+44 – 2026 Electricity Rates
+
+Section 2 – Rate G9
+SECTION 2
+–
+RATE G 9
+Application 4.9
+General Rate G 9 applies to a contract which is characterized by limited use of billing demand and where
+the maximum power demand has been at least 65 kilowatts during one of the 12 consecutive monthly
+periods ending at the end of the consumption period in question.
+Rate G 9 is not offered to independent producers.
+Structure of Rate G 9 4.10
+The structure of monthly Rate G 9 for an annual contract is as follows:
+$5.292 per kilowatt of billing demand
+plus
+12.611¢ per kilowatthour.
+The minimum monthly bill is $15.426 when single-phase electricity is delivered or $46.278 when
+three-phase electricity is delivered.
+If the maximum power demand exceeds the real power during a consumption period, the excess is
+subject to a monthly charge of $12.950 per kilowatt.
+If applicable, the credit for supply at medium or high voltage and the adjustment for transformation
+losses, as described in articles 12.2 and 12.4, apply.
+Billing demand 4.11
+The billing demand at Rate G 9 is equal to the maximum power demand during the consumption period
+in question, but is never less than the minimum billing demand as defined in Article 4.12.
+Minimum billing demand 4.12
+The minimum billing demand for any consumption period is equal to 75% of the maximum power demand
+during a consumption period that falls wholly within the winter period included in the 12 consecutive
+monthly periods ending at the end of the consumption period in question.
+When a customer terminates an annual contract and signs another for the delivery of electricity at
+the same location and for similar purpos
+[DOC 1] https://www.hydroquebec.com/data/documents-donnees/pdf/electricity-rates.pdf?v=20261001
+es within the following 12 consecutive monthly periods, these
+two contracts are considered to be a single contract for calculation of the minimum billing demand.
+For a change to Rate G 9 from Rate G, Rate M or Rate L G, or from a domestic rate, the minimum billing
+demand is determined as specified in this article.
+Short‑term contract 4.13
+A short-term contract for general use of medium power, where the electricity delivered is metered and
+the contract has a duration of at least 1 monthly period, is eligible for Rate G 9, but the minimum monthly
+bill is increased by $15.426.
+In the winter period, the monthly demand charge is increased by $7.542.
+2026 Electricity Rates – 45
+
+Section 2 – Rate G9
+When a consumption period to which the increased demand charge applies overlaps with the beginning
+or the end of the winter period, this increase is prorated to the number of days in the consumption period
+that fall within the winter period.
+When a customer terminates a short-term contract and signs another for the delivery of electricity at
+the same location and for similar purposes within the following 12 consecutive monthly periods, these
+two contracts are considered to be a single contract for calculation of the minimum billing demand.
+Installation of maximum‑demand meter 4.14
+Hydro-Québec installs a maximum-demand meter for all Rate G 9 contracts in order to measure the
+maximum power demand.
+46 – 2026 Electricity Rates
+
+Section 3 – Rate GD
+SECTION 3
+–
+RATE G D
+Application 4.15
+Rate G D applies to the annual medium-power contract of an independent producer whose usual energy
+source is temporarily unavailable or is under maintenance. The electricity is then delivered as a backup
+energy source.
+Rate G D does not apply if backup generators are the only equipment used by the customer to produce
+electricity.
+Rate G D may not be used for the resale of energy to a third party.
+Beginning of application of Rate G D 4.16
+Rate G D applies as of the date on which the appropriate metering equipment is installed. All the
+electricity supplied under this rate must be covered by a separate contract.
+Structure of Rate G D 4.17
+The structure of monthly Rate G D for an annual contract is as follows:
+$6.630 per kilowatt of billing demand
+plus
+7.818¢ per kilowatthour for energy consumed in the summer period, or
+19.368¢ per kilowatthour for energy consumed in the winter period.
+The minimum monthly bill is $15.426 when single-phase electricity is delivered or $46.278 when
+three-phase electricity is delivered.
+If applicable, the credit for supply at medium or high voltage and the adjustment for transformation
+losses, as described in articles 12.2 and 12.4, apply.
+Billing demand 4.18
+The billing demand at Rate G D is equal to the highest real power demand (in kilowatts) during the
+consumption period in question, but is never less than the minimum billing demand as defined in
+Article 4.19.
+Minimum billing demand 4.19
+The minimum billing demand for a contract at Rate G D is the hig
+[DOC 1] https://www.hydroquebec.com/data/documents-donnees/pdf/electricity-rates.pdf?v=20261001
+hest real power demand during the
+24 consecutive monthly periods ending at the end of the consumption period in question.
+When a customer terminates an annual contract and signs another for the delivery of electricity at
+the same location and for similar purposes within the following 12 consecutive monthly periods, these
+two contracts are considered to be a single contract for calculation of the minimum billing demand.
+For a change to Rate G D from Rate G or Rate M, the minimum billing demand cannot be less than that
+established according to the conditions governing the original rate, for at least 12 consecutive monthly
+periods starting from the one during which the minimum billing demand was established.
+2026 Electricity Rates – 47
+
+Section 3 – Rate GD
+For a change to Rate G or Rate M from Rate G D, the minimum billing demand for the first 12 consumption
+periods at the new rate cannot be less than the minimum billing demand for the applicable general rate,
+nor can it be less than 100% of the maximum power demand for the last 12 consumption periods at
+Rate G D.
+48 – 2026 Electricity Rates
+
+Section 4 – Industrial Revitalization Rate for Medium‑Power Customers
+SECTION 4
+–
+INDUSTRIAL REVITALIZATION RATE FOR MEDIUM-POWER CUSTOMERS
+Application 4.20
+The Industrial Revitalization Rate, described in Section 6 of Chapter 6, is reserved for the Rate M
+contract to which it applied up to March 6, 2025, and that is principally related to an industrial activity
+of a customer who undertakes, as a result of the present rate, to return all or part of a plant’s unused
+production capacity to operation or to convert one or more industrial processes to electricity. The
+maximum power demand must have been at least 500 kilowatts during a consumption period included
+in the 12 consecutive monthly periods preceding the sign-up application.
+This rate does not apply when the customer is benefiting from the options, rate or conditions described
+in sections 2, 4, 5, 7 and 8 of Chapter 6 (Demand Response – Commitment Option, Additional Electricity
+Option, Economic Development Rate, running in or testing of equipment).
+Conditions of application 4.21
+The conditions described in Section 6 of Chapter 6 apply, with the following adjustments:
+a) The load increase provided for in subparagraph b)of Article 6.76 must be at least 250 kilowatts;
+b) The Industrial Revitalization Rate price established in Article 6.80 may not be less than the second-tier
+energy price under Rate M, i.e., 4.667¢ per kilowatthour;
+c) Rate L mentioned in articles 6.82, 6.83 and 6.85 is replaced by Rate M;
+d) The power factor adjustment provided for in Article 6.83 is applied if the power factor for the actual
+or reference consumption, or both, is less than 90%.
+2026 Electricity Rates – 49
+
+Section 5 – Rate BR
+SECTION 5
+–
+RATE B R
+Application 4.22
+Rate B R applies to a contract for electricity delivered for the purpose of supplying one or more direct-current
+electric vehicle charging stations rated 400 volts or
+[DOC 1] https://www.hydroquebec.com/data/documents-donnees/pdf/electricity-rates.pdf?v=20261001
+ more. The electricity may also be used to supply one
+or more 240-volt stations, at the customer’s discretion.
+Definition 4.23
+In this section, the following definition applies:
+load factor: The ratio, expressed as a percentage, of energy consumption to the product of maximum
+power demand and the number of hours in the consumption period.
+Structure of Rate B R 4.24
+The structure of monthly Rate B R for an annual contract is as follows:
+13.100¢ per kilowatthour for consumption associated with the first 50 kilowatts of maximum power
+demand, i.e., the product of the maximum power demand up to 50 kilowatts, the load factor
+and the number of hours in the consumption period,
+plus
+25.461¢ per kilowatthour for consumption associated with the maximum power demand in excess of
+50 kilowatts, i.e., the product of the excess power demand, the load factor up to 6%, and the
+number of hours in the consumption period,
+plus
+17.427¢ per kilowatthour for the remaining consumption.
+The minimum monthly bill is $15.426 when single-phase electricity is delivered or $46.278 when
+three-phase electricity is delivered.
+Terms and conditions of application 4.25
+If several direct-current charging stations rated 400 volts or more and belonging to the same customer
+are installed at the same site, they must come under a single contract.
+The customer must undertake to supply Hydro-Québec with non-identifiable data from all charging
+stations covered by the contract under this rate, such as duration, energy consumption and power
+demand for each charge, at an agreed-upon frequency. If the customer fails to comply with this
+undertaking, the contract ceases to be eligible for Rate B R and becomes subject to the appropriate
+general rate.
+Subject to all applicable legislation, Hydro-Québec undertakes to keep confidential all information
+provided by the customer for the purposes of this rate and identified as confidential by the customer.
+50 – 2026 Electricity Rates
+
+Section 5 – Rate BR
+Mixed use 4.26
+When the electricity is not used exclusively for the purpose of supplying electric vehicle charging
+stations, this rate applies on condition that the installed capacity for other purposes does not exceed
+10 kilowatts. If the installed capacity for other purposes exceeds 10 kilowatts, the appropriate general
+rate applies.
+Installation of maximum‑demand meter 4.27
+Hydro-Québec installs a maximum-demand meter for all Rate B R contracts in order to measure the
+maximum power demand.
+2026 Electricity Rates – 51
+
+Section 6 – Net Metering for Customer‑Generators – Option I
+SECTION 6
+–
+NET METERING FOR CUSTOMER-GENERATORS – OPTION I
+Application 4.28
+Net Metering Option I, described in Section 6 of Chapter 2, applies to the Rate M contract of a customer
+whose maximum self-generation capacity does not exceed 1,000 kilowatts.
+52 – 2026 Electricity Rates
+
+Section 7 – Rate Flex M
+SECTION 7
+–
+RATE FLEX M
+Application 4.29
+Rate Flex M is an experimental peak rate that applies to a medium-power contract.
+This
+[DOC 1] https://www.hydroquebec.com/data/documents-donnees/pdf/electricity-rates.pdf?v=20261001
+g demand
+plus
+a) During the winter period:
+3.966¢ per kilowatthour for energy consumed outside peak demand events, and
+62.558¢ per kilowatthour for energy consumed during peak demand events;
+or
+b) During the summer period:
+6.292¢ per kilowatthour for the first 210,000 kilowatthours, and
+4.666¢ per kilowatthour for the remaining consumption.
+The minimum monthly bill is $15.426 when single-phase electricity is delivered or $46.278 when
+three-phase electricity is delivered.
+If applicable, the credit for supply at medium or high voltage and the adjustment for transformation
+losses, as described in articles 12.2 and 12.4, apply.
+Billing demand 4.36
+The billing demand at Rate Flex M is equal to the maximum power demand during the consumption
+period in question, but is never less than the minimum billing demand as defined in Article 4.37.
+Minimum billing demand 4.37
+The minimum billing demand for any given consumption period is equal to 65% of the maximum
+power demand during a consumption period that falls wholly within the winter period included in the
+12 consecutive monthly periods ending at the end of the consumption period in question.
+54 – 2026 Electricity Rates
+
+Section 7 – Rate Flex M
+When the minimum billing demand reaches or exceeds 5,000 kilowatts, the contract ceases to be eligible
+for Rate Flex M. It then becomes subject to Rate L, if it is eligible for such rate, or to Rate L G.
+Rate L or Rate L G applies as of the beginning of the consumption period during which the minimum
+billing demand reaches or exceeds 5,000 kilowatts.
+When a customer terminates an annual contract and signs another for the delivery of electricity at
+the same location and for similar purposes within the following 12 consecutive monthly periods, these
+two contracts are considered to be a single contract for calculation of the minimum billing demand.
+For a change to Rate Flex M from Rate M, Rate G, Rate G 9, Rate L G or a domestic rate, the minimum
+billing demand is determined as specified in this article.
+Limitation 4.38
+Hydro-Québec reserves the right to terminate a customer’s Rate Flex M contract if it encounters
+recurring problems in gathering hourly metering data.
+Termination 4.39
+The customer may terminate the Rate Flex M contract at any time by calling Hydro-Québec’s customer
+services.
+The contract will then become subject to Rate M, or to any other rate for which it is eligible, the day after
+Hydro-Québec is notified of the termination.
+If the rate change occurs partway through a consumption period, the period will be split into two
+sub-periods for billing purposes. Consumption will then be billed at Rate Flex M based on Hydro-Québec’s
+meter reading on the day it receives the customer’s termination notice and at the new rate based on the
+reading taken at the end of the consumption period.
+Installation of maximum‑demand meter 4.40
+Hydro-Québec installs a maximum-demand meter for all Rate Flex M contracts in order to measure the
+maximum power demand.
+2026 Electrici
+[DOC 1] https://www.hydroquebec.com/data/documents-donnees/pdf/electricity-rates.pdf?v=20261001
+’s telecommunications provider.
+Structure of Rate Flex G 9 4.47
+The structure of monthly Rate Flex G 9 for an annual contract is as follows:
+$5.292 per kilowatt of billing demand
+plus
+a) During the winter period:
+10.133¢ per kilowatthour for energy consumed outside peak demand events, and
+62.558¢ per kilowatthour for energy consumed during peak demand events;
+or
+b) During the summer period:
+12.611¢ per kilowatthour.
+The minimum monthly bill is $15.426 when single-phase electricity is delivered or $46.278 when
+three-phase electricity is delivered.
+If the maximum power demand exceeds the real power during a consumption period, the excess is subject
+to a monthly charge of $12.950 per kilowatt.
+If applicable, the credit for supply at medium or high voltage and the adjustment for transformation
+losses, as described in articles 12.2 and 12.4, apply.
+Billing demand 4.48
+The billing demand at Rate Flex G 9 is equal to the maximum power demand during the consumption
+period in question, but is never less than the minimum billing demand as defined in Article 4.49.
+2026 Electricity Rates – 57
+
+Section 8 – Rate Flex G9
+Minimum billing demand 4.49
+The minimum billing demand for a contract at Rate Flex G 9 is equal to 75% of the maximum power
+demand during a consumption period that falls wholly within the winter period included in the
+12 consecutive monthly periods ending at the end of the consumption period in question.
+When a customer terminates an annual contract and signs another for the delivery of electricity at
+the same location and for similar purposes within the following 12 consecutive monthly periods, these
+two contracts are considered to be a single contract for calculation of the minimum billing demand.
+For a change to Rate Flex G 9 from Rate G 9, Rate G, Rate M, Rate L G or a domestic rate, the minimum
+billing demand is determined as specified in this article.
+Limitation 4.50
+Hydro-Québec reserves the right to terminate a customer’s Rate Flex G 9 contract if it encounters
+recurring problems with gathering hourly metering data.
+Termination 4.51
+The customer may terminate the Rate Flex G 9 contract at any time by calling Hydro-Québec’s customer
+services.
+The contract will then become subject to Rate G 9, or to any other rate for which it is eligible, the day
+after Hydro-Québec is notified of the termination.
+If the rate change occurs partway through a consumption period, the period will be split into two
+sub-periods for billing purposes. Consumption will then be billed at Rate Flex G 9 based on Hydro-Québec’s
+meter reading on the day it receives the customer’s termination notice and at the new rate based on the
+reading taken at the end of the consumption period.
+Installation of a maximum‑demand meter 4.52
+Hydro-Québec installs a maximum-demand meter for all Rate Flex G 9 contracts in order to measure the
+maximum power demand.
+58 – 2026 Electricity Rates
+
+CHAPTER 5
+– RATES FOR LARGE POWER
+SECTION 1
+–
+RATE L
+Application 5.1
+Rate L applies to an annual
+[DOC 1] https://www.hydroquebec.com/data/documents-donnees/pdf/electricity-rates.pdf?v=20261001
+ contract where the minimum billing demand is at least 5,000 kilowatts and
+which is principally related to an industrial activity.
+Structure of Rate L 5.2
+The structure of monthly Rate L is as follows:
+$15.027 per kilowatt of billing demand
+plus
+3.821¢ per kilowatthour.
+If applicable, the credit for supply at medium or high voltage and the adjustment for transformation
+losses, as described in articles 12.2 and 12.4, apply.
+Contract power 5.3
+The contract power is equal to the minimum billing demand set for a contract under Rate L. It must not
+be less than 5,000 kilowatts, nor exceed the available power.
+When a customer terminates an annual contract and signs another for the delivery of electricity at
+the same location and for similar purposes within the following 12 consecutive monthly periods, these
+two contracts are considered to be a single contract in regard to the contract power.
+Billing demand 5.4
+The billing demand at Rate L is equal to the maximum power demand during the consumption period in
+question, but is never less than the contract power defined in Article 5.3.
+Condition related to the power factor for power demand less than 5,000 kilowatts 5.5
+If, during a consumption period, the maximum power demand exceeds the highest real power demand,
+which is less than 5,000 kilowatts, Hydro-Québec applies the demand charge to the difference between:
+a) the maximum power demand up to 5,000 kilowatts, and
+b) the highest real power demand.
+If applicable, the credit for supply at medium or high voltage and the adjustment for transformation
+losses, as described in articles 12.2 and 12.4, apply.
+2026 Electricity Rates – 59
+
+Section 1 – Rate L
+Optimization charge 5.6
+If, in a day during the winter period, the maximum power demand exceeds 110% of the contract power,
+the overrun is subject to a daily optimization charge of $8.808 per kilowatt. For each day during which
+such an overrun occurs, the charge will be applied to the number of kilowatts making up the highest
+overrun during the day.
+For each consumption period, however, the amount calculated by applying the daily optimization
+charges is limited to the amount that would result from applying a monthly optimization charge to the
+portion of the billing demand exceeding 110% of the contract power. This optimization charge is $26.420
+per kilowatt.
+For purposes of this article, a day is defined as a 24-hour period beginning at 00:00.
+Increase in contract power 5.7
+The customer may increase the contract power at any time by submitting a request to Hydro-Québec
+in writing, but not more than once per consumption period. The revision of the contract power takes
+effect, at the customer’s discretion, either at the beginning of the consumption period during which
+Hydro-Québec receives the written request for revision or at the beginning of one of the 3 previous
+consumption periods. The customer may also increase the contract power at a specific date and time.
+To do so, they must notify Hydro-Québec in writi
+[DOC 1] https://www.hydroquebec.com/data/documents-donnees/pdf/electricity-rates.pdf?v=20261001
+er of hours
+the supply of electricity was reduced and the average energy consumed during those hours, expressed
+in kilowatts.
+This credit does not apply when Hydro-Québec refuses to deliver electricity to the customer as provided
+for in rates L D and L P, respectively described in sections 5 and 6 of this chapter, or prohibits consumption
+as provided for in the Additional Electricity Option described in Section 4 of Chapter 6, or when service
+has been suspended due to breach of contract.
+For purposes of this article, a day is defined as a 24-hour period beginning at 00:00.
+Provision withdrawn 5.13
+62 – 2026 Electricity Rates
+
+Section 2 – Rate LG
+SECTION 2
+–
+RATE L G
+Application 5.14
+Rate L G applies to an annual contract with a minimum billing demand of at least 5,000 kilowatts, unless
+the contract is principally related to an industrial activity.
+Structure of Rate L G 5.15
+The structure of monthly Rate L G is as follows:
+$16.571 per kilowatt of billing demand
+plus
+4.324¢ per kilowatthour.
+If applicable, the credit for supply at medium or high voltage and the adjustment for transformation losses,
+as described in articles 12.2 and 12.4, apply.
+Billing demand 5.16
+The billing demand at Rate L G is equal to the maximum power demand during the consumption period in
+question, but is never less than the minimum billing demand as defined in Article 5.18.
+Condition related to the power factor for power demand less than 5,000 kilowatts 5.17
+If, during a consumption period, the maximum power demand exceeds the highest real power demand,
+which is less than 5,000 kilowatts, Hydro-Québec applies the demand charge to the difference between:
+a) the maximum power demand up to 5,000 kilowatts, and
+b) the highest real power demand.
+If applicable, the credit for supply at medium or high voltage and the adjustment for transformation losses,
+as described in articles 12.2 and 12.4, apply.
+Minimum billing demand 5.18
+The minimum billing demand for any given consumption period is equal to 75% of the maximum
+power demand during a consumption period that falls wholly within the winter period included in the
+12 consecutive monthly periods ending at the end of the given consumption period. This value cannot be
+less than 5,000 kilowatts.
+When a customer terminates an annual contract and signs another for the delivery of electricity at
+the same location and for similar purposes within the following 12 consecutive monthly periods, these
+two contracts are considered to be a single contract for calculation of the minimum billing demand.
+For a change to Rate L G from Rate G, Rate G 9, Rate M or a domestic rate, the minimum billing demand is
+determined as specified in this article.
+2026 Electricity Rates – 63
+
+Section 2 – Rate LG
+Minimum billing demand of less than 5,000 kilowatts 5.19
+The customer with a Rate L G contract may opt for Rate M at any time by submitting a rate-change
+request to Hydro-Québec in writing. The rate change takes effect either at the beginning of the
+consu
+[DOC 1] https://www.hydroquebec.com/data/documents-donnees/pdf/electricity-rates.pdf?v=20261001
+ays fall within
+the winter period.
+Structure of Rate H 5.27
+The structure of monthly Rate H is as follows:
+$6.630 per kilowatt of billing demand
+plus
+6.695¢ per kilowatthour for the energy consumed outside winter weekdays, and
+22.620¢ per kilowatthour for the energy consumed on winter weekdays.
+If applicable, the credit for supply at medium or high voltage and the adjustment for transformation
+losses, as described in articles 12.2 and 12.4, apply.
+Billing demand 5.28
+The billing demand under Rate H is equal to the higher of the following amounts:
+a) the highest maximum power demand during the 24 monthly periods ending at the end of
+the consumption period in question; or
+b) the contract power, which cannot be less than 5,000 kilowatts.
+For a change from Rate H to Rate L, Rate L G, Rate G 9 or Rate M, the minimum billing demand for the first
+12 consumption periods at the new rate cannot be less than:
+a) 90% of the maximum power demand during the last 12 consumption periods, including the most recent
+period, for a change to Rate L; or
+b) 75% of the maximum power demand during the last 12 consumption periods, including the most recent
+period, for a change to Rate L G or Rate G 9; or
+c) 65% of the maximum power demand during the last 12 consumption periods, including the most recent
+period, for a change to Rate M.
+2026 Electricity Rates – 67
+
+Section 5 – Rate LD
+SECTION 5
+–
+RATE L D
+Application 5.29
+Rate L D is offered to a customer whose usual source of power has temporarily failed if the sum of their
+normal independent production and the minimum billing demand under the applicable general rate totals
+5,000 kilowatts or more. In such cases, the electricity is delivered as a backup energy source. If part of the
+load is always supplied by Hydro-Québec, that portion will be billed at Rate L, if it is eligible for that rate, or
+at one of the general rates.
+Rate L D includes a non-firm option offered only to an independent producer of power from forest
+biomass or to a customer under contract to purchase electricity from an independent producer whose
+facilities are located on a site adjacent to the customer’s site and whose power is generated from forest
+biomass.
+Rate L D does not apply if backup generators are the only equipment used by the customer to produce
+electricity.
+Rate L D may not be used for the resale of energy to a third party.
+Definitions 5.30
+In this section, the following definitions apply:
+base rate: The rate applicable to the part of the load always supplied by Hydro-Québec.
+normal independent production: The production that reflects the normal utilization of independent
+production during the consumption period in question. It is set out in a written agreement between the
+customer and Hydro-Québec.
+normal power: The maximum power demand met by Hydro-Québec outside planned or unplanned
+interruptions in the consumption period in question. This value cannot be less than the billing demand
+under the base rate, where applicable.
+planned interr
+[DOC 1] https://www.hydroquebec.com/data/documents-donnees/pdf/electricity-rates.pdf?v=20261001
+uption: A period, planned by the customer and approved by Hydro-Québec, during which
+all or part of the equipment used to produce electricity is temporarily out of service.
+power demand met by Hydro‑Québec: The power demand recorded by the equipment that meters the
+load supplied by Hydro-Québec.
+power demand met by the independent producer: The power demand recorded by the equipment that
+meters the load supplied by independent production.
+unplanned interruption: A period, not planned by the customer, during which all or part of the equipment
+used to produce electricity is temporarily out of service.
+winter weekday: The period between 06:00 and 22:00 during all business days in the winter period.
+Hydro-Québec may, on verbal notice to the customer, consider winter Saturdays and Sundays from
+06:00 to 22:00 to be “winter weekdays.”
+Business days in the winter period exclude December 24, 25, 26 and 31, January 1 and 2, as well as
+Good Friday, Easter Saturday, Easter Sunday and Easter Monday when the latter four days fall within the
+winter period.
+68 – 2026 Electricity Rates
+
+Section 5 – Rate LD
+Available power 5.31
+The available power under a contract at Rate L D is set out in a written agreement between the customer
+and Hydro-Québec.
+Structure of Rate L D 5.32
+a) Firm option
+The structure of monthly firm Rate L D is as follows:
+$6.630 per kilowatt of billing demand
+plus
+6.695¢ per kilowatthour for energy consumed outside winter weekdays, and
+22.620¢ per kilowatthour for energy consumed on winter weekdays.
+b) Non‑firm option
+The structure of non-firm Rate L D is as follows:
+$0.663 per kilowatt of billing demand per day for planned interruptions, and
+$1.326 per kilowatt of billing demand per day for unplanned interruptions,
+plus
+6.695¢ per kilowatthour.
+In the case of the non-firm option, the amount billed as demand may not be higher than the product of
+the monthly price of $6.630 per kilowatt and the highest daily billing demand for the consumption period
+in question.
+If applicable, the credit for supply at medium or high voltage and the adjustment for transformation losses,
+as described in articles 12.2 and 12.4, apply to the firm and non-firm options. In the case of the non-firm
+option, the applicable monthly supply credit and adjustment are multiplied by the ratio of the daily price to
+the monthly price for conversion to daily amounts.
+Billing demands 5.33
+a) Determination of billing demand under the base rate
+If applicable, the billing demand under the base rate is equal to the maximum power demand, but
+cannot be less than the minimum billing demand.
+2026 Electricity Rates – 69
+
+Section 5 – Rate LD
+The power demand under the base rate is calculated using the following formula:
+PA = PA – PR
+base HQ
+where
+PA = the power demand under the base rate;
+base
+PA = the power demand met by Hydro-Québec;
+HQ
+PR = the backup power, i.e., the lesser of:
+i) PAN – PF
+ii) PA – PN
+HQ
+where
+PAN = the normal independent production;
+PF = the power demand met by the ind
+[DOC 1] https://www.hydroquebec.com/data/documents-donnees/pdf/electricity-rates.pdf?v=20261001
+ependent producer;
+PN = the normal power.
+The backup power cannot be less than 0.
+b) Determination of billing demand under firm and non‑firm Rate L D
+If applicable, the billing demand under firm Rate L D corresponds to the maximum power demand,
+but cannot be less than the highest power demand under Rate L D during the last 24 monthly periods
+ending at the end of the consumption period in question.
+If applicable, the daily billing demand under non-firm Rate L D is the maximum power demand under
+Rate L D for each day on which there has been an interruption.
+The power demand under firm and non-firm Rate L D is calculated using the following formula:
+PA = PA – PA
+LD HQ base
+where
+PA = the power demand at Rate LD.
+LD
+Metering 5.34
+In the event that the load supplied by independent production cannot be separated from that supplied by
+Hydro-Québec, the customer must assume the cost of the metering equipment installed by Hydro-Québec
+to record independent production.
+Conditions regarding the delivery of electricity – Non‑firm option 5.35
+In order to be able to consume electricity during planned interruptions, a customer whose contract is
+subject to non-firm Rate L D must submit a request to Hydro-Québec in writing at least 2 business days
+before the interruption during the summer period and at least 7 days before the interruption during
+the winter period, specifying the period when the electricity is needed and the quantity required.
+Hydro-Québec accepts or denies the request, depending on system availability during the period
+indicated by the customer, and confirms acceptance in writing to the customer, if applicable. A customer
+who wishes to change the date must provide reasonable notice to Hydro-Québec. Hydro-Québec
+notifies the customer as soon as possible of its decision to accept or deny the request.
+70 – 2026 Electricity Rates
+
+Section 5 – Rate LD
+Whenever possible, Hydro-Québec agrees to notify the customer in advance of the hours during which
+electricity consumption will not be allowed. However, depending on system management requirements
+and availability, Hydro-Québec may, at its discretion, interrupt the delivery of backup power on 2 hours’
+notice for a planned or unplanned interruption in the winter period, and for an unplanned interruption in
+the summer period.
+If the customer consumes electricity during any period when delivery has been refused by
+Hydro-Québec, all the electricity consumed as backup power during those hours will be billed at the
+price of 62.558¢ per kilowatthour.
+If, during a period when backup power is being delivered, the customer wishes to extend the period
+specified in the request, the customer must submit a new request to Hydro-Québec in writing, indicating
+the additional duration of the delivery. Hydro-Québec accepts or denies the request depending on
+system availability during the period indicated by the customer.
+Restrictions – Non‑firm option 5.36
+The provisions of the non-firm option shall not be interpreted as an
+[DOC 1] https://www.hydroquebec.com/data/documents-donnees/pdf/electricity-rates.pdf?v=20261001
+tions.
+If Hydro-Québec accepts a customer request under Article 5.46 during the winter period, it shall
+guarantee delivery of the electricity for a 48-hour period or for the requested period, whichever is
+shorter. Should the customer wish to extend the consumption of electricity under the Rate L P contract,
+they must submit a new authorization request in writing to Hydro-Québec.
+Unauthorized consumption of electricity 5.49
+Should the customer consume electricity during periods for which delivery was denied or without
+having made a prior request, all electricity consumed during such periods shall be billed at 62.558¢ per
+kilowatthour.
+This article shall not be interpreted as permission to consume electricity without authorization.
+Credit for supply 5.50
+No credit for supply is applicable to the rate described in this section.
+Restriction 5.51
+The provisions of this section shall not be interpreted as an obligation on the part of Hydro-Québec to
+assume connection or installation costs for the purpose of enabling a customer to sign up for a Rate L P
+contract.
+2026 Electricity Rates – 73
+
+
+
+CHAPTER 6
+– RATE OPTIONS AND OPTIONAL RATES
+MAINLY FOR BUSINESS CUSTOMERS
+SECTION 1
+–
+LOAD RETENTION RATE
+Subsection 1.1 – Rate L Customers of Hydro-Québec
+Application 6.1
+The Load Retention Rate applies to a contract that was subject to Rate L on the date when the customer
+signed up for the Load Retention Rate.
+Definitions 6.2
+In this section, the following definitions apply:
+collaborator: Any person or corporate entity, other than a supplier, that provides items defined as being
+among the customer’s variable costs.
+variable costs: Production costs that vary proportionally with quantities produced. These costs include
+but are not limited to the cost of raw materials, labour and energy. They exclude all other expenses that
+do not vary proportionally with quantities produced, such as investments in fixed assets, depreciation
+and amortization, financing costs, as well as overhead and administrative expenses.
+For purposes of the Load Retention Rate, electricity costs are not included in the variable costs.
+supplier: Any person or corporate entity supplying goods or services defined as being among the
+customer’s variable costs, excluding a corporation or partnership which controls the customer, is
+controlled by the customer, or is controlled along with the customer by another entity.
+reference period: A period of 12 months for which data are available and which precedes the month
+when Hydro-Québec receives the customer’s written application.
+Sign‑up procedure 6.3
+A customer wishing to sign up for the Load Retention Rate must submit a request to Hydro-Québec in
+writing. The customer’s request must contain the following information:
+a) Financial statements covering the 3 years preceding the customer’s request, prepared and audited
+according to generally accepted accounting principles and auditing standards. These financial
+statements must include the statement of operat
+[DOC 1] https://www.hydroquebec.com/data/documents-donnees/pdf/electricity-rates.pdf?v=20261001
+ed by the customer of the date, start time and
+end time of each peak demand event by telephone, email or any other means agreed upon with the
+customer.
+Peak demand event notifications will be transmitted as follows:
+– No later than 15:00 on the business day preceding a peak demand event scheduled for before 16:00;
+– No later than noon of the same day for a peak demand event scheduled for 16:00 or later;
+– No later than 15:00 on the business day preceding 2 peak demand events scheduled for the same day.
+To check the proper transmission of peak demand event notifications, Hydro-Québec will send 2 test
+notifications to the contacts provided by the customer (via email, telephone or any other means agreed
+upon with the customer), on the first and third Tuesdays in November. For these tests, no demand
+reduction measures have to be implemented, and no credit will be granted.
+Hydro-Québec cannot be held responsible for non-receipt of a peak demand event notification due to
+an error in the email address, telephone number or other contact information provided by the customer,
+or due to technical problems experienced by the customer or their telecommunications provider.
+2026 Electricity Rates – 83
+
+Section 2 – Demand Response – Commitment Option
+Nominal credits 6.21
+The following credits apply for the winter period:
+Fixed credit Variable credit
+Sub‑option I $51.905 per kilowatt of effective 5.191¢ per kilowatthour of effective
+interruptible power. hourly interruptible power for
+each peak demand event hour.
+Sub‑option I I $53.981 per kilowatt of effective 5.191¢ per kilowatthour of effective
+interruptible power. hourly interruptible power for
+each peak demand event hour.
+Sub‑option I I I $51.905 per kilowatt of effective 36.334¢ per kilowatthour of effective
+interruptible power. hourly interruptible power for
+each peak demand event hour.
+Sub‑option I V $53.981 per kilowatt of effective 36.334¢ per kilowatthour of effective
+interruptible power. hourly interruptible power for
+each peak demand event hour.
+Sub‑option V $67.477 per kilowatt of effective 5.191¢ per kilowatthour of effective
+interruptible power. hourly interruptible power for
+each peak demand event hour.
+Sub‑option V I $69.553 per kilowatt of effective 5.191¢ per kilowatthour of effective
+interruptible power. hourly interruptible power for
+each peak demand event hour.
+Sub‑option V I I $67.477 per kilowatt of effective 36.334¢ per kilowatthour of effective
+interruptible power. hourly interruptible power for
+each peak demand event hour.
+Sub‑option V I I I $69.553 per kilowatt of effective 36.334¢ per kilowatthour of effective
+interruptible power. hourly interruptible power for
+each peak demand event hour.
+Sub‑option I X $69.553 per kilowatt of effective 5.191¢ per kilowatthour of effective
+interruptible power. hourly interruptible power for
+each peak demand event hour.
+Sub‑option X $71.629 per kilowatt of effective 5.191¢ per kilowatthour of effective
+interruptible power. hourly interruptible power f
+[DOC 1] https://www.hydroquebec.com/data/documents-donnees/pdf/electricity-rates.pdf?v=20261001
+or
+each peak demand event hour.
+Sub‑option X I $69.553 per kilowatt of effective 36.334¢ per kilowatthour of effective
+interruptible power. hourly interruptible power for
+each peak demand event hour.
+Sub‑option X I I $71.629 per kilowatt of effective 36.334¢ per kilowatthour of effective
+interruptible power. hourly interruptible power for
+each peak demand event hour.
+Sub‑option X I I I $71.629 per kilowatt of effective 5.191¢ per kilowatthour of effective
+interruptible power. hourly interruptible power for
+each peak demand event hour.
+Sub‑option X I V $73.705 per kilowatt of effective 5.191¢ per kilowatthour of effective
+interruptible power. hourly interruptible power for
+each peak demand event hour.
+Sub‑option X V $71.629 per kilowatt of effective 36.334¢ per kilowatthour of effective
+interruptible power. hourly interruptible power for
+each peak demand event hour.
+84 – 2026 Electricity Rates
+ | Fixed credit | Variable credit
+
+Section 2 – Demand Response – Commitment Option
+Fixed credit Variable credit
+Sub‑option X V I $73.705 per kilowatt of effective 36.334¢ per kilowatthour of effective
+interruptible power. hourly interruptible power for
+each peak demand event hour.
+Sub‑option X V I I $73.705 per kilowatt of effective 5.191¢ per kilowatthour of effective
+interruptible power. hourly interruptible power for
+each peak demand event hour.
+Sub‑option X V I I I $75.781 per kilowatt of effective 5.191¢ per kilowatthour of effective
+interruptible power. hourly interruptible power for
+each peak demand event hour.
+Sub‑option X I X $73.705 per kilowatt of effective 36.334¢ per kilowatthour of effective
+interruptible power. hourly interruptible power for
+each peak demand event hour.
+Sub‑option X X $75.781 per kilowatt of effective 36.334¢ per kilowatthour of effective
+interruptible power. hourly interruptible power for
+each peak demand event hour.
+Effective credits applicable to the contract 6.22
+The effective credits are applied to the bill for the consumption period in question according
+to the following conditions:
+a) Effective fixed credit:
+The effective fixed credit to which the customer is entitled for a given consumption period equals
+the product of the fixed credit for the winter period and the effective interruptible power for the
+consumption period in question, prorated to the number of hours in the consumption period in
+relation to the number of hours in the winter period.
+b) Effective variable credit:
+The effective variable credit to which the customer is entitled for a given consumption period equals
+the product of the variable credit and the number of kilowatthours of effective hourly interruptible
+power for each peak demand event hour.
+c) Multi-year commitment credit based on the duration of the customer’s commitment, paid every
+consumption period and calculated as follows:
+i. Commitment for two consecutive winter periods: 5% multiplied by the effective fixed credit
+calculated according to subparagraph a);
+ii. Commitment for three consecutiv
+[DOC 1] https://www.hydroquebec.com/data/documents-donnees/pdf/electricity-rates.pdf?v=20261001
+e winter periods: 10% multiplied by the effective fixed credit
+calculated according to subparagraph a).
+In addition to the deductions provided for in Article 6.25, if a customer decides to terminate their multi-
+year commitment, Hydro-Québec deducts an amount equal to 50% of the credits calculated according
+to subparagraph a) for the year of termination, multiplied by the number of years remaining in the
+commitment.
+Moreover, Hydro-Québec reserves the right to terminate the multi-year commitment of a customer who
+does not provide the interruptible power to which they committed.
+Hydro-Québec also reserves the right to cancel the multi-year commitment credit after any winter period.
+2026 Electricity Rates – 85
+ | Fixed credit | Variable credit
+
+Section 2 – Demand Response – Commitment Option
+d) Credit for shorter notice than the one provided for in Article 6.20, paid after each relevant consumption
+period and calculated as follows:
+72.667¢ per kilowatthour of effective hourly interruptible power for each peak demand event hour.
+If the customer who received a notice shorter than the one provided for in Article 6.20 does not provide
+the interruptible power to which they committed, Hydro-Québec applies the deductions described
+in Article 6.25.
+In addition, Hydro-Québec may decide that the customer is no longer eligible for the D R Commitment
+Option.
+Hydro-Québec also reserves the right to cancel the credit for shorter notice after any winter period.
+Calculation of contribution coefficient 6.23
+The contribution coefficient for a consumption period is calculated as follows:
+C = (P – P )
+max base
+I
+where
+C = the contribution coefficient;
+P = the maximum power;
+max
+P = the base power;
+base
+I = the interruptible power.
+The contribution coefficient cannot be negative.
+Recovery periods 6.24
+A Rate L customer is entitled to recovery periods if one or more peak demand events have occurred in
+the winter period. These recovery periods may take place:
+a) between 22:00 and 06:00 from Monday to Thursday; or
+b) between 22:00 Friday and 06:00 Monday.
+The consumption during the recovery period is that which exceeds, for the consumption period in
+question, the contract power in effect or the maximum power demand recorded outside recovery
+periods during the consumption period in question, whichever is higher.
+Consumption during recovery periods is billed at the price of energy at Rate L, up to the number of
+kilowatthours of effective hourly interruptible power to which the variable credit was applied. Any
+additional consumption is billed at the price of additional electricity in effect for the consumption period
+in question, as set out in Article 6.52.
+Hydro-Québec may prohibit consumption during a recovery period, based on system management
+requirements and availability.
+The customer’s right to recovery periods must in no case be interpreted as a limitation of Hydro-Québec’s
+right to ask the customer to interrupt their consumption under the conditions of this section.
+
+[DOC 1] https://www.hydroquebec.com/data/documents-donnees/pdf/electricity-rates.pdf?v=20261001
+omer’s normal consumption profile, Hydro-Québec will use another reference period
+or any other calculation method it deems more appropriate.
+Determining the price of electricity 6.52
+The price of electricity supplied under the Additional Electricity Option corresponds to:
+a) During the winter period, the result of the following formula:
+HAP x CEE + (H – HAP ) x CEP
+h h h h
+H
+h
+where
+HAP = t he number of hours for which Hydro-Québec plans to make short-term purchases
+h
+on the markets during the winter period;
+CEE = Hydro-Québec’s avoided energy cost for the winter period;
+h
+CEP = the average cost of heritage pool electricity in effect;
+H = the total number of hours in the winter period;
+h
+or
+b) During the summer period, the average cost of heritage pool electricity in effect.
+For a Rate G or Rate M or Rate G 9 contract, the price of additional electricity set according to Article 6.52
+cannot be lower than the average price at Rate M, based only on the second-tier energy price for 25-k V
+service and a 100% load factor, i.e., 7.012¢ per kilowatthour.
+For a Rate L or Rate L G contract, the price of additional electricity cannot be lower than the average
+price at Rate L for 120-k V service and a 100% load factor, i.e., 5.446¢ per kilowatthour.
+Notification of the price of electricity 6.53
+Hydro-Québec shall notify the customer of the price of electricity supplied under the Additional
+Electricity Option 7 business days before the beginning of each calendar month. This price shall remain
+fixed for the entire monthly period.
+Billing 6.54
+For the duration of the commitment to the Additional Electricity Option, the customer’s bill for the
+consumption period in question is established as follows:
+96 – 2026 Electricity Rates
+
+Section 4 – Additional Electricity Option for Medium‑ or Large‑Power Customers
+a) An initial amount is calculated by applying the prices and conditions in effect for Rate M, Rate G 9,
+Rate L or Rate L G, as the case may be, to the reference power, taking into account, if applicable,
+the credit for supply at medium or high voltage and the adjustment for transformation losses, as
+described in articles 12.2 and 12.4;
+b) A second amount is calculated by multiplying the difference between actual consumption and the
+additional electricity for the consumption period by the price of energy at Rate M, Rate G 9, Rate L or
+Rate L G;
+c) A third amount is calculated by multiplying the additional electricity for the consumption period by
+the price determined in accordance with Article 6.52;
+d) The results obtained in subparagraphs a), b) and c), as well as any amount related to the power
+factor applicable under Article 6.55, are added up.
+When a consumption period overlaps 2 monthly periods, the amount billed for additional electricity will
+be prorated to the number of hours of the consumption period falling in each monthly period.
+Conditions related to the power factor 6.55
+For a Rate G or Rate M or Rate G 9 contract, an adjustment for the differenc
+[DOC 1] https://www.hydroquebec.com/data/documents-donnees/pdf/electricity-rates.pdf?v=20261001
+Québec receives the customer’s written request, or on the date on which the
+plant’s unused production capacity is returned to operation or the date on which the industrial process or
+processes are converted to electricity.
+Commitment 6.78
+The customer undertakes to sign up for the Industrial Revitalization Rate for a minimum of 3 consumption
+periods during the 12 consecutive monthly periods following the sign-up date.
+Renewal of commitment 6.79
+A customer may renew a commitment regarding the Industrial Revitalization Rate by submitting a request
+to Hydro-Québec in writing before the end of the commitment. The rate will continue to apply to the
+same contract, subject to Hydro-Québec’s approval.
+Determining the price of electricity 6.80
+The price of electricity supplied under the Industrial Revitalization Rate is equal to:
+a) During the winter period, the result of the formula provided in subparagraph a) of Article 6.52;
+b) During the summer period, the average cost of heritage pool electricity in effect.
+The applicable price cannot be lower than the price of energy at Rate L, i.e., 3.821¢ per kilowatthour.
+Notification of the price of electricity 6.81
+Hydro-Québec shall notify the customer of the price of electricity supplied under the Industrial
+Revitalization Rate 7 business days prior to December 1 for the winter period, and 7 business days prior
+to April 1 for the summer period.
+Billing 6.82
+For each consumption period, the Industrial Revitalization Rate applies to all or to the eligible portion of
+the load, as the case may be, as follows:
+a) An initial amount is calculated by applying the Rate L prices and conditions in effect to the historical
+demand, taking into account, as applicable, the credit for supply at medium or high voltage and the
+adjustment for transformation losses described in articles 12.2 and 12.4;
+104 – 2026 Electricity Rates
+
+Section 6 – Industrial Revitalization Rate for Rate L Customers
+b) A second amount is calculated by multiplying the difference between actual consumption and the
+supplementary electricity for the consumption period by the price of energy at Rate L;
+c) A third amount is calculated by multiplying the supplementary electricity by the price determined
+in accordance with Article 6.80;
+d) The results obtained in subparagraphs a), b) and c), as well as any amount related to the power
+factor applicable under Article 6.83, are added up.
+When a consumption period overlaps with the beginning or end of the winter period, the amount billed
+for supplementary electricity is prorated according to the number of hours in the consumption period
+that fall within the summer period and the winter period, respectively.
+Condition related to the power factor 6.83
+If, during a given consumption period, the maximum power demand exceeds the highest real power
+demand, Hydro-Québec applies the demand charge in effect for Rate L to the difference between those
+two values.
+Restrictions 6.84
+Hydro-Québec may prohibit consumption of el
+[DOC 1] https://www.hydroquebec.com/data/documents-donnees/pdf/electricity-rates.pdf?v=20261001
+written agreement specified in Article 6.88. All consumption beyond
+this demand level is billed at 62.558¢ per kilowatthour.
+This article shall not be interpreted as granting the customer permission to exceed their available power.
+110 – 2026 Electricity Rates
+
+Section 8 – Equipment Testing by Medium‑ and Large‑Power Customers
+SECTION 8
+–
+EQUIPMENT TESTING BY MEDIUM- AND LARGE-POWER CUSTOMERS
+Application 6.96
+The conditions for equipment testing described in this section apply, subject to the installation of the
+appropriate metering equipment, to the Rate M, Rate G 9, Rate L or Rate L G contract of a customer who
+wishes to conduct one or more tests following the addition of new equipment or the modification or
+optimization of existing equipment. The customer may benefit from them for a minimum of 1 hour and
+a maximum of 1 consumption period.
+To benefit from these conditions, the customer must notify Hydro-Québec in writing, at least 5 business
+days before the test period(s), of the scheduled start and end dates and times of such test period(s). The
+customer must also inform Hydro-Québec of the nature of the new equipment or of the modifications or
+optimization work as well as the power rating of the equipment to be tested, subject to Hydro-Québec’s
+written approval. The maximum power demand during the test period(s) must be at least 500 kilowatts.
+Billing 6.97
+At the end of the consumption period in question, the customer must confirm the actual start and
+end dates and times of the test period(s). Once Hydro-Québec has approved these test periods, the
+customer’s bill for the consumption period is determined as follows:
+a) An initial amount is calculated by applying the Rate M, Rate G 9, Rate L or Rate L G prices in effect,
+as the case may be, to the billing demand recorded outside of the test period(s) and to the energy
+consumed during the consumption period in question, taking into account, as applicable, the credit
+for supply at medium or high voltage and the adjustment for transformation losses, as described in
+articles 12.2 and 12.4;
+b) A second amount is calculated by adding up the real power demands exceeding the billing demand
+as determined under subparagraph a) for each 15-minute integration period within the actual hours
+of the test period(s), and multiplying the result by 12.512¢ per kilowatthour;
+c) The results obtained in subparagraphs a) and b) are added up.
+Restriction 6.98
+Hydro-Québec may prohibit the consumption of electricity for equipment testing purposes, based on
+system management requirements and availability.
+2026 Electricity Rates – 111
+
+
+
+CHAPTER 7
+– RATE FOR CRYPTOGRAPHIC USE APPLIED TO BLOCKCHAINS
+SECTION 1
+–
+RATE C B
+Subsection 1.1 – Hydro-Québec Customers
+Application 7.1
+Rate C B applies to an annual contract under which electricity is delivered, in whole or in part, for
+cryptographic use applied to blockchains and where the installed capacity dedicated to this use is at
+least 50 kilowatts.
+More specifically, it appli
+[DOC 1] https://www.hydroquebec.com/data/documents-donnees/pdf/electricity-rates.pdf?v=20261001
+he structure of monthly Rate C B for a medium-power annual contract, i.e., a contract with a minimum
+billing demand of less than 5,000 kilowatts, is as follows:
+$18.242 per kilowatt of billing demand
+plus
+6.292¢ per kilowatthour for the first 210,000 kilowatthours of authorized consumption, and
+4.666¢ per kilowatthour for the remaining authorized consumption,
+plus
+18.767¢ per kilowatthour for any consumption above or other than the authorized consumption.
+The minimum monthly bill is $15.426 when single-phase electricity is delivered or $46.278 when
+three-phase electricity is delivered.
+If applicable, the credit for supply at medium or high voltage and the adjustment for transformation
+losses, as described in articles 12.2 and 12.4, apply.
+Structure of large‑power Rate C B 7.4
+The structure of monthly Rate C B for a large-power annual contract, i.e., a contract with a minimum
+billing demand of 5,000 kilowatts or more, is as follows:
+$16.571 per kilowatt of billing demand
+plus
+4.324¢ per kilowatthour for authorized consumption,
+plus
+18.767¢ per kilowatthour for any consumption above or other than the authorized consumption.
+If applicable, the credit for supply at medium or high voltage and the adjustment for transformation
+losses, as described in articles 12.2 and 12.4, apply.
+Billing demand 7.5
+The billing demand at Rate C B is equal to the maximum power demand during the consumption period in
+question, but is never less than the minimum billing demand, as described in Article 7.7.
+114 – 2026 Electricity Rates
+
+Section 1 – Rate CB
+Condition related to the power factor for power demand 7.6
+less than 5,000 kilowatts under a large‑power contract
+If, during a consumption period, the maximum power demand exceeds the highest real power demand,
+which is less than 5,000 kilowatts, Hydro-Québec applies the demand charge to the difference between:
+a) the maximum power demand up to 5,000 kilowatts; and
+b) the highest real power demand.
+If applicable, the credit for supply at medium or high voltage and the adjustment for transformation
+losses, as described in articles 12.2 and 12.4, apply.
+Minimum billing demand 7.7
+Depending on whether the contract is a medium-power or large-power contract, the minimum billing
+demand for any given consumption period is equal to 65% or 75%, respectively, of the maximum
+power demand during a consumption period that falls wholly within the winter period included in
+the 12 consecutive monthly periods ending at the end of the consumption period in question. For
+a large-power contract, this value cannot be less than 5,000 kilowatts.
+When the minimum billing demand reaches or exceeds 5,000 kilowatts, the contract ceases to be eligible
+for medium-power Rate C B and becomes subject to large-power Rate C B.
+Large-power Rate C B applies as of the beginning of the consumption period during which the minimum
+billing demand reached or exceeded 5,000 kilowatts.
+When a customer terminates an annual contract and signs another for the deliver
+[DOC 2] https://www.hydroquebec.com/data/documents-donnees/pdf/comparaison-prix-2025-en.pdf
+2025
+Comparison of Electricity Prices
+in Major North American Cities
+Rates in effect April 1, 2025
+2025
+Comparison of Electricity Prices
+in Major North American Cities
+Rates in effect April 1, 2025
+
+
+ |  |  |  |  | 
+ |  |  |  |  | 
+ |  |  |  |  | 
+ |  |  |  |  | 
+ |  |  |  |  | 
+ |  |  |  | 
+ |  |  |  | 
+ |  |  |  | 
+ | 
+ | 
+ | 
+ | 
+ | 
+ |  | 
+ |  | 
+ |  |  |  |  |  |  | 
+ |  |  |  |  |  |  | 
+ |  |  |  |  |  |  | 
+ |  |  |  |  |  |  | 
+ |  |  |  |  |  |  | 
+ |  |  |  |  |  |  | 
+
+
+
+
+ | 
+ | 
+
+TABLE OF CONTENTS
+INTRODUCTION 2
+METHOD 7
+HIGHLIGHTS 9
+Residential Customers 9
+Small-Power Customers 10
+Medium-Power Customers 11
+Large-Power Customers 14
+RESULTS
+1 Summary Tables (excluding taxes) 16
+2 Summary Tables (including taxes) 20
+3 Detailed Tables – Residential Customers 24
+4 Detailed Tables – Small-Power Customers 28
+5 Detailed Tables – Medium-Power Customers 32
+6 Detailed Tables – Large-Power Customers 36
+APPENDICES
+A Rate Adjustments 40
+B Time-of-Use Rates 43
+Adjustment Clauses 43
+C Applicable Taxes 49
+D Utilities in the Study 55
+Legal deposit, Bibliothèque et Archives nationales du Québec, 4th quarter 2025
+ISBN: 978-2-555-02337-6 (PDF Eng. version)
+ISBN: 978-2-555-02336-9 (PDF Fr. version)
+Legal deposit, Bibliothèque et Archives nationales du Québec, 4th quarter 2024
+ISBN: 978-2-550-99040-6 (PDF Eng. version)
+ISBN: 978-2-550-99039-0 (PDF Fr. version)
+For more information, please call Hydro-Québec’s Direction principale –
+Offres énergétiques et commercialisation marketing:
+Tel.: 514 798-1223, ext. 879-2081
+This publication is available online at
+www.hydroquebec.com/documents-data/official-publications.
+Original document written in French.
+Ce document est également publié en français.
+2025G379A
+1
+
+INTRODUCTION
+Every year, Hydro-Québec compares the monthly
+electricity bills of Québec customers in the
+residential, commercial, institutional and industrial
+segments with those of customers of the various
+utilities serving 21 major North American cities.
+This report details the principal conclusions
+of the comparative analysis of prices in effect
+on April 1, 2025. There are three sections. The first
+describes the method used to estimate electricity
+bills. The second examines the highlights of the
+seven consumption levels analyzed, with the help
+of charts. Finally, the third presents the results
+of the 21 consumption levels for which data were
+collected and compiled in the form of summary
+and detailed tables.
+The most recent rate adjustments, time-of-use
+rates, adjustment clauses and applicable taxes,
+as well as a profile of the utilities in the study,
+appear in separate appendices.
+2
+
+MAJOR NORTH AMERICAN CITIES
+AVERAGE PRICES FOR RESIDENTIAL CUSTOMERS1, 2
+(IN ¢/k W h)3
+1927 Privy Council border
+(not final)
+St. John’s, N L: 15.59
+Edmonton, A B: 22.00
+Vancouver, B C: 12.60 Charlottetown, P E: 19.69
+Calgary, A B: 22.90 Moncton, N B: 16.61
+Seattle, W A: 18.97 Regina, S K: 17.89 Halifax, N S: 20.48
+Winnipeg, M B: 10.53
+Montréal, Q C: 8.29
+Portland, O R: 23.
+[DOC 2] https://www.hydroquebec.com/data/documents-donnees/pdf/comparaison-prix-2025-en.pdf
+by some utilities vary depending
+PERIOD COVERED on the season and/or time of day when energy
+is consumed. In the United States, for example,
+Monthly bills have been calculated based on a number of utilities set a higher price in summer,
+the rates in effect on April 1, 2025. The most when demand for air-conditioning is stronger.
+recent rate adjustments applied by the Canadian In Québec, on the other hand, demand increases
+utilities in the study between April 1, 2024, and in winter because of heating requirements.
+April 1, 2025, are shown in Appendix A. Thus, for some utilities, April 1 may fall within a
+period in the year when the price is high, whereas
+for others it falls in a period when the price is low.
+An annual average price has therefore been
+CONSUMPTION LEVELS calculated in the case of utilities with time-of-use
+rates. These utilities and the consumption levels
+Seven consumption levels were selected to which time-of-use rates apply are listed in
+for analysis. However, data were collected for Appendix B.
+21 consumption levels and those results are
+presented in the detailed tables.
+ADJUSTMENT CLAUSES
+OPTIONAL PROGRAMS The rates of some distributors include clauses
+that allow them to adjust their customers’
+The bills have been calculated according to base electricity bills according to different variables.
+rates. Optional rates or programs offered by some Since these adjustments may be applied monthly
+utilities to their residential, commercial, institutional or over a longer period, the bills issued by a given
+or industrial customers have not been taken into distributor may have varied between April 1, 2024,
+account, since the terms and conditions vary and April 1, 2025, even though base rates remained
+considerably from one utility to the next. the same. Appendix B lists the adjustment clauses
+taken into account when calculating bills.
+7
+
+TAXES
+With the exception of the bills presented in
+Section 2, taxes are not included in any of the
+calculations. Appendix C lists the taxes applicable
+on April 1, 2025, by customer category; those which
+may be partially or fully refundable are indicated.
+EXCHANGE RATE
+The exchange rate used to convert bills in
+U.S. dollars into Canadian dollars is $0.6970
+(C$1 = US$0.6970), the rate in effect at noon
+on April 1, 2025. The Canadian dollar had thus
+depreciated by 5.39% relative to the U.S. dollar
+on April 1, 2024.
+8
+
+HIGHLIGHTS
+The document Electricity Rates Effective have been analyzed according to these
+April 1, 2025, sets out Hydro-Québec’s rates categories. The industrial rate has been used
+established in accordance with Schedule 1 of to calculate the bills of large-power customers.
+the Hydro-Québec Act. Three types of rates are in
+RESIDENTIAL CUSTOMERS
+effect: domestic rates, for residential and farm
+customers (hereinafter, “residential customers”); The rate applicable to Hydro-Québec’s residential
+the industrial rate, for large-power industrial customers is among the most advantageous in
+customers; and g
+[DOC 2] https://www.hydroquebec.com/data/documents-donnees/pdf/comparaison-prix-2025-en.pdf
+ to
+residential customers
+5.10 April 1, 2025 3.60 Applicable to all
+business customers
+except large-power
+industrial customers
+ENMAX, A B 2024 6.31 January 1, 2025 −2.92 Average of distribution
+components (0.20%)
+Maritime Electric, P E 2024 N A March 1, 2025 2.90
+EPCOR, A B 2024 ND January 1, 2025 ND
+Nova Scotia Power, N S 2024 6.90 January 1, 2025 4.00
+NB Power, N B 2024 9.25 April 1, 2025 9.14
+Hydro Ottawa, O N 2024 ND January 1, 2025 ND
+SaskPower, S K 2024 NA NA NA
+Newfoundland Power, N L1 2024 6.90 July 1, 2024 7.00
+Newfoundland and Labrador Hydro, N L1 2024 ND July 1, 2024 ND
+Toronto Hydro, O N 2024 ND January 1, 2025 ND
+BC Hydro, B C 2024 6.42 April 1, 2025 3.42
+Manitoba Hydro, M B 2024 1.00 April 1, 2025 0.00 There was no increase
+on April 1, 2025
+Data concerning American utilities not available.
+NA: Not applicable
+ND: No data
+1) N ewfoundland and Labrador Hydro rates for customers with a power demand of 30,000 k W or more; Newfoundland Power rates
+for all other customer categories.
+41
+
+RATE ADJUSTMENTS (Between April 1, 2024, and April 1, 2025)
+Adjustments by Customer Category
+Date Residential General-Rate Industrial Average
+Customers Customers Customers %
+% % %
+Canadian Utilities
+Hydro-Québec, Q C April 1, 2025 3.00 3.601 1.70 ND
+3.602
+3.603
+ENMAX, A B January 1, 2025 −1.814 −1.201 ND −2.924
+−3.452
+−2.893
+Maritime Electric, P E March 1, 2025 ND ND ND 2.90
+EPCOR, A B January 1, 2025 ND ND ND ND
+Nova Scotia Power, N S January 1, 2025 4.40 3.901 3.505 4.00
+3.402 3.006
+4.103
+NB Power, N B April 1, 2025 9.66 7.40 7.14 9.14
+Hydro Ottawa, O N January 1, 2025 ND ND ND ND
+SaskPower, S K N A NA N A N A N A
+Newfoundland Power, N L7 July 1, 2024 6.80 7.60 8.90 7.00
+Newfoundland and July 1, 2024 NA N A 0.00 N A
+Labrador Hydro, N L7
+Toronto Hydro, O N January 1, 2025 ND ND ND ND
+BC Hydro, B C April 1, 2025 3.42 3.42 3.42 3.42
+Manitoba Hydro, M B April 1, 2025 0.00 0.00 0.00 0.00
+Data concerning American utilities not available.
+NA: Not applicable
+ND: No data
+1) Small-power customers.
+2) Medium-power customers.
+3) Large-power customers.
+4) Average of distribution and transmission components.
+5) Small industrial companies.
+6) Midsize industrial companies.
+7) Newfoundland and Labrador Hydro rates for customers with a power demand of 30,000 k W or more; Newfoundland Power rates for all other
+customer categories.
+Note: Because of adjustment clauses (see list in Appendix B), electricity bills issued by a utility may vary, even though base rates have not changed.
+42
+
+Appendix B
+B
+Appendix
+Time-of-Use Rates
+Adjustment Clauses
+
+TIME-OF-USE RATES
+The utilities listed below apply time-of-use rates for different consumption levels. For the purposes
+of this study, an annual average has been calculated for utilities whose rates vary according to the
+season or time of day (or both). In the case of utilities whose supply costs are determined by the market,
+the average for the month of March 2025 was used.
+B C Hydro, B C Residential customers
+CenterPoint Energy, T X A
+[DOC 2] https://www.hydroquebec.com/data/documents-donnees/pdf/comparaison-prix-2025-en.pdf
+ll levels
+Commonwealth Edison, I L All levels
+Consolidated Edison, N Y All levels
+DTE Electric, M I Residential customers
+General-rate customers: 500–50,000 k W
+ENMAX, A B All levels
+EPCOR, A B All levels
+Eversource Energy, M A General-rate customers: All levels
+Hydro Ottawa, O N All levels
+Nashville Electric Service, T N All levels
+Newfoundland Power, N L Residential customers
+General-rate customers: 14–10,000 k W
+Nova Scotia Power, N S Residential customers
+Pacific Gas and Electric, C A All levels
+PacifiCorp, O R 1,000–50,000 k W
+Seattle City Light, W A Residential customers
+General-rate customers: 1,000–50,000 k W
+Toronto Hydro, O N All levels
+44
+
+ADJUSTMENT CLAUSES
+Below is a list of utilities whose rates include adjustment clauses that may cause fluctuations in the price
+of electricity even though base rates have not been adjusted.
+BC Hydro, B C Deferral Account Rate Rider
+Trade Income Rate Rider
+CenterPoint Energy, T X Accumulated Deferred Federal Income Tax Credit
+Distribution Cost Recovery Factor
+Energy Efficiency Cost Recovery Factor
+Nuclear Decommissioning Charge
+Rate Case Expenses Surcharge
+Temporary Emergency Electric Energy Facilities Rider
+Transition Charges
+Transmission Cost Recovery Factor
+Commonwealth Edison, I L Carbon-Free Resource Adjustment
+Coal to Solar Adjustment
+Delivery Service Pricing Reconciliation
+Energy Efficiency Adjustments
+Energy Transition Assistance Charge
+Environmental Cost Recovery Adjustment
+Excess Deferred Income Tax Adjustment
+Franchise Cost Additions
+Renewable Energy Adjustment
+Renewable Energy Distributed Generation Rebate
+Retail Customer Assessments
+Zero Emission Adjustment
+Consolidated Edison, N Y Adjustment Factors – M A C
+Adjustment Factors – M S C
+Billing and Payment Processing Charge
+Clean Energy Standard Delivery Surcharge
+Clean Energy Standard Supply Surcharge
+Delivery Revenue Surcharge
+Dynamic Load Management Surcharge
+Market Supply Charge
+Market Supply Charge – Capacity
+Merchant Function Charge
+Monthly Adjustment Clause
+Revenue Decoupling Mechanism Adjustment
+System Benefits Charge
+Value of Distributed Energy Resources Cost Recovery
+DTE Electric, M I Delivery Surcharges
+Energy Waste Reduction Surcharge
+Low Income Energy Assistance Fund Factor
+Power Supply Cost Recovery Clause
+Renewable Energy Plan Surcharge
+45
+
+ENMAX, A B Balancing Pool Allocation Rider
+Local Access Fee
+Quarterly Transmission Access Charge Adjustment Rider
+Transmission Access Charge Deferral Account Rider Adjustment
+EPCOR, A B Balancing Pool Rider
+DAS True-Up Rider
+Local Access Fee
+SAS True-Up Rider
+Short Term Adjustment Rider
+Transmission Charge Deferral Account True-Up Rider
+Eversource Energy, M A Advanced Metering Infrastructure Factor
+Attorney General Consultant Expense
+Basic Service Cost Adjustment
+Electronic Payment Recovery Factor
+Energy Efficiency Charge
+Farm Discount
+Grid Modernization Factor
+Long Term Renewable Contract Adjustment
+Low Income Discount
+Miscellaneous Charges
+Net Metering Recovery Surcharge
+Pension Adjustme
+[DOC 2] https://www.hydroquebec.com/data/documents-donnees/pdf/comparaison-prix-2025-en.pdf
+To other components
+Sales tax 8.875 To base amount of bill + gross receipts tax
+Portland, O R Multnomah County business income tax −0.3 To a portion of base amount of bill
+City of Portland franchise tax 1.5 To a portion of base amount of bill
+San Francisco, C A Energy Commission tax ¢/k W h To energy consumption
+San Francisco utility users’ tax 5 To base amount of bill
+Seattle, W A State utility tax 3.8734 Tax included in rate schedule prices
+City of Seattle occupation tax 6 Tax included in rate schedule prices
+54
+
+Appendix D
+D
+Appendix
+Utilities in the Study
+
+UTILITIES IN THE STUDY
+1927 Privy Council border
+(not final) 9 St. John’s, NL
+4 Edmonton, AB
+3 Charlottetown, PE
+11 Vancouver, BC
+2 Calgary, AB 6 Moncton, NB
+8 Regina, SK
+22 Seattle, WA 5 Halifax, NS
+12 Winnipeg, MB
+1 Montréal, QC
+20 Portland, OR
+7 Ottawa, ON
+10Toronto, ON 13 Boston, MA
+15 Detroit, MI 19 New York, NY
+14 Chicago, IL
+Abbreviations Used
+21 San Francisco, CA
+AB Alberta
+BC British Columbia
+CA California
+FL Florida
+IL Illinois
+18 Nashville, TN
+MA Massachusetts
+MB Manitoba
+MI Michigan
+NB New Brunswick
+NL Newfoundland and Labrador
+NS Nova Scotia
+NY New York
+ON Ontario
+16 Houston, TX
+OR Oregon
+PE Prince Edward Island
+QC Québec
+17 Miami, FL SK Saskatchewan
+TN Tennessee
+TX Texas
+WA Washington
+CANADIAN UTILITIES AMERICAN UTILITIES
+1- Hydro-Québec 13- Eversource Energy
+2- ENMAX 14- Commonwealth Edison
+3- Maritime Electric 15- D T E Electric
+4- EPCOR 16- CenterPoint Energy
+5- Nova Scotia Power 17- Florida Power and Light
+6- NB Power 18- Nashville Electric Service
+7- Hydro Otta wa 19- Consolidated Edison
+8- SaskPower 20- PacifiCorp
+9- Newfoundland and Labrador Hydro 21- Pacific Gas and Electric
+(customers with a power demand 22- Seattle City Light
+of 30,000 k W or more)
+Newfoundland Power
+(all other customer categories)
+10- Toronto Hydro
+11- BC Hydro
+12- Manitoba Hydro
+56
+ | 3
+6 | 
+
+CANADIAN
+ENMAX
+UTILITIES
+Calgary, Alberta
+Activities: Generation, transmission and distribution
+Installed capacity: 1,601 M W
+Main sources: Natural gas (91%) and wind (9%)
+HYDRO-QUÉBEC
+Number of accounts: About 675,000
+Montréal, Québec
+Distribution regulator: Alberta Utilities
+Hydro-Québec, a government-owned company,
+Commission
+is one of the largest electric utilities in North
+America. In accordance with the Act respecting Wholesale market: Open
+the Régie de l’énergie [Québec energy board], it
+Retail market: Open
+provides a maximum of 165 T W h of heritage pool
+electricity per year to the Québec market and also
+purchases power on the markets to meet its
+customers’ needs. The average supply cost of MARITIME ELECTRIC
+heritage pool electricity, set at 2.79¢/kWh in 1998, Charlottetown, Prince Edward Island
+has been indexed annually on January 1 since Activities: Distribution
+2014 at a rate corresponding to the annual
+Installed capacity: 203 M W
+variation in the average overall Consumer Price
+Index for Québec. The large-power industrial rate Main sources: Purchases from N B Power
+(Rate L) is exempt from this index
+[DOC 3] https://www.hydroquebec.com/data/documents-donnees/pdf/hq-rapport-annuel-2025-anglais.pdf
+Annual Report 2025
+Together, we have
+the power to change
+the course of history!
+Hydro-Québec | Annual Report 2025
+
+Hydro‑Québec
+in Numbers
+$2.9 billion 196.7 TWh
+Net income in 2025 Electricity sales,
+2.9 billion dollars. 196.7 terawatthour, including 11.8 terawatthour for exportation
+including 11.8 TWh
+outside Québec
+8.29¢/kWh 14.5¢/kWh
+Residential rate, Average price obtained
+8.29 cents per kilowatthour,
+the lowest in North America on sales outside Québec
+14.5 cents per kilowatthour.
+$7.8 billion $20.6 million
+Investments in Québec in 2025 Donations and sponsorships
+:
+to 640 organizations in 2025
+7.8 billion dollars 20.6 million dollars.
+$4.4 billion
+Contribution to the Québec
+government’s revenue in 2025
+4.4 billion dollars.
+Table of Contents
+3 Message from the Chair of the Board Cover: Xaviera Daoust, Civil Engineering
+Technician, prepares to launch a drone
+4 Message from the President and Chief Executive Officer
+as she investigates the causes of an
+equipment failure.
+5 Management Team
+6 Review of Operations
+18 Financial Review
+Legal deposit – Bibliothèque et Archives
+70 Board of Directors nationales du Québec, 1st quarter 2026
+ISBN: 978‑2‑555‑03113‑5 (PDF Eng. version)
+77 Governance
+ISBN: 978‑2‑555‑03111‑1 (PDF Fr. version)
+ISBN: 978‑2‑555‑03112‑8 (Print Eng. version)
+87 Our Generating, Transmission and Distribution Facilities ISBN: 978‑2‑555‑03110‑4 (Print Fr. version)
+Hydro-Québec | Annual Report 2025 2
+
+Message from the
+Chair of the Board
+The year 2025 was marked by I would also like to point out the
+outstanding mobilization at commitment and diligence of our
+Hydro‑Québec in the pursuit of the Board members, who have fulfilled their
+ambitious objectives of the Action duties while keeping the key priorities
+Plan 2035: Towards a Decarbonized of the Action Plan 2035 and the sound
+and Prosperous Québec. Committed management of the company’s ongoing
+to the importance of this mission, activities at the forefront. Within the
+the Board of Directors has focused Board and its five committees, they have
+its governance efforts on the support worked to ensure thorough governance
+of accelerated investments to reach in the company’s major areas of activity,
+these goals. In a rapidly changing global which is essential in the context of the
+context, Hydro‑Québec has stayed significant investments that will enable
+the course and even exceeded certain the company to navigate this pivotal
+2025 targets it had set for itself, with the moment in history. I would also like to
+organization as a whole driven by the thank those members whose terms came
+Manon Brouillette
+deep conviction that our actions today to an end in 2025: Hanane Dagdougui,
+Chair of the Board of Directors
+will shape a more sustainable tomorrow, Jonathan Gignac and Paul Stinis.
+in a resolutely forward‑looking Québec.
+Finally, I am pleased to welcome two
+Last July saw a significant change new members to the Board: Julie
+in leadership. Following the departure Lévesque, Executive Vice President of
+o
+[DOC 3] https://www.hydroquebec.com/data/documents-donnees/pdf/hq-rapport-annuel-2025-anglais.pdf
+ Quarter
+HHyyddrroo--QQuuéébbeecc || AAnnnnuuaall RReeppoorrtt 22002255 Management's Discussion and Analysis 18
+
+2025 at a Glance
+Hydro‑Québec’s net income totalled The increase in net income is due to Colder temperatures in 2025
+$2,906 million in 2025, representing a $1,410‑million spike in electricity sales.
+an increase of $243 million from the In Québec, colder temperatures in the first EFFECT OF
+$2,663 million recorded a year ago. and last quarters compared to the previous TEMPERATURES ON
+This is at the top of the target range year, combined with the indexation of rates SALES IN QUÉBEC
+for the year, forecasting income between on April 1, 2024 and 2025, were a major
+2025: +3.3 TWh
+$2.4 billion and $3.0 billion. This factor behind the $1,206‑million growth
+2024: −3.9 TWh
+performance was achieved in a context in related revenue. On markets outside
+marked by cold temperatures across all Québec, sales rose by $204 million, largely
+Electricity sales in Québec reached a peak
+markets, especially in the first quarter, due to weather conditions experienced
+of 184.9 TWh, an increase of 7.7 TWh over
+and low runoff levels that have persisted during the first quarter, which caused
+2024. This growth is essentially due to
+since 2023. It also reflects the skillful energy prices to increase overall. However,
+the impact of cold temperatures. In the
+deployment of the sales strategy through these positive impacts, combined with
+first quarter, they were 3°C lower on
+the purchase and sale of energy at the $256‑million gain on disposal of
+average than in 2024, while in the last
+appropriate times on external markets. the investment in Innergex énergie
+quarter, they were 2°C lower on average.
+Large reservoirs, which provide natural renouvelable inc., were partially offset
+It should be noted that in 2024, Québec
+energy storage and allow strategic by a $1,096‑million increase in electricity
+experienced the warmest year ever
+management of the reserves, played purchases, mainly due to an increase
+recorded province‑wide, and the first
+an important role in this regard. in short‑term purchases on the markets
+quarter was the mildest in 10 years.
+in order to meet Québec’s ad hoc
+requirements during colder periods. The colder temperatures in 2025 resulted
+Net Income
+They were also reduced by the $248‑million in a 3.3‑TWh increase in sales in Québec
+increase in financial expenses under compared to normal temperatures.
+3.5 the borrowing program in connection Regarding normalized electricity sales,
+with the investment activities under i.e., excluding the temperature effect,
+3.0 3.0 the Action Plan 2035. they rose for a seventh consecutive year,
+In light of these results, Hydro‑Québec totalling 181.6 TWh, a historic high.
+2.5 will be able to pay a dividend of
+2.4 $2.2 billion to the Québec government,
+its sole shareholder.
+2.0
+1.5
+2.9
+2.7
+1.0
+Electricity Sales in Québec
+0.5
+181.6
+185
+0.0
+181.1
+$B 2024 2025 179.4 180.0
+Target range 180
+177.0
+170.4
+175 172.1
+169.0
+170.3 184.9
+169.4
+1
+[DOC 3] https://www.hydroquebec.com/data/documents-donnees/pdf/hq-rapport-annuel-2025-anglais.pdf
+70 180.6
+177.3 177.2
+174.6 175.2
+172.8
+165 170.7 171.4
+169.2
+160
+TWh 2016 2017 2018 2019 2020 2021 2022 2023 2024 2025
+Total electricity sales
+Normalized electricity sales
+HHyyddrroo--QQuuéébbeecc || AAnnnnuuaall RReeppoorrtt 22002255 Management's Discussion and Analysis 19
+
+Persistent backdrop of Profitable and prudent
+low runoff conditions Sales and Purchases management of water resources
+Outside Québec
+The results for 2025 are set against a
+SALES
+backdrop of continuing low runoff
+conditions, which have persisted since 40 2025: 11.8 TWh
+at 14.5¢/kWh
+2023. Indeed, natural water inflows in 36.2 35.6
+recent years have been lower than normal 35 2024: 15.1 TWh
+overall, due to lower precipitation and at 9.9¢/kWh
+30
+spring runoff, resulting in historically low
+reservoir levels. As a result, Hydro‑Québec PURCHASES
+25
+continued to take a prudent approach 23.0
+2025: 15.2 TWh
+to managing its energy reserves and at 7.6¢/kWh
+20
+therefore limited its exports for a third
+2024: 9.4 TWh
+consecutive year to ensure optimum use 15 15.1 15.2 at 3.6¢/kWh
+of water resources. This situation led to
+11.8
+a decline of 3.3 TWh in electricity sales 10 9.4 Thanks to the proactive and flexible
+on external markets compared with 2024. management of its water resources,
+However, it had no impact on the security 5 3.7 Hydro‑Québec was able to capitalize
+of Québec’s energy supply. It should on favourable market conditions through
+also be noted that the runoff is a cyclical 0 0.6 1.0 energy purchases and sales at
+phenomenon, characterized by alternating TWh 2021 2022 2023 2024 2025 appropriate times. In the first quarter,
+periods of higher and lower precipitation Sales the company increased its electricity
+observed since the 1960s. Purchases exports to take advantage of high prices
+arising from strong demand. In the
+following quarters, prices fell as winter
+Variances in the Annual Water Inflow from the Average drew to a close, and the focus therefore
+shifted to increasing purchases as a
+means of replenishing part of its energy
+70
+reserves in the persistent context of low
+60 runoff levels. As a result, Hydro‑Québec
+50 generated net revenue of nearly
+40 $200 million by the end of 2025, with
+the positive contribution of 4.7 TWh1
+30
+regarding water levels in reservoirs,
+20
+allowing it to mitigate the impact
+10
+of low runoff.
+0
+−10
+−20
+−30
+−40
+−50
+TWh
+Above-average runoff
+Below-average runoff
+1) Excluding net income of Great River Hydro
+HHyyddrroo--QQuuéébbeecc || AAnnnnuuaall RReeppoorrtt 22002255 Management's Discussion and Analysis 20
+5491 0591 5591 0691 5691 0791 5791 0891 5891 0991 5991 0002 5002 0102 5102 0202 5202
+
+Rigorous implementation in the Chaudière‑Appalaches and Estrie
+of the investment plan regions, with a view to commissioning a Investments
+new 1,200‑MW interconnection between in Québec in 2025
+INVESTMENTS Québec and New England (“NECEC”) $7.8B
+in early 2026, continued, as did the
+2025: $7,842M
+construction of the Hertel–New York
+2024: $6,533M interconnection line, whi
+[DOC 3] https://www.hydroquebec.com/data/documents-donnees/pdf/hq-rapport-annuel-2025-anglais.pdf
+ the
+Net income
+deployment of a 320‑kV direct‑current line
+HHyyddrroo--QQuuéébbeecc || AAnnnnuuaall RReeppoorrtt 22002255 Management's Discussion and Analysis 21
+
+Consolidated Results
+Net income Revenue from ordinary activities
+Electricity sales in Québec
+Net income reached $2,906 million
+Electricity sales in Québec rose by 7.7 TWh
+in 2025, an increase of $243 million,
+to reach a historic level of 184.9 TWh,
+compared to $2,663 million in 2024.
+contributing to the $1,206‑million growth
+The increase is mainly due to a spike
+in related revenue resulting from the
+in electricity sales as well as a gain on
+combined effect of three main factors.
+disposal of the investment in Innergex
+énergie renouvelable inc. However, First, temperatures had a favourable
+Variances in Actual
+these factors were offset by an impact of 7.2 TWh or $652 million Temperatures Compared to
+increase in electricity purchases compared to the previous year. In fact, Normals – Montréal and Québec
+and financial expenses. temperatures observed across Québec
+in 2024 were the warmest on record.
+Revenue The impact on electricity sales was most 3.0
+pronounced in the first quarter of 2025,
+Revenue totalled $17,999 million, 2.5 2.5
+resulting in an increase of 4.1 TWh or
+compared to $16,113 million a year
+$370 million. More specifically, 2.0
+earlier. Electricity sales amounted to
+temperatures in January and February
+$16,988 million, or $1,410 million more 1.5
+were, on average, 3°C and 5°C lower,
+than the $15,578 million recorded
+the previous year. This growth is due respectively, than those of last year. 1.0 0.8 0.9
+As heating accounts for a large part
+to a $1,206‑million rise in electricity sales
+of electricity consumption during the winter 0.5 0.4
+in Québec, as well as a $204‑million
+months, any decrease in temperatures
+increase in sales on markets outside 0.0
+during this period necessarily has a
+Québec. Other revenue from ordinary favourable impact on the volume of −0.5 −0.1
+activities and revenue from other activities
+electricity sales and related revenue.
+amounted to $1,011 million, an increase −1.0 −0.7
+The impact was also significant in the last
+of $476 million compared to the
+quarter of 2025 and led to an increase −1.5 −1.2
+$535 million recorded in 2024. −1.4
+of 2.6 TWh or $237 million. Temperatures
+−2.0
+in November and December were on °C 1st 2nd 3rd 4th
+average 3°C lower than those in 2024. quarter quarter quarter quarter
+2024
+2025
+Net Income Revenue Cumulative Impact on Electricity
+Sales in Québec of Actual
+Temperatures Compared to Normals
+5,000 20,000
+4,557 18,000 17,999
+1,011 400
+16,113
+4,000 16,000 535 1,703 310
+300
+1,499
+3,564 14,000
+3,288 200 142
+12,000 153
+123
+3,000 2,906 100
+10,000
+2,663
+0
+8,000
+15,285
+2,000 6,000 14,079 −100 370 652
+4,000 −200
+2,000 −300 −247
+1,000 −268
+−273
+0 −400 −342
+$M 2024 2025 $M Jan. 1 Mar. 31Jun. 30Sep. 30 Dec. 31
+Other 2024
+0 Electricity sales outside Québec 2025
+$M 2021 2022 2023 2024 2025 Electricity sales in Québec Normal temperatures
+HHyyddrroo-
+[DOC 3] https://www.hydroquebec.com/data/documents-donnees/pdf/hq-rapport-annuel-2025-anglais.pdf
+-QQuuéébbeecc || AAnnnnuuaall RReeppoorrtt 22002255 Management's Discussion and Analysis 22
+
+Second, baseload demand, including governance of energy resources and
+the impact of one day less of sales due to to amend various legislative provisions Breakdown of Electricity Sales
+the absence of February 29 (2024 being a and An Act to simplify the process for in Québec in 2025
+by Segment (TWh)
+leap year), rose by 0.5 TWh or $64 million, establishing electricity distribution rates,
+mainly due to increased energy needs in the indexation rate for domestic rates,
+the residential segment and in the i.e., those applicable to residential and
+27%
+commercial, institutional and small farm customers, was capped at 3%. Commercial, 29%
+institutional and Large industrial
+industrial segment, where demographic In addition, under two provisional small industrial
+change led to growth in the number of decisions, the Régie approved rate
+customer accounts. However, this growth increases of 3.6% for commercial
+was mitigated by a slight downturn in customers and 1.7% for large‑power
+demand observed in several business industrial customers (Rate L). These
+segments in the large industrial customer increases apply until the Régie renders
+category, given the economic context. its final decisions on the rate case.
+Third, the rate indexations that came into
+effect on April 1, 2024 and 2025, resulted
+in a $435‑million increase in revenue.
+In 2025, in accordance with the provisions 40% 4%
+Residential Other
+of An Act to ensure the responsible
+Electricity Sales in Québec by Segment
+Sales volume Revenue
+2025 2025‑2024 change 2025 2025‑2024 change
+Segment TWh TWh % $M $M %
+Residential 74.7 6.5 9.5 6,857 822 13.6
+Commercial, institutional and small industrial 49.6 1.4 2.9 5,041 344 7.3
+Large industrial 54.0 (0.4) (0.7) 2,949 10 0.3
+Other 6.6 0.2 3.1 438 30 7.4
+Total 184.9 7.7 4.3 15,285 1,206 8.6
+Factors Underlying the 2025‑2024 Change in Sales by Segment
+Volume effects Price effects Total
+Rate
+Baseload demand Temperatures Total adjustments Other Total
+Segment TWh $M TWh $M $M $M $M $M $M
+Residential 0.7 62 5.7 525 587 193 42 235 822
+Commercial, institutional
+and small industrial 0.2 13 1.3 118 131 192 21 213 344
+Large industrial (0.4) (15) – – (15) 33 (8) 25 10
+Other – 4 0.2 9 13 17 – 17 30
+Total 0.5 64 7.2 652 716 435 55 490 1,206
+HHyyddrroo--QQuuéébbeecc || AAnnnnuuaall RReeppoorrtt 22002255 Management's Discussion and Analysis 23
+
+Electricity Prices on the
+Breakdown of Sales ElectriciNtye wPr iEcnegsl oann dth Mea Nrkeewt E(¢n/gklWanhda) Marketa
+Outside Québec in 2025
+by Market (TWh)
+20
+41% 41%
+New England New Brunswick 15
+10
+5
+0
+13% 5% 2025
+Ontario New York 2020-2024 Average
+a) Monthly averages of hourly electricity prices on the New England market (Mass Hub – ISO‑NE)
+Electricity sales outside Québec Other revenue from ordinary activities of salaries, the impact of inflation on
+Revenue from electricity sales on external Other revenue from ordinary activities the entire supply chain
+[DOC 3] https://www.hydroquebec.com/data/documents-donnees/pdf/hq-rapport-annuel-2025-anglais.pdf
+c) Including a US$750‑million swing loan.
+d) Net proceeds from the issuance of medium‑term notes.
+Credit Ratings
+2025 2024 $2.3B
+Net acquisition $6.9B
+Commercial Long‑term Commercial Long‑term of short-term Investments in
+investments and property, plant and
+paper debt Outlook paper debt Outlook sinking fund securities equipment and
+intangible assets
+U.S. agencies
+Moody’s P-1 Aa2 Stable P‑1 Aa2 Stable
+S&P Global Ratings A-1 A+ NAa A‑1+ AA− NAa
+Fitch Ratings F1+ AA− Stable F1+ AA− Stable
+Canadian agency
+Morningstar DBRS R-1 (middle) AA (low) Stable R‑1 (middle) AA (low) Stable
+a) S&P Global Ratings does not provide an outlook for Hydro‑Québec’s credit rating.
+HHyyddrroo--QQuuéébbeecc || AAnnnnuuaall RReeppoorrtt 22002255 Management's Discussion and Analysis 27
+
+Regulatory Framework
+The Act respecting the Régie de l’énergie Process for Establishing Electricity Distribution Rates
+(CQLR, c. R‑6.01) grants the Régie exclusive
+2020 2021-2024 2025 2026-2028
+authority to determine or modify the
+rates and conditions under which
+electricity is transmitted and distributed Rate freeze Indexation Régie to set rates based Régie to set rates based
+based on on cost of service for on cost of service for
+in Québec. Hydro‑Québec’s electricity
+inflationa,b one year, except for the years 2026, 2027
+transmission and distribution activities residential ratesc and 2028
+are therefore regulated.
+In its role as provider of power a) Excluding Rate L
+transmission services in Québec, b) Based on the lesser of the average CPI and the top rate of the Bank of Canada’s inflation‑control range
+Hydro‑Québec operates and develops for residential rates beginning April 1, 2023, in accordance with the provisions of An Act mainly to cap the
+one of the most extensive power indexation rate for Hydro-Québec domestic distribution rate prices and to further regulate the obligation to
+distribute electricity.
+transmission systems in North America.
+c) The increase of residential rates was limited to 3%, in compliance with Bill 24.
+It markets system capacity and manages
+power flows throughout Québec, offering
+non‑discriminatory access to its system Comparative Index of Electricity Prices
+Comparative Index of Electricity Prices
+to all market players in compliance with for Residential Customersa in 2025
+for Residential Customersa in 2025
+applicable regulatory requirements.
+In its role as power distributor in Québec,
+it has the mandate to provide electricity Montréal 100
+Winnipeg 127
+to the Québec market and to deliver reliable
+Vancouver 152
+power and quality services to its customers
+Toronto 188
+with a view to efficiency and sustainable
+Moncton 200
+development. In this context, it also
+Miami 226
+promotes energy efficiency.
+Halifax 247
+Edmonton 265
+Rate cases and rate-setting
+Calgary 276
+For 2025, the revenue authorized by Chicago 293
+the Régie for transmission rate‑setting Boston 577
+purposes totalled $3,517 million, or New York 633
+$3,143 million for native‑load transmission San Francisco 723
+and 

@@ -1,0 +1,475 @@
+[DOC 0] https://www.smud.org/-/media/Documents/Rate-Information/Rates/1-R.ashx
+Residential Service
+Rate Schedule R
+I. Applicability
+This Rate Schedule R applies to single- and three-phase service for the following types of residential premises:
+1. Individually metered residences including single-family homes, duplexes, apartments, and condominiums; and
+2. General farm service where the meter also serves the residence or additional meters on a farm where the electricity
+consumed is solely for domestic purposes; and
+3. Master-metered service to a qualifying multifamily accommodation or mobile home park that is submetered to all
+single-family units or individual mobile homes.
+For the purposes of this schedule a “month” is considered to be a single billing period of 27 to 34 days.
+A. Fixed Rate (rate category RF01)
+1. The Fixed Rate is the alternative rate to SMUD’s Time-of-Day (TOD) (5-8 p.m.) Rate (rate category RT02) under Rate
+Schedule R-TOD.
+2. The Fixed Rate is required for customers serviced with analog meters and digital non-communicating meters.
+3. Customers who qualify for Rate Schedule NEM1 and have an eligible renewable electrical generation facility that was
+approved for installation prior to January 1, 2018 are eligible to enroll in the Fixed Rate and may remain on the Fixed
+Rate after December 31, 2022.
+4. Customers who have an eligible renewable electrical generation facility under Rate Schedule NEM1 that was approved
+for installation on or after January 1, 2018 are not eligible to enroll in the Fixed Rate.
+5. Customers who have an eligible renewable electrical generation facility under Rate Schedule SSR are not eligible to
+enroll in the Fixed Rate.
+6. Customers who have a storage facility without an associated eligible generating facility are not eligible to enroll in the
+Fixed Rate.
+7. Customers who have master meters, including those enrolled on the RSMM rate category, are not eligible to enroll in
+the Fixed Rate.
+C. Master-Metered Multifamily Accommodation and Mobile Home Park Billing (Rate Category RSMM)
+1. This rate is closed to new customers unless SMUD determines that it is not reasonable or feasible to provide service
+and meter the individual units directly.
+2. The master-metered customer’s electricity consumption will be billed using the total kWh usage of the master-meter
+divided by the number of occupied single-family accommodations. The billing calculation will include applicable
+discounts to all kWh Usage Charges and System Infrastructure Fixed Charge (SIFC) for qualifying energy assistance
+and medical equipment discount program participants. The customer must advise SMUD within 15 days following any
+change in the number of occupied single-family accommodations wired for electric service.
+SACRAMENTO MUNICIPAL UTILITY DISTRICT Sheet No. R-1
+Resolution No. 25-06-15 adopted June 19, 2025 Effective: June 20, 2025
+
+Residential Service
+Rate Schedule R
+II. Firm Service Rates
+A. Fixed Rate Customers (rate category RF01)
+Effective as of Effective as of Effective as of
+May 1, 2025 January 1, 2026 January 1, 
+[DOC 0] https://www.smud.org/-/media/Documents/Rate-Information/Rates/1-R.ashx
+2027
+Fixed Rate (RF01)
+Non-Summer Season (October - May)
+System Infrastructure Fixed Charge per month per meter $26.20 $27.00 $27.80
+Electricity Usage Charge
+All kWh usage per month $/kWh $0.1331 $0.1371 $0.1412
+Summer Season (June - September)
+System Infrastructure Fixed Charge per month per meter $26.20 $27.00 $27.80
+Electricity Usage Charge
+All kWh usage per month $/kWh $0.2126 $0.2189 $0.2255
+B. Master-Metered Multifamily Accommodation and Mobile Home Park Billing (Rate Category RSMM) Closed
+Effective as of Effective as of Effective as of
+May 1, 2025 January 1, 2026 January 1, 2027
+Master Metered Multifamily and Mobile Home Park Billing (Closed)
+Non-Summer Season (October - May)
+System Infrastructure Fixed Charge per month per unit $26.20 $27.00 $27.80
+Electricity Usage Charge
+All kWh usage per month $/kWh $0.1476 $0.1520 $0.1566
+Summer Season (June - September)
+System Infrastructure Fixed Charge per month per unit $26.20 $27.00 $27.80
+Electricity Usage Charge
+All kWh usage per month $/kWh $0.1690 $0.1740 $0.1792
+III. Electricity Usage Surcharges
+Refer to the following rate schedule for details on electricity usage surcharges that apply to all kWh.
+A. Hydro Generation Adjustment (HGA). Refer to Rate Schedule HGA.
+IV. Rate Option Menu
+A. Energy Assistance Program Rate. Refer to Rate Schedule EAPR.
+B. Medical Equipment Discount Program. Refer to Rate Schedule MED.
+C. Joint Participation in Medical Equipment Discount and Energy Assistance Programs. Refer to Rate Schedule MED.
+D. Time-of-Day Rate. Refer to Rate Schedule R-TOD.
+E. Standby Service Option
+SACRAMENTO MUNICIPAL UTILITY DISTRICT Sheet No. R-2
+Resolution No. 25-06-15 adopted June 19, 2025 Effective: June 20, 2025
+ | Effective as of
+May 1, 2025 | Effective as of
+January 1, 2026 | Effective as of
+January 1, 2027
+Fixed Rate (RF01) |  |  | 
+Non-Summer Season (October - May)
+System Infrastructure Fixed Charge per month per meter
+Electricity Usage Charge
+All kWh usage per month $/kWh
+Summer Season (June - September)
+System Infrastructure Fixed Charge per month per meter
+Electricity Usage Charge
+All kWh usage per month $/kWh | $26.20
+$0.1331
+$26.20
+$0.2126 | $27.00
+$0.1371
+$27.00
+$0.2189 | $27.80
+$0.1412
+$27.80
+$0.2255
+ | Effective as of
+May 1, 2025 | Effective as of
+January 1, 2026 | Effective as of
+January 1, 2027
+Master Metered Multifamily and Mobile Home Park Billing (Closed) |  |  | 
+Non-Summer Season (October - May)
+System Infrastructure Fixed Charge per month per unit
+Electricity Usage Charge
+All kWh usage per month $/kWh
+Summer Season (June - September)
+System Infrastructure Fixed Charge per month per unit
+Electricity Usage Charge
+All kWh usage per month $/kWh | $26.20
+$0.1476
+$26.20
+$0.1690 | $27.00
+$0.1520
+$27.00
+$0.1740 | $27.80
+$0.1566
+$27.80
+$0.1792
+
+Residential Service
+Rate Schedule R
+Standby Service applies when all of the following conditions are met:
+1. The customer has generation, sited on the customer’s premises, that serves all or part of the customer’s load; and
+2. The gen
+[DOC 0] https://www.smud.org/-/media/Documents/Rate-Information/Rates/1-R.ashx
+erator(s) have a combined nameplate rating of less than 100 kW; and
+3. The generator(s) are connected to SMUD’s electrical system; and
+4. SMUD is required to have resources available to provide supplemental service, backup electricity and/or to supply
+electricity during generator(s) maintenance service.
+Standby Service Charge - January 1 through December 31
+($/kW of Contract Capacity per month)
+Effective May 1, 2025 $8.597
+Effective January 1, 2026 $8.855
+Effective January 1, 2027 $9.121
+In addition to the Standby Service Charge, SMUD will continue to bill for all applicable charges under this rate schedule.
+The Standby Charge will be waived only for qualifying renewable generation under Rate Schedules NEM1 and SSR. The
+Standby Service Charge applies to customers who install, interconnect, and operate their own electrical generation facility
+and equipment to self-supply all their own power needs as a microgrid service, where SMUD provides only backup
+electricity.
+F. Customer Energy Generation Option. Refer to Rate Schedule NEM1.
+G. SMUD Renewable Energy Option
+SMUD offers optional programs that allow customers to receive renewable energy for an additional charge, detailed on
+www.smud.org.
+H. Special Metering Charge
+For customers who purchase and install additional equipment and software identified by SMUD meter specialists as necessary for
+load data collection and transfer to electronic media outside SMUD, SMUD will charge a monthly service fee to cover
+maintenance, software support and licensing fees. Payment for this nonstandard equipment and service will be made through
+provisions in Rule and Regulation 2, Section IV. Special Facilities. The fee schedule is available at SMUD’s website,
+www.smud.org.
+I. Plug-In Electric Vehicle (PEV) Option. Refer to Rate Schedule R-TOD.
+J. Residential Three-Phase Service Option
+This option is open to customers located in areas where three-phase service is available. A Special Facilities fee may be charged
+to cover the additional costs for providing this service. This charge is in addition to the SIFC.
+Three-Phase Service - January 1 through December 31
+(Special Facilities fee per month)
+Effective May 1, 2025 $56.25
+Effective January 1, 2026 $57.95
+Effective January 1, 2027 $59.70
+SACRAMENTO MUNICIPAL UTILITY DISTRICT Sheet No. R-3
+Resolution No. 25-06-15 adopted June 19, 2025 Effective: June 20, 2025
+
+Residential Service
+Rate Schedule R
+V. Billing
+KWh usage may be prorated for nonstandard billing periods, when billing period spans a price change, and/or when the billing
+period spans more than one season. The monthly SIFC will be prorated when the bill period is shorter than 27 days. The
+following table shows the basis for the proration in these circumstances. The monthly System Infrastructure Fixed Charge is
+determined by the billing period end date.
+Billing Circumstance Basis for Proration
+Bill period is shorter than 27 days (SIFC
+and kWh) Relationship between the length of the billing period and 30 days.
+Bil
+[DOC 0] https://www.smud.org/-/media/Documents/Rate-Information/Rates/1-R.ashx
+l period is longer than 34 days (kWh)
+Relationship between the length of the billing period and the
+Seasons overlap and price changes within
+number of days that fall within the respective season or pricing
+bill period
+periods.
+(End)
+SACRAMENTO MUNICIPAL UTILITY DISTRICT Sheet No. R-4
+Resolution No. 25-06-15 adopted June 19, 2025 Effective: June 20, 2025
+Billing Circumstance | Basis for Proration
+Bill period is shorter than 27 days (SIFC
+and kWh) | Relationship between the length of the billing period and 30 days.
+Bill period is longer than 34 days (kWh) | 
+Seasons overlap and price changes within
+bill period | Relationship between the length of the billing period and the
+number of days that fall within the respective season or pricing
+periods.
+[DOC 2] https://www.smud.org/-/media/Documents/Rate-Information/Rates/01_HGA.ashx
+Hydro Generation Adjustment
+Rate Schedule HGA
+I. Applicability
+This Rate Schedule HGA applies to all customers receiving retail electric service from SMUD. Annually, SMUD will calculate
+how the yearly variation of precipitation affects hydro generation from SMUD’s Upper American River Project (UARP) and
+impacts the SMUD budget. As of April 1, 2024, SMUD will also calculate how the annual hydro generation delivery variances
+from the Western Area Power Administration’s (WAPA) Central Valley Project (CVP) impact the SMUD budget.
+II. Conditions
+A. General Conditions
+1. The Hydro Generation Adjustment (HGA) precipitation period begins April 1 of the previous year and ends on March
+31 of the current year (Water Year).
+2. The price of power delivered into the area designated as North Path 15 (NP15) will be used to determine the dollar
+impact of any excess or shortfall of energy. If NP15 is no longer available, then a suitable replacement will be used.
+B. SMUD Conditions
+1. The actual inches of precipitation (AP) for each period shall be measured at the Fresh Pond measuring station or
+suitable replacement representative of the UARP watershed.
+2. The AP will be compared to the median (midpoint) of inches of precipitation (MP), with the most recent years of data
+available at the established measuring station, up to a maximum of 50 years.
+3. SMUD estimates that each inch of precipitation at Fresh Pond results in 28,000 megawatt hours (MWh) of generation
+in the UARP.
+4. The AP will be capped at a maximum of 80 inches per Water Year to accommodate for spill at the hydroelectric
+facilities in the UARP.
+C. WAPA Conditions
+1. The monthly Forecasted Delivery (FD) is provided by WAPA.
+2. The FD will be compared to the Actual Delivery (AD) as identified by SMUD.
+III. Budget Impact Determination
+A. SMUD Budget Impact Determination
+The following calculations will be used to determine the SMUD budget impact (SBI) from precipitation variances:
+1. Precipitation Variance
+Inches of Precipitation Variance (± IPV) = MP – AP
+The variance of precipitation equals the difference between the 50-year median and the actual inches of precipitation. If
+the measuring station changes, the number of years used to determine the median precipitation may vary depending on
+the volume of historical data available.
+2. Generation Conversion
+± IPV x 28,000 MWh/inch = ± MWh
+The variance of hydro generation, in megawatt hours, equals the inches of precipitation variance x 28,000 MWh/inch at
+Fresh Pond. If the measuring station changes, the MWh per inch may vary.
+3. Calculation of Budget Effects
+The market cost of energy is the monthly average of the actual NP15 prices through April 1 and the monthly forecasted
+NP15 prices for the balance of the year. If NP15 is no longer available, then a suitable replacement will be used.
+± MWh x market cost of energy ($/MWh) = ± SMUD budget impact ($)
+SACRAMENTO MUNICIPAL UTILITY DISTRICT Sheet No. HGA-1
+Resolution No. 23-09-09 adopted September 21, 2023 Effec
+[DOC 2] https://www.smud.org/-/media/Documents/Rate-Information/Rates/01_HGA.ashx
+tive: September 22, 2023
+
+Hydro Generation Adjustment
+Rate Schedule HGA
+B. WAPA Budget Impact Determination
+The following calculations will be used to determine the WAPA budget impact (WBI) from energy delivery variances on a
+monthly basis:
+1. Energy Delivery Variance
+MWh Energy Delivery Variance (± EDV) = FD – AD
+The energy delivery variance equals the difference between the monthly forecasted energy delivery and the monthly
+actual energy delivery.
+2. Calculation of Budget Effects
+The market cost of energy is the average NP15 price.
+IV. Rate Stabilization Funds
+A. Hydro Rate Stabilization Fund
+The SBI will first be compared to the Hydro Rate Stabilization Fund (HRSF). In Water Years with above median
+precipitation, funds shall be deposited to the HRSF from Operating Revenues until the HRSF reaches a maximum of 6% of
+budgeted annual gross retail revenue, at which time subsequent excesses may be returned to the customer through the
+SMUD HGA. In Water Years with below median precipitation, funds will be withdrawn from the HRSF and applied to
+Operating Revenues until the HRSF balance reaches zero, at which time the SMUD HGA will be levied as a surcharge on
+electricity usage.
+The SBI will not exceed ± 4 percent of budgeted annual gross retail revenue.
+B. WAPA Rate Stabilization Fund
+The WBI will first be compared to the WAPA Rate Stabilization Fund (WRSF). In Water Years where actual energy
+deliveries exceed the forecasted energy deliveries, funds shall be deposited to the WRSF from Operating Revenues until the
+WRSF reaches a maximum of 4% of budgeted annual gross retail revenue, at which time subsequent excesses may be
+returned to the customer through the WAPA HGA. In Water Years where actual energy deliveries are below the forecasted
+energy deliveries, funds will be withdrawn from the WRSF and applied to Operating Revenues until the WRSF balance
+reaches zero, at which time the WAPA HGA will be levied as a surcharge on electricity usage.
+The WBI will not exceed ± 2 percent of budgeted annual gross retail revenue.
+V. Rate Charges
+A. SMUD Rate Charges
+The SMUD HGA deposits into or transfers out of the Hydro Rate Stabilization Fund will be calculated as follows:
+HRSF – SBI = Calculated HRSF
+A. If Calculated HRSF is < 0
+The Accountant
+will transfer the remaining balance of the HRSF to Operating Revenues and the SMUD HGA will be set at:
+– Calculated HRSF = SMUD HGA
+Budgeted annual retail kWh sales
+SACRAMENTO MUNICIPAL UTILITY DISTRICT Sheet No. HGA-2
+Resolution No. 23-09-09 adopted September 21, 2023 Effective: September 22, 2023
+
+Hydro Generation Adjustment
+Rate Schedule HGA
+B. If Calculated HRSF is ≥ 0 and ≤ 6 percent of budgeted annual gross retail revenue:
+The Accountant will transfer the positive SBI out of the HRSF and into Operating Revenues and transfer the negative
+SBI into the HRSF from Operating Revenues.
+C. If the Calculated HRSF is > 6 percent of budgeted annual gross retail revenue:
+The Accountant will transfer the negative SBI into the HRS
+[DOC 2] https://www.smud.org/-/media/Documents/Rate-Information/Rates/01_HGA.ashx
+F from Operating Revenues up to 6 percent of budgeted
+annual gross retail revenue. The Board may authorize the SMUD HGA or direct the funds for another purpose. At the
+Board’s direction, the SMUD HGA will be set at:
+– (Calculated HRSF – 6% of budgeted annual gross retail revenue) = SMUD HGA
+Budgeted annual retail kWh sales
+B. WAPA Rate Charges
+The WAPA HGA deposits into or transfers out of the WAPA Rate Stabilization Fund will be calculated as follows:
+WRSF – WBI = Calculated WRSF
+A. If Calculated WRSF is < 0
+The Accountant will transfer the remaining balance of the WRSF to Operating Revenues and the WAPA HGA will be
+set at:
+– Calculated WRSF = WAPA HGA
+Budgeted annual retail kWh sales
+Any funds collected through the WAPA HGA will be deposited into the WRSF.
+B. If Calculated WRSF is ≥ 0 and ≤ 4 percent of budgeted annual gross retail revenue:
+The Accountant will transfer the positive WBI out of the WRSF and into Operating Revenues and transfer the negative
+WBI into the WRSF from Operating Revenues.
+C. If the Calculated WRSF is > 4 percent of budgeted annual gross retail revenue:
+The Accountant will transfer the negative WBI into the WRSF from Operating Revenues up to 4 percent of budgeted
+annual gross retail revenue. The Board may authorize the WAPA HGA or direct the funds for another purpose. At the
+Board’s direction, the WAPA HGA will be set at:
+– (Calculated WRSF – 4% of budgeted annual gross retail revenue) = WAPA HGA
+Budgeted annual retail kWh sales
+C. Rate Charges
+The HGA will be comprised of the SMUD HGA and the WAPA HGA.
+HGA = SMUD HGA + WAPA HGA
+VI. Application
+The HGA is recalculated for each Water Year and will be applied to all rate schedules May 1 until April 30 of the following year.
+(End)
+SACRAMENTO MUNICIPAL UTILITY DISTRICT Sheet No. HGA-3
+Resolution No. 23-09-09 adopted September 21, 2023 Effective: September 22, 2023
+[DOC 7] https://www.smud.org/-/media/Documents/Rate-Information/Residential-Rates/Residential-Rate-Guide.ashx
+Billing & payment options Other options Power theft
+• Budget Billing.Stay on track with a set bill • EnergyHELP.With as little as a $5 donation Our technicians encounter various methods
+amount for 12 months at a time. You can added to your monthly bill, you can help of power theft each month. Unsafe conditions
+minimize future changes in your bill qualified, income-eligible families in financial are a danger to all our customers. Please
+amount by managing your usage, crisis maintain electric service in their homes. report any unsafe situation you discover by
+especially during the summer months. Learn more atsmud.org/EnergyHELP. calling us at916-732-6594.
+• Custom Due Date. Set your payment due •HomePower®.Cover your home for up to Choose your service
+date range. We’ll adjust the date your bill is $500 per year in electrical repairs—with no
+and give us a call!
+issued, based on your preferred due date. deductible. It’s just $7.50 a month, added to
+• SMUD app.Pay your bill from your mobile your bill. Learn more at Customer Service....1-888-742-SMUD (7683)
+device! It’s fast, easy and secure. You also smud.org/HomePower. • Bill inquiries, new service, pay station
+can report an outage, look at your bill, see • Electric Vehicles (EVs).Learn more about locations, residential products and services
+how much energy you’re using and more. our incentives, special discount rate and • Energy efficiency products and services,
+Download it from the Apple App Store or other important tools and resources for EV
+EnergyHELP, Financing, Greenergy, EAPR,
+Google Play. owners atsmud.org/DriveElectric.
+MED Rate
+• Online Payments.Pay your bill online at • Three-Phase Power.This service is available • EV Advisors, Home Energy Use Analysis,
+smud.org.Click on “Sign in” and then for an additional fee to residential 2026 Residential
+HomePower, SolarShares®, Shade Trees
+“Pay now” to view your bill amount and customers with large electric loads, such as
+make payments directly from your bank that of an elevator or commercial grade Power Outages.....1-888-456-SMUD (7683)
+Rate Guide
+account or with your credit card. light industrial equipment. 24-hour service line
+Clean energy options • Standby Service.We assess an additional
+TTY Phone Service................916-732-6630
+fee to provide backup/maintenance service Effective Jan. 1, 2026
+• Greenergy®.For a few dollars per month for customers who operate their own For the deaf and hard of hearing
+added to your bill, you can have your
+generators. Solar, wind and biogas
+Community Education &
+electric usage met with clean energy
+generators are exempt from this charge. Technology Center................916-732-6738 Helping you save energy, save money and
+resources like wind and solar.
+Clear space Explore free classes, videos and support a carbon-free future.
+• Battery Storage.Considering battery
+educational events at smud.org/Learn.
+storage? By joining our My Energy You must leave at least 8 feet of clearance in
+Optimizer® Partner+ program, yo
+[DOC 7] https://www.smud.org/-/media/Documents/Rate-Information/Residential-Rates/Residential-Rate-Guide.ashx
+u may be front of our green electrical boxes and at
+Call before you dig..................................... 811
+eligible for rebates to make your battery least 3 feet of clearance around utility poles.
+Call Underground Service Alert at least 2 business
+storage unit an even smarter device. This helps us work more efficiently, especially smud.org
+days before digging to make sure you avoid
+during a power outage. You may be charged
+• Solar and Storage Rate. If you have underground utility lines.
+if we need to clear the space. You must also
+qualifying renewable generation, like a
+allow access to utility easements on your
+photovoltaic system, this is for you. The
+property so we can inspect and maintain our
+energy you generate, powers your home
+power lines and equipment.
+and in turn reduces what we supply.
+Intermittent excess energy your system
+produces is returned to us and applied as ©SMUD 1189-11/25 ®A trademark/service mark of Sacramento
+Municipal Utility District, Reg. U.S. Pat. & Tm. Off.
+a credit on your bill.
+501/25/RESBI 30158-I-0573
+
+Your basic rates Standard energy charges
+As your community-owned, not-for-profit We offer seasonal electricity prices for all customers.
+electric service, we proudly offer a range of
+Residentialprices by season(dollars/kWh)*
+residential rate options that are priced among
+the lowest in California — averaging 47% lower
+than neighboring PG&E as of Sept. 1, 2025. Rate category SIFC Non-Summer Summer Non-Summer
+( Jan.1-Dec. 31) (Jan.1-May 31 ) (Jun. 1-Sept . 30) (Oct.1-Dec. 31)
+This brochure explains how we bill your
+electricity service and summarizes the options Time-of-Day $27.00 Peak: $0.1776 Peak: $0.3765 Peak: $0.1776
+available to you. The full text of our Rates, (5-8 p.m.) Off-peak: $0.1285 Mid-peak: $0.2139 Off-peak: $0.1285 Examples of SMUD residential rate options
+Rules and Regulations is available at Off-peak: $0.1550
+smud.org/Ratesor at our Customer Service
+Rate Income-eligible Medical Equipment Discount
+Fixed $27.00 All: $0.1371 All: $0.2189 All: $0.1371
+Center at 6301 S Street in Sacramento.
+Time-of-Day Time-of-Day (5-8 p.m.) Time-of-Day (5-8 p.m.)
+Energy usage charges are the * Does not include hydro-generation charges ** Fixed charge per month
+(5-8 p.m.) with EAPR with MED
+bulk of your bill Seasons for Time-of-Day
+Fixed Fixed with EAPR Fixed with MED
+Most of the charges on your monthly bill are
+Peak Weekdays between 5 p.m. and 8 p.m.
+for the electricity you use, measured in
+Summer Mid-peak Weekdays between noon and midnight except during Time-Of-Day Rate (TOD) Infrastructure Fixed Charge ($17) and higher
+kilowatt-hours (kWh).
+(June 1 - Sept. 30) Peak hours. energy charges. Learn more at
+The Time-of-Day (5-8 p.m.) Rate is the
+Other charges Off-peak All other hours, including weekends and holidays. smud.org/TODLowUse.
+standard residential rate for all our
+Your monthly bill also includes a few other Non-Summer Peak Weekdays between 5 p.m. and 8 p.m. customers with a smart meter. Eligible Residential assist
+[DOC 7] https://www.smud.org/-/media/Documents/Rate-Information/Residential-Rates/Residential-Rate-Guide.ashx
+ance programs
+charges like: (Jan. 1 - May 31) and customers have the option to enroll in the
+• System Infrastructure Fixed Charge (SIFC), (Oct.1 - Dec. 31) Off-peak All other hours, including weekends and holidays. alternative Fixed Rate. We offer income-eligible and medical
+equipment discount rates for qualifying
+covers some of the costs associated with
+If you own or lease an electric vehicle, you households.
+the meter, neighborhood wires, poles,
+can receive a discount for charging between
+transformers and other equipment required Energy Assistance Program Rate (EAPR)
+to provide electric service, and operating midnight and 6 a.m. This discount applies to
+Income-eligible customers can receive $10 off
+expenses like customer services and billing. all household electricity use during these hours.
+the SIFC and a monthly discount on energy
+Many of our
+• Taxes from the State and some local If you can shift your electricity use to times usage based on how your income compares
+municipalities. programs help other than the 5 p.m. - 8 p.m. peak period, to the Federal Poverty Level.
+• Premium feesfor any special programs make life easier you can save on your electricity bill. Learn Medical Equipment Discount (MED) Rate
+or services you may have chosen to more at smud.org/TimeOfDay.
+and contribute to a Households with a full-time resident
+participate in.
+clean energy future. Time-of-Day (Low Use) Rate dependent on a qualifying
+• Discounts that you may be eligible for as electrically-powered medical device in the
+a participant in our income-eligible or Learn more at If you don’t use much energy and have a home may be eligible for a monthly MED
+medical equipment programs. smud.org. panel size less than or equal to 125 amps, Rate discount.
+you may benefit from the new optional
+• Hydro Generation Surcharge that adjusts
+Time-of-Day (Low Use) Rate. It has the same To apply for EAPR or MED Rate, visit
+annually, as needed, based on precipitation.
+structure as the standard Time-of-Day smud.org or call 1-888-742-SMUD (7683)
+(5-8 p.m.) Rate but a lower monthly System for an application.
+Rate category | SIFC
+( Jan.1-Dec. 31) | Non-Summer
+(Jan.1-May 31 ) | Summer
+(Jun. 1-Sept . 30) | Non-Summer
+(Oct.1-Dec. 31)
+Time-of-Day
+(5-8 p.m.) | $27.00 | Peak: $0.1776
+Off-peak: $0.1285 | Peak: $0.3765
+Mid-peak: $0.2139
+Off-peak: $0.1550 | Peak: $0.1776
+Off-peak: $0.1285
+Fixed | $27.00 | All: $0.1371 | All: $0.2189 | All: $0.1371
+Rate | Income-eligible | Medical Equipment Discount
+Time-of-Day
+(5-8 p.m.) | Time-of-Day (5-8 p.m.)
+with EAPR | Time-of-Day (5-8 p.m.)
+with MED
+Fixed | Fixed with EAPR | Fixed with MED
+Summer
+(June 1 - Sept. 30) | Peak
+Mid-peak
+Off-peak | Weekdays between 5 p.m. and 8 p.m.
+Weekdays between noon and midnight except during
+Peak hours.
+All other hours, including weekends and holidays.
+Non-Summer
+(Jan. 1 - May 31) and
+(Oct.1 - Dec. 31) | Peak
+Off-peak | Weekdays between 5 p.m. and 8 p.m.
+All other hours, including weekends and holidays.

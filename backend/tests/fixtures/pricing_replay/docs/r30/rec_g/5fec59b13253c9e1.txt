@@ -1,0 +1,1144 @@
+[DOC 0] https://www.fpl.com/rates.html
+FPL | Rates and Your Bill
+Skip to Main Content
+/content/fplgp/us/en/northwest/rates.html
+Which region would you like to access today?
+FPL
+OR
+FPL Northwest FL
+CONTINUE
+Rates and Your Bill
+We’re committed to delivering reliable electricity while keeping bills as low as possible.
+The bill you pay each month is determined by the amount of electricity you use and by rates approved by the Florida Public Service Commission (PSC).
+The links below will help you understand the components of your bill and find ways to save.
+Discover ways to save
+Aside from rates, your monthly bill amount is determined by the amount of electricity used. Find out how simple changes can help you save.
+Start saving
+Business programs
+Bill payment assistance
+Our advocacy partners help us secure federal funding to help low-income customers receive financial assistance with their electric bills.
+Get help
+Understanding Your Bill: Residential
+How to Read Your Bill
+Sample Bill
+Explanation of Charges
+Residential Deposits
+Understanding Your Bill: Business
+Explanation of Charges - Small Businesses
+Explanation of Charges - with Demand Charges
+Understanding Demand
+Business Deposits
+Rates and Charges
+Residential
+Business
+New Customer Overview
+Información para Nuevos Clientes
+Service Charges
+Discover Ways to Save
+Aside from rates, your monthly bill amount is determined by the amount of electricity used. Find out how simple changes can help you save.
+Start Saving
+Business Programs
+Meters
+Learn how we determine how much energy you’ve used and why you may get an estimated bill.
+Meters
+How to Read Your Meter
+Meter Options
+Meter Tampering
+Regulatory, Rates, Rules and Tariffs
+Retail Rates, Rules and Tariffs
+Wholesale Rates and Tariffs
+Business Rate Options
+Tax Exemptions for Businesses
+Residential Time of Use Rate
+About FPL
+News
+Company
+Careers
+Environment
+Community
+Donate to Care To Share®
+Rates and Your Bill
+About Energy
+Energy My Way
+Ensuring Reliability
+Diverse Energy Sources
+Electric Vehicles
+Power Disturbances
+Safety
+Partner Resources
+Supplier Home and Login
+DSM Contractor Portal
+Fuel Portal
+Building and Construction
+Land Use
+Assist Agency Login
+WebTAXI Login
+Deposit Portal
+En Español
+INGLÉS
+ESPAÑOL
+Ahora la información que necesitas sobre tu servicio eléctrico está disponible en español en FPL.com.
+Facebook
+Twitter
+YouTube
+FPL Blog
+A NextEra Energy Company
+Terms & Conditions
+Privacy Policy
+Safety Policy
+Feedback
+En Español
+Copyright © 2026, Florida Power & Light Company. All rights reserved.
+FPL.com is optimized for the following browsers and mobile operating systems: IE 9+, Firefox 31+, Chrome 37+, Safari 6.1+, Apple iOS 7+ and Android 4+.
+Our websites use technologies (e.g., cookies, pixels, and session replay technology) for site functionality, analytics, performance, fraud-detection, and targeted advertising. Your interactions and personal data may be collected on our websites by us and providers of these technologies (e.g., Meta, Google, LinkedIn) in accordance with our Privacy Policy.
+[DOC 0] https://www.fpl.com/rates.html
+ Using the website(s) will be treated as your consent to the practices in our
+Privacy Policy
+and
+Terms and Conditions
+.
+[DOC 1] https://www.fpl.com/content/dam/fplgp/us/en/rates/pdf/residential-rates-oct2026.pdf
+Residential Rates and Clauses
+Effective October 2026*
+Base Charge/ ≤ 1,000 kWh/ > 1,000 kWh/ Conservation Capacity Environmental Storm Protection ≤1,000 kWh / > 1,000 kWh / Transition Credit
+Month Energy Charge Energy Charge (¢/kWh) (¢/kWh) (¢/kWh) (¢/kWh) Fuel Charge Fuel Charge (¢/kWh)
+(¢/kWh) (¢/kWh) (¢/kWh) (¢/kWh)
+RATES AND CHARGES
+Residential Service (RS-1) $10.52 7.865 8.865 0.148 0.052 0.345 0.995 2.893 3.893 -0.040
+Residential TOU Rider (RTR-1) $10.52 14.410** -6.157** 0.148 0.052 0.345 0.995 0.226** -0.098** -0.040
+** Except for base charges, all rates and charges under Rate Schedule RS-1 shall apply to RTR-1. RTR-1 Base Energy and Fuel Charges and Credits applicable to on- and off-peak usage are in addition to the RS-1 charges
+Note: Residential customers whose monthly base electric service costs fall below $30 are subject to a minimum $30 base bill.
+Monthly Program Monthly Off-Peak On-Peak Energy
+Charge Energy Charge Charge
+(¢/kWh)
+RS-1 EV Full Installation $25.57 $19.81 27.067
+RS-1 EV Equipment only Installation $18.41 $19.81 27.067
+Monthly Program On-Peak Energy Off-Peak Energy Conservation Capacity Charge Environmental Storm Protection On-Peak Fuel Off-Peak Fuel Transition Credit
+Charge Charge Charge Charge (¢/kWh) Charge Charge Charge (¢/kWh) Charge (¢/kWh) (¢/kWh)
+(¢/kWh) (¢/kWh) (¢/kWh) (¢/kWh) (¢/kWh)
+RS-2 EV Full Installation $36.00 22.583 2.016 0.148 0.052 0.345 0.995 3.428 3.104 -0.040
+RS-2 EV Equipment only Installation $27.00 22.583 2.016 0.148 0.052 0.345 0.995 3.428 3.104 -0.040
+FPL-Owned Units Customer-Owned Units
+OUTDOOR LIGHTING (Fixture, Maintenance, and Base (Relamping and Base LED LIGHTING (LT-1)1
+Non-Fuel Energy) Non-Fuel Energy)
+Sodium Vapor 6,300 lu 70 watts $10.35 $3.62 Conversion Fee $2.11
+Sodium Vapor 9,500 lu 100 watts $10.95 $4.08 Maintenance per Fixture (Company-Owned LED Fixture and Pole) $1.65
+Sodium Vapor 12,000 lu 150 watts $12.92 $5.16 Maintenance per Fixture (Company Fixture on Customer Pole) $1.33
+Sodium Vapor 16,000 lu 150 watts $11.99 $4.87 Standard Wood pole $6.67
+Sodium Vapor 22,000 lu 200 watts $17.02 $6.67 Standard Concrete pole $9.13
+Sodium Vapor 50,000 lu 400 watts $20.71 $9.71 Standard Fiberglass pole $10.78
+Mercury Vapor 6,000 lu 140 watts $9.78 $4.63 Decorative Concrete pole $19.60
+Mercury Vapor 8,600 lu 175 watts $10.40 $5.20 Facilities Charge 1.25%
+Mercury Vapor 21,500 lu 400 watts $17.85 $9.33 Underground Conductors (¢ per foot) 5.462
+Non-Fuel Energy (¢ per kWh) 3.863 Base Non-Fuel Energy (¢ per kWh) 3.863
+Other Charges
+Wood Pole $14.51
+Concrete/Steel Pole $19.60
+Fiberglass Pole $23.03
+Underground conductors excluding Trenching ($ per foot) $0.112
+Down-guy, Anchor and Protector $13.19
+1 Catalog of available fixtures and the assigned billing tier for each can be viewed at www.FPL.com/partner/builders/lighting.html.
+*Rates approved by the Florida Public Service Commission in Docket Nos. 20250011-EI, 20210015-EI, 20250001-EI, 20250002-EG, 20250007-EI, and 20250010-EI.
+If there is a discrep
+[DOC 1] https://www.fpl.com/content/dam/fplgp/us/en/rates/pdf/residential-rates-oct2026.pdf
+ancy between the rates shown on this insert and the effective, PSC-approved tariff, the rates in the tariff prevail in all instances.
+26-3817
+RATES AND CHARGES | Base Charge/
+Month | ≤ 1,000 kWh/
+Energy Charge
+(¢/kWh) | > 1,000 kWh/
+Energy Charge
+(¢/kWh) | Conservation
+(¢/kWh) | Capacity
+(¢/kWh) | Environmental
+(¢/kWh) | Storm Protection
+(¢/kWh) | ≤1,000 kWh /
+Fuel Charge
+(¢/kWh) | > 1,000 kWh /
+Fuel Charge
+(¢/kWh) | Transition Credit
+(¢/kWh)
+Residential Service (RS-1) | $10.52 | 7.865 | 8.865 | 0.148 | 0.052 | 0.345 | 0.995 | 2.893 | 3.893 | -0.040
+Residential TOU Rider (RTR-1) | $10.52 | 14.410** | -6.157** | 0.148 | 0.052 | 0.345 | 0.995 | 0.226** | -0.098** | -0.040
+ | Monthly Program
+Charge | Monthly Off-Peak
+Energy Charge | On-Peak Energy
+Charge
+(¢/kWh)
+RS-1 EV Full Installation | $25.57 | $19.81 | 27.067
+RS-1 EV Equipment only Installation | $18.41 | $19.81 | 27.067
+ | Monthly Program
+Charge | On-Peak Energy
+Charge
+(¢/kWh) | Off-Peak Energy
+Charge
+(¢/kWh) | Conservation
+Charge
+(¢/kWh) | Capacity Charge
+(¢/kWh) | Environmental
+Charge
+(¢/kWh) | Storm Protection
+Charge
+(¢/kWh) | On-Peak Fuel
+Charge (¢/kWh) | Off-Peak Fuel
+Charge (¢/kWh) | Transition Credit
+(¢/kWh)
+RS-2 EV Full Installation | $36.00 | 22.583 | 2.016 | 0.148 | 0.052 | 0.345 | 0.995 | 3.428 | 3.104 | -0.040
+RS-2 EV Equipment only Installation | $27.00 | 22.583 | 2.016 | 0.148 | 0.052 | 0.345 | 0.995 | 3.428 | 3.104 | -0.040
+ | FPL-Owned Units
+(Fixture, Maintenance, and Base
+Non-Fuel Energy) | Customer-Owned Units
+(Relamping and Base
+Non-Fuel Energy)
+Sodium Vapor 6,300 lu 70 watts | $10.35 | $3.62
+Sodium Vapor 9,500 lu 100 watts | $10.95 | $4.08
+Sodium Vapor 12,000 lu 150 watts | $12.92 | $5.16
+Sodium Vapor 16,000 lu 150 watts | $11.99 | $4.87
+Sodium Vapor 22,000 lu 200 watts | $17.02 | $6.67
+Sodium Vapor 50,000 lu 400 watts | $20.71 | $9.71
+Mercury Vapor 6,000 lu 140 watts | $9.78 | $4.63
+Mercury Vapor 8,600 lu 175 watts | $10.40 | $5.20
+Mercury Vapor 21,500 lu 400 watts | $17.85 | $9.33
+ |  | 
+Non-Fuel Energy (¢ per kWh) | 3.863 | 
+ |  | 
+Other Charges |  | 
+Wood Pole | $14.51 | 
+Concrete/Steel Pole | $19.60 | 
+Fiberglass Pole | $23.03 | 
+Underground conductors excluding Trenching ($ per foot) | $0.112 | 
+Down-guy, Anchor and Protector | $13.19 | 
+ | 
+Conversion Fee | $2.11
+Maintenance per Fixture (Company-Owned LED Fixture and Pole) | $1.65
+Maintenance per Fixture (Company Fixture on Customer Pole) | $1.33
+Standard Wood pole | $6.67
+Standard Concrete pole | $9.13
+Standard Fiberglass pole | $10.78
+Decorative Concrete pole | $19.60
+Facilities Charge | 1.25%
+Underground Conductors (¢ per foot) | 5.462
+ | 
+Base Non-Fuel Energy (¢ per kWh) | 3.863
+[DOC 2] https://www.fpl.com/rates/retail-tariffs.html
+FPL | Rates | Retail Regulatory, Rates, Rules and Tariffs
+Skip to Main Content
+/content/fplgp/us/en/northwest/rates/rates-rules-and-regulations.html
+Which region would you like to access today?
+FPL
+OR
+FPL Northwest FL
+CONTINUE
+Back To Rates and Your Bill
+Retail Regulatory, Rates and Tariffs
+Electric retail tariff book
+Title Page
+Table of Contents
+General Description of the Areas Served
+Miscellaneous
+Technical Terms and Abbreviations
+Rules and Regulations
+Communities Served
+Rates Schedules
+Standard Forms
+Contracts and Agreements
+About FPL
+News
+Company
+Careers
+Environment
+Community
+Donate to Care To Share®
+Rates and Your Bill
+About Energy
+Energy My Way
+Ensuring Reliability
+Diverse Energy Sources
+Electric Vehicles
+Power Disturbances
+Safety
+Partner Resources
+Supplier Home and Login
+DSM Contractor Portal
+Fuel Portal
+Building and Construction
+Land Use
+Assist Agency Login
+WebTAXI Login
+Deposit Portal
+En Español
+INGLÉS
+ESPAÑOL
+Ahora la información que necesitas sobre tu servicio eléctrico está disponible en español en FPL.com.
+Facebook
+Twitter
+YouTube
+FPL Blog
+A NextEra Energy Company
+Terms & Conditions
+Privacy Policy
+Safety Policy
+Feedback
+En Español
+Copyright © 2026, Florida Power & Light Company. All rights reserved.
+FPL.com is optimized for the following browsers and mobile operating systems: IE 9+, Firefox 31+, Chrome 37+, Safari 6.1+, Apple iOS 7+ and Android 4+.
+Our websites use technologies (e.g., cookies, pixels, and session replay technology) for site functionality, analytics, performance, fraud-detection, and targeted advertising. Your interactions and personal data may be collected on our websites by us and providers of these technologies (e.g., Meta, Google, LinkedIn) in accordance with our Privacy Policy. Using the website(s) will be treated as your consent to the practices in our
+Privacy Policy
+and
+Terms and Conditions
+.
+[DOC 3] https://www.fpl.com/content/dam/fplgp/us/en/rates/pdf/business-rates-oct2026.pdf
+Business rates and clauses
+Effective October 2026*
+Base Maximum On-Peak Demand Demand Energy On-Peak Off-Peak Conservation Capacity Environmental Storm Fuel On-Peak Off-Peak Transition Curtailment Curtailment Early Utility Controlled C/I Demand
+Charge / / Demand Demand Charge Charge - Charge Energy Energy Charge Charge Charge Protection Charge Fuel Fuel Credit Credit Penalty Termination Demand Credit Reduction Rider
+Month Charge Charge - Firm Load Control (¢/kWh) Charge Charge (¢/kWh or (¢/kWh or (¢/kWh) Charge (¢/kWh) Charge Charge (¢/kWh or ($/kW) ($/kW) ($/kW) ($/kW) Admisinstrative
+BUSINESS RATE CLASS ($/kW) ($/kW) On-Peak On-Peak (¢/kWh) (¢/kWh) $/kW) $/kW) (¢/kWh or (¢/kWh) (¢/kWh) $/kW) Adder
+($/kW) ($/kW) $/kW)
+General Service Non-Demand (GS-1) $14.20 8.039 0.144 0.050 0.331 0.927 3.202 -0.031
+General Service Non-Demand Non-Metered (GS-1) $7.12 8.039 0.144 0.050 0.331 0.927 3.202 -0.031
+General Service Non-Demand-TOU (GST-1) $14.20 14.906 5.086 0.144 0.050 0.331 0.927 3.428 3.104 -0.031
+General Service Constant Usage (GSCU-1) $19.25 4.829 0.102 0.030 0.203 2.623 3.202 -0.032
+General Service Demand (GSD-1/GSD-1EV) $33.71 $12.70 2.825 $0.49 $0.16 0.286 $1.80 3.201 -$0.12 -$9.75 $168.59
+Commercial/Industrial Load Control [CILC-1(G)] $212.65 $5.67 $14.17 $3.73 2.110 2.110 $0.57 $0.17 0.224 $1.66 3.428 3.103 -$0.12
+General Service Demand-TOU (GSDT-1) $33.71 $0.79 $11.90 6.019 1.524 $0.49 $0.16 0.286 $1.80 3.428 3.103 -$0.12 -$9.75 $168.59
+High Load Factor TOU (25 - 499 kW) $33.71 $3.10 $14.96 2.435 1.524 $0.49 $0.16 0.286 $1.80 3.428 3.103 -$0.12 -$9.75 $168.59
+Seasonal Demand TOU Rider (SDTR) (25 - 499 kW) Option A (Jun-Sep) $33.71 $0.79 $13.56 11.624 1.862 $0.49 $0.16 0.286 $1.80 3.492 3.163 -$0.12
+Seasonal Demand TOU Rider (SDTR) (25 - 499 kW) Option A (Jan-May/Oct-Dec) $33.71 $12.01 2.825 $0.49 $0.16 0.286 $1.80 3.201 -$0.12
+Seasonal Demand TOU Rider (SDTR) (25 - 499 kW) Option B (Jun-Sep) $33.71 $0.79 $13.56 11.624 1.862 $0.49 $0.16 0.286 $1.80 3.492 3.163 -$0.12
+Seasonal Demand TOU Rider (SDTR) (25 - 499 kW) Option B (Jan-May/Oct-Dec) $33.71 $0.79 $10.82 5.786 1.862 $0.49 $0.16 0.286 $1.80 3.428 3.103 -$0.12
+General Service Large Demand (GSLD-1/GSLD-1EV) $98.69 $15.12 2.179 $0.55 $0.18 0.256 $1.81 3.198 -$0.12 -$9.75 $230.31
+General Service Large Demand-TOU (GSLDT-1) $98.69 $0.88 $14.26 3.771 1.572 $0.55 $0.18 0.256 $1.81 3.424 3.100 -$0.12 -$9.75 $230.31
+Curtailable Service (CS-1) $131.60 $15.12 2.179 $0.55 $0.18 0.256 $1.81 3.198 -$0.12 -$2.55 $4.92 $1.45
+Curtailable Service-TOU (CST-1) $131.60 $0.88 $14.26 3.771 1.572 $0.55 $0.18 0.256 $1.81 3.424 3.100 -$0.12 -$2.55 $4.92 $1.45
+High Load Factor-TOU (500 - 1,999 kW) $98.69 $3.42 $15.92 1.382 1.347 $0.55 $0.18 0.256 $1.81 3.424 3.100 -$0.12 -$9.75 $230.31
+Seasonal Demand TOU Rider (SDTR) (500 - 1,999 kW) Option A (Jun-Sep) $98.69 $0.88 $15.58 7.211 1.572 $0.55 $0.18 0.256 $1.81 3.489 3.159 -$0.12
+Seasonal Demand TOU Rider (SDTR) (500 - 1,999 kW) Option A (Jan-May/Oct-Dec) $98.69 $14.46
+[DOC 3] https://www.fpl.com/content/dam/fplgp/us/en/rates/pdf/business-rates-oct2026.pdf
+ 2.179 $0.55 $0.18 0.256 $1.81 3.198 -$0.12
+Seasonal Demand TOU Rider (SDTR) (500 - 1,999 kW) Option B (Jun-Sep) $98.69 $0.88 $15.58 7.211 1.572 $0.55 $0.18 0.256 $1.81 3.489 3.159 -$0.12
+Seasonal Demand TOU Rider (SDTR) (500 - 1,999 kW) Option B (Jan-May/Oct-Dec) $98.69 $0.88 $13.27 3.946 1.572 $0.55 $0.18 0.256 $1.81 3.424 3.100 -$0.12
+LED Lighting (LT-1) 3.863 0.050 0.006 0.059 0.320 3.156 -0.104
+General Service Large Demand (GSLD-2) $286.07 $15.23 1.895 $0.55 $0.17 0.241 $1.66 3.165 -$0.11 -$9.75 $95.36
+General Service Large Demand-TOU (GSLDT-2) $286.07 $0.76 $14.47 3.062 1.486 $0.55 $0.17 0.241 $1.66 3.390 3.069 -$0.11 -$9.75 $95.36
+Curtailable Service (CS-2) $317.86 $15.23 1.895 $0.55 $0.17 0.241 $1.66 3.165 -$0.11 -$2.46 $4.75 $1.40
+Curtailable Service-TOU (CST-2) $317.86 $0.76 $15.23 3.062 1.486 $0.55 $0.17 0.241 $1.66 3.390 3.069 -$0.11 -$2.46 $4.75 $1.40
+High Load Factor-TOU (2,000 and greater) $286.07 $3.30 $15.48 1.202 1.201 $0.55 $0.17 0.241 $1.66 3.390 3.069 -$0.11 -$9.75 $95.36
+Seasonal Demand TOU Rider (SDTR) (2,000 and greater) Option A (Jun-Sep) $286.07 $0.76 $15.10 5.992 1.486 $0.55 $0.17 0.241 $1.66 3.454 3.128 -$0.11
+Seasonal Demand TOU Rider (SDTR) (2,000 and greater) Option A (Jan-May/Oct-Dec) $286.07 $15.12 1.895 $0.55 $0.17 0.241 $1.66 3.165 -$0.11
+Seasonal Demand TOU Rider (SDTR) (2,000 and greater) Option B (Jun-Sep) $286.07 $0.76 $15.10 5.992 1.486 $0.55 $0.17 0.241 $1.66 3.454 3.128 -$0.11
+Seasonal Demand TOU Rider (SDTR) (2,000 and greater) Option B (Jan-May/Oct-Dec) $286.07 $0.76 $13.65 3.594 1.486 $0.55 $0.17 0.241 $1.66 3.390 3.069 -$0.11
+Traffic Signals Metered (SL-2M) $8.73 6.665 0.102 0.030 0.203 2.623 3.202 -0.032
+General Service Large Demand (GSLD-3) $2,523.29 $12.01 1.384 $0.55 $0.17 0.214 $0.19 3.075 -$0.10 -$9.75 $290.70
+General Service Large Demand-TOU (GSLDT-3) $2,523.29 $12.01 1.576 1.317 $0.55 $0.17 0.214 $0.19 3.292 2.981 -$0.10 -$9.75 $290.70
+Street Lighting Metered (SL-1M) $19.17 3.871 0.050 0.006 0.059 0.320 3.156 -0.104
+Commercial/Industrial Load Control (Transmission) [CILC-1(T)] $3,130.38 $16.45 $4.51 1.314 1.314 $0.56 $0.17 0.195 $0.18 3.292 2.981 -$0.10
+Commercial/Industrial Load Control (Distribution) [CILC-1(D)] $357.97 $6.04 $15.59 $4.31 1.437 1.437 $0.57 $0.17 0.224 $1.66 3.385 3.065 -$0.12
+Metropolitan Transit Service (MET) $899.25 $19.03 2.537 $0.45 $0.15 0.260 $2.15 3.165 -$0.12
+Sports Field Service (OS-2) $173.83 10.937 0.085 0.023 0.199 2.426 3.165 -0.055
+Street Lighting (SL-1 and PL-1) 3.863 0.050 0.006 0.059 0.320 3.156 -0.104
+Outdoor Lighting (OL-1) 3.863 0.050 0.006 0.059 0.320 3.156 -0.104
+Traffic Signals (SL-2) 6.485 0.102 0.030 0.203 2.623 3.202 -0.032
+*Rates approved by the Florida Public Service Commission in Docket Nos. 20250011-EI, 20210015-EI, 20250001-EI, 20250002-EG, 20250007-EI, and 20250010-EI.
+Note: Metered GS-1 and GST-1 customers whose monthly base electric service costs fall below $30 are subject to a minimum $30 base bill.
+If there is a discrepancy between the rat
+[DOC 3] https://www.fpl.com/content/dam/fplgp/us/en/rates/pdf/business-rates-oct2026.pdf
+es shown on this insert and the effective, PSC-approved tariff, the rates in the tariff prevail in all instances.
+ | Base
+Charge /
+Month | Maximum
+/ Demand
+Charge
+($/kW) | On-Peak
+Demand
+Charge
+($/kW) | Demand
+Charge
+- Firm
+On-Peak
+($/kW) | Demand
+Charge -
+Load Control
+On-Peak
+($/kW) | Energy
+Charge
+(¢/kWh) | On-Peak
+Energy
+Charge
+(¢/kWh) | Off-Peak
+Energy
+Charge
+(¢/kWh) | Conservation
+Charge
+(¢/kWh or
+$/kW) | Capacity
+Charge
+(¢/kWh or
+$/kW) | Environmental
+Charge
+(¢/kWh) | Storm
+Protection
+Charge
+(¢/kWh or
+$/kW) | Fuel
+Charge
+(¢/kWh) | On-Peak
+Fuel
+Charge
+(¢/kWh) | Off-Peak
+Fuel
+Charge
+(¢/kWh) | Transition
+Credit
+(¢/kWh or
+$/kW)
+General Service Non-Demand (GS-1) | $14.20 |  |  |  |  | 8.039 |  |  | 0.144 | 0.050 | 0.331 | 0.927 | 3.202 |  |  | -0.031
+General Service Non-Demand Non-Metered (GS-1) | $7.12 |  |  |  |  | 8.039 |  |  | 0.144 | 0.050 | 0.331 | 0.927 | 3.202 |  |  | -0.031
+General Service Non-Demand-TOU (GST-1) | $14.20 |  |  |  |  |  | 14.906 | 5.086 | 0.144 | 0.050 | 0.331 | 0.927 |  | 3.428 | 3.104 | -0.031
+General Service Constant Usage (GSCU-1) | $19.25 |  |  |  |  | 4.829 |  |  | 0.102 | 0.030 | 0.203 | 2.623 | 3.202 |  |  | -0.032
+General Service Demand (GSD-1/GSD-1EV) | $33.71 | $12.70 |  |  |  | 2.825 |  |  | $0.49 | $0.16 | 0.286 | $1.80 | 3.201 |  |  | -$0.12
+Commercial/Industrial Load Control [CILC-1(G)] | $212.65 | $5.67 |  | $14.17 | $3.73 |  | 2.110 | 2.110 | $0.57 | $0.17 | 0.224 | $1.66 |  | 3.428 | 3.103 | -$0.12
+General Service Demand-TOU (GSDT-1) | $33.71 | $0.79 | $11.90 |  |  |  | 6.019 | 1.524 | $0.49 | $0.16 | 0.286 | $1.80 |  | 3.428 | 3.103 | -$0.12
+High Load Factor TOU (25 - 499 kW) | $33.71 | $3.10 | $14.96 |  |  |  | 2.435 | 1.524 | $0.49 | $0.16 | 0.286 | $1.80 |  | 3.428 | 3.103 | -$0.12
+Seasonal Demand TOU Rider (SDTR) (25 - 499 kW) Option A (Jun-Sep) | $33.71 | $0.79 | $13.56 |  |  |  | 11.624 | 1.862 | $0.49 | $0.16 | 0.286 | $1.80 |  | 3.492 | 3.163 | -$0.12
+Seasonal Demand TOU Rider (SDTR) (25 - 499 kW) Option A (Jan-May/Oct-Dec) | $33.71 | $12.01 |  |  |  | 2.825 |  |  | $0.49 | $0.16 | 0.286 | $1.80 | 3.201 |  |  | -$0.12
+Seasonal Demand TOU Rider (SDTR) (25 - 499 kW) Option B (Jun-Sep) | $33.71 | $0.79 | $13.56 |  |  |  | 11.624 | 1.862 | $0.49 | $0.16 | 0.286 | $1.80 |  | 3.492 | 3.163 | -$0.12
+Seasonal Demand TOU Rider (SDTR) (25 - 499 kW) Option B (Jan-May/Oct-Dec) | $33.71 | $0.79 | $10.82 |  |  |  | 5.786 | 1.862 | $0.49 | $0.16 | 0.286 | $1.80 |  | 3.428 | 3.103 | -$0.12
+General Service Large Demand (GSLD-1/GSLD-1EV) | $98.69 | $15.12 |  |  |  | 2.179 |  |  | $0.55 | $0.18 | 0.256 | $1.81 | 3.198 |  |  | -$0.12
+General Service Large Demand-TOU (GSLDT-1) | $98.69 | $0.88 | $14.26 |  |  |  | 3.771 | 1.572 | $0.55 | $0.18 | 0.256 | $1.81 |  | 3.424 | 3.100 | -$0.12
+Curtailable Service (CS-1) | $131.60 | $15.12 |  |  |  | 2.179 |  |  | $0.55 | $0.18 | 0.256 | $1.81 | 3.198 |  |  | -$0.12
+Curtailable Service-TOU (CST-1) | $131.60 | $0.88 | $14.26 |  |  |  | 3.771 | 1.572 | $0.55 | $0.18 | 0.256 |
+[DOC 3] https://www.fpl.com/content/dam/fplgp/us/en/rates/pdf/business-rates-oct2026.pdf
+ $1.81 |  | 3.424 | 3.100 | -$0.12
+High Load Factor-TOU (500 - 1,999 kW) | $98.69 | $3.42 | $15.92 |  |  |  | 1.382 | 1.347 | $0.55 | $0.18 | 0.256 | $1.81 |  | 3.424 | 3.100 | -$0.12
+Seasonal Demand TOU Rider (SDTR) (500 - 1,999 kW) Option A (Jun-Sep) | $98.69 | $0.88 | $15.58 |  |  |  | 7.211 | 1.572 | $0.55 | $0.18 | 0.256 | $1.81 |  | 3.489 | 3.159 | -$0.12
+Seasonal Demand TOU Rider (SDTR) (500 - 1,999 kW) Option A (Jan-May/Oct-Dec) | $98.69 | $14.46 |  |  |  | 2.179 |  |  | $0.55 | $0.18 | 0.256 | $1.81 | 3.198 |  |  | -$0.12
+Seasonal Demand TOU Rider (SDTR) (500 - 1,999 kW) Option B (Jun-Sep) | $98.69 | $0.88 | $15.58 |  |  |  | 7.211 | 1.572 | $0.55 | $0.18 | 0.256 | $1.81 |  | 3.489 | 3.159 | -$0.12
+Seasonal Demand TOU Rider (SDTR) (500 - 1,999 kW) Option B (Jan-May/Oct-Dec) | $98.69 | $0.88 | $13.27 |  |  |  | 3.946 | 1.572 | $0.55 | $0.18 | 0.256 | $1.81 |  | 3.424 | 3.100 | -$0.12
+LED Lighting (LT-1) |  |  |  |  |  | 3.863 |  |  | 0.050 | 0.006 | 0.059 | 0.320 | 3.156 |  |  | -0.104
+General Service Large Demand (GSLD-2) | $286.07 | $15.23 |  |  |  | 1.895 |  |  | $0.55 | $0.17 | 0.241 | $1.66 | 3.165 |  |  | -$0.11
+General Service Large Demand-TOU (GSLDT-2) | $286.07 | $0.76 | $14.47 |  |  |  | 3.062 | 1.486 | $0.55 | $0.17 | 0.241 | $1.66 |  | 3.390 | 3.069 | -$0.11
+Curtailable Service (CS-2) | $317.86 | $15.23 |  |  |  | 1.895 |  |  | $0.55 | $0.17 | 0.241 | $1.66 | 3.165 |  |  | -$0.11
+Curtailable Service-TOU (CST-2) | $317.86 | $0.76 | $15.23 |  |  |  | 3.062 | 1.486 | $0.55 | $0.17 | 0.241 | $1.66 |  | 3.390 | 3.069 | -$0.11
+High Load Factor-TOU (2,000 and greater) | $286.07 | $3.30 | $15.48 |  |  |  | 1.202 | 1.201 | $0.55 | $0.17 | 0.241 | $1.66 |  | 3.390 | 3.069 | -$0.11
+Seasonal Demand TOU Rider (SDTR) (2,000 and greater) Option A (Jun-Sep) | $286.07 | $0.76 | $15.10 |  |  |  | 5.992 | 1.486 | $0.55 | $0.17 | 0.241 | $1.66 |  | 3.454 | 3.128 | -$0.11
+Seasonal Demand TOU Rider (SDTR) (2,000 and greater) Option A (Jan-May/Oct-Dec) | $286.07 | $15.12 |  |  |  | 1.895 |  |  | $0.55 | $0.17 | 0.241 | $1.66 | 3.165 |  |  | -$0.11
+Seasonal Demand TOU Rider (SDTR) (2,000 and greater) Option B (Jun-Sep) | $286.07 | $0.76 | $15.10 |  |  |  | 5.992 | 1.486 | $0.55 | $0.17 | 0.241 | $1.66 |  | 3.454 | 3.128 | -$0.11
+Seasonal Demand TOU Rider (SDTR) (2,000 and greater) Option B (Jan-May/Oct-Dec) | $286.07 | $0.76 | $13.65 |  |  |  | 3.594 | 1.486 | $0.55 | $0.17 | 0.241 | $1.66 |  | 3.390 | 3.069 | -$0.11
+Traffic Signals Metered (SL-2M) | $8.73 |  |  |  |  | 6.665 |  |  | 0.102 | 0.030 | 0.203 | 2.623 | 3.202 |  |  | -0.032
+General Service Large Demand (GSLD-3) | $2,523.29 | $12.01 |  |  |  | 1.384 |  |  | $0.55 | $0.17 | 0.214 | $0.19 | 3.075 |  |  | -$0.10
+General Service Large Demand-TOU (GSLDT-3) | $2,523.29 |  | $12.01 |  |  |  | 1.576 | 1.317 | $0.55 | $0.17 | 0.214 | $0.19 |  | 3.292 | 2.981 | -$0.10
+Street Lighting Metered (SL-1M) | $19.17 |  |  |  |  | 3.871 |  |  | 0.050 | 0.006 | 0.059 | 0.320 | 3.156 |  |  | -0.104
+Commercial/
+[DOC 3] https://www.fpl.com/content/dam/fplgp/us/en/rates/pdf/business-rates-oct2026.pdf
+Industrial Load Control (Transmission) [CILC-1(T)] | $3,130.38 |  |  | $16.45 | $4.51 |  | 1.314 | 1.314 | $0.56 | $0.17 | 0.195 | $0.18 |  | 3.292 | 2.981 | -$0.10
+Commercial/Industrial Load Control (Distribution) [CILC-1(D)] | $357.97 | $6.04 |  | $15.59 | $4.31 |  | 1.437 | 1.437 | $0.57 | $0.17 | 0.224 | $1.66 |  | 3.385 | 3.065 | -$0.12
+Metropolitan Transit Service (MET) | $899.25 | $19.03 |  |  |  | 2.537 |  |  | $0.45 | $0.15 | 0.260 | $2.15 | 3.165 |  |  | -$0.12
+Sports Field Service (OS-2) | $173.83 |  |  |  |  | 10.937 |  |  | 0.085 | 0.023 | 0.199 | 2.426 | 3.165 |  |  | -0.055
+Street Lighting (SL-1 and PL-1) |  |  |  |  |  | 3.863 |  |  | 0.050 | 0.006 | 0.059 | 0.320 | 3.156 |  |  | -0.104
+Outdoor Lighting (OL-1) |  |  |  |  |  | 3.863 |  |  | 0.050 | 0.006 | 0.059 | 0.320 | 3.156 |  |  | -0.104
+Traffic Signals (SL-2) |  |  |  |  |  | 6.485 |  |  | 0.102 | 0.030 | 0.203 | 2.623 | 3.202 |  |  | -0.032
+Curtailment
+Credit
+($/kW) | Curtailment
+Penalty
+($/kW) | Early
+Termination
+($/kW) | Utility Controlled
+Demand Credit
+($/kW) | C/I Demand
+Reduction Rider
+Admisinstrative
+Adder
+ |  |  |  | 
+ |  |  |  | 
+ |  |  |  | 
+ |  |  |  | 
+ |  |  | -$9.75 | $168.59
+ |  |  |  | 
+ |  |  | -$9.75 | $168.59
+ |  |  | -$9.75 | $168.59
+ |  |  |  | 
+ |  |  |  | 
+ |  |  |  | 
+ |  |  |  | 
+ |  |  | -$9.75 | $230.31
+ |  |  | -$9.75 | $230.31
+-$2.55 | $4.92 | $1.45 |  | 
+-$2.55 | $4.92 | $1.45 |  | 
+ |  |  | -$9.75 | $230.31
+ |  |  |  | 
+ |  |  |  | 
+ |  |  |  | 
+ |  |  |  | 
+ |  |  |  | 
+ |  |  | -$9.75 | $95.36
+ |  |  | -$9.75 | $95.36
+-$2.46 | $4.75 | $1.40 |  | 
+-$2.46 | $4.75 | $1.40 |  | 
+ |  |  | -$9.75 | $95.36
+ |  |  |  | 
+ |  |  |  | 
+ |  |  |  | 
+ |  |  |  | 
+ |  |  |  | 
+ |  |  | -$9.75 | $290.70
+ |  |  | -$9.75 | $290.70
+ |  |  |  | 
+ |  |  |  | 
+ |  |  |  | 
+ |  |  |  | 
+ |  |  |  | 
+ |  |  |  | 
+ |  |  |  | 
+ |  |  |  | 
+
+Business rates and clauses
+Effective October 2026*
+Contract
+Demand Storm
+Standby Demand Demand On-Peak Off-Peak Conservation Capacity Environmental
+Base Charge Protection On-Peak Fuel Off-Peak Fuel Transition Credit
+Demand Charge Firm Charge Energy Charge Energy Charge Charge Charge Charge
+Charge Interruptible Charge Charge (¢/kWh) Charge ($/kW) (¢/kWh)
+Charge ($/kW) ($/kW) (¢/kWh) (¢/kWh) ($/kW) ($/kW) (¢/kWh)
+($/kW) ($/kW)
+($/kW)
+Standby and Supplemental Service (SST-1D) RDC $195.26 $4.68 $2.30 1.113 1.113 $0.06 $0.02 0.607 $0.29 3.428 3.103 -$0.02
+DDC $1.12 $0.03 $0.01 $0.14 -$0.01
+Standby and Supplemental Service (SST-2D) RDC $195.26 $4.68 $2.30 1.113 1.113 $0.06 $0.02 0.607 $0.29 3.424 3.100 -$0.02
+DDC $1.12 $0.03 $0.01 $0.14 -$0.01
+Standby and Supplemental Service (SST-3D) RDC $663.90 $4.68 $2.30 1.113 1.113 $0.06 $0.02 0.607 $0.29 3.390 3.069 -$0.02
+DDC $1.12 $0.03 $0.01 $0.14 -$0.01
+Standby and Supplemental Service (SST-1T) RDC $2,816.13 $2.10 1.108 1.108 $0.06 $0.02 0.228 $0.02 3.292 2.981 -$0.02
+DDC $0.65 $0.03 $0.01 $0.01 -$0.01
+Interruptible Standby and Supplemental (ISST-1D) RDC $759.35 $4.68 $0.40 $2.30 1.113 1.113 
+[DOC 3] https://www.fpl.com/content/dam/fplgp/us/en/rates/pdf/business-rates-oct2026.pdf
+$0.06 $0.02 0.607 $0.29 3.385 3.065 -$0.02
+DDC $0.19 $1.12 $0.03 $0.01 $0.14 -$0.01
+Interruptible Standby and Supplemental (ISST-1T) RDC $3,106.71 $0.45 $2.10 1.108 1.108 $0.06 $0.02 0.228 $0.02 3.292 2.981 -$0.02
+DDC $0.18 $0.65 $0.03 $0.01 $0.01 -$0.01
+FPL-Owned Units Customer-Owned Units FPL-Owned Units Customer-Owned Units
+OUTDOOR LIGHTING (Fixture, Maintenance, and (Relamping and Base STREET LIGHTING (Fixture, Maintenance, and (Relamping and Base LED LIGHTING (LT-1)1
+Base Non-Fuel Energy) Non-Fuel Energy) Base Non-Fuel Energy) Non-Fuel Energy)
+Sodium Vapor 6,300 lu 70 watts $10.35 $3.62 Sodium Vapor 6,300 lu 70 watts $9.63 $3.58 Conversion Fee $2.11
+Sodium Vapor 9,500 lu 100 watts $10.95 $4.08 Sodium Vapor 9,500 lu 100 watts $9.67 $4.06 Maintenance per Fixture (Company-Owned LED Fixture and Pole) $1.65
+Sodium Vapor 12,000 lu 150 watts $12.92 $5.16 Sodium Vapor 16,000 lu 150 watts $10.61 $4.83 Maintenance per Fixture (Company Fixture on Customer Pole) $1.33
+Sodium Vapor 16,000 lu 150 watts $11.99 $4.87 Sodium Vapor 22,000 lu 200 watts $15.39 $6.61 Standard Wood pole $6.67
+Sodium Vapor 22,000 lu 200 watts $17.02 $6.67 Sodium Vapor 27,500 lu 250 watts $17.29 $7.96 Standard Concrete pole $9.13
+Sodium Vapor 50,000 lu 400 watts $20.71 $9.71 Sodium Vapor 50,000 lu 400 watts $18.56 $9.69 Standard Fiberglass pole $10.78
+Mercury Vapor 6,000 lu 140 watts $9.78 $4.63 Sodium Vapor 140,000 lu 1,000 watts $36.17 $22.14 Decorative Concrete pole $19.60
+Mercury Vapor 8,600 lu 175 watts $10.40 $5.20 Mercury Vapor 6,000 lu 140 watts $8.96 $4.59 Facilities Charge 1.25%
+Mercury Vapor 21,500 lu 400 watts $17.85 $9.33 Mercury Vapor 8,600 lu 175 watts $9.60 $5.16 Underground Conductors (¢ per foot) 5.462
+Mercury Vapor 11,500 lu 250 watts $14.59 $7.20
+Mercury Vapor 21,500 lu 400 watts $16.68 $9.32
+Non-Fuel Energy (¢ per kWh) 3.863 Base Non-Fuel Energy (¢ per kWh) 3.863
+Other Charges Non-Fuel Energy (¢ per kWh) 3.863
+Wood Pole $14.51
+Concrete/Steel Pole $19.60 Other Charges
+Fiberglass Pole $23.03 Wood Pole $6.67
+Underground conductors excluding Trenching ($ per foot) $0.112 Concrete/Steel Pole $9.13
+Down-guy, Anchor and Protector $13.19 Fiberglass Pole $10.78
+Underground Conductors not Under Paving (¢ per Foot) 5.462
+Underground Conductors Under Paving (¢ per Foot) 13.342
+1Catalog of available fixtures and the assigned billing tier for each can be viewed at www.FPL.com/partner/builders/lighting.html.
+*Rates approved by the Florida Public Service Commission in Docket Nos. 20250011-EI, 20210015-EI, 20250001-EI, 20250002-EG, 20250007-EI, and 20250010-EI.
+If there is a discrepancy between the rates shown on this insert and the effective, PSC-approved tariff, the rates in the tariff prevail in all instances.
+26-3817
+ |  | Base
+Charge | Contract
+Standby
+Demand
+Charge
+($/kW) | Demand
+Charge
+Interruptible
+($/kW) | Demand
+Charge Firm
+($/kW) | Demand
+Charge
+($/kW) |  | On-Peak
+Energy Charge
+(¢/kWh) | Off-Peak
+Energy Charge
+(¢/kWh) | Conservation
+Charge
+($/kW) | Capacity
+Charge
+
+[DOC 3] https://www.fpl.com/content/dam/fplgp/us/en/rates/pdf/business-rates-oct2026.pdf
+($/kW) | Environmental
+Charge
+(¢/kWh) | Storm
+Protection
+Charge
+($/kW) |  | On-Peak Fuel
+Charge (¢/kWh) | Off-Peak Fuel
+Charge ($/kW) | Transition Credit
+(¢/kWh)
+Standby and Supplemental Service (SST-1D) | RDC | $195.26 | $4.68 |  |  | $2.30 |  | 1.113 | 1.113 | $0.06 | $0.02 | 0.607 | $0.29 |  | 3.428 | 3.103 | -$0.02
+ | DDC |  |  |  |  | $1.12 |  |  |  | $0.03 | $0.01 |  | $0.14 |  |  |  | -$0.01
+Standby and Supplemental Service (SST-2D) | RDC | $195.26 | $4.68 |  |  | $2.30 |  | 1.113 | 1.113 | $0.06 | $0.02 | 0.607 | $0.29 |  | 3.424 | 3.100 | -$0.02
+ | DDC |  |  |  |  | $1.12 |  |  |  | $0.03 | $0.01 |  | $0.14 |  |  |  | -$0.01
+Standby and Supplemental Service (SST-3D) | RDC | $663.90 | $4.68 |  |  | $2.30 |  | 1.113 | 1.113 | $0.06 | $0.02 | 0.607 | $0.29 |  | 3.390 | 3.069 | -$0.02
+ | DDC |  |  |  |  | $1.12 |  |  |  | $0.03 | $0.01 |  | $0.14 |  |  |  | -$0.01
+Standby and Supplemental Service (SST-1T) | RDC | $2,816.13 |  |  |  | $2.10 |  | 1.108 | 1.108 | $0.06 | $0.02 | 0.228 | $0.02 |  | 3.292 | 2.981 | -$0.02
+ | DDC |  |  |  |  | $0.65 |  |  |  | $0.03 | $0.01 |  | $0.01 |  |  |  | -$0.01
+Interruptible Standby and Supplemental (ISST-1D) | RDC | $759.35 | $4.68 | $0.40 | $2.30 |  |  | 1.113 | 1.113 | $0.06 | $0.02 | 0.607 | $0.29 |  | 3.385 | 3.065 | -$0.02
+ | DDC |  |  | $0.19 | $1.12 |  |  |  |  | $0.03 | $0.01 |  | $0.14 |  |  |  | -$0.01
+Interruptible Standby and Supplemental (ISST-1T) | RDC | $3,106.71 |  | $0.45 | $2.10 |  |  | 1.108 | 1.108 | $0.06 | $0.02 | 0.228 | $0.02 |  | 3.292 | 2.981 | -$0.02
+ | DDC |  |  | $0.18 | $0.65 |  |  |  |  | $0.03 | $0.01 |  | $0.01 |  |  |  | -$0.01
+ | FPL-Owned Units
+(Fixture, Maintenance, and
+Base Non-Fuel Energy) | Customer-Owned Units
+(Relamping and Base
+Non-Fuel Energy)
+Sodium Vapor 6,300 lu 70 watts | $10.35 | $3.62
+Sodium Vapor 9,500 lu 100 watts | $10.95 | $4.08
+Sodium Vapor 12,000 lu 150 watts | $12.92 | $5.16
+Sodium Vapor 16,000 lu 150 watts | $11.99 | $4.87
+Sodium Vapor 22,000 lu 200 watts | $17.02 | $6.67
+Sodium Vapor 50,000 lu 400 watts | $20.71 | $9.71
+Mercury Vapor 6,000 lu 140 watts | $9.78 | $4.63
+Mercury Vapor 8,600 lu 175 watts | $10.40 | $5.20
+Mercury Vapor 21,500 lu 400 watts | $17.85 | $9.33
+ |  | 
+Non-Fuel Energy (¢ per kWh) | 3.863 | 
+ |  | 
+Other Charges |  | 
+Wood Pole | $14.51 | 
+Concrete/Steel Pole | $19.60 | 
+Fiberglass Pole | $23.03 | 
+Underground conductors excluding Trenching ($ per foot) | $0.112 | 
+Down-guy, Anchor and Protector | $13.19 | 
+ | FPL-Owned Units
+(Fixture, Maintenance, and
+Base Non-Fuel Energy) | Customer-Owned Units
+(Relamping and Base
+Non-Fuel Energy)
+Sodium Vapor 6,300 lu 70 watts | $9.63 | $3.58
+Sodium Vapor 9,500 lu 100 watts | $9.67 | $4.06
+Sodium Vapor 16,000 lu 150 watts | $10.61 | $4.83
+Sodium Vapor 22,000 lu 200 watts | $15.39 | $6.61
+Sodium Vapor 27,500 lu 250 watts | $17.29 | $7.96
+Sodium Vapor 50,000 lu 400 watts | $18.56 | $9.69
+Sodium Vapor 140,000 lu 1,000 watts | $36.17 | $22.14
+Mercury Vapor 6,000 lu 140 watts | $8.96 | $4.59
+Mer
+[DOC 3] https://www.fpl.com/content/dam/fplgp/us/en/rates/pdf/business-rates-oct2026.pdf
+cury Vapor 8,600 lu 175 watts | $9.60 | $5.16
+Mercury Vapor 11,500 lu 250 watts | $14.59 | $7.20
+Mercury Vapor 21,500 lu 400 watts | $16.68 | $9.32
+ |  | 
+Non-Fuel Energy (¢ per kWh) | 3.863 | 
+ |  | 
+Other Charges |  | 
+Wood Pole | $6.67 | 
+Concrete/Steel Pole | $9.13 | 
+Fiberglass Pole | $10.78 | 
+Underground Conductors not Under Paving (¢ per Foot) | 5.462 | 
+Underground Conductors Under Paving (¢ per Foot) | 13.342 | 
+ | 
+Conversion Fee | $2.11
+Maintenance per Fixture (Company-Owned LED Fixture and Pole) | $1.65
+Maintenance per Fixture (Company Fixture on Customer Pole) | $1.33
+Standard Wood pole | $6.67
+Standard Concrete pole | $9.13
+Standard Fiberglass pole | $10.78
+Decorative Concrete pole | $19.60
+Facilities Charge | 1.25%
+Underground Conductors (¢ per foot) | 5.462
+ | 
+Base Non-Fuel Energy (¢ per kWh) | 3.863
+[DOC 4] https://www.fpl.com/content/dam/fplgp/us/en/rates/pdf/sample.pdf
+How to read your bill
+1 Bill-specific information:
+a. Service period dates: The service days included in
+this bill. Note: The number of days in a billing 1
+period may fluctuate due to weekends, holidays or
+changes in the date we read your meter.
+b. Statement date: The date upon which the monthly
+bill is generated.
+c. Account number: This is a unique identifier for the 2
+customer at this address – refer to this number if 7
+3
+you contact FPL about your account.
+d. Service address: The location where electricity is
+being provided. 8
+4
+2 Total amount due: The amount you owe for services
+already used during the billing period, plus any outstanding
+service charges, deposits or late payment fees incurred.
+5
+3 New charges due by: When the payment for new charges
+is due.
+4 Bill summary: A high-level summary of the total amount 6
+due and payments received during the service period
+indicated on your bill.
+5 Bill messages: Important and timely information that can
+benefit our customers. 9
+10
+6 How to contact FPL: You can manage your account, make
+a payment, report an outage and more at FPL.com, or you
+can call us.
+7 Energy usage history: Illustrates the monthly kilowatt-
+hours (kWh) used for the last 13 months.
+8 Keep in mind: Important information that can benefit
+our customers.
+Stay connected
+9 Customer contact information: Name associated For a fast, easy way to stay informed and report
+with the account and the address requested to have
+outages, download the FPL Mobile App.
+communications sent.
+FPL.com/MobileApp
+10 Payment mailing address: Location to send a check
+payment for this bill. For more payment options, visit
+FPL.com/WaysToPay.
+Page 1 of 2
+121346_Legacy
+How to read your bill
+1 Bill-specific information:
+a. Service period dates: The service days included in
+this bill. Note: The number of days in a billing 1
+period may fluctuate due to weekends, holidays or
+changes in the date we read your meter.
+b. Statement date: The date upon which the monthly
+bill is generated.
+c. Account number: This is a unique identifier for the 2
+customer at this address – refer to this number if 7
+3
+you contact FPL about your account.
+d. Service address: The location where electricity is
+being provided. 8
+4
+2 Total amount due: The amount you owe for services
+already used during the billing period, plus any outstanding
+service charges, deposits or late payment fees incurred.
+5
+3 New charges due by: When the payment for new charges
+is due.
+4 Bill summary: A high-level summary of the total amount 6
+due and payments received during the service period
+indicated on your bill.
+5 Bill messages: Important and timely information that can
+benefit our customers. 9
+10
+6 How to contact FPL: You can manage your account, make
+a payment, report an outage and more at FPL.com, or you
+can call us.
+7 Energy usage history: Illustrates the monthly kilowatt-
+hours (kWh) used for the last 13 months.
+8 Keep in mind: Important information that can benefit
+our customers.
+Stay connected
+9 Customer con
+[DOC 4] https://www.fpl.com/content/dam/fplgp/us/en/rates/pdf/sample.pdf
+tact information: Name associated For a fast, easy way to stay informed and report
+with the account and the address requested to have
+outages, download the FPL Mobile App.
+communications sent.
+FPL.com/MobileApp
+10 Payment mailing address: Location to send a check
+payment for this bill. For more payment options, visit
+FPL.com/WaysToPay.
+
+How to read your bill (continued)
+11 Rate: Determines how the bill is calculated – for this
+account, RS-1 for residential service.
+12 Electric service amount: These charges are regulated
+by the Florida Public Service Commission. The total 14
+electric service amount is made up of the following
+charges:
+a. Base charge: A fixed monthly amount to cover the 11
+cost of providing service to your location. This 15
+charge includes the cost of the meter, billing and
+12
+providing customer service. It is applicable whether
+or not electricity is used.
+13
+b. Non-fuel charge: This total charge is made up of
+base rates and the following charges:
+» Energy Conservation Cost Recovery Charge
+(ECCR): Cost of programs designed to reduce
+electric demand and consumption.
+» Capacity Cost Recovery Clause (CCRC):
+Cost for purchasing electricity from non-
+FPL-owned resources, as well as certain
+nuclear-related expenses.
+» Environmental Cost Recovery Clause
+(ECRC): Cost to meet environmental laws and
+regulations.
+16
+» Storm Protection Plan Cost Recovery
+Clause (SPPCRC): Cost to strengthen the grid
+in order to reduce restoration costs and
+outage times during major storms, as well as
+improving day-to-day service reliability.
+» Transition credit: Addresses the difference
+in costs to serve FPL and former Gulf Power
+customers in a reasonable manner for all
+customers. Transition credit will decline to
+zero over a five-year period, fully aligning
+14 Meter summary
+rates by Jan. 1, 2027.
+a. Meter number: Unique identifier associated with your electric bill.
+c. Fuel charge: The cost for fuel required to provide
+b. Next meter read date: Date the next meter reading is scheduled
+each kilowatt-hour (kWh) of electricity. FPL makes
+to take place.
+no profit on fuel costs.
+c. Meter reading from the last day of the service period minus the
+meter reading from the last day of the previous service period to
+13 Taxes and charges: Taxes and fees may vary by area,
+determine kWh used during the service period for this bill.
+with amounts established by local governing bodies. FPL
+collects these costs for distribution to appropriate entities
+15 Energy usage comparison: Compares the kilowatt-hours (kWh) used
+and does not profit from them. The amount is made up of
+this month to last month, and to last year for the same period. A variety
+the following charges:
+of factors may affect energy usage. For tips to manage your energy
+a. Gross receipts tax: Tax on a customer’s electric
+usage, visit FPL.com/WaysToSave.
+bill that is paid to the State of Florida.
+b. Franchise charge: Fee on a customer’s electric
+16 Bill messages: Important and timely information that can benefit
+bill 
+[DOC 4] https://www.fpl.com/content/dam/fplgp/us/en/rates/pdf/sample.pdf
+that is collected by FPL and provided to the
+our customers.
+appropriate local municipality or county
+government.
+c. Regulatory assessment fee: Tax on a customer’s
+electric bill that is paid to the Florida Public Service
+Commission.
+Page 2 of 2
+How to read your bill (continued)
+11 Rate: Determines how the bill is calculated – for this
+account, RS-1 for residential service.
+12 Electric service amount: These charges are regulated
+by the Florida Public Service Commission. The total 14
+electric service amount is made up of the following
+charges:
+a. Base charge: A fixed monthly amount to cover the 11
+cost of providing service to your location. This 15
+charge includes the cost of the meter, billing and
+12
+providing customer service. It is applicable whether
+or not electricity is used.
+13
+b. Non-fuel charge: This total charge is made up of
+base rates and the following charges:
+» Energy Conservation Cost Recovery Charge
+(ECCR): Cost of programs designed to reduce
+electric demand and consumption.
+» Capacity Cost Recovery Clause (CCRC):
+Cost for purchasing electricity from non-
+FPL-owned resources, as well as certain
+nuclear-related expenses.
+» Environmental Cost Recovery Clause
+(ECRC): Cost to meet environmental laws and
+regulations.
+16
+» Storm Protection Plan Cost Recovery
+Clause (SPPCRC): Cost to strengthen the grid
+in order to reduce restoration costs and
+outage times during major storms, as well as
+improving day-to-day service reliability.
+» Transition credit: Addresses the difference
+in costs to serve FPL and former Gulf Power
+customers in a reasonable manner for all
+customers. Transition credit will decline to
+zero over a five-year period, fully aligning
+14 Meter summary
+rates by Jan. 1, 2027.
+a. Meter number: Unique identifier associated with your electric bill.
+c. Fuel charge: The cost for fuel required to provide
+b. Next meter read date: Date the next meter reading is scheduled
+each kilowatt-hour (kWh) of electricity. FPL makes
+to take place.
+no profit on fuel costs.
+c. Meter reading from the last day of the service period minus the
+meter reading from the last day of the previous service period to
+13 Taxes and charges: Taxes and fees may vary by area,
+determine kWh used during the service period for this bill.
+with amounts established by local governing bodies. FPL
+collects these costs for distribution to appropriate entities
+15 Energy usage comparison: Compares the kilowatt-hours (kWh) used
+and does not profit from them. The amount is made up of
+this month to last month, and to last year for the same period. A variety
+the following charges:
+of factors may affect energy usage. For tips to manage your energy
+a. Gross receipts tax: Tax on a customer’s electric
+usage, visit FPL.com/WaysToSave.
+bill that is paid to the State of Florida.
+b. Franchise charge: Fee on a customer’s electric
+16 Bill messages: Important and timely information that can benefit
+bill that is collected by FPL and provided to the
+our customers.
+appropriate local municipality or c
+[DOC 4] https://www.fpl.com/content/dam/fplgp/us/en/rates/pdf/sample.pdf
+ounty
+government.
+c. Regulatory assessment fee: Tax on a customer’s
+electric bill that is paid to the Florida Public Service
+Commission.
+[DOC 5] https://www.fpl.com/content/dam/fplgp/us/en/rates/pdf/business-explanation.pdf
+FPL.com/rates
+Understanding your bill:
+small business customers
+Below are explanations of the items related to your monthly electric bill.
+The Florida Public Service Commission (PSC) regulates FPL’s electricity rates.
+Base charge: A fixed monthly amount to cover Gross receipts tax and Regulatory assessment fee:
+the cost of the meter, billing and customer service. It is FPL pays a tax equal to 2.6% of gross electric and operating
+applicable whether or not electricity is used in a given month. revenues to the state and the Florida Public Service
+Commission.
+Fuel charge includes: The cost for fuel required to provide
+each kilowatt-hour (kWh) of electricity. Florida Power & Light Other taxes and fees: Vary by area, as established
+Company makes no profit on fuel costs, which are by local governing bodies. FPL collects these costs for
+adjusted at least once a year. distribution to the appropriate entities.
+Non-fuel charge: » Franchise charge: FPL competes with municipalities
+» Base energy charge: The costs other than fuel to and county governments for the right to serve electric
+produce and deliver electricity, including the cost of customers. If a local government chooses, it can enter
+operating power plants and maintaining the grid. into a contract with FPL that enables the government
+to charge residents a contractual amount, the franchise
+» Energy Conservation Cost Recovery (ECCR)
+fee, in exchange for its agreement to not form an electric
+Charge: Cost of programs designed to reduce electric
+utility for the term of the franchise.
+demand and consumption through efficiency measures.
+» Utility/municipal tax: A tax imposed by a municipality
+» Capacity Cost Recovery Clause (CCRC): Cost for or county government on the sale of electricity.
+purchasing electricity from non-FPL owned resources
+» Florida sales tax: A 6.95 percent tax levied by the
+as well as certain nuclear-related expenses.
+State of Florida on the purchase of electricity.
+» Environmental Cost Recovery Clause (ECRC):
+» Discretionary sales surtax: A surtax that is charged
+Cost to meet environmental laws and regulations.
+by many Florida counties.
+» Storm Protection Plan Cost Recovery Clause
+(SPPCRC): Cost to strengthen the grid in order to NOTE: The term “base bill” refers to the total of the base
+reduce restoration costs and outage times during charge and base energy charge. It is not a separate item on
+major storms, as well as improving day-to-day service the bill. Metered GS-1 and GST-1 customers whose monthly
+reliability. base electric service costs fall below $30 are subject to a
+minimum $30 base bill.
+» Transition Credit: Addresses difference in costs
+to serve FPL and former Gulf Power customers in a
+reasonable manner for all customers. Transition credit
+will decline to zero over a five-year period, fully aligning
+rates by Jan. 1, 2027.
+Base Bill
+Base Charge
+Typical 1,500-kWh $14.20 Non-fuel charge
+Base Energy Charge
+Small Business $120.59
+Transition Credit
+Customer Monthly Bill -$0.47
+Fuel
+[DOC 5] https://www.fpl.com/content/dam/fplgp/us/en/rates/pdf/business-explanation.pdf
+ Charge
+October 2026: $48.03 CCRC
+$0.75
+$209.56 E
+$
+C
+2
+C
+.
+R
+16
+ECRC
+Gross Receipts Tax/ $4.97
+(excludes municipal tax, franchise charge, Regulatory SPPCRC
+and sales taxes where applicable) Assessment Fee $13.91
+$5.42
+26-4014
+[DOC 6] https://www.fpl.com/content/dam/fplgp/us/en/rates/pdf/demand-explanation.pdf
+FPL.com/rates
+Understanding your bill: business
+customers (with demand charge)
+Below are explanations of the items related to your monthly electric bill. The Florida Public
+Service Commission (PSC) regulates FPL’s electricity rates.
+Base charge: A fixed monthly amount to cover the cost of the meter, Gross receipts tax and Regulatory
+billing and customer service. It is applicable whether or not electricity is assessment fee: FPL pays a tax equal to 2.6% of
+used in a given month. gross electric and operating revenues to the state
+and the Florida Public Service Commission.
+Fuel charge: The cost for fuel required to provide each kilowatt-hour
+(kWh) of electricity. Other taxes and fees: Vary by area as established
+by the local governing body. FPL collects these
+Non-fuel charge includes:
+costs for distribution to the appropriate entities.
+» Base energy charge: The costs other than fuel to produce and
+» Franchise charge: FPL competes with
+deliver electricity, including the cost of operating power plants
+municipalities and county governments for
+and maintaining the grid.
+the right to serve electric customers. If a local
+» Environmental Cost Recovery Clause (ECRC): Cost to meet
+government chooses, it can enter into a contract
+environmental laws and regulations.
+with FPL that enables the government to charge
+Demand charge includes: residents a contractual amount, the franchise
+» Demand charge: Includes the cost of generation and grid facilities fee, in exchange for its agreement to not form an
+needed to meet peak demand for electricity. electric utility for the term of the franchise.
+» Energy Conservation Cost Recovery (ECCR) Charge: Cost of » Utility/municipal tax: A tax imposed by a
+programs designed to reduce electric demand and consumption. municipality or county government on the sale
+» Capacity Cost Recovery Clause (CCRC): Cost for purchasing of electricity.
+electricity from non-FPL owned resources as well as certain » Florida sales tax: A 6.95 percent tax levied
+nuclear-related expenses. by the State of Florida on the purchase of
+» Storm Protection Plan Cost Recovery Clause (SPPCRC): Cost electricity.
+to strengthen the grid in order to reduce restoration costs and
+» Discretionary sales surtax: A surtax that is
+outage times during major storms, as well as improving
+charged by many Florida counties.
+day-to-day service reliability.
+» Transition Credit: Addresses difference in costs to serve FPL NOTE: The term “base bill” refers to the total of
+and former Gulf Power customers in a reasonable manner for all the base charge, base energy charge and demand
+customers. Transition credit will decline to zero over a five-year charge. It is not a separate item on the bill.
+period, fully aligning rates by Jan. 1, 2027.
+Non-fuel Charge
+Typical 500-kW demand, Base Energy Charge
+$4,358
+200,000 kWh Business Fue l $ C 6 h ,3 ar 9 g 6 e E $ C 5 R 1 C 2
+Base
+Customer Monthly Bill Bill
+Base Charge
+in October 2026: $98.69
+Demand Charge
+$20,668.94 Demand
+$7,560
+Gross Recei
+[DOC 6] https://www.fpl.com/content/dam/fplgp/us/en/rates/pdf/demand-explanation.pdf
+pts T - r $ an 6 s 0 ition Credit
+Tax/ Regulatory
+SPPCRC
+(excludes municipal tax, franchise charge, Assessment Fee $905
+$534.25
+and sales taxes where applicable) CCRC
+$90
+ECCR
+$275
+26-4014
+[DOC 7] https://www.fpl.com/rates/time-of-use.html
+FPL | Rates | Residential Time of Use Rate
+Skip to Main Content
+/content/fplgp/us/en/northwest/rates/time-of-use.html
+Which region would you like to access today?
+FPL
+OR
+FPL Northwest FL
+CONTINUE
+Time-of-Use (TOU) rates
+Learn about TOU rates during peak and off-peak hours and see if you qualify.
+How it works
+Unlike traditional rates where the cost is always the same, TOU rates reflect the fluctuating demand for electricity. During peak hours, the cost is about 26 cents per kilowatt-hour, while off-peak hours cost around 9 cents.*
+See standard rates
+* This is an approximation and may vary by location.
+Enrollment terms and limitations
+Requires annual commitment
+Enrollment takes about three months
+Requires a new meter
+You may need to be present for installation if meter is inaccessible
+No extra cost to join TOU (same as standard service)
+Cannot participate in FPL On Call,
+®
+FPL Budget Billing
+®
+or FPL EVolution
+®
+Is a TOU rate plan right for you?
+To realize savings, customers must use less energy during the “peak” hours.
+Rodney:
+Uses over 1,000 kWh of energy per month
+Sets the A/C to 78 degrees or higher during peak hours
+Has no one home during peak hours Monday-Friday
+Uses timers to run small appliances during off-peak times
+Rodney travels for work and owns an EV that he only charges during off-peak hours, he may save on the TOU rate.
+Valerie:
+Uses less than 1000 kwh per month
+Sets the A/C to lower than 78 degrees during peak hours
+Works from home and is mostly at home during the day Monday-Friday
+Has no timers and runs washer, dryer, pool pump, or other appliances during the day
+With lower energy usage, and being home during peak hours, Valerie would not save on the TOU rate.
+Timing is everything
+To benefit from TOU, you must shift electricity use away from peak hours. *
+Summer
+April 1 to Oct. 31
+Winter
+Nov. 1 to March 31
+* Excludes weekends, New Year’s Day, Memorial Day, Independence Day, Labor Day, Thanksgiving Day and Christmas Day.
+EV owner but can’t charge during off-peak hours?
+Enroll in our FPL EVolution
+®
+Home program! With no upfront costs, we’ll install a new level 2 charger plus you'll get unlimited off-peak night, weekend and holiday charging.
+GET CHARGED
+Helping you find more ways to save.
+How much energy are you using?
+Our free Energy Manager tool tracks where, when and how you’re using energy and get personalized tips.
+TRY IT NOW
+Save $30 a month
+Small changes make a big difference – try these tips to lower your bill.
+SEE HOW
+Frequently Asked Questions
+How will I know if the program will benefit me?
+By filling out the form below, a rate analysis can be performed comparing your energy consumption profile to the “peak” and “off-peak” time periods. This analysis will help you determine whether or not the rate is a good fit for your home.
+What if I go on the program and later decide it’s not a good fit?
+The minimum enrollment period is one year. After the first year, customers have the option to exit the program.
+Can I check my usage an
+[DOC 7] https://www.fpl.com/rates/time-of-use.html
+d rate mid-month to make sure I’m meeting my savings goals?
+With the free FPL Energy Manager, you're able to monitor, analyze and simulate your energy usage so you can save on your bill.
+As part of the Energy Manager you also have access to the Energy Analyzer, Energy Dashboard, Appliance Calculators, and Simulator tools. Together, they can help you identify changes to help lower your bill.
+Start now
+Will I be notified when the TOU rates/times change season to season?
+Important information that can benefit our customers will be found on the billing statement within the keep in mind section. Review your preferences to ensure your signed up for ‘special updates’ to receive our newsletter.
+Sign up for marketing newsletters
+.
+Interested in joining TOU?
+Share your details, and we'll contact you to review eligibility and assist with enrollment if you qualify.
+About FPL
+News
+Company
+Careers
+Environment
+Community
+Donate to Care To Share®
+Rates and Your Bill
+About Energy
+Energy My Way
+Ensuring Reliability
+Diverse Energy Sources
+Electric Vehicles
+Power Disturbances
+Safety
+Partner Resources
+Supplier Home and Login
+DSM Contractor Portal
+Fuel Portal
+Building and Construction
+Land Use
+Assist Agency Login
+WebTAXI Login
+Deposit Portal
+En Español
+INGLÉS
+ESPAÑOL
+Ahora la información que necesitas sobre tu servicio eléctrico está disponible en español en FPL.com.
+Facebook
+Twitter
+YouTube
+FPL Blog
+A NextEra Energy Company
+Terms & Conditions
+Privacy Policy
+Safety Policy
+Feedback
+En Español
+Copyright © 2026, Florida Power & Light Company. All rights reserved.
+FPL.com is optimized for the following browsers and mobile operating systems: IE 9+, Firefox 31+, Chrome 37+, Safari 6.1+, Apple iOS 7+ and Android 4+.
+Our websites use technologies (e.g., cookies, pixels, and session replay technology) for site functionality, analytics, performance, fraud-detection, and targeted advertising. Your interactions and personal data may be collected on our websites by us and providers of these technologies (e.g., Meta, Google, LinkedIn) in accordance with our Privacy Policy. Using the website(s) will be treated as your consent to the practices in our
+Privacy Policy
+and
+Terms and Conditions
+.

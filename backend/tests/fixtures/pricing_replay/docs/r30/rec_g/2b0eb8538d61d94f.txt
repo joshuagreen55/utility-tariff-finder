@@ -1,0 +1,2744 @@
+[DOC 0] https://www.torontohydro.com/for-home/residential-rate-change
+Residential rate changes
+Information about the recent rate changes.
+Rates as of May 1, 2026
+As of May 1, summer Time-of-Use (TOU) hours and Tier thresholds are in effect. Customers on the Ultra-Low Overnight (ULO) price plan are not affected, and electricity rates remain unchanged.
+Eligible customers on the Regulated Price Plan have the option to choose between TOU, ULO and Tiered price plans.
+Learn more about customer choice
+To help serve you better, we’ve put together our top customer questions, broken down by category. To get quick answers to your rates questions, see the rates section of our
+frequently asked questions page
+.
+[DOC 1] https://www.torontohydro.com/for-home/rates
+Residential rates and charges
+Understanding current rates and how they're set.
+Are you a business customer?
+Get detailed information about electricity rates for your business.
+Learn more
+×
+Rates as of May 1, 2026
+As of May 1, summer Time-of-Use (TOU) hours and Tier thresholds are in effect. Customers on the Ultra-Low Overnight (ULO) price plan are not affected, and electricity rates remain unchanged.
+Electricity rates
+Electricity rates
+Eligible customers on the Regulated Price Plan (RPP) have the option to choose between Time-of-Use (TOU), Ultra-Low Overnight (ULO) and Tiered price plans. Visit our
+Customer Choice page
+to learn more and determine which plan works best for you.
+Time-of-Use (TOU) rates
+As of May 1, the OEB moved to summer time periods. TOU rates are listed in the following table, which also indicates the hours to which these rates apply.
+Summer TOU price periods from May 1, 2026 to October 31, 2026
+TOU period
+Hours
+Price
+Off-peak
+Weekdays from 7 p.m. to 7 a.m. and all day weekends and statutory holidays
+9.8¢ per kWh
+Mid-peak
+Weekdays from 7 a.m. to 11 a.m. and 5 p.m. to 7 p.m.
+15.7¢ per kWh
+On-peak
+Weekdays from 11 a.m. to 5 p.m.
+20.3¢ per kWh
+These rates cover the cost of electricity purchased on your behalf. Toronto Hydro collects this cost from you, without mark-up, and pays it directly to our suppliers.
+View the OEB's TOU and ULO holiday schedule
+Ultra-Low Overnight (ULO) rates
+As of May 1, 2023, the OEB introduced a new ULO price plan for RPP customers. ULO rates are listed in the following table, which also indicates the hours to which these rates apply.
+ULO price periods are the same in the summer as they are in the winter — the following pricing is in effect from November 1, 2025 to October 31, 2026
+ULO period
+Hours
+Price
+Ultra-low overnight
+Every day from 11 p.m. to 7 a.m.
+3.9¢ per kWh
+Weekend off-peak
+Weekends and statutory holidays from 7 a.m. to 11 p.m.
+9.8¢ per kWh
+Mid-peak
+Weekdays from 7 a.m. to 4 p.m. and 9 p.m. to 11 p.m.
+15.7¢ per kWh
+On-peak
+Weekdays from 4 p.m. to 9 p.m.
+39.1¢ per kWh
+These rates cover the cost of electricity purchased on your behalf. Toronto Hydro collects this cost from you, without mark-up, and pays it directly to our suppliers.
+View the OEB's TOU and ULO holiday schedule
+Tiered rates
+As of May 1, the OEB moved to summer Tier thresholds. Tiered rates are listed in the following table, which also indicates the updated thresholds to which these rates apply.
+Summer pricing tiers from May 1, 2026 to October 31, 2026
+Price tier
+Description
+Price
+Tier 1
+Residential customers: up to 600 kWh/month
+12.0¢ per kWh
+Tier 2
+Residential customers: more than 600 kWh/month
+14.2¢ per kWh
+These rates cover the cost of electricity purchased on your behalf. Toronto Hydro collects this cost from you, without mark-up, and pays it directly to our suppliers.
+Retailer rates
+You may choose to purchase your electricity from another company by entering a contract with a licensed electricity retailer. Your contract specif
+[DOC 1] https://www.torontohydro.com/for-home/rates
+ies a fixed electricity price for a set number of years. Please note that the fixed price is not regulated by the OEB.
+Learn more about electricity retailers
+Delivery Charges
+Delivery Charges
+Toronto Hydro received approval from the OEB to implement changes to its Delivery Charges, effective January 1, 2026.
+Delivery Charges cover the cost of delivering electricity from the generator to Toronto Hydro, and then to your home or business. This includes costs to build and maintain transmission and distribution lines, towers and poles, and to operate provincial and local electricity systems.
+Residential Service
+Refer to the following tables for current charges and credits. For an explanation of the charges and credits, please refer to the list of terms and definitions at the bottom of the page.
+Distribution Charges and credits
+Charge/credit name
+Rate
+Customer
+$51.18 per 30 days
+Rate Rider for Disposition of Change in Useful Life of Assets – Effective 2025–2026
+- $1.41 per 30 days
+Rate Rider for Disposition of Change in Useful Life of Assets – Effective 2025–2028
+- $0.34 per 30 days
+Rate Rider for Disposition of Change in Useful Life of Assets – Effective 2026–2028
+- $0.99 per 30 days
+Rate Rider for Disposition of Wireless Pole Attachment Revenue
+- $0.03 per 30 days
+Rate Rider for Disposition of Wireline Pole Attachment Revenue
+$0.04 per 30 days
+Rate Rider for Smart Metering Entity
+$0.41 per 30 days
+Delivery Charges and credits
+Charge/credit name
+Rate
+Rate Rider for Disposition of Capacity Based Recovery Account
+$0.00048 per kWh
+Rate Rider for Disposition of Deferral/Variance Accounts
+$0.00112 per kWh
+Rate Rider for Disposition of Global Adjustment Account (applicable only for non-RPP customers)
+$0.00508 per kWh
+Transmission Charge
+Charge name
+Rate
+Transmission
+$0.02241 per kWh
+Residential Suite Metered Service
+This service class is also known as "Competitive sector multi-unit residential." Refer to the following tables for current charges and credits. For an explanation of the charges and credits, please refer to the list of terms and definitions at the bottom of the page.
+Distribution Charges and credits
+Charge/credit name
+Rate
+Customer
+$41.98 per 30 days
+Rate Rider for Disposition of Change in Useful Life of Assets – Effective 2025–2026
+- $1.10 per 30 days
+Rate Rider for Disposition of Change in Useful Life of Assets – Effective 2025–2028
+- $0.27 per 30 days
+Rate Rider for Disposition of Change in Useful Life of Assets – Effective 2026–2028
+- $0.77 per 30 days
+Rate Rider for Disposition of Wireless Pole Attachment Revenue
+- $0.03 per 30 days
+Rate Rider for Disposition of Wireline Pole Attachment Revenue
+$0.03 per 30 days
+Rate Rider for Smart Metering Entity
+$0.41 per 30 days
+Delivery Charges and credits
+Charge/credit name
+Rate
+Rate Rider for Disposition of Capacity Based Recovery Account
+$0.00048 per kWh
+Rate Rider for Disposition of Deferral/Variance Accounts
+$0.00073 per kWh
+Rate Rider for Disposition of Global Adjustment Account (applicable only 
+[DOC 1] https://www.torontohydro.com/for-home/rates
+for non-RPP customers)
+$0.00508 per kWh
+Transmission Charge
+Charge name
+Rate
+Transmission
+$0.02241 per kWh
+Resources
+Have a question about rates?
+Get answers to our most frequently asked questions.
+Learn more about rates
+Regulatory Charges
+Regulatory Charges
+The OEB announced an update to Regulatory Charges, effective January 1, 2026.
+Regulatory charges are the costs of administering the wholesale electricity system and maintaining the reliability of the provincial grid.
+Refer to the following table for current charges. For an explanation of the charge, please check out the list of terms and definitions at the bottom of the page.
+Regulatory Charges
+Charge name
+Rate
+Standard Supply Service – Administration (if applicable)
+$0.25 per 30 days
+Wholesale Market Service
+$0.0053 per kWh
+Additional Charges
+Additional charges
+Harmonized Sales Tax (HST)
+Effective July 1, 2010, a Harmonized Sales Tax (HST) of 13% is applied to electricity bills. The implementation of HST is mandated by the Province of Ontario. For information on HST, please visit the
+Ontario Ministry of Finance website
+or call the HST hotline at 1-800-337-7222.
+Ontario Electricity Rebate (OER)
+The provincial government announced a change to the OER from 13.1% to 23.5%, effective November 1, 2025. The Ontario government introduced the OER as an expanded rebate providing bill relief that is applied to customer bills, largely offsetting price changes on the electricity line. The rebate is applied to bills for most residential consumers, long-term care homes, farms and many small businesses.
+Learn more about the OER
+Unmetered water heater charges
+These charges are applied to current customers who have an unmetered electric water heater billed by Toronto Hydro on a flat rate basis. Toronto Hydro no longer offers this flat rate billing option for new customers.
+As of May 1, 2002, flat rate (unmetered) water heater energy usage is billed on an estimated average daily kWh basis. Your estimated usage is determined by the size of your water heater, the wattage of the water heater electric elements and the number of days in the billing period. If you have an unmetered electric water heater, you're being billed the higher tiered rate of the Regulated Price Plan.
+If you have any questions, please visit our
+contact page
+to reach us by phone or using our online contact form.
+Other charges
+Other charges/credits may include miscellaneous adjustments to prior billed electricity amounts, or charges for other specific services.
+View a list of specific service charges that may be applied to your bill statement
+.
+Terms and definitions
+Customer, Distribution and Transmission
+Customer Charge
+The Customer Charge covers, together with the Distribution Charge, the costs Toronto Hydro incurs to deliver electricity to your home, building and maintaining the distribution system, administration and billing.
+Transmission Charge
+This charge covers the costs involved in transmitting electricity from generators to the city. T
+[DOC 1] https://www.torontohydro.com/for-home/rates
+oronto Hydro passes this cost through to you, without markup. The January 1, 2026 decrease in the Transmission Charge, by $0.118 per kWh, reflects the cost of transmission services provided by Hydro One to Toronto Hydro.
+Rate Riders
+Rate riders are temporary costs or credits on utility bills. The rate rider is a mechanism used to flow through costs that are incurred by a distribution utility, or refunds provided to the distribution utility, that were not included in its tariff distribution rates at the time those rates were approved by the OEB. All rate riders must be approved by the OEB before they are applied to customer bills.
+Disposition of Capacity Based Recovery (CBR) Account
+This charge reflects the difference between the cost of CBR program in the wholesale energy market and CBR amounts billed to Class B customers.
+Disposition of Change in Useful Life of Assets – Effective 2025–2026
+This credit (refund) reflects the difference in 2023 and 2024 revenue requirement attributed to updated depreciation rates (implemented in 2023) compared to the previous rates.
+Disposition of Change in Useful Life of Assets – Effective 2025–2028
+This credit (refund) reflects the difference in 2023 and 2024 revenue requirement attributed to updated depreciation rates (implemented in 2023) compared to the previous rates.
+Disposition of Change in Useful Life of Assets – Effective 2026–2028
+This credit (refund) reflects the difference in 2023 and 2024 revenue requirement attributed to updated depreciation rates (implemented in 2023) compared to the previous rates.
+Disposition of Deferral/Variance Account
+This charge reflects the clearance of residual balances for accounts relating to variances for a number of energy-related pass-through costs.
+Disposition of Global Adjustment Account
+This charge reflects the variance between Global Adjustment paid to the Independent Electricity System Operator (IESO) and collected from customers. This rate rider only applies to customers who are not on the Regulated Price Plan (Non-RPP), enrolled with a retailer contract.
+Disposition of Wireless Pole Attachment Revenue
+This credit (refund) is associated with wireless pole attachments.
+Disposition of Wireline Pole Attachment Revenue
+This credit (refund) is associated with wireline pole attachments.
+Smart Metering Entity Charge
+On April 14, 2022, the OEB approved a decrease of the Smart Metering Entity (SME) Charge to be collected from customers effective from January 1, 2023 to December 31, 2027, on behalf of the SME. This charge recovers costs incurred by the SME to collect, manage, store and retrieve information related to the metering of these customers’ electricity usage in Ontario.
+Regulatory
+Standard Supply Service – Administration Charge (if applicable)
+This is an administration charge of $0.25 stated on a 30-day basis. If your billing period is different than 30 days, the RPP administration charge will be prorated accordingly. This is a service charge for customers who have
+[DOC 1] https://www.torontohydro.com/for-home/rates
+n’t contracted with an electricity retailer for their energy supply.
+Wholesale Market Service Charge
+This charge covers costs such as market regulation and management of the system. Toronto Hydro collects this charge, without mark-up, on behalf of the IESO.
+Related content
+Electricity retailers
+Know your choices when purchasing electricity
+Learn about electricity retailers
+Your bill explained
+Detailed information about your bill
+Learn about your bill
+Service charges explained
+List of standard charges as defined by the OEB
+Learn about service charges
+[DOC 2] https://www.torontohydro.com/corporate-reports
+Corporate Reports
+Learn how we deliver value to our city and  ratepayers.
+Click on the file name below to view it. Check the checkbox and press the "Download selected PDFs" button to download it.
+Download selected PDFs
+2026 Corporate Reports
+Document
+Posted
+Select
+Second Quarter Financial Report 2026 (PDF, 785 KB)
+Aug 13, 2026
+Select file for download
+Major Event Report – May 23, 2026 (PDF, 164 KB)
+Jul 22, 2026
+Select file for download
+Major Event Report – March 7, 2026 (PDF, 246 KB)
+May 05, 2026
+Select file for download
+First Quarter Financial Report 2026 (PDF, 696 KB)
+May 14, 2026
+Select file for download
+2025 Corporate Reports
+Document
+Posted
+Select
+2025 Year in Review (PDF, 3.6 MB)
+Jun 26, 2026
+Select file for download
+2025 Rate Application Reporting Commitments (PDF, 461 KB)
+Sep 23, 2026
+Select file for download
+Forced Labour in Canadian Supply Chains Report (PDF, 358 KB)
+May 27, 2026
+Select file for download
+2025 Electricity Distributor Scorecard (PDF, 353 KB)
+Sep 23, 2026
+Select file for download
+2025 Sustainability Report (PDF, 8.6 MB)
+May 14, 2026
+Select file for download
+Annual Information Form 2025 (PDF, 1.3 MB)
+Feb 26, 2026
+Select file for download
+Fourth Quarter Financial Report 2025 (PDF, 1.3 MB)
+Feb 25, 2026
+Select file for download
+Third Quarter Financial Report 2025 (PDF, 760 KB)
+Nov 19, 2025
+Select file for download
+Second Quarter Financial Report 2025 (PDF, 740 KB)
+Aug 13, 2025
+Select file for download
+Major Event Report – April 29, 2025 (PDF, 153 KB)
+Jun 27, 2025
+Select file for download
+First Quarter Financial Report 2025 (PDF, 693 KB)
+May 08, 2025
+Select file for download
+2024 Corporate Reports
+Document
+Posted
+Select
+2024 Electricity Distributor Scorecard (PDF, 452 KB)
+Sep 24, 2025
+Select file for download
+2024 Annual Report (PDF, 4.6 MB)
+Jun 27, 2025
+Select file for download
+Climate Action: 2024 Year-End Status Report (PDF, 7.5 MB)
+Jun 10, 2025
+Select file for download
+Forced Labour in Canadian Supply Chains Report (PDF, 1.2 MB)
+May 14, 2025
+Select file for download
+2024 Environmental, Social and Governance Report (PDF, 16.8 MB)
+May 12, 2025
+Select file for download
+Annual Information Form 2024 (PDF, 722 KB)
+Feb 28, 2025
+Select file for download
+Fourth Quarter Financial Report 2024 (PDF, 1.3 MB)
+Feb 27, 2025
+Select file for download
+Third Quarter Financial Report 2024 (PDF, 730 KB)
+Nov 20, 2024
+Select file for download
+Major Event Report – July 16, 2024 (PDF, 150 KB)
+Sep 12, 2024
+Select file for download
+Second Quarter Financial Report 2024 (PDF, 611 KB)
+Aug 15, 2024
+Select file for download
+First Quarter Financial Report 2024 (PDF, 285 KB)
+May 09, 2024
+Select file for download
+2023 Corporate Reports
+Document
+Posted
+Select
+2023 Electricity Distributor Scorecard (PDF, 438 KB)
+Sep 13, 2024
+Select file for download
+2023 Annual Report (PDF, 5.0 MB)
+Jul 26, 2024
+Select file for download
+Climate Action: 2023 Year-End Status Report (PDF, 4.8 MB)
+Jul 09, 2024
+Select file for download
+Forced Labour in Canadian Supply Chains Report (
+[DOC 2] https://www.torontohydro.com/corporate-reports
+PDF, 193 KB)
+May 27, 2024
+Select file for download
+2023 Environmental, Social and Governance Report (PDF, 6.7 MB)
+Apr 22, 2024
+Select file for download
+2023 Environmental Performance Report (PDF, 1.1 MB)
+Apr 22, 2024
+Select file for download
+Annual Information Form 2023 (PDF, 716 KB)
+Apr 04, 2024
+Select file for download
+Fourth Quarter Financial Report 2023 (PDF, 677 KB)
+Mar 04, 2024
+Select file for download
+Third Quarter Financial Report 2023 (PDF, 235 KB)
+Nov 20, 2023
+Select file for download
+Second Quarter Financial Report 2023 (PDF, 225 KB)
+Aug 16, 2023
+Select file for download
+Climate Action Plan 2023 Status Report (PDF, 3.2 MB)
+Jul 04, 2023
+Select file for download
+First Quarter Financial Report 2023 (PDF, 213 KB)
+May 12, 2023
+Select file for download
+2022 Corporate Reports
+Document
+Posted
+Select
+2022 Electricity Distributor Scorecard (PDF, 463 KB)
+Sep 01, 2023
+Select file for download
+2022 Annual Report (PDF, 6.5 MB)
+Jul 24, 2023
+Select file for download
+2022 Environmental Performance Report (PDF, 451 KB)
+May 02, 2023
+Select file for download
+2022 Environmental, Social and Governance Report (PDF, 13.2 MB)
+Apr 21, 2023
+Select file for download
+Annual Information Form 2022 (PDF, 701 KB)
+Mar 29, 2023
+Select file for download
+Fourth Quarter Financial Report 2022 (PDF, 1.3 MB)
+Mar 01, 2023
+Select file for download
+Third Quarter Financial Report 2022 (PDF, 463 KB)
+Nov 16, 2022
+Select file for download
+Second Quarter Financial Report 2022 (PDF, 616 KB)
+Aug 24, 2022
+Select file for download
+Climate Action Plan 2022 Status Report (PDF, 6.3 MB)
+Jul 27, 2022
+Select file for download
+Major Event Report - May 21, 2022 (PDF, 226 KB)
+Jul 20, 2022
+Select file for download
+First Quarter Financial Report 2022 (PDF, 220 KB)
+May 16, 2022
+Select file for download
+2021 Corporate Reports
+Document
+Posted
+Select
+2021 Electricity Distributor Scorecard (PDF, 478 KB)
+Sep 06, 2022
+Select file for download
+2021 Annual Report (PDF, 3.2 MB)
+Jul 19, 2022
+Select file for download
+2021 Environmental Performance Report (PDF, 846 KB)
+Apr 21, 2022
+Select file for download
+2021 Environmental, Social and Governance Report (PDF, 791 KB)
+Apr 21, 2022
+Select file for download
+2021 Environmental, Social and Governance Metrics (PDF, 331 KB)
+Apr 21, 2022
+Select file for download
+Annual Information Form 2021 (PDF, 880 KB)
+Mar 31, 2022
+Select file for download
+Fourth Quarter Financial Report 2021 (PDF, 654 KB)
+Mar 03, 2022
+Select file for download
+Climate Action Plan (PDF, 9.4 MB)
+Nov 30, 2021
+Select file for download
+Third Quarter Financial Report 2021 (PDF, 568 KB)
+Nov 17, 2021
+Select file for download
+Second Quarter Financial Report 2021 (PDF, 276 KB)
+Aug 18, 2021
+Select file for download
+First Quarter Financial Report 2021 (PDF, 662 KB)
+May 12, 2021
+Select file for download
+2020 Corporate Reports
+Document
+Posted
+Select
+2020 Electricity Distributor Scorecard (PDF, 455 KB)
+Oct 22, 2021
+Select file for download
+2020 Annual Report (PDF, 1.7 MB)
+Jun 11, 2021
+Select file for download
+2020
+[DOC 2] https://www.torontohydro.com/corporate-reports
+ Environmental, Social and Governance Report (PDF, 330 KB)
+Apr 22, 2021
+Select file for download
+2020 Environmental, Social and Governance Metrics (PDF, 235 KB)
+Apr 22, 2021
+Select file for download
+2020 Environmental Performance Report (PDF, 1.4 MB)
+Apr 22, 2021
+Select file for download
+Annual Information Form 2020 (1,012 KB)
+Mar 31, 2021
+Select file for download
+Annual Financial Report 2020 (PDF, 992 KB)
+Mar 04, 2021
+Select file for download
+Third Quarter Financial Report 2020 (PDF, 713 KB)
+Nov 20, 2020
+Select file for download
+Major Event Report - July 8, 2020 (PDF, 213 KB)
+Sep 08, 2020
+Select file for download
+Second Quarter Financial Report 2020 (PDF, 739 KB)
+Aug 19, 2020
+Select file for download
+First Quarter Financial Report 2020 (PDF, 675 KB)
+May 14, 2020
+Select file for download
+2019 Corporate Reports
+Document
+Posted
+Select
+2019 Electricity Distributor Scorecard (PDF, 377 KB)
+Oct 19, 2020
+Select file for download
+2019 Annual Report (PDF, 2.4 MB)
+Jun 10, 2020
+Select file for download
+2019 Environmental, Social Responsibility and Governance Report (PDF, 391 KB)
+Apr 23, 2020
+Select file for download
+2019 Environmental, Social Responsibility and Governance Metrics (PDF, 252 KB)
+Apr 23, 2020
+Select file for download
+2019 Environmental Performance Report (PDF, 637 KB)
+Apr 22, 2020
+Select file for download
+Annual Information Form 2019 (PDF, 984 KB)
+Apr 01, 2020
+Select file for download
+Annual Financial Report 2019 (PDF, 1.29 MB)
+Mar 28, 2020
+Select file for download
+Third Quarter Financial Report  2019 (PDF, 700 KB)
+Nov 20, 2019
+Select file for download
+Second Quarter Financial Report 2019 (PDF, 920 KB)
+Aug 21, 2019
+Select file for download
+First Quarter Financial Report 2019 (PDF, 921 KB)
+May 17, 2019
+Select file for download
+BMO Infrastructure Utilities Conference 2019 (PDF, 2 MB)
+Feb 26, 2019
+Select file for download
+2018 Corporate Reports
+Document
+Posted
+Select
+2018 Corporate Responsibility Report (PDF, 12.3 MB)
+Feb 03, 2020
+Select file for download
+2018 Electricity Distributor Scorecard (PDF, 378 KB)
+Sep 30, 2019
+Select file for download
+Annual Report 2018 (PDF, 13.2 MB)
+May 21, 2019
+Select file for download
+Annual Information Form 2018 (PDF, 1 MB)
+Mar 21, 2019
+Select file for download
+Environmental Performance Report 2018 (PDF, 1.9 MB)
+Mar 20, 2019
+Select file for download
+Annual Financial Report 2018 (PDF, 3 MB)
+Mar 07, 2019
+Select file for download
+Third Quarter Report 2018 (PDF, 1.27 MB)
+Nov 21, 2018
+Select file for download
+Major Event Report - July 28, 2018 (PDF, 293 KB)
+Sep 28, 2018
+Select file for download
+Second Quarter Report 2018 (PDF, 1.41 MB)
+Aug 23, 2018
+Select file for download
+Major Event Report - June 13, 2018 (PDF, 292 KB)
+Aug 14, 2018
+Select file for download
+Major Event Report - May 4, 2018 (PDF, 292 KB)
+Jul 05, 2018
+Select file for download
+Major Event Report - April 15, 2018 (PDF, 306 KB)
+Jun 15, 2018
+Select file for download
+Fixed Income Investor Presentation 2018 (PDF, 3.2 MB)
+Jun 08, 2018
+Select file for download
+M
+[DOC 2] https://www.torontohydro.com/corporate-reports
+ajor Event Report - April 4, 2018 (PDF, 290 KB)
+Jun 01, 2018
+Select file for download
+First Quarter Report 2018 (PDF, 1.04 MB)
+May 16, 2018
+Select file for download
+2017 Corporate Reports
+Document
+Posted
+Select
+2017 Electricity Distributor Scorecard (PDF, 573 KB)
+Sep 07, 2018
+Select file for download
+2017 Corporate Responsibility Highlights Report (PDF, 6.2 MB)
+Jun 12, 2018
+Select file for download
+Annual Report 2017 (PDF, 15.1 MB)
+May 22, 2018
+Select file for download
+Annual Information Form 2017 (PDF, 1.11 MB)
+Mar 29, 2018
+Select file for download
+Annual Financial Report 2017 (PDF, 1.35 MB)
+Mar 08, 2018
+Select file for download
+Major Event Report - October 15, 2017 (PDF, 290 KB)
+Dec 14, 2017
+Select file for download
+Third Quarter Report 2017 (PDF, 299 KB)
+Nov 23, 2017
+Select file for download
+Second Quarter Report 2017 (PDF, 1.1 MB)
+Aug 16, 2017
+Select file for download
+First Quarter Report 2017 (PDF, 952 KB)
+May 11, 2017
+Select file for download
+2016 Corporate Reports
+Document
+Posted
+Select
+2016 Corporate Responsibility Report (PDF, 2.8 MB)
+Feb 01, 2018
+Select file for download
+BMO Infrastructure Utilities Conference 2016 (PDF, 1.3 MB)
+Apr 22, 2016
+Select file for download
+Electricity Distribution Scorecard 2016 (PDF, 126 KB)
+Sep 24, 2017
+Select file for download
+Environmental Report 2016 (PDF, 1.2 MB)
+Apr 03, 2017
+Select file for download
+Fixed Income Investor Presentation 2016 (PDF, 1.6 MB)
+Apr 22, 2016
+Select file for download
+Annual Report 2016 (PDF, 7.87 MB)
+May 12, 2017
+Select file for download
+Annual Information Form 2016 (PDF, 1.2 MB)
+Mar 31, 2017
+Select file for download
+Annual Financial Report 2016 (PDF, 1.9 MB)
+Mar 02, 2017
+Select file for download
+Third Quarter Report 2016 (PDF, 1.1 MB)
+Nov 24, 2016
+Select file for download
+Second Quarter Report 2016 (PDF, 750 KB)
+Aug 19, 2016
+Select file for download
+First Quarter Report 2016 (PDF, 678 KB)
+May 12, 2016
+Select file for download
+2015 Corporate Reports
+Document
+Posted
+Select
+Electricity Distributor Scorecard 2015 (PDF, 284 KB)
+Feb 25, 2015
+Select file for download
+BMO Infrastructure Utilities Conference 2015 (PDF, 2.3 MB)
+Feb 25, 2015
+Select file for download
+Third Quarter Report 2015 (PDF, 992 KB)
+Nov 27, 2015
+Select file for download
+Second Quarter Report 2015 (PDF, 912 KB)
+Aug 21, 2015
+Select file for download
+First Quarter Report 2015 (PDF, 1.19 MB)
+May 15, 2015
+Select file for download
+Annual Report 2015 (PDF, 7.13 MB)
+May 13, 2016
+Select file for download
+Annual Information Form 2015 (PDF, 1.21 MB)
+Mar 29, 2016
+Select file for download
+Annual Financial Report 2015 (PDF, 1.53 MB)
+Mar 04, 2016
+Select file for download
+2014 Corporate Reports
+Document
+Posted
+Select
+BMO Infrastructure Utilities Conference 2014 (PDF, 2.5 MB)
+May 01, 2014
+Select file for download
+Electricity Distributor Scorecard 2014 (PDF, 0.6 MB)
+Sep 23, 2015
+Select file for download
+Fixed Income Investor Presentation 2014 (PDF, 2.1 MB)
+May 01, 2014
+Select file for download
+Third Quarter Report 2014 (PDF, 428 KB)
+No
+[DOC 2] https://www.torontohydro.com/corporate-reports
+v 14, 2014
+Select file for download
+Second Quarter Report 2014 (PDF, 643 KB)
+Aug 14, 2014
+Select file for download
+First Quarter Report 2014 (PDF, 667 KB)
+May 16, 2014
+Select file for download
+Annual Report 2014 (PDF, 2.9 MB)
+May 19, 2015
+Select file for download
+Annual Report 2014 (PDF, 4.48 MB)
+May 15, 2015
+Select file for download
+Annual Financial Report 2014 (PDF, 1.54 MB)
+May 15, 2015
+Select file for download
+Annual Information Form 2014 (PDF, 1.03 MB)
+Apr 01, 2015
+Select file for download
+Annual Financial Report 2014 (PDF, 1.54 MB)
+Mar 11, 2015
+Select file for download
+2013 Corporate Reports
+Document
+Posted
+Select
+Electricity Distributor Scorecard 2013 (PDF, 0.8MB)
+Sep 24, 2014
+Select file for download
+Third Quarter Report 2013 (PDF, 329 KB)
+Nov 15, 2013
+Select file for download
+Second Quarter Interim Consolidated Financial Statements 2013 (PDF, 175 KB)
+Aug 15, 2013
+Select file for download
+Second Quarter Interim MD&A 2013 (PDF, 188 KB)
+Aug 15, 2013
+Select file for download
+Annual Report 2013 (PDF, 7.42 MB)
+May 21, 2014
+Select file for download
+First Quarter Interim Consolidated Financial Statements 2013 (PDF, 167 KB)
+May 16, 2013
+Select file for download
+First Quarter Interim MD&A 2013 (PDF, 167 KB)
+May 16, 2013
+Select file for download
+Annual Information Form 2013 (PDF, 542 KB)
+Apr 01, 2014
+Select file for download
+Annual Financial Report 2013 (PDF, 877 KB)
+Mar 19, 2014
+Select file for download
+2012 Corporate Reports
+Document
+Posted
+Select
+Third Quarter Interim Consolidated Financial Statements 2012 (PDF, 256 KB)
+Dec 18, 2012
+Select file for download
+Third Quarter Interim MD&A 2012 (PDF, 188 KB)
+Dec 18, 2012
+Select file for download
+Second Quarter Interim Consolidated Financial Statements 2012 (PDF, 183 KB)
+Aug 17, 2012
+Select file for download
+Second Quarter Interim MD&A 2012 (PDF, 248 KB)
+Aug 17, 2012
+Select file for download
+First Quarter Interim Consolidated Financial Statements 2012 (PDF, 244 KB)
+May 18, 2012
+Select file for download
+First Quarter Interim MD&A 2012 (PDF, 172 KB)
+May 18, 2012
+Select file for download
+Annual Report 2012 (PDF, 7.63 MB)
+May 02, 2013
+Select file for download
+Annual Information Form 2012 (PDF, 583 KB)
+Apr 02, 2013
+Select file for download
+Management Discussion and Analysis (MD&A) 2012 (PDF, 252 KB)
+Mar 01, 2013
+Select file for download
+Audited Consolidated Financial Statements 2012 (PDF, 3.88 MB)
+Mar 01, 2013
+Select file for download
+2011 Corporate Reports
+Document
+Posted
+Select
+Third Quarter Interim Consolidated Financial Statements 2011 (PDF, 186 KB)
+Nov 23, 2011
+Select file for download
+Third Quarter Interim MD&A 2011 (PDF, 252 KB)
+Nov 23, 2011
+Select file for download
+Second Quarter Interim Consolidated Financial Statements 2011 (PDF, 180 KB)
+Aug 26, 2011
+Select file for download
+Second Quarter Interim MD&A 2011 (PDF, 222 KB)
+Aug 26, 2011
+Select file for download
+First Quarter Interim Consolidated Financial Statements 2011 (PDF, 162 KB)
+May 25, 2011
+Select file for download
+First Quarter Interim MD&A 2
+[DOC 3] https://www.torontohydro.com/documents/20143/207343396/2025-rate-application-reporting-commitments
+2025-2029 RATE APPLICATION REPORTING COMMITMENTS
+As part of its 2025-2029 Rate Application (EB-2023-0195), Toronto Hydro committed to report annually on a
+number of metrics that supplement its Electricity Distributor Scorecard and related Management Discussion
+& Analysis1 (“MD&A”). These commitments expand the scope of annual public reporting and are intended
+to provide greater transparency regarding Toronto Hydro’s capital program execution, variance account
+balances, asset management progress, emissions performance, and distributed energy resource (“DER”)
+adoption and participation over the rate period. Toronto Hydro has also committed to provide a variance
+analysis on its capital investment plans, which can be found in this report as Appendix A.
+More specifically, the parties agreed that Toronto Hydro will annually report on net capital expenditures and
+net in-service additions by program, annual balances in the Demand-Related Variance Account (DRVA) sub-
+accounts, progress related to ISO 55001 certification, Scope 1 and 2 greenhouse gas emissions, and several
+DER-related metrics, including participation in grid services and demand response programs, installed DER
+capacity, and instances where DERs cannot be connected.
+For the purposes of this report, Toronto Hydro has interpreted “Nameplate Capacity” as referring to DER
+classification, which is outlined in the OEB’s Distributed Energy Resources Connection Procedures.2
+Disclaimer
+The information provided by the utility regarding future performance (or what can be construed as forward-looking
+information) may be subject to a number of risks, uncertainties and other factors that may cause actual events,
+conditions or results to differ materially from historical results or those contemplated by the utility regarding its future
+performance. Some of the factors that could cause such differences include legislative or regulatory developments,
+financial market conditions, general economic conditions and the weather. For these reasons, the information on future
+performance is intended to be management’s best judgment on the reporting date of the measures, and could be
+markedly different in the future. Toronto Hydro undertakes no obligation to update or revise any forward-looking
+information, whether as a result of new information, future events or otherwise after the date hereof, except as required
+by law or by the OEB for the purposes of reporting.
+1 Toronto Hydro 2024 Scorecard & MD&A
+2 OEB’s Distributed Energy Resources Connection Procedures
+2025-2029 Rate Application Reporting Commitments – Toronto Hydro-Electric System Limited Page 1 of 11
+ | Disclaimer | 
+
+1. Net Capital Expenditures (CAPEX) and Net In-Service Additions (ISA) by Program
+In 2025, Toronto Hydro continued to make significant capital investments across the organization to
+renew and maintain the electricity grid, connect customers and support growth, improve reliability and
+resiliency, and ensure the system remains safe, accessible, 
+[DOC 3] https://www.torontohydro.com/documents/20143/207343396/2025-rate-application-reporting-commitments
+and capable of meeting current and future
+electricity demands. The tables below provide the Net Capital Expenditures and Net In-Service Additions
+at the program level as well as Tables 8 and 9 from the Settlement Proposal updated for 2025 actuals.
+Please refer to Appendix A for an overview of Toronto Hydro’s net capital expenditures in 2025 including
+variances in forecast expenditures from the 2025-2029 capital plan versus actual expenditures over the
+2025-2029 rate period by OEB investment category.
+Updated Settlement Proposal Table 8 – 2025 Actual Net Capital Expenditures ($ Millions)
+2025
+Actual Capital 754.5
+System Access 235.1
+System Renewal 356.4
+System Service 31.9
+General Plant 83.5
+Other 47.6
+Updated Settlement Proposal Table 9 – 2025 Actual Net In-Service Additions ($ Millions)
+2025
+Actual In-Service Additions 605.3
+System Access 159.5
+System Renewal 363.6
+System Service 10.1
+General Plant 70.7
+Other 1.34
+2025-2029 Rate Application Reporting Commitments – Toronto Hydro-Electric System Limited Page 2 of 11
+ | 2025
+Actual Capital | 754.5
+System Access | 235.1
+System Renewal | 356.4
+System Service | 31.9
+General Plant | 83.5
+Other | 47.6
+ | 2025
+Actual In-Service Additions | 605.3
+System Access | 159.5
+System Renewal | 363.6
+System Service | 10.1
+General Plant | 70.7
+Other | 1.34
+
+2025 Actual Net Capital Expenditures ($ Millions)
+Programs 2025
+Reporting Basis MIFRS
+Customer and Generation Connections 146.1
+Externally Initiated Plant Relocations & Expansion 11.1
+Generation Protection, Monitoring and Control (0.3)
+Load Demand 24.6
+Metering 53.5
+System Access Net Expenditures 235.1
+Area Conversions 83.9
+Network System Renewal 10.6
+Reactive and Corrective Capital 71.7
+Stations Renewal 30.2
+Underground Renewal - Downtown 10.7
+Underground Renewal - Horseshoe 84.7
+Overhead System Renewal 64.5
+System Renewal Net Expenditures 356.4
+Network Condition Monitoring and Control 1.5
+Stations Expansion 22.3
+System Enhancements 8.3
+Non-Wires Alternative 0.1
+System Service Net Expenditures 31.9
+Facilities Management and Security 27.8
+Enterprise Data Centre 3.6
+Fleet and Equipment 1.9
+IT/OT Systems 50.2
+General Plant Net Expenditures 83.5
+AFUDC 5.2
+Miscellaneous 42.3
+Other Total Net Expenditures 47.6
+Total 754.5
+Less Renewable Generation Facility Assets and Other
+(0.2)
+Non-Rate-Regulated Utility Assets (input as negative)
+Total 754.4
+2025-2029 Rate Application Reporting Commitments – Toronto Hydro-Electric System Limited Page 3 of 11
+ | Programs |  |  | 2025 | 
+ | Reporting Basis |  |  | MIFRS | 
+ | Customer and Generation Connections |  |  | 146.1 | 
+ | Externally Initiated Plant Relocations & Expansion |  |  | 11.1 | 
+ | Generation Protection, Monitoring and Control |  |  | (0.3) | 
+ | Load Demand |  |  | 24.6 | 
+ | Metering |  |  | 53.5 | 
+ | System Access Net Expenditures |  |  | 235.1 | 
+ | Area Conversions |  |  | 83.9 | 
+ | Network System Renewal |  |  | 10.6 | 
+ | Reactive and Corrective Capital |  |  | 71.7 | 
+ | Stations Renewal |  |  | 30.2 | 
+ | U
+[DOC 3] https://www.torontohydro.com/documents/20143/207343396/2025-rate-application-reporting-commitments
+nderground Renewal - Downtown |  |  | 10.7 | 
+ | Underground Renewal - Horseshoe |  |  | 84.7 | 
+ | Overhead System Renewal |  |  | 64.5 | 
+ | System Renewal Net Expenditures |  |  | 356.4 | 
+ | Network Condition Monitoring and Control |  |  | 1.5 | 
+ | Stations Expansion |  |  | 22.3 | 
+ | System Enhancements |  |  | 8.3 | 
+ | Non-Wires Alternative |  |  | 0.1 | 
+ | System Service Net Expenditures |  |  | 31.9 | 
+ | Facilities Management and Security |  |  | 27.8 | 
+ | Enterprise Data Centre |  |  | 3.6 | 
+ | Fleet and Equipment |  |  | 1.9 | 
+ | IT/OT Systems |  |  | 50.2 | 
+ | General Plant Net Expenditures |  |  | 83.5 | 
+ | AFUDC |  |  | 5.2 | 
+ | Miscellaneous |  |  | 42.3 | 
+ | Other Total Net Expenditures |  |  | 47.6 | 
+ | Total |  |  | 754.5 | 
+ | Less Renewable Generation Facility Assets and Other |  | (0.2) |  | 
+ | Non-Rate-Regulated Utility Assets (input as negative) |  |  |  | 
+ | Total |  |  | 754.4 | 
+
+2025 Actual Net In-Service Additions ($ Millions)
+Programs 2025
+Reporting Basis MIFRS
+Customer and Generation Connections 98.3
+Externally Initiated Plant Relocations & Expansion 4.0
+Generation Protection, Monitoring and Control -
+Load Demand 10.6
+Metering 46.7
+System Access Net Expenditures 159.5
+Area Conversions 45.8
+Network System Renewal 21.0
+Reactive and Corrective Capital 72.7
+Stations Renewal 31.0
+Underground Renewal - Downtown 9.5
+Underground Renewal - Horseshoe 96.5
+Overhead System Renewal 87.1
+System Renewal Net Expenditures 363.6
+Network Condition Monitoring and Control 4.8
+Stations Expansion 0.1
+System Enhancements 5.2
+Non-Wires Alternative -
+System Service Net Expenditures 10.1
+Facilities Management and Security 17.8
+Enterprise Data centre -
+Fleet and Equipment 4.8
+IT/OT Systems 48.0
+General Plant Net Expenditures 70.7
+Miscellaneous 1.3
+Other Total Net Expenditures 1.3
+Total 605.3
+Less Renewable Generation Facility Assets and Other
+-
+Non-Rate-Regulated Utility Assets (input as negative)
+Total 605.3
+2025-2029 Rate Application Reporting Commitments – Toronto Hydro-Electric System Limited Page 4 of 11
+ | Programs |  |  | 2025 | 
+ | Reporting Basis |  |  | MIFRS | 
+ | Customer and Generation Connections |  | 98.3 |  | 
+ | Externally Initiated Plant Relocations & Expansion |  | 4.0 |  | 
+ | Generation Protection, Monitoring and Control |  | - |  | 
+ | Load Demand |  | 10.6 |  | 
+ | Metering |  | 46.7 |  | 
+ | System Access Net Expenditures |  |  | 159.5 | 
+ | Area Conversions |  | 45.8 |  | 
+ | Network System Renewal |  | 21.0 |  | 
+ | Reactive and Corrective Capital |  | 72.7 |  | 
+ | Stations Renewal |  | 31.0 |  | 
+ | Underground Renewal - Downtown |  | 9.5 |  | 
+ | Underground Renewal - Horseshoe |  | 96.5 |  | 
+ | Overhead System Renewal |  | 87.1 |  | 
+ | System Renewal Net Expenditures |  |  | 363.6 | 
+ | Network Condition Monitoring and Control |  | 4.8 |  | 
+ | Stations Expansion |  | 0.1 |  | 
+ | System Enhancements |  | 5.2 |  | 
+ | Non-Wires Alternative |  | - |  | 
+ | System Service Net Expenditures |  |  | 10.1
+[DOC 3] https://www.torontohydro.com/documents/20143/207343396/2025-rate-application-reporting-commitments
+ | 
+ | Facilities Management and Security |  |  | 17.8 | 
+ | Enterprise Data centre |  |  | - | 
+ | Fleet and Equipment |  |  | 4.8 | 
+ | IT/OT Systems |  |  | 48.0 | 
+ | General Plant Net Expenditures |  |  | 70.7 | 
+ | Miscellaneous |  |  | 1.3 | 
+ | Other Total Net Expenditures |  |  | 1.3 | 
+ | Total |  |  | 605.3 | 
+Less Renewable Generation Facility Assets and Other
+Non-Rate-Regulated Utility Assets (input as negative) |  |  | - |  | 
+ | Total |  |  | 605.3 | 
+
+2. Annual balance of Demand-Related Variance Account sub-accounts
+Toronto Hydro notes that through Settlement the DRVA was replaced by a Demand-Related Capital
+Variance Account (DRCVA) and Revenue Variance Account (RVA). Below are the balances of both sub-
+accounts as well as Tables 20 and 21 of the Settlement Proposal which provide the net capital
+expenditures and net in-service additions associated with the eligible DRCVA programs.
+Account 1508 – Sub-Accounts DRCVA & RVA ($ Millions)
+Dec 31, 2025
+Account
+Balance
+Demand-Related Capital Variance Account3 -
+Revenue Variance Account4 21.1
+Note: The RVA balance above excludes carrying charges
+Updated Settlement Proposal Table 1 - Net Capital Expenditures Associated
+with the Eligible DRCVA Programs ($ Millions)
+DRCVA Eligible Programs 2025
+Load Connections 146.4
+Externally Initiated Plant Relocations & Expansions 11.1
+Generation, Protection, Monitoring & Control1 (0.3)
+Stations Expansion1 22.3
+Non-Wires Alternative1 (0.1)
+DRCVA Capital Expenditures 179.4
+Note 1: These exclude capital expenditures that are not part of rate base
+Updated Settlement Proposal Table 2 - Net In-Service Additions Associated
+with the Eligible DRCVA Programs ($ Millions)
+DRCVA Eligible Programs 2025
+Load Connections 99.1
+Externally Initiated Plant Relocations & Expansions 4.0
+Generation, Protection, Monitoring & Control1 -
+Stations Expansion1 0.1
+Non-Wires Alternative1 -
+DRCVA Eligible In-Service Additions 103.2
+Note 1: These exclude in-service additions that are not part of rate base
+3 There is no balance in the DRCA as the account is cumulative and the 15% deadband threshold has not been passed.
+4 The RVA balance is filed for clearance on an interim basis in the 2027 Rate Application Annual Update (EB-2026-0073) and remains
+subject to change until its approval with the Ontario Energy Board.
+2025-2029 Rate Application Reporting Commitments – Toronto Hydro-Electric System Limited Page 5 of 11
+Account |  |  |  | Dec 31, 2025 | 
+ |  |  |  | Balance | 
+ | Demand-Related Capital Variance Account3 |  |  | - | 
+ | Revenue Variance Account4 |  |  | 21.1 | 
+ | DRCVA Eligible Programs |  |  | 2025 | 
+Load Connections |  |  | 146.4 |  | 
+Externally Initiated Plant Relocations & Expansions |  |  | 11.1 |  | 
+Generation, Protection, Monitoring & Control1 |  |  | (0.3) |  | 
+Stations Expansion1 |  |  | 22.3 |  | 
+Non-Wires Alternative1 |  |  | (0.1) |  | 
+ | DRCVA Capital Expenditures |  |  | 179.4 | 
+ | DRCVA Eligible Programs |  |  | 2025 | 
+Load Connections |  |  | 99.1 |  
+[DOC 3] https://www.torontohydro.com/documents/20143/207343396/2025-rate-application-reporting-commitments
+| 
+Externally Initiated Plant Relocations & Expansions |  |  | 4.0 |  | 
+Generation, Protection, Monitoring & Control1 |  |  | - |  | 
+Stations Expansion1 |  |  | 0.1 |  | 
+Non-Wires Alternative1 |  |  | - |  | 
+ | DRCVA Eligible In-Service Additions |  |  | 103.2 | 
+
+3. Progress Reporting on ISO 55001 Certification
+Upon careful consideration of its organizational strategy and priorities, Toronto Hydro is no longer
+pursuing ISO 55001 certification during the 2025-2029 rate period. Toronto Hydro remains committed
+to continuous improvement in Asset Management, with a renewed focus on enhancing data accuracy
+and decision-support tools to drive customer value.
+4. Scope 1 and 2 Greenhouse Gas (GHG) Emissions
+In 2025, Toronto Hydro emitted 5,498 tonnes of Scope 1 emissions and 35,027 tonnes of Scope 2
+emissions. At this time, disclosure of Scope 3 emissions is not required under the standards set out by
+the Canadian Sustainability Standards Board (CSSB) and Canadian Securities Administrators (CSA).
+Scope 1 and 2 GHG Emissions (t CO2e)
+Scope 2025
+Scope 1 Emissions 5,498
+Scope 2 Emissions 35,027
+5. DER Systems Enrolled in Grid Services Procured by Toronto Hydro
+This measure captures Toronto Hydro-connected customers that participate in provincially available
+Distributed Energy Resource (DER) grid services. In 2025, 2,916 customers participated, with a total MW
+of 131.8. The data below is an aggregation of the Net Metering,5 Feed-In Tariff (FIT), Micro Feed-In Tariff
+(mFIT), Combined Heat and Power Standard Offer Program (CHPSOP), and Renewable Energy Standard
+Offer Program (RESOP)6 provincial programs.
+Customer Participation in Provincial DER Grid Services
+Year Number of Customers % of Total Customers Total MW
+2025 2,916 0.37% 131.8
+5 For more information on the Net Metering program, please visit the OEB’s website
+6 For information on the FIT, mFIT, CHPSOP, and RESOP programs, please visit the IESO’s website
+2025-2029 Rate Application Reporting Commitments – Toronto Hydro-Electric System Limited Page 6 of 11
+ | Scope |  |  | 2025 | 
+ | Scope 1 Emissions |  |  | 5,498 | 
+ | Scope 2 Emissions |  |  | 35,027 | 
+ | Year |  |  | Number of Customers |  |  | % of Total Customers |  |  | Total MW | 
+ | 2025 |  |  | 2,916 |  |  | 0.37% |  |  | 131.8 | 
+
+6. Customers That Participate in Toronto Hydro-led Demand Response-Related Programs
+This measure tracks the number of Toronto Hydro customers that participate in its Local Demand
+Response program7, by rate class and sector. In 2025, Toronto Hydro had seven customers that
+participated in the program, of which all were commercial customers.
+Customer Participation in Toronto Hydro-led DR-Related Programs
+2025
+Sector Rate Class
+Customers % of Customers by Class Capacity Commitment (MW)
+GS 50-999 kW 4 0.04% 1.10
+Commercial GS 1000-4999 kW 1 0.19% 1.00
+LU >= 5000 kW 2 4.17% 2.75
+7 For more information on the Demand Response program, please visit the Toronto Hydro Website
+2025-2029 Rate Application Reporting Commitments 
+[DOC 3] https://www.torontohydro.com/documents/20143/207343396/2025-rate-application-reporting-commitments
+– Toronto Hydro-Electric System Limited Page 7 of 11
+Sector | Rate Class |  |  |  | 2025 |  |  |  |  |  |  | 
+ |  |  |  |  | Customers |  |  | % of Customers by Class |  |  | Capacity Commitment (MW) | 
+Commercial |  | GS 50-999 kW |  |  | 4 |  |  | 0.04% |  |  | 1.10 | 
+ |  | GS 1000-4999 kW |  |  | 1 |  |  | 0.19% |  |  | 1.00 | 
+ |  | LU >= 5000 kW |  |  | 2 |  |  | 4.17% |  |  | 2.75 | 
+
+7. Total Number of DERs Connected to Toronto Hydro’s Grid
+Toronto Hydro has a diverse range of customers with a Distributed Energy Resource (DER) connection to the distribution grid. DERs vary in
+capacity, ranging from residential solar panels to natural gas generators for industrial facilities. This measure shows the total number of DERs
+connected to Toronto Hydro’s grid, broken down by rate class, DER capacity and type.
+2025 Total Number of DERs by Class and Type
+Rate Class Customers % of Customers by Class Number of DERs Number of DERs by Nameplate Capacity8 Number of DERs by Type
+Micro 2137 Renewable 2146
+Small 15 Non-Renewable -
+Residential9 2116 0.30% 2152
+Medium - Energy Storage 6
+Large -
+Micro 27 Renewable 685
+Small 659 Non-Renewable 1
+GS <50 kW 674 0.93% 687
+Medium 1 Energy Storage 1
+Large -
+Micro 5 Renewable 81
+Small 158 Non-Renewable 79
+GS 50-999 kW 166 1.65% 168
+Medium 5 Energy Storage 8
+Large -
+Micro 1 Renewable 10
+Small 15 Non-Renewable 22
+GS 1000-4999 kW 37 7.05% 40
+Medium 24 Energy Storage 8
+Large -
+Micro 1 Renewable 3
+Small 2 Non-Renewable 11
+LU >=5000 kW 11 22.92% 16
+Medium 12 Energy Storage 2
+Large 1
+Micro 2171 Renewable 2925
+Small 849 Non-Renewable 113
+Total 3004 0.38% 3063
+Medium 42 Energy Storage 25
+Large 1
+8 For the purposes of this report, Toronto Hydro has interpreted “Nameplate Capacity” as referring to DER classification, which is outlined in the OEB’s Distributed Energy Resources
+Connection Procedures.
+9 The Residential rate class consists of Residential and Competitive Sector Multi-Unit Residential (CSMUR) customers.
+2025-2029 Rate Application Reporting Commitments – Toronto Hydro-Electric System Limited Page 8 of 11
+ | Rate Class |  |  | Customers |  |  | % of Customers by Class |  |  | Number of DERs |  |  | Number of DERs by Nameplate Capacity8 |  |  |  |  |  | Number of DERs by Type |  |  |  | 
+Residential9 |  |  | 2116 |  |  | 0.30% |  |  | 2152 |  |  |  | Micro |  |  | 2137 |  |  | Renewable |  |  | 2146 | 
+ |  |  |  |  |  |  |  |  |  |  |  |  | Small |  |  | 15 |  |  | Non-Renewable |  |  | - | 
+ |  |  |  |  |  |  |  |  |  |  |  |  | Medium |  |  | - |  |  | Energy Storage |  |  | 6 | 
+ |  |  |  |  |  |  |  |  |  |  |  |  | Large |  |  | - |  |  |  |  |  |  | 
+GS <50 kW |  |  | 674 |  |  | 0.93% |  |  | 687 |  |  |  | Micro |  |  | 27 |  |  | Renewable |  |  | 685 | 
+ |  |  |  |  |  |  |  |  |  |  |  |  | Small |  |  | 659 |  |  | Non-Renewable |  |  | 1 | 
+ |  |  |  |  |  |  |  |  |  |  |  |  | Medium |  |  | 1 |  |  | Energy Storage |  |  | 1 | 
+ |  |  |  |  |  |  |  |  |  |  |  |  | Large |  |  | - |  |  |  |  |  |  | 
+G
+[DOC 3] https://www.torontohydro.com/documents/20143/207343396/2025-rate-application-reporting-commitments
+S 50-999 kW |  |  | 166 |  |  | 1.65% |  |  | 168 |  |  |  | Micro |  |  | 5 |  |  | Renewable |  |  | 81 | 
+ |  |  |  |  |  |  |  |  |  |  |  |  | Small |  |  | 158 |  |  | Non-Renewable |  |  | 79 | 
+ |  |  |  |  |  |  |  |  |  |  |  |  | Medium |  |  | 5 |  |  | Energy Storage |  |  | 8 | 
+ |  |  |  |  |  |  |  |  |  |  |  |  | Large |  |  | - |  |  |  |  |  |  | 
+GS 1000-4999 kW |  |  | 37 |  |  | 7.05% |  |  | 40 |  |  |  | Micro |  |  | 1 |  |  | Renewable |  |  | 10 | 
+ |  |  |  |  |  |  |  |  |  |  |  |  | Small |  |  | 15 |  |  | Non-Renewable |  |  | 22 | 
+ |  |  |  |  |  |  |  |  |  |  |  |  | Medium |  |  | 24 |  |  | Energy Storage |  |  | 8 | 
+ |  |  |  |  |  |  |  |  |  |  |  |  | Large |  |  | - |  |  |  |  |  |  | 
+LU >=5000 kW |  |  | 11 |  |  | 22.92% |  |  | 16 |  |  |  | Micro |  |  | 1 |  |  | Renewable |  |  | 3 | 
+ |  |  |  |  |  |  |  |  |  |  |  |  | Small |  |  | 2 |  |  | Non-Renewable |  |  | 11 | 
+ |  |  |  |  |  |  |  |  |  |  |  |  | Medium |  |  | 12 |  |  | Energy Storage |  |  | 2 | 
+ |  |  |  |  |  |  |  |  |  |  |  |  | Large |  |  | 1 |  |  |  |  |  |  | 
+Total |  |  | 3004 |  |  | 0.38% |  |  | 3063 |  |  |  | Micro |  |  | 2171 |  |  | Renewable |  |  | 2925 | 
+ |  |  |  |  |  |  |  |  |  |  |  |  | Small |  |  | 849 |  |  | Non-Renewable |  |  | 113 | 
+ |  |  |  |  |  |  |  |  |  |  |  |  | Medium |  |  | 42 |  |  | Energy Storage |  |  | 25 | 
+ |  |  |  |  |  |  |  |  |  |  |  |  | Large |  |  | 1 |  |  |  |  |  |  | 
+
+8. Customers That Cannot Connect a DER
+This measure outlines the number of customers who cannot connect a DER due to various infrastructure
+restrictions, and the nameplate capacity of the proposed DERs, by DER type.
+Customers That Cannot Connect a DER by Type
+2025
+DER Type
+Customers Number of DERs by Nameplate Capacity
+Micro 3
+Small 4
+Solar 7
+Medium -
+Large -
+Micro 1
+Small -
+Battery 1
+Medium -
+Large -
+Micro 3
+Small -
+Solar + Battery 3
+Medium -
+Large -
+2025-2029 Rate Application Reporting Commitments – Toronto Hydro-Electric System Limited Page 9 of 11
+DER Type |  | 2025 |  |  |  |  |  |  | 
+ |  | Customers |  |  | Number of DERs by Nameplate Capacity |  |  |  | 
+Solar | 7 |  |  |  | Micro |  |  | 3 | 
+ |  |  |  |  | Small |  |  | 4 | 
+ |  |  |  |  | Medium |  |  | - | 
+ |  |  |  |  | Large |  |  | - | 
+Battery | 1 |  |  |  | Micro |  |  | 1 | 
+ |  |  |  |  | Small |  |  | - | 
+ |  |  |  |  | Medium |  |  | - | 
+ |  |  |  |  | Large |  |  | - | 
+Solar + Battery | 3 |  |  |  | Micro |  |  | 3 | 
+ |  |  |  |  | Small |  |  | - | 
+ |  |  |  |  | Medium |  |  | - | 
+ |  |  |  |  | Large |  |  | - | 
+
+Appendix A: 2025 Capital Expenditures Report
+This report provides an overview of Toronto Hydro’s net capital expenditures in 2025 including variances in
+forecast expenditures from the 2025-2029 capital plan versus actual expenditures over the 2025-2029 rate
+period by OEB investment category. In this report, Toronto Hydro refers to the forecast provided in Table 8
+of the Settlement Proposal10 as the 
+[DOC 3] https://www.torontohydro.com/documents/20143/207343396/2025-rate-application-reporting-commitments
+“Plan”.
+Plan (OEB Approved) versus Actual Variance for 2025
+In 2025, Toronto Hydro’s actual net capital expenditure is $754.5 million, which is $92.1 million greater than
+the 2025 OEB approved capital expenditures. Table 1 provides a breakdown of the Plan and actuals for 2025
+by OEB investment category. The sections that follow the table provide explanations for each category.
+Table 1: 2025-2029 Net Capital Expenditure Summary ($ Millions)
+2025
+OEB Category
+Plan Act. Var.
+System Access 218.2 235.1 16.9
+System Renewal 312.5 356.4 44.0
+System Service 33.9 31.9 (1.9)
+General Plant 92.6 83.5 (9.1)
+Other 5.3 47.6 42.3
+Total Net CapEx 662.4 754.5 92.1
+System Access
+The System Access category is driven by investments to meet customer requests and allows customers to
+seamlessly access and benefit from reliable electricity services through the distribution system. In 2025,
+System Access expenditures were $16.9 million higher than planned primarily due to:
+• Higher Customer Connections costs driven by external factors, including an increased number of
+large connections, size and location of connections, and economic drivers.
+• Lower expenditures in the Load Demand and Externally Initiated Plant Relocations and Expansions
+programs primarily due to customer- and site-related delays, with the Load Demand program also
+reflecting deferrals to offset increased Customer Connections expenditures.
+• Lower Metering costs due to project delays and slower condominium development.
+System Renewal
+The System Renewal category is driven by investments to upkeep and renew aging, deteriorating and
+outdated equipment to maintain reliability, reduce safety risks and enhance the grid’s capacity to serve
+customers. In 2025, System Renewal expenditures were $44.0 million higher than planned primarily due to:
+• Higher expenditures in Overhead System Renewal, Reactive and Corrective Capital, and
+10 EB-2023-0195, Settlement Proposal (August 16, 2024) at pages 19-20.
+2025-2029 Rate Application Reporting Commitments – Toronto Hydro-Electric System Limited Page 10 of 11
+ | 2025 |  | 
+OEB Category |  |  | 
+ | Plan | Act. | Var.
+ |  |  | 
+System Access | 218.2 | 235.1 | 16.9
+System Renewal | 312.5 | 356.4 | 44.0
+System Service | 33.9 | 31.9 | (1.9)
+General Plant | 92.6 | 83.5 | (9.1)
+Other | 5.3 | 47.6 | 42.3
+Total Net CapEx | 662.4 | 754.5 | 92.1
+
+Underground System Renewal - Horseshoe programs to enable the successful removal of all PCB at-
+risk transformers.
+• Higher Area Conversions costs primarily driven by the complexity of construction (e.g. site
+conditions).
+• Increased spending was partially offset by reduced spending in the Stations Renewal and
+Underground System Renewal – Downtown programs.
+System Service
+The System Service category is driven by investments in the system to effectively meet operational
+objectives, improve efficiency, anticipate future customer electricity service requirements, including grid
+modernization. In 2025, System Service expenditures were $1.9 million
+[DOC 3] https://www.torontohydro.com/documents/20143/207343396/2025-rate-application-reporting-commitments
+ lower than planned.
+General Plant
+The General Plant category is driven by investments to keep the business running efficiently with safe and
+reliable vehicles, work centers and IT equipment and reduce its emissions. In 2025, General Plant
+expenditures were $9.1 million lower than planned primarily due to the following factors:
+• Lower expenditures in Fleet and Equipment program due to supply chain disruptions and payment
+timing.
+• Lower expenditures in the IT/OT systems program.
+Other Capital
+Expenditures in the Other category were $42.3 million higher than planned primarily due to an increase in
+pre-capitalized inventory levels to support upcoming capital projects as well as delays in inventory
+consumption for demand-driven projects.
+2025-2029 Rate Application Reporting Commitments – Toronto Hydro-Electric System Limited Page 11 of 11
+[DOC 4] https://www.torontohydro.com/for-business/rates
+Search results
+Website search tool
+×
+Search
+We have found the following suggestions for your query:
+View full search results
+Below are the results we have found:
+All
+For
+Home
+For
+Business
+For
+Contractors & Developers
+Business rates and charges
+Understanding current rates and how they're set.
+Rates as of May 1, 2026
+As of May 1, summer Time-of-Use (TOU) hours and Tier thresholds are in effect. Customers on the Ultra-Low Overnight (ULO) price plan are not affected, and electricity rates remain unchanged.
+If you own or operate a commercial electric vehicle charging station, you may be eligible for the new Electric Vehicle Charging (EVC) rate, available January 1, 2026. Eligible customers can opt in to the EVC rate at any time. For more information, please visit our
+EVC web page
+.
+Business rates and charges
+Electricity Rates
+Delivery charges
+Regulatory Charges
+Additional Charges
+Business rates and charges
+Electricity Rates
+Electricity rates
+Eligible customers on the Regulated Price Plan (RPP) have the option to choose between Time-of-Use (TOU), Ultra-Low Overnight (ULO) and Tiered price plans. Visit our
+Customer Choice page
+to learn more and determine which plan works best for you.
+Time-of-Use (TOU) rates
+As of May 1, the OEB moved to summer time periods. TOU rates are listed in the following table, which also indicates the hours to which these rates apply.
+Summer TOU price periods from May 1, 2026 to October 31, 2026
+TOU period
+Hours
+Price
+Off-peak
+Weekdays from 7 p.m. to 7 a.m. and all day weekends and statutory holidays
+9.8¢ per kWh
+Mid-peak
+Weekdays from 7 a.m. to 11 a.m. and 5 p.m. to 7 p.m.
+15.7¢ per kWh
+On-peak
+Weekdays from 11 a.m. to 5 p.m.
+20.3¢ per kWh
+These rates cover the cost of electricity purchased on your behalf. Toronto Hydro collects this cost from you, without mark-up, and pays it directly to our suppliers.
+View the OEB's TOU and ULO holiday schedule
+Ultra-Low Overnight (ULO) rates
+As of May 1, 2023, the OEB introduced a new ULO price plan for RPP customers. ULO rates are listed in the following table, which also indicates the hours to which these rates apply.
+ULO price periods are the same in the summer as they are in the winter — the following pricing is in effect from November 1, 2025 to October 31, 2026
+ULO period
+Hours
+Price
+Ultra-low overnight
+Every day from 11 p.m. to 7 a.m.
+3.9¢ per kWh
+Weekend off-peak
+Weekends and statutory holidays from 7 a.m. to 11 p.m.
+9.8¢ per kWh
+Mid-peak
+Weekdays from 7 a.m. to 4 p.m. and 9 p.m. to 11 p.m.
+15.7¢ per kWh
+On-peak
+Weekdays from 4 p.m. to 9 p.m.
+39.1¢ per kWh
+These rates cover the cost of electricity purchased on your behalf. Toronto Hydro collects this cost from you, without mark-up, and pays it directly to our suppliers.
+View the OEB's TOU and ULO holiday schedule
+Tiered rates
+As of May 1, the OEB moved to summer Tier thresholds. The Tier threshold for small business customers is 750 kWh/month, all year round.
+Summer pricing tiers from May 1, 2026 to October 31, 2026
+Price tier
+Descr
+[DOC 4] https://www.torontohydro.com/for-business/rates
+iption
+Price
+Tier 1
+Non-residential customers: for electricity used up to 750 kWh/month
+12.0¢ per kWh
+Tier 2
+Non-residential customers: for electricity used above 750 kWh/month
+14.2¢ per kWh
+These rates cover the cost of electricity purchased on your behalf. Toronto Hydro collects this cost from you, without mark-up, and pays it directly to our suppliers.
+Hourly spot pricing
+Most General Service customers with a monthly demand greater than 50 kW — who don’t have a contract with a retailer — pay the wholesale electricity price and Global Adjustment electricity charge. Toronto Hydro collects both charges from you, without mark-up, on behalf of the Independent Electricity System Operator (IESO).
+Effective May 1, 2025, the IESO announced that the Hourly Ontario Energy Price (HOEP) will now be known as the Ontario Electricity Market Price (OEMP). Customers' electricity bills will look the same. For more information on the OEMP, please visit the
+IESO's website
+.
+Customers with interval meters
+are charged the Ontario Electricity Market Price (OEMP), which is the price that's charged to Toronto Hydro customers for their electricity consumption. The OEMP consists of the Day-Ahead Ontario Zonal Price (OZP) adjusted by the Load Forecast Deviation Adjustment (LFDA). The LFDA is an adjustment based on differences between the day-ahead forecast and actual demand and the price the market pays to account for those differences. The OEMP is calculated by adding the Day-Ahead OZP and the LFDA, which can be positive or negative, for each hour.
+Retailer rates
+You may choose to purchase your electricity from another company by entering a contract with a licensed electricity retailer. Your contract specifies a fixed electricity price for a set number of years. Unlike Toronto Hydro's rates, the fixed price is not regulated by the OEB. Please visit the
+OEB's Retail Energy Contracts page
+for more details.
+Delivery charges
+Delivery Charges
+Toronto Hydro received approval from the OEB to implement changes to its Delivery Charges, effective January 1, 2026.
+Delivery Charges cover the cost of delivering electricity from the generator to Toronto Hydro, and then to your home or business. This includes costs to build and maintain transmission and distribution lines, towers and poles, and to operate provincial and local electricity systems.
+Business - General Service < 50 kW
+Refer to the following tables for current rates and charges. For an explanation of the charges and credits, please refer to the list of terms and definitions at the bottom of the page.
+Customer Charges and credits
+Charge name
+Rate
+Customer
+$43.70 per 30 days
+Rate Rider for Smart Metering Entity
+$0.41 per 30 days
+Distribution Charges and credits
+Charge/credit name
+Rate
+Distribution Volumetric Rate
+$0.04778 per kWh
+Rate Rider for Disposition of Capacity Based Recovery Account
+$0.00048 per kWh
+Rate Rider for Disposition of Change in Useful Life of Assets – Effective 2025–2026
+- $0.00179 per kWh
+Rate Rider for Di
+[DOC 4] https://www.torontohydro.com/for-business/rates
+sposition of Change in Useful Life of Assets – Effective 2025–2028
+- $0.00043 per kWh
+Rate Rider for Disposition of Change in Useful Life of Assets – Effective 2026–2028
+- $0.00125 per kWh
+Rate Rider for Disposition of Deferral/Variance Accounts
+$0.00124 per kWh
+Rate Rider for Disposition of Global Adjustment Account (applicable only for non-RPP customers)
+$0.00508 per kWh
+Rate Rider for Disposition of Wireless Pole Attachment Revenue
+- $0.00004 per kWh
+Rate Rider for Disposition of Wireline Pole Attachment Revenue
+$0.00005 per kWh
+Transmission Charge
+Charge name
+Rate
+Transmission
+$0.02111 per kWh
+Business - General Service 50 - 999 kW
+Refer to the following tables for current rates and charges. For an explanation of the charges and credits, please refer to the list of terms and definitions at the bottom of the page.
+Customer Charges and credits
+Charge/credit name
+Rate
+Customer
+$64.30 per 30 days
+Distribution Charges and credits
+Charge/credit name
+Rate
+Distribution Volumetric Rate
+$10.5170 per kVA per 30 days
+Rate Rider for Disposition of Capacity Based Recovery Account
+$0.1892 per kVA per 30 days
+Rate Rider for Disposition of Change in Useful Life of Assets – Effective 2025–2026
+- $0.3006 per kVA per 30 days
+Rate Rider for Disposition of Change in Useful Life of Assets – Effective 2025–2028
+- $0.0726 per kVA per 30 days
+Rate Rider for Disposition of Change in Useful Life of Assets – Effective 2026–2028
+- $0.2109 per kVA per 30 days
+Rate Rider for Disposition of Deferral/Variance Accounts
+$0.4088 per kVA per 30 days
+Rate Rider for Disposition of Deferral/Variance Accounts for Non-Wholesale Market Participants
+$0.0941 per kVA per 30 days
+Rate Rider for Disposition of Excess Expansion Deposits
+- $0.0472 per kVA per 30 days
+Rate Rider for Disposition of Global Adjustment Account (applicable only for non-RPP customers)
+$0.00508 per kWh
+Rate Rider for Disposition of Wireless Pole Attachment Revenue
+- $0.0052 per kVA per 30 days
+Rate Rider for Disposition of Wireline Pole Attachment Revenue
+$0.0063 per kVA per 30 days
+Transformer Allowance for Ownership (if applicable)
+- $0.62 per kVA per 30 days
+Transmission Charges
+Charge name
+Rate
+Connection
+$2.8938 per max. kW per 30 days
+Connection – EV Charging
+$0.4919 per max. kW per 30 days
+Network
+$4.4306 per peak kW per 30 days
+Network – EV Charging
+$0.7532 per peak kW per 30 days
+Business - General Service 1,000 - 4,999 kW
+Refer to the following tables for current rates and charges. For an explanation of the charges and credits, please refer to the list of terms and definitions at the bottom of the page.
+Customer Charge
+Charge name
+Rate
+Customer
+$1,094.15 per 30 days
+Distribution Charges and credits
+Charge/credit name
+Rate
+Distribution Volumetric Rate
+$8.7311 per kVA per 30 days
+Rate Rider for Disposition of Capacity Based Recovery Account
+$0.1847 per kVA per 30 days
+Rate Rider for Disposition of Change in Useful Life of Assets – Effective 2025–2026
+- $0.2568 per kVA per 30 days
+Rate Rider for Disposition of
+[DOC 4] https://www.torontohydro.com/for-business/rates
+ Change in Useful Life of Assets – Effective 2025–2028
+- $0.0621 per kVA per 30 days
+Rate Rider for Disposition of Change in Useful Life of Assets – Effective 2026–2028
+- $0.1802 per kVA per 30 days
+Rate Rider for Disposition of Deferral/Variance Accounts
+$0.6206 per kVA per 30 days
+Rate Rider for Disposition of Excess Expansion Deposits
+- $0.0403 per kVA per 30 days
+Rate Rider for Disposition of Global Adjustment Account (applicable only for non-RPP customers)
+$0.00508 per kWh
+Rate Rider for Disposition of Wireless Pole Attachment Revenue
+- $0.0039 per kVA per 30 days
+Rate Rider for Disposition of Wireline Pole Attachment Revenue
+$0.0047 kVA per 30 days
+Transformer Allowance for Ownership (if applicable)
+- $0.62 per kVA per 30 days
+Transmission Charges
+Charge name
+Rate
+Connection
+$2.8908 per max. kW per 30 days
+Connection – EV Charging
+$0.4914 per max. kW per 30 days
+Network
+$4.2809 per peak kW per 30 days
+Network – EV Charging
+$0.7277 per peak kW per 30 days
+Business - Large Use Customers (> 5,000 kW)
+Refer to the following tables for current rates and charges. For an explanation of the charges and credits, please refer to the list of terms and definitions at the bottom of the page.
+Customer Charges
+Charge name
+Rate
+Customer
+$4,843.52 per 30 days
+Distribution Charges and credits
+Charge/credit name
+Rate
+Distribution Volumetric Rate
+$9.4416 per kVA per 30 days
+Rate Rider for Disposition of Capacity Based Recovery Account
+$0.1556 per kVA per 30 days
+Rate Rider for Disposition of Change in Useful Life of Assets – Effective 2025–2026
+- $0.2639 per kVA per 30 days
+Rate Rider for Disposition of Change in Useful Life of Assets – Effective 2025–2028
+- $0.0638 per kVA per 30 days
+Rate Rider for Disposition of Change in Useful Life of Assets – Effective 2026–2028
+- $0.1852 per kVA per 30 days
+Rate Rider for Disposition of Deferral/Variance Accounts
+$0.5237 per kVA per 30 days
+Rate Rider for Disposition of Deferral/Variance Accounts for Non-wholesale Market Participants
+$0.1083 per kVA per 30 days
+Rate Rider for Disposition of Excess Expansion Deposits
+- $0.0414 per kVA per 30 days
+Rate Rider for Disposition of Global Adjustment Account (applicable only for non-RPP customers)
+$0.00508 per kWh
+Rate Rider for Disposition of Wireless Pole Attachment Revenue
+- $0.0031 per kVA per 30 days
+Rate Rider for Disposition of Wireline Pole Attachment Revenue
+$0.0038 per kVA per 30 days
+Transformer Allowance for Ownership (if applicable)
+- $0.62 per kVA per 30 days
+Transmission Charges
+Charge name
+Rate
+Connection
+$3.2117 per max. kW per 30 days
+Network
+$4.8799 per peak kW per 30 days
+Unmetered scattered load
+Refer to the following tables for current rates and charges. For an explanation of the charges and credits, please refer to the list of terms and definitions at the bottom of the page.
+Customer Charges
+Charge name
+Rate
+Customer
+$8.03 per customer per 30 days
+Connection
+$0.83 per connection per 30 days
+Distribution Charges and credits
+Charge/credit name
+Rate
+Distribu
+[DOC 4] https://www.torontohydro.com/for-business/rates
+tion Volumetric Rate
+$0.10120 per kWh
+Rate Rider for Disposition of Capacity Based Recovery Account
+$0.00048 per kWh
+Rate Rider for Disposition of Change in Useful Life of Assets – Effective 2025–2026
+- $0.00298 per kWh
+Rate Rider for Disposition of Change in Useful Life of Assets – Effective 2025–2028
+- $0.00072 per kWh
+Rate Rider for Disposition of Change in Useful Life of Assets – Effective 2026–2028
+- $0.00209 per kWh
+Rate Rider for Disposition of Deferral/Variance Accounts
+$0.00089 per kWh
+Rate Rider for Disposition of Excess Expansion Deposits
+- $0.00047 per kWh
+Rate Rider for Disposition of Global Adjustment Account (applicable only for non-RPP customers)
+$0.00508 per kWh
+Rate Rider for Disposition of Wireless Pole Attachment Revenue
+- $0.00006 per kWh
+Rate Rider for Disposition of Wireline Pole Attachment Revenue
+$0.00007 per kWh
+Transmission Charge
+Charge name
+Rate
+Transmission
+$0.01380 per kWh
+Streetlighting
+Refer to the following tables for current rates and charges. For an explanation of the charges and credits, please refer to the list of terms and definitions at the bottom of the page.
+Customer Charge
+Charge name
+Rate
+Customer (per device)
+$2.08 per device per 30 days
+Distribution Charges and credits
+Charge/credit name
+Rate
+Distribution Volumetric Rate
+$46.4488 per kVA per 30 days
+Rate Rider for Disposition of Capacity Based Recovery Account
+$0.1656 per kVA per 30 days
+Rate Rider for Disposition of Change in Useful Life of Assets – Effective 2025–2026
+- $1.5037 per kVA per 30 days
+Rate Rider for Disposition of Change in Useful Life of Assets – Effective 2025–2028
+- $0.3634 per kVA per 30 days
+Rate Rider for Disposition of Change in Useful Life of Assets – Effective 2026–2028
+- $1.0551 per kVA per 30 days
+Rate Rider for Disposition of Deferral/Variance Accounts
+$0.2222 per kVA per 30 days
+Rate Rider for Disposition of Excess Expansion Deposits
+- $0.2360 per kVA per 30 days
+Rate Rider for Disposition of Global Adjustment Account (applicable only for non-RPP customers)
+$0.00508 per kWh
+Rate Rider for Disposition of Wireless Pole Attachment Revenue
+- $0.4099 per kVA per 30 days
+Rate Rider for Disposition of Wireline Pole Attachment Revenue
+$0.4964 per kVA per 30 days
+Transmission Charges
+Charge name
+Rate
+Connection
+$3.4502 per max. kW per 30 days
+Network
+$3.9409 per peak kW per 30 days
+Rate class
+Rate class reviews
+As a business customer, your rate class may change depending on your average monthly electricity demand. Learn about your rate class and the review process.
+Details
+Regulatory Charges
+Regulatory Charges
+The OEB announced an update to Regulatory Charges, effective January 1, 2026. Regulatory Charges cover the costs of administering the wholesale electricity system and maintaining the reliability of the provincial grid.
+Refer to the following table for current charges. For an explanation of the charge, please refer to the list of terms and definitions at the bottom of the page.
+Regulatory Charges
+Charge name
+Rate
+Capacity Based
+[DOC 5] https://www.torontohydro.com/documents/20143/295817/2018-corporate-responsibility-report.pdf
+TORONTO HYDRO 2018 CORPORATE RESPONSIBILITY REPORT
+Bringing Energy to Life
+1
+
+TORONTO HYDRO 2018 CORPORATE RESPONSIBILITY REPORT
+Sustainability is part of our vision to provide safe and reliable service in a cost-effective and
+environmentally responsible manner. It’s an area of focus that we adopted many years ago.
+Sustainability compliments and enhances our major initiatives and investment strategies.
+The Operating Centres Consolidation Program (OCCP) is a good example of how we apply
+sustainability focus to our major initiatives. As part of this program, we reduced the number of work
+centres we occupy from nine to five from 2014-2018 and enhanced their environmental performance
+and management. As a result, we achieved significant cost savings for our customers, reduced our
+environmental impact and provided employees with a healthier workplace environment.
+MESSAGE FROM THE CHAIR AND CEO
+Investing in our grid requires our crews to utilize a fleet of vehicles to get the work done. Operation
+of the fleet, including idling and maintenance, is inherently costly and may have negative effects on
+TORONTO HYDRO PROFILE
+the environment due to vehicle emissions. Stringent targets for reducing idling time have been set,
+and each year we have surpassed them. Our strong performance in this area helps reduce our fuel
+ABOUT THIS REPORT
+costs and harmful emissions — a win-win situation.
+GOVERNANCE
+Another area of focus is the hardening of our electricity distribution grid in an effort to help with
+service reliability especially during recent extreme weather events, accompanied by growing evidence
+ENVIRONMENTAL LEADERSHIP
+of the impact of climate change on the weather patterns in Toronto. As part of grid renewal efforts,
+we invest in hardening our equipment to better withstand extreme environmental conditions and
+SOCIAL RESPONSIBILITY
+enable faster power restoration. These investments increase grid resilience and have the potential
+to result in future savings for the company by extending the service of our equipment.
+AT A GLANCE
+Our experience shows that strong sustainability performance compliments robust financial
+ASSURANCE LETTER performance. Over the years, our most sustainable projects have resulted in cost savings
+for our customers. Through sustainability we can find solutions to manage and reduce
+GRI TABLE
+cost pressures, to continue to provide
+reliable service for our customers, and
+to decrease our environmental impact.
+We invite you to read the following
+report to see how we’re striving
+toward long-term environment,
+social and economic goals and
+achievements in new
+and innovative ways.
+Anthony Haines
+David McFadden President and Chief Executive Officer,
+Chair, Board of Directors Toronto Hydro Corporation
+2
+
+TORONTO HYDRO 2018 CORPORATE RESPONSIBILITY REPORT
+Toronto Hydro Corporation
+The City of Toronto (the “City”) is the sole shareholder of
+Toronto Hydro Corporation, which wholly owns two subsidiaries:
+• Toronto Hydro-Electric System Limited distributes
+[DOC 5] https://www.torontohydro.com/documents/20143/295817/2018-corporate-responsibility-report.pdf
+ electricity
+to residential, commercial and industrial customers in the City
+of Toronto
+• Toronto Hydro Energy Services Inc. provides street lighting and
+MESSAGE FROM THE CHAIR AND CEO
+expressway lighting service in the city of Toronto
+TORONTO HYDRO PROFILE
+ABOUT THIS REPORT
+GOVERNANCE
+ENVIRONMENTAL LEADERSHIP
+SOCIAL RESPONSIBILITY
+AT A GLANCE
+ASSURANCE LETTER
+GENERATION AND TRANSMISSION MUNICIPAL DISTRIBUTION LINE
+GRI TABLE
+TRANSFORMER STATION SUBSTATION
+Throughout this report, references to “Toronto Hydro” or
+CUSTOMERS
+“the Company” are intended to refer to Toronto Hydro
+Corporation and it subsidiaries.
+The electrical distribution business in Ontario is regulated by
+the Ontario Energy Board (OEB), which has broad powers relating
+to licensing standards of conduct and service, and the regulation
+of electricity distribution rates charged by Toronto Hydro and
+other electricity distributors in Ontario.
+3
+
+TORONTO HYDRO 2018 CORPORATE RESPONSIBILITY REPORT
+Awards and Certifications
+1. First place on Corporate Knights’ 2017 Future 40 Responsible
+Corporate Leaders in Canada list
+2. Second place on Corporate Knights’ 2018 Best 50 Corporate
+Citizens in Canada list
+3. 2017 and 2018 Canada’s Safest Employer in the Utilities and
+MESSAGE FROM THE CHAIR AND CEO Electrical Category
+4. 2018 Canadian Electricity Association (CEA) President’s Award
+TORONTO HYDRO PROFILE
+of Excellence for Employee Safety
+ABOUT THIS REPORT 5. Ave Lethbridge, EVP, and Chief Human Resources and Safety
+Officer — named to 2017 Top 5 Influential Women in Diversity
+GOVERNANCE & HR list, DiversityCan Magazine
+6. Anthony Haines, President & CEO — named to 2017 Clean 16 list
+ENVIRONMENTAL LEADERSHIP
+7. Anthony Haines, President & CEO — 2017 Responsible CEO
+SOCIAL RESPONSIBILITY of Year Award, Corporate Responsibility Magazine
+8. Anthony Haines, President & CEO — 2017 Individual Leadership
+AT A GLANCE
+on Sustainability Award, Canadian Electricity Association
+ASSURANCE LETTER 9. BOMA BEST Gold Certification for the 71 Rexdale Boulevard
+and 715 Milner Avenue work centres
+GRI TABLE
+10. BOMA BEST Silver Certification for the 500 Commissioners
+Street work centre
+11. ISO 14001:2015 Certification
+12. OHSAS 18001:2007 Certification
+13. CEA Sustainable Electricity Company brand designation
+14. Edison Electric Institute’s Emergency Assistance Award
+for outstanding work assisting customers impacted
+by Hurricane Irma
+4
+
+TORONTO HYDRO 2018 CORPORATE RESPONSIBILITY REPORT
+Corporate Overview
+as of December 31, 2018
+$4.7
+Toronto Hydro owns and operates billion of capital assets comprised primarily
+of an electricity distribution system that delivers electricity within the City of Toronto
+Toronto Hydro’s registered office is located at 14 Carlton St., Toronto, Ontario
+MESSAGE FROM THE CHAIR AND CEO
+772,000
+TORONTO HYDRO PROFILE customers
+689,560
+residential service customers
+ABOUT THIS REPORT
+GOVERNANCE
+19%
+of electricity consumed in Ontario is distributed by Toronto Hydro
+ENVIRONMENTAL LEADERSHIP
+82,292
+gene
+[DOC 5] https://www.torontohydro.com/documents/20143/295817/2018-corporate-responsibility-report.pdf
+GRI TABLE Engagement
+Materiality assessment and stakeholder engagement are key to the development of Toronto
+Hydro’s sustainability program. As such, Toronto Hydro has undertaken a comprehensive
+stakeholder consultation to better understand the sustainability priorities of stakeholders
+(see next page). After consulting with different stakeholders, aspects from each group were
+prioritized, and the information gathered was used to shape this report. Communication and
+engagement with stakeholders are an ongoing process at Toronto Hydro.
+11
+
+TORONTO HYDRO 2018 CORPORATE RESPONSIBILITY REPORT
+Toronto Hydro selects the stakeholders with whom to engage on sustainability
+issues based on their influence, impact and responsibility. Communication with
+stakeholders is completed through a variety of methods, including surveys,
+participation in working groups, internal and external newsletters, etc.
+Below are examples of Toronto Hydro’s stakeholders.
+MESSAGE FROM THE CHAIR AND CEO
+Customers
+TORONTO HYDRO PROFILE
+— residential, business and commercial customers
+ABOUT THIS REPORT
+Colleges and Universities
+GOVERNANCE — including Georgian College and Ryerson University’s Centre for Urban Energy
+ENVIRONMENTAL LEADERSHIP
+Employees
+SOCIAL RESPONSIBILITY
+Government
+AT A GLANCE
+— Municipal, provincial and federal government bodies such as the Independent
+Electricity System Operator (IESO), Ministry of Energy, Northern Development
+ASSURANCE LETTER
+and Mines, Ministry of Labour, Ministry of Environment, Conservation and
+Parks, Environment and Climate Change Canada
+GRI TABLE
+Industry Associations
+— including the Association of Electrical Utility Safety Professionals, Board of
+Canadian Registered Safety Professionals, Canadian Electricity Association,
+Canadian Standards Association and Infrastructure Health and Safety Association
+Regulators
+— including the Ontario Energy Board
+Shareholder
+— City of Toronto is the Corporation’s sole shareholder
+12
+
+TORONTO HYDRO 2018 CORPORATE RESPONSIBILITY REPORT
+COMMUNICATION IN ACTION
+Toronto Hydro’s conducts regular surveys to gauge customer perceptions on interactions
+with Toronto Hydro, resulting in approximately 200 responses per month. These surveys have
+identified the need for building customer awareness of available financial assistance programs.
+Monthly refresher training courses are provided to the applicable employees, incorporating
+survey results in the content to ensure knowledge gaps are closed.
+MESSAGE FROM THE CHAIR AND CEO
+Further, Toronto Hydro conducts bi-annual in-depth customer satisfaction surveys
+TORONTO HYDRO PROFILE and reports the results to the Ontario Energy Board. Results from these surveys are used
+to determine opportunities to improve internal and customer-facing processes. Key areas
+ABOUT THIS REPORT include: power quality/reliability, price, billing/payment, communications, and the customer
+service experience. Toronto Hydro deploys these surveys via telephone through a
+GOVERNANCE third-party service provi
+[DOC 5] https://www.torontohydro.com/documents/20143/295817/2018-corporate-responsibility-report.pdf
+rporation’s Economic performance
+ASSURANCE LETTER (in millions of Canadian dollars)
+The following information is from the Corporation’s consolidated financial statements, which
+GRI TABLE includes both Toronto Hydro and Toronto Hydro Energy Services Inc.
+YEAR ENDED DECEMBER 31
+2018 2017
+Revenues $3,582.7 $3,652.1
+Operating costs $2,953.8 $3,148.9
+Payments to providers of capital $172.9 $161.9
+Payments to government $48.1 $27.9
+Dividends to the City of Toronto
+The Corporation declared and paid dividends to the City totalling $75.0 million in 2017,
+and $93.9 million in 2018.
+21
+
+TORONTO HYDRO 2018 CORPORATE RESPONSIBILITY REPORT
+Procurement Practices Management Approach
+Toronto Hydro extends the sustainability program to its vendors and contractors through the
+consideration of sustainability measures during the selection process and ongoing monitoring
+throughout the life of the contracts. A dedicated team is responsible for facilitating the
+timely and cost-effective procurement of services, materials and equipment. This team is
+also responsible for maintaining the inventory to support uninterrupted work and managing
+material handling costs. Each year, Toronto Hydro procures, warehouses and distributes
+MESSAGE FROM THE CHAIR AND CEO approximately $80M to $90M in assets, and executes an average of 200 contracts for the
+supply of goods and services.
+TORONTO HYDRO PROFILE
+Toronto Hydro manages the supply chain by sourcing reputable suppliers, monitoring
+ABOUT THIS REPORT performance to ensure contractual obligations are met, and generating the purchase orders
+that underlie each agreement.
+GOVERNANCE
+Suppliers range from:
+ENVIRONMENTAL LEADERSHIP • Manufacturers that sell materials directly to Toronto Hydro
+• Distributors that provide materials from various manufacturers
+SOCIAL RESPONSIBILITY • Service providers that offer professional services, such as facilities maintenance
+• Contractors who provide various construction and electrical distribution services
+AT A GLANCE to complete the capital and maintenance programs
+A large component of the supply chain is related to procuring electrical materials and
+ASSURANCE LETTER
+contractor services to complete capital construction. Most manufacturers in the industry
+GRI TABLE sell or make their products available through distributors and do not deal directly with utilities.
+In some situations, design and construction services are outsourced to secure additional
+flexible resources to execute the work program, the magnitude of which may fluctuate from
+year to year.
+22
+
+TORONTO HYDRO 2018 CORPORATE RESPONSIBILITY REPORT
+Management approach to supplier assessment
+for environmental and labour practices
+Toronto Hydro works to ensure that suppliers share the same values and labour practices
+and require them to abide by any and all applicable laws.
+A competitive bidding process for the selection and screening of vendors is an integral part
+of the Toronto Hydro Procurement Policy and central to Toronto Hydro’s commitment 
+[DOC 5] https://www.torontohydro.com/documents/20143/295817/2018-corporate-responsibility-report.pdf
+ATION — INTEGRATION IN SYSTEM PLANNING
+In addition to planning to meet the capacity demands of a growing city, Toronto Hydro has
+been planning and making investments to adapt to the challenges presented by climate
+change. The purpose of the improvements and collaboration is to help reduce the impacts
+of climate change on the residents of Toronto.
+In 2015, Toronto Hydro completed a vulnerability assessment study following the Public
+MESSAGE FROM THE CHAIR AND CEO
+Infrastructure Engineering Vulnerability Committee (PIEVC) protocol developed by Engineers
+Canada. The study conducted a risk assessment for the various components and areas of the
+TORONTO HYDRO PROFILE
+distribution system that would be affected by climate change, and the results were used to
+develop a road map on climate adaptation initiatives.
+ABOUT THIS REPORT
+The majority of the road map was completed by the end of 2017 and since then Toronto Hydro
+GOVERNANCE
+has continued to integrate considerations regarding the impact of climate change and the risks
+it presents into its operations. As an example, when planning new projects, Toronto Hydro has
+ENVIRONMENTAL LEADERSHIP
+put in place procedures to ensure that climate risk is specifically considered in developing
+the project.
+SOCIAL RESPONSIBILITY
+An example of a climate change consideration in the planning process are future temperature
+AT A GLANCE and climate projections. Toronto Hydro continually reviews sources of climate data to verify
+that the projections used for planning purposes continue to be valid and widely accepted. This
+ASSURANCE LETTER review is currently completed on an ad hoc basis, however, the review will be a requirement of
+the system planning guidelines in the project planning process. For example, with this data,
+GRI TABLE Toronto Hydro can mitigate climate risks to the grid by reviewing and updating equipment
+specifications, such as the use of tree-proof wire to reduce tree contact risks during storms
+and associated outages.
+31
+
+TORONTO HYDRO 2018 CORPORATE RESPONSIBILITY REPORT
+Management approach to
+demand-side management
+Toronto Hydro delivered numerous CDM programs to customers in 2017 and 2018. The purpose
+of these programs is to reduce the peak demand, costs and environmental impacts associated
+with new generation, transmission, and distribution systems. This results in economic benefits
+to the customer and reduces the impact on the environment. Toronto Hydro tracked and
+reported progress against the CDM target established by the OEB to ensure programs are
+MESSAGE FROM THE CHAIR AND CEO
+achieving the desired results. Toronto Hydro’s role in the delivery of conservation programs
+will change in future years due to changes made by the provincial government (discussed in
+TORONTO HYDRO PROFILE
+more detail below).
+ABOUT THIS REPORT
+CDM Programs
+GOVERNANCE
+In 2017 and 2018, Toronto Hydro delivered provincially-funded CDM programs to the
+ENVIRONMENTAL LEADERSHIP following market segments:
+• Residential customers incl
+[DOC 6] https://www.torontohydro.com/documents/20143/295812/2017-Corporate-responsibility-highlights-report.pdf
+2017 Corporate
+Responsibility
+HIGHLIGHTS Report
+OUR CITY
+OUR ENVIRONMENT
+OUR PEOPLE
+
+Toronto Hydro is committed to delivering affordable and dependable electricity to support the future growth and economic prosperity of our
+city. To achieve this goal, we’re implementing progressive and sustainable solutions to meet the shifting electricity demand of our customers.
+At Toronto Hydro, the employees that make up our talented workforce drive the innovations and improvements that help ensure system
+reliability. However, it’s only possible to serve our customers effectively if our employees can execute their work safely. A safe work
+environment is foundational to our business – that’s why we’re continuously working to improve our safety performance through process
+improvements, and increased awareness and education for our employees and the wider public.
+The electrical utility sector is under increasing pressure to reduce costs and maximize efficiencies. At Toronto Hydro, we’re rising to the
+challenge by monitoring and assessing our energy consumption, waste streams and procurement practices to reduce our environmental
+footprint and improve organizational efficiency. We also support our customers in the shift to a sustainable economy by helping to advance
+the electrification of transportation, enhancing our online services to reduce paper consumption and facilitating a wide variety
+of conservation initiatives.
+We continue to strive to lead our industry, and we’re thrilled to have the opportunity to lead and be part of the diverse and exciting team
+at Toronto Hydro. The following report highlights our ongoing commitment to powering a sustainable future through innovation and
+continuous improvement.
+Anthony Haines, President and Ave Lethbridge, Executive Vice-President and
+Chief Executive Officer Chief Human Resources and Safety Officer
+Human Resources and Safety Division
+About Toronto Hydro Corporation
+The City of Toronto is the sole shareholder of Toronto Hydro Corporation (the “Corporation”),
+which wholly owns two subsidiaries:
+• Toronto Hydro-Electric System Limited distributes electricity and engages
+in conservation and demand management (CDM) activities
+• Toronto Hydro Energy Services Inc. provides street lighting and expressway
+lighting services in the city of Toronto
+GENERATION
+TRANSFORMER
+STATION
+MUNICIPAL
+SUBSTATION
+TRANSMISSION
+DISTRIBUTION LINE
+Throughout this report, references to “Toronto Hydro” or “the Company”
+are intended to refer to the utility, Toronto Hydro-Electric System Limited.
+CUSTOMERS
+The electrical distribution business in Ontario is regulated by the Ontario
+RESIDENTIAL, INDUSTRIAL,
+Energy Board (OEB), which has broad powers relating to licensing standards
+COMMERCIAL
+of conduct and service, and the regulation of electricity distribution rates
+charged by Toronto Hydro and other electricity distributors in Ontario.
+The information in these materials is based on information currently available to Toronto Hydro Corporation and its 
+[DOC 6] https://www.torontohydro.com/documents/20143/295812/2017-Corporate-responsibility-highlights-report.pdf
+affiliates (together hereinafter referred to as“Toronto Hydro”), and is provided for information purposes only.
+Toronto Hydro does not warrant the accuracy, reliability, completeness or timeliness of the information and undertakes no obligation to revise or update these materials. By receiving these materials, you hereby waive any and all
+liability of Toronto Hydro (including its directors, officers, employees, agents and subcontractors) for damages of whatever kind and nature which may occur or be suffered by you or your representatives as a result of the use of these
+materials or reliance on the information therein. ®A registered trademark of Toronto Hydro Corporation used under licence.
+HIGHLIGHTS l 2017 TORONTO HYDRO CORPORATE RESPONSIBILITY REPORT l 2
+
+OUR CITY
+ENERGY CONSERVATION AND
+DEMAND MANAGEMENT (CDM)
+Since 2009, through its CDM initiatives,
+In 2017, Toronto Hydro continued to work with residential, small business, industrial and
+Toronto Hydro has helped its customers
+commercial customers to implement energy-efficiency projects. Toronto Hydro’s 2017
+reduce electricity consumption by
+CDM programs led to an estimated energy savings of 353,000 MWh and reduced summer
+peak demand by 43 MW compared to 2016. These initiatives also helped to reduce GHG 1,920
+GWh
+emissions in the city by 14,120 tCOe which is equivalent to the annual emissions from
+2
+approximately 3,000 cars.
++
+RESEARCH AND DEVELOPMENT
+Toronto Hydro continually adapts to changes in the utility industry, including technology
+re-shaping the electricity distribution assets, more frequent extreme weather events reduce annual GHG emissions by
+76,818
+(e.g. ice storms) and the rapid building of a vertical city in Toronto. tCO e
+2
+Energy Storage
++
+Energy Storage is an integrated solution that is intended to store electricity during
+off-peak hours and release it as needed during higher demand periods. Toronto Hydro
+worked with external companies in 2017 to develop new battery storage projects on
+reduce peak demand by
+underused land, existing substations and utility poles.
+324
+MW
+POLE MOUNTED ENERGY STORAGE
+EMERGENCY
+PREPAREDNESS
+FOR CUSTOMERS
+Educating customers on
+emergency preparedness is
+a top priority. In 2017, Toronto
+Hydro focused on encouraging
+customers to create or check emergency
+preparedness kits. These activities took
+place through direct outreach campaigns
+via newsletters, brochures and community
+events, and public relations campaigns.
+Additionally, Toronto Hydro distributed
+Electric Vehicles close to 1,600 emergency preparedness
+kits in 2017 to low income residents of
+The City of Toronto has stated that approximately one-third of GHG emissions in Toronto
+Toronto.
+are from vehicles. Toronto Hydro is supporting the transition to electric vehicles by
+increasing the availability of charging stations for electric vehicles to the residents of
+Toronto, as well as Toronto Hydro employees.
+Toronto Hydro is working with the City of Toronto to install charging stations in
+residential
+[DOC 7] https://www.torontohydro.com/documents/20143/295808/corporate-responsibility-report-2016.pdf
+am to reduce the physical footprint
+of Toronto Hydro, while implementing initiatives to conserve natural resources, reduce costs
+and improve the work environment
+• Participated in innovative energy storage projects aimed at reducing peak demand, including
+community energy storage, underwater energy storage and pole mounted energy storage
+• Returned $119.6 million in shareholder value through dividends to the City of Toronto
+• Invested more than $1 billion in the distribution grid to ensure safety and reliability of service
+to the residents of Toronto
+• Received two awards from the Electrical Safety Authority, one in 2015 for Consumer and
+Home Safety and one in 2016 for Powerline Safety
+• Successfully completed third-party public safety audits (Regulation 22/04) with zero findings
+for the fourth year in a row
+• Enabled 334 Feed-in Tariff (FIT) interconnections totalling more than 39 MW of generation
+or approximately 25% of rooftop FIT solar generation installed in Ontario
+4 TORONTO HYDRO I 2016 CORPORATE RESPONSIBILITY REPORT
+ | 
+ | 
+
+INTRODUCTION MATERIALITY OUR CITY OUR PEOPLE OUR GLOSSARY AT A GLANCE
+AND STAKEHOLDER ENVIRONMENT
+ENGAGEMENT
+G4-3 G4-4
+About Toronto Hydro Corporation
+The City of Toronto is the sole shareholder of Toronto Hydro Corporation
+(the “Corporation”), which wholly owns two subsidiaries:
+• Toronto Hydro-Electric System Limited distributes electricity and engages
+in conservation and demand management (CDM) activities
+• Toronto Hydro Energy Services Inc. owns street lighting assets in the City
+and provides maintenance and capital improvements to the City’s street
+lighting systems through a subcontract with Toronto Hydro
+GENERATION
+TRANSFORMER
+STATION
+MUNICIPAL
+SUBSTATION
+TRANSMISSION
+Throughout this report, references to
+“Toronto Hydro” or “the Company”
+are intended to refer to the utility,
+Toronto Hydro-Electric System Limited.
+The electrical distribution business in Ontario
+DISTRIBUTION LINE
+is regulated by the Ontario Energy Board
+(OEB), which has broad powers relating to
+licensing standards of conduct and service,
+CUSTOMERS and the regulation of electricity distribution
+RESIDENTIAL, INDUSTRIAL, rates charged by Toronto Hydro and other
+COMMERCIAL electricity distributors in Ontario.
+INTRODUCTION I TORONTO HYDRO 5
+ | 
+ | 
+ | 
+ |  | 
+ |  | 
+ |  | 
+ |  | 
+ |  | 
+ |  | 
+ | 
+ | 
+ | 
+
+
+ |  | 
+
+INTRODUCTION
+G4-5 G4-6 G4-7 G4-8 G4-9 G4-EU4
+81,321
+general
+Corporate Overview Steeles Avenue service customers 679,717 residential
+P
+as of December 31, 2016 H with monthly peak demand service customers C I
+ig of 0-5000 kilowatts (kW) or less K
+Toronto Hydro owns h w 15,560 kilometres of overhead wires averaged over a twelve-month period R E
+a
+y N I
+and operates $4.1 billion 4 2 761,000 G
+7 16,500 T
+O
+of capital assets within customers
+W
+60,420 primary
+N
+Toronto, Ontario, Canada
+distribution
+switches
+L
+I
+Headquarters located at transformers 5 157 in-service E N
+operation centres
+municipal substations
+14 Carlton Street, Toronto. Head Office 
+[DOC 7] https://www.torontohydro.com/documents/20143/295808/corporate-responsibility-report-2016.pdf
+— 14 Carlton Street
+Toronto, Ontario M5B 1K5
+177,220
+1
+poles
+control
+61.1%
+centre of permanent
+employees covered by collective
+bargaining units Labour unions:
+The Power Workers’ Union (PWU),
+The Society of Energy Professionals
+1,490
+4,638
+44 employees
+large users
+average number in 2016 Megawatts
+with monthly peak demand
+of peak load
+of more than 5,000 kW
+on August 12, 2016
+representing approximately
+19% of the provincial demand
+13,040 kilometres of underground wires 1
+transmission system
+terminal station
+34
+terminal
+stations
+6 TORONTO HYDRO I 2016 CORPORATE RESPONSIBILITY REPORT
+ | 
+ |  | 
+ |  | 
+ | 
+ |  | 
+ |  | 
+ | 
+ | 
+ | 
+
+INTRODUCTION MATERIALITY OUR CITY OUR PEOPLE OUR GLOSSARY AT A GLANCE
+AND STAKEHOLDER ENVIRONMENT
+ENGAGEMENT
+81,321
+general
+Steeles Avenue service customers 679,717 residential
+P
+H with monthly peak demand service customers C I
+ig of 0-5000 kilowatts (kW) or less K
+h w 15,560 kilometres of overhead wires averaged over a twelve-month period R E
+a
+y N I
+4 G
+2 761,000
+7 16,500 T
+O
+customers
+W
+60,420 primary
+N
+distribution
+switches
+L
+I
+transformers 157 N
+5 in-service E
+operation centres
+municipal substations
+Head Office — 14 Carlton Street
+Toronto, Ontario M5B 1K5
+177,220
+1
+poles
+control
+61.1%
+centre of permanent
+employees covered by collective
+bargaining units Labour unions:
+The Power Workers’ Union (PWU),
+The Society of Energy Professionals
+1,490
+4,638
+44 employees
+large users
+average number in 2016 Megawatts
+with monthly peak demand
+of peak load
+of more than 5,000 kW
+on August 12, 2016
+representing approximately
+19% of the provincial demand
+13,040 kilometres of underground wires 1
+transmission system
+terminal station
+34
+terminal
+stations
+INTRODUCTION I TORONTO HYDRO 7
+ | 
+ |  | 
+ |  | 
+ | 
+ |  | 
+ |  | 
+ | 
+ | 
+ |  | 
+
+INTRODUCTION
+Corporate mission and values, codes of conduct and
+principles
+Toronto Hydro’s vision is to “continuously maximize customer and stakeholders’ satisfaction by being safe,
+reliable and environmentally responsible at optimal costs.” Toronto Hydro has established an Enterprise
+Risk Management (ERM) framework that helps determine whether Toronto Hydro is positioned to achieve
+strategic objectives. The ERM framework provides a consistent, disciplined methodology for controlling risk
+by identifying, assessing, managing, monitoring and reporting risks to Toronto Hydro.
+Toronto Hydro has four strategic pillars:
+PEOPLE
+Fully-engaged, healthy, productive and safe workforce to meet changing business requirements
+Strives to:
+• Provide a healthy and safe workplace
+• Develop a skilled and knowledgeable workforce
+• Keep the workforce engaged
+Toronto Hydro will continue to strengthen its already strong safety culture
+through various internal initiatives in order to achieve world-class results.
+Our commitment to employee health and safety will remain persistent,
+as we strive to minimize the risk of injury to the workforce. This will
+be accomplished through ongoing safety inspections, audits, training,
+education and 
+[DOC 7] https://www.torontohydro.com/documents/20143/295808/corporate-responsibility-report-2016.pdf
+the ISO
+14001:2004 standard, CEA reports, Electric Power Research Institute’s list of Top 15 Material Issues; the GRI’s
+Standard Disclosures and Electric Utilities Sector Supplement; and Toronto Hydro’s Strategic Direction 2014.
+Sixteen sustainability issues were identified and mapped to corresponding GRI G4 aspects
+(see table below).
+Stage 2: Prioritization — How material issues
+were selected for Toronto Hydro
+During this phase, executives provided feedback on the list of issues and ranked them based on:
+• Issues’ impact on Toronto Hydro’s business priorities (i.e. business risk and opportunity)
+• Toronto Hydro’s ability to exert control over each issue
+Consultations with stakeholders were hosted to gather their input from:
+eight two 186
+employee interviews employee focus online surveys
+groups, bringing together a cross- to employees
+section of departments
+18 1,000 one
+external residential social media scan
+stakeholder interviews and commercial customer
+telephone and online surveys
+During the consultation, stakeholders were asked to rank the issues based on 1) importance to their
+organization and 2) importance for Toronto Hydro to address in its sustainability strategy. Additionally,
+stakeholders identified topics missing from this list. Stakeholders identified qualitative and quantitative
+data related to Toronto Hydro’s environmental, economic and social performance should be
+provided as well as a comparison against the performance of peers.
+MATERIALITY AND STAKEHOLDER ENGAGEMENT I TORONTO HYDRO 15
+ | 
+eight
+employee interviews | two
+employee focus
+groups, bringing together a cross-
+section of departments | 186
+online surveys
+to employees
+18
+external
+stakeholder interviews | 1,000
+residential
+and commercial customer
+telephone and online surveys | one
+social media scan
+ |  |  |  | 
+ |  |  |  | 
+ |  |  |  | 
+ |  |  |  | 
+ |  |  |  | 
+ |  | 
+
+MATERIALITY AND STAKEHOLDER ENGAGEMENT
+G4-20 G4-21 G4-23
+Aspect definitions and boundaries are presented in the table below. The Aspect boundaries were defined
+after evaluating whether the greatest impact of each issue was to internal or external stakeholders.
+There have been no significant changes to the boundaries since the 2014 report.
+This table maps Toronto Hydro’s material issues to the corresponding GRI G4 Aspects
+Toronto Hydro’s Material Issue Corresponding GRI G4 Aspect Boundary
+Community Involvement
+Strategic Community Sponsorship Economic Performance External
+Consumers and Customers
+Conservation and Demand Management Demand-Side Management External
+Emergency Preparedness and Response Disaster/Emergency Mixed
+Planning and Response (External & Internal)
+Grid Investment Research and Development Mixed
+(External & Internal)
+Availability and Reliability Mixed (External & Internal)
+Public Safety Customer Health and Safety External
+Responsible Communication and Education Provision of Information External
+Service Reliability Availability and Reliability Access External
+Environment
+Air Emissions Emissions In
+[DOC 7] https://www.torontohydro.com/documents/20143/295808/corporate-responsibility-report-2016.pdf
+tomer issues, and resolved more than 3,200 customer issues between January 1, 2015 and
+December 31, 2016.
+18 TORONTO HYDRO I 2016 CORPORATE RESPONSIBILITY REPORT
+ | 
+ | 
+
+INTRODUCTION MATERIALITY OUR CITY OUR OUR GLOSSARY AT A GLANCE
+AND STAKEHOLDER PEOPLE ENVIRONMENT
+ENGAGEMENT
+Our key stakeholders include:
+CUSTOMERS – RESIDENTIAL, BUSINESS AND COMMERCIAL CUSTOMERS
+We communicate with this group regularly through:
+• Engagement in our CDM programs
+• Newsletters
+• Correspondence
+• Face-to-face meetings
+• Notifications about neighbourhood construction
+• Community events
+COLLEGES AND UNIVERSITIES – including Georgian College
+and Ryerson University’s Centre for Urban Energy
+We work with the academic community through:
+• Sponsorships
+• Curriculum development
+• Research projects
+EMPLOYEES We communicate with this group regularly through:
+• Training programs
+• Employee engagement initiatives
+• Corporate communications channels including bi-annual employee magazine, intranet, bulletins, monthly
+posters and daily digital signage
+GOVERNMENT – provincial and federal government bodies such as the IESO, Ministry of Energy
+We work with this group through a broad base of initiatives, including:
+• Outreach with Members of Provincial Parliament to advise about riding-specific projects
+• Support of Ministry of Energy’s policies and initiatives
+INDUSTRY ASSOCIATIONS – Please see our list of memberships on page 35
+We communicate with this group regularly through:
+• Participation on boards of directors and working committees
+NON-GOVERNMENT, NOT-FOR-PROFIT AND COMMUNITY ORGANIZATION
+We work with this group regularly through:
+• Employee fundraising efforts for charities and not-for-profit organizations within the city
+• Corporate sponsorships
+REGULATOR – ONTARIO ENERGY BOARD (OEB)
+We communicate with this group regularly through:
+• Active rate filings and other OEB-sponsored proceedings
+SHAREHOLDER – the City of Toronto is the Corporation’s sole shareholder
+We communicate with this group regularly through:
+• Councillor engagement to update them on construction projects and other business taking place
+in their wards
+• Collaborating with the city on energy conservation initiatives
+• Discussion of financial performance and corporate governance based on Shareholder Direction
+MATERIALITY AND STAKEHOLDER ENGAGEMENT I TORONTO HYDRO 19
+ | 
+ |  |  |  | 
+ |  |  |  | 
+ |  |  |  | 
+ |  |  |  | 
+ |  |  |  | 
+ |  | 
+
+OUR CITY
+OUR CITY
+OUR CITY
+Toronto Hydro strives to contribute to the
+improvement of Canada’s largest city. This
+consists of significant investment in the
+electricity distribution infrastructure within the
+city, as well as giving back to the community.
+Toronto Hydro has developed long-term plans
+to support the growth of the city, implemented
+initiatives to ensure safe and reliable service is
+provided to residents and made investments in
+infrastructure to support the electrification of
+transportation. Toronto Hydro also contributes
+to the economic health of the city thro
+[DOC 7] https://www.torontohydro.com/documents/20143/295808/corporate-responsibility-report-2016.pdf
+lidated financial statements and
+municipal property taxes paid.
+ |  | 
+Material Issues for Toronto Hydro: | Economic Performance, Service Reliability, Grid Investment, Conservation and
+Demand Management, Material Selection and Usage, Strategic Community
+Sponsorships; Responsible Communication & Education; Public Safety
+ | $4,032.3
+2016 Revenues1 |  | 
+ | $4,032.3
+2016 Revenues1 |  | 
+ |  |  | 
+$3,550.2
+2015 |  |  | 
+ | $3,494.0
+2016 Operating Costs2 |  | 
+ | $3,494.0
+2016 Operating C | os | 
+ |  |  | 
+ | $3,173.1
+2015 |  | 
+ |  |  | 
+ |  |  | 
+ |  |  | 
+ |  |  | 
+ |  |  | 
+ |  |  | 
+ |  |  | 
+idends paid to the
+s of capital per the
+ancial statements.
+xes paid per the
+ancial statements and |  |  |  |  |  |  |  | 
+ | s
+a
+s
+i
+s | paid to the
+pital per the
+tatements.
+d per the
+tatements and |  |  |  |  |  | 
+ |  |  | ents.
+the |  |  |  |  | 
+ |  |  |  |  |  |  |  | 
+ |  |  |  |  |  |  |  | 
+ |  | 
+
+OUR CITY
+G4-DMA
+$63.35
+$60.6
+$56.25
+MILLION
+MILLION
+Dividends to the
+MILLION
+City of Toronto
+Toronto Hydro Corporation
+declared and paid dividends
+to the city totalling
+$60.6 million in 2014
+$56.25 million in 2015
+$63.35 million in 2016
+2016 2015 2014
+AVAILABILITY AND RELIABILITY
+Corresponding Toronto Hydro’s Material Issues Grid Investment and Service Reliability
+Management approach to availability and reliability
+1. In order to ensure reliable service to all areas of the
+More than 30% of our distribution
+city, Toronto Hydro invests in the distribution grid,
+develops and executes plans for future growth, equipment needs to be replaced by 2020
+conducts inspections of assets and carries out
+maintenance of assets to prolong their life and
+7%
+reduce costs to the customer.
+2. Toronto Hydro’s infrastructure is aging and needs BEYOND USEFUL LIFE
+IN 5 YEARS 68%
+to be replaced and renewed in order to continue to
+provide safe and reliable service. At the end of 2016,
+approximately 25% of Toronto Hydro’s distribution 25% NOT BEYOND
+assets were past their useful life. USEFUL LIFE
+3. In addition, the City of Toronto has and continues
+BEYOND
+to experience significant growth, particularly in
+USEFUL LIFE
+high-rise development. In 2016 alone, there were
+approximately 129 new construction projects
+planned or underway in the City of Toronto.
+22 TORONTO HYDRO I 2016 CORPORATE RESPONSIBILITY REPORT
+ | 
+MILLION
+
+MILLION
+
+MILLION
+
+ | 
+
+INTRODUCTION MATERIALITY OUR CITY OUR OUR GLOSSARY AT A GLANCE
+AND STAKEHOLDER PEOPLE ENVIRONMENT
+ENGAGEMENT
+Investing in the grid - Capital Expenditure Plan
+Renewing the grid and replacing aging distribution equipment, while meeting the needs of a growing city,
+is a costly and complex endeavour. To address these challenges, Toronto Hydro has developed a five-year
+capital plan, known as the 2015-2019 Distribution System Plan (the “DSP”). The DSP was presented to the
+OEB in 2014/2015 and allowed Toronto Hydro to secure funding to invest in the system. The DSP consists
+of four main investment categories: system access, system renewal, system servic
+[DOC 7] https://www.torontohydro.com/documents/20143/295808/corporate-responsibility-report-2016.pdf
+to the customer and reduces the impact on the environment.
+A CDM target has been established by the OEB. Toronto Hydro tracks and reports progress against this CDM target
+to ensure programs are achieving the desired result.
+CDM Programs
+In 2015 and 2016, Toronto Hydro delivered provincially-funded CDM programs to the following market segments:
+• Residential customers including low-income
+• Business customers
+• Industrial customers
+For more information about conservation programs, please visit torontohydro.com/conservation
+CDM Target
+As a condition of Toronto Hydro’s distribution Energy Savings (GWh)
+license, CDM programs must be offered to
+1,576
+customers. From 2015 to 2020, the OEB
+provided a target to reduce electricity
+2015 - 2020
+consumption in the City of Toronto
+Target
+by 1,576 GWh.
+468
+For 2015 and 2016, Toronto Hydro has made
+significant progress towards achieving the CDM 2015 - 2016
+Achievement
+target by delivering 468 GWh of CDM savings
+which accounts for 30% of the total 2020 target.
+For 2015 and 2016, the gigawatt-hour savings
+represented a greenhouse gas emissions reduction
+30%
+of 19,188 tonnes of carbon dioxide equivalent
+emissions or the equivalent electricity use of
+Total Achieved
+approximately 48,846 homes.
+30 TORONTO HYDRO I 2016 CORPORATE RESPONSIBILITY REPORT
+ | 
+2015 - 2020
+Target
+
+2015 - 2016
+Achievement |  |  |  | 
+3
+Total |  |  |  | 
+ | 3 |  |  | 0%
+ | Tota | l | A | chieved
+ |  |  |  | 
+ |  |  |  | 
+ | 
+
+INTRODUCTION MATERIALITY OUR CITY OUR OUR GLOSSARY AT A GLANCE
+AND STAKEHOLDER PEOPLE ENVIRONMENT
+ENGAGEMENT
+Assisting low-income customers
+Toronto Hydro recognizes the importance of delivering programs to assist this
+vulnerable segment of the customer base. These programs exist to help ensure
+that low income customers have access to electricity.
+The Home Assistance Program (HAP) is funded by
+the IESO and assists homeowners and tenants with managing
+their energy costs through complimentary energy-efficient
+retrofits in their homes, such as specific energy-efficient
+refrigerators, chest freezers, light bulbs, power bars, etc. The
+goal of the program is to help low-income customers who
+are unable to pay for the upfront costs of energy-efficiency
+upgrades. The number of customers who participated in the
+HAP program decreased from 3,841 customer in 2015 to 1,109
+customers in 2016. This reduction in participation was due to
+a shift in focus from social housing participants to individual
+participants. The majority of the social housing potential was
+captured in previous years. Individual homes take more time
+to complete. However, on average these individual homes
+yield significantly higher savings per project.
+The Low-Income Energy Assistance
+Program (LEAP) is a year-round program
+developed by the OEB to assist low-income
+customers with their energy bill payments.
+Toronto Hydro funds LEAP through electricity
+rates. The program provides a one-time grant
+of up to $500 (per year) to eligible customers
+having difficulty paying past
+[DOC 7] https://www.torontohydro.com/documents/20143/295808/corporate-responsibility-report-2016.pdf
+ due electricity
+bills. It’s not intended to provide regular or
+ongoing bill payment assistance. In 2016,
+1,726 customers received LEAP funding,
+which was an increase from the 1,334 customers
+who received funding in 2015.
+OUR CITY I TORONTO HYDRO 31
+ | 
+ | 
+ | 
+ |  |  | 
+ |  |  | 
+ |  |  | 
+ |  | 
+ |  | 
+
+OUR CITY
+The Joint Home Assistance Program/
+Home Winterization Pilot launched in
+Q4 2016 in collaboration with Enbridge Gas
+Distribution. The objective of the pilot is
+to demonstrate cost-savings opportunities
+through the use of a single organization
+to deliver the program and to improve the
+customer experience by offering a streamlined
+program experience to customers. Customers
+who contact the program delivery agent
+are now screened for both programs and
+benefit from a single audit visit rather than
+two separate interruptions. As both programs
+complement each other well, new marketing
+material was developed to showcase the
+An Embedded Community Outreach
+benefits of each, as one cohesive customer-
+Coordinator has been located at a social housing
+facing program.
+agency weekly since March 2016 to promote
+Toronto Hydro’s residential programs and services.
+Information on the LEAP is also provided to
+customers who are on modest income(s) and/or in
+arrears. Assistance is also provided to customers
+who qualify for the HAP. This successful initiative
+has helped build customer trust, increased program
+awareness, and strengthened relationships with
+both partner agencies and customers.
+Customers are made aware of available programs
+through annual bill inserts, disconnection notices,
+and through conversations with Customer Service
+Representatives in the Call Centre or Collections.
+Toronto Hydro also promotes the LEAP and HAP
+programs to low income customers through in person
+presentations at targeted events.
+32 TORONTO HYDRO I 2016 CORPORATE RESPONSIBILITY REPORT
+ | 
+ | The Joint Home Assistance Program/
+Home Winterization Pilot launched in
+Q4 2016 in collaboration with Enbridge Gas
+Distribution. The objective of the pilot is
+to demonstrate cost-savings opportunities
+through the use of a single organization
+to deliver the program and to improve the
+customer experience by offering a streamlined
+program experience to customers. Customers
+who contact the program delivery agent
+are now screened for both programs and
+benefit from a single audit visit rather than
+two separate interruptions. As both programs
+complement each other well, new marketing
+material was developed to showcase the
+benefits of each, as one cohesive customer-
+facing program. | complement each other well, new marketing
+material was developed to showcase the
+benefits of each, as one cohesive customer-
+facing program.
+ | 
+
+INTRODUCTION MATERIALITY OUR CITY OUR OUR GLOSSARY AT A GLANCE
+AND STAKEHOLDER PEOPLE ENVIRONMENT
+ENGAGEMENT
+Giving back to the community
+In addition to the CDM programs and programs for low-income United Way
+customers, Toronto Hydro contributes to the community and employee
+a
+[DOC 7] https://www.torontohydro.com/documents/20143/295808/corporate-responsibility-report-2016.pdf
+ges, CDM programs, emergency preparedness, public safety, capital
+construction and power outages.
+Toronto Hydro communicates this information using the following channels:
+• Customer newsletters (printed bill inserts and digital)
+• Direct mail
+• Bill messages
+• Website
+• Social media
+• Email blasts
+• News releases
+• Purchased and earned media
+• City councillor outreach
+• Face-to-face interactions at retail and community outreach events
+Spreading the conservation message
+Toronto Hydro continued to be one of the biggest contributors to the Ontario Ministry of Energy’s
+(MOE) provincial CDM mandate through work with residential, small business, industrial and
+commercial customers to implement energy-efficiency projects. Refer to page 30 for more
+information on the results of the CDM programs offered by Toronto Hydro.
+Canada’s Anti-Spam Legislation (CASL)
+Toronto Hydro complies with the communications and marketing practices outlined in CASL.
+Extensive training was conducted with relevant personnel regarding CASL. Toronto Hydro monitors
+the Canadian Radio-television and Telecommunications Commission’s enforcement of CASL and
+periodically reviews and updates internal procedures to ensure compliance. Any acute issues are
+dealt with in a prompt and thorough manner.
+OUR CITY I TORONTO HYDRO 45
+ | 
+ |  |  | 
+ |  |  | 
+ |  |  | 
+ |  | 
+ |  | 
+
+OUR CITY
+Marketing activities
+As a regulated entity, Toronto Hydro’s marketing activities are generally limited to providing information to
+customers regarding available services and conservation programs. Toronto Hydro also educates customers
+on safety hazards related to electricity use. More information about safety education, including preparing
+for emergencies, can be found on the Toronto Hydro website at torontohydro.com/safety. Toronto Hydro’s
+Conditions of Service describes its services, equipment and applicable safety legislation, and is posted on the
+Toronto Hydro website and communicated through bill messages and inserts.
+The nature of direct customer communications, volume, and output of information that’s provided to
+customers is regulated by the OEB through a combination of laws and other legal instruments, regular
+reporting requirements, compliance powers and quasi-judicial hearing processes. The OEB also has a
+consumer relations service, where customers who have questions or complaints can report them directly to
+the regulator (who will take action as appropriate).
+Toronto Hydro measures the effectiveness of marketing and communications programs by commissioning
+market research via telephone surveys, online surveys and focus groups. Toronto Hydro also subscribes
+to a number of industry surveys including those conducted by JD Power, Simul and Canadian Electricity
+Association. Communications effectiveness are also monitored and tracked through media metrics, as well as
+online customer engagement metrics.
+This research helps address specific requirements for customer feedback on topics like customer experi
